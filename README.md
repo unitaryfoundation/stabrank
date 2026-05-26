@@ -54,20 +54,11 @@ verifier so that no result depends on trusting the search heuristic.
 
 ## State of the art
 
-Best-known stabilizer-rank values and upper bounds for the four
-Clifford-inequivalent qutrit magic-state orbits at small copy count,
-from *Stabilizer-rank bounds for qutrit magic-state orbits* and the
-prior qutrit-_T_-state literature:
+Best-known stabilizer-rank values and upper bounds across the qubit
+and qutrit Clifford-inequivalent magic-state orbits, with citations and
+provenance, are catalogued on the project page:
 
-| $\chi_R(\,\cdot\,)$ | $m=1$ | $m=2$ | $m=3$ | $m=4$ |
-|---|---|---|---|---|
-| $\|\mathbb{S}\rangle^{\otimes m}$  (Strange)        | 2 | **2** | **4**     | $\le 4$ |
-| $\|H_3\rangle^{\otimes m}$                  | 2 | **3** | **4**     | $\le 8$ |
-| $\|\mathbb{N}\rangle^{\otimes m}$  (Norrell)        | 2 | **3** | **4**     | $\le 7$ |
-| $\|T_3\rangle^{\otimes m}$                  | 3 | 3     | $\le 8$   | $\le 9$ |
-
-Bold entries are tight values established by this library / paper;
-the $T_3$ entries are due to [Kocia 2020](https://arxiv.org/abs/2012.11739).
+> **https://unitaryfoundation.github.io/stabrank/#soa**
 
 ## Installation
 
