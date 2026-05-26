@@ -42,6 +42,11 @@ uv venv
 uv pip install -e .</code></pre>
 
       <h3 class="t">Quickstart</h3>
+      <p class="section-lede">
+        A two-term decomposition of
+        <span class="math">|&Sopf;&rang;<sup>&otimes;2</sup></span>
+        via the simulated-annealing engine.
+      </p>
 <pre><code>import numpy as np
 from stabrank.target_functions import qutrit_strange_state
 from stabrank.stabrank_core import run_sa_pauli_expansion
@@ -62,7 +67,9 @@ _, basis, coeffs, residual, *_ = run_sa_pauli_expansion(
     initial_basis=initial_basis,
     num_chains=16,
     early_exit_threshold=1e-12,
-)</code></pre>
+)
+
+print(f"|S>^2 &asymp; sum of {chi} stabilizer states, residual = {residual:.2e}")</code></pre>
     </section>
 
     <section id="soa" class="section">
