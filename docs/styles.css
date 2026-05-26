@@ -1,0 +1,288 @@
+/*
+  stabrank landing page.
+
+  Palette: warm-dark Boards-of-Canada-ish background, amber and gold
+  on cream. Modeled on the BoC "Inferno" / Hexagon Sun palette.
+*/
+
+:root {
+  --bg: #100804;          /* very dark warm: near-black with a brown bias */
+  --bg-alt: #1a0e08;
+  --surface: #221408;
+  --border: #3d2818;
+  --text: #f4ede2;        /* warm cream */
+  --text-muted: #a89578;  /* warm tan-gray */
+  --primary: #f5a523;     /* BoC amber */
+  --primary-soft: #f5a52322;
+  --accent: #facc15;      /* BoC gold */
+  --danger: #c2351a;      /* warm vintage red */
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+/*
+  Type: matches boardsofcanada.com - ITC Avant Garde Gothic Pro at
+  light weights (300/400) with tight (negative) letter-spacing.
+  Jost is the closest free Google Font in the Avant Garde Gothic
+  family; system Century Gothic and Apple Gothic are reasonable
+  fallbacks for the BoC-faithful geometric-sans glyphs.
+*/
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Jost", "ITC Avant Garde Gothic",
+               "Century Gothic", CenturyGothic, AppleGothic,
+               -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+}
+
+a { color: var(--primary); text-decoration: none; transition: color .15s; }
+a:hover { color: var(--accent); }
+
+header.site,
+footer.site {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 1.75rem 1.5rem;
+}
+
+header.site {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+footer.site {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+footer.site a { color: var(--text-muted); border-bottom: 1px dotted var(--text-muted); }
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text);
+}
+
+.brand-mark { width: 44px; height: 44px; display: block; }
+.brand-name {
+  font-size: 1.35rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+  color: var(--primary);
+  line-height: 1;
+}
+
+main {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.hero {
+  padding: 3rem 0 2.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero h1 {
+  font-size: clamp(1.85rem, 4vw + 0.5rem, 2.85rem);
+  line-height: 1.1;
+  margin: 0 0 1rem 0;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+
+.lede {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  max-width: 700px;
+  margin: 0 0 1.75rem 0;
+}
+.lede code { color: var(--primary); }
+
+.hero-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+.btn {
+  display: inline-block;
+  padding: 0.55rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  transition: all .15s;
+}
+.btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.btn.primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #1a0d04;
+  font-weight: 600;
+}
+.btn.primary:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #1a0d04;
+}
+
+.section {
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.section h2 {
+  font-size: 1.65rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  color: var(--text);
+}
+
+.section h3.t {
+  font-size: 0.78rem;
+  margin: 1.75rem 0 0.75rem 0;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.section-lede {
+  color: var(--text-muted);
+  max-width: 760px;
+  margin: 0.25rem 0 1.25rem 0;
+  font-size: 0.97rem;
+}
+
+.table-wrap { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+thead th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  padding: 0.55rem 0.7rem;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+tbody th {
+  text-align: left;
+  font-weight: 600;
+  padding: 0.6rem 0.7rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--primary);
+}
+tbody td {
+  padding: 0.6rem 0.7rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+tbody tr:last-child th,
+tbody tr:last-child td { border-bottom: none; }
+tbody td b {
+  color: #1a0d04;
+  background: var(--primary);
+  padding: 0.05rem 0.4rem;
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+a.cite {
+  display: inline;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  border-bottom: 1px dotted transparent;
+  margin-left: 0.1em;
+}
+a.cite:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+.src-key {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 0.75rem;
+}
+
+ol.references {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: ref;
+}
+ol.references li {
+  counter-increment: ref;
+  padding: 0.6rem 0 0.6rem 2.2rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+ol.references li::before {
+  content: "[" counter(ref) "]";
+  position: absolute;
+  left: 0;
+  top: 0.6rem;
+  color: var(--primary);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+ol.references li:last-child { border-bottom: none; }
+ol.references li:target {
+  background: var(--primary-soft);
+  border-radius: 4px;
+}
+ol.references li i { color: var(--text); }
+ol.references li a {
+  color: var(--text-muted);
+  border-bottom: 1px dotted var(--text-muted);
+}
+ol.references li a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+pre {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0.75rem 0 1rem 0;
+}
+pre code {
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono",
+               Menlo, Consolas, monospace;
+  color: var(--text);
+}
+code { font-family: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Consolas, monospace; }
+
+.math {
+  font-family: "iA Writer Quattro", "Charter", Georgia, serif;
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
+
+@media (max-width: 640px) {
+  header.site { flex-direction: column; align-items: flex-start; }
+}

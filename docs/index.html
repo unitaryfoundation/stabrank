@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>stabrank &mdash; tools for stabilizer-rank bounds on magic states</title>
+  <meta name="description" content="Open-source Python tools for computing, certifying, and formalizing stabilizer-rank decompositions of quantum magic states.">
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site">
+    <a class="brand" href="#top" aria-label="stabrank home">
+      <img src="logo.svg" alt="" class="brand-mark">
+      <span class="brand-name">stabrank</span>
+    </a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <h1>Tools for stabilizer-rank bounds on magic states.</h1>
+      <p class="lede">
+        <code>stabrank</code> is an open-source Python library for
+        the simulated-annealing search, exhaustive certification,
+        and Lean&nbsp;4 formal verification of stabilizer-rank
+        decompositions of quantum magic states.
+      </p>
+      <div class="hero-actions">
+        <a class="btn primary" href="https://github.com/unitaryfoundation/stabrank">Code</a>
+        <a class="btn" href="#cite">Cite</a>
+      </div>
+    </section>
+
+    <section id="install" class="section">
+      <h2>Install</h2>
+<pre><code>git clone https://github.com/unitaryfoundation/stabrank.git
+cd stabrank
+uv venv
+uv pip install -e .</code></pre>
+
+      <h3 class="t">Quickstart</h3>
+<pre><code>import numpy as np
+from stabrank.target_functions import qutrit_strange_state
+from stabrank.stabrank_core import run_sa_pauli_expansion
+
+target = qutrit_strange_state(2)              # 9-dim |S>^2
+n, p, chi = 2, 3, 2
+
+initial_basis = [
+    np.ones(p**n, dtype=complex) / np.sqrt(p**n)
+    for _ in range(chi)
+]
+
+_, basis, coeffs, residual, *_ = run_sa_pauli_expansion(
+    target=target,
+    n_orig=n,
+    p_prime=p,
+    k_subset_size=chi,
+    initial_basis=initial_basis,
+    num_chains=16,
+    early_exit_threshold=1e-12,
+)</code></pre>
+    </section>
+
+    <section id="soa" class="section">
+      <h2>State of the art</h2>
+      <p class="section-lede">
+        Best known exact-rank upper bounds on
+        <span class="math">&chi;<sub>R</sub>(|M&rang;<sup>&otimes;m</sup>)</span>.
+        Bold cells are tight (equality); other cells are upper bounds.
+      </p>
+
+      <h3 class="t">Qubit <span class="math">H</span>-type orbit</h3>
+      <p class="section-lede">
+        Phase-state representative
+        <span class="math">|T&rang; = (|0&rang; + e<sup>i&pi;/4</sup>|1&rang;)/&radic;2</span>,
+        Clifford-equivalent to
+        <span class="math">cos(&pi;/8)|0&rang; + sin(&pi;/8)|1&rang;</span>
+        (edge center of the stabilizer octahedron).
+        The cells below are the standard literature values for the
+        &ldquo;qubit&nbsp;<i>T</i>-state&rdquo; in the
+        magic-state-distillation sense.
+      </p>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th><span class="math">m</span></th>
+            <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
+            <th>6</th><th>7</th><th>8</th>
+            <th>asymptotic</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><span class="math">&chi;<sub>R</sub>(T<sup>&otimes;m</sup>) &le;</span></th>
+            <td><b>2</b></td>
+            <td><b>2</b> <a class="cite" href="#ref-1">[1]</a></td>
+            <td><b>3</b> <a class="cite" href="#ref-1">[1]</a></td>
+            <td><b>4</b> <a class="cite" href="#ref-6">[6]</a></td>
+            <td>6 <a class="cite" href="#ref-1">[1]</a></td>
+            <td>6 <a class="cite" href="#ref-2">[2]</a></td>
+            <td>12 <a class="cite" href="#ref-2">[2]</a></td>
+            <td>12 <a class="cite" href="#ref-2">[2]</a></td>
+            <td>2<sup>&alpha;m</sup>, &alpha; = log<sub>2</sub>(3)/4 &asymp; 0.3963 <a class="cite" href="#ref-2">[2]</a></td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="math">&chi;<sub>R</sub>(T<sup>&otimes;m</sup>) &ge;</span></th>
+            <td><b>2</b></td>
+            <td><b>2</b> <a class="cite" href="#ref-2">[2]</a></td>
+            <td><b>3</b> <a class="cite" href="#ref-2">[2]</a></td>
+            <td><b>4</b> <a class="cite" href="#ref-6">[6]</a></td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td>m / 100 <a class="cite" href="#ref-7">[7]</a></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="t">Qubit Bravyi&ndash;Kitaev <span class="math">T</span>-type orbit</h3>
+      <p class="section-lede">
+        BK&nbsp;<i>T</i>-type representative
+        <span class="math">|T&rang; = cos&beta;&thinsp;|0&rang; + e<sup>i&pi;/4</sup>&thinsp;sin&beta;&thinsp;|1&rang;</span>,
+        <span class="math">cos(2&beta;) = 1/&radic;3</span>
+        (face center of the stabilizer octahedron, Bloch vector
+        (1,1,1)/&radic;3). Distinct from the
+        <i>H</i>-type orbit above.
+      </p>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th><span class="math">m</span></th>
+            <th>1</th><th>2</th><th>3</th><th>4</th>
+            <th>asymptotic <span class="math">&gamma; &le;</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><span class="math">&chi;<sub>R</sub>(T<sup>&otimes;m</sup>) &le;</span></th>
+            <td><b>2</b></td>
+            <td><b>2</b> <a class="cite" href="#ref-6">[6]</a></td>
+            <td><b>3</b> <a class="cite" href="#ref-6">[6]</a></td>
+            <td>&le;3 <a class="cite" href="#ref-6">[6]</a></td>
+            <td>log<sub>2</sub>(3)/4 &asymp; 0.3963 <a class="cite" href="#ref-6">[6]</a></td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="math">&chi;<sub>R</sub>(T<sup>&otimes;m</sup>) &ge;</span></th>
+            <td><b>2</b></td>
+            <td><b>2</b> <a class="cite" href="#ref-6">[6]</a></td>
+            <td><b>3</b> <a class="cite" href="#ref-6">[6]</a></td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="t">Qutrits</h3>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>orbit</th>
+            <th><span class="math">m</span>&thinsp;=&thinsp;1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>asymptotic <span class="math">&gamma; &le;</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Strange</th>
+            <td><b>2</b></td>
+            <td><b>2</b> <a class="cite" href="#ref-6">[6]</a></td>
+            <td><b>4</b> <a class="cite" href="#ref-6">[6]</a></td>
+            <td>&le;4 <a class="cite" href="#ref-6">[6]</a></td>
+            <td>log<sub>3</sub>(2)/2 &asymp; 0.316 <a class="cite" href="#ref-6">[6]</a></td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="math">H<sub>3</sub></span></th>
+            <td><b>2</b></td>
+            <td><b>3</b> <a class="cite" href="#ref-6">[6]</a></td>
+            <td><b>4</b> <a class="cite" href="#ref-6">[6]</a></td>
+            <td>&le;8 <a class="cite" href="#ref-6">[6]</a></td>
+            <td>log<sub>3</sub>(4)/3 &asymp; 0.421 <a class="cite" href="#ref-6">[6]</a></td>
+          </tr>
+          <tr>
+            <th scope="row">Norrell</th>
+            <td><b>2</b></td>
+            <td><b>3</b> <a class="cite" href="#ref-6">[6]</a></td>
+            <td><b>4</b> <a class="cite" href="#ref-6">[6]</a></td>
+            <td>&le;7 <a class="cite" href="#ref-6">[6]</a></td>
+            <td>log<sub>3</sub>(4)/3 &asymp; 0.421 <a class="cite" href="#ref-6">[6]</a></td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="math">T<sub>3</sub></span></th>
+            <td><b>3</b></td>
+            <td>3 <a class="cite" href="#ref-3">[3]</a></td>
+            <td>&le;8 <a class="cite" href="#ref-3">[3]</a></td>
+            <td>&le;9</td>
+            <td>1/2 <a class="cite" href="#ref-3">[3]</a></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <section id="references" class="section">
+      <h2>References</h2>
+      <p class="section-lede">
+        <a href="refs.bib">refs.bib</a> &middot; download the canonical BibTeX.
+      </p>
+      <ol class="references">
+        <li id="ref-1">
+          Bravyi, S., Smith, G., Smolin, J. A.
+          <i>Trading classical and quantum computational resources.</i>
+          Phys. Rev. X <b>6</b>, 021043 (2016).
+          <a href="https://arxiv.org/abs/1506.01396">arXiv:1506.01396</a>
+          &middot;
+          <a href="https://doi.org/10.1103/PhysRevX.6.021043">DOI</a>
+        </li>
+        <li id="ref-2">
+          Qassim, H., Pashayan, H., Gosset, D.
+          <i>Improved upper bounds on the stabilizer rank of magic states.</i>
+          Quantum <b>5</b>, 606 (2021).
+          <a href="https://arxiv.org/abs/2106.07740">arXiv:2106.07740</a>
+          &middot;
+          <a href="https://doi.org/10.22331/q-2021-12-20-606">DOI</a>
+        </li>
+        <li id="ref-3">
+          Kocia, L., Sarovar, M.
+          <i>Improved simulation of quantum circuits by fewer Gaussian eliminations.</i>
+          Phys. Rev. A <b>103</b>, 022603 (2021).
+          <a href="https://arxiv.org/abs/2003.01130">arXiv:2003.01130</a>
+          &middot;
+          <a href="https://doi.org/10.1103/PhysRevA.103.022603">DOI</a>
+        </li>
+        <li id="ref-4">
+          Labib, F.
+          <i>Stabilizer rank and higher-order Fourier analysis.</i>
+          Quantum <b>6</b>, 645 (2022).
+          <a href="https://arxiv.org/abs/2107.10551">arXiv:2107.10551</a>
+          &middot;
+          <a href="https://doi.org/10.22331/q-2022-02-09-645">DOI</a>
+        </li>
+        <li id="ref-5">
+          Jain, A., Prakash, S.
+          <i>Qutrit and ququint magic states.</i>
+          Phys. Rev. A <b>102</b>, 042409 (2020).
+          <a href="https://arxiv.org/abs/2003.07164">arXiv:2003.07164</a>
+          &middot;
+          <a href="https://doi.org/10.1103/PhysRevA.102.042409">DOI</a>
+        </li>
+        <li id="ref-6">
+          Labib, F., Russo, V.
+          <i>Stabilizer-rank bounds for qutrit magic-state orbits.</i>
+          (2026).
+          arXiv preprint, eprint <i>TBA</i>.
+        </li>
+        <li id="ref-7">
+          Peleg, S., Shpilka, A., Volk, B. L.
+          <i>Lower bounds on stabilizer rank.</i>
+          Quantum <b>6</b>, 652 (2022).
+          <a href="https://arxiv.org/abs/2106.03214">arXiv:2106.03214</a>
+          &middot;
+          <a href="https://doi.org/10.22331/q-2022-02-15-652">DOI</a>
+        </li>
+      </ol>
+    </section>
+
+    <section id="cite" class="section">
+      <h2>Cite the tool</h2>
+<pre><code>@software{stabrank,
+  author  = {Labib, Farrokh and Russo, Vincent},
+  title   = {stabrank: tools for stabilizer-rank bounds on magic states},
+  year    = {2026},
+  url     = {https://github.com/unitaryfoundation/stabrank},
+}</code></pre>
+    </section>
+  </main>
+
+  <footer class="site">
+    <p>
+      stabrank is developed at
+      <a href="https://unitary.foundation">Unitary Foundation</a>.
+      Code under
+      <a href="https://github.com/unitaryfoundation/stabrank/blob/main/LICENSE">Apache 2.0</a>.
+    </p>
+  </footer>
+</body>
+</html>
