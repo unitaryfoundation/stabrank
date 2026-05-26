@@ -1,0 +1,68 @@
+{
+  "m": 6,
+  "k_code": 1,
+  "n_eff": 5,
+  "d": 3,
+  "dim": 243,
+  "timestamp": "2026-04-29T10:55:14.578989+00:00",
+  "mana": {
+    "wigner_l1": 11.222222222222243,
+    "mana": 2.2008637300392397,
+    "chi_lower_bound": 4,
+    "time_seconds": 56.19
+  },
+  "fidelity": {
+    "f_max": 0.13717421124828613,
+    "chi_lower_bound": 8,
+    "total_states": 10637618544,
+    "time_seconds": 7725.94,
+    "per_k": [
+      {
+        "k": 0,
+        "f_max": 0.0041152263374485635,
+        "chi_lower_bound": 243,
+        "states_checked": 243
+      },
+      {
+        "k": 1,
+        "f_max": 0.012345679012345692,
+        "chi_lower_bound": 81,
+        "states_checked": 295245
+      },
+      {
+        "k": 2,
+        "f_max": 0.03703703703703707,
+        "chi_lower_bound": 27,
+        "states_checked": 47829690
+      },
+      {
+        "k": 3,
+        "f_max": 0.11111111111111123,
+        "chi_lower_bound": 9,
+        "states_checked": 1291401630
+      },
+      {
+        "k": 4,
+        "f_max": 0.10288065843621431,
+        "chi_lower_bound": 10,
+        "states_checked": 5811307335
+      },
+      {
+        "k": 5,
+        "f_max": 0.13717421124828613,
+        "chi_lower_bound": 8,
+        "states_checked": 3486784401
+      }
+    ]
+  },
+  "summary": {
+    "best_lower_bound": 8,
+    "effective_rank_lb": 24,
+    "gamma": 0.473197,
+    "best_k": 5,
+    "sa_recommended": {
+      "fixed_dimension": 5,
+      "min_chi": 8
+    }
+  }
+}

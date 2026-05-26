@@ -1,0 +1,51 @@
+[build-system]
+requires = ["scikit-build-core>=0.4.3", "nanobind>=1.3.2"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "stabrank"
+version = "0.1.0"
+authors = [{name = "Farrokh Labib"}]
+description = "A package for computing stabilizer rank decompositions of quantum states"
+readme = "README.md"
+requires-python = ">=3.12,<3.15"
+license = {text = "Apache License 2.0"}
+keywords = ["quantum", "stabilizer", "rank", "decomposition"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+    "numpy>=1.26,<3",
+    "numba>=0.62,<0.63; python_version < '3.13'",
+    "numba>=0.65,<1; python_version >= '3.13'",
+    "scipy>=1.11,<2",
+    "sympy>=1.12,<2",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/unitaryfoundation/stabrank"
+Repository = "https://github.com/unitaryfoundation/stabrank"
+
+[tool.scikit-build]
+minimum-version = "0.4"
+wheel.packages = ["stabrank"]
+
+[tool.ruff.lint.per-file-ignores]
+# Research and example scripts use math-conventional single-letter
+# loop indices and short lambda definitions that mirror the paper's
+# Q-polynomial notation, and may keep partially-applied tuning
+# configurations for documentation purposes; they are not part of
+# the maintained library surface area.
+"scripts/**/*.py" = ["E741", "E731"]
+"stabrank/examples/**/*.py" = ["E741", "F841", "E731"]

@@ -1,0 +1,18 @@
+build/
+.venv/
+.venv-*/
+.pytest_cache/
+__pycache__/
+
+# OS noise
+.DS_Store
+
+# Local SA solution scratch (research artifacts not for the repo).
+# Tracked paper-supplementary npz files live under paper/solutions/ and
+# are committed explicitly.
+/solution_*.npz
+
+# LaTeX scratch from invoking pdflatex outside paper/. The paper itself
+# has its own .gitignore covering main.* products.
+texput.log
+.claude/

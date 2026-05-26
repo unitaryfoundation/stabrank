@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -eu
+
+repo_root="$(git rev-parse --show-toplevel)"
+
+printf '%s\n' 'Running test suite before commit...'
+
+exec "$repo_root/scripts/run-tests.sh"

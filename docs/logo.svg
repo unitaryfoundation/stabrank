@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  stabrank logo v6.
+
+  A 3D rendering of the qubit stabilizer polytope - the octahedron
+  with vertices at ±X, ±Y, ±Z in Bloch coordinates - viewed in
+  3/4 perspective so the octahedral shape reads as a solid rather
+  than a flat silhouette:
+
+    * 4 of the 6 vertices (±X, ±Y here) form the rhombic convex hull
+      in this view.
+    * The remaining 2 vertices (±Z) sit inside the hull, one in front
+      and one behind.
+    * Front-face edges (to +Z) are drawn solid; back-face edges
+      (to -Z) are dashed.
+    * The 6 corner dots mark the 6 single-qubit stabilizer states.
+
+  Palette is BoC amber on a transparent ground, with the warm-red
+  chromatic-glow filter.
+-->
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="-80 -80 160 160"
+     role="img" aria-label="stabrank">
+  <title>stabrank</title>
+  <defs>
+    <filter id="bocglow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur"/>
+      <feFlood flood-color="#c2351a" flood-opacity="0.9" result="red"/>
+      <feComposite in="red" in2="blur" operator="in" result="redGlow"/>
+      <feMerge>
+        <feMergeNode in="redGlow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g filter="url(#bocglow)"
+     stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- silhouette: rhombus formed by ±X, ±Y projections.
+         Faint amber wash hints at the polytope's volume. -->
+    <polygon points="67.6,-7.7 0,-63.4 -67.6,7.7 0,63.4"
+             fill="#f5a523" fill-opacity="0.08"
+             stroke="#f5a523" stroke-width="4.5"/>
+
+    <!-- back-facing edges (to the rear -Z vertex, dashed) -->
+    <g stroke="#f5a523" stroke-width="2" stroke-dasharray="4 3"
+       stroke-opacity="0.55" fill="none">
+      <line x1="-18.1" y1="-28.6" x2="0"     y2="-63.4"/>
+      <line x1="-18.1" y1="-28.6" x2="67.6"  y2="-7.7"/>
+      <line x1="-18.1" y1="-28.6" x2="0"     y2="63.4"/>
+      <line x1="-18.1" y1="-28.6" x2="-67.6" y2="7.7"/>
+    </g>
+
+    <!-- front-facing edges (to the front +Z vertex, solid) -->
+    <g stroke="#f5a523" stroke-width="2.5" fill="none">
+      <line x1="18.1" y1="28.6" x2="0"     y2="-63.4"/>
+      <line x1="18.1" y1="28.6" x2="67.6"  y2="-7.7"/>
+      <line x1="18.1" y1="28.6" x2="0"     y2="63.4"/>
+      <line x1="18.1" y1="28.6" x2="-67.6" y2="7.7"/>
+    </g>
+
+    <!-- the 6 single-qubit stabilizer states at the polytope vertices -->
+    <circle cx="0"      cy="-63.4" r="5" fill="#f5a523"/>
+    <circle cx="67.6"   cy="-7.7"  r="5" fill="#f5a523"/>
+    <circle cx="0"      cy="63.4"  r="5" fill="#f5a523"/>
+    <circle cx="-67.6"  cy="7.7"   r="5" fill="#f5a523"/>
+    <circle cx="18.1"   cy="28.6"  r="5" fill="#f5a523"/>
+    <circle cx="-18.1"  cy="-28.6" r="5" fill="#f5a523"/>
+  </g>
+</svg>

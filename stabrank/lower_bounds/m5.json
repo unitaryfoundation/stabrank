@@ -1,0 +1,62 @@
+{
+  "m": 5,
+  "k_code": 1,
+  "n_eff": 4,
+  "d": 3,
+  "dim": 81,
+  "timestamp": "2026-04-29T08:44:24.778757+00:00",
+  "mana": {
+    "wigner_l1": 6.555555555555555,
+    "mana": 1.7115345294827133,
+    "chi_lower_bound": 3,
+    "time_seconds": 2.08
+  },
+  "fidelity": {
+    "f_max": 0.1975308641975312,
+    "chi_lower_bound": 6,
+    "total_states": 12249468,
+    "time_seconds": 5.0,
+    "per_k": [
+      {
+        "k": 0,
+        "f_max": 0.012345679012345678,
+        "chi_lower_bound": 81,
+        "states_checked": 81
+      },
+      {
+        "k": 1,
+        "f_max": 0.03703703703703705,
+        "chi_lower_bound": 27,
+        "states_checked": 26244
+      },
+      {
+        "k": 2,
+        "f_max": 0.11111111111111113,
+        "chi_lower_bound": 9,
+        "states_checked": 1062882
+      },
+      {
+        "k": 3,
+        "f_max": 0.14814814814814828,
+        "chi_lower_bound": 7,
+        "states_checked": 6377292
+      },
+      {
+        "k": 4,
+        "f_max": 0.1975308641975312,
+        "chi_lower_bound": 6,
+        "states_checked": 4782969
+      }
+    ]
+  },
+  "summary": {
+    "best_lower_bound": 6,
+    "effective_rank_lb": 18,
+    "gamma": 0.543643,
+    "best_k": 4,
+    "sa_recommended": {
+      "fixed_dimension": 4,
+      "min_chi": 6
+    }
+  }
+}
