@@ -212,10 +212,12 @@ tbody td b {
 
 a.cite {
   display: inline;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   color: var(--text-muted);
   border-bottom: 1px dotted transparent;
-  margin-left: 0.1em;
+  margin-left: 0.15em;
+  vertical-align: super;
+  line-height: 0;
 }
 a.cite:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
