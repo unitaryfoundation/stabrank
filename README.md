@@ -117,9 +117,9 @@ print(f"|S>^2 ≈ sum of {chi} stabilizer states, residual = {residual:.2e}")
 ```
 
 For more involved workflows — the Norrell $m = 4$ decomposition, the
-exhaustive $k$-triple search at $m = 3$, the gadget existence check on
-$\mathrm{Sp}(4, \mathbb F_3)$ — see the companion scripts under
-`scripts/research/orbit_paper/`.
+exhaustive $k$-triple search at $m = 3$, and the gadget existence check
+on $\mathrm{Sp}(4, \mathbb F_3)$ — see the public API surface in the
+`stabrank` package and the test suite under `tests/`.
 
 ## Citation
 
