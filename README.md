@@ -71,9 +71,23 @@ the $T_3$ entries are due to [Kocia 2020](https://arxiv.org/abs/2012.11739).
 
 ## Installation
 
-stabrank requires Python 3.12–3.14. The C++ core is compiled at install
-time via [scikit-build-core](https://scikit-build-core.readthedocs.io/)
-and [nanobind](https://nanobind.readthedocs.io/).
+stabrank requires Python 3.12–3.14. Pre-built wheels are published on
+PyPI for Linux, macOS, and Windows:
+
+```bash
+pip install stabrank
+```
+
+Or with [uv](https://docs.astral.sh/uv/):
+
+```bash
+uv pip install stabrank
+```
+
+To build from source (e.g.\ for development), clone the repo and
+install in editable mode; the C++ core is compiled at install time via
+[scikit-build-core](https://scikit-build-core.readthedocs.io/) and
+[nanobind](https://nanobind.readthedocs.io/):
 
 ```bash
 git clone https://github.com/unitaryfoundation/stabrank.git

@@ -5,19 +5,33 @@ build-backend = "scikit_build_core.build"
 [project]
 name = "stabrank"
 version = "0.1.0"
-authors = [{name = "Farrokh Labib"}]
-description = "A package for computing stabilizer rank decompositions of quantum states"
+authors = [
+    {name = "Farrokh Labib"},
+    {name = "Vincent Russo"},
+]
+description = "Tools for stabilizer-rank bounds on quantum magic states."
 readme = "README.md"
 requires-python = ">=3.12,<3.15"
 license = {text = "Apache License 2.0"}
-keywords = ["quantum", "stabilizer", "rank", "decomposition"]
+keywords = [
+    "quantum",
+    "quantum-computing",
+    "stabilizer",
+    "stabilizer-rank",
+    "magic-states",
+    "classical-simulation",
+]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
+    "Programming Language :: C++",
     "Topic :: Scientific/Engineering :: Physics",
 ]
 dependencies = [
@@ -34,8 +48,9 @@ test = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/unitaryfoundation/stabrank"
-Repository = "https://github.com/unitaryfoundation/stabrank"
+Homepage = "https://unitaryfoundation.github.io/stabrank/"
+Source = "https://github.com/unitaryfoundation/stabrank"
+Issues = "https://github.com/unitaryfoundation/stabrank/issues"
 
 [tool.scikit-build]
 minimum-version = "0.4"
