@@ -17,7 +17,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, macos-13, windows-latest]
+        # macos-latest = Apple Silicon. macos-13 (Intel) is end-of-lifed
+        # by GitHub Actions and has multi-hour queue waits; Intel-mac
+        # users can install from sdist (`pip install stabrank` builds
+        # the C++ kernel locally given Xcode CLI tools).
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
       - name: Check out repository
