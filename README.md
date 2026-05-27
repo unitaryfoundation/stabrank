@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/logo.svg" alt="stabrank" width="180">
+  <img src="https://raw.githubusercontent.com/unitaryfoundation/stabrank/main/docs/logo.svg" alt="stabrank" width="180">
 </p>
 
 <h1 align="center">stabrank</h1>
