@@ -112,7 +112,7 @@ print(f"|S>^2 &asymp; sum of {chi} stabilizer states, residual = {residual:.2e}"
             <td>6 <a class="cite" href="#ref-2">[2]</a></td>
             <td>12 <a class="cite" href="#ref-2">[2]</a></td>
             <td>12 <a class="cite" href="#ref-2">[2]</a></td>
-            <td>2<sup>&alpha;m</sup>, &alpha; = log<sub>2</sub>(3)/4 &asymp; 0.3963 <a class="cite" href="#ref-2">[2]</a></td>
+            <td>2<sup>&alpha;m</sup>, &alpha; = log<sub>2</sub>(3)/4 &asymp; 0.3963 <a class="cite" href="#ref-2">[2]</a><a class="cite" href="#ref-8">[8]</a></td>
           </tr>
           <tr>
             <th scope="row"><span class="math">&chi;<sub>R</sub>(T<sup>&otimes;m</sup>) &ge;</span></th>
@@ -276,6 +276,20 @@ print(f"|S>^2 &asymp; sum of {chi} stabilizer states, residual = {residual:.2e}"
           <a href="https://arxiv.org/abs/2106.03214">arXiv:2106.03214</a>
           &middot;
           <a href="https://doi.org/10.22331/q-2022-02-15-652">DOI</a>
+        </li>
+        <li id="ref-8">
+          Kissinger, A., van de Wetering, J., Vilmart, R.
+          <i>Classical simulation of quantum circuits with partial and graphical stabiliser decompositions.</i>
+          TQC 2022, LIPIcs <b>232</b>, 5:1&ndash;5:13.
+          <a href="https://arxiv.org/abs/2202.09202">arXiv:2202.09202</a>
+          &middot;
+          <a href="https://doi.org/10.4230/LIPIcs.TQC.2022.5">DOI</a>.
+          Sharpens the H-type bound to a finite-rate
+          <span class="math">&chi;<sub>R</sub>(H<sup>&otimes;t</sup>) &le; (4/3)&middot;2<sup>0.3963&thinsp;t</sup></span>
+          via a partial-decomposition technique
+          (<span class="math">&#124;H&rang;<sup>&otimes;5</sup></span> &rarr; 3 terms, each retaining a single
+          <span class="math">&#124;H&rang;</span>; iterated to remove four
+          <span class="math">&#124;H&rang;</span>s at the cost of tripling terms).
         </li>
       </ol>
     </section>
