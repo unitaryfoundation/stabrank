@@ -11,6 +11,7 @@
 <p align="center">
   <a href="https://unitary.foundation"><img alt="Unitary Foundation" src="https://img.shields.io/badge/Supported%20By-Unitary%20Foundation-FFFF00.svg"></a>
   <a href="https://github.com/unitaryfoundation/stabrank/actions/workflows/tests.yml"><img alt="CI" src="https://github.com/unitaryfoundation/stabrank/actions/workflows/tests.yml/badge.svg"></a>
+ <a href="https://arxiv.org/abs/2605.28586"><img alt="arXiv" src="https://img.shields.io/badge/arXiv-2605.28586-<COLOR>.svg"></a>
   <a href="https://github.com/unitaryfoundation/stabrank/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/license-Apache--2.0-blue.svg"></a>
 </p>
 
@@ -131,14 +132,14 @@ on $\mathrm{Sp}(4, \mathbb F_3)$ — see the public API surface in the
 If you use stabrank in your work, please cite the arXiv preprint:
 
 ```bibtex
-@misc{labib2026stabilizer,
-      title={Stabilizer-rank bounds for qutrit magic-state orbits},
+@misc{labib2026stabilizerrankboundsmagicstate,
+      title={Stabilizer rank bounds for magic-state orbits}, 
       author={Farrokh Labib and Vincent Russo},
       year={2026},
-      eprint={TBA},
+      eprint={2605.28586},
       archivePrefix={arXiv},
       primaryClass={quant-ph},
-      url={https://arxiv.org/abs/TBA},
+      url={https://arxiv.org/abs/2605.28586}, 
 }
 ```
 
