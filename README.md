@@ -132,7 +132,7 @@ on $\mathrm{Sp}(4, \mathbb F_3)$ — see the public API surface in the
 If you use stabrank in your work, please cite the arXiv preprint:
 
 ```bibtex
-@misc{labib2026stabilizerrankboundsmagicstate,
+@misc{labib2026stabilizer,
       title={Stabilizer rank bounds for magic-state orbits}, 
       author={Farrokh Labib and Vincent Russo},
       year={2026},
