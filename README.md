@@ -152,6 +152,11 @@ This material is also based upon work supported by the U.S. Department
 of Energy, Office of Science, National Quantum Information Science
 Research Centers, Quantum Science Center.
 
+This work is partly supported by the European Union through the QLASS project (EU Horizon Europe
+grant agreement 101135876). Views and opinions expressed are however those of the authors only
+and do not necessarily reflect those of the European Union. Neither the European Union nor the
+granting authority can be held responsible for them.
+
 ## Development
 
 The test suite runs under `pytest`. `pytest` is declared as an
