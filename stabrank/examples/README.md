@@ -36,10 +36,6 @@ threshold, then prunes the least-significant basis function as far as the error
 allows before re-annealing at the smaller rank. Solutions are written to
 `solution_<target>_k<k>_n<n>_<timestamp>.npz`.
 
-## Other scripts
-
-`construct_t3_6.py` is a standalone construction script for the qutrit `T3,6` state.
-
 ## Notes
 
 - Every script seeds via `np.random` and prints the seed, so runs are reproducible
