@@ -253,9 +253,7 @@ def cs_ratio_bound_sdp(
 ) -> dict[str, float]:
     """Cauchy-Schwarz rank lower bound via SDP relaxation (cvxpy).
 
-    See stabrank.cs_ratio_sdp_mosek.cs_ratio_bound_mosek for the more
-    efficient direct-Fusion implementation. This cvxpy version is the
-    reference implementation used to verify m=1 results.
+    This cvxpy version is the reference implementation used to verify m=1 results.
 
     Lifts X = c c^* (Hermitian PSD, rank-1 dropped) of the QCQP
         min ||c||_1^2 / ||c||_2^2  s.t.  A c = psi.
