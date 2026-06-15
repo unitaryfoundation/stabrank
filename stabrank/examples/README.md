@@ -36,17 +36,7 @@ threshold, then prunes the least-significant basis function as far as the error
 allows before re-annealing at the smaller rank. Solutions are written to
 `solution_<target>_k<k>_n<n>_<timestamp>.npz`.
 
-## Sweep scripts
-
-These iterate searches over families of codes rather than a single state:
-
-| Script | What it sweeps |
-| --- | --- |
-| `sweep_code_states.py` | All systematic `[m, k]` qubit codes |
-| `sweep_qutrit_code_states.py` | All systematic `[m, k]` qutrit codes |
-| `sweep_qutrit_code_states_guided.py` | Qutrit code sweep with a guided start |
-| `sweep_qubit_lower_bounds.py` | Cauchy-Schwarz lower bounds over qubit codes |
-| `sweep_qutrit_lower_bounds.py` | Cauchy-Schwarz lower bounds over qutrit codes |
+## Other scripts
 
 `construct_t3_6.py` is a standalone construction script for the qutrit `T3,6` state.
 
