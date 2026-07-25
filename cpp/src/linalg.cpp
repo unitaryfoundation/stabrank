@@ -178,4 +178,99 @@ LeastSquaresResult least_squares_solve(
     return result;
 }
 
+IncrementalLeastSquares::IncrementalLeastSquares(
+    const ComplexVec& target,
+    int basis_size) {
+
+    const int rows = static_cast<int>(target.size());
+    matrix_ = Eigen::MatrixXcd::Zero(rows, basis_size);
+    target_.resize(rows);
+    for (int i = 0; i < rows; ++i) {
+        target_(i) = target[static_cast<size_t>(i)];
+    }
+    target_norm_ = target_.norm();
+    gram_ = Eigen::MatrixXcd::Zero(basis_size, basis_size);
+    proj_ = Eigen::VectorXcd::Zero(basis_size);
+}
+
+void IncrementalLeastSquares::set_column(
+    int column,
+    const ComplexVec& basis_func) {
+
+    for (int row = 0; row < matrix_.rows(); ++row) {
+        matrix_(row, column) = basis_func[static_cast<size_t>(row)];
+    }
+    const auto col = matrix_.col(column);
+    for (Eigen::Index j = 0; j < matrix_.cols(); ++j) {
+        // G(j, c) = a_j^H a_c; recomputed exactly from the current columns.
+        const std::complex<double> g = matrix_.col(j).dot(col);
+        gram_(j, column) = g;
+        gram_(column, j) = std::conj(g);
+    }
+    proj_(column) = col.dot(target_);
+}
+
+LeastSquaresResult IncrementalLeastSquares::solve(double rtol, double atol) {
+    const Eigen::Index m = matrix_.rows();
+    const Eigen::Index k = matrix_.cols();
+
+    if (k == 0) {
+        LeastSquaresResult result;
+        result.is_representable = (target_norm_ < atol);
+        result.reconstruction_error = target_norm_;
+        return result;
+    }
+
+    ldlt_.compute(gram_);
+
+    // The eigenvalues of G are the squared singular values of A, so the QR
+    // path's 1e-10 relative diagonal threshold corresponds to 1e-20 here.
+    // Use a more conservative 1e-14 (singular-value ratio ~1e-7): the Gram
+    // route loses accuracy earlier than QR, so marginal cases are routed to
+    // the guarded QR/SVD solver instead of risking a bad solve. That
+    // fallback also covers the underdetermined m < k case, where G is
+    // always singular.
+    constexpr double kGramRankTol = 1e-14;
+    const Eigen::VectorXd d = ldlt_.vectorD().real().cwiseAbs();
+    const double max_d = d.maxCoeff();
+    const double min_d = d.minCoeff();
+    const bool degenerate = (ldlt_.info() != Eigen::Success) ||
+        !(max_d > 0.0) || (m < k) || (min_d < kGramRankTol * max_d);
+
+    if (degenerate) {
+        LeastSquaresWorkspace workspace;
+        workspace.matrix = matrix_;
+        workspace.target = target_;
+        workspace.target_norm = target_norm_;
+        return least_squares_solve(workspace, rtol, atol);
+    }
+
+    solution_ = ldlt_.solve(proj_);
+
+    // r^2 = ||t||^2 - 2 Re(b^H x) + x^H G x, clamped against fp noise.
+    double r_sq = target_norm_ * target_norm_
+        - 2.0 * std::real(proj_.dot(solution_))
+        + std::real(solution_.dot(gram_ * solution_));
+    if (r_sq < 0.0) r_sq = 0.0;
+    double error = std::sqrt(r_sq);
+
+    // Below the cancellation floor of the subtraction above the estimate is
+    // meaningless; recompute explicitly so near-exact decompositions report
+    // machine-precision residuals just like the QR path does.
+    const double explicit_floor = 1e-6 * std::max(1.0, target_norm_);
+    if (error < explicit_floor) {
+        residual_scratch_ = target_ - matrix_ * solution_;
+        error = residual_scratch_.norm();
+    }
+
+    LeastSquaresResult result;
+    result.is_representable = (error <= atol + rtol * target_norm_);
+    result.reconstruction_error = error;
+    result.coeffs.resize(static_cast<size_t>(k));
+    for (Eigen::Index j = 0; j < k; ++j) {
+        result.coeffs[static_cast<size_t>(j)] = solution_(j);
+    }
+    return result;
+}
+
 }  // namespace stabrank
