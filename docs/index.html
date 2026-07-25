@@ -51,7 +51,8 @@ uv pip install -e .</code></pre>
 from stabrank.target_functions import qutrit_strange_state
 from stabrank.stabrank_core import run_sa_pauli_expansion
 
-target = qutrit_strange_state(2)              # 9-dim |S>^2
+# 9-dim |S>^2
+target = qutrit_strange_state(2)
 n, p, chi = 2, 3, 2
 
 initial_basis = [
@@ -70,6 +71,12 @@ _, basis, coeffs, residual, *_ = run_sa_pauli_expansion(
 )
 
 print(f"|S>^2 &asymp; sum of {chi} stabilizer states, residual = {residual:.2e}")</code></pre>
+      <p class="section-lede">
+        A successful search terminates at machine precision, well below
+        the <code>1e-12</code> early-exit threshold (the exact residual
+        varies with the seed):
+      </p>
+<pre><code class="nohighlight">|S>^2 &asymp; sum of 2 stabilizer states, residual = 1.88e-16</code></pre>
     </section>
 
     <section id="soa" class="section">

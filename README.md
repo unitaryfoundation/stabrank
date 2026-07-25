@@ -101,7 +101,8 @@ import numpy as np
 from stabrank.target_functions import qutrit_strange_state
 from stabrank.stabrank_core import run_sa_pauli_expansion
 
-target = qutrit_strange_state(2)              # 9-dim |S>^2
+# 9-dim |S>^2
+target = qutrit_strange_state(2)
 n, p, chi = 2, 3, 2
 
 initial_basis = [
@@ -120,6 +121,15 @@ _, basis, coeffs, residual, *_ = run_sa_pauli_expansion(
 )
 
 print(f"|S>^2 ≈ sum of {chi} stabilizer states, residual = {residual:.2e}")
+```
+
+The engine logs each annealing chain as it runs; the final line reports
+the best residual found. A successful search terminates at machine
+precision, well below the `1e-12` early-exit threshold (the exact value
+varies with the seed):
+
+```
+|S>^2 ≈ sum of 2 stabilizer states, residual = 1.88e-16
 ```
 
 For more involved workflows — the Norrell $m = 4$ decomposition, the
