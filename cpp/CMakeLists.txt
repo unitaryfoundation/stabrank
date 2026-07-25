@@ -54,6 +54,7 @@ if(BUILD_TESTING)
   # --- Catch2 tests ---
   add_executable(stabrank_tests
     tests/test_linalg.cpp
+    tests/test_incremental_lsq.cpp
     tests/test_polynomial.cpp
     tests/test_pauli.cpp
     tests/test_sa_engine.cpp

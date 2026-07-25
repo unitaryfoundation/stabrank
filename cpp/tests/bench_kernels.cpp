@@ -351,3 +351,35 @@ TEST_CASE("Least squares - workspace path mimicking SA inner loop") {
         };
     }
 }
+
+TEST_CASE("Least-squares proposal evaluation - qutrit n=6, k=7") {
+    const int n = 6, p = 3, k = 7;
+    const auto target = random_state(n, p, 99);
+    auto basis = random_basis(n, p, k, 100);
+    auto candidates = random_basis(n, p, 64, 200);
+
+    // Old hot path: rewrite one column, full Householder QR per proposal.
+    auto workspace = make_least_squares_workspace(target, k);
+    for (int j = 0; j < k; ++j) workspace.matrix.col(j) =
+        Eigen::Map<const Eigen::VectorXcd>(basis[static_cast<size_t>(j)].data(),
+                                           static_cast<Eigen::Index>(basis[static_cast<size_t>(j)].size()));
+    size_t cursor = 0;
+    BENCHMARK("full QR solve per proposal") {
+        set_least_squares_basis_column(
+            workspace, static_cast<int>(cursor % k),
+            candidates[cursor % candidates.size()]);
+        cursor++;
+        return least_squares_solve(workspace, 1e-5, 1e-8).reconstruction_error;
+    };
+
+    // New hot path: incremental Gram update + k x k solve.
+    IncrementalLeastSquares inc(target, k);
+    for (int j = 0; j < k; ++j) inc.set_column(j, basis[static_cast<size_t>(j)]);
+    size_t cursor2 = 0;
+    BENCHMARK("incremental Gram solve per proposal") {
+        inc.set_column(static_cast<int>(cursor2 % k),
+                       candidates[cursor2 % candidates.size()]);
+        cursor2++;
+        return inc.solve(1e-5, 1e-8).reconstruction_error;
+    };
+}

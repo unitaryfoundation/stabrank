@@ -59,12 +59,11 @@ static SAResult run_single_chain(
 
     // Initial state
     auto current_funcs = initial_basis;
-    auto ls_workspace = make_least_squares_workspace(target, k_subset_size);
+    IncrementalLeastSquares ls_workspace(target, k_subset_size);
     for (int idx = 0; idx < k_subset_size; ++idx) {
-        set_least_squares_basis_column(
-            ls_workspace, idx, current_funcs[static_cast<size_t>(idx)]);
+        ls_workspace.set_column(idx, current_funcs[static_cast<size_t>(idx)]);
     }
-    auto ls_result = least_squares_solve(ls_workspace, config.rtol, config.atol);
+    auto ls_result = ls_workspace.solve(config.rtol, config.atol);
     double current_error = ls_result.reconstruction_error;
     double current_cost = current_error;  // cost = error
 
@@ -145,8 +144,7 @@ static SAResult run_single_chain(
                 mutated_indices.push_back(idx);
                 previous_funcs.push_back(current_funcs[static_cast<size_t>(idx)]);
                 current_funcs[static_cast<size_t>(idx)] = std::move(new_func);
-                set_least_squares_basis_column(
-                    ls_workspace, idx, current_funcs[static_cast<size_t>(idx)]);
+                ls_workspace.set_column(idx, current_funcs[static_cast<size_t>(idx)]);
             };
 
             double rand_val = uniform_01(rng);
@@ -182,7 +180,7 @@ static SAResult run_single_chain(
             }
 
             // Evaluate
-            auto new_ls = least_squares_solve(ls_workspace, config.rtol, config.atol);
+            auto new_ls = ls_workspace.solve(config.rtol, config.atol);
             double new_error = new_ls.reconstruction_error;
             double new_cost = new_error;
 
@@ -204,8 +202,7 @@ static SAResult run_single_chain(
                 for (size_t i = 0; i < mutated_indices.size(); ++i) {
                     const int idx = mutated_indices[i];
                     current_funcs[static_cast<size_t>(idx)] = std::move(previous_funcs[i]);
-                    set_least_squares_basis_column(
-                        ls_workspace, idx, current_funcs[static_cast<size_t>(idx)]);
+                    ls_workspace.set_column(idx, current_funcs[static_cast<size_t>(idx)]);
                 }
             }
 
