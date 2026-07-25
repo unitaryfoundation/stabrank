@@ -50,6 +50,10 @@ target_include_directories(stabrank_core_lib PUBLIC
 
 target_link_libraries(stabrank_core_lib PUBLIC Eigen3::Eigen)
 
+if(STABRANK_NATIVE AND NOT MSVC)
+  target_compile_options(stabrank_core_lib PUBLIC -march=native)
+endif()
+
 if(BUILD_TESTING)
   # --- Catch2 tests ---
   add_executable(stabrank_tests
