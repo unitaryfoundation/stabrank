@@ -84,7 +84,13 @@ print(f"|S>^2 &asymp; sum of {chi} stabilizer states, residual = {residual:.2e}"
       <p class="section-lede">
         Best known exact-rank upper bounds on
         <span class="math">&chi;<sub>R</sub>(|M&rang;<sup>&otimes;m</sup>)</span>.
-        Bold cells are tight (equality); other cells are upper bounds.
+        Bold cells are tight (equality); other cells are one-sided
+        bounds. Tightness comes either from an exhaustive lower-bound
+        certificate or from projection monotonicity
+        (<span class="math">&chi;(|M&rang;<sup>&otimes;m</sup>) &ge;
+        &chi;(|M&rang;<sup>&otimes;m-1</sup>)</span>, by projecting one
+        factor onto a computational-basis state of nonzero overlap)
+        applied to a certified smaller-<span class="math">m</span> value.
       </p>
 
       <h3 class="t">Qubit <span class="math">H</span>-type orbit</h3>
@@ -127,10 +133,10 @@ print(f"|S>^2 &asymp; sum of {chi} stabilizer states, residual = {residual:.2e}"
             <td><b>2</b> <a class="cite" href="#ref-2">[2]</a></td>
             <td><b>3</b> <a class="cite" href="#ref-2">[2]</a></td>
             <td><b>4</b> <a class="cite" href="#ref-6">[6]</a></td>
-            <td>&mdash;</td>
-            <td>&mdash;</td>
-            <td>&mdash;</td>
-            <td>&mdash;</td>
+            <td>4 <a class="cite" href="#ref-6">[6]</a></td>
+            <td>4 <a class="cite" href="#ref-6">[6]</a></td>
+            <td>4 <a class="cite" href="#ref-6">[6]</a></td>
+            <td>4 <a class="cite" href="#ref-6">[6]</a></td>
             <td>m / 100 <a class="cite" href="#ref-7">[7]</a></td>
           </tr>
         </tbody>
@@ -161,7 +167,7 @@ print(f"|S>^2 &asymp; sum of {chi} stabilizer states, residual = {residual:.2e}"
             <td><b>2</b></td>
             <td><b>2</b> <a class="cite" href="#ref-6">[6]</a></td>
             <td><b>3</b> <a class="cite" href="#ref-6">[6]</a></td>
-            <td>&le;3 <a class="cite" href="#ref-6">[6]</a></td>
+            <td><b>3</b> <a class="cite" href="#ref-6">[6]</a></td>
             <td>log<sub>2</sub>(3)/4 &asymp; 0.3963 <a class="cite" href="#ref-6">[6]</a></td>
           </tr>
           <tr>
@@ -169,7 +175,7 @@ print(f"|S>^2 &asymp; sum of {chi} stabilizer states, residual = {residual:.2e}"
             <td><b>2</b></td>
             <td><b>2</b> <a class="cite" href="#ref-6">[6]</a></td>
             <td><b>3</b> <a class="cite" href="#ref-6">[6]</a></td>
-            <td>&mdash;</td>
+            <td><b>3</b> <a class="cite" href="#ref-6">[6]</a></td>
             <td>&mdash;</td>
           </tr>
         </tbody>
@@ -195,7 +201,7 @@ print(f"|S>^2 &asymp; sum of {chi} stabilizer states, residual = {residual:.2e}"
             <td><b>2</b></td>
             <td><b>2</b> <a class="cite" href="#ref-6">[6]</a></td>
             <td><b>4</b> <a class="cite" href="#ref-6">[6]</a></td>
-            <td>&le;4 <a class="cite" href="#ref-6">[6]</a></td>
+            <td><b>4</b> <a class="cite" href="#ref-6">[6]</a></td>
             <td>log<sub>3</sub>(2)/2 &asymp; 0.316 <a class="cite" href="#ref-6">[6]</a></td>
           </tr>
           <tr>
