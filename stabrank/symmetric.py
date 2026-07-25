@@ -27,8 +27,6 @@ within a period block. A periodicity audit runs periodically and on every
 accepted best; a violation raises rather than silently corrupting the ansatz.
 """
 
-from __future__ import annotations
-
 import dataclasses
 import math
 
