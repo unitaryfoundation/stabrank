@@ -36,7 +36,7 @@
 
     <section id="install" class="section">
       <h2>Install</h2>
-<pre><code>git clone https://github.com/unitaryfoundation/stabrank.git
+<pre><code class="language-bash">git clone https://github.com/unitaryfoundation/stabrank.git
 cd stabrank
 uv venv
 uv pip install -e .</code></pre>
@@ -47,7 +47,7 @@ uv pip install -e .</code></pre>
         <span class="math">|&Sopf;&rang;<sup>&otimes;2</sup></span>
         via the simulated-annealing engine.
       </p>
-<pre><code>import numpy as np
+<pre><code class="language-python">import numpy as np
 from stabrank.target_functions import qutrit_strange_state
 from stabrank.stabrank_core import run_sa_pauli_expansion
 
@@ -265,9 +265,9 @@ print(f"|S>^2 &asymp; sum of {chi} stabilizer states, residual = {residual:.2e}"
         </li>
         <li id="ref-6">
           Labib, F., Russo, V.
-          <i>Stabilizer-rank bounds for qutrit magic-state orbits.</i>
+          <i>Stabilizer rank bounds for magic-state orbits.</i>
           (2026).
-          arXiv preprint, eprint <i>TBA</i>.
+          <a href="https://arxiv.org/abs/2605.28586">arXiv:2605.28586</a>
         </li>
         <li id="ref-7">
           Peleg, S., Shpilka, A., Volk, B. L.
@@ -296,15 +296,14 @@ print(f"|S>^2 &asymp; sum of {chi} stabilizer states, residual = {residual:.2e}"
 
     <section id="cite" class="section">
       <h2>Cite the tool</h2>
-<pre><code>
-  @misc{labib2026stabilizer,
-      title={Stabilizer rank bounds for magic-state orbits}, 
-      author={Farrokh Labib and Vincent Russo},
-      year={2026},
-      eprint={2605.28586},
-      archivePrefix={arXiv},
-      primaryClass={quant-ph},
-      url={https://arxiv.org/abs/2605.28586}, 
+<pre><code class="nohighlight">@misc{labib2026stabilizer,
+  title={Stabilizer rank bounds for magic-state orbits},
+  author={Farrokh Labib and Vincent Russo},
+  year={2026},
+  eprint={2605.28586},
+  archivePrefix={arXiv},
+  primaryClass={quant-ph},
+  url={https://arxiv.org/abs/2605.28586},
 }</code></pre>
     </section>
   </main>
@@ -317,5 +316,8 @@ print(f"|S>^2 &asymp; sum of {chi} stabilizer states, residual = {residual:.2e}"
       <a href="https://github.com/unitaryfoundation/stabrank/blob/main/LICENSE">Apache 2.0</a>.
     </p>
   </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
 </body>
 </html>

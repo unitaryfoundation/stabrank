@@ -279,6 +279,21 @@ pre code {
 }
 code { font-family: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Consolas, monospace; }
 
+/*
+  Syntax highlighting (highlight.js). No stock theme is loaded;
+  token colors are defined here from the site palette so highlighted
+  code sits inside the existing pre/code surface styling.
+*/
+pre code.hljs { padding: 0; background: transparent; }
+.hljs-comment, .hljs-quote { color: var(--text-muted); font-style: italic; }
+.hljs-keyword, .hljs-selector-tag, .hljs-literal { color: var(--primary); }
+.hljs-string, .hljs-meta .hljs-string, .hljs-regexp { color: var(--accent); }
+.hljs-number, .hljs-symbol { color: #e2724c; }
+.hljs-title, .hljs-title.function_, .hljs-title.class_ { color: var(--text); font-weight: 500; }
+.hljs-built_in, .hljs-type { color: var(--accent); }
+.hljs-attr, .hljs-params, .hljs-variable, .hljs-operator, .hljs-punctuation { color: var(--text); }
+.hljs-meta { color: var(--text-muted); }
+
 .math {
   font-family: "iA Writer Quattro", "Charter", Georgia, serif;
   font-style: italic;

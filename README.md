@@ -11,7 +11,7 @@
 <p align="center">
   <a href="https://unitary.foundation"><img alt="Unitary Foundation" src="https://img.shields.io/badge/Supported%20By-Unitary%20Foundation-FFFF00.svg"></a>
   <a href="https://github.com/unitaryfoundation/stabrank/actions/workflows/tests.yml"><img alt="CI" src="https://github.com/unitaryfoundation/stabrank/actions/workflows/tests.yml/badge.svg"></a>
- <a href="https://arxiv.org/abs/2605.28586"><img alt="arXiv" src="https://img.shields.io/badge/arXiv-2605.28586-<COLOR>.svg"></a>
+  <a href="https://arxiv.org/abs/2605.28586"><img alt="arXiv" src="https://img.shields.io/badge/arXiv-2605.28586-b31b1b.svg"></a>
   <a href="https://github.com/unitaryfoundation/stabrank/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/license-Apache--2.0-blue.svg"></a>
 </p>
 
