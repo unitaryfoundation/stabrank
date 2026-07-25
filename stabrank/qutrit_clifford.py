@@ -6,8 +6,6 @@ Provides:
 - Gadget acceptance checking (unitarity, non-Clifford, correctable byproducts)
 """
 
-from __future__ import annotations
-
 from collections import deque
 from typing import Iterator
 
