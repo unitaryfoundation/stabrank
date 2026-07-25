@@ -5,6 +5,19 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+# scikit-build-core wheel builds set Release themselves, but a bare
+# `cmake -S . -B build` (the test/benchmark path) otherwise compiles
+# with no optimization at all, which badly misrepresents the SA kernels.
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
+endif()
+
+# Opt-in host-tuned codegen (AVX2/FMA etc. for Eigen's complex kernels).
+# Keep OFF for distributable wheels; turn ON for local source builds:
+#   cmake -DSTABRANK_NATIVE=ON ...
+#   SKBUILD_CMAKE_DEFINE="STABRANK_NATIVE=ON" uv pip install -e .
+option(STABRANK_NATIVE "Compile with -march=native" OFF)
+
 include(CTest)
 if(BUILD_TESTING)
   enable_testing()
