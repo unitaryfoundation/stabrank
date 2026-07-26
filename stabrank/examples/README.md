@@ -50,3 +50,12 @@ dependency) that an explicit 5-dimensional stabilizer span approximates
 the six-copy BK T-type state with residual exactly
 `sqrt(5(2 - sqrt(3))/24)`. Accompanies the conjecture on the project page
 that this is optimal, i.e. that `chi(|T>^6) = 6`.
+
+## `strange6_rank7_certificate.py`, `h3m4_rank6_certificate.py` — plateau certificates
+
+Standalone exact-arithmetic verifications (require `sympy`, not a package
+dependency) of the conjectured optimal low-rank approximation errors:
+every 7-element subset of the m = 2 Strange product basis approximates
+`|S>^6` at exactly `sqrt(8/27)`, and an explicit 6-dimensional span
+approximates `|H3>^4` at exactly `sqrt(70 - 37 sqrt(3))/12`. See the
+project page's conjecture table.
