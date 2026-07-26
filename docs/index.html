@@ -182,6 +182,26 @@ print(f"|S>^2 &asymp; sum of {chi} stabilizer states, residual = {residual:.2e}"
       </table>
       </div>
 
+      <h3 class="t">Conjecture: six copies of the BK <span class="math">T</span>-type state need rank 6</h3>
+      <p class="section-lede">
+        There is an explicit 5-dimensional stabilizer span whose
+        least-squares distance to
+        <span class="math">|T&rang;<sup>&otimes;6</sup></span> is exactly
+        <span class="math">&radic;(5(2&minus;&radic;3)/24) =
+        &radic;(5/6)&thinsp;sin(&pi;/12) &asymp; 0.2363</span>
+        (three cyclic shifts of the product state
+        <span class="math">|+i&rang;|+&rang;|0&rang;|+i&rang;|+&rang;|0&rang;</span>
+        together with two shift-related graph states on the complement of a
+        hexagon; verified in exact arithmetic by
+        <code>stabrank/examples/ttype6_rank5_certificate.py</code>).
+        Eleven independent annealing campaigns across three unrelated search
+        structures all terminated at this residual and never below it. We
+        conjecture it is optimal, which would give
+        <span class="math">&chi;<sub>R</sub>(T<sup>&otimes;6</sup>) = 6</span>:
+        sub-multiplicativity
+        <span class="math">3 &times; 2</span> tight at six copies.
+      </p>
+
       <h3 class="t">Qutrits</h3>
       <div class="table-wrap">
       <table>

@@ -42,3 +42,11 @@ allows before re-annealing at the smaller rank. Solutions are written to
   post-hoc; `search_decomposition.py` additionally accepts `--seed` to pin a run.
 - The `sys.path.append(...)` boilerplate at the top of each script is only needed
   when running in-place without `uv pip install -e .`; it is harmless otherwise.
+
+## `ttype6_rank5_certificate.py` — exact rank-5 approximation certificate
+
+Standalone exact-arithmetic verification (requires `sympy`, not a package
+dependency) that an explicit 5-dimensional stabilizer span approximates
+the six-copy BK T-type state with residual exactly
+`sqrt(5(2 - sqrt(3))/24)`. Accompanies the conjecture on the project page
+that this is optimal, i.e. that `chi(|T>^6) = 6`.
