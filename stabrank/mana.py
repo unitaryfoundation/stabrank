@@ -8,8 +8,6 @@ functions, so mana is zero iff the state is stabilizer.
 Reference: Veitch, Ferrie, Gross, Emerson, New J. Phys. 14, 113011 (2012).
 """
 
-from __future__ import annotations
-
 import itertools
 import math
 

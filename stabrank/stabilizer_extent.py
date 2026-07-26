@@ -7,8 +7,6 @@ low-l1 stabilizer decompositions.
 The stabilizer fidelity bound gives: chi >= 1 / max_phi |<phi|psi>|^2.
 """
 
-from __future__ import annotations
-
 import itertools
 import math
 

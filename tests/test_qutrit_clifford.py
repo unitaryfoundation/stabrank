@@ -1,7 +1,5 @@
 """Tests for qutrit Clifford group utilities and gadget checking."""
 
-from __future__ import annotations
-
 import numpy as np
 import pytest
 
