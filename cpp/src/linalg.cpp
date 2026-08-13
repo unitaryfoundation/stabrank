@@ -161,9 +161,18 @@ LeastSquaresResult least_squares_solve(
     const bool degenerate =
         (max_abs_diag > 0.0) && (min_abs_diag < kRelativeRankTol * max_abs_diag);
     if (degenerate) {
-        // Recompute via explicit reconstruction; the QR-implied error is unsafe.
-        const Eigen::VectorXcd reconstructed = workspace.matrix * x;
-        error = (workspace.target - reconstructed).norm();
+        // The triangular solve's x can be enormous here, and the explicit
+        // reconstruction ||t - M x|| then carries absolute error of order
+        // ||M|| ||x|| eps, which UNDERREPORTS the true span distance (a
+        // duplicated column drove ||x|| ~ 1e15 and produced a stable-looking
+        // but bogus residual that SA then chased). Solve instead by
+        // rank-truncated SVD: the minimal-norm solution has modest ||x||, so
+        // both it and its residual are honest.
+        Eigen::BDCSVD<Eigen::MatrixXcd> svd(
+            workspace.matrix, Eigen::ComputeThinU | Eigen::ComputeThinV);
+        svd.setThreshold(kRelativeRankTol);
+        x = svd.solve(workspace.target);
+        error = (workspace.target - workspace.matrix * x).norm();
     }
 
     result.is_representable = !degenerate &&

@@ -198,8 +198,34 @@ def run_symmetric_sa(
     config: SymmetricSAConfig,
     seed: int = 0,
     verbose: bool = False,
+    engine: str = "python",
 ):
-    """Anneal seeds under the cyclic-orbit ansatz; returns (error, columns, coeffs)."""
+    """Anneal seeds under the cyclic-orbit ansatz; returns (error, columns, coeffs).
+
+    engine="cpp" dispatches to the C++ implementation in stabrank_core
+    (same ansatz and move set on the incremental Gram solver; typically
+    two orders of magnitude more proposals per second). The two engines
+    use different RNG streams, so results for a given seed differ.
+    """
+    if engine == "cpp":
+        from .stabrank_core import run_symmetric_sa as _cpp
+        err, cols, coeffs = _cpp(
+            np.ascontiguousarray(target, dtype=complex), n, p,
+            config.shift_unit, list(config.orbit_sizes),
+            initial_temperature=config.initial_temperature,
+            min_temperature=config.min_temperature,
+            cooling_rate=config.cooling_rate,
+            iterations_at_temp=config.iterations_at_temp,
+            reseed_prob=config.reseed_prob,
+            two_seed_prob=config.two_seed_prob,
+            early_exit=config.early_exit,
+            audit_every=config.audit_every,
+            seed=seed,
+            num_chains=1,
+        )
+        return err, [np.asarray(c) for c in cols], np.asarray(coeffs)
+    if engine != "python":
+        raise ValueError("engine must be 'python' or 'cpp'")
     group_order = n // config.shift_unit
     if n % config.shift_unit != 0:
         raise ValueError("shift_unit must divide n")

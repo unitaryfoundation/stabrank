@@ -42,6 +42,7 @@ add_library(stabrank_core_lib STATIC
   src/clifford.cpp
   src/fidelity.cpp
   src/sa_engine.cpp
+  src/symmetric_engine.cpp
 )
 
 target_include_directories(stabrank_core_lib PUBLIC
@@ -62,6 +63,7 @@ if(BUILD_TESTING)
     tests/test_polynomial.cpp
     tests/test_pauli.cpp
     tests/test_sa_engine.cpp
+    tests/test_symmetric_engine.cpp
     tests/test_kernel_properties.cpp
   )
 

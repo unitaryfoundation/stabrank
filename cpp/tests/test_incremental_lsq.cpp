@@ -135,3 +135,30 @@ TEST_CASE("incremental solve handles underdetermined m < k via fallback",
         incremental.reconstruction_error,
         Catch::Matchers::WithinAbs(batch.reconstruction_error, 1e-8));
 }
+
+TEST_CASE("degenerate duplicated column reports the true span distance",
+          "[linalg][incremental][regression]") {
+    // Regression: the old degenerate path recomputed ||t - M x|| with the
+    // exploded triangular-solve x, underreporting the residual by O(0.1).
+    std::mt19937_64 rng(13);
+    const int m = 81;
+    const ComplexVec target = random_state(m, rng);
+    std::vector<ComplexVec> basis;
+    for (int j = 0; j < 3; ++j) basis.push_back(random_state(m, rng));
+    basis.push_back(basis[0]);  // exact duplicate -> rank 3, k = 4
+
+    const auto with_dup = least_squares_solve(target, basis, 1e-5, 1e-8);
+    std::vector<ComplexVec> dedup(basis.begin(), basis.begin() + 3);
+    const auto without = least_squares_solve(target, dedup, 1e-5, 1e-8);
+
+    REQUIRE(with_dup.degeneracy_detected);
+    // Span is identical, so the reported residuals must agree.
+    REQUIRE_THAT(with_dup.reconstruction_error,
+                 Catch::Matchers::WithinAbs(without.reconstruction_error, 1e-9));
+
+    IncrementalLeastSquares inc(target, 4);
+    for (int j = 0; j < 4; ++j) inc.set_column(j, basis[static_cast<size_t>(j)]);
+    const auto inc_result = inc.solve(1e-5, 1e-8);
+    REQUIRE_THAT(inc_result.reconstruction_error,
+                 Catch::Matchers::WithinAbs(without.reconstruction_error, 1e-9));
+}
