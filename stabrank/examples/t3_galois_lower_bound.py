@@ -3,7 +3,10 @@
 Every qutrit stabilizer state is a positive real multiple of a vector with
 entries in Z[w3], so the span of any exact stabilizer decomposition is defined
 over Q(w3) and is therefore mapped to itself by any automorphism of C fixing
-Q(w3), applied entrywise.
+Q(w3), applied entrywise.  Using the field of definition of stabilizer-state
+coordinates to bound exact rank is not new -- Lovitz-Steffan (Quantum 6, 692
+(2022)) Prop. 3.7 does it over Q(i) for qubits -- so what is new here is the
+Galois-orbit step and the Z[w3] instantiation, not arithmetic-implies-rank.
 
 |T3> = (|0> + w9|1> + w9^2|2>)/sqrt(3) has entries in Q(w9), and
 
@@ -18,12 +21,21 @@ Writing t_a = (|0> + w9^a|1> + w9^{2a}|2>)/sqrt(3), the orbit of |T3> = t_1 is
 whose dimension is 3 for every m (a Vandermonde in w9, w9^4, w9^7).  Two
 consequences, both proved here:
 
-  chi(|T3>^{ot m}) >= 3 for every m >= 1, with no search at all.  This is the
-  only lower bound on the T3 orbit that holds for all m: the subset-sum
-  technique needs an exponentially increasing subsequence of amplitude moduli,
-  and all three amplitudes of |T3> have modulus 1/sqrt(3).
+  chi(|T3>^{ot m}) >= 3 for every m >= 1, with no search at all.  This is
+  asymptotically far weaker than what is already known: the Omega(n) exact-rank
+  bound for this same state at every prime p (Labib, Quantum 6, 645 (2022),
+  Thm 1.1, whose p=3 magic state is exactly |T3>) subsumes it.  What it retains
+  is smallness: that Omega(n) carries an unspecified constant and needs
+  r <= n/C, so it certifies nothing at m = 2 or 3, where this does.
 
-  chi(|T3>^{ot 3}) >= 5.  A rank-r span has dimension r and contains V_m, so
+  Note the subset-sum route (Peleg-Shpilka-Volk; Lovitz-Steffan) genuinely
+  cannot reach this orbit -- it needs an exponentially increasing subsequence
+  of amplitude moduli and all three amplitudes of |T3> have modulus 1/sqrt(3)
+  -- but Labib's higher-order-Fourier route does not go through moduli at all.
+
+  chi(|T3>^{ot 3}) >= 5.  This is the part with no published competitor: no
+  lower bound of any kind is in print for a small tensor power of any qutrit
+  magic state.  A rank-r span has dimension r and contains V_m, so
   the r states' components off V_m span at most r-3 dimensions.  For r=3 that
   forces a stabilizer state to lie inside V_3, and none does.  For r=4 it
   forces two of them to be parallel off V_3, and no two are.  Both checks are
