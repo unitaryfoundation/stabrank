@@ -66,3 +66,12 @@ the annealing engine. Each embedded state is matched against the
 exhaustive three-qutrit dictionary and the identity is verified in exact
 arithmetic in `sympy`, upgrading the `8?` of Kocia-Sarovar
 (arXiv:2003.01130) to a certified bound `chi(|T3>^3) <= 8`.
+
+## `strange6_rank7_certificate.py`, `h3m4_rank6_certificate.py` — plateau certificates
+
+Standalone exact-arithmetic verifications (require `sympy`, not a package
+dependency) of the conjectured optimal low-rank approximation errors:
+every 7-element subset of the m = 2 Strange product basis approximates
+`|S>^6` at exactly `sqrt(8/27)`, and an explicit 6-dimensional span
+approximates `|H3>^4` at exactly `sqrt(70 - 37 sqrt(3))/12`. See the
+project page's conjecture table.

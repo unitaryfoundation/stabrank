@@ -182,24 +182,61 @@ print(f"|S>^2 &asymp; sum of {chi} stabilizer states, residual = {residual:.2e}"
       </table>
       </div>
 
-      <h3 class="t">Conjecture: six copies of the BK <span class="math">T</span>-type state need rank 6</h3>
+      <h3 class="t">Conjectured optimal low-rank approximations</h3>
       <p class="section-lede">
-        There is an explicit 5-dimensional stabilizer span whose
-        least-squares distance to
-        <span class="math">|T&rang;<sup>&otimes;6</sup></span> is exactly
-        <span class="math">&radic;(5(2&minus;&radic;3)/24) =
-        &radic;(5/6)&thinsp;sin(&pi;/12) &asymp; 0.2363</span>
-        (three cyclic shifts of the product state
+        For three targets just past the certified small-<span
+        class="math">m</span> frontier, extensive annealing (dense
+        warm-started and cyclic-orbit symmetric searches) terminates at an
+        exact algebraic residual and never below it. In each case an
+        explicit stabilizer span achieving the value is verified in exact
+        arithmetic by a standalone certificate script under
+        <code>stabrank/examples/</code>, and we conjecture the value is
+        optimal, which would make the sub-multiplicative construction tight:
+      </p>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>target</th>
+            <th>rank</th>
+            <th>exact residual</th>
+            <th>if optimal</th>
+            <th>certificate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><span class="math">|T&rang;<sup>&otimes;6</sup></span> (BK)</th>
+            <td>5</td>
+            <td><span class="math">&radic;(5/6)&thinsp;sin(&pi;/12) &asymp; 0.2363</span></td>
+            <td><span class="math">&chi;<sub>R</sub>(T<sup>&otimes;6</sup>) = 6 = 3&times;2</span></td>
+            <td><code>ttype6_rank5_certificate.py</code></td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="math">|&Sopf;&rang;<sup>&otimes;6</sup></span></th>
+            <td>7</td>
+            <td><span class="math">&radic;(8/27) &asymp; 0.5443</span></td>
+            <td><span class="math">&chi;<sub>R</sub>(&Sopf;<sup>&otimes;6</sup>) = 8 = 2<sup>3</sup></span></td>
+            <td><code>strange6_rank7_certificate.py</code></td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="math">|H<sub>3</sub>&rang;<sup>&otimes;4</sup></span></th>
+            <td>6</td>
+            <td><span class="math">&radic;(70&minus;37&radic;3)/12 &asymp; 0.2027</span></td>
+            <td><span class="math">&chi;<sub>R</sub>(H<sub>3</sub><sup>&otimes;4</sup>) &gt; 6</span></td>
+            <td><code>h3m4_rank6_certificate.py</code></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="section-lede">
+        The <span class="math">|T&rang;<sup>&otimes;6</sup></span> witness is
+        three cyclic shifts of
         <span class="math">|+i&rang;|+&rang;|0&rang;|+i&rang;|+&rang;|0&rang;</span>
-        together with two shift-related graph states on the complement of a
-        hexagon; verified in exact arithmetic by
-        <code>stabrank/examples/ttype6_rank5_certificate.py</code>).
-        Eleven independent annealing campaigns across three unrelated search
-        structures all terminated at this residual and never below it. We
-        conjecture it is optimal, which would give
-        <span class="math">&chi;<sub>R</sub>(T<sup>&otimes;6</sup>) = 6</span>:
-        sub-multiplicativity
-        <span class="math">3 &times; 2</span> tight at six copies.
+        plus two shift-related graph states on the complement of a hexagon;
+        the <span class="math">|&Sopf;&rang;<sup>&otimes;6</sup></span>
+        witness is any 7 of the 8 products built from the m&thinsp;=&thinsp;2
+        Strange identity, all of which achieve the same residual.
       </p>
 
       <h3 class="t">Qutrits</h3>
