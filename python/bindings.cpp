@@ -13,6 +13,7 @@
 #include "stabrank/types.hpp"
 #include "stabrank/clifford.hpp"
 #include "stabrank/fidelity.hpp"
+#include "stabrank/symmetric_engine.hpp"
 
 #include <complex>
 #include <cstdint>
@@ -291,6 +292,61 @@ NB_MODULE(stabrank_core, m) {
         },
         "target"_a, "basis_funcs"_a, "rtol"_a = 1e-5, "atol"_a = 1e-8,
         "Solve least-squares for target = sum(c_i * basis_i).");
+
+    // --- run_symmetric_sa (cyclic-orbit symmetric-ansatz engine) ---
+    m.def("run_symmetric_sa",
+        [](nb::ndarray<std::complex<double>, nb::ndim<1>> target_arr,
+           int n, int p, int shift_unit, std::vector<int> orbit_sizes,
+           double initial_temperature, double min_temperature,
+           double cooling_rate, int iterations_at_temp,
+           double reseed_prob, double two_seed_prob,
+           double early_exit, int audit_every,
+           uint64_t seed, int num_chains) {
+
+            stabrank::SymmetricConfig config;
+            config.shift_unit = shift_unit;
+            config.orbit_sizes = std::move(orbit_sizes);
+            config.initial_temperature = initial_temperature;
+            config.min_temperature = min_temperature;
+            config.cooling_rate = cooling_rate;
+            config.iterations_at_temp = iterations_at_temp;
+            config.reseed_prob = reseed_prob;
+            config.two_seed_prob = two_seed_prob;
+            config.early_exit = early_exit;
+            config.audit_every = audit_every;
+            config.num_chains = num_chains;
+
+            const auto target = ndarray_to_complexvec(target_arr);
+            stabrank::SymmetricResult result;
+            {
+                nb::gil_scoped_release release;
+                result = stabrank::run_symmetric_sa(config, target, n, p, seed);
+            }
+
+            nb::list columns;
+            for (const auto& col : result.best_columns) {
+                columns.append(complexvec_to_ndarray(col));
+            }
+            return nb::make_tuple(
+                result.best_error, columns,
+                complexvec_to_ndarray(result.best_coeffs));
+        },
+        "target"_a, "n"_a, "p"_a, "shift_unit"_a, "orbit_sizes"_a,
+        "initial_temperature"_a = 0.5, "min_temperature"_a = 1e-4,
+        "cooling_rate"_a = 0.999, "iterations_at_temp"_a = 400,
+        "reseed_prob"_a = 0.02, "two_seed_prob"_a = 0.2,
+        "early_exit"_a = 1e-12, "audit_every"_a = 5000,
+        "seed"_a = 0, "num_chains"_a = 1,
+        "Cyclic-orbit symmetric-ansatz SA; returns (best_error, columns, coeffs).");
+
+    m.def("shift_qudits",
+        [](nb::ndarray<std::complex<double>, nb::ndim<1>> state,
+           int shift, int n, int p) {
+            return complexvec_to_ndarray(
+                stabrank::shift_qudits(ndarray_to_complexvec(state), shift, n, p));
+        },
+        "state"_a, "shift"_a, "n"_a, "p"_a,
+        "Cyclically shift qudit positions by `shift`.");
 
     // --- apply_random_pauli_string ---
     m.def("apply_random_pauli_string",

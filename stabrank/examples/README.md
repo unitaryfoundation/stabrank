@@ -51,6 +51,22 @@ the six-copy BK T-type state with residual exactly
 `sqrt(5(2 - sqrt(3))/24)`. Accompanies the conjecture on the project page
 that this is optimal, i.e. that `chi(|T>^6) = 6`.
 
+## `t3m2_rank3_certificate.py`: tight value for two copies of |T3>
+
+Certifies `chi(|T3>^2) = 3`: reproduces the three-term carry identity
+(upper bound) and exhaustively sweeps all pairs from the two-qutrit
+stabilizer dictionary (lower bound; minimum pair residual 0.4645). Also
+checks the explicit nine-term product witnesses for `|T3>^3` and
+`|T3>^4` built from the same carry blocks.
+
+## `t3m3_rank8_certificate.py`: explicit rank-8 witness for three copies of |T3>
+
+An explicit eight-term stabilizer decomposition of `|T3>^3`, found with
+the annealing engine. Each embedded state is matched against the
+exhaustive three-qutrit dictionary and the identity is verified in exact
+arithmetic in `sympy`, upgrading the `8?` of Kocia-Sarovar
+(arXiv:2003.01130) to a certified bound `chi(|T3>^3) <= 8`.
+
 ## `strange6_rank7_certificate.py`, `h3m4_rank6_certificate.py` — plateau certificates
 
 Standalone exact-arithmetic verifications (require `sympy`, not a package

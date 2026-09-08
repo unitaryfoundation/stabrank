@@ -280,14 +280,97 @@ print(f"|S>^2 &asymp; sum of {chi} stabilizer states, residual = {residual:.2e}"
           <tr>
             <th scope="row"><span class="math">T<sub>3</sub></span></th>
             <td><b>3</b></td>
-            <td>3 <a class="cite" href="#ref-3">[3]</a></td>
+            <td><b>3</b> <a class="cite" href="#ref-3">[3]</a></td>
             <td>&le;8 <a class="cite" href="#ref-3">[3]</a></td>
-            <td>&le;9</td>
+            <td>&le;9 <a class="cite" href="#ref-3">[3]</a></td>
             <td>1/2 <a class="cite" href="#ref-3">[3]</a></td>
           </tr>
         </tbody>
       </table>
       </div>
+
+      <h3 class="t">Status of the <span class="math">T<sub>3</sub></span> cells</h3>
+      <p class="section-lede">
+        The <span class="math">m</span>&thinsp;=&thinsp;2 value is tight: an
+        exhaustive sweep over all 85,491 row pairs of the parametrized
+        two-qutrit dictionary (covering all 360 distinct stabilizer
+        states) leaves a minimum least-squares residual of
+        0.4645
+        (<code>stabrank/examples/t3m2_rank3_certificate.py</code>), so no
+        two-term decomposition of
+        <span class="math">|T<sub>3</sub>&rang;<sup>&otimes;2</sup></span>
+        exists.
+        The <span class="math">m</span>&thinsp;=&thinsp;3 bound of
+        <a class="cite" href="#ref-3">[3]</a> was stated there as a
+        quadratic-Gauss-sum rank with the stabilizer-rank value marked
+        uncertain (&ldquo;8?&rdquo;, supported by a possibly unconverged
+        Monte Carlo search). It is now backed by an explicit eight-term
+        stabilizer decomposition found with the annealing engine
+        (supports 3, 3, 9, 27, 27, 27, 27, 27), each state matched
+        against the exhaustive three-qutrit dictionary and the identity
+        verified in exact arithmetic
+        (<code>stabrank/examples/t3m3_rank8_certificate.py</code>).
+        The <span class="math">m</span>&thinsp;=&thinsp;4 bound has an
+        explicit nine-term product witness built from the carry
+        decomposition of
+        <span class="math">|T<sub>3</sub>&rang;<sup>&otimes;2</sup></span>
+        (<code>stabrank/examples/t3m2_rank3_certificate.py</code>).
+        At <span class="math">m</span>&thinsp;=&thinsp;3, no
+        <span class="math">k</span>&thinsp;=&thinsp;7 decomposition was
+        found across more than forty searches spanning fast and slow
+        dense anneals, symmetric-ansatz searches, warm-started squeezes
+        of the exact eight-term basis, and anneals from every prune
+        position of that basis. All runs terminate at
+        nonzero local minima (a recurring basin at residual
+        0.120393331639 was hit by five independent seeds to twelve
+        digits); the deepest minimum found has residual 0.0821265100,
+        and its basis snaps to exact stabilizer states whose
+        least-squares residual squared is the smallest root of
+        466277476977288<span class="math">x</span><sup>3</sup>
+        &minus; 258557391262152<span class="math">x</span><sup>2</sup>
+        + 19913013136890<span class="math">x</span>
+        &minus; 122689385209, an exact algebraic critical point of the
+        search landscape. A structural exhaustion supports this:
+        splitting <span class="math">F<sub>3</sub><sup>3</sup></span> by
+        the residue of <span class="math">x<sub>1</sub>+x<sub>2</sub>+x<sub>3</sub></span>
+        mod 3, each of the three carry states of
+        <span class="math">|T<sub>3</sub>&rang;<sup>&otimes;3</sup></span>
+        has certified in-class rank 3, so a seven-term decomposition
+        needs at least one state whose support crosses the classes.
+        Enumerating all 29,160 class-crossing stabilizer states shows
+        none can serve as the sole crossing state (zero survivors,
+        nearest miss failing consistency by a relative 0.35), and a
+        second exhaustion over all 1,431 ways a two-crossing-state
+        decomposition could close its single-class-state class
+        (4.6 million state pairs, both admissible class-state
+        distributions) also leaves zero survivors. Any seven-term
+        decomposition must therefore contain at least three
+        class-crossing states (the exact eight-term witness uses
+        five). We conjecture
+        <span class="math">&chi;<sub>R</sub>(T<sub>3</sub><sup>&otimes;3</sup>) = 8</span>.
+      </p>
+
+      <h3 class="t">Floors below the <span class="math">m</span>&thinsp;=&thinsp;4 cells</h3>
+      <p class="section-lede">
+        Slow-schedule searches one rank below the
+        <span class="math">m</span>&thinsp;=&thinsp;4 bounds also terminate
+        at exact algebraic floors, verified in exact arithmetic.
+        For the Norrell orbit at
+        <span class="math">k</span>&thinsp;=&thinsp;6, five of six
+        independent anneals reach the identical residual
+        <span class="math">&radic;(211/4043) &asymp; 0.2284</span>, and
+        the deepest basin found has the rational value
+        <span class="math">&radic;(419/8559) &asymp; 0.2213</span>; for
+        <span class="math">H<sub>3</sub></span> at
+        <span class="math">k</span>&thinsp;=&thinsp;7 the deepest captured
+        basin has residual squared
+        <span class="math">(3349 &minus; 1418&radic;3)/7280 &asymp; 0.3502<sup>2</sup></span>,
+        with all runs ending in 0.344&ndash;0.358. No search reached zero,
+        supporting the conjectures
+        <span class="math">&chi;<sub>R</sub>(N<sub>+</sub><sup>&otimes;4</sup>) = 7</span>
+        and
+        <span class="math">&chi;<sub>R</sub>(H<sub>3</sub><sup>&otimes;4</sup>) = 8</span>.
+      </p>
     </section>
 
     <section id="references" class="section">

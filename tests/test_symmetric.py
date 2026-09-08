@@ -86,3 +86,25 @@ def test_config_validation():
         run_symmetric_sa(
             target, 2, 2,
             SymmetricSAConfig(shift_unit=1, orbit_sizes=(4,)), seed=0)
+
+
+def test_cpp_engine_matches_ansatz_and_converges():
+    from stabrank.stabrank_core import shift_qudits as cpp_shift
+
+    # Shift semantics agree between the Python and C++ implementations.
+    rng = np.random.default_rng(9)
+    v = rng.normal(size=81) + 1j * rng.normal(size=81)
+    assert np.allclose(cpp_shift(v.astype(complex), 1, 4, 3),
+                       shift_qudits(v, 1, 4, 3))
+
+    # C++ engine finds the strange m=2 rank-2 decomposition.
+    target = qutrit_strange_state(2)
+    cfg = SymmetricSAConfig(
+        shift_unit=1, orbit_sizes=(1, 1),
+        initial_temperature=0.5, min_temperature=1e-3,
+        cooling_rate=0.99, iterations_at_temp=300,
+    )
+    err, cols, coeffs = run_symmetric_sa(target, 2, 3, cfg, seed=7, engine="cpp")
+    assert err < 1e-9
+    a = np.column_stack(cols)
+    assert np.linalg.norm(target - a @ coeffs) < 1e-9
