@@ -7,7 +7,8 @@
   "provenance": {
     "author": "Labib and Russo",
     "reference": "arXiv:2605.28586",
-    "method": "literature"
+    "method": "literature",
+    "date": "2026-01-01"
   },
   "notes": "rank 6 plateaus at sqrt(70-37 sqrt 3)/12"
 }

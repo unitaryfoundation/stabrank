@@ -77,7 +77,8 @@
   "provenance": {
     "author": "Labib and Russo",
     "reference": "arXiv:2605.28586, Theorem 2",
-    "method": "carry decomposition"
+    "method": "carry decomposition",
+    "date": "2026-01-01"
   },
   "notes": "Two full-support terms; the smallest known exponent across the four qutrit orbits."
 }

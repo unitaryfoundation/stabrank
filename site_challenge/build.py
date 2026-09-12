@@ -23,17 +23,20 @@ import html
 import json
 import math
 import os
+import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "verify_challenge"))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from stabrank_verify import ORBIT_LABEL, ORBIT_P, implied_gamma, verify  # noqa: E402
+from _assets import GHICON, UFLOGO  # noqa: E402
 
 DOCS = os.path.join(ROOT, "docs")
 BOUNDS = os.path.join(ROOT, "bounds")
 CERTS = os.path.join(ROOT, "certs")
+REPO = "https://github.com/unitaryfoundation/stabrank"
 
-# Published per-copy exponents these bounds are measured against.
 BASELINE = {
     "S": (math.log(2, 3) / 2, "log₃2/2"),
     "N": (math.log(4, 3) / 3, "log₃4/3"),
@@ -45,6 +48,8 @@ BASELINE = {
 ORBIT_ORDER = ["S", "N", "H3", "T3", "qubit_H", "qubit_T"]
 SYSTEM = {"S": "qutrit", "N": "qutrit", "H3": "qutrit", "T3": "qutrit",
           "qubit_H": "qubit", "qubit_T": "qubit"}
+COLOR = {"S": "#6d28d9", "N": "#0369a1", "H3": "#059669",
+         "T3": "#b45309", "qubit_H": "#be185d", "qubit_T": "#128081"}
 TIER_RANK = {"verified": 3, "reproduced": 2, "cited": 1, None: 0}
 RECORD_TIERS = ("verified", "reproduced")
 
@@ -62,7 +67,6 @@ def content_hash(sub):
 
 
 def load_bounds():
-    """Verify every submission, using a cached certificate when it still applies."""
     out = []
     for path in sorted(glob.glob(os.path.join(BOUNDS, "*.json"))):
         sub = json.load(open(path))
@@ -77,20 +81,18 @@ def load_bounds():
             r = verify(sub)
             res = {"ok": r.ok, "tier": r.tier, "detail": r.detail,
                    "gamma": r.gamma, "content_hash": h}
-            if r.ok and r.tier == "verified":
+            if r.ok and r.tier in ("verified", "reproduced"):
                 os.makedirs(CERTS, exist_ok=True)
                 with open(cpath, "w") as f:
                     json.dump(res, f, indent=2)
                     f.write("\n")
         if res.get("gamma") is None and sub["direction"] == "upper":
             res["gamma"] = implied_gamma(ORBIT_P[sub["orbit"]], sub["rank"], sub["m"])
-        out.append({"sub": sub, "res": res, "slug": s,
-                    "file": os.path.basename(path)})
+        out.append({"sub": sub, "res": res, "slug": s})
     return out
 
 
 def best_by_cell(entries):
-    """Best bound per (orbit, m, direction). Ties break toward the higher tier."""
     cells = {}
     for e in entries:
         if not e["res"]["ok"]:
@@ -107,7 +109,6 @@ def best_by_cell(entries):
 
 
 def leaderboard(entries):
-    """Best record-eligible exponent per orbit, and what the baseline is."""
     rows = []
     for orbit in ORBIT_ORDER:
         base, base_txt = BASELINE[orbit]
@@ -119,50 +120,193 @@ def leaderboard(entries):
             if not r["ok"] or r["tier"] not in RECORD_TIERS:
                 continue
             g = r.get("gamma")
-            if g is None:
-                continue
-            if best is None or g < best["res"]["gamma"]:
+            if g is not None and (best is None or g < best["res"]["gamma"]):
                 best = e
         rows.append({"orbit": orbit, "baseline": base, "baseline_txt": base_txt,
                      "best": best})
     return rows
 
 
-# ------------------------------------------------------------------ HTML ----
+def contributors(entries):
+    """Rank submitters. Records are what count; volume breaks ties."""
+    cells = best_by_cell(entries)
+    holders = {id(e) for e in cells.values()}
+    agg = {}
+    for e in entries:
+        s, r = e["sub"], e["res"]
+        who = s["provenance"].get("author", "unknown")
+        a = agg.setdefault(who, {"who": who, "n": 0, "verified": 0, "records": 0,
+                                 "best": None, "cells": set()})
+        a["n"] += 1
+        if r["ok"] and r["tier"] == "verified":
+            a["verified"] += 1
+        if id(e) in holders:
+            a["records"] += 1
+            a["cells"].add((s["orbit"], int(s["m"])))
+        if s["direction"] == "upper" and r["ok"] and r.get("gamma") is not None:
+            if a["best"] is None or r["gamma"] < a["best"]:
+                a["best"] = r["gamma"]
+    rows = sorted(agg.values(),
+                  key=lambda a: (-a["records"], -a["verified"], a["best"] if a["best"] else 9))
+    return rows
+
+
+# ------------------------------------------------------------------ chart ---
+
+def progress_chart(entries):
+    """Best-known exponent per orbit over time, as a step chart.
+
+    Each orbit's line steps down whenever a submission improved its best gamma.
+    The axis ticks name values the chart actually reaches, and the viewBox
+    leaves room for the outermost labels rather than clipping them.
+    """
+    series = {}
+    for orbit in ORBIT_ORDER:
+        pts = []
+        best = None
+        rows = sorted(
+            [e for e in entries
+             if e["sub"]["orbit"] == orbit and e["sub"]["direction"] == "upper"
+             and e["res"]["ok"] and e["res"].get("gamma") is not None],
+            key=lambda e: e["sub"]["provenance"].get("date", "2026-01-01"))
+        for e in rows:
+            yr = int(e["sub"]["provenance"].get("date", "2026")[:4])
+            g = e["res"]["gamma"]
+            if best is None or g < best:
+                best = g
+                pts.append((yr, g))
+        if pts:
+            series[orbit] = pts
+    if not series:
+        return ""
+
+    years = sorted({y for pts in series.values() for y, _ in pts})
+    y0, y1 = min(years), max(years) + 1
+    gs = [g for pts in series.values() for _, g in pts] + \
+         [b for b, _ in BASELINE.values()]
+    lo, hi = min(gs) * 0.93, max(gs) * 1.05
+
+    W, H = 900, 330
+    L, R, T, B = 62, 150, 18, 40
+    def X(yr): return L + (yr - y0) / max(1, (y1 - y0)) * (W - L - R)
+    def Y(g):  return T + (hi - g) / (hi - lo) * (H - T - B)
+
+    o = [f"<svg class=chart viewBox='0 0 {W} {H}' role='img' "
+         f"aria-label='best known per-copy exponent by orbit over time'>"]
+    # horizontal gridlines at real gamma values
+    ticks = [round(lo + i * (hi - lo) / 4, 3) for i in range(5)]
+    for t in ticks:
+        o.append(f"<line class=grid x1='{L}' x2='{W-R}' y1='{Y(t):.1f}' y2='{Y(t):.1f}'/>")
+        o.append(f"<text class=ax x='{L-9}' y='{Y(t)+4:.1f}' text-anchor='end'>{t:.3f}</text>")
+    for yr in years:
+        o.append(f"<text class=ax x='{X(yr):.1f}' y='{H-14}' text-anchor='middle'>{yr}</text>")
+    o.append(f"<text class=axl x='14' y='{T+(H-T-B)/2:.0f}' "
+             f"transform='rotate(-90 14 {T+(H-T-B)/2:.0f})' text-anchor='middle'>"
+             f"per-copy exponent &gamma;</text>")
+
+    for orbit, pts in series.items():
+        c = COLOR[orbit]
+        d = []
+        for i, (yr, g) in enumerate(pts):
+            if i == 0:
+                d.append(f"M{X(yr):.1f},{Y(g):.1f}")
+            else:
+                d.append(f"L{X(yr):.1f},{Y(pts[i-1][1]):.1f}")
+                d.append(f"L{X(yr):.1f},{Y(g):.1f}")
+        d.append(f"L{X(y1):.1f},{Y(pts[-1][1]):.1f}")
+        o.append(f"<path class=ln d='{' '.join(d)}' stroke='{c}'/>")
+        for yr, g in pts:
+            o.append(f"<circle cx='{X(yr):.1f}' cy='{Y(g):.1f}' r='4' "
+                     f"fill='#fff' stroke='{c}' stroke-width='2'/>")
+        fg = pts[-1][1]
+        o.append(f"<text class=lbl x='{X(y1)+9:.1f}' y='{Y(fg)+4:.1f}' fill='{c}'>"
+                 f"{ORBIT_LABEL[orbit]} &middot; {fg:.4f}</text>")
+    o.append("</svg>")
+    return "".join(o)
+
+
+# ------------------------------------------------------------------- HTML ---
 
 CSS = """
 :root{--ink:#0f172a;--mut:#64748b;--ln:#e2e8f0;--ac:#36006c;--ex:#059669;
---exb:#ffff00;--dark:#111111;--bg:#fff;--soft:#f8fafc;--warn:#b45309;--bad:#be185d}
+--exb:#ffff00;--dark:#111111;--bg:#fff;--soft:#f8fafc;--bad:#be185d}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);
 font-family:Manrope,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6}
-.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+.wrap{max-width:1060px;margin:0 auto;padding:0 20px}
 a{color:var(--ac)}
 code,.mono{font-family:"Space Mono",ui-monospace,Menlo,monospace}
+h1,h2{font-family:Manrope,system-ui,sans-serif;letter-spacing:-.01em}
 
-header.hero{position:relative;overflow:hidden;background:var(--dark);color:#fff;
-padding:54px 0 46px;margin-bottom:34px}
-.heroflow{position:absolute;inset:0;width:100%;height:100%;opacity:.32}
-.heroflow path{fill:none;stroke:var(--exb);stroke-width:1.1}
-header.hero .wrap{position:relative}
-h1{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:40px;
-letter-spacing:-.02em;margin:0 0 10px;text-wrap:balance}
-.tag{color:#cbd5e1;max-width:68ch;margin:0;font-size:16px}
-.hero .meta{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px 22px;
-font-family:"Space Mono",monospace;font-size:12px;color:#94a3b8}
+header.hero{background:
+radial-gradient(115% 130% at 50% -25%,rgba(255,255,0,.18),transparent 60%),
+repeating-linear-gradient(0deg,transparent 0 27px,rgba(255,255,255,.05) 27px 28px),
+repeating-linear-gradient(90deg,transparent 0 27px,rgba(255,255,255,.05) 27px 28px),
+var(--dark);color:#fff;padding:34px 0 30px;
+position:relative;overflow:hidden;border-bottom:4px solid #ffff00}
+header.hero>.wrap{position:relative;z-index:1}
+.heroflow{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.heroflow path{fill:none;stroke:#ffff00;stroke-width:1.5;opacity:.10;
+stroke-linecap:round;stroke-dasharray:130 420;animation:flowtrail 15s linear infinite}
+.heroflow path:nth-child(2){opacity:.07;animation-duration:21s;animation-delay:-4s}
+.heroflow path:nth-child(3){opacity:.08;animation-duration:26s;animation-delay:-9s}
+.heroflow path:nth-child(4){opacity:.06;animation-duration:18s;animation-delay:-2s}
+.heroflow path:nth-child(5){opacity:.05;animation-duration:30s;animation-delay:-13s}
+@keyframes flowtrail{to{stroke-dashoffset:-1100}}
+@media(prefers-reduced-motion:reduce){.heroflow path{animation:none}}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 18px}
+.brandmark{display:flex;align-items:center;gap:16px}
+.uflogo{height:38px;width:auto;display:block;filter:drop-shadow(0 4px 14px rgba(0,0,0,.35))}
+header.hero h1{font-size:clamp(30px,6vw,44px);margin:0;letter-spacing:-1px}
+header.hero p{font-size:18px;max-width:640px;margin:0;color:#e4e4e7}
+header.hero p a{color:#ffff00;text-decoration:underline}
+header.hero p a:hover{background:#ffff00;color:#111;text-decoration:none}
+.topnav{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.topnav a{display:inline-flex;align-items:center;gap:7px;color:#e4e4e7;
+font-family:"Space Mono",ui-monospace,monospace;font-size:14px;font-weight:700;
+padding:7px 14px;border:1px solid rgba(255,255,255,.18);border-radius:8px;
+background:rgba(255,255,255,.06);text-decoration:none}
+.topnav a:hover{background:#ffff00;color:#111;border-color:#ffff00}
+.lbcta{flex:0 0 auto;font-size:14px;font-weight:700;color:#fff;
+font-family:"Space Mono",ui-monospace,monospace;background:var(--ac);border:none;
+border-radius:8px;padding:9px 16px;text-decoration:none;cursor:pointer;
+box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.lbcta:hover{background:#5b21b6}
 
-h2{font-family:"Space Grotesk",sans-serif;font-size:13px;font-weight:700;
-letter-spacing:.1em;text-transform:uppercase;color:var(--mut);
-margin:40px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--ln)}
-section p{max-width:72ch}
+h2{font-size:22px;font-weight:700;margin:44px 0 4px;letter-spacing:-.01em}
+.h2sub{color:var(--mut);font-size:14px;margin:0 0 14px}
+section p{max-width:74ch}
 
-.lead{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:0 0 6px}
-.card{border:1px solid var(--ln);border-radius:10px;padding:14px 16px;background:var(--soft)}
-.card .k{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.08em;
-text-transform:uppercase;color:var(--mut)}
-.card .v{font-family:"Space Grotesk",sans-serif;font-size:27px;font-weight:700;
-margin-top:2px;font-variant-numeric:tabular-nums}
-.card .s{font-size:13px;color:var(--mut)}
+.chartbox{border:1px solid var(--ln);border-radius:12px;padding:8px 10px 2px;background:#fff}
+.chart{width:100%;height:auto;display:block}
+.chart .grid{stroke:var(--ln);stroke-width:1}
+.chart .ax{font-family:"Space Mono",monospace;font-size:11px;fill:var(--mut)}
+.chart .axl{font-family:"Space Mono",monospace;font-size:11px;fill:var(--mut)}
+.chart .ln{fill:none;stroke-width:2.5;stroke-linejoin:round}
+.chart .lbl{font-family:"Space Mono",monospace;font-size:12px;font-weight:700}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;padding:10px 4px 12px;
+font-family:"Space Mono",monospace;font-size:12px;color:var(--mut)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+
+.lb{border:1px solid var(--ln);border-radius:12px;background:var(--soft);overflow:hidden}
+.lbhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;
+gap:12px;padding:14px 18px;border-bottom:1px solid var(--ln);background:#fff}
+.lbhead .t{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.12em;
+text-transform:uppercase;color:var(--ink);font-weight:700}
+.lbhead .s{color:var(--mut);font-size:13px}
+.lbhead .big{font-family:Manrope,sans-serif;font-size:30px;font-weight:700;
+line-height:1;text-align:right}
+.lbhead .bigk{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.1em;
+text-transform:uppercase;color:var(--mut);text-align:right}
+.lbrow{display:grid;grid-template-columns:34px 1fr repeat(3,88px);gap:10px;
+align-items:center;padding:11px 18px;border-bottom:1px solid var(--ln);background:#fff}
+.lbrow:last-child{border-bottom:0}
+.lbrow .rk{font-family:"Space Mono",monospace;color:var(--mut);font-size:14px}
+.lbrow .who{font-weight:700}
+.lbrow .m{text-align:center}
+.lbrow .m b{display:block;font-family:Manrope;font-size:17px;line-height:1.1}
+.lbrow .m span{font-family:"Space Mono",monospace;font-size:10px;
+letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
 
 table{border-collapse:collapse;width:100%;font-size:14px}
 .tw{overflow-x:auto}
@@ -174,19 +318,16 @@ tr.rec td{background:#fbfaff}
 
 .pill{display:inline-block;font-family:"Space Mono",monospace;font-size:11px;
 padding:2px 8px;border-radius:999px;border:1px solid currentColor}
-.t-verified{color:var(--ex)}
-.t-reproduced{color:var(--ac)}
-.t-cited{color:var(--mut)}
-.t-failed{color:var(--bad)}
-
-.bar{position:relative;height:9px;background:var(--ln);border-radius:999px;min-width:130px}
-.bar i{position:absolute;top:0;bottom:0;left:0;background:var(--ac);border-radius:999px;display:block}
+.t-verified{color:var(--ex)}.t-reproduced{color:var(--ac)}
+.t-cited{color:var(--mut)}.t-failed{color:var(--bad)}
 .gain{color:var(--ex);font-weight:700}
 .none{color:var(--mut)}
+.bar{position:relative;height:9px;background:var(--ln);border-radius:999px;min-width:120px}
+.bar i{position:absolute;top:0;bottom:0;left:0;background:var(--ac);border-radius:999px}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
 .orb{border:1px solid var(--ln);border-radius:10px;padding:14px 16px}
-.orb h3{font-family:"Space Grotesk",sans-serif;margin:0 0 2px;font-size:18px}
+.orb h3{font-family:Manrope;margin:0 0 2px;font-size:18px}
 .orb .sub{font-family:"Space Mono",monospace;font-size:11px;color:var(--mut);
 text-transform:uppercase;letter-spacing:.07em}
 .cells{margin-top:10px;font-family:"Space Mono",monospace;font-size:13px}
@@ -194,11 +335,32 @@ text-transform:uppercase;letter-spacing:.07em}
 border-bottom:1px dotted var(--ln)}
 .cells div:last-child{border-bottom:0}
 
-pre{background:var(--soft);border:1px solid var(--ln);border-radius:8px;
-padding:12px 14px;overflow-x:auto;font-size:13px}
-footer{margin:56px 0 40px;padding-top:18px;border-top:1px solid var(--ln);
-color:var(--mut);font-size:13px}
-@media(max-width:640px){h1{font-size:29px}}
+details{border:1px solid var(--ln);border-radius:10px;padding:10px 14px;background:var(--soft)}
+details summary{cursor:pointer;font-family:"Space Mono",monospace;font-size:13px;font-weight:700}
+pre{background:#fff;border:1px solid var(--ln);border-radius:8px;padding:12px 14px;
+overflow-x:auto;font-size:12.5px;line-height:1.5}
+.refs{list-style:none;padding:0;counter-reset:r}
+.refs li{counter-increment:r;padding:12px 0 12px 42px;border-bottom:1px solid var(--ln);
+position:relative;max-width:80ch}
+.refs li:before{content:"[" counter(r) "]";position:absolute;left:0;top:12px;
+font-family:"Space Mono",monospace;font-size:12px;color:var(--mut)}
+.refs .ti{font-weight:700}
+.refs .au{color:var(--ink)}
+.refs .vn{color:var(--mut)}
+.refs .nt{color:var(--mut);font-size:13.5px;margin-top:3px}
+footer.foot{margin:64px 0 0;border-top:1px solid var(--ln);background:var(--soft)}
+.footmain{max-width:1060px;margin:0 auto;padding:26px 20px 30px}
+.footbrand{max-width:420px}
+.footbrand .fb{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.footbrand .fb span{font-size:18px;font-weight:700;color:var(--ink)}
+.footbrand p{margin:0;color:var(--mut);font-size:14px}
+.footlinks{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center;margin-top:16px}
+.footlinks a{display:inline-flex;align-items:center;gap:7px;color:var(--ink);
+text-decoration:none;font-size:14px}
+.footlinks a:hover{color:var(--ac);text-decoration:underline}
+.footlinks svg{width:16px;height:16px}
+@media(max-width:700px){.lbrow{grid-template-columns:28px 1fr 70px;}
+.lbrow .m:nth-child(n+4){display:none}}
 """
 
 HEROSVG = """<svg class=heroflow viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
@@ -218,10 +380,48 @@ def head(title, rel=""):
         "<link rel=preconnect href='https://fonts.googleapis.com'>"
         "<link rel=preconnect href='https://fonts.gstatic.com' crossorigin>"
         "<link href='https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700"
-        "&family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@400;700&display=swap'"
-        " rel=stylesheet>"
+        "&family=Space+Mono:wght@400;700&display=swap' rel=stylesheet>"
         f"<link rel=stylesheet href='{rel}style.css'></head><body>"
     )
+
+
+def hero(title, tagline, rel=""):
+    return (
+        "<header class=hero>" + HEROSVG + "<div class=wrap>"
+        "<div class=brand><span class=brandmark>"
+        f"<a href='https://unitary.foundation' aria-label='Unitary Foundation'>{UFLOGO}</a>"
+        "</span>"
+        f"<a class=lbcta href='{REPO}#contributing'>Participate</a></div>"
+        f"<h1>{title}</h1><p>{tagline}</p>"
+        "<nav class=topnav>"
+        f"<a href='{rel}state-of-the-art.html'>State of the art</a>"
+        f"<a href='{rel}references.html'>References</a>"
+        f"<a href='{REPO}'>{GHICON}GitHub</a>"
+        "</nav></div></header>"
+    )
+
+
+
+FOOTMARK = '<svg width=34 height=34 viewBox="0 0 64 64" aria-hidden="true"><rect x="1" y="1" width="62" height="62" rx="14" fill="#111111" stroke="rgba(255,255,255,0.16)" stroke-width="1.5"/><g stroke="#ffffff" stroke-width="3.4" stroke-linecap="round" opacity="0.9"><line x1="32" y1="16" x2="17" y2="40"/><line x1="32" y1="16" x2="47" y2="40"/><line x1="32" y1="16" x2="32" y2="46"/></g><g fill="#ffffff"><circle cx="17" cy="42" r="5"/><circle cx="32" cy="47" r="5"/><circle cx="47" cy="42" r="5"/></g><circle cx="32" cy="16" r="6" fill="#ffff00"/></svg>'
+
+
+def footer(rel=""):
+    links = [
+        (REPO, "GitHub", True),
+        (REPO + "/blob/main/CONTRIBUTING.md", "Contribute", False),
+        (REPO + "/blob/main/schema/bound.schema.json", "Schema", False),
+        (rel + "state-of-the-art.html", "State of the art", False),
+        (rel + "references.html", "References", False),
+        ("https://arxiv.org/abs/2605.28586", "Paper", False),
+    ]
+    out = ["<footer class=foot><div class=footmain><div class=footbrand><div class=fb>",
+           FOOTMARK, "<span>Stabilizer Rank Challenge</span></div>",
+           "<p>An open, automatically verified leaderboard for exact stabilizer "
+           "decompositions of magic states.</p></div><nav class=footlinks>"]
+    for href, label, icon in links:
+        out.append(f"<a href='{href}'>" + (GHICON if icon else "") + label + "</a>")
+    out.append("</nav></div></footer>")
+    return "".join(out)
 
 
 def tier_pill(tier, ok=True):
@@ -230,103 +430,178 @@ def tier_pill(tier, ok=True):
     return f"<span class='pill t-{tier}'>{tier}</span>"
 
 
+# -------------------------------------------------------------- references --
+
+def parse_bib(path):
+    try:
+        text = open(path).read()
+    except OSError:
+        return []
+    out = []
+    for m in re.finditer(r"@(\w+)\s*\{\s*([^,]+),", text):
+        i = text.index("{", m.start())
+        depth, j = 0, i
+        while j < len(text):
+            if text[j] == "{":
+                depth += 1
+            elif text[j] == "}":
+                depth -= 1
+                if depth == 0:
+                    break
+            j += 1
+        body = text[i + 1:j]
+        e = {"key": m.group(2).strip(), "type": m.group(1).lower()}
+        for fm in re.finditer(r"(\w+)\s*=\s*", body):
+            k = fm.group(1).lower()
+            p = fm.end()
+            if p < len(body) and body[p] == "{":
+                d, q = 0, p
+                while q < len(body):
+                    if body[q] == "{":
+                        d += 1
+                    elif body[q] == "}":
+                        d -= 1
+                        if d == 0:
+                            break
+                    q += 1
+                e[k] = body[p + 1:q].strip()
+        out.append(e)
+    return out
+
+
+def references_page(refs):
+    o = [head("References — Stabilizer Rank Challenge")]
+    o.append(hero("References",
+                  "Work the bounds on this leaderboard are measured against."))
+    o.append("<div class=wrap><ol class=refs>")
+    for r in sorted(refs, key=lambda r: (r.get("year", ""), r.get("author", ""))):
+        au = E(r.get("author", "")).replace(" and ", ", ")
+        ti = E(r.get("title", ""))
+        ven = ", ".join(x for x in [E(r.get("journal", "")),
+                                    (f"vol. {E(r['volume'])}" if r.get("volume") else ""),
+                                    (f"p. {E(r['pages'])}" if r.get("pages") else ""),
+                                    E(r.get("year", ""))] if x)
+        links = []
+        if r.get("eprint"):
+            links.append(f"<a href='https://arxiv.org/abs/{E(r['eprint'])}'>"
+                         f"arXiv:{E(r['eprint'])}</a>")
+        if r.get("doi"):
+            links.append(f"<a href='https://doi.org/{E(r['doi'])}'>DOI</a>")
+        o.append(f"<li><span class=au>{au}</span>. <span class=ti>{ti}</span>. "
+                 f"<span class=vn>{ven}</span>"
+                 + (" &middot; " + " &middot; ".join(links) if links else "")
+                 + (f"<div class=nt>{E(r['note'])}</div>" if r.get("note") else "")
+                 + "</li>")
+    o.append("</ol></div>" + footer() + "</body></html>")
+    with open(os.path.join(DOCS, "references.html"), "w") as f:
+        f.write("".join(o))
+
+
+# ------------------------------------------------------------------ build ---
+
 def build():
     entries = load_bounds()
     cells = best_by_cell(entries)
     board = leaderboard(entries)
-    ok_n = sum(1 for e in entries if e["res"]["ok"])
+    people = contributors(entries)
     ver_n = sum(1 for e in entries if e["res"]["ok"] and e["res"]["tier"] == "verified")
     rep_n = sum(1 for e in entries if e["res"]["ok"] and e["res"]["tier"] == "reproduced")
     moved = [r for r in board if r["best"] and r["best"]["res"]["gamma"] < r["baseline"] - 1e-12]
+    tight = min((r for r in board if r["best"]),
+                key=lambda r: r["best"]["res"]["gamma"], default=None)
 
     o = [head("Stabilizer Rank Challenge")]
-    o.append("<header class=hero>" + HEROSVG + "<div class=wrap>")
-    o.append("<h1>Stabilizer Rank Challenge</h1>")
-    o.append("<p class=tag>How many stabilizer states does it take to write a magic "
-             "state exactly? Submit a decomposition, the pipeline rebuilds it in exact "
-             "arithmetic, and the leaderboard moves only if it checks out.</p>")
-    o.append(f"<div class=meta><span>{len(entries)} submissions</span>"
-             f"<span>{ver_n} verified</span><span>{rep_n} reproduced</span>"
-             f"<span>{len(ORBIT_ORDER)} orbits</span>"
-             f"<span>{len(moved)} published exponents beaten</span></div>")
-    o.append("</div></header><div class=wrap>")
+    o.append(hero("Stabilizer Rank Challenge",
+                  "Find smaller exact stabilizer decompositions of magic states. "
+                  f"<a href='state-of-the-art.html'>Read the state of the art.</a>"))
+    o.append("<div class=wrap>")
 
-    # ---- headline
-    o.append("<div class=lead>")
-    o.append(f"<div class=card><div class=k>Exponents beaten</div>"
-             f"<div class=v>{len(moved)}</div>"
-             f"<div class=s>of {len(ORBIT_ORDER)} orbits</div></div>")
-    o.append(f"<div class=card><div class=k>Machine-checked</div>"
-             f"<div class=v>{ver_n + rep_n}</div>"
-             f"<div class=s>of {len(entries)} submissions</div></div>")
-    tightest = min((r for r in board if r["best"]),
-                   key=lambda r: r["best"]["res"]["gamma"], default=None)
-    if tightest:
-        o.append(f"<div class=card><div class=k>Tightest exponent</div>"
-                 f"<div class=v>{tightest['best']['res']['gamma']:.4f}</div>"
-                 f"<div class=s>{ORBIT_LABEL[tightest['orbit']]}, "
-                 f"{SYSTEM[tightest['orbit']]}</div></div>")
+    # ---- the graph, first thing on the page
+    o.append("<h2>Record progress</h2>")
+    o.append("<p class=h2sub>Best known per-copy exponent &gamma; for each orbit. "
+             "Lower is better; a line steps down when a submission improved that "
+             "orbit's best bound.</p>")
+    o.append("<div class=chartbox>" + progress_chart(entries) + "</div>")
+    o.append("<div class=legend>" + "".join(
+        f"<span><i style='background:{COLOR[ob]}'></i>{ORBIT_LABEL[ob]} "
+        f"({SYSTEM[ob]})</span>" for ob in ORBIT_ORDER) + "</div>")
+
+    # ---- contributor leaderboard
+    o.append("<h2>Leaderboard</h2>")
+    o.append("<p class=h2sub>Ranked by records held. A record needs a bound the "
+             "pipeline could check, so cited literature values never take one.</p>")
+    o.append("<div class=lb><div class=lbhead><div>"
+             f"<div class=t>Leaderboard</div><div class=s>{len(people)} contributors "
+             f"&middot; {len(entries)} bounds submitted through the challenge</div></div>")
+    if tight:
+        o.append(f"<div><div class=bigk>Tightest &gamma;</div>"
+                 f"<div class=big>{tight['best']['res']['gamma']:.4f}</div>"
+                 f"<div class=s style='text-align:right'>{ORBIT_LABEL[tight['orbit']]}"
+                 f" &middot; {E(tight['best']['sub']['provenance'].get('author',''))}</div></div>")
+    o.append("</div>")
+    for i, a in enumerate(people, 1):
+        best = f"{a['best']:.4f}" if a["best"] is not None else "&mdash;"
+        o.append(f"<div class=lbrow><div class=rk>{i}</div>"
+                 f"<div class=who>{E(a['who'])}{' &#128081;' if i == 1 and a['records'] else ''}</div>"
+                 f"<div class=m><b>{a['n']}</b><span>bounds</span></div>"
+                 f"<div class=m><b>{a['records']}</b><span>records</span></div>"
+                 f"<div class=m><b>{best}</b><span>best &gamma;</span></div></div>")
     o.append("</div>")
 
-    # ---- leaderboard
-    o.append("<section><h2>Leaderboard &mdash; per-copy exponent &gamma;</h2>")
-    o.append("<p>A record needs a bound the pipeline could check. Cited literature "
-             "values appear in the ledger below but never hold a record, so topping a "
-             "cell means submitting something verifiable.</p><div class=tw><table>")
+    # ---- exponent table
+    o.append("<h2>Exponents</h2>")
+    o.append("<p class=h2sub>Every &gamma; below is published. "
+             f"{len(moved)} of {len(ORBIT_ORDER)} have been beaten here.</p><div class=tw><table>")
     o.append("<thead><tr><th>orbit</th><th></th><th class=num>published &gamma; &le;</th>"
              "<th class=num>best here</th><th>progress</th><th>record held by</th>"
              "</tr></thead><tbody>")
     for r in board:
-        orbit, base = r["orbit"], r["baseline"]
-        best = r["best"]
-        lab = f"{ORBIT_LABEL[orbit]}"
+        orbit, base, best = r["orbit"], r["baseline"], r["best"]
         if best:
             g = best["res"]["gamma"]
             beat = g < base - 1e-12
             s = best["sub"]
-            held = (f"<a href='bounds/{best['slug']}.html'>&chi;(&#8739;{E(orbit)}&rang;"
-                    f"<sup>&otimes;{s['m']}</sup>) &le; {s['rank']}</a> "
-                    f"{tier_pill(best['res']['tier'])}")
-            gtxt = (f"<span class=gain>{g:.4f}</span>" if beat else f"{g:.4f}")
+            held = (f"<a href='bounds/{best['slug']}.html'>&chi; &le; {s['rank']} "
+                    f"at m={s['m']}</a> {tier_pill(best['res']['tier'])}")
+            gtxt = f"<span class=gain>{g:.4f}</span>" if beat else f"{g:.4f}"
             frac = max(0.0, min(1.0, (base - g) / base)) if base else 0
             bar = f"<div class=bar><i style='width:{frac*100:.1f}%'></i></div>"
         else:
             gtxt, held, bar = "<span class=none>&mdash;</span>", \
                 "<span class=none>open</span>", "<div class=bar></div>"
         o.append(f"<tr{' class=rec' if best and best['res']['gamma'] < base - 1e-12 else ''}>"
-                 f"<td><b>{lab}</b></td><td class=mono style='color:var(--mut)'>{SYSTEM[orbit]}</td>"
+                 f"<td><b>{ORBIT_LABEL[orbit]}</b></td>"
+                 f"<td class=mono style='color:var(--mut)'>{SYSTEM[orbit]}</td>"
                  f"<td class=num>{base:.4f}</td><td class=num>{gtxt}</td>"
                  f"<td>{bar}</td><td>{held}</td></tr>")
-    o.append("</tbody></table></div></section>")
+    o.append("</tbody></table></div>")
 
-    # ---- per-orbit cells
-    o.append("<section><h2>Cell ledger</h2>")
-    o.append("<p>Best bound on &chi;(&#8739;M&rang;<sup>&otimes;m</sup>) for each orbit "
-             "and copy count. A cell with matching upper and lower bounds is settled.</p>")
-    o.append("<div class=grid>")
+    # ---- cell ledger
+    o.append("<h2>Cell ledger</h2>")
+    o.append("<p class=h2sub>Best bound on &chi;(&#8739;M&rang;<sup>&otimes;m</sup>) "
+             "per orbit and copy count. Matching upper and lower bounds settle a cell.</p>")
+    o.append("<div class=grid3>")
     for orbit in ORBIT_ORDER:
         base, base_txt = BASELINE[orbit]
         o.append(f"<div class=orb><h3>{ORBIT_LABEL[orbit]}</h3>"
-                 f"<div class=sub>{SYSTEM[orbit]} &middot; published &gamma; &le; {base_txt} "
-                 f"&asymp; {base:.4f}</div><div class=cells>")
+                 f"<div class=sub>{SYSTEM[orbit]} &middot; published &gamma; &le; "
+                 f"{base_txt} &asymp; {base:.4f}</div><div class=cells>")
         ms = sorted({int(k[1]) for k in cells if k[0] == orbit})
         if not ms:
             o.append("<div><span class=none>no bounds yet</span></div>")
         for m in ms:
-            up = cells.get((orbit, m, "upper"))
-            lo = cells.get((orbit, m, "lower"))
-            u = f"&le;{up['sub']['rank']}" if up else "&mdash;"
-            l = f"&ge;{lo['sub']['rank']}" if lo else ""
+            up, lo = cells.get((orbit, m, "upper")), cells.get((orbit, m, "lower"))
             settled = up and lo and up["sub"]["rank"] == lo["sub"]["rank"]
-            val = (f"<b>= {up['sub']['rank']}</b>" if settled
-                   else f"{l + ', ' if l else ''}{u}")
-            tier = tier_pill(up["res"]["tier"]) if up else ""
-            o.append(f"<div><span>m = {m}</span><span>{val} {tier}</span></div>")
+            u = f"&le;{up['sub']['rank']}" if up else "&mdash;"
+            l = f"&ge;{lo['sub']['rank']}, " if lo else ""
+            val = f"<b>= {up['sub']['rank']}</b>" if settled else f"{l}{u}"
+            o.append(f"<div><span>m = {m}</span><span>{val} "
+                     f"{tier_pill(up['res']['tier']) if up else ''}</span></div>")
         o.append("</div></div>")
-    o.append("</div></section>")
+    o.append("</div>")
 
     # ---- all submissions
-    o.append("<section><h2>All submissions</h2><div class=tw><table>")
+    o.append("<h2>All submissions</h2><div class=tw><table>")
     o.append("<thead><tr><th>bound</th><th>orbit</th><th class=num>m</th>"
              "<th class=num>rank</th><th class=num>&gamma;</th><th>tier</th>"
              "<th>attribution</th></tr></thead><tbody>")
@@ -338,100 +613,75 @@ def build():
         gt = f"{g:.4f}" if (g is not None and s["direction"] == "upper") else "&mdash;"
         o.append(f"<tr><td><a href='bounds/{e['slug']}.html'>&chi;<sub>R</sub>"
                  f"(&#8739;{E(s['orbit'])}&rang;<sup>&otimes;{s['m']}</sup>) {sign} "
-                 f"{s['rank']}</a></td>"
-                 f"<td>{ORBIT_LABEL[s['orbit']]}</td><td class=num>{s['m']}</td>"
-                 f"<td class=num>{s['rank']}</td><td class=num>{gt}</td>"
-                 f"<td>{tier_pill(r['tier'], r['ok'])}</td>"
+                 f"{s['rank']}</a></td><td>{ORBIT_LABEL[s['orbit']]}</td>"
+                 f"<td class=num>{s['m']}</td><td class=num>{s['rank']}</td>"
+                 f"<td class=num>{gt}</td><td>{tier_pill(r['tier'], r['ok'])}</td>"
                  f"<td style='white-space:normal'>{E(s['provenance'].get('author',''))}"
                  f" &middot; <span class=mono style='font-size:12px'>"
                  f"{E(s['provenance'].get('reference',''))}</span></td></tr>")
-    o.append("</tbody></table></div></section>")
+    o.append("</tbody></table></div>")
 
-    # ---- submit
-    o.append("<section><h2>Submit a bound</h2>")
+    # ---- submit, with the schema folded away
+    o.append("<h2>Submit a bound</h2>")
     o.append("<p>Add one JSON file to <code>bounds/</code> and open a pull request. "
              "An upper bound carries its decomposition; every term is given by its "
              "stabilizer parametrisation, so a term that is not a stabilizer state "
-             "cannot be written down in the first place. The pipeline rebuilds the "
-             "identity in exact arithmetic and a floating-point near-miss earns "
-             "nothing.</p>")
-    o.append("<pre>" + E(json.dumps({
-        "schema_version": "0.1", "orbit": "S", "m": 2,
-        "direction": "upper", "rank": 2,
-        "witness": {
-            "terms": [{"k": 2, "x0": [0, 0], "W": [[1, 0], [0, 1]],
-                       "Q": [[1, 1], [0, 1]], "l": [0, 0]}, "..."],
-            "coeffs": ["3/4 + sqrt(3)*I/4", "..."]},
-        "provenance": {"author": "you", "reference": "arXiv:...", "method": "..."},
+             "cannot be written down. The pipeline rebuilds the identity in exact "
+             "arithmetic, and a floating-point near-miss earns nothing. Lower bounds "
+             "carry a certificate script that must run and assert.</p>")
+    o.append("<p>Do not hand-compute coefficients: supply the terms and run "
+             "<code>make fit BOUND=bounds/yours.json</code>, which solves for them "
+             "exactly or tells you no exact combination of those terms works.</p>")
+    o.append("<details><summary>Submission format</summary><pre>" + E(json.dumps({
+        "schema_version": "0.1", "orbit": "S", "m": 2, "direction": "upper", "rank": 2,
+        "witness": {"terms": [{"k": 2, "x0": [0, 0], "W": [[1, 0], [0, 1]],
+                               "Q": [[1, 1], [0, 1]], "l": [0, 0]}, "..."],
+                    "coeffs": ["3/4 + sqrt(3)*I/4", "..."]},
+        "provenance": {"author": "you", "reference": "arXiv:...",
+                       "method": "...", "date": "2026-01-01"},
         "notes": "what is new about it",
-    }, indent=2)) + "</pre>")
-    o.append("<p>Do not hand-compute the coefficients. Supply the terms and run "
-             "<code>make fit BOUND=bounds/your.json</code>, which solves for them "
-             "exactly or tells you no exact combination of those terms works &mdash; "
-             "before you spend a review.</p>")
-    o.append("<p>Lower bounds cannot be checked from a static witness, so they carry "
-             "a certificate script that must run and assert. Anything else is recorded "
-             "as <span class='pill t-cited'>cited</span> and cannot take a record.</p>")
-    o.append("</section>")
+    }, indent=2)) + "</pre></details>")
 
-    o.append("<section><h2>Background</h2>")
-    o.append("<p>The <a href='state-of-the-art.html'>state-of-the-art notes</a> carry "
-             "the material this leaderboard does not: the optimality conjectures and "
-             "their exact plateau residuals, the algebraic floors below the m=4 cells, "
-             "the T3 orbit's certificate status, and the reference list. A bound here "
-             "is a claim the pipeline can check; the notes are where the reasoning "
-             "lives.</p></section>")
-    o.append("<footer>Bounds are re-verified on every build; nothing here is taken on "
-             "the submitter's word. Source and submission guide in the "
-             "<a href='https://github.com/unitaryfoundation/stabrank'>stabrank "
-             "repository</a>. Run by the "
-             "<a href='https://unitary.foundation'>Unitary Foundation</a>.</footer>")
-    o.append("</div></body></html>")
+    o.append("</div>" + footer() + "</body></html>")
 
-    os.makedirs(DOCS, exist_ok=True)
     os.makedirs(os.path.join(DOCS, "bounds"), exist_ok=True)
     with open(os.path.join(DOCS, "index.html"), "w") as f:
         f.write("".join(o))
     with open(os.path.join(DOCS, "style.css"), "w") as f:
         f.write(CSS)
-
+    references_page(parse_bib(os.path.join(DOCS, "refs.bib")))
     for e in entries:
         detail_page(e)
-
-    print(f"docs/index.html written: {len(entries)} bounds, "
-          f"{ver_n} verified, {rep_n} reproduced, {len(moved)} exponents beaten")
-    return entries
+    print(f"docs/ written: {len(entries)} bounds, {ver_n} verified, {rep_n} reproduced, "
+          f"{len(moved)} exponents beaten, {len(people)} contributors")
 
 
 def detail_page(e):
     s, r = e["sub"], e["res"]
     sign = "&le;" if s["direction"] == "upper" else "&ge;"
-    o = [head(f"chi({s['orbit']}^{s['m']}) {s['direction']} {s['rank']}", rel="../")]
-    o.append("<header class=hero>" + HEROSVG + "<div class=wrap>")
-    o.append(f"<h1>&chi;<sub>R</sub>(&#8739;{E(s['orbit'])}&rang;"
-             f"<sup>&otimes;{s['m']}</sup>) {sign} {s['rank']}</h1>")
-    o.append(f"<p class=tag>{ORBIT_LABEL[s['orbit']]} orbit, {SYSTEM[s['orbit']]}. "
-             f"{E(s.get('notes','') or '')}</p>")
-    o.append("</div></header><div class=wrap>")
-    o.append(f"<p><a href='../index.html'>&larr; leaderboard</a></p>")
-    o.append("<section><h2>Verification</h2>")
-    o.append(f"<p>{tier_pill(r['tier'], r['ok'])} &nbsp; {E(r['detail'])}</p>")
+    o = [head(f"chi({s['orbit']}^{s['m']}) {sign} {s['rank']}", rel="../")]
+    o.append(hero(f"&chi;<sub>R</sub>(&#8739;{E(s['orbit'])}&rang;"
+                  f"<sup>&otimes;{s['m']}</sup>) {sign} {s['rank']}",
+                  f"{ORBIT_LABEL[s['orbit']]} orbit, {SYSTEM[s['orbit']]}.", rel="../"))
+    o.append("<div class=wrap><p><a href='../index.html'>&larr; leaderboard</a></p>")
+    o.append(f"<h2>Verification</h2><p>{tier_pill(r['tier'], r['ok'])} &nbsp; "
+             f"{E(r['detail'])}</p>")
     if r.get("gamma") is not None and s["direction"] == "upper":
         base = BASELINE[s["orbit"]][0]
         beat = r["gamma"] < base - 1e-12
-        o.append(f"<p>Implied per-copy exponent &gamma; &le; "
-                 f"<b>{r['gamma']:.4f}</b>, against a published {base:.4f} &mdash; "
-                 + ("<span class=gain>an improvement</span>." if beat
-                    else "no improvement.") + "</p>")
-    o.append("</section>")
-    o.append("<section><h2>Attribution</h2><p>"
-             + E(s["provenance"].get("author", "")) + " &middot; "
-             + f"<span class=mono>{E(s['provenance'].get('reference',''))}</span>"
-             + (" &middot; " + E(s["provenance"]["method"])
-                if s["provenance"].get("method") else "") + "</p></section>")
-    o.append("<section><h2>Submission</h2><pre>" + E(json.dumps(s, indent=2))
-             + "</pre></section>")
-    o.append("</div></body></html>")
+        o.append(f"<p>Implied per-copy exponent &gamma; &le; <b>{r['gamma']:.4f}</b>, "
+                 f"against a published {base:.4f} &mdash; "
+                 + ("<span class=gain>an improvement</span>." if beat else "no improvement.")
+                 + "</p>")
+    if s.get("notes"):
+        o.append(f"<h2>Notes</h2><p>{E(s['notes'])}</p>")
+    o.append("<h2>Attribution</h2><p>" + E(s["provenance"].get("author", ""))
+             + " &middot; <span class=mono>" + E(s["provenance"].get("reference", ""))
+             + "</span>" + (" &middot; " + E(s["provenance"]["method"])
+                            if s["provenance"].get("method") else "") + "</p>")
+    o.append("<h2>Submission</h2><details><summary>JSON</summary><pre>"
+             + E(json.dumps(s, indent=2)) + "</pre></details>")
+    o.append("</div>" + footer(rel="../") + "</body></html>")
     with open(os.path.join(DOCS, "bounds", f"{e['slug']}.html"), "w") as f:
         f.write("".join(o))
 

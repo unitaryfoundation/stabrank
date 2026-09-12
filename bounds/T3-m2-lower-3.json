@@ -11,7 +11,8 @@
   "provenance": {
     "author": "this repository",
     "reference": "stabrank PR #16",
-    "method": "Galois descent over Z[w3]; no search"
+    "method": "Galois descent over Z[w3]; no search",
+    "date": "2026-01-01"
   },
   "notes": "Holds for every m. With the rank-3 witness at m=2 this settles that cell exactly. Field-of-definition arguments for stabilizer rank are prior art (Lovitz and Steffan, over Q(i)); the Galois-orbit step and the Z[w3] instantiation are not."
 }

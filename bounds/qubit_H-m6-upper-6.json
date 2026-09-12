@@ -7,7 +7,8 @@
   "provenance": {
     "author": "Bravyi and Gosset",
     "reference": "arXiv:1601.07601",
-    "method": "literature"
+    "method": "literature",
+    "date": "2016-01-01"
   },
   "notes": "underpins the standard 2^{0.47n} figure"
 }
