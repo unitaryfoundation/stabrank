@@ -392,23 +392,30 @@ font-size:11px;background:var(--ac);color:#fff;border:none;border-radius:6px;
 padding:4px 10px;cursor:pointer}
 .copy:hover{background:#5b21b6}
 
-.recent{display:flex;flex-direction:column;gap:8px}
-.rrow{display:grid;grid-template-columns:1fr 120px 160px 92px 96px;gap:12px;
-align-items:center;padding:11px 16px;border:1px solid var(--ln);border-radius:10px;
-text-decoration:none;color:var(--ink);background:#fff}
-.rrow:hover{border-color:var(--ac);background:var(--soft)}
-.rb{font-family:"Space Mono",monospace;font-size:13px;font-weight:700}
-.rt{color:var(--mut);font-size:13px}
-.rw{font-size:13px}
-.rd{font-family:"Space Mono",monospace;font-size:12px;color:var(--mut);text-align:right}
-@media(max-width:760px){.rrow{grid-template-columns:1fr auto}
-.rrow .rt,.rrow .rw{display:none}}
+.recent{display:flex;flex-direction:column;gap:6px;border:1px solid var(--ln);
+border-radius:12px;padding:8px;background:var(--soft)}
+.rrow{display:flex;align-items:center;gap:12px;flex-wrap:nowrap;white-space:nowrap;
+padding:9px 14px;border-radius:8px;background:#fff}
+.rrow:hover{background:#fbfaff}
+.rb{font-size:13px;font-weight:700;text-decoration:none;color:var(--ink);flex:0 0 auto}
+.rb:hover{color:var(--ac)}
+.star{color:var(--ac);flex:0 0 auto}
+.rt{color:var(--mut);font-size:13px;flex:0 0 auto}
+.rw{font-size:13px;flex:0 0 auto}
+.rd{font-family:"Space Mono",monospace;font-size:12px;color:var(--mut);
+margin-left:auto;flex:0 0 auto}
+.srcnote{font-family:"Space Mono",monospace;font-size:10.5px;color:var(--mut)}
+.ket{font-family:Manrope,system-ui,sans-serif;font-weight:600;white-space:nowrap}
+.ket sup{font-size:.72em}
+@media(max-width:820px){.rrow .rt,.rrow .rw{display:none}}
 
 .scroll{max-height:520px;overflow-y:auto;border:1px solid var(--ln);border-radius:10px}
 .scroll table{font-size:13.5px}
 .scroll thead th{position:sticky;top:0;background:#fff;z-index:1;
 box-shadow:inset 0 -1px 0 var(--ln)}
 a.gh{text-decoration:none;font-weight:600}
+td.mono a{text-decoration:none;border-bottom:1px dotted var(--ln);padding-bottom:1px}
+td.mono a:hover{border-bottom-color:var(--ac)}
 a.gh:hover{text-decoration:underline}
 
 footer.foot{margin:64px 0 0;border-top:1px solid var(--ln);background:var(--soft)}
@@ -506,6 +513,51 @@ file and the leaderboard picks it up on the next build.</p>
 <p>A bound the pipeline cannot check is recorded as <span class='pill t-cited'>cited</span>
 and never takes a record.</p>
 </dialog>"""
+
+
+ARXIV = re.compile(r"arXiv:\s*([0-9]{4}\.[0-9]{4,5})", re.I)
+
+
+def arxiv_url(prov):
+    m = ARXIV.search(prov.get("reference", "") or "")
+    return f"https://arxiv.org/abs/{m.group(1)}" if m else None
+
+
+def source_link(e, rel=""):
+    """Where a reader should go to check this bound themselves.
+
+    A Lean proof beats a paper, a paper beats our own detail page, because the
+    point of a link here is to leave the leaderboard and see the evidence.
+    """
+    sub = e["sub"]
+    ln = sub.get("lean")
+    if ln:
+        return (REPO + "/blob/main/lean_proofs/" + ln["module"].replace(".", "/")
+                + ".lean", "Lean proof")
+    u = arxiv_url(sub["provenance"])
+    if u:
+        return u, "paper"
+    return f"{rel}bounds/{e['slug']}.html", "details"
+
+
+def ref_link(prov):
+    """Render a reference string, linking the arXiv id if there is one."""
+    txt = prov.get("reference", "") or ""
+    u = arxiv_url(prov)
+    if not u:
+        return E(txt)
+    m = ARXIV.search(txt)
+    return (E(txt[:m.start()]) + f"<a href='{u}'>{E(m.group(0))}</a>"
+            + E(txt[m.end():]))
+
+
+def ket(orbit, m, sign=None, rank=None):
+    """chi_R(|M>^{ot m}) in a form that renders without novelty glyphs."""
+    body = (f"<span class=ket>&chi;<sub>R</sub>(|{E(orbit)}&rang;"
+            f"<sup>&otimes;{m}</sup>)</span>")
+    if sign and rank is not None:
+        body += f" {sign} <b>{rank}</b>"
+    return body
 
 
 def lean_ok(sub):
@@ -689,8 +741,9 @@ def build():
             g = best["res"]["gamma"]
             beat = g < base - 1e-12
             s = best["sub"]
-            held = (f"<a href='bounds/{best['slug']}.html'>&chi; &le; {s['rank']} "
-                    f"at m={s['m']}</a> {tier_pill(best['res']['tier'])}")
+            url, what = source_link(best)
+            held = (f"<a href='{url}'>&chi; &le; {s['rank']} at m={s['m']}</a> "
+                    f"<span class=srcnote>{what}</span> {tier_pill(best['res']['tier'])}")
             gtxt = f"<span class=gain>{g:.4f}</span>" if beat else f"{g:.4f}"
             frac = max(0.0, min(1.0, (base - g) / base)) if base else 0
             bar = f"<div class=bar><i style='width:{frac*100:.1f}%'></i></div>"
@@ -725,7 +778,8 @@ def build():
             val = f"<b>= {up['sub']['rank']}</b>" if settled else f"{l}{u}"
             tgt = up or lo
             if tgt:
-                val = f"<a href='bounds/{tgt['slug']}.html'>{val}</a>"
+                url, _ = source_link(tgt)
+                val = f"<a href='{url}'>{val}</a>"
             o.append(f"<div><span>m = {m}</span><span>{val} "
                      f"{tier_pill(up['res']['tier']) if up else ''}</span></div>")
         o.append("</div></div>")
@@ -741,13 +795,14 @@ def build():
         s_, r = e["sub"], e["res"]
         sign = "&le;" if s_["direction"] == "upper" else "&ge;"
         star = "&#9733; " if e["res"]["tier"] in RECORD_TIERS else ""
-        o.append(f"<a class=rrow href='bounds/{e['slug']}.html'>"
-                 f"<span class=rb>{star}&chi;(&#8739;{E(s_['orbit'])}&rang;"
-                 f"<sup>&otimes;{s_['m']}</sup>) {sign} {s_['rank']}</span>"
+        url, _ = source_link(e)
+        o.append(f"<div class=rrow><a class=rb href='{url}'>"
+                 f"{ket(s_['orbit'], s_['m'], sign, s_['rank'])}</a>"
+                 f"{'<span class=star>&#9733;</span>' if star else ''}"
                  f"<span class=rt>{ORBIT_LABEL[s_['orbit']]}</span>"
                  f"<span class=rw>{gh_links(s_['provenance'])}</span>"
-                 f"<span>{tier_pill(r['tier'], r['ok'])}</span>"
-                 f"<span class=rd>{E(s_['provenance'].get('date','')[:10])}</span></a>")
+                 f"{tier_pill(r['tier'], r['ok'])}"
+                 f"<span class=rd>{E(s_['provenance'].get('date','')[:10])}</span></div>")
     o.append("</div>")
 
     # ---- all submissions
@@ -761,15 +816,15 @@ def build():
         sign = "&le;" if s["direction"] == "upper" else "&ge;"
         g = r.get("gamma")
         gt = f"{g:.4f}" if (g is not None and s["direction"] == "upper") else "&mdash;"
-        o.append(f"<tr><td><a href='bounds/{e['slug']}.html'>&chi;<sub>R</sub>"
-                 f"(&#8739;{E(s['orbit'])}&rang;<sup>&otimes;{s['m']}</sup>) {sign} "
-                 f"{s['rank']}</a></td><td>{ORBIT_LABEL[s['orbit']]}</td>"
+        url, _ = source_link(e)
+        o.append(f"<tr><td><a href='{url}'>{ket(s['orbit'], s['m'], sign, s['rank'])}"
+                 f"</a></td><td>{ORBIT_LABEL[s['orbit']]}</td>"
                  f"<td class=num>{s['m']}</td><td class=num>{s['rank']}</td>"
                  f"<td class=num>{gt}</td>"
                  f"<td>{tier_pill(r['tier'], r['ok'])} {lean_badge(s)}</td>"
                  f"<td style='white-space:normal'>{gh_links(s['provenance'])}"
                  f" &middot; <span class=mono style='font-size:12px'>"
-                 f"{E(s['provenance'].get('reference',''))}</span></td></tr>")
+                 f"{ref_link(s['provenance'])}</span></td></tr>")
     o.append("</tbody></table></div>")
 
     # ---- lean corpus
@@ -796,27 +851,6 @@ def build():
                      f"{E(ln['module'])}</td>"
                      f"<td>{tier_pill(e['res']['tier'], e['res']['ok'])}</td></tr>")
         o.append("</tbody></table></div>")
-
-    # ---- submit, with the schema folded away
-    o.append("<h2>Submit a bound</h2>")
-    o.append("<p>Add one JSON file to <code>bounds/</code> and open a pull request. "
-             "An upper bound carries its decomposition; every term is given by its "
-             "stabilizer parametrisation, so a term that is not a stabilizer state "
-             "cannot be written down. The pipeline rebuilds the identity in exact "
-             "arithmetic, and a floating-point near-miss earns nothing. Lower bounds "
-             "carry a certificate script that must run and assert.</p>")
-    o.append("<p>Do not hand-compute coefficients: supply the terms and run "
-             "<code>make fit BOUND=bounds/yours.json</code>, which solves for them "
-             "exactly or tells you no exact combination of those terms works.</p>")
-    o.append("<details><summary>Submission format</summary><pre>" + E(json.dumps({
-        "schema_version": "0.1", "orbit": "S", "m": 2, "direction": "upper", "rank": 2,
-        "witness": {"terms": [{"k": 2, "x0": [0, 0], "W": [[1, 0], [0, 1]],
-                               "Q": [[1, 1], [0, 1]], "l": [0, 0]}, "..."],
-                    "coeffs": ["3/4 + sqrt(3)*I/4", "..."]},
-        "provenance": {"author": "you", "reference": "arXiv:...",
-                       "method": "...", "date": "2026-01-01"},
-        "notes": "what is new about it",
-    }, indent=2)) + "</pre></details>")
 
     o.append("</div>" + footer() + "</body></html>")
 

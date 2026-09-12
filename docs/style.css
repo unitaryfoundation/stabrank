@@ -146,23 +146,30 @@ font-size:11px;background:var(--ac);color:#fff;border:none;border-radius:6px;
 padding:4px 10px;cursor:pointer}
 .copy:hover{background:#5b21b6}
 
-.recent{display:flex;flex-direction:column;gap:8px}
-.rrow{display:grid;grid-template-columns:1fr 120px 160px 92px 96px;gap:12px;
-align-items:center;padding:11px 16px;border:1px solid var(--ln);border-radius:10px;
-text-decoration:none;color:var(--ink);background:#fff}
-.rrow:hover{border-color:var(--ac);background:var(--soft)}
-.rb{font-family:"Space Mono",monospace;font-size:13px;font-weight:700}
-.rt{color:var(--mut);font-size:13px}
-.rw{font-size:13px}
-.rd{font-family:"Space Mono",monospace;font-size:12px;color:var(--mut);text-align:right}
-@media(max-width:760px){.rrow{grid-template-columns:1fr auto}
-.rrow .rt,.rrow .rw{display:none}}
+.recent{display:flex;flex-direction:column;gap:6px;border:1px solid var(--ln);
+border-radius:12px;padding:8px;background:var(--soft)}
+.rrow{display:flex;align-items:center;gap:12px;flex-wrap:nowrap;white-space:nowrap;
+padding:9px 14px;border-radius:8px;background:#fff}
+.rrow:hover{background:#fbfaff}
+.rb{font-size:13px;font-weight:700;text-decoration:none;color:var(--ink);flex:0 0 auto}
+.rb:hover{color:var(--ac)}
+.star{color:var(--ac);flex:0 0 auto}
+.rt{color:var(--mut);font-size:13px;flex:0 0 auto}
+.rw{font-size:13px;flex:0 0 auto}
+.rd{font-family:"Space Mono",monospace;font-size:12px;color:var(--mut);
+margin-left:auto;flex:0 0 auto}
+.srcnote{font-family:"Space Mono",monospace;font-size:10.5px;color:var(--mut)}
+.ket{font-family:Manrope,system-ui,sans-serif;font-weight:600;white-space:nowrap}
+.ket sup{font-size:.72em}
+@media(max-width:820px){.rrow .rt,.rrow .rw{display:none}}
 
 .scroll{max-height:520px;overflow-y:auto;border:1px solid var(--ln);border-radius:10px}
 .scroll table{font-size:13.5px}
 .scroll thead th{position:sticky;top:0;background:#fff;z-index:1;
 box-shadow:inset 0 -1px 0 var(--ln)}
 a.gh{text-decoration:none;font-weight:600}
+td.mono a{text-decoration:none;border-bottom:1px dotted var(--ln);padding-bottom:1px}
+td.mono a:hover{border-bottom-color:var(--ac)}
 a.gh:hover{text-decoration:underline}
 
 footer.foot{margin:64px 0 0;border-top:1px solid var(--ln);background:var(--soft)}
