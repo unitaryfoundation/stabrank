@@ -1,0 +1,21 @@
+{
+  "schema_version": "0.1",
+  "orbit": "N",
+  "m": 2,
+  "direction": "lower",
+  "rank": 3,
+  "certificate": {
+    "script": "verify_challenge/cert_m2_rank2.py",
+    "expect": "CERTIFIED chi(N^2) >= 3"
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank PR #18",
+    "method": "exhaustion over all 64620 pairs of 2-qutrit stabilizer states",
+    "date": "2026-09-12",
+    "github": [
+      "vprusso"
+    ]
+  },
+  "notes": "Pairs with the lean-certified rank-3 decomposition to settle this cell at chi = 3 exactly, and closes it as a route to the published exponent, which would need rank 2 here. The exclusion rests on a margin rather than exact arithmetic: the closest any two candidate directions come to parallel is 0.71 (N) or 0.73 (H3) against a threshold of 1 - 1e-6, so no rounding at the 1e-15 level of these inputs can close the gap. The same search finds the known rank-2 decomposition of the Strange state at m=2, which the certificate runs as a positive control and fails without."
+}
