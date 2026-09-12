@@ -48,6 +48,57 @@ BASELINE = {
 ORBIT_ORDER = ["S", "N", "H3", "T3", "qubit_H", "qubit_T"]
 SYSTEM = {"S": "qutrit", "N": "qutrit", "H3": "qutrit", "T3": "qutrit",
           "qubit_H": "qubit", "qubit_T": "qubit"}
+ORBIT_DEF = {
+ "S": ("(|1&rang; &minus; |2&rang;)/&radic;2",
+   "The Strange state. Its support misses |0&rang; entirely, which is what "
+   "makes it unusual among the qutrit magic states: two of the nine amplitudes "
+   "of |S&rang;<sup>&otimes;2</sup> vanish, and the missing support is exactly "
+   "what the rank-2 decomposition exploits.",
+   "Smallest known exact-rank exponent of the four qutrit orbits. Its m=3 and "
+   "m=4 cells are settled at 4, so the exponent cannot be improved there; "
+   "beating it needs m=6 at rank 7, where search terminates at exactly "
+   "&radic;(8/27) and never below."),
+ "N": ("(|0&rang; + |1&rang; &minus; 2|2&rang;)/&radic;6",
+   "The Norrell state. Real amplitudes, one of them twice the others in "
+   "magnitude, so unlike T3 its amplitudes are not all of equal modulus.",
+   "Shares the published exponent log&#8323;4/3 with H&#8323;. Its m=4 cell "
+   "sits at 7; rank 6 bottoms out at &radic;(211/4043) across five of six "
+   "independent anneals, with a deeper basin at &radic;(419/8559)."),
+ "H3": ("&radic;((3+&radic;3)/6)&nbsp;|0&rang; + "
+   "&radic;((3&minus;&radic;3)/12)&nbsp;(|1&rang; + |2&rang;)",
+   "The eigenvector of the qutrit Fourier transform with eigenvalue 1. The "
+   "qutrit analogue of the qubit H-type state, and like it the natural target "
+   "of distillation.",
+   "Its m=4 cell sits at 8; rank 6 terminates at exactly "
+   "&radic;(70&minus;37&radic;3)/12, identified to fifteen digits across five "
+   "runs on two independent engines."),
+ "T3": ("(|0&rang; + &omega;&#8329;|1&rang; + &omega;&#8329;&sup2;|2&rang;)/&radic;3, "
+   "&nbsp;&omega;&#8329; = e<sup>2&pi;i/9</sup>",
+   "The qutrit T-type or face-centre state. All three amplitudes have equal "
+   "modulus 1/&radic;3 and differ only by phase, which is precisely why the "
+   "subset-sum lower-bound technique cannot reach this orbit: that argument "
+   "needs an exponentially increasing subsequence of amplitude moduli.",
+   "The only orbit whose amplitudes leave Q(&omega;&#8323;), living instead in "
+   "Q(&omega;&#8329;). That extra field degree is what a Galois argument can "
+   "exploit, and it is where the certified &chi; &ge; 6 at m=3 comes from."),
+ "qubit_H": ("cos(&pi;/8)|0&rang; + sin(&pi;/8)|1&rang;",
+   "The qubit H-type state, the edge centre of the stabilizer octahedron. "
+   "Clifford-equivalent to the phase state (|0&rang; + "
+   "e<sup>i&pi;/4</sup>|1&rang;)/&radic;2, which is what the literature "
+   "usually means by 'the T state'.",
+   "The most studied cell in the field: &chi; &le; 6 at six copies underpins "
+   "the standard 2<sup>0.47n</sup> figure. The published exponent log&#8322;3/4 "
+   "comes from an asymptotic contracted-cat-state family rather than from any "
+   "single m, so every finite-m entry here sits above it."),
+ "qubit_T": ("cos(&beta;)|0&rang; + e<sup>i&pi;/4</sup>sin(&beta;)|1&rang;, "
+   "&nbsp;cos(2&beta;) = 1/&radic;3",
+   "The qubit Bravyi-Kitaev T-type state, the face centre of the stabilizer "
+   "octahedron. A different Clifford orbit from the H-type despite the "
+   "overloaded name.",
+   "Rank 5 at six copies is conjectured impossible, with search terminating at "
+   "exactly &radic;(5/6)&nbsp;sin(&pi;/12)."),
+}
+
 COLOR = {"S": "#6d28d9", "N": "#0369a1", "H3": "#059669",
          "T3": "#b45309", "qubit_H": "#be185d", "qubit_T": "#128081"}
 TIER_RANK = {"lean": 4, "verified": 3, "reproduced": 2, "cited": 1, None: 0}
@@ -125,6 +176,30 @@ def leaderboard(entries):
         rows.append({"orbit": orbit, "baseline": base, "baseline_txt": base_txt,
                      "best": best})
     return rows
+
+
+def next_target(orbit, base):
+    """The cheapest cell that would beat the published exponent.
+
+    An empty progress bar on every row carries no information; naming the
+    smallest rank at each m that would move the number is actionable.
+    """
+    p = ORBIT_P[orbit]
+    best = None
+    for m in range(2, 9):
+        r = math.floor(p ** (base * m) - 1e-9)
+        if abs(p ** (base * m) - r) < 1e-9:
+            r -= 1
+        if r < 2:
+            continue
+        g = math.log(r, p) / m
+        if g < base - 1e-12 and (best is None or g < best[2]):
+            best = (m, r, g)
+    if best is None:
+        return "<span class=none>&mdash;</span>"
+    m, r, g = best
+    return (f"<span class=tgt>needs &chi; &le; {r} at m={m}"
+            f"<span class=tgtg>&rarr; {g:.4f}</span></span>")
 
 
 def contributors(entries):
@@ -404,9 +479,26 @@ padding:9px 14px;border-radius:8px;background:#fff}
 .rw{font-size:13px;flex:0 0 auto}
 .rd{font-family:"Space Mono",monospace;font-size:12px;color:var(--mut);
 margin-left:auto;flex:0 0 auto}
-.srcnote{font-family:"Space Mono",monospace;font-size:10.5px;color:var(--mut)}
+.tp{font-family:"Cambria Math","STIX Two Math","DejaVu Math TeX Gyre",
+"Latin Modern Math",serif;font-size:.86em;vertical-align:.02em}
+.tgt{font-family:"Space Mono",monospace;font-size:11.5px;color:var(--mut);
+white-space:nowrap}
+.tgtg{color:var(--ac);margin-left:8px;font-weight:700}
+a.lgd{color:var(--mut);text-decoration:none;display:inline-flex;align-items:center}
+a.lgd:hover{color:var(--ac)}
+a.m{text-decoration:none;color:inherit;border-radius:8px;padding:4px 0}
+a.m:hover{background:var(--soft);color:var(--ac)}
+.lbrow .who a{text-decoration:none;color:var(--ink)}
+.lbrow .who a:hover{color:var(--ac)}
+.orb h3 a,.exp a{text-decoration:none;color:inherit}
+.orb h3 a:hover{color:var(--ac)}
+.statebox{border:1px solid var(--ln);border-left:4px solid var(--ac);
+border-radius:10px;padding:16px 20px;background:var(--soft);margin:4px 0 14px}
+.stateeq{font-size:19px;line-height:1.8}
+.stateeq sup{font-size:.7em}
 .ket{font-family:Manrope,system-ui,sans-serif;font-weight:600;white-space:nowrap}
 .ket sup{font-size:.72em}
+header.hero p br{line-height:2}
 @media(max-width:820px){.rrow .rt,.rrow .rw{display:none}}
 
 .scroll{max-height:520px;overflow-y:auto;border:1px solid var(--ln);border-radius:10px}
@@ -551,10 +643,14 @@ def ref_link(prov):
             + E(txt[m.end():]))
 
 
+TENS = "<span class=tp>&otimes;</span>"
+
+
 def ket(orbit, m, sign=None, rank=None):
-    """chi_R(|M>^{ot m}) in a form that renders without novelty glyphs."""
+    """chi_R(|M>^{ot m}). The tensor glyph gets its own font stack and size:
+    left in a monospace superscript it substitutes to an oversized circled x."""
     body = (f"<span class=ket>&chi;<sub>R</sub>(|{E(orbit)}&rang;"
-            f"<sup>&otimes;{m}</sup>)</span>")
+            f"<sup>{TENS}{m}</sup>)</span>")
     if sign and rank is not None:
         body += f" {sign} <b>{rank}</b>"
     return body
@@ -600,9 +696,23 @@ def gh_links(prov):
     return " ".join(f"<a class=gh href='https://github.com/{E(h)}'>@{E(h)}</a>" for h in hs)
 
 
-def tier_pill(tier, ok=True):
+def tier_pill(tier, ok=True, sub=None):
+    """One badge per bound.
+
+    A lean-tier bound shows only its Lean badge, which already says the tier and
+    links to the proof; showing both a `lean` pill and a `Lean - theorem` pill
+    was two tags for one fact. A cited bound links to what it is cited from.
+    """
     if not ok:
         return "<span class='pill t-failed'>failed</span>"
+    if tier == "lean" and sub is not None and sub.get("lean"):
+        return lean_badge(sub)
+    if tier == "cited" and sub is not None:
+        u = arxiv_url(sub["provenance"])
+        if u:
+            return (f"<a class='pill t-cited' href='{u}' "
+                    f"title='cited from {E(sub[chr(39)+chr(39)] if False else sub['provenance'].get('reference',''))}'>"
+                    f"cited</a>")
     return f"<span class='pill t-{tier}'>{tier}</span>"
 
 
@@ -691,7 +801,7 @@ def build():
 
     o = [head("Stabilizer Rank Challenge")]
     o.append(hero("Stabilizer Rank Challenge",
-                  "Find smaller exact stabilizer decompositions of magic states. "
+                  "Find smaller exact stabilizer decompositions of magic states.<br>"
                   f"<a href='state-of-the-art.html'>Read the state of the art.</a>"))
     o.append(PARTICIPATE)
     o.append("<div class=wrap>")
@@ -703,8 +813,8 @@ def build():
              "orbit's best bound.</p>")
     o.append("<div class=chartbox>" + progress_chart(entries) + "</div>")
     o.append("<div class=legend>" + "".join(
-        f"<span><i style='background:{COLOR[ob]}'></i>{ORBIT_LABEL[ob]} "
-        f"({SYSTEM[ob]})</span>" for ob in ORBIT_ORDER) + "</div>")
+        f"<a class=lgd href='orbits/{ob}.html'><i style='background:{COLOR[ob]}'></i>"
+        f"{ORBIT_LABEL[ob]} ({SYSTEM[ob]})</a>" for ob in ORBIT_ORDER) + "</div>")
 
     # ---- contributor leaderboard
     o.append("<h2>Leaderboard</h2>")
@@ -719,13 +829,27 @@ def build():
                  f"<div class=s style='text-align:right'>{ORBIT_LABEL[tight['orbit']]}"
                  f" &middot; {E(tight['best']['sub']['provenance'].get('author',''))}</div></div>")
     o.append("</div>")
+    bestlink = {}
+    for e in entries:
+        s_, r = e["sub"], e["res"]
+        w = s_["provenance"].get("author")
+        if s_["direction"] == "upper" and r["ok"] and r.get("gamma") is not None:
+            cur = bestlink.get(w)
+            if cur is None or r["gamma"] < cur[0]:
+                bestlink[w] = (r["gamma"], source_link(e)[0])
+    bestlink = {k: v[1] for k, v in bestlink.items()}
     for i, a in enumerate(people, 1):
         best = f"{a['best']:.4f}" if a["best"] is not None else "&mdash;"
+        pg = f"people/{person_slug(a['who'])}.html"
+        bl = (f"<a href='{bestlink[a['who']]}'>{best}</a>"
+              if a["who"] in bestlink else best)
         o.append(f"<div class=lbrow><div class=rk>{i}</div>"
-                 f"<div class=who>{a['links']}{' &#128081;' if i == 1 and a['records'] else ''}</div>"
-                 f"<div class=m><b>{a['n']}</b><span>bounds</span></div>"
-                 f"<div class=m><b>{a['records']}</b><span>records</span></div>"
-                 f"<div class=m><b>{best}</b><span>best &gamma;</span></div></div>")
+                 f"<div class=who><a href='{pg}'>{E(a['who'])}</a> {a['links']}"
+                 f"{' &#128081;' if i == 1 and a['records'] else ''}</div>"
+                 f"<a class=m href='{pg}#bounds'><b>{a['n']}</b><span>bounds</span></a>"
+                 f"<a class=m href='{pg}#records'><b>{a['records']}</b>"
+                 f"<span>records</span></a>"
+                 f"<div class=m><b>{bl}</b><span>best &gamma;</span></div></div>")
     o.append("</div>")
 
     # ---- exponent table
@@ -743,15 +867,15 @@ def build():
             s = best["sub"]
             url, what = source_link(best)
             held = (f"<a href='{url}'>&chi; &le; {s['rank']} at m={s['m']}</a> "
-                    f"<span class=srcnote>{what}</span> {tier_pill(best['res']['tier'])}")
+                    f"{tier_pill(best['res']['tier'], True, best['sub'])}")
             gtxt = f"<span class=gain>{g:.4f}</span>" if beat else f"{g:.4f}"
-            frac = max(0.0, min(1.0, (base - g) / base)) if base else 0
-            bar = f"<div class=bar><i style='width:{frac*100:.1f}%'></i></div>"
+            bar = (f"<span class=gain>beaten by {base - g:.4f}</span>" if beat
+                   else next_target(orbit, base))
         else:
-            gtxt, held, bar = "<span class=none>&mdash;</span>", \
-                "<span class=none>open</span>", "<div class=bar></div>"
+            gtxt, held = "<span class=none>&mdash;</span>", "<span class=none>open</span>"
+            bar = next_target(orbit, base)
         o.append(f"<tr{' class=rec' if best and best['res']['gamma'] < base - 1e-12 else ''}>"
-                 f"<td><b>{ORBIT_LABEL[orbit]}</b></td>"
+                 f"<td><b><a href='orbits/{orbit}.html'>{ORBIT_LABEL[orbit]}</a></b></td>"
                  f"<td class=mono style='color:var(--mut)'>{SYSTEM[orbit]}</td>"
                  f"<td class=num>{base:.4f}</td><td class=num>{gtxt}</td>"
                  f"<td>{bar}</td><td>{held}</td></tr>")
@@ -764,7 +888,8 @@ def build():
     o.append("<div class=grid3>")
     for orbit in ORBIT_ORDER:
         base, base_txt = BASELINE[orbit]
-        o.append(f"<div class=orb><h3>{ORBIT_LABEL[orbit]}</h3>"
+        o.append(f"<div class=orb><h3><a href='orbits/{orbit}.html'>"
+                 f"{ORBIT_LABEL[orbit]}</a></h3>"
                  f"<div class=sub>{SYSTEM[orbit]} &middot; published &gamma; &le; "
                  f"{base_txt} &asymp; {base:.4f}</div><div class=cells>")
         ms = sorted({int(k[1]) for k in cells if k[0] == orbit})
@@ -781,7 +906,7 @@ def build():
                 url, _ = source_link(tgt)
                 val = f"<a href='{url}'>{val}</a>"
             o.append(f"<div><span>m = {m}</span><span>{val} "
-                     f"{tier_pill(up['res']['tier']) if up else ''}</span></div>")
+                     f"{tier_pill(up['res']['tier'], True, up['sub']) if up else ''}</span></div>")
         o.append("</div></div>")
     o.append("</div>")
 
@@ -801,7 +926,7 @@ def build():
                  f"{'<span class=star>&#9733;</span>' if star else ''}"
                  f"<span class=rt>{ORBIT_LABEL[s_['orbit']]}</span>"
                  f"<span class=rw>{gh_links(s_['provenance'])}</span>"
-                 f"{tier_pill(r['tier'], r['ok'])}"
+                 f"{tier_pill(r['tier'], r['ok'], s_)}"
                  f"<span class=rd>{E(s_['provenance'].get('date','')[:10])}</span></div>")
     o.append("</div>")
 
@@ -821,7 +946,7 @@ def build():
                  f"</a></td><td>{ORBIT_LABEL[s['orbit']]}</td>"
                  f"<td class=num>{s['m']}</td><td class=num>{s['rank']}</td>"
                  f"<td class=num>{gt}</td>"
-                 f"<td>{tier_pill(r['tier'], r['ok'])} {lean_badge(s)}</td>"
+                 f"<td>{tier_pill(r['tier'], r['ok'], s_)} {lean_badge(s)}</td>"
                  f"<td style='white-space:normal'>{gh_links(s['provenance'])}"
                  f" &middot; <span class=mono style='font-size:12px'>"
                  f"{ref_link(s['provenance'])}</span></td></tr>")
@@ -837,19 +962,17 @@ def build():
                  "decomposition identities proved in <span class=mono>lean_proofs/"
                  "</span>, and they are built in CI against mathlib.</p>")
         o.append("<div class=tw><table><thead><tr><th>bound</th><th>theorem</th>"
-                 "<th>module</th><th>tier</th></tr></thead><tbody>")
+                 "<th>orbit</th></tr></thead><tbody>")
         for e in sorted(leaned, key=lambda e: (ORBIT_ORDER.index(e["sub"]["orbit"]),
                                                int(e["sub"]["m"]))):
             s_, ln = e["sub"], e["sub"]["lean"]
             url = (REPO + "/blob/main/lean_proofs/"
                    + ln["module"].replace(".", "/") + ".lean")
-            o.append(f"<tr><td><a href='bounds/{e['slug']}.html'>&chi;(&#8739;"
-                     f"{E(s_['orbit'])}&rang;<sup>&otimes;{s_['m']}</sup>) &le; "
-                     f"{s_['rank']}</a></td>"
+            o.append(f"<tr><td><a href='{url}'>"
+                     f"{ket(s_['orbit'], s_['m'], '&le;', s_['rank'])}</a></td>"
                      f"<td class=mono><a href='{url}'>{E(ln['theorem'])}</a></td>"
-                     f"<td class=mono style='color:var(--mut);font-size:12px'>"
-                     f"{E(ln['module'])}</td>"
-                     f"<td>{tier_pill(e['res']['tier'], e['res']['ok'])}</td></tr>")
+                     f"<td><a href='orbits/{s_['orbit']}.html'>"
+                     f"{ORBIT_LABEL[s_['orbit']]}</a></td></tr>")
         o.append("</tbody></table></div>")
 
     o.append("</div>" + footer() + "</body></html>")
@@ -862,10 +985,100 @@ def build():
     references_page(parse_bib(os.path.join(DOCS, "refs.bib")))
     for e in entries:
         detail_page(e)
+    for orbit in ORBIT_ORDER:
+        orbit_page(orbit, entries, cells)
+    for a in people:
+        person_page(a, entries, cells)
     print(f"docs/ written: {len(entries)} bounds, {lean_n} lean-certified "
           f"({leanclaim_n} claim a proof), "
           f"{ver_n} verified, {rep_n} reproduced, {len(moved)} exponents beaten, "
           f"{len(people)} contributors")
+
+
+def orbit_page(orbit, entries, cells):
+    """A dedicated page per magic-state orbit: what the state is, and every
+    bound anyone has submitted against it."""
+    defn, blurb, note = ORBIT_DEF[orbit]
+    base, base_txt = BASELINE[orbit]
+    mine = [e for e in entries if e["sub"]["orbit"] == orbit]
+    o = [head(f"{ORBIT_LABEL[orbit]} — Stabilizer Rank Challenge", rel="../")]
+    o.append(hero(f"{ORBIT_LABEL[orbit]}",
+                  f"The {SYSTEM[orbit]} {ORBIT_LABEL[orbit]} orbit. "
+                  f"Published &gamma; &le; {base_txt} &asymp; {base:.4f}.", rel="../"))
+    o.append(PARTICIPATE)
+    o.append("<div class=wrap><p><a href='../index.html'>&larr; back to the board</a></p>")
+    o.append(f"<h2>The state</h2><div class=statebox><div class=stateeq>"
+             f"|{E(orbit)}&rang; = {defn}</div></div>")
+    o.append(f"<p>{blurb}</p><p>{note}</p>")
+    o.append("<h2>Bounds on this orbit</h2><div class=tw><table>"
+             "<thead><tr><th>bound</th><th class=num>m</th><th class=num>rank</th>"
+             "<th class=num>&gamma;</th><th>tier</th><th>attribution</th>"
+             "</tr></thead><tbody>")
+    for e in sorted(mine, key=lambda e: (int(e["sub"]["m"]), e["sub"]["direction"])):
+        s_, r = e["sub"], e["res"]
+        sign = "&le;" if s_["direction"] == "upper" else "&ge;"
+        g = r.get("gamma")
+        gt = f"{g:.4f}" if (g is not None and s_["direction"] == "upper") else "&mdash;"
+        url, _ = source_link(e, rel="../")
+        o.append(f"<tr><td><a href='{url}'>{ket(orbit, s_['m'], sign, s_['rank'])}</a></td>"
+                 f"<td class=num>{s_['m']}</td><td class=num>{s_['rank']}</td>"
+                 f"<td class=num>{gt}</td>"
+                 f"<td>{tier_pill(r['tier'], r['ok'], s_)}</td>"
+                 f"<td style='white-space:normal'>{gh_links(s_['provenance'])} &middot; "
+                 f"<span class=mono style='font-size:12px'>{ref_link(s_['provenance'])}"
+                 f"</span></td></tr>")
+    o.append("</tbody></table></div>")
+    o.append(f"<h2>What would move it</h2><p>Beating the published exponent needs "
+             f"{next_target(orbit, base)}.</p>")
+    o.append("</div>" + footer(rel="../") + "</body></html>")
+    os.makedirs(os.path.join(DOCS, "orbits"), exist_ok=True)
+    with open(os.path.join(DOCS, "orbits", f"{orbit}.html"), "w") as f:
+        f.write("".join(o))
+
+
+def person_slug(who):
+    return re.sub(r"[^a-z0-9]+", "-", who.lower()).strip("-")
+
+
+def person_page(a, entries, cells):
+    """A page per contributor, so the leaderboard's counts are all clickable."""
+    holders = {id(e) for e in cells.values()}
+    mine = [e for e in entries if e["sub"]["provenance"].get("author") == a["who"]]
+    o = [head(f"{a['who']} — Stabilizer Rank Challenge", rel="../")]
+    o.append(hero(E(a["who"]),
+                  f"{a['n']} bounds submitted &middot; {a['records']} records held.",
+                  rel="../"))
+    o.append(PARTICIPATE)
+    o.append("<div class=wrap><p><a href='../index.html'>&larr; back to the board</a></p>")
+    for title, anchor, sel in (
+        ("Records held", "records", lambda e: id(e) in holders),
+        ("All bounds", "bounds", lambda e: True)):
+        rows = [e for e in mine if sel(e)]
+        o.append(f"<h2 id='{anchor}'>{title} <span class=h2note>&middot; "
+                 f"{len(rows)}</span></h2>")
+        if not rows:
+            o.append("<p class=none>none yet</p>")
+            continue
+        o.append("<div class=tw><table><thead><tr><th>bound</th><th>orbit</th>"
+                 "<th class=num>&gamma;</th><th>tier</th></tr></thead><tbody>")
+        for e in sorted(rows, key=lambda e: (ORBIT_ORDER.index(e["sub"]["orbit"]),
+                                             int(e["sub"]["m"]))):
+            s_, r = e["sub"], e["res"]
+            sign = "&le;" if s_["direction"] == "upper" else "&ge;"
+            g = r.get("gamma")
+            gt = f"{g:.4f}" if (g is not None and s_["direction"] == "upper") else "&mdash;"
+            url, _ = source_link(e, rel="../")
+            o.append(f"<tr><td><a href='{url}'>"
+                     f"{ket(s_['orbit'], s_['m'], sign, s_['rank'])}</a></td>"
+                     f"<td><a href='../orbits/{s_['orbit']}.html'>"
+                     f"{ORBIT_LABEL[s_['orbit']]}</a></td>"
+                     f"<td class=num>{gt}</td>"
+                     f"<td>{tier_pill(r['tier'], r['ok'], s_)}</td></tr>")
+        o.append("</tbody></table></div>")
+    o.append("</div>" + footer(rel="../") + "</body></html>")
+    os.makedirs(os.path.join(DOCS, "people"), exist_ok=True)
+    with open(os.path.join(DOCS, "people", f"{person_slug(a['who'])}.html"), "w") as f:
+        f.write("".join(o))
 
 
 def detail_page(e):
@@ -877,7 +1090,7 @@ def detail_page(e):
                   f"{ORBIT_LABEL[s['orbit']]} orbit, {SYSTEM[s['orbit']]}.", rel="../"))
     o.append(PARTICIPATE)
     o.append("<div class=wrap><p><a href='../index.html'>&larr; back to the board</a></p>")
-    o.append(f"<h2>Verification</h2><p>{tier_pill(r['tier'], r['ok'])} &nbsp; "
+    o.append(f"<h2>Verification</h2><p>{tier_pill(r['tier'], r['ok'], s)} &nbsp; "
              f"{E(r['detail'])}</p>")
     if r.get("gamma") is not None and s["direction"] == "upper":
         base = BASELINE[s["orbit"]][0]
