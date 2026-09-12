@@ -251,8 +251,12 @@ def next_target(orbit, base):
 
 def contributors(entries):
     """Rank submitters. Records are what count; volume breaks ties."""
+    # best_by_cell reports the tightest bound known for a cell, which is what the
+    # ledger should show even when it is a literature value. A record is a
+    # stronger claim: the pipeline had to be able to check it.
     cells = best_by_cell(entries)
-    holders = {id(e) for e in cells.values()}
+    holders = {id(e) for e in cells.values()
+               if e["res"]["tier"] in RECORD_TIERS}
     agg = {}
     for e in entries:
         s, r = e["sub"], e["res"]
@@ -916,9 +920,10 @@ def build():
         o.append(f"<div class=lbrow><div class=rk>{i}</div>"
                  f"<div class=who><a href='{pg}'>{a['links']}</a>"
                  f"{' &#128081;' if i == 1 and a['records'] else ''}</div>"
-                 f"<a class=m href='{pg}#bounds'><b>{a['n']}</b><span>bounds</span></a>"
+                 f"<a class=m href='{pg}#bounds'><b>{a['n']}</b>"
+                 f"<span>bound{'' if a['n'] == 1 else 's'}</span></a>"
                  f"<a class=m href='{pg}#records'><b>{a['records']}</b>"
-                 f"<span>records</span></a>"
+                 f"<span>record{'' if a['records'] == 1 else 's'}</span></a>"
                  f"<div class=m><b>{bl}</b><span>best &gamma;</span></div></div>")
     o.append("</div>")
 
@@ -984,11 +989,19 @@ def build():
     o.append("</div>")
 
     # ---- recently added
-    recent = sorted(entries,
-                    key=lambda e: e["sub"]["provenance"].get("date", ""),
-                    reverse=True)[:10]
-    o.append("<h2>Recently added <span class=h2note>&middot; last 10 by submission "
-             "date</span></h2><div class=recent>")
+    # Most of the literature arrived in two batches on one day each, so the date
+    # alone would hand nearly every slot to whichever orbit sorts first; ties go
+    # to record-holding tiers, then across orbits.
+    recent = sorted(
+        entries,
+        key=lambda e: (e["sub"]["provenance"].get("date", ""),
+                       e["res"]["tier"] in RECORD_TIERS,
+                       -ORBIT_ORDER.index(e["sub"]["orbit"]),
+                       -int(e["sub"]["m"])),
+        reverse=True)[:10]
+    o.append("<h2>Recently added <span class=h2note>&middot; newest first; a "
+             "literature entry is dated by its arXiv v1</span></h2>"
+             "<div class=recent>")
     for e in recent:
         s_, r = e["sub"], e["res"]
         sign = "&le;" if s_["direction"] == "upper" else "&ge;"

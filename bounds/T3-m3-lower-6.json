@@ -1,0 +1,21 @@
+{
+  "schema_version": "0.1",
+  "orbit": "T3",
+  "m": 3,
+  "direction": "lower",
+  "rank": 6,
+  "certificate": {
+    "script": "verify_challenge/cert_t3m3_rank6.py",
+    "expect": "CERTIFIED chi(T3^3) >= 6"
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank PR #16",
+    "method": "Galois descent to cut the search to finitely many candidate lines, then exhaustion",
+    "date": "2026-09-07",
+    "github": [
+      "vprusso"
+    ]
+  },
+  "notes": "Pairs with the rank-8 upper bound to put this cell at 6 <= chi <= 8. Every rank-5 decomposition would put five stabilizer states on one projective line off the Galois space; the 45 candidate groups are enumerated and each is rejected by least squares. The rejection is numerical, not symbolic, so this earns the reproduced tier rather than verified. The groups do exist, so the argument cannot be closed by observing that none do. Grouping is done on a random projection to C^3, which can only propose extra candidates, never lose one, since a linear map preserves collinearity."
+}
