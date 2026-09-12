@@ -1,0 +1,9 @@
+{
+  "module": "LeanProofs.QubitTM4",
+  "ok": false,
+  "log": [
+    "Some required targets logged failures:",
+    "- LeanProofs.QubitTM4",
+    "error: build failed"
+  ]
+}

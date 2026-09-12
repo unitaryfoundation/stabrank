@@ -1,0 +1,8 @@
+{
+  "module": "LeanProofs.NorrellM3Pointwise",
+  "ok": true,
+  "log": [
+    "\u2714 [3301/3301] Built LeanProofs.NorrellM3Pointwise (17s)",
+    "Build completed successfully (3301 jobs)."
+  ]
+}

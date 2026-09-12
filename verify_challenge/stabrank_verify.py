@@ -20,15 +20,24 @@ exit zero having printed its claim. A bound with no runnable certificate is
 recorded at the `cited` tier and is never allowed to set a leaderboard record.
 
 Tiers, in decreasing strength:
+    lean        a Lean theorem proves it, and the build receipt confirms it compiles
     verified    exact arithmetic confirmed the decomposition here
     reproduced  a certificate script ran to completion and asserted the bound
     cited       attributed to the literature; not machine-checked
+
+The Lean tier is the one that does not depend on trusting this file. Building
+mathlib is far too slow to run on every site build, so a bound claiming it needs
+a receipt in certs/lean-<module>.json written by `make lean-certify` after a
+real `lake build`. Without the receipt the claim is ignored and the bound falls
+back to whatever the exact-arithmetic check earns it, so a Lean claim can never
+inflate a tier on its own.
 """
 
 from __future__ import annotations
 
 import json
 import os
+import re
 import subprocess
 import sys
 
@@ -245,6 +254,43 @@ def verify_lower(sub, budget_s=900):
     return Result(True, "reproduced", f"certificate script asserted: {expect or 'ok'}")
 
 
+LEAN_ROOT = os.path.join(ROOT, "lean_proofs")
+
+
+def lean_receipt_path(module):
+    return os.path.join(ROOT, "certs", f"lean-{module.replace('.', '-')}.json")
+
+
+def verify_lean(sub):
+    """Accept a Lean claim only if the theorem is there and the build receipt is.
+
+    Returns a Result on success, or None to fall through to the other checks.
+    """
+    lean = sub.get("lean")
+    if not lean or not lean.get("module") or not lean.get("theorem"):
+        return None
+    mod, thm = lean["module"], lean["theorem"]
+    src = os.path.join(LEAN_ROOT, *mod.split(".")) + ".lean"
+    if not os.path.isfile(src):
+        return Result(False, None, f"Lean module not found: {mod}")
+    text = open(src).read()
+    if not re.search(rf"^\s*(theorem|lemma)\s+{re.escape(thm)}\b", text, re.M):
+        return Result(False, None, f"{thm} is not declared in {mod}")
+    rec = lean_receipt_path(mod)
+    if not os.path.isfile(rec):
+        return None      # not built here; fall back rather than claim the tier
+    r = json.load(open(rec))
+    if not r.get("ok"):
+        # The Lean proof does not compile. That is a problem with the proof, not
+        # with the bound, so do not fail the bound: drop to the other checks and
+        # let the site show the module as broken.
+        return None
+    p = ORBIT_P[sub["orbit"]]
+    g = (implied_gamma(p, int(sub["rank"]), int(sub["m"]))
+         if sub["direction"] == "upper" else None)
+    return Result(True, "lean", f"{thm} in {mod}, machine-checked by Lean", g)
+
+
 def verify(sub, budget_s=900):
     for field in ("schema_version", "orbit", "m", "direction", "rank", "provenance"):
         if field not in sub:
@@ -255,6 +301,9 @@ def verify(sub, budget_s=900):
         return Result(False, None, "m must be at least 1")
     if int(sub["rank"]) < 1:
         return Result(False, None, "rank must be at least 1")
+    lean = verify_lean(sub)
+    if lean is not None:
+        return lean
     if sub["direction"] == "upper":
         if not sub.get("witness"):
             return Result(True, "cited",

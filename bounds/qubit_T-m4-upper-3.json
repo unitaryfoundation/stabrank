@@ -8,7 +8,15 @@
     "author": "Labib and Russo",
     "reference": "arXiv:2605.28586",
     "method": "literature",
-    "date": "2026-01-01"
+    "date": "2026-01-01",
+    "github": [
+      "FarLab",
+      "vprusso"
+    ]
   },
-  "notes": "matches the QPG exponent by direct algebra"
+  "notes": "matches the QPG exponent by direct algebra",
+  "lean": {
+    "module": "LeanProofs.QubitTM4",
+    "theorem": "stabilizer_rank_le_three"
+  }
 }

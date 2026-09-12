@@ -16,3 +16,8 @@ fit:
 
 seed:
 	uv run python verify_challenge/seed_bounds.py
+
+# Build the Lean modules the bounds depend on and write build receipts.
+# Slow (mathlib); the site trusts the receipts rather than rebuilding.
+lean-certify:
+	uv run python verify_challenge/lean_certify.py

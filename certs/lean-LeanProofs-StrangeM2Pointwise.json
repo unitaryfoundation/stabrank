@@ -1,0 +1,8 @@
+{
+  "module": "LeanProofs.StrangeM2Pointwise",
+  "ok": true,
+  "log": [
+    "\u2714 [3300/3300] Built LeanProofs.StrangeM2Pointwise (6.7s)",
+    "Build completed successfully (3300 jobs)."
+  ]
+}

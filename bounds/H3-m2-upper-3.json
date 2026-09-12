@@ -8,7 +8,15 @@
     "author": "Labib and Russo",
     "reference": "arXiv:2605.28586",
     "method": "literature",
-    "date": "2026-01-01"
+    "date": "2026-01-01",
+    "github": [
+      "FarLab",
+      "vprusso"
+    ]
   },
-  "notes": ""
+  "notes": "",
+  "lean": {
+    "module": "LeanProofs.H3M2Pointwise",
+    "theorem": "h3_m2_vector_decomposition"
+  }
 }

@@ -50,8 +50,8 @@ SYSTEM = {"S": "qutrit", "N": "qutrit", "H3": "qutrit", "T3": "qutrit",
           "qubit_H": "qubit", "qubit_T": "qubit"}
 COLOR = {"S": "#6d28d9", "N": "#0369a1", "H3": "#059669",
          "T3": "#b45309", "qubit_H": "#be185d", "qubit_T": "#128081"}
-TIER_RANK = {"verified": 3, "reproduced": 2, "cited": 1, None: 0}
-RECORD_TIERS = ("verified", "reproduced")
+TIER_RANK = {"lean": 4, "verified": 3, "reproduced": 2, "cited": 1, None: 0}
+RECORD_TIERS = ("lean", "verified", "reproduced")
 
 E = html.escape
 
@@ -135,7 +135,8 @@ def contributors(entries):
     for e in entries:
         s, r = e["sub"], e["res"]
         who = s["provenance"].get("author", "unknown")
-        a = agg.setdefault(who, {"who": who, "n": 0, "verified": 0, "records": 0,
+        a = agg.setdefault(who, {"who": who, "links": gh_links(s["provenance"]),
+                                 "n": 0, "verified": 0, "records": 0,
                                  "best": None, "cells": set()})
         a["n"] += 1
         if r["ok"] and r["tier"] == "verified":
@@ -167,7 +168,8 @@ def progress_chart(entries):
         rows = sorted(
             [e for e in entries
              if e["sub"]["orbit"] == orbit and e["sub"]["direction"] == "upper"
-             and e["res"]["ok"] and e["res"].get("gamma") is not None],
+             and e["res"]["ok"] and e["res"].get("gamma") is not None
+             and int(e["sub"]["m"]) > 1],   # m=1 is not an asymptotic record
             key=lambda e: e["sub"]["provenance"].get("date", "2026-01-01"))
         for e in rows:
             yr = int(e["sub"]["provenance"].get("date", "2026")[:4])
@@ -184,7 +186,7 @@ def progress_chart(entries):
     y0, y1 = min(years), max(years) + 1
     gs = [g for pts in series.values() for _, g in pts] + \
          [b for b, _ in BASELINE.values()]
-    lo, hi = min(gs) * 0.93, max(gs) * 1.05
+    lo, hi = min(gs) * 0.96, max(gs) * 1.04
 
     W, H = 900, 330
     L, R, T, B = 62, 150, 18, 40
@@ -218,9 +220,24 @@ def progress_chart(entries):
         for yr, g in pts:
             o.append(f"<circle cx='{X(yr):.1f}' cy='{Y(g):.1f}' r='4' "
                      f"fill='#fff' stroke='{c}' stroke-width='2'/>")
-        fg = pts[-1][1]
-        o.append(f"<text class=lbl x='{X(y1)+9:.1f}' y='{Y(fg)+4:.1f}' fill='{c}'>"
-                 f"{ORBIT_LABEL[orbit]} &middot; {fg:.4f}</text>")
+    # right-edge labels collide when orbits share an exponent, so lay them out
+    # in one pass with a minimum vertical gap and a leader line back to the line
+    ends = sorted(((pts[-1][1], ob) for ob, pts in series.items()),
+                  key=lambda t: -t[0])
+    placed, prev = [], None
+    for g, ob in ends:
+        y = Y(g)
+        if prev is not None and y - prev < 15:
+            y = prev + 15
+        placed.append((ob, g, y))
+        prev = y
+    for ob, g, y in placed:
+        c = COLOR[ob]
+        if abs(y - Y(g)) > 1:
+            o.append(f"<path class=leader d='M{X(y1):.1f},{Y(g):.1f} "
+                     f"L{X(y1)+6:.1f},{y:.1f}' stroke='{c}'/>")
+        o.append(f"<text class=lbl x='{X(y1)+10:.1f}' y='{y+4:.1f}' fill='{c}'>"
+                 f"{ORBIT_LABEL[ob]} &middot; {g:.4f}</text>")
     o.append("</svg>")
     return "".join(o)
 
@@ -318,6 +335,10 @@ tr.rec td{background:#fbfaff}
 
 .pill{display:inline-block;font-family:"Space Mono",monospace;font-size:11px;
 padding:2px 8px;border-radius:999px;border:1px solid currentColor}
+.t-lean{color:#6d28d9;text-decoration:none;font-weight:700}
+.t-leanbad{color:var(--bad);text-decoration:none;font-weight:700}
+.t-leanpend{color:var(--mut);text-decoration:none}
+.t-lean:hover{background:#6d28d9;color:#fff}
 .t-verified{color:var(--ex)}.t-reproduced{color:var(--ac)}
 .t-cited{color:var(--mut)}.t-failed{color:var(--bad)}
 .gain{color:var(--ex);font-weight:700}
@@ -348,6 +369,48 @@ font-family:"Space Mono",monospace;font-size:12px;color:var(--mut)}
 .refs .au{color:var(--ink)}
 .refs .vn{color:var(--mut)}
 .refs .nt{color:var(--mut);font-size:13.5px;margin-top:3px}
+.chart .leader{fill:none;stroke-width:1.2;opacity:.55}
+.h2note{font-weight:400;font-size:14px;color:var(--mut);letter-spacing:0}
+
+.modal{border:none;border-radius:14px;padding:0;max-width:620px;width:calc(100% - 32px);
+box-shadow:0 24px 70px rgba(0,0,0,.35)}
+.modal::backdrop{background:rgba(15,23,42,.55)}
+.modal h3{margin:0 0 4px;font-size:22px}
+.modal>*:not(form){padding:0 26px}
+.modal h3{padding-top:24px}
+.modal p:last-of-type{padding-bottom:24px}
+.modal p{color:var(--mut);max-width:none}
+.modal form{display:flex;justify-content:flex-end;padding:10px 12px 0}
+.modal .x{background:none;border:none;font-size:24px;line-height:1;color:var(--mut);
+cursor:pointer;padding:0 6px}
+.codewrap{position:relative;margin:14px 26px}
+.codewrap pre{background:var(--dark);color:#e4e4e7;border:none;margin:0;
+padding:16px 18px;border-radius:10px}
+.codewrap code{color:#e4e4e7}
+.copy{position:absolute;top:10px;right:10px;font-family:"Space Mono",monospace;
+font-size:11px;background:var(--ac);color:#fff;border:none;border-radius:6px;
+padding:4px 10px;cursor:pointer}
+.copy:hover{background:#5b21b6}
+
+.recent{display:flex;flex-direction:column;gap:8px}
+.rrow{display:grid;grid-template-columns:1fr 120px 160px 92px 96px;gap:12px;
+align-items:center;padding:11px 16px;border:1px solid var(--ln);border-radius:10px;
+text-decoration:none;color:var(--ink);background:#fff}
+.rrow:hover{border-color:var(--ac);background:var(--soft)}
+.rb{font-family:"Space Mono",monospace;font-size:13px;font-weight:700}
+.rt{color:var(--mut);font-size:13px}
+.rw{font-size:13px}
+.rd{font-family:"Space Mono",monospace;font-size:12px;color:var(--mut);text-align:right}
+@media(max-width:760px){.rrow{grid-template-columns:1fr auto}
+.rrow .rt,.rrow .rw{display:none}}
+
+.scroll{max-height:520px;overflow-y:auto;border:1px solid var(--ln);border-radius:10px}
+.scroll table{font-size:13.5px}
+.scroll thead th{position:sticky;top:0;background:#fff;z-index:1;
+box-shadow:inset 0 -1px 0 var(--ln)}
+a.gh{text-decoration:none;font-weight:600}
+a.gh:hover{text-decoration:underline}
+
 footer.foot{margin:64px 0 0;border-top:1px solid var(--ln);background:var(--soft)}
 .footmain{max-width:1060px;margin:0 auto;padding:26px 20px 30px}
 .footbrand{max-width:420px}
@@ -391,7 +454,8 @@ def hero(title, tagline, rel=""):
         "<div class=brand><span class=brandmark>"
         f"<a href='https://unitary.foundation' aria-label='Unitary Foundation'>{UFLOGO}</a>"
         "</span>"
-        f"<a class=lbcta href='{REPO}#contributing'>Participate</a></div>"
+        "<button class=lbcta type=button onclick=\"document.getElementById('participate').showModal()\">"
+        "Participate</button></div>"
         f"<h1>{title}</h1><p>{tagline}</p>"
         "<nav class=topnav>"
         f"<a href='{rel}state-of-the-art.html'>State of the art</a>"
@@ -422,6 +486,66 @@ def footer(rel=""):
         out.append(f"<a href='{href}'>" + (GHICON if icon else "") + label + "</a>")
     out.append("</nav></div></footer>")
     return "".join(out)
+
+
+PARTICIPATE = """<dialog id=participate class=modal>
+<form method=dialog><button class=x aria-label=Close>&times;</button></form>
+<h3>Participate</h3>
+<p>Run it yourself, or point a coding agent at it.</p>
+<div class=codewrap><button class=copy type=button
+onclick="navigator.clipboard.writeText(this.parentNode.querySelector('code').innerText)">copy</button>
+<pre><code>git clone https://github.com/unitaryfoundation/stabrank
+cd stabrank
+# describe your decomposition in bounds/mybound.json
+make fit BOUND=bounds/mybound.json ARGS=--write
+make verify BOUND=bounds/mybound.json</code></pre></div>
+<p><code>fit</code> solves for the exact coefficients, or tells you no exact
+combination of your terms reproduces the target. <code>verify</code> rebuilds
+the identity in exact arithmetic. If it passes, open a pull request adding the
+file and the leaderboard picks it up on the next build.</p>
+<p>A bound the pipeline cannot check is recorded as <span class='pill t-cited'>cited</span>
+and never takes a record.</p>
+</dialog>"""
+
+
+def lean_ok(sub):
+    """True/False if a build receipt exists for this bound's module, else None."""
+    ln = sub.get("lean")
+    if not ln:
+        return None
+    rec = os.path.join(CERTS, "lean-" + ln["module"].replace(".", "-") + ".json")
+    if not os.path.isfile(rec):
+        return None
+    return bool(json.load(open(rec)).get("ok"))
+
+
+def lean_badge(sub, rel=""):
+    """Link a bound to the Lean theorem that proves it, when there is one.
+
+    Shown independently of the tier: the badge says a proof exists, the tier
+    says whether a build receipt confirmed it compiles.
+    """
+    ln = sub.get("lean")
+    if not ln:
+        return ""
+    url = (REPO + "/blob/main/lean_proofs/"
+           + ln["module"].replace(".", "/") + ".lean")
+    ok = lean_ok(sub)
+    cls = "t-lean" if ok else ("t-leanbad" if ok is False else "t-leanpend")
+    tip = ("machine-checked" if ok else
+           ("the recorded lake build of this module fails" if ok is False
+            else "no build receipt recorded yet"))
+    mark = "" if ok else (" &#9888;" if ok is False else " &middot; unbuilt")
+    return (f"<a class='pill {cls}' href='{url}' title='{E(ln['module'])} &mdash; {tip}'>"
+            f"Lean &middot; {E(ln['theorem'])}{mark}</a>")
+
+
+def gh_links(prov):
+    """Render submitters as linked GitHub handles where we know them."""
+    hs = prov.get("github") or []
+    if not hs:
+        return E(prov.get("author", ""))
+    return " ".join(f"<a class=gh href='https://github.com/{E(h)}'>@{E(h)}</a>" for h in hs)
 
 
 def tier_pill(tier, ok=True):
@@ -473,6 +597,7 @@ def references_page(refs):
     o = [head("References — Stabilizer Rank Challenge")]
     o.append(hero("References",
                   "Work the bounds on this leaderboard are measured against."))
+    o.append(PARTICIPATE)
     o.append("<div class=wrap><ol class=refs>")
     for r in sorted(refs, key=lambda r: (r.get("year", ""), r.get("author", ""))):
         au = E(r.get("author", "")).replace(" and ", ", ")
@@ -504,6 +629,8 @@ def build():
     cells = best_by_cell(entries)
     board = leaderboard(entries)
     people = contributors(entries)
+    lean_n = sum(1 for e in entries if e["res"]["ok"] and e["res"]["tier"] == "lean")
+    leanclaim_n = sum(1 for e in entries if e["sub"].get("lean"))
     ver_n = sum(1 for e in entries if e["res"]["ok"] and e["res"]["tier"] == "verified")
     rep_n = sum(1 for e in entries if e["res"]["ok"] and e["res"]["tier"] == "reproduced")
     moved = [r for r in board if r["best"] and r["best"]["res"]["gamma"] < r["baseline"] - 1e-12]
@@ -514,6 +641,7 @@ def build():
     o.append(hero("Stabilizer Rank Challenge",
                   "Find smaller exact stabilizer decompositions of magic states. "
                   f"<a href='state-of-the-art.html'>Read the state of the art.</a>"))
+    o.append(PARTICIPATE)
     o.append("<div class=wrap>")
 
     # ---- the graph, first thing on the page
@@ -542,7 +670,7 @@ def build():
     for i, a in enumerate(people, 1):
         best = f"{a['best']:.4f}" if a["best"] is not None else "&mdash;"
         o.append(f"<div class=lbrow><div class=rk>{i}</div>"
-                 f"<div class=who>{E(a['who'])}{' &#128081;' if i == 1 and a['records'] else ''}</div>"
+                 f"<div class=who>{a['links']}{' &#128081;' if i == 1 and a['records'] else ''}</div>"
                  f"<div class=m><b>{a['n']}</b><span>bounds</span></div>"
                  f"<div class=m><b>{a['records']}</b><span>records</span></div>"
                  f"<div class=m><b>{best}</b><span>best &gamma;</span></div></div>")
@@ -595,13 +723,35 @@ def build():
             u = f"&le;{up['sub']['rank']}" if up else "&mdash;"
             l = f"&ge;{lo['sub']['rank']}, " if lo else ""
             val = f"<b>= {up['sub']['rank']}</b>" if settled else f"{l}{u}"
+            tgt = up or lo
+            if tgt:
+                val = f"<a href='bounds/{tgt['slug']}.html'>{val}</a>"
             o.append(f"<div><span>m = {m}</span><span>{val} "
                      f"{tier_pill(up['res']['tier']) if up else ''}</span></div>")
         o.append("</div></div>")
     o.append("</div>")
 
+    # ---- recently added
+    recent = sorted(entries,
+                    key=lambda e: e["sub"]["provenance"].get("date", ""),
+                    reverse=True)[:10]
+    o.append("<h2>Recently added <span class=h2note>&middot; last 10 by submission "
+             "date</span></h2><div class=recent>")
+    for e in recent:
+        s_, r = e["sub"], e["res"]
+        sign = "&le;" if s_["direction"] == "upper" else "&ge;"
+        star = "&#9733; " if e["res"]["tier"] in RECORD_TIERS else ""
+        o.append(f"<a class=rrow href='bounds/{e['slug']}.html'>"
+                 f"<span class=rb>{star}&chi;(&#8739;{E(s_['orbit'])}&rang;"
+                 f"<sup>&otimes;{s_['m']}</sup>) {sign} {s_['rank']}</span>"
+                 f"<span class=rt>{ORBIT_LABEL[s_['orbit']]}</span>"
+                 f"<span class=rw>{gh_links(s_['provenance'])}</span>"
+                 f"<span>{tier_pill(r['tier'], r['ok'])}</span>"
+                 f"<span class=rd>{E(s_['provenance'].get('date','')[:10])}</span></a>")
+    o.append("</div>")
+
     # ---- all submissions
-    o.append("<h2>All submissions</h2><div class=tw><table>")
+    o.append("<h2>All submissions</h2><div class='tw scroll'><table>")
     o.append("<thead><tr><th>bound</th><th>orbit</th><th class=num>m</th>"
              "<th class=num>rank</th><th class=num>&gamma;</th><th>tier</th>"
              "<th>attribution</th></tr></thead><tbody>")
@@ -615,11 +765,37 @@ def build():
                  f"(&#8739;{E(s['orbit'])}&rang;<sup>&otimes;{s['m']}</sup>) {sign} "
                  f"{s['rank']}</a></td><td>{ORBIT_LABEL[s['orbit']]}</td>"
                  f"<td class=num>{s['m']}</td><td class=num>{s['rank']}</td>"
-                 f"<td class=num>{gt}</td><td>{tier_pill(r['tier'], r['ok'])}</td>"
-                 f"<td style='white-space:normal'>{E(s['provenance'].get('author',''))}"
+                 f"<td class=num>{gt}</td>"
+                 f"<td>{tier_pill(r['tier'], r['ok'])} {lean_badge(s)}</td>"
+                 f"<td style='white-space:normal'>{gh_links(s['provenance'])}"
                  f" &middot; <span class=mono style='font-size:12px'>"
                  f"{E(s['provenance'].get('reference',''))}</span></td></tr>")
     o.append("</tbody></table></div>")
+
+    # ---- lean corpus
+    leaned = [e for e in entries if e["sub"].get("lean")]
+    if leaned:
+        o.append("<h2>Lean corpus <span class=h2note>&middot; "
+                 f"{len(leaned)} bounds with machine-checked proofs</span></h2>")
+        o.append("<p class=h2sub>A Lean theorem is the strongest thing a bound can "
+                 "carry: it does not ask you to trust this pipeline. These are the "
+                 "decomposition identities proved in <span class=mono>lean_proofs/"
+                 "</span>, and they are built in CI against mathlib.</p>")
+        o.append("<div class=tw><table><thead><tr><th>bound</th><th>theorem</th>"
+                 "<th>module</th><th>tier</th></tr></thead><tbody>")
+        for e in sorted(leaned, key=lambda e: (ORBIT_ORDER.index(e["sub"]["orbit"]),
+                                               int(e["sub"]["m"]))):
+            s_, ln = e["sub"], e["sub"]["lean"]
+            url = (REPO + "/blob/main/lean_proofs/"
+                   + ln["module"].replace(".", "/") + ".lean")
+            o.append(f"<tr><td><a href='bounds/{e['slug']}.html'>&chi;(&#8739;"
+                     f"{E(s_['orbit'])}&rang;<sup>&otimes;{s_['m']}</sup>) &le; "
+                     f"{s_['rank']}</a></td>"
+                     f"<td class=mono><a href='{url}'>{E(ln['theorem'])}</a></td>"
+                     f"<td class=mono style='color:var(--mut);font-size:12px'>"
+                     f"{E(ln['module'])}</td>"
+                     f"<td>{tier_pill(e['res']['tier'], e['res']['ok'])}</td></tr>")
+        o.append("</tbody></table></div>")
 
     # ---- submit, with the schema folded away
     o.append("<h2>Submit a bound</h2>")
@@ -652,8 +828,10 @@ def build():
     references_page(parse_bib(os.path.join(DOCS, "refs.bib")))
     for e in entries:
         detail_page(e)
-    print(f"docs/ written: {len(entries)} bounds, {ver_n} verified, {rep_n} reproduced, "
-          f"{len(moved)} exponents beaten, {len(people)} contributors")
+    print(f"docs/ written: {len(entries)} bounds, {lean_n} lean-certified "
+          f"({leanclaim_n} claim a proof), "
+          f"{ver_n} verified, {rep_n} reproduced, {len(moved)} exponents beaten, "
+          f"{len(people)} contributors")
 
 
 def detail_page(e):
@@ -663,7 +841,8 @@ def detail_page(e):
     o.append(hero(f"&chi;<sub>R</sub>(&#8739;{E(s['orbit'])}&rang;"
                   f"<sup>&otimes;{s['m']}</sup>) {sign} {s['rank']}",
                   f"{ORBIT_LABEL[s['orbit']]} orbit, {SYSTEM[s['orbit']]}.", rel="../"))
-    o.append("<div class=wrap><p><a href='../index.html'>&larr; leaderboard</a></p>")
+    o.append(PARTICIPATE)
+    o.append("<div class=wrap><p><a href='../index.html'>&larr; back to the board</a></p>")
     o.append(f"<h2>Verification</h2><p>{tier_pill(r['tier'], r['ok'])} &nbsp; "
              f"{E(r['detail'])}</p>")
     if r.get("gamma") is not None and s["direction"] == "upper":
@@ -673,6 +852,17 @@ def detail_page(e):
                  f"against a published {base:.4f} &mdash; "
                  + ("<span class=gain>an improvement</span>." if beat else "no improvement.")
                  + "</p>")
+    if s.get("lean"):
+        ln = s["lean"]
+        url = (REPO + "/blob/main/lean_proofs/" + ln["module"].replace(".", "/") + ".lean")
+        o.append("<h2>Lean proof</h2><p>This bound is backed by a machine-checked "
+                 f"theorem: <a class=mono href='{url}'>{E(ln['theorem'])}</a> in "
+                 f"<span class=mono>{E(ln['module'])}</span>. "
+                 + ("The recorded <code>lake build</code> confirms it compiles."
+                    if r["tier"] == "lean" else
+                    "No build receipt is recorded here yet, so this bound is shown "
+                    "at the tier the other checks earn it; the Lean claim does not "
+                    "inflate a tier on its own.") + "</p>")
     if s.get("notes"):
         o.append(f"<h2>Notes</h2><p>{E(s['notes'])}</p>")
     o.append("<h2>Attribution</h2><p>" + E(s["provenance"].get("author", ""))

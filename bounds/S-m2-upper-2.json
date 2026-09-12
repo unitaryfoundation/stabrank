@@ -78,7 +78,15 @@
     "author": "Labib and Russo",
     "reference": "arXiv:2605.28586, Theorem 2",
     "method": "carry decomposition",
-    "date": "2026-01-01"
+    "date": "2026-01-01",
+    "github": [
+      "FarLab",
+      "vprusso"
+    ]
   },
-  "notes": "Two full-support terms; the smallest known exponent across the four qutrit orbits."
+  "notes": "Two full-support terms; the smallest known exponent across the four qutrit orbits.",
+  "lean": {
+    "module": "LeanProofs.StrangeM2Pointwise",
+    "theorem": "strange_m2_vector_decomposition"
+  }
 }

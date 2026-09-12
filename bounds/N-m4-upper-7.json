@@ -8,7 +8,15 @@
     "author": "Labib and Russo",
     "reference": "arXiv:2605.28586",
     "method": "literature",
-    "date": "2026-01-01"
+    "date": "2026-01-01",
+    "github": [
+      "FarLab",
+      "vprusso"
+    ]
   },
-  "notes": "rank 6 floors at sqrt(211/4043)"
+  "notes": "rank 6 floors at sqrt(211/4043)",
+  "lean": {
+    "module": "LeanProofs.NorrellM4Pointwise",
+    "theorem": "norrell_m4_vector_decomposition"
+  }
 }

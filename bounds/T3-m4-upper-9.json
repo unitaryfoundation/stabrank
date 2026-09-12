@@ -8,7 +8,11 @@
     "author": "Labib and Russo",
     "reference": "arXiv:2605.28586",
     "method": "literature",
-    "date": "2026-01-01"
+    "date": "2026-01-01",
+    "github": [
+      "FarLab",
+      "vprusso"
+    ]
   },
   "notes": "nine-term product witness from the m=2 carry decomposition"
 }
