@@ -182,7 +182,11 @@ border-radius:10px;padding:16px 20px;background:var(--soft);margin:4px 0 14px}
 .stateeq{font-size:19px;line-height:1.8}
 .stateeq sup{font-size:.7em}
 .ket{font-family:Manrope,system-ui,sans-serif;font-weight:600;white-space:nowrap}
-.ket sup{font-size:.72em}
+.ket math{font-size:1.02em}
+math{font-family:"STIX Two Math","Cambria Math","Latin Modern Math",serif}
+.stateeq math{font-size:1.5em}
+.h2sub math,.sub math,thead math{font-size:1em}
+.sub math{color:var(--mut)}
 header.hero p br{line-height:2}
 @media(max-width:820px){.rrow .rt,.rrow .rw{display:none}}
 

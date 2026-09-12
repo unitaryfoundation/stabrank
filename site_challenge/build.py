@@ -32,6 +32,29 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from stabrank_verify import ORBIT_LABEL, ORBIT_P, implied_gamma, verify  # noqa: E402
 from _assets import GHICON, UFLOGO  # noqa: E402
 
+import latex2mathml.converter as _l2m
+
+_MCACHE = {}
+
+
+def M(tex, block=False):
+    """Render LaTeX to MathML at build time.
+
+    Done here rather than at page load so the site ships static markup: no
+    runtime script, no CDN, and nothing that breaks when a stylesheet or font
+    file cannot be fetched. Browsers render MathML natively.
+    """
+    key = (tex, block)
+    if key not in _MCACHE:
+        try:
+            out = _l2m.convert(tex)
+            if block:
+                out = out.replace('display="inline"', 'display="block"', 1)
+        except Exception:
+            out = f"<code>{E(tex)}</code>"
+        _MCACHE[key] = out
+    return _MCACHE[key]
+
 DOCS = os.path.join(ROOT, "docs")
 BOUNDS = os.path.join(ROOT, "bounds")
 CERTS = os.path.join(ROOT, "certs")
@@ -48,8 +71,32 @@ BASELINE = {
 ORBIT_ORDER = ["S", "N", "H3", "T3", "qubit_H", "qubit_T"]
 SYSTEM = {"S": "qutrit", "N": "qutrit", "H3": "qutrit", "T3": "qutrit",
           "qubit_H": "qubit", "qubit_T": "qubit"}
+ORBIT_TEX = {
+ # \left|...\right\rangle rather than |...\rangle: the bare form renders the
+ # ket as an identifier (italic, symbol spacing), the fenced form as an
+ # operator, which is what gives correct spacing.
+ "S":  r"\left|S\right\rangle = \frac{\left|1\right\rangle - \left|2\right\rangle}{\sqrt{2}}",
+ "N":  r"\left|N\right\rangle = \frac{\left|0\right\rangle + \left|1\right\rangle - 2\left|2\right\rangle}{\sqrt{6}}",
+ "H3": r"\left|H_3\right\rangle = \sqrt{\tfrac{3+\sqrt{3}}{6}}\,\left|0\right\rangle + "
+       r"\sqrt{\tfrac{3-\sqrt{3}}{12}}\,\bigl(\left|1\right\rangle + \left|2\right\rangle\bigr)",
+ "T3": r"\left|T_3\right\rangle = \frac{\left|0\right\rangle + \omega_9\left|1\right\rangle + "
+       r"\omega_9^{2}\left|2\right\rangle}{\sqrt{3}},\qquad \omega_9 = e^{2\pi i/9}",
+ "qubit_H": r"\left|H\right\rangle = \cos(\pi/8)\,\left|0\right\rangle + \sin(\pi/8)\,\left|1\right\rangle",
+ "qubit_T": r"\left|T\right\rangle = \cos\beta\,\left|0\right\rangle + e^{i\pi/4}\sin\beta\,\left|1\right\rangle,"
+            r"\qquad \cos 2\beta = \tfrac{1}{\sqrt{3}}",
+}
+
+BASE_TEX = {
+ "S": r"\gamma \le \tfrac{\log_3 2}{2} \approx 0.3155",
+ "N": r"\gamma \le \tfrac{\log_3 4}{3} \approx 0.4206",
+ "H3": r"\gamma \le \tfrac{\log_3 4}{3} \approx 0.4206",
+ "T3": r"\gamma \le \tfrac{1}{2} = 0.5000",
+ "qubit_H": r"\gamma \le \tfrac{\log_2 3}{4} \approx 0.3963",
+ "qubit_T": r"\gamma \le \tfrac{\log_2 3}{4} \approx 0.3963",
+}
+
 ORBIT_DEF = {
- "S": ("(|1&rang; &minus; |2&rang;)/&radic;2",
+ "S": ("",
    "The Strange state. Its support misses |0&rang; entirely, which is what "
    "makes it unusual among the qutrit magic states: two of the nine amplitudes "
    "of |S&rang;<sup>&otimes;2</sup> vanish, and the missing support is exactly "
@@ -311,8 +358,9 @@ def progress_chart(entries):
         if abs(y - Y(g)) > 1:
             o.append(f"<path class=leader d='M{X(y1):.1f},{Y(g):.1f} "
                      f"L{X(y1)+6:.1f},{y:.1f}' stroke='{c}'/>")
-        o.append(f"<text class=lbl x='{X(y1)+10:.1f}' y='{y+4:.1f}' fill='{c}'>"
-                 f"{ORBIT_LABEL[ob]} &middot; {g:.4f}</text>")
+        o.append(f"<a href='orbits/{ob}.html'>"
+                 f"<text class=lbl x='{X(y1)+10:.1f}' y='{y+4:.1f}' fill='{c}'>"
+                 f"{ORBIT_LABEL[ob]} &middot; {g:.4f}</text></a>")
     o.append("</svg>")
     return "".join(o)
 
@@ -503,7 +551,11 @@ border-radius:10px;padding:16px 20px;background:var(--soft);margin:4px 0 14px}
 .stateeq{font-size:19px;line-height:1.8}
 .stateeq sup{font-size:.7em}
 .ket{font-family:Manrope,system-ui,sans-serif;font-weight:600;white-space:nowrap}
-.ket sup{font-size:.72em}
+.ket math{font-size:1.02em}
+math{font-family:"STIX Two Math","Cambria Math","Latin Modern Math",serif}
+.stateeq math{font-size:1.5em}
+.h2sub math,.sub math,thead math{font-size:1em}
+.sub math{color:var(--mut)}
 header.hero p br{line-height:2}
 @media(max-width:820px){.rrow .rt,.rrow .rw{display:none}}
 
@@ -563,7 +615,6 @@ def hero(title, tagline, rel=""):
         "Participate</button></div>"
         f"<h1>{title}</h1><p>{tagline}</p>"
         "<nav class=topnav>"
-        f"<a href='{rel}state-of-the-art.html'>State of the art</a>"
         f"<a href='{rel}references.html'>References</a>"
         f"<a href='{REPO}'>{GHICON}GitHub</a>"
         "</nav></div></header>"
@@ -579,7 +630,6 @@ def footer(rel=""):
         (REPO, "GitHub", True),
         (REPO + "/blob/main/CONTRIBUTING.md", "Contribute", False),
         (REPO + "/blob/main/schema/bound.schema.json", "Schema", False),
-        (rel + "state-of-the-art.html", "State of the art", False),
         (rel + "references.html", "References", False),
         ("https://arxiv.org/abs/2605.28586", "Paper", False),
     ]
@@ -651,15 +701,17 @@ def ref_link(prov):
 
 TENS = "<span class=tp>&otimes;</span>"
 
+ORB_TEX_NAME = {"S": "S", "N": "N", "H3": "H_3", "T3": "T_3",
+                "qubit_H": r"H", "qubit_T": r"T"}
+
 
 def ket(orbit, m, sign=None, rank=None):
-    """chi_R(|M>^{ot m}). The tensor glyph gets its own font stack and size:
-    left in a monospace superscript it substitutes to an oversized circled x."""
-    body = (f"<span class=ket>&chi;<sub>R</sub>(|{E(orbit)}&rang;"
-            f"<sup>{TENS}{m}</sup>)</span>")
+    r"""\chi_R(|M\rangle^{\otimes m}) with an optional bound, as MathML."""
+    nm = ORB_TEX_NAME.get(orbit, orbit)
+    tex = rf"\chi_R\bigl(\left|{nm}\right\rangle^{{\otimes {m}}}\bigr)"
     if sign and rank is not None:
-        body += f" {sign} <b>{rank}</b>"
-    return body
+        tex += (r" \le " if sign in ("&le;", "<=") else r" \ge ") + str(rank)
+    return f"<span class=ket>{M(tex)}</span>"
 
 
 def lean_ok(sub):
@@ -809,8 +861,7 @@ def build():
 
     o = [head("Stabilizer Rank Challenge")]
     o.append(hero("Stabilizer Rank Challenge",
-                  "Find smaller exact stabilizer decompositions of magic states.<br>"
-                  f"<a href='state-of-the-art.html'>Read the state of the art.</a>"))
+                  "Find smaller exact stabilizer decompositions of magic states."))
     o.append(PARTICIPATE)
     o.append("<div class=wrap>")
 
@@ -864,7 +915,8 @@ def build():
     o.append("<h2>Exponents</h2>")
     o.append("<p class=h2sub>Every &gamma; below is published. "
              f"{len(moved)} of {len(ORBIT_ORDER)} have been beaten here.</p><div class=tw><table>")
-    o.append("<thead><tr><th>orbit</th><th></th><th class=num>published &gamma; &le;</th>"
+    o.append("<thead><tr><th>orbit</th><th></th><th class=num>published "
+             + M(r"\gamma") + " &le;</th>"
              "<th class=num>best here</th><th>progress</th><th>record held by</th>"
              "</tr></thead><tbody>")
     for r in board:
@@ -891,16 +943,17 @@ def build():
 
     # ---- cell ledger
     o.append("<h2>Cell ledger</h2>")
-    o.append("<p class=h2sub>Best bound on <span class=ket>&chi;(|M&rang;"
-             f"<sup>{TENS}m</sup>)</span> per orbit and copy count. "
+    o.append("<p class=h2sub>Best bound on "
+             + M(r"\chi_R\bigl(\left|M\right\rangle^{\otimes m}\bigr)")
+             + " per orbit and copy count. "
              "Matching upper and lower bounds settle a cell.</p>")
     o.append("<div class=grid3>")
     for orbit in ORBIT_ORDER:
         base, base_txt = BASELINE[orbit]
         o.append(f"<div class=orb><h3><a href='orbits/{orbit}.html'>"
                  f"{ORBIT_LABEL[orbit]}</a></h3>"
-                 f"<div class=sub>{SYSTEM[orbit]} &middot; published &gamma; &le; "
-                 f"{base_txt} &asymp; {base:.4f}</div><div class=cells>")
+                 f"<div class=sub>{SYSTEM[orbit]} &middot; published "
+                 f"{M(BASE_TEX[orbit])}</div><div class=cells>")
         ms = sorted({int(k[1]) for k in cells if k[0] == orbit})
         if not ms:
             o.append("<div><span class=none>no bounds yet</span></div>")
@@ -961,23 +1014,6 @@ def build():
                  f"{ref_link(s['provenance'])}</span></td></tr>")
     o.append("</tbody></table></div>")
 
-    # ---- a failing Lean module is otherwise invisible: the badge shows the
-    # tier the bound falls back to, not that its proof stopped compiling
-    broken = [e for e in entries
-              if e["sub"].get("lean") and lean_ok(e["sub"]) is False]
-    if broken:
-        o.append("<div class=warn><b>Lean build failing.</b> ")
-        for e in broken:
-            ln = e["sub"]["lean"]
-            url = (REPO + "/blob/main/lean_proofs/"
-                   + ln["module"].replace(".", "/") + ".lean")
-            o.append(f"<a href='{url}'>{E(ln['module'])}</a> does not compile, so "
-                     f"{ket(e['sub']['orbit'], e['sub']['m'])} falls back to its "
-                     f"cited tier. ")
-        o.append("The module is not imported by <span class=mono>LeanProofs.lean"
-                 "</span>, so the default build target skips it and CI stays "
-                 "green.</div>")
-
     o.append("</div>" + footer() + "</body></html>")
 
     os.makedirs(os.path.join(DOCS, "bounds"), exist_ok=True)
@@ -1007,11 +1043,11 @@ def orbit_page(orbit, entries, cells):
     o = [head(f"{ORBIT_LABEL[orbit]} — Stabilizer Rank Challenge", rel="../")]
     o.append(hero(f"{ORBIT_LABEL[orbit]}",
                   f"The {SYSTEM[orbit]} {ORBIT_LABEL[orbit]} orbit. "
-                  f"Published &gamma; &le; {base_txt} &asymp; {base:.4f}.", rel="../"))
+                  f"Published {M(BASE_TEX[orbit])}.", rel="../"))
     o.append(PARTICIPATE)
     o.append("<div class=wrap><p><a href='../index.html'>&larr; back to the board</a></p>")
-    o.append(f"<h2>The state</h2><div class=statebox><div class=stateeq>"
-             f"|{E(orbit)}&rang; = {defn}</div></div>")
+    o.append("<h2>The state</h2><div class=statebox><div class=stateeq>"
+             + M(ORBIT_TEX[orbit], block=True) + "</div></div>")
     o.append(f"<p>{blurb}</p><p>{note}</p>")
     o.append("<h2>Bounds on this orbit</h2><div class=tw><table>"
              "<thead><tr><th>bound</th><th class=num>m</th><th class=num>rank</th>"

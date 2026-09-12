@@ -21,3 +21,8 @@ seed:
 # Slow (mathlib); the site trusts the receipts rather than rebuilding.
 lean-certify:
 	uv run python verify_challenge/lean_certify.py
+
+# Serve docs/ so links, MathML and every page behave exactly as deployed.
+serve:
+	@echo "http://localhost:8765/"
+	@cd docs && python3 -m http.server 8765 --bind 127.0.0.1
