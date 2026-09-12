@@ -993,8 +993,7 @@ def build():
         s_, r = e["sub"], e["res"]
         sign = "&le;" if s_["direction"] == "upper" else "&ge;"
         star = "&#9733; " if e["res"]["tier"] in RECORD_TIERS else ""
-        url, _ = source_link(e)
-        o.append(f"<div class=rrow><a class=rb href='{url}'>"
+        o.append(f"<div class=rrow><a class=rb href='bounds/{e['slug']}.html'>"
                  f"{ket(s_['orbit'], s_['m'], sign, s_['rank'])}</a>"
                  f"{'<span class=star>&#9733;</span>' if star else ''}"
                  f"<span class=rt>{ORBIT_LABEL[s_['orbit']]}</span>"
@@ -1014,12 +1013,12 @@ def build():
         sign = "&le;" if s["direction"] == "upper" else "&ge;"
         g = r.get("gamma")
         gt = f"{g:.4f}" if (g is not None and s["direction"] == "upper") else "&mdash;"
-        url, _ = source_link(e)
-        o.append(f"<tr><td><a href='{url}'>{ket(s['orbit'], s['m'], sign, s['rank'])}"
-                 f"</a></td><td>{ORBIT_LABEL[s['orbit']]}</td>"
+        o.append(f"<tr><td><a href='bounds/{e['slug']}.html'>"
+                 f"{ket(s['orbit'], s['m'], sign, s['rank'])}</a></td>"
+                 f"<td><a href='orbits/{s['orbit']}.html'>{ORBIT_LABEL[s['orbit']]}</a></td>"
                  f"<td class=num>{s['m']}</td><td class=num>{s['rank']}</td>"
                  f"<td class=num>{gt}</td>"
-                 f"<td>{tier_pill(r['tier'], r['ok'], s_)} {lean_badge(s)}</td>"
+                 f"<td>{tier_pill(r['tier'], r['ok'], s_)}</td>"
                  f"<td style='white-space:normal'>{gh_links(s['provenance'])}"
                  f" &middot; <span class=mono style='font-size:12px'>"
                  f"{ref_link(s['provenance'])}</span></td></tr>")
@@ -1071,8 +1070,8 @@ def orbit_page(orbit, entries, cells):
         sign = "&le;" if s_["direction"] == "upper" else "&ge;"
         g = r.get("gamma")
         gt = f"{g:.4f}" if (g is not None and s_["direction"] == "upper") else "&mdash;"
-        url, _ = source_link(e, rel="../")
-        o.append(f"<tr><td><a href='{url}'>{ket(orbit, s_['m'], sign, s_['rank'])}</a></td>"
+        o.append(f"<tr><td><a href='../bounds/{e['slug']}.html'>"
+                 f"{ket(orbit, s_['m'], sign, s_['rank'])}</a></td>"
                  f"<td class=num>{s_['m']}</td><td class=num>{s_['rank']}</td>"
                  f"<td class=num>{gt}</td>"
                  f"<td>{tier_pill(r['tier'], r['ok'], s_)}</td>"
@@ -1119,8 +1118,7 @@ def person_page(a, entries, cells):
             sign = "&le;" if s_["direction"] == "upper" else "&ge;"
             g = r.get("gamma")
             gt = f"{g:.4f}" if (g is not None and s_["direction"] == "upper") else "&mdash;"
-            url, _ = source_link(e, rel="../")
-            o.append(f"<tr><td><a href='{url}'>"
+            o.append(f"<tr><td><a href='../bounds/{e['slug']}.html'>"
                      f"{ket(s_['orbit'], s_['m'], sign, s_['rank'])}</a></td>"
                      f"<td><a href='../orbits/{s_['orbit']}.html'>"
                      f"{ORBIT_LABEL[s_['orbit']]}</a></td>"
