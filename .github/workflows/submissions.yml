@@ -1,0 +1,82 @@
+name: Submissions
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "bounds/**"
+      - "schema/**"
+      - "verify_challenge/**"
+  pull_request:
+    paths:
+      - "bounds/**"
+      - "schema/**"
+      - "verify_challenge/**"
+
+permissions:
+  contents: read
+
+jobs:
+  bounds:
+    name: Verify submitted bounds
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      # Only what the pull request touched. Re-verifying the whole board on
+      # every submission would spend the budget on bounds nobody changed.
+      # Collected before the staging step below, which leaves HEAD at the base
+      # commit and so would make this diff empty.
+      - name: Collect changed submissions
+        id: changed
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            files=$(git diff --name-only --diff-filter=d "$BASE" HEAD -- bounds/ | tr '\n' ' ')
+          else
+            files=$(ls bounds/*.json | tr '\n' ' ')
+          fi
+          echo "files=$files" >> "$GITHUB_OUTPUT"
+          echo "changed: ${files:-none}"
+
+      # A submission must not be able to redefine the checks that judge it, so
+      # the schema and the verifier come from the base branch and only the data
+      # under bounds/ is taken from the pull request. A lower bound is an
+      # exception in kind: its certificate script *is* the submission, so that
+      # script is taken from the pull request too, and only for a branch in
+      # this repository. A fork's certificate is left for a maintainer to run.
+      - name: Stage base-branch checks against submitted data
+        if: github.event_name == 'pull_request'
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          SAME_REPO: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+        run: |
+          head=$(git rev-parse HEAD)
+          git checkout --detach "$BASE"
+          git checkout "$head" -- bounds/
+          if [ "$SAME_REPO" = "true" ]; then
+            git checkout "$head" -- verify_challenge/ stabrank/ schema/ pyproject.toml
+            echo "branch in this repository: certificate scripts run from the PR"
+          else
+            echo "::notice::fork pull request: the schema and verifier are the base branch's, so a certificate script added by this PR is reported missing and left for a maintainer to run"
+          fi
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+        with:
+          enable-cache: true
+
+      - name: Validate against the schema
+        run: uv run --extra challenge python verify_challenge/validate_bounds.py
+
+      - name: Verify them
+        if: steps.changed.outputs.files != ''
+        run: |
+          uv run --extra challenge python verify_challenge/stabrank_verify.py \
+            ${{ steps.changed.outputs.files }}

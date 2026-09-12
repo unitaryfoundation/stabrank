@@ -44,6 +44,18 @@
                    "description": "exact sympy expressions, e.g. '3/4 + sqrt(3)*I/4'; no floats"}
       }
     },
+    "lean": {
+      "type": "object",
+      "required": ["module", "theorem"],
+      "additionalProperties": false,
+      "description": "required for the lean tier; the module must build and the named theorem must be the bound as stated",
+      "properties": {
+        "module": {"type": "string",
+                   "description": "Lean module, e.g. 'LeanProofs.H3M3Pointwise'"},
+        "theorem": {"type": "string",
+                    "description": "name of the theorem inside that module"}
+      }
+    },
     "certificate": {
       "type": "object",
       "required": ["script", "expect"],
@@ -56,11 +68,18 @@
     },
     "provenance": {
       "type": "object",
-      "required": ["author"],
+      "required": ["author", "date"],
+      "additionalProperties": false,
       "properties": {
         "author": {"type": "string"},
-        "reference": {"type": "string"},
-        "method": {"type": "string"}
+        "reference": {"type": "string",
+                      "description": "where the bound comes from, e.g. 'arXiv:2605.28586' or 'stabrank PR #16'"},
+        "method": {"type": "string", "description": "how it was obtained, in one line"},
+        "date": {"type": "string", "format": "date",
+                 "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+                 "description": "when the bound first appeared: the arXiv v1 date for a literature value, otherwise the date of the work"},
+        "github": {"type": "array", "items": {"type": "string"},
+                   "description": "GitHub handles, without the @; binds the entry to its authors"}
       }
     },
     "notes": {"type": "string", "maxLength": 2000}

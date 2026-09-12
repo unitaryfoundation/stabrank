@@ -45,6 +45,13 @@ dependencies = [
 test = [
     "pytest>=7.0",
 ]
+# The challenge pipeline: exact verification of submitted decompositions,
+# schema validation, and build-time math rendering for docs/.
+challenge = [
+    "sympy>=1.12",
+    "jsonschema>=4.0",
+    "latex2mathml>=3.77",
+]
 
 [project.urls]
 Homepage = "https://unitaryfoundation.github.io/stabrank/"
