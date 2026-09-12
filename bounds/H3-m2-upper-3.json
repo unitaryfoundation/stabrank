@@ -1,0 +1,22 @@
+{
+  "schema_version": "0.1",
+  "orbit": "H3",
+  "m": 2,
+  "direction": "upper",
+  "rank": 3,
+  "provenance": {
+    "author": "Labib and Russo",
+    "reference": "arXiv:2605.28586",
+    "method": "literature",
+    "date": "2026-05-27",
+    "github": [
+      "FarLab",
+      "vprusso"
+    ]
+  },
+  "notes": "",
+  "lean": {
+    "module": "LeanProofs.H3M2Pointwise",
+    "theorem": "h3_m2_vector_decomposition"
+  }
+}

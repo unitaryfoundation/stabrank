@@ -1,0 +1,18 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_T",
+  "m": 6,
+  "direction": "upper",
+  "rank": 6,
+  "provenance": {
+    "author": "Labib and Russo",
+    "reference": "arXiv:2605.28586",
+    "method": "literature",
+    "date": "2026-05-27",
+    "github": [
+      "FarLab",
+      "vprusso"
+    ]
+  },
+  "notes": "rank 5 plateaus at sqrt(5/6) sin(pi/12)"
+}

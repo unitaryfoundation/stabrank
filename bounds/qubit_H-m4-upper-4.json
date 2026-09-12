@@ -1,0 +1,18 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_H",
+  "m": 4,
+  "direction": "upper",
+  "rank": 4,
+  "provenance": {
+    "author": "Labib and Russo",
+    "reference": "arXiv:2605.28586",
+    "method": "literature",
+    "date": "2026-05-27",
+    "github": [
+      "FarLab",
+      "vprusso"
+    ]
+  },
+  "notes": ""
+}

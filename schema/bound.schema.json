@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/unitaryfoundation/stabrank/schema/bound.schema.json",
+  "title": "Stabilizer-rank bound submission",
+  "description": "A claimed bound on chi(|M>^{ot m}) for one magic-state orbit. Upper bounds carry an explicit decomposition whose terms are given by their stabilizer parametrisation, so a term that is not a stabilizer state cannot be expressed. Lower bounds carry a certificate script that must run and assert.",
+  "type": "object",
+  "required": ["schema_version", "orbit", "m", "direction", "rank", "provenance"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"enum": ["0.1"]},
+    "orbit": {"enum": ["S", "N", "H3", "T3", "qubit_H", "qubit_T"],
+              "description": "S Strange, N Norrell, H3 qutrit Hadamard eigenstate, T3 qutrit T-type (face centre), qubit_H qubit H-type (edge centre), qubit_T qubit Bravyi-Kitaev T-type"},
+    "m": {"type": "integer", "minimum": 1, "maximum": 8,
+          "description": "number of copies; capped by the verification budget"},
+    "direction": {"enum": ["upper", "lower"]},
+    "rank": {"type": "integer", "minimum": 1},
+    "witness": {
+      "type": "object",
+      "required": ["terms", "coeffs"],
+      "additionalProperties": false,
+      "description": "required for an upper bound to earn the verified tier",
+      "properties": {
+        "terms": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["k", "x0", "W"],
+            "additionalProperties": false,
+            "properties": {
+              "k": {"type": "integer", "minimum": 0,
+                    "description": "dimension of the support flat"},
+              "x0": {"type": "array", "items": {"type": "integer"},
+                     "description": "coset representative, length m"},
+              "W": {"type": "array", "items": {"type": "array", "items": {"type": "integer"}},
+                    "description": "k rows of length m spanning the flat; must be injective"},
+              "Q": {"type": "array", "items": {"type": "array", "items": {"type": "integer"}},
+                    "description": "quadratic phase form, read upper-triangular"},
+              "l": {"type": "array", "items": {"type": "integer"},
+                    "description": "linear phase, length k"}
+            }
+          }
+        },
+        "coeffs": {"type": "array", "items": {"type": "string"},
+                   "description": "exact sympy expressions, e.g. '3/4 + sqrt(3)*I/4'; no floats"}
+      }
+    },
+    "lean": {
+      "type": "object",
+      "required": ["module", "theorem"],
+      "additionalProperties": false,
+      "description": "required for the lean tier; the module must build and the named theorem must be the bound as stated",
+      "properties": {
+        "module": {"type": "string",
+                   "description": "Lean module, e.g. 'LeanProofs.H3M3Pointwise'"},
+        "theorem": {"type": "string",
+                    "description": "name of the theorem inside that module"}
+      }
+    },
+    "certificate": {
+      "type": "object",
+      "required": ["script", "expect"],
+      "additionalProperties": false,
+      "description": "required for a lower bound to earn the reproduced tier",
+      "properties": {
+        "script": {"type": "string", "description": "path relative to the repository root"},
+        "expect": {"type": "string", "description": "string the script must print"}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["author", "date"],
+      "additionalProperties": false,
+      "properties": {
+        "author": {"type": "string"},
+        "reference": {"type": "string",
+                      "description": "where the bound comes from, e.g. 'arXiv:2605.28586' or 'stabrank PR #16'"},
+        "method": {"type": "string", "description": "how it was obtained, in one line"},
+        "date": {"type": "string", "format": "date",
+                 "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+                 "description": "when the bound first appeared: the arXiv v1 date for a literature value, otherwise the date of the work"},
+        "github": {"type": "array", "items": {"type": "string"},
+                   "description": "GitHub handles, without the @; binds the entry to its authors"}
+      }
+    },
+    "notes": {"type": "string", "maxLength": 2000}
+  }
+}

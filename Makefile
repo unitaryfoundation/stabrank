@@ -1,0 +1,28 @@
+.PHONY: build verify fit seed clean-site
+
+# Rebuild docs/ from bounds/. Every bound is re-verified unless a cached
+# certificate in certs/ still matches its content hash.
+build:
+	uv run --extra challenge python site_challenge/build.py
+
+# Verify one submission, or all of them.
+verify:
+	uv run --extra challenge python verify_challenge/stabrank_verify.py $(or $(BOUND),bounds/*.json)
+
+# Solve for the exact coefficients of a proposed decomposition before submitting.
+# Pass --write to fill them into the file.
+fit:
+	uv run --extra challenge python verify_challenge/fit_coeffs.py $(BOUND) $(ARGS)
+
+seed:
+	uv run --extra challenge python verify_challenge/seed_bounds.py
+
+# Build the Lean modules the bounds depend on and write build receipts.
+# Slow (mathlib); the site trusts the receipts rather than rebuilding.
+lean-certify:
+	uv run --extra challenge python verify_challenge/lean_certify.py
+
+# Serve docs/ so links, MathML and every page behave exactly as deployed.
+serve:
+	@echo "http://localhost:8765/"
+	@cd docs && python3 -m http.server 8765 --bind 127.0.0.1

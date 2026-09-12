@@ -1,0 +1,22 @@
+{
+  "schema_version": "0.1",
+  "orbit": "N",
+  "m": 4,
+  "direction": "upper",
+  "rank": 7,
+  "provenance": {
+    "author": "Labib and Russo",
+    "reference": "arXiv:2605.28586",
+    "method": "literature",
+    "date": "2026-05-27",
+    "github": [
+      "FarLab",
+      "vprusso"
+    ]
+  },
+  "notes": "rank 6 floors at sqrt(211/4043)",
+  "lean": {
+    "module": "LeanProofs.NorrellM4Pointwise",
+    "theorem": "norrell_m4_vector_decomposition"
+  }
+}

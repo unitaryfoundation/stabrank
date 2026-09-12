@@ -1,0 +1,15 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_H",
+  "m": 6,
+  "direction": "upper",
+  "rank": 6,
+  "provenance": {
+    "author": "Bravyi and Gosset",
+    "reference": "arXiv:1601.07601",
+    "method": "literature",
+    "date": "2016-01-27",
+    "github": []
+  },
+  "notes": "underpins the standard 2^{0.47n} figure"
+}
