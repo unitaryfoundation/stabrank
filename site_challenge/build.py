@@ -597,6 +597,7 @@ def head(title, rel=""):
         "<!doctype html><html lang=en><head><meta charset=utf-8>"
         "<meta name=viewport content='width=device-width,initial-scale=1'>"
         f"<title>{E(title)}</title>"
+        f"<link rel=icon type='image/svg+xml' href='{rel}favicon.svg'>"
         "<link rel=preconnect href='https://fonts.googleapis.com'>"
         "<link rel=preconnect href='https://fonts.gstatic.com' crossorigin>"
         "<link href='https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700"
@@ -622,7 +623,15 @@ def hero(title, tagline, rel=""):
 
 
 
-FOOTMARK = '<svg width=34 height=34 viewBox="0 0 64 64" aria-hidden="true"><rect x="1" y="1" width="62" height="62" rx="14" fill="#111111" stroke="rgba(255,255,255,0.16)" stroke-width="1.5"/><g stroke="#ffffff" stroke-width="3.4" stroke-linecap="round" opacity="0.9"><line x1="32" y1="16" x2="17" y2="40"/><line x1="32" y1="16" x2="47" y2="40"/><line x1="32" y1="16" x2="32" y2="46"/></g><g fill="#ffffff"><circle cx="17" cy="42" r="5"/><circle cx="32" cy="47" r="5"/><circle cx="47" cy="42" r="5"/></g><circle cx="32" cy="16" r="6" fill="#ffff00"/></svg>'
+# The mark: a magic state (yellow) decomposing into stabilizer terms
+# (white). One source, used for both the favicon and the footer brand.
+MARK_BODY = '<rect x="1" y="1" width="62" height="62" rx="14" fill="#111111" stroke="rgba(255,255,255,0.16)" stroke-width="1.5"/><g stroke="#ffffff" stroke-width="3.4" stroke-linecap="round" opacity="0.9"><line x1="32" y1="16" x2="17" y2="40"/><line x1="32" y1="16" x2="47" y2="40"/><line x1="32" y1="16" x2="32" y2="46"/></g><g fill="#ffffff"><circle cx="17" cy="42" r="5"/><circle cx="32" cy="47" r="5"/><circle cx="47" cy="42" r="5"/></g><circle cx="32" cy="16" r="6" fill="#ffff00"/>'
+
+FAVICON = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">'
+           + MARK_BODY + '</svg>')
+
+FOOTMARK = ('<svg width=34 height=34 viewBox="0 0 64 64" aria-hidden="true">'
+            + MARK_BODY + '</svg>')
 
 
 def footer(rel=""):
@@ -1021,6 +1030,8 @@ def build():
         f.write("".join(o))
     with open(os.path.join(DOCS, "style.css"), "w") as f:
         f.write(CSS)
+    with open(os.path.join(DOCS, "favicon.svg"), "w") as f:
+        f.write(FAVICON)
     references_page(parse_bib(os.path.join(DOCS, "refs.bib")))
     for e in entries:
         detail_page(e)
