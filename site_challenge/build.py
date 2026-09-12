@@ -484,6 +484,9 @@ padding:9px 14px;border-radius:8px;background:#fff}
 margin-left:auto;flex:0 0 auto}
 .tp{font-family:"Cambria Math","STIX Two Math","DejaVu Math TeX Gyre",
 "Latin Modern Math",serif;font-size:.86em;vertical-align:.02em}
+.warn{border:1px solid #f3c9c9;border-left:4px solid var(--bad);border-radius:10px;
+padding:12px 16px;background:#fdf6f6;margin:22px 0 0;font-size:14px}
+.warn b{color:var(--bad)}
 .tgt{font-family:"Space Mono",monospace;font-size:11.5px;color:var(--mut);
 white-space:nowrap}
 .tgtg{color:var(--ac);margin-left:8px;font-weight:700}
@@ -958,28 +961,22 @@ def build():
                  f"{ref_link(s['provenance'])}</span></td></tr>")
     o.append("</tbody></table></div>")
 
-    # ---- lean corpus
-    leaned = [e for e in entries if e["sub"].get("lean")]
-    if leaned:
-        o.append("<h2>Lean corpus <span class=h2note>&middot; "
-                 f"{len(leaned)} bounds with machine-checked proofs</span></h2>")
-        o.append("<p class=h2sub>A Lean theorem is the strongest thing a bound can "
-                 "carry: it does not ask you to trust this pipeline. These are the "
-                 "decomposition identities proved in <span class=mono>lean_proofs/"
-                 "</span>, and they are built in CI against mathlib.</p>")
-        o.append("<div class=tw><table><thead><tr><th>bound</th><th>theorem</th>"
-                 "<th>orbit</th></tr></thead><tbody>")
-        for e in sorted(leaned, key=lambda e: (ORBIT_ORDER.index(e["sub"]["orbit"]),
-                                               int(e["sub"]["m"]))):
-            s_, ln = e["sub"], e["sub"]["lean"]
+    # ---- a failing Lean module is otherwise invisible: the badge shows the
+    # tier the bound falls back to, not that its proof stopped compiling
+    broken = [e for e in entries
+              if e["sub"].get("lean") and lean_ok(e["sub"]) is False]
+    if broken:
+        o.append("<div class=warn><b>Lean build failing.</b> ")
+        for e in broken:
+            ln = e["sub"]["lean"]
             url = (REPO + "/blob/main/lean_proofs/"
                    + ln["module"].replace(".", "/") + ".lean")
-            o.append(f"<tr><td><a href='{url}'>"
-                     f"{ket(s_['orbit'], s_['m'], '&le;', s_['rank'])}</a></td>"
-                     f"<td class=mono><a href='{url}'>{E(ln['theorem'])}</a></td>"
-                     f"<td><a href='orbits/{s_['orbit']}.html'>"
-                     f"{ORBIT_LABEL[s_['orbit']]}</a></td></tr>")
-        o.append("</tbody></table></div>")
+            o.append(f"<a href='{url}'>{E(ln['module'])}</a> does not compile, so "
+                     f"{ket(e['sub']['orbit'], e['sub']['m'])} falls back to its "
+                     f"cited tier. ")
+        o.append("The module is not imported by <span class=mono>LeanProofs.lean"
+                 "</span>, so the default build target skips it and CI stays "
+                 "green.</div>")
 
     o.append("</div>" + footer() + "</body></html>")
 
