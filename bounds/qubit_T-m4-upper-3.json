@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_T",
+  "m": 4,
+  "direction": "upper",
+  "rank": 3,
+  "provenance": {
+    "author": "Labib and Russo",
+    "reference": "arXiv:2605.28586",
+    "method": "literature"
+  },
+  "notes": "matches the QPG exponent by direct algebra"
+}

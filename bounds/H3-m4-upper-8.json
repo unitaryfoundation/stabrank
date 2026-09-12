@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.1",
+  "orbit": "H3",
+  "m": 4,
+  "direction": "upper",
+  "rank": 8,
+  "provenance": {
+    "author": "Labib and Russo",
+    "reference": "arXiv:2605.28586",
+    "method": "literature"
+  },
+  "notes": "rank 6 plateaus at sqrt(70-37 sqrt 3)/12"
+}

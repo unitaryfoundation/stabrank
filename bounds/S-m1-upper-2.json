@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.1",
+  "orbit": "S",
+  "m": 1,
+  "direction": "upper",
+  "rank": 2,
+  "provenance": {
+    "author": "Labib and Russo",
+    "reference": "arXiv:2605.28586",
+    "method": "literature"
+  },
+  "notes": "single copy"
+}

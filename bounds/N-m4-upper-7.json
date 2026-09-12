@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.1",
+  "orbit": "N",
+  "m": 4,
+  "direction": "upper",
+  "rank": 7,
+  "provenance": {
+    "author": "Labib and Russo",
+    "reference": "arXiv:2605.28586",
+    "method": "literature"
+  },
+  "notes": "rank 6 floors at sqrt(211/4043)"
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.1",
+  "orbit": "T3",
+  "m": 1,
+  "direction": "upper",
+  "rank": 3,
+  "provenance": {
+    "author": "Kocia and Sarovar",
+    "reference": "arXiv:2003.01130",
+    "method": "literature"
+  },
+  "notes": ""
+}

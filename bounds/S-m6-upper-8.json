@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.1",
+  "orbit": "S",
+  "m": 6,
+  "direction": "upper",
+  "rank": 8,
+  "provenance": {
+    "author": "Labib and Russo",
+    "reference": "arXiv:2605.28586",
+    "method": "literature"
+  },
+  "notes": "2^3 from the m=2 identity; rank 7 plateaus at sqrt(8/27)"
+}

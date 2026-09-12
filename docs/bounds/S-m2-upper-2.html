@@ -1,0 +1,89 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>chi(S^2) upper 2</title><link rel=preconnect href='https://fonts.googleapis.com'><link rel=preconnect href='https://fonts.gstatic.com' crossorigin><link href='https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@400;700&display=swap' rel=stylesheet><link rel=stylesheet href='../style.css'></head><body><header class=hero><svg class=heroflow viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+<path d="M-60,90 C250,20 450,260 760,150 S1160,40 1300,120"/>
+<path d="M-60,205 C200,300 500,80 790,225 S1110,265 1300,180"/>
+<path d="M-60,300 C300,180 520,360 820,255 S1130,120 1300,300"/>
+<path d="M-60,40 C220,140 480,-20 760,90 S1090,180 1300,50"/>
+<path d="M-60,260 C280,360 540,200 800,320 S1190,220 1300,260"/>
+</svg><div class=wrap><h1>&chi;<sub>R</sub>(&#8739;S&rang;<sup>&otimes;2</sup>) &le; 2</h1><p class=tag>Strange orbit, qutrit. Two full-support terms; the smallest known exponent across the four qutrit orbits.</p></div></header><div class=wrap><p><a href='../index.html'>&larr; leaderboard</a></p><section><h2>Verification</h2><p><span class='pill t-verified'>verified</span> &nbsp; 2 stabilizer terms reproduce |S&gt;^{ot 2}, checked symbolically</p><p>Implied per-copy exponent &gamma; &le; <b>0.3155</b>, against a published 0.3155 &mdash; no improvement.</p></section><section><h2>Attribution</h2><p>Labib and Russo &middot; <span class=mono>arXiv:2605.28586, Theorem 2</span> &middot; carry decomposition</p></section><section><h2>Submission</h2><pre>{
+  &quot;schema_version&quot;: &quot;0.1&quot;,
+  &quot;orbit&quot;: &quot;S&quot;,
+  &quot;m&quot;: 2,
+  &quot;direction&quot;: &quot;upper&quot;,
+  &quot;rank&quot;: 2,
+  &quot;witness&quot;: {
+    &quot;terms&quot;: [
+      {
+        &quot;k&quot;: 2,
+        &quot;x0&quot;: [
+          0,
+          0
+        ],
+        &quot;W&quot;: [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        &quot;Q&quot;: [
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        &quot;l&quot;: [
+          0,
+          0
+        ]
+      },
+      {
+        &quot;k&quot;: 2,
+        &quot;x0&quot;: [
+          0,
+          0
+        ],
+        &quot;W&quot;: [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        &quot;Q&quot;: [
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        &quot;l&quot;: [
+          0,
+          0
+        ]
+      }
+    ],
+    &quot;coeffs&quot;: [
+      &quot;3/4 + sqrt(3)*I/4&quot;,
+      &quot;-3/4 - sqrt(3)*I/4&quot;
+    ]
+  },
+  &quot;provenance&quot;: {
+    &quot;author&quot;: &quot;Labib and Russo&quot;,
+    &quot;reference&quot;: &quot;arXiv:2605.28586, Theorem 2&quot;,
+    &quot;method&quot;: &quot;carry decomposition&quot;
+  },
+  &quot;notes&quot;: &quot;Two full-support terms; the smallest known exponent across the four qutrit orbits.&quot;
+}</pre></section></div></body></html>

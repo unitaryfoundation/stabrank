@@ -1,0 +1,23 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>chi(T3^2) lower 3</title><link rel=preconnect href='https://fonts.googleapis.com'><link rel=preconnect href='https://fonts.gstatic.com' crossorigin><link href='https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@400;700&display=swap' rel=stylesheet><link rel=stylesheet href='../style.css'></head><body><header class=hero><svg class=heroflow viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+<path d="M-60,90 C250,20 450,260 760,150 S1160,40 1300,120"/>
+<path d="M-60,205 C200,300 500,80 790,225 S1110,265 1300,180"/>
+<path d="M-60,300 C300,180 520,360 820,255 S1130,120 1300,300"/>
+<path d="M-60,40 C220,140 480,-20 760,90 S1090,180 1300,50"/>
+<path d="M-60,260 C280,360 540,200 800,320 S1190,220 1300,260"/>
+</svg><div class=wrap><h1>&chi;<sub>R</sub>(&#8739;T3&rang;<sup>&otimes;2</sup>) &ge; 3</h1><p class=tag>T₃ orbit, qutrit. Holds for every m. With the rank-3 witness at m=2 this settles that cell exactly. Field-of-definition arguments for stabilizer rank are prior art (Lovitz and Steffan, over Q(i)); the Galois-orbit step and the Z[w3] instantiation are not.</p></div></header><div class=wrap><p><a href='../index.html'>&larr; leaderboard</a></p><section><h2>Verification</h2><p><span class='pill t-reproduced'>reproduced</span> &nbsp; certificate script asserted: CERTIFIED chi(T3^m) &gt;= 3</p></section><section><h2>Attribution</h2><p>this repository &middot; <span class=mono>stabrank PR #16</span> &middot; Galois descent over Z[w3]; no search</p></section><section><h2>Submission</h2><pre>{
+  &quot;schema_version&quot;: &quot;0.1&quot;,
+  &quot;orbit&quot;: &quot;T3&quot;,
+  &quot;m&quot;: 2,
+  &quot;direction&quot;: &quot;lower&quot;,
+  &quot;rank&quot;: 3,
+  &quot;certificate&quot;: {
+    &quot;script&quot;: &quot;verify_challenge/cert_t3_galois.py&quot;,
+    &quot;expect&quot;: &quot;CERTIFIED chi(T3^m) &gt;= 3&quot;
+  },
+  &quot;provenance&quot;: {
+    &quot;author&quot;: &quot;this repository&quot;,
+    &quot;reference&quot;: &quot;stabrank PR #16&quot;,
+    &quot;method&quot;: &quot;Galois descent over Z[w3]; no search&quot;
+  },
+  &quot;notes&quot;: &quot;Holds for every m. With the rank-3 witness at m=2 this settles that cell exactly. Field-of-definition arguments for stabilizer rank are prior art (Lovitz and Steffan, over Q(i)); the Galois-orbit step and the Z[w3] instantiation are not.&quot;
+}</pre></section></div></body></html>

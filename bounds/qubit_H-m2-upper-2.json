@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_H",
+  "m": 2,
+  "direction": "upper",
+  "rank": 2,
+  "provenance": {
+    "author": "Bravyi, Smith and Smolin",
+    "reference": "arXiv:1506.01396",
+    "method": "literature"
+  },
+  "notes": ""
+}

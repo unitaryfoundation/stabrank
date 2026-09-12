@@ -1,0 +1,18 @@
+.PHONY: build verify fit seed clean-site
+
+# Rebuild docs/ from bounds/. Every bound is re-verified unless a cached
+# certificate in certs/ still matches its content hash.
+build:
+	uv run python site_challenge/build.py
+
+# Verify one submission, or all of them.
+verify:
+	uv run python verify_challenge/stabrank_verify.py $(or $(BOUND),bounds/*.json)
+
+# Solve for the exact coefficients of a proposed decomposition before submitting.
+# Pass --write to fill them into the file.
+fit:
+	uv run python verify_challenge/fit_coeffs.py $(BOUND) $(ARGS)
+
+seed:
+	uv run python verify_challenge/seed_bounds.py
