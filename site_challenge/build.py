@@ -427,8 +427,11 @@ padding:2px 8px;border-radius:999px;border:1px solid currentColor}
 .orb .sub{font-family:"Space Mono",monospace;font-size:11px;color:var(--mut);
 text-transform:uppercase;letter-spacing:.07em}
 .cells{margin-top:10px;font-family:"Space Mono",monospace;font-size:13px}
-.cells div{display:flex;justify-content:space-between;gap:10px;padding:3px 0;
-border-bottom:1px dotted var(--ln)}
+.cells div{display:flex;justify-content:space-between;align-items:center;gap:10px;
+padding:5px 0;border-bottom:1px dotted var(--ln);white-space:nowrap}
+.cells div>span:first-child{flex:0 0 auto}
+.cells div>span:last-child{display:inline-flex;align-items:center;gap:7px;
+flex:0 0 auto}
 .cells div:last-child{border-bottom:0}
 
 details{border:1px solid var(--ln);border-radius:10px;padding:10px 14px;background:var(--soft)}
@@ -667,7 +670,7 @@ def lean_ok(sub):
     return bool(json.load(open(rec)).get("ok"))
 
 
-def lean_badge(sub, rel=""):
+def lean_badge(sub, rel="", compact=True):
     """Link a bound to the Lean theorem that proves it, when there is one.
 
     Shown independently of the tier: the badge says a proof exists, the tier
@@ -684,8 +687,10 @@ def lean_badge(sub, rel=""):
            ("the recorded lake build of this module fails" if ok is False
             else "no build receipt recorded yet"))
     mark = "" if ok else (" &#9888;" if ok is False else " &middot; unbuilt")
-    return (f"<a class='pill {cls}' href='{url}' title='{E(ln['module'])} &mdash; {tip}'>"
-            f"Lean &middot; {E(ln['theorem'])}{mark}</a>")
+    label = "lean" if compact else f"Lean &middot; {E(ln['theorem'])}"
+    return (f"<a class='pill {cls}' href='{url}' "
+            f"title='{E(ln['theorem'])} in {E(ln['module'])} &mdash; {tip}'>"
+            f"{label}{'' if compact else mark}</a>")
 
 
 def gh_links(prov):
@@ -696,7 +701,7 @@ def gh_links(prov):
     return " ".join(f"<a class=gh href='https://github.com/{E(h)}'>@{E(h)}</a>" for h in hs)
 
 
-def tier_pill(tier, ok=True, sub=None):
+def tier_pill(tier, ok=True, sub=None, compact=True):
     """One badge per bound.
 
     A lean-tier bound shows only its Lean badge, which already says the tier and
@@ -706,7 +711,7 @@ def tier_pill(tier, ok=True, sub=None):
     if not ok:
         return "<span class='pill t-failed'>failed</span>"
     if tier == "lean" and sub is not None and sub.get("lean"):
-        return lean_badge(sub)
+        return lean_badge(sub, compact=compact)
     if tier == "cited" and sub is not None:
         u = arxiv_url(sub["provenance"])
         if u:
@@ -883,8 +888,9 @@ def build():
 
     # ---- cell ledger
     o.append("<h2>Cell ledger</h2>")
-    o.append("<p class=h2sub>Best bound on &chi;(&#8739;M&rang;<sup>&otimes;m</sup>) "
-             "per orbit and copy count. Matching upper and lower bounds settle a cell.</p>")
+    o.append("<p class=h2sub>Best bound on <span class=ket>&chi;(|M&rang;"
+             f"<sup>{TENS}m</sup>)</span> per orbit and copy count. "
+             "Matching upper and lower bounds settle a cell.</p>")
     o.append("<div class=grid3>")
     for orbit in ORBIT_ORDER:
         base, base_txt = BASELINE[orbit]
@@ -906,7 +912,7 @@ def build():
                 url, _ = source_link(tgt)
                 val = f"<a href='{url}'>{val}</a>"
             o.append(f"<div><span>m = {m}</span><span>{val} "
-                     f"{tier_pill(up['res']['tier'], True, up['sub']) if up else ''}</span></div>")
+                     f"{tier_pill(up['res']['tier'], True, up['sub'], compact=True) if up else ''}</span></div>")
         o.append("</div></div>")
     o.append("</div>")
 

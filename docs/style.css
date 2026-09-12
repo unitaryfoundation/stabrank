@@ -106,8 +106,11 @@ padding:2px 8px;border-radius:999px;border:1px solid currentColor}
 .orb .sub{font-family:"Space Mono",monospace;font-size:11px;color:var(--mut);
 text-transform:uppercase;letter-spacing:.07em}
 .cells{margin-top:10px;font-family:"Space Mono",monospace;font-size:13px}
-.cells div{display:flex;justify-content:space-between;gap:10px;padding:3px 0;
-border-bottom:1px dotted var(--ln)}
+.cells div{display:flex;justify-content:space-between;align-items:center;gap:10px;
+padding:5px 0;border-bottom:1px dotted var(--ln);white-space:nowrap}
+.cells div>span:first-child{flex:0 0 auto}
+.cells div>span:last-child{display:inline-flex;align-items:center;gap:7px;
+flex:0 0 auto}
 .cells div:last-child{border-bottom:0}
 
 details{border:1px solid var(--ln);border-radius:10px;padding:10px 14px;background:var(--soft)}
