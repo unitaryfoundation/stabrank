@@ -464,6 +464,8 @@ padding:2px 8px;border-radius:999px;border:1px solid currentColor}
 .t-lean:hover{background:#6d28d9;color:#fff}
 .t-verified{color:var(--ex)}.t-reproduced{color:var(--ac)}
 .t-cited{color:var(--mut)}.t-failed{color:var(--bad)}
+a.pill{text-decoration:none}
+a.t-cited:hover{color:var(--ac);border-color:var(--ac)}
 .gain{color:var(--ex);font-weight:700}
 .none{color:var(--mut)}
 .bar{position:relative;height:9px;background:var(--ln);border-radius:999px;min-width:120px}
