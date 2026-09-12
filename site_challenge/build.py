@@ -852,7 +852,7 @@ def build():
         bl = (f"<a href='{bestlink[a['who']]}'>{best}</a>"
               if a["who"] in bestlink else best)
         o.append(f"<div class=lbrow><div class=rk>{i}</div>"
-                 f"<div class=who><a href='{pg}'>{E(a['who'])}</a> {a['links']}"
+                 f"<div class=who><a href='{pg}'>{a['links']}</a>"
                  f"{' &#128081;' if i == 1 and a['records'] else ''}</div>"
                  f"<a class=m href='{pg}#bounds'><b>{a['n']}</b><span>bounds</span></a>"
                  f"<a class=m href='{pg}#records'><b>{a['records']}</b>"
