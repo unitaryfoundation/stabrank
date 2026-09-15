@@ -1,0 +1,21 @@
+{
+  "schema_version": "0.1",
+  "orbit": "S",
+  "m": 2,
+  "direction": "lower",
+  "rank": 2,
+  "lean": {
+    "module": "LeanProofs.StrangeM2Lower",
+    "theorem": "strange_m2_chi_ge_two"
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank PR #19",
+    "method": "affine-support obstruction, formalized in Lean",
+    "date": "2026-09-15",
+    "github": [
+      "vprusso"
+    ]
+  },
+  "notes": "The first lower bound in this development proved in Lean, and with the rank-2 decomposition of StrangeM2Pointwise it settles chi(|S>^2) = 2 with both directions machine-checked. Lower bounds are universally quantified, which is why the rest of the Lean development proves only upper bounds; at r = 1 the quantifier is over a single state and one structural fact closes it with no enumeration. The support of a stabilizer state is an affine subspace of F_3^n, so it is closed under a - b + c. |S>^2 is supported on the four points of {1,2}^2, and taking a = c = (1,1) with b = (2,2) lands on (0,0), where the amplitude vanishes. The affine-support property enters as a hypothesis rather than being derived, exactly as the Pointwise files carry stabilizer-ness in the shape of their definitions; anything satisfying it is covered, so the theorem is strictly more general than the stabilizer case."
+}

@@ -1,5 +1,5 @@
 {
-  "module": "LeanProofs.NorrellM3Pointwise",
+  "module": "LeanProofs.StrangeM2Lower",
   "ok": true,
   "log": [
     "Build completed successfully (3301 jobs)."
