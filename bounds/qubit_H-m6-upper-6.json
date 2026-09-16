@@ -3,281 +3,9 @@
   "orbit": "qubit_H",
   "m": 6,
   "direction": "upper",
-  "rank": 7,
+  "rank": 6,
   "witness": {
     "terms": [
-      {
-        "k": 4,
-        "x0": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "W": [
-          [
-            1,
-            0,
-            0,
-            1,
-            0,
-            1
-          ],
-          [
-            0,
-            1,
-            0,
-            0,
-            0,
-            0
-          ],
-          [
-            0,
-            0,
-            1,
-            0,
-            0,
-            0
-          ],
-          [
-            0,
-            0,
-            0,
-            0,
-            1,
-            0
-          ]
-        ],
-        "Q": [
-          [
-            0,
-            1,
-            1,
-            1
-          ],
-          [
-            0,
-            0,
-            0,
-            0
-          ],
-          [
-            0,
-            0,
-            0,
-            0
-          ],
-          [
-            0,
-            0,
-            0,
-            0
-          ]
-        ],
-        "l": [
-          1,
-          0,
-          0,
-          0
-        ]
-      },
-      {
-        "k": 3,
-        "x0": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "W": [
-          [
-            1,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          [
-            0,
-            0,
-            0,
-            1,
-            0,
-            0
-          ],
-          [
-            0,
-            0,
-            0,
-            0,
-            0,
-            1
-          ]
-        ],
-        "Q": [
-          [
-            0,
-            0,
-            0
-          ],
-          [
-            0,
-            0,
-            0
-          ],
-          [
-            0,
-            0,
-            0
-          ]
-        ],
-        "l": [
-          0,
-          0,
-          0
-        ]
-      },
-      {
-        "k": 4,
-        "x0": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "W": [
-          [
-            1,
-            0,
-            0,
-            0,
-            1,
-            0
-          ],
-          [
-            0,
-            1,
-            0,
-            0,
-            1,
-            0
-          ],
-          [
-            0,
-            0,
-            1,
-            0,
-            0,
-            0
-          ],
-          [
-            0,
-            0,
-            0,
-            1,
-            1,
-            1
-          ]
-        ],
-        "Q": [
-          [
-            0,
-            1,
-            0,
-            1
-          ],
-          [
-            0,
-            0,
-            0,
-            1
-          ],
-          [
-            0,
-            0,
-            0,
-            1
-          ],
-          [
-            0,
-            0,
-            0,
-            0
-          ]
-        ],
-        "l": [
-          0,
-          2,
-          0,
-          0
-        ]
-      },
-      {
-        "k": 3,
-        "x0": [
-          0,
-          1,
-          1,
-          0,
-          1,
-          0
-        ],
-        "W": [
-          [
-            1,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          [
-            0,
-            0,
-            0,
-            1,
-            0,
-            0
-          ],
-          [
-            0,
-            0,
-            0,
-            0,
-            0,
-            1
-          ]
-        ],
-        "Q": [
-          [
-            0,
-            0,
-            0
-          ],
-          [
-            0,
-            0,
-            0
-          ],
-          [
-            0,
-            0,
-            0
-          ]
-        ],
-        "l": [
-          2,
-          2,
-          2
-        ]
-      },
       {
         "k": 6,
         "x0": [
@@ -350,17 +78,25 @@
           [
             0,
             0,
-            0,
-            0,
-            0,
-            0
+            1,
+            1,
+            1,
+            1
           ],
           [
             0,
             0,
             0,
             1,
+            1,
+            1
+          ],
+          [
             0,
+            0,
+            0,
+            0,
+            1,
             1
           ],
           [
@@ -370,14 +106,6 @@
             0,
             0,
             1
-          ],
-          [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
           ],
           [
             0,
@@ -389,16 +117,16 @@
           ]
         ],
         "l": [
-          0,
-          0,
           2,
-          0,
-          0,
-          0
+          2,
+          2,
+          2,
+          2,
+          2
         ]
       },
       {
-        "k": 4,
+        "k": 1,
         "x0": [
           0,
           0,
@@ -410,9 +138,38 @@
         "W": [
           [
             1,
-            0,
-            0,
             1,
+            1,
+            1,
+            1,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0
+          ]
+        ],
+        "l": [
+          2
+        ]
+      },
+      {
+        "k": 5,
+        "x0": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "W": [
+          [
+            1,
+            0,
+            0,
+            0,
             0,
             1
           ],
@@ -422,7 +179,7 @@
             0,
             0,
             0,
-            0
+            1
           ],
           [
             0,
@@ -430,7 +187,15 @@
             1,
             0,
             0,
-            0
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            0,
+            1
           ],
           [
             0,
@@ -438,17 +203,12 @@
             0,
             0,
             1,
-            0
+            1
           ]
         ],
         "Q": [
           [
             0,
-            1,
-            1,
-            1
-          ],
-          [
             0,
             0,
             0,
@@ -458,9 +218,25 @@
             0,
             0,
             0,
+            0,
             0
           ],
           [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
             0,
             0,
             0,
@@ -468,6 +244,7 @@
           ]
         ],
         "l": [
+          0,
           0,
           0,
           0,
@@ -482,7 +259,7 @@
           0,
           0,
           0,
-          0
+          1
         ],
         "W": [
           [
@@ -565,35 +342,190 @@
         ],
         "l": [
           2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "k": 6,
+        "x0": [
           0,
           0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "l": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          2
+        ]
+      },
+      {
+        "k": 2,
+        "x0": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "l": [
           2,
           0
         ]
       }
     ],
     "coeffs": [
-      "1/2 + I/2",
-      "1/4 + sqrt(2)/4",
-      "sqrt(2)/4",
-      "1/4 - sqrt(2)/4",
-      "sqrt(2)/4",
-      "sqrt(2)/4 - I/2",
-      "sqrt(2)/4"
+      "-sqrt(2)/4",
+      "1/2",
+      "1/2",
+      "-sqrt(2)/4",
+      "1/2",
+      "1/2"
     ]
   },
   "provenance": {
-    "author": "Bravyi, Smith and Smolin",
-    "reference": "arXiv:1506.01396",
+    "author": "Qassim, Pashayan and Gosset",
+    "reference": "arXiv:2106.07740",
     "method": "literature",
-    "date": "2015-06-03",
-    "github": [],
-    "compute": {
-      "cpu_hours": 0.1,
-      "wall_clock_hours": 0.1,
-      "runs": 3,
-      "hardware": "Apple silicon laptop, 8 annealing chains per run"
-    }
+    "date": "2021-06-14",
+    "github": []
   },
-  "notes": "The six-copy value of Bravyi, Smith and Smolin, chi(|H>^6) <= 7, behind the 2^{0.47n} figure (log_2(7)/6 = 0.468); they conjectured it optimal, and Qassim, Pashayan and Gosset later gave rank 6, which is the cell's record. Kept on the ledger as the historical value with a witness: found here by the package's annealer (search_decomposition.py, target qubit_real, seed 3, starting rank 7) and verified in exact arithmetic. Two runs starting at rank 6 (seeds 1 and 2) both stopped at residual 0.101, so the annealer did not find the rank-6 cat-state decomposition on its own."
+  "notes": "chi(|H>^6) <= 6 from the cat-state construction: |T>^6 = (|cat_6> + |cat_6^->)/sqrt 2 with |cat_6^+-> = (|T>^6 +- |T_perp>^6)/sqrt 2, and |cat_6> = 2^{-3/2}(|0^6> - i|1^6>) + 2^{-1/2} e^{3 i pi/4}(|E_6> + i|K_6>) has rank 3 (their Eq. 7), which refuted the conjecture of Bravyi, Smith and Smolin that chi(|H>^6) = 7 and gives exponent log_2(6)/6 = 0.431. Witness built here: a single-qubit Clifford C with C|T> proportional to |H> is applied to the three QPG terms, giving a cat-like state a|H>^6 + b|H_perp>^6, and Hadamard on five of the six qubits, which fixes |H> and negates |H_perp>, gives a second one with a different relative phase; |H>^6 is a combination of the two, so the six Clifford images span it. Verified here in exact arithmetic. This entry restores the value an earlier revision had listed under Bravyi and Gosset (arXiv:1601.07601, which bounds the approximate rank only) and then, in a faulty correction, replaced by 7."
 }
