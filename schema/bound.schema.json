@@ -34,9 +34,9 @@
               "W": {"type": "array", "items": {"type": "array", "items": {"type": "integer"}},
                     "description": "k rows of length m spanning the flat; must be injective"},
               "Q": {"type": "array", "items": {"type": "array", "items": {"type": "integer"}},
-                    "description": "quadratic phase form, read upper-triangular"},
+                    "description": "quadratic phase form, read upper-triangular and mod p; the phase is w_p^Q(y) for odd p and (-1)^Q(y) for qubits"},
               "l": {"type": "array", "items": {"type": "integer"},
-                    "description": "linear phase, length k"}
+                    "description": "linear phase, length k; the phase is w_p^(l.y) for odd p and i^(l.y) for qubits, with l read mod 4 so that every qubit stabilizer state is expressible"}
             }
           }
         },

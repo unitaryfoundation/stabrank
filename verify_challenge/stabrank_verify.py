@@ -10,9 +10,12 @@ stabilizer parametrisation
     |sigma> propto sum_{y in F_p^k} w_p^{Q(y) + l.y} |x0 + W y>,
 
 not as a raw amplitude vector, so a term that is not a stabilizer state cannot
-be expressed in the first place. The verifier rebuilds every term and the
-target in exact arithmetic and requires the identity to hold on the nose. A
-floating-point near-miss earns nothing.
+be expressed in the first place. For qubits the phase group is the fourth roots
+of unity rather than the second, so there the phase is i^{l.y} (-1)^{Q(y)} with
+l read mod 4 and Q mod 2; every qubit stabilizer state has this form, and with
+w_2 = -1 alone the Y eigenstates could not be written at all. The verifier
+rebuilds every term and the target in exact arithmetic and requires the
+identity to hold on the nose. A floating-point near-miss earns nothing.
 
 Lower bounds cannot be checked from a static witness, so they carry a
 certificate script. The pipeline runs it under a time budget and requires it to
@@ -132,7 +135,12 @@ def stabilizer_vector(term, p, n):
 
     term: {"k": k, "x0": [n ints], "W": [k rows of n ints], "Q": [[k x k]],
            "l": [k ints]}
-    giving  sum_{y in F_p^k} w_p^{Q(y) + l.y} |x0 + W y>  up to normalisation.
+    giving  sum_{y in F_p^k} w_p^{Q(y) + l.y} |x0 + W y>  up to normalisation
+    for odd p, and  sum_y i^{l.y} (-1)^{Q(y)} |x0 + W y>  for p = 2, where l.y
+    is summed over the integers and read mod 4. The qubit form is the standard
+    one (a Z_4-valued quadratic form with even cross terms) and reaches every
+    qubit stabilizer state; l = (2, 0, ...) is the same state as putting a 1 on
+    the diagonal of Q, which is harmless redundancy rather than a second state.
 
     Q is read as an upper-triangular form: only entries with i <= j are used, so
     a submitter cannot smuggle in a non-quadratic phase.
@@ -145,7 +153,8 @@ def stabilizer_vector(term, p, n):
     if len(W) != k or any(len(r) != n for r in W):
         raise ValueError(f"W must be {k}x{n}")
     Q = [[int(a) % p for a in row] for row in term.get("Q", [[0] * k for _ in range(k)])]
-    ell = [int(a) % p for a in term.get("l", [0] * k)]
+    lmod = 4 if p == 2 else p
+    ell = [int(a) % lmod for a in term.get("l", [0] * k)]
     if len(ell) != k:
         raise ValueError(f"l must have length {k}")
 
@@ -166,9 +175,12 @@ def stabilizer_vector(term, p, n):
         if pos in support:
             raise ValueError("W is not injective: repeated support point")
         support.add(pos)
-        e = sum(Q[i][j] * y[i] * y[j] for i in range(k) for j in range(i, k))
-        e += sum(ell[i] * y[i] for i in range(k))
-        vec[pos] = w ** (e % p)
+        q = sum(Q[i][j] * y[i] * y[j] for i in range(k) for j in range(i, k))
+        lin = sum(ell[i] * y[i] for i in range(k))
+        if p == 2:
+            vec[pos] = sp.I ** (lin % 4) * (-1) ** (q % 2)
+        else:
+            vec[pos] = w ** ((q + lin) % p)
     return vec / sp.sqrt(p ** k)
 
 
