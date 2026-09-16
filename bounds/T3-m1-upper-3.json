@@ -11,5 +11,41 @@
     "date": "2020-03-02",
     "github": []
   },
-  "notes": ""
+  "notes": "Witness: the computational basis, one term per amplitude, verified here.",
+  "witness": {
+    "terms": [
+      {
+        "k": 0,
+        "x0": [
+          0
+        ],
+        "W": [],
+        "Q": [],
+        "l": []
+      },
+      {
+        "k": 0,
+        "x0": [
+          1
+        ],
+        "W": [],
+        "Q": [],
+        "l": []
+      },
+      {
+        "k": 0,
+        "x0": [
+          2
+        ],
+        "W": [],
+        "Q": [],
+        "l": []
+      }
+    ],
+    "coeffs": [
+      "sqrt(3)/3",
+      "sqrt(3)*exp(2*I*pi/9)/3",
+      "sqrt(3)*exp(4*I*pi/9)/3"
+    ]
+  }
 }
