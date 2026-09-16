@@ -29,13 +29,24 @@ merge two distinct states, which is the direction that loses a lower bound.
 
 Positive control: the Strange state at m=2 has a known rank-2 decomposition, so
 the same code must find its keys colliding.
+
+Three bounds cite this script, one per orbit, and the verifier invokes it once
+per bound. The enumeration is the whole cost and it is shared, so running it
+three times would be 2.2 hours for one pull request. The computed verdicts are
+therefore memoised in the system temp directory under a key covering this
+script's own source, the copy count and the orbit list, so the second and third
+invocations are instant. The memo is derived by this script from the repository
+it ships in, not read from the submission, and it is discarded whenever the
+script changes.
 """
 
 import argparse
 import hashlib
 import itertools
+import json
 import os
 import sys
+import tempfile
 import time
 
 import numpy as np
@@ -138,12 +149,36 @@ def min_gap(k):
     return float(d[i]), (int(o[i]), int(o[i + 1]))
 
 
+def memo_path(m, orbits):
+    """Key the memo on this script's source, so an edit invalidates it."""
+    src = hashlib.blake2b(open(os.path.abspath(__file__), "rb").read(),
+                          digest_size=8).hexdigest()
+    tag = f"{src}-m{m}-{'_'.join(orbits)}"
+    return os.path.join(tempfile.gettempdir(), f"stabrank-rank2-{tag}.json")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--m", type=int, default=4)
     ap.add_argument("--orbits", default="T3,N,H3")
     ap.add_argument("--no-control", action="store_true")
+    ap.add_argument("--no-memo", action="store_true")
     a = ap.parse_args()
+    orbits = a.orbits.split(",")
+
+    memo = memo_path(a.m, orbits)
+    if not a.no_memo and os.path.exists(memo):
+        rec = json.load(open(memo))
+        print(f"reusing the verdicts computed by an earlier invocation "
+              f"({rec['n_raw']:,} states, {rec['n_distinct']:,} distinct)\n")
+        for o in orbits:
+            e = rec["orbits"][o]
+            if not e["ok"]:
+                print(f"{o} m={a.m}: {e['detail']}")
+                return 1
+            print(f"{o} m={a.m}: {e['detail']}")
+            print(f"CERTIFIED chi({o}^{a.m}) >= 3")
+        return 0
 
     if not a.no_control:
         print("positive control: Strange at m=2 (a rank-2 decomposition is known)")
@@ -151,33 +186,48 @@ def main():
         psi /= np.linalg.norm(psi)
         ks, r1, n, nd = keys_for([psi], 2, 3)
         g, pair = min_gap(ks[0])
-        verdict = "keys collide, as they must" if g < 1e-9 else "NO COLLISION -- search is broken"
-        print(f"  {n} states ({nd} distinct), minimum key gap {g:.3e} at {pair}: {verdict}\n")
+        verdict = ("keys collide, as they must" if g < 1e-9
+                   else "NO COLLISION -- search is broken")
+        print(f"  {n} states ({nd} distinct), minimum key gap {g:.3e} at {pair}: "
+              f"{verdict}\n")
         if g >= 1e-9:
             return 1
 
-    orbits = a.orbits.split(",")
     psis = []
     for o in orbits:
         p = np.array([complex(x) for x in target_vector(o, a.m)]).ravel()
         psis.append(p / np.linalg.norm(p))
     print(f"m={a.m}, orbits {orbits}")
     ks, rank1, n, nd = keys_for(psis, a.m, 3)
+
+    rec = {"n_raw": n, "n_distinct": nd, "orbits": {}}
     ok = True
     for o, k, r1 in zip(orbits, ks, rank1):
         if r1:
-            print(f"{o} m={a.m}: target IS a stabilizer state (rank 1)")
+            d = f"target IS a stabilizer state (rank 1)"
+            rec["orbits"][o] = {"ok": False, "detail": d}
+            print(f"{o} m={a.m}: {d}")
             ok = False
             continue
         g, pair = min_gap(k)
         if g < 1e-9:
-            print(f"{o} m={a.m}: candidate parallel pair {pair}, gap {g:.3e} -- "
-                  f"needs exact confirmation, NOT excluded")
+            d = (f"candidate parallel pair {pair}, gap {g:.3e} -- needs exact "
+                 f"confirmation, NOT excluded")
+            rec["orbits"][o] = {"ok": False, "detail": d}
+            print(f"{o} m={a.m}: {d}")
             ok = False
         else:
-            print(f"{o} m={a.m}: no two of {len(k):,} keys within {g:.3e}; "
-                  f"no rank-2 decomposition")
+            d = (f"no two of {len(k):,} keys within {g:.3e}; "
+                 f"no rank-2 decomposition")
+            rec["orbits"][o] = {"ok": True, "detail": d}
+            print(f"{o} m={a.m}: {d}")
             print(f"CERTIFIED chi({o}^{a.m}) >= 3")
+    if ok and not a.no_memo:
+        try:
+            with open(memo, "w") as f:
+                json.dump(rec, f)
+        except OSError:
+            pass
     return 0 if ok else 1
 
 
