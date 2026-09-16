@@ -1,9 +1,7 @@
 {
   "module": "LeanProofs.QubitTM4",
-  "ok": false,
+  "ok": true,
   "log": [
-    "Some required targets logged failures:",
-    "- LeanProofs.QubitTM4",
-    "error: build failed"
+    "Build completed successfully (8248 jobs)."
   ]
 }
