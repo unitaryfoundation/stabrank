@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "tier": "verified",
+  "detail": "3 stabilizer terms reproduce |qubit_H>^{ot 3}, checked symbolically",
+  "gamma": 0.5283208335737187,
+  "content_hash": "5a774c7cd97b0fd4"
+}
