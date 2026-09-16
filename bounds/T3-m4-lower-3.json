@@ -1,0 +1,22 @@
+{
+  "schema_version": "0.1",
+  "orbit": "T3",
+  "m": 4,
+  "direction": "lower",
+  "rank": 3,
+  "certificate": {
+    "script": "verify_challenge/cert_m4_rank2.py",
+    "expect": "CERTIFIED chi(T3^4) >= 3",
+    "budget_s": 5400
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank PR #20",
+    "method": "streaming rank-2 exclusion over all 7,439,040 four-qutrit stabilizer states",
+    "date": "2026-09-16",
+    "github": [
+      "vprusso"
+    ]
+  },
+  "notes": "Closes this cell as a route to the published exponent, which would need rank 2 here. The cell had no lower bound at all before. Excluding rank 2 over 7,439,040 stabilizer states is memory-bound rather than time-bound: holding them is 9.6 GB and the library enumerator doubles that by building a list before stacking, so the certificate holds nothing. Parallel vectors have identical canonical keys, since scaling q by lambda scales both (KEY.u) and (CAN.u) by lambda/|lambda|, so only a 16-byte key per state is kept. Equal keys are necessary for parallel, so no genuinely parallel pair can be missed; the reverse direction would only add a candidate. The raw enumeration repeats each state under several parametrisations, and repeats share a key, so states are deduplicated first by a 128-bit digest of the canonical form (dividing by the first nonzero entry puts every entry in {0, 1, w3, w3^2}); 12,249,468 raw reduce to exactly the expected 7,439,040. The exclusion rests on a margin: the closest any two of those keys come is 5.045e-07, against float error near 1e-15. The Strange state at m=2 is the positive control, where a rank-2 decomposition is known and the keys must collide."
+}

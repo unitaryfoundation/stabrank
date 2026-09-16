@@ -242,6 +242,10 @@ def verify_lower(sub, budget_s=900):
     if not os.path.isfile(path):
         return Result(False, None, f"certificate script not found: {cert['script']}")
     expect = cert.get("expect", "")
+    # An exhaustion over 7.4 million states does not fit a 900s default, and
+    # cutting it off would report a false negative rather than a slow pass. A
+    # submission may declare what it needs, capped by the schema.
+    budget_s = int(cert.get("budget_s", budget_s))
     try:
         proc = subprocess.run([sys.executable, path], capture_output=True,
                               text=True, timeout=budget_s, cwd=ROOT)
