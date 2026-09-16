@@ -20,7 +20,7 @@ Six orbits are open, with the published exponent each one is measured against:
 | tier | meaning |
 |---|---|
 | `lean` | a Lean module builds and its theorem is the bound as stated |
-| `verified` | the pipeline rebuilt the decomposition and confirmed the identity |
+| `verified` | the pipeline rebuilt the decomposition and confirmed the identity, or a lower-bound certificate is exact throughout, with no floating-point margin anywhere |
 | `reproduced` | a certificate script ran under the budget and asserted the bound |
 | `cited` | attributed to the literature, not machine-checked here |
 
@@ -64,6 +64,8 @@ A lower bound cannot be settled by a static witness, so it carries a certificate
 ```
 
 The script runs under a 900-second budget. That is a real constraint on what you can submit, not a formality: an exhaustion written as a Python loop over 30240 states will not fit, and the fix is usually to restate the search rather than to ask for more time. `verify_challenge/cert_t3m3_rank6.py` is worth reading as an example, because it documents both the reformulation that brought 26 CPU-minutes down to under three and the more aggressive version of the same idea that silently loses configurations.
+
+A certificate that is exact throughout, so that no floating-point margin stands anywhere under the bound, may declare `"exact": true` and then earns `verified` rather than `reproduced`. The pipeline cannot check that declaration from outside, any more than it can check that the claim string follows from what the script computed, so both are what review of the script is for. The bar is the whole argument, not the last step: a search that harvests candidates numerically and then rejects each one exactly does not qualify, because the completeness of the candidate list still rests on the harvest's margin, and that margin is what a missed decomposition would hide behind. An argument like the Galois descent for T3, computed as an exact rank, does qualify. Say in `notes` which steps are exact and which rest on a margin, whether or not you claim the flag.
 
 Write the script so it fails loudly. A certificate that prints its claim unconditionally is worse than no certificate, since it converts a bug into a board entry.
 
