@@ -763,6 +763,64 @@ def lean_badge(sub, rel="", compact=True):
             f"{label}{'' if compact else mark}</a>")
 
 
+def compute_summary(comp):
+    """One sentence of what the search cost, from provenance.compute."""
+    parts = []
+    if comp.get("runs") is not None:
+        parts.append(f"{comp['runs']} run{'s' if comp['runs'] != 1 else ''}")
+    if comp.get("cpu_hours") is not None:
+        parts.append(f"{comp['cpu_hours']:g} CPU-hours")
+    if comp.get("gpu_hours"):
+        parts.append(f"{comp['gpu_hours']:g} GPU-hours")
+    if comp.get("wall_clock_hours") is not None:
+        parts.append(f"{comp['wall_clock_hours']:g} h wall-clock")
+    if comp.get("hardware"):
+        parts.append("on " + E(comp["hardware"]))
+    for u in comp.get("llm") or []:
+        toks = []
+        if u.get("input_tokens") is not None:
+            toks.append(f"{u['input_tokens']:,} in")
+        if u.get("output_tokens") is not None:
+            toks.append(f"{u['output_tokens']:,} out")
+        piece = f"<span class=mono>{E(u['model'])}</span>"
+        if toks:
+            piece += " (" + ", ".join(toks) + " tokens)"
+        if u.get("role"):
+            piece += ", " + E(u["role"])
+        parts.append(piece)
+    if comp.get("cost_usd") is not None:
+        parts.append(f"${comp['cost_usd']:,.2f}")
+    return "; ".join(parts) + "." if parts else "reported, but empty."
+
+
+def write_ledger(entries):
+    """docs/ledger.json: every bound with its tier and what finding it cost.
+
+    The board shows results; the ledger is the data behind a cost-per-discovery
+    curve, one row per submission, machine-readable and regenerated on every
+    build so nothing has to be back-filled later.
+    """
+    rows = []
+    for e in entries:
+        s, r = e["sub"], e["res"]
+        prov = s["provenance"]
+        rows.append({
+            "slug": e["slug"], "orbit": s["orbit"], "m": int(s["m"]),
+            "direction": s["direction"], "rank": int(s["rank"]),
+            "tier": r["tier"], "ok": r["ok"],
+            "gamma": r.get("gamma") if s["direction"] == "upper" else None,
+            "date": prov.get("date"), "author": prov.get("author"),
+            "github": prov.get("github") or [], "method": prov.get("method"),
+            "reference": prov.get("reference"),
+            "compute": prov.get("compute"),
+        })
+    rows.sort(key=lambda x: (x["date"] or "", x["slug"]))
+    with open(os.path.join(DOCS, "ledger.json"), "w") as f:
+        json.dump({"generated_from": "bounds/", "rows": rows}, f, indent=1)
+        f.write("\n")
+    return rows
+
+
 def gh_links(prov):
     """Render submitters as linked GitHub handles where we know them."""
     hs = prov.get("github") or []
@@ -1047,6 +1105,7 @@ def build():
     with open(os.path.join(DOCS, "favicon.svg"), "w") as f:
         f.write(FAVICON)
     references_page(parse_bib(os.path.join(DOCS, "refs.bib")))
+    write_ledger(entries)
     for e in entries:
         detail_page(e)
     for orbit in ORBIT_ORDER:
@@ -1173,6 +1232,9 @@ def detail_page(e):
                     "No build receipt is recorded here yet, so this bound is shown "
                     "at the tier the other checks earn it; the Lean claim does not "
                     "inflate a tier on its own.") + "</p>")
+    comp = s["provenance"].get("compute")
+    if comp:
+        o.append("<h2>Compute</h2><p>" + compute_summary(comp) + "</p>")
     if s.get("notes"):
         o.append(f"<h2>Notes</h2><p>{E(s['notes'])}</p>")
     o.append("<h2>Attribution</h2><p>" + E(s["provenance"].get("author", ""))

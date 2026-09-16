@@ -85,6 +85,23 @@ Every submission carries `provenance` and a free-text `notes` field, capped at 2
 
 `date` is when the bound first appeared: the arXiv v1 date for a literature value, otherwise the date of the work. It orders the recent-submissions list and the record-progress chart, so a placeholder there is not harmless. `github` binds the entry to its authors.
 
+`provenance.compute` records what the search cost, and every field in it is optional:
+
+```json
+"compute": {
+  "cpu_hours": 3.5,
+  "gpu_hours": 0,
+  "wall_clock_hours": 1.2,
+  "runs": 40,
+  "hardware": "Apple M3 Max, 14 cores",
+  "llm": [{"model": "claude-fable-5-1", "input_tokens": 1200000,
+           "output_tokens": 85000, "role": "drove the search"}],
+  "cost_usd": 12.40
+}
+```
+
+Count every run that led to the bound, including the ones that failed, and count what the search spent rather than what the verifier spends checking it. The site collects these into `docs/ledger.json`, one row per submission with its tier and date, which is the data behind a cost-per-discovery curve. That curve cannot be reconstructed after the fact from a board that only records results, so report the cost at the time even when it is small; a certificate that took ten CPU-minutes to find is a data point, and a blank is not.
+
 Use `notes` for what the fields cannot hold: the search that found it, the margin by which the check passed, what you ruled out on the way, and any respect in which the result is weaker than it looks. A route you can show is barren is worth recording next to the bound it failed to improve. The board's value compounds through shared search experience, and the alternative is that every contributor rediscovers the same dead end at their own expense.
 
 ## Submitting
