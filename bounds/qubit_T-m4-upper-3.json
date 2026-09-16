@@ -14,9 +14,187 @@
       "vprusso"
     ]
   },
-  "notes": "matches the QPG exponent by direct algebra",
+  "notes": "matches the QPG exponent by direct algebra Witness: the three states sigma_1, sigma_2, sigma_3 of LeanProofs.QubitTM4, with phases in the fourth roots of unity, verified here in exact arithmetic. The Lean module itself does not build at present, so this witness is what stands behind the cell.",
   "lean": {
     "module": "LeanProofs.QubitTM4",
     "theorem": "stabilizer_rank_le_three"
+  },
+  "witness": {
+    "terms": [
+      {
+        "k": 3,
+        "x0": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "l": [
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "k": 4,
+        "x0": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "l": [
+          0,
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "k": 3,
+        "x0": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "l": [
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "coeffs": [
+      "sqrt(sqrt(3)/9 + 2/9) + I*sqrt(2/9 - sqrt(3)/9)",
+      "2/3",
+      "sqrt(sqrt(3)/9 + 2/9) - I*sqrt(2/9 - sqrt(3)/9)"
+    ]
   }
 }
