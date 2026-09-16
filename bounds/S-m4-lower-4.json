@@ -14,5 +14,9 @@
       "vprusso"
     ]
   },
-  "notes": "projection monotonicity from m=3"
+  "notes": "Projection monotonicity from m=3, with the m=3 exclusion re-run inside the certificate rather than taken from the board: chi(psi (x) phi) >= chi(psi) whenever phi has a nonzero computational amplitude, since applying I (x) <x| to a decomposition of psi (x) phi maps each stabilizer state to a stabilizer state or zero (the lemma is written out in the certificate). With the rank-4 upper bound this settles chi(|S>^4) = 4.",
+  "certificate": {
+    "script": "verify_challenge/cert_s_m4_from_m3.py",
+    "expect": "CERTIFIED chi(S^4) >= 4"
+  }
 }

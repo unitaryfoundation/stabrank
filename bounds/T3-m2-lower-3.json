@@ -6,7 +6,8 @@
   "rank": 3,
   "certificate": {
     "script": "verify_challenge/cert_t3_galois.py",
-    "expect": "CERTIFIED chi(T3^m) >= 3"
+    "expect": "CERTIFIED chi(T3^m) >= 3",
+    "exact": true
   },
   "provenance": {
     "author": "this repository",
@@ -17,5 +18,5 @@
       "vprusso"
     ]
   },
-  "notes": "Holds for every m. With the rank-3 witness at m=2 this settles that cell exactly. Field-of-definition arguments for stabilizer rank are prior art (Lovitz and Steffan, over Q(i)); the Galois-orbit step and the Z[w3] instantiation are not."
+  "notes": "Holds for every m. With the rank-3 witness at m=2 this settles that cell exactly. Field-of-definition arguments for stabilizer rank are prior art (Lovitz and Steffan, over Q(i)); the Galois-orbit step and the Z[w3] instantiation are not. The certificate is exact throughout: the only computation is the rank of a 3-column matrix over Q(w9), taken symbolically, so no floating-point margin stands under it."
 }

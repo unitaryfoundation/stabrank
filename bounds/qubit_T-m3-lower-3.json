@@ -1,0 +1,27 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_T",
+  "m": 3,
+  "direction": "lower",
+  "rank": 3,
+  "certificate": {
+    "script": "verify_challenge/cert_qubit_t_m3_rank2.py",
+    "expect": "CERTIFIED chi(qubit_T^3) >= 3"
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank rank_exclusion.py",
+    "method": "exhaustion over all pairs of 3-qubit stabilizer states, via the quotient by the target",
+    "date": "2026-09-16",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.001,
+      "wall_clock_hours": 0.001,
+      "runs": 1,
+      "hardware": "Apple silicon laptop"
+    }
+  },
+  "notes": "Pairs with the annealed rank-3 decomposition to settle chi(|T>^3) = 3 exactly. The exclusion is numerical and rests on a margin: the closest any two key-adjacent quotient directions come to parallel is 0.81 against a threshold of 1 - 1e-6. The T-type state at m=2, whose rank-2 decomposition is verified on the board, is the positive control."
+}

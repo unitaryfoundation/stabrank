@@ -1,0 +1,27 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_H",
+  "m": 4,
+  "direction": "lower",
+  "rank": 4,
+  "certificate": {
+    "script": "verify_challenge/cert_qubit_h_m4_rank3.py",
+    "expect": "CERTIFIED chi(qubit_H^4) >= 4"
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank rank_exclusion.py",
+    "method": "exhaustion over all triples of 4-qubit stabilizer states, via a pivot and two quotients",
+    "date": "2026-09-16",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.3,
+      "wall_clock_hours": 0.08,
+      "runs": 1,
+      "hardware": "Apple silicon laptop, 8 worker processes"
+    }
+  },
+  "notes": "Settles chi(|H>^4) = 4 with the verified rank-4 decomposition, both directions machine-checked, and reproduces the value of Bravyi, Smith and Smolin from scratch. Every rank-3 triple over the 36720 four-qubit stabilizer states is excluded: 8.69 million collinear-in-quotient candidates arise and every one is three states of a single two-dimensional stabilizer subspace, whose span cannot contain the target once rank 2 is excluded in the same pass; no independent collinear triple exists at all. The exclusion is numerical and rests on a margin: the closest any two key-adjacent non-parallel quotient directions come to parallel is 0.9877 against a threshold of 1 - 1e-6, and the certificate refuses to print its claim if that clearance falls under 0.01. The H-type state at m=3, whose rank-3 decomposition is verified on the board, is the positive control."
+}

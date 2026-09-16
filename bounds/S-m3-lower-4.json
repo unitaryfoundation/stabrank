@@ -12,7 +12,17 @@
     "github": [
       "FarLab",
       "vprusso"
-    ]
+    ],
+    "compute": {
+      "cpu_hours": 0.05,
+      "wall_clock_hours": 0.05,
+      "runs": 1,
+      "hardware": "Apple silicon laptop, 8 worker processes"
+    }
   },
-  "notes": "exhaustive"
+  "notes": "The exhaustive m=3 value of arXiv:2605.28586, reproduced here from scratch: every rank-3 triple over the 30240 three-qutrit stabilizer states is excluded by the pivot-and-quotient search of rank_exclusion.py, with rank 2 excluded in the same pass. Together with the Lean-checked rank-4 decomposition this settles chi(|S>^3) = 4 with both directions machine-checked. The exclusion is numerical and rests on a margin: the certificate reports the closest any two non-parallel quotient directions come to the parallel threshold and refuses to print its claim if that margin is under 0.01. The Norrell state at m=2, whose rank-3 decomposition is proved in Lean, is the positive control.",
+  "certificate": {
+    "script": "verify_challenge/cert_s_m3_rank3.py",
+    "expect": "CERTIFIED chi(S^3) >= 4"
+  }
 }
