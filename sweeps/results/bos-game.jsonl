@@ -1,0 +1,241 @@
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.02 budget=2.8M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.3244084772419735, "solved": false, "secs": 31.4}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.02 budget=2.8M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 1, "rank": 9, "residual": 0.3373914601810332, "solved": false, "secs": 29.5}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.02 budget=2.8M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 2, "rank": 9, "residual": 0.3325372073498617, "solved": false, "secs": 45.8}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.02 budget=2.8M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 3, "rank": 9, "residual": 0.344025881260409, "solved": false, "secs": 55.2}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.02 budget=2.8M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 0, "rank": 9, "residual": 0.2827760642858139, "solved": false, "secs": 85.5}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.02 budget=2.8M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 1, "rank": 9, "residual": 0.28375814081065387, "solved": false, "secs": 167.3}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.02 budget=2.8M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 2, "rank": 9, "residual": 0.28375814081065387, "solved": false, "secs": 71.9}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.02 budget=2.8M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 3, "rank": 9, "residual": 0.2805720494407195, "solved": false, "secs": 65.9}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.02 budget=2.8M", "g": 1, "sizes": [4, 4, 1], "seed": 0, "rank": 9, "residual": 0.2781089434541693, "solved": false, "secs": 47.4}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.02 budget=2.8M", "g": 1, "sizes": [4, 4, 1], "seed": 1, "rank": 9, "residual": 0.2781089434541691, "solved": false, "secs": 51.3}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.02 budget=2.8M", "g": 1, "sizes": [4, 4, 1], "seed": 2, "rank": 9, "residual": 0.2781089434541687, "solved": false, "secs": 48.0}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.02 budget=2.8M", "g": 1, "sizes": [4, 4, 1], "seed": 3, "rank": 9, "residual": 0.27810894345416853, "solved": false, "secs": 45.3}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.15 budget=2.8M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.31757509983875043, "solved": false, "secs": 67.8}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.15 budget=2.8M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 1, "rank": 9, "residual": 0.3191295651903813, "solved": false, "secs": 47.9}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.15 budget=2.8M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 2, "rank": 9, "residual": 0.2993960571858275, "solved": false, "secs": 46.5}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.15 budget=2.8M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 3, "rank": 9, "residual": 0.29377307633071564, "solved": false, "secs": 47.6}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.15 budget=2.8M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 0, "rank": 9, "residual": 0.3008441025091896, "solved": false, "secs": 103.7}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.15 budget=2.8M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 1, "rank": 9, "residual": 0.3052430100271233, "solved": false, "secs": 118.6}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.15 budget=2.8M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 2, "rank": 9, "residual": 0.29923180056801996, "solved": false, "secs": 87.9}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.15 budget=2.8M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 3, "rank": 9, "residual": 0.29943953890044683, "solved": false, "secs": 117.5}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.15 budget=2.8M", "g": 1, "sizes": [4, 4, 1], "seed": 0, "rank": 9, "residual": 0.2781089434541693, "solved": false, "secs": 53.0}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.15 budget=2.8M", "g": 1, "sizes": [4, 4, 1], "seed": 1, "rank": 9, "residual": 0.2781089434541687, "solved": false, "secs": 53.7}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.15 budget=2.8M", "g": 1, "sizes": [4, 4, 1], "seed": 2, "rank": 9, "residual": 0.2781089434541687, "solved": false, "secs": 64.7}
+{"label": "T0=0.1 rate=0.9985 iters=600 reseed=0.15 budget=2.8M", "g": 1, "sizes": [4, 4, 1], "seed": 3, "rank": 9, "residual": 0.2781089434541687, "solved": false, "secs": 59.5}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.02 budget=3.4M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.3322012140355128, "solved": false, "secs": 44.8}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.02 budget=3.4M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 1, "rank": 9, "residual": 0.3037310088285956, "solved": false, "secs": 58.5}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.02 budget=3.4M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 2, "rank": 9, "residual": 0.33193173087785816, "solved": false, "secs": 44.4}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.02 budget=3.4M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 3, "rank": 9, "residual": 0.3231557738186638, "solved": false, "secs": 39.1}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.02 budget=3.4M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 0, "rank": 9, "residual": 0.28233659491884205, "solved": false, "secs": 97.1}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.02 budget=3.4M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 1, "rank": 9, "residual": 0.28375814081065465, "solved": false, "secs": 121.4}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.02 budget=3.4M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 2, "rank": 9, "residual": 0.28375814081065426, "solved": false, "secs": 116.0}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.02 budget=3.4M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 3, "rank": 9, "residual": 0.28057204944072506, "solved": false, "secs": 112.6}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.02 budget=3.4M", "g": 1, "sizes": [4, 4, 1], "seed": 0, "rank": 9, "residual": 0.27810894345416853, "solved": false, "secs": 41.9}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.02 budget=3.4M", "g": 1, "sizes": [4, 4, 1], "seed": 1, "rank": 9, "residual": 0.2781089434541693, "solved": false, "secs": 61.7}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.02 budget=3.4M", "g": 1, "sizes": [4, 4, 1], "seed": 2, "rank": 9, "residual": 0.2781089434541691, "solved": false, "secs": 70.9}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.02 budget=3.4M", "g": 1, "sizes": [4, 4, 1], "seed": 3, "rank": 9, "residual": 0.303508630411729, "solved": false, "secs": 61.8}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.15 budget=3.4M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.309745617358172, "solved": false, "secs": 65.3}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.15 budget=3.4M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 1, "rank": 9, "residual": 0.29468933847499856, "solved": false, "secs": 45.2}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.15 budget=3.4M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 2, "rank": 9, "residual": 0.2745586288854588, "solved": false, "secs": 61.5}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.15 budget=3.4M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 3, "rank": 9, "residual": 0.32142481537602297, "solved": false, "secs": 64.0}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.15 budget=3.4M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 0, "rank": 9, "residual": 0.2955663542278368, "solved": false, "secs": 131.6}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.15 budget=3.4M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 1, "rank": 9, "residual": 0.30224780233317744, "solved": false, "secs": 157.0}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.15 budget=3.4M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 2, "rank": 9, "residual": 0.2805720494407253, "solved": false, "secs": 143.4}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.15 budget=3.4M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 3, "rank": 9, "residual": 0.3092656581445418, "solved": false, "secs": 127.3}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.15 budget=3.4M", "g": 1, "sizes": [4, 4, 1], "seed": 0, "rank": 9, "residual": 0.2781089434541691, "solved": false, "secs": 71.4}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.15 budget=3.4M", "g": 1, "sizes": [4, 4, 1], "seed": 1, "rank": 9, "residual": 0.2781089434541689, "solved": false, "secs": 73.4}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.15 budget=3.4M", "g": 1, "sizes": [4, 4, 1], "seed": 2, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 74.8}
+{"label": "T0=0.5 rate=0.9985 iters=600 reseed=0.15 budget=3.4M", "g": 1, "sizes": [4, 4, 1], "seed": 3, "rank": 9, "residual": 0.2781089434541681, "solved": false, "secs": 65.7}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.02 budget=4.0M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.32898397316920697, "solved": false, "secs": 52.6}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.02 budget=4.0M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 1, "rank": 9, "residual": 0.35862405727530244, "solved": false, "secs": 43.1}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.02 budget=4.0M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 2, "rank": 9, "residual": 0.33442817653347673, "solved": false, "secs": 53.4}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.02 budget=4.0M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 3, "rank": 9, "residual": 0.32257721379722865, "solved": false, "secs": 53.3}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.02 budget=4.0M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 0, "rank": 9, "residual": 0.2860235109016519, "solved": false, "secs": 128.6}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.02 budget=4.0M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 1, "rank": 9, "residual": 0.28057204944072567, "solved": false, "secs": 129.2}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.02 budget=4.0M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 2, "rank": 9, "residual": 0.28057204944072567, "solved": false, "secs": 141.8}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.02 budget=4.0M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 3, "rank": 9, "residual": 0.28277606428581314, "solved": false, "secs": 120.3}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.02 budget=4.0M", "g": 1, "sizes": [4, 4, 1], "seed": 0, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 57.0}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.02 budget=4.0M", "g": 1, "sizes": [4, 4, 1], "seed": 1, "rank": 9, "residual": 0.2781089434541687, "solved": false, "secs": 83.4}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.02 budget=4.0M", "g": 1, "sizes": [4, 4, 1], "seed": 2, "rank": 9, "residual": 0.2781089434541691, "solved": false, "secs": 63.7}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.02 budget=4.0M", "g": 1, "sizes": [4, 4, 1], "seed": 3, "rank": 9, "residual": 0.2781089434541687, "solved": false, "secs": 70.2}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.15 budget=4.0M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.3093899395665007, "solved": false, "secs": 68.2}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.15 budget=4.0M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 1, "rank": 9, "residual": 0.2825976656895343, "solved": false, "secs": 71.8}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.15 budget=4.0M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 2, "rank": 9, "residual": 0.30855024677877185, "solved": false, "secs": 70.0}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.15 budget=4.0M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 3, "rank": 9, "residual": 0.29512219108325144, "solved": false, "secs": 58.8}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.15 budget=4.0M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 0, "rank": 9, "residual": 0.30773401277163676, "solved": false, "secs": 184.8}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.15 budget=4.0M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 1, "rank": 9, "residual": 0.29556635422783656, "solved": false, "secs": 170.2}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.15 budget=4.0M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 2, "rank": 9, "residual": 0.30524301002712256, "solved": false, "secs": 186.4}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.15 budget=4.0M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 3, "rank": 9, "residual": 0.3013457963100427, "solved": false, "secs": 192.7}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.15 budget=4.0M", "g": 1, "sizes": [4, 4, 1], "seed": 0, "rank": 9, "residual": 0.27810894345416853, "solved": false, "secs": 79.4}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.15 budget=4.0M", "g": 1, "sizes": [4, 4, 1], "seed": 1, "rank": 9, "residual": 0.2781089434541691, "solved": false, "secs": 72.1}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.15 budget=4.0M", "g": 1, "sizes": [4, 4, 1], "seed": 2, "rank": 9, "residual": 0.27810894345416853, "solved": false, "secs": 76.8}
+{"label": "T0=2.0 rate=0.9985 iters=600 reseed=0.15 budget=4.0M", "g": 1, "sizes": [4, 4, 1], "seed": 3, "rank": 9, "residual": 0.2781089434541681, "solved": false, "secs": 75.7}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.02 budget=27.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.29581379186077816, "solved": false, "secs": 365.8}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.02 budget=27.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 1, "rank": 9, "residual": 0.2935288270738462, "solved": false, "secs": 363.0}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.02 budget=27.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 2, "rank": 9, "residual": 0.28442029528644464, "solved": false, "secs": 440.1}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.02 budget=27.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 3, "rank": 9, "residual": 0.28649715247867413, "solved": false, "secs": 330.9}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.02 budget=27.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 0, "rank": 9, "residual": 0.28057204944072606, "solved": false, "secs": 736.1}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.02 budget=27.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 1, "rank": 9, "residual": 0.26264081965654423, "solved": false, "secs": 773.0}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.02 budget=27.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 2, "rank": 9, "residual": 0.2805720494407243, "solved": false, "secs": 768.6}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.02 budget=27.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 3, "rank": 9, "residual": 0.2775576874040761, "solved": false, "secs": 764.9}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.02 budget=27.6M", "g": 1, "sizes": [4, 4, 1], "seed": 0, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 488.5}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.02 budget=27.6M", "g": 1, "sizes": [4, 4, 1], "seed": 1, "rank": 9, "residual": 0.2781089434541687, "solved": false, "secs": 496.9}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.02 budget=27.6M", "g": 1, "sizes": [4, 4, 1], "seed": 2, "rank": 9, "residual": 0.27810894345416853, "solved": false, "secs": 474.0}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.02 budget=27.6M", "g": 1, "sizes": [4, 4, 1], "seed": 3, "rank": 9, "residual": 0.27810894345416853, "solved": false, "secs": 519.2}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.15 budget=27.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.2924253436902924, "solved": false, "secs": 494.8}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.15 budget=27.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 1, "rank": 9, "residual": 0.26957643854223345, "solved": false, "secs": 433.6}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.15 budget=27.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 2, "rank": 9, "residual": 0.26538847331579757, "solved": false, "secs": 444.5}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.15 budget=27.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 3, "rank": 9, "residual": 0.2614587116268594, "solved": false, "secs": 468.8}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.15 budget=27.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 0, "rank": 9, "residual": 0.2955663542278364, "solved": false, "secs": 1053.8}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.15 budget=27.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 1, "rank": 9, "residual": 0.28602351090165246, "solved": false, "secs": 1065.7}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.15 budget=27.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 2, "rank": 9, "residual": 0.28233659491884167, "solved": false, "secs": 1077.1}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.15 budget=27.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 3, "rank": 9, "residual": 0.2805720494407253, "solved": false, "secs": 1144.6}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.15 budget=27.6M", "g": 1, "sizes": [4, 4, 1], "seed": 0, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 605.8}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.15 budget=27.6M", "g": 1, "sizes": [4, 4, 1], "seed": 1, "rank": 9, "residual": 0.2781089434541681, "solved": false, "secs": 603.7}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.15 budget=27.6M", "g": 1, "sizes": [4, 4, 1], "seed": 2, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 548.5}
+{"label": "T0=0.1 rate=0.9985 iters=6000 reseed=0.15 budget=27.6M", "g": 1, "sizes": [4, 4, 1], "seed": 3, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 569.7}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.02 budget=27.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.2803945529756126, "solved": false, "secs": 762.8}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.02 budget=27.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 1, "rank": 9, "residual": 0.28275590208928597, "solved": false, "secs": 342.4}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.02 budget=27.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 2, "rank": 9, "residual": 0.25231982938185366, "solved": false, "secs": 332.5}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.02 budget=27.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 3, "rank": 9, "residual": 0.282744665835717, "solved": false, "secs": 553.1}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.02 budget=27.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 0, "rank": 9, "residual": 0.2805720494407253, "solved": false, "secs": 1133.9}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.02 budget=27.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 1, "rank": 9, "residual": 0.2626408196565455, "solved": false, "secs": 838.7}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.02 budget=27.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 2, "rank": 9, "residual": 0.2805720494407245, "solved": false, "secs": 637.3}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.02 budget=27.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 3, "rank": 9, "residual": 0.28057204944072506, "solved": false, "secs": 904.9}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.02 budget=27.6M", "g": 1, "sizes": [4, 4, 1], "seed": 0, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 516.4}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.02 budget=27.6M", "g": 1, "sizes": [4, 4, 1], "seed": 1, "rank": 9, "residual": 0.2781089434541687, "solved": false, "secs": 505.1}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.02 budget=27.6M", "g": 1, "sizes": [4, 4, 1], "seed": 2, "rank": 9, "residual": 0.27810894345416853, "solved": false, "secs": 502.3}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.02 budget=27.6M", "g": 1, "sizes": [4, 4, 1], "seed": 3, "rank": 9, "residual": 0.27810894345416853, "solved": false, "secs": 506.8}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.15 budget=27.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.26771110194908, "solved": false, "secs": 566.8}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.15 budget=27.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 1, "rank": 9, "residual": 0.29003435363011265, "solved": false, "secs": 521.7}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.15 budget=27.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 2, "rank": 9, "residual": 0.2977331914612341, "solved": false, "secs": 422.9}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.15 budget=27.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 3, "rank": 9, "residual": 0.2651945563131036, "solved": false, "secs": 494.7}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.15 budget=27.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 0, "rank": 9, "residual": 0.28057204944072567, "solved": false, "secs": 990.4}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.15 budget=27.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 1, "rank": 9, "residual": 0.29398712791331516, "solved": false, "secs": 957.9}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.15 budget=27.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 2, "rank": 9, "residual": 0.28233659491884183, "solved": false, "secs": 1092.7}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.15 budget=27.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 3, "rank": 9, "residual": 0.29310566227384577, "solved": false, "secs": 1001.8}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.15 budget=27.6M", "g": 1, "sizes": [4, 4, 1], "seed": 0, "rank": 9, "residual": 0.2781089434541681, "solved": false, "secs": 538.3}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.15 budget=27.6M", "g": 1, "sizes": [4, 4, 1], "seed": 1, "rank": 9, "residual": 0.2781089434541679, "solved": false, "secs": 592.1}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.15 budget=27.6M", "g": 1, "sizes": [4, 4, 1], "seed": 2, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 608.0}
+{"label": "T0=0.1 rate=0.99985 iters=600 reseed=0.15 budget=27.6M", "g": 1, "sizes": [4, 4, 1], "seed": 3, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 611.7}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.02 budget=34.0M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.2989203713159369, "solved": false, "secs": 497.6}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.02 budget=34.0M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 1, "rank": 9, "residual": 0.27531087649554276, "solved": false, "secs": 435.4}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.02 budget=34.0M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 2, "rank": 9, "residual": 0.2063763166406411, "solved": false, "secs": 451.2}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.02 budget=34.0M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 3, "rank": 9, "residual": 0.27251839564052494, "solved": false, "secs": 424.3}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.02 budget=34.0M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 0, "rank": 9, "residual": 0.2805720494407249, "solved": false, "secs": 4038.4}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.02 budget=34.0M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 1, "rank": 9, "residual": 0.27421024084664575, "solved": false, "secs": 1259.9}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.02 budget=34.0M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 2, "rank": 9, "residual": 0.2805720494407253, "solved": false, "secs": 1068.5}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.02 budget=34.0M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 3, "rank": 9, "residual": 0.26264081965654507, "solved": false, "secs": 933.1}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.02 budget=34.0M", "g": 1, "sizes": [4, 4, 1], "seed": 0, "rank": 9, "residual": 0.27810894345416853, "solved": false, "secs": 576.2}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.02 budget=34.0M", "g": 1, "sizes": [4, 4, 1], "seed": 1, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 595.8}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.02 budget=34.0M", "g": 1, "sizes": [4, 4, 1], "seed": 2, "rank": 9, "residual": 0.2781089434541687, "solved": false, "secs": 581.8}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.02 budget=34.0M", "g": 1, "sizes": [4, 4, 1], "seed": 3, "rank": 9, "residual": 0.27810894345416853, "solved": false, "secs": 639.9}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.15 budget=34.0M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.26680348397496917, "solved": false, "secs": 573.0}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.15 budget=34.0M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 1, "rank": 9, "residual": 0.2697046156389871, "solved": false, "secs": 587.0}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.15 budget=34.0M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 2, "rank": 9, "residual": 0.2939388850277241, "solved": false, "secs": 604.2}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.15 budget=34.0M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 3, "rank": 9, "residual": 0.2542128627213531, "solved": false, "secs": 575.3}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.15 budget=34.0M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 0, "rank": 9, "residual": 0.2939871279133144, "solved": false, "secs": 1425.2}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.15 budget=34.0M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 1, "rank": 9, "residual": 0.28057204944072506, "solved": false, "secs": 1376.4}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.15 budget=34.0M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 2, "rank": 9, "residual": 0.2955663542278364, "solved": false, "secs": 1331.5}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.15 budget=34.0M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 3, "rank": 9, "residual": 0.2805720494407253, "solved": false, "secs": 1533.1}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.15 budget=34.0M", "g": 1, "sizes": [4, 4, 1], "seed": 0, "rank": 9, "residual": 0.2781089434541681, "solved": false, "secs": 724.0}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.15 budget=34.0M", "g": 1, "sizes": [4, 4, 1], "seed": 1, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 711.0}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.15 budget=34.0M", "g": 1, "sizes": [4, 4, 1], "seed": 2, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 796.1}
+{"label": "T0=0.5 rate=0.9985 iters=6000 reseed=0.15 budget=34.0M", "g": 1, "sizes": [4, 4, 1], "seed": 3, "rank": 9, "residual": 0.2781089434541679, "solved": false, "secs": 711.0}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.02 budget=34.1M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.2784380064122793, "solved": false, "secs": 448.3}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.02 budget=34.1M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 1, "rank": 9, "residual": 0.2217446498143295, "solved": false, "secs": 488.9}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.02 budget=34.1M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 2, "rank": 9, "residual": 0.28913265953649575, "solved": false, "secs": 368.7}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.02 budget=34.1M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 3, "rank": 9, "residual": 0.2835448514985188, "solved": false, "secs": 539.9}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.02 budget=34.1M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 0, "rank": 9, "residual": 0.2805720494407243, "solved": false, "secs": 1124.3}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.02 budget=34.1M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 1, "rank": 9, "residual": 0.2805720494407253, "solved": false, "secs": 1008.9}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.02 budget=34.1M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 2, "rank": 9, "residual": 0.28057204944072506, "solved": false, "secs": 1004.0}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.02 budget=34.1M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 3, "rank": 9, "residual": 0.2805720494407245, "solved": false, "secs": 920.5}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.02 budget=34.1M", "g": 1, "sizes": [4, 4, 1], "seed": 0, "rank": 9, "residual": 0.2781089434541687, "solved": false, "secs": 645.2}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.02 budget=34.1M", "g": 1, "sizes": [4, 4, 1], "seed": 1, "rank": 9, "residual": 0.2781089434541681, "solved": false, "secs": 599.1}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.02 budget=34.1M", "g": 1, "sizes": [4, 4, 1], "seed": 2, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 565.4}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.02 budget=34.1M", "g": 1, "sizes": [4, 4, 1], "seed": 3, "rank": 9, "residual": 0.2781089434541679, "solved": false, "secs": 580.2}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.15 budget=34.1M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.20637631664064085, "solved": false, "secs": 599.5}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.15 budget=34.1M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 1, "rank": 9, "residual": 0.28069720136018567, "solved": false, "secs": 702.9}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.15 budget=34.1M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 2, "rank": 9, "residual": 0.2063763166406403, "solved": false, "secs": 597.1}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.15 budget=34.1M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 3, "rank": 9, "residual": 0.2776019941467603, "solved": false, "secs": 519.6}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.15 budget=34.1M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 0, "rank": 9, "residual": 0.28233659491884283, "solved": false, "secs": 1541.1}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.15 budget=34.1M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 1, "rank": 9, "residual": 0.2805720494407253, "solved": false, "secs": 1383.3}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.15 budget=34.1M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 2, "rank": 9, "residual": 0.2805720494407253, "solved": false, "secs": 1349.0}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.15 budget=34.1M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 3, "rank": 9, "residual": 0.2805720494407253, "solved": false, "secs": 1438.7}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.15 budget=34.1M", "g": 1, "sizes": [4, 4, 1], "seed": 0, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 692.6}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.15 budget=34.1M", "g": 1, "sizes": [4, 4, 1], "seed": 1, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 733.9}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.15 budget=34.1M", "g": 1, "sizes": [4, 4, 1], "seed": 2, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 693.3}
+{"label": "T0=0.5 rate=0.99985 iters=600 reseed=0.15 budget=34.1M", "g": 1, "sizes": [4, 4, 1], "seed": 3, "rank": 9, "residual": 0.2781089434541679, "solved": false, "secs": 701.1}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.02 budget=39.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.20173823523912698, "solved": false, "secs": 500.8}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.02 budget=39.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 1, "rank": 9, "residual": 0.25231982938185255, "solved": false, "secs": 475.4}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.02 budget=39.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 2, "rank": 9, "residual": 0.2914008302167455, "solved": false, "secs": 507.3}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.02 budget=39.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 3, "rank": 9, "residual": 0.2745586288854588, "solved": false, "secs": 499.8}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.02 budget=39.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 0, "rank": 9, "residual": 0.28057204944072467, "solved": false, "secs": 4725.1}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.02 budget=39.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 1, "rank": 9, "residual": 0.2805720494407245, "solved": false, "secs": 1266.0}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.02 budget=39.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 2, "rank": 9, "residual": 0.2823365949188413, "solved": false, "secs": 1159.1}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.02 budget=39.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 3, "rank": 9, "residual": 0.28057204944072506, "solved": false, "secs": 1148.0}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.02 budget=39.6M", "g": 1, "sizes": [4, 4, 1], "seed": 0, "rank": 9, "residual": 0.27810894345416853, "solved": false, "secs": 666.0}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.02 budget=39.6M", "g": 1, "sizes": [4, 4, 1], "seed": 1, "rank": 9, "residual": 0.27810894345416853, "solved": false, "secs": 705.3}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.02 budget=39.6M", "g": 1, "sizes": [4, 4, 1], "seed": 2, "rank": 9, "residual": 0.2781089434541691, "solved": false, "secs": 741.2}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.02 budget=39.6M", "g": 1, "sizes": [4, 4, 1], "seed": 3, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 684.5}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.15 budget=39.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.2677111019490796, "solved": false, "secs": 657.8}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.15 budget=39.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 1, "rank": 9, "residual": 0.2835448514985188, "solved": false, "secs": 644.5}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.15 budget=39.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 2, "rank": 9, "residual": 0.271917396627535, "solved": false, "secs": 680.9}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.15 budget=39.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 3, "rank": 9, "residual": 0.2695764385422337, "solved": false, "secs": 712.9}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.15 budget=39.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 0, "rank": 9, "residual": 0.28057204944072567, "solved": false, "secs": 1889.9}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.15 budget=39.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 1, "rank": 9, "residual": 0.28057204944072567, "solved": false, "secs": 1965.4}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.15 budget=39.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 2, "rank": 9, "residual": 0.2805720494407249, "solved": false, "secs": 1789.3}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.15 budget=39.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 3, "rank": 9, "residual": 0.28602351090165207, "solved": false, "secs": 1835.1}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.15 budget=39.6M", "g": 1, "sizes": [4, 4, 1], "seed": 0, "rank": 9, "residual": 0.2781089434541681, "solved": false, "secs": 785.1}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.15 budget=39.6M", "g": 1, "sizes": [4, 4, 1], "seed": 1, "rank": 9, "residual": 0.2781089434541681, "solved": false, "secs": 788.2}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.15 budget=39.6M", "g": 1, "sizes": [4, 4, 1], "seed": 2, "rank": 9, "residual": 0.2781089434541681, "solved": false, "secs": 823.0}
+{"label": "T0=2.0 rate=0.9985 iters=6000 reseed=0.15 budget=39.6M", "g": 1, "sizes": [4, 4, 1], "seed": 3, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 808.2}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.02 budget=39.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.264398816881416, "solved": false, "secs": 420.0}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.02 budget=39.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 1, "rank": 9, "residual": 0.29740939099153335, "solved": false, "secs": 563.1}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.02 budget=39.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 2, "rank": 9, "residual": 0.281171217131268, "solved": false, "secs": 594.6}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.02 budget=39.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 3, "rank": 9, "residual": 0.27936129683070726, "solved": false, "secs": 504.8}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.02 budget=39.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 0, "rank": 9, "residual": 0.2805720494407249, "solved": false, "secs": 5777.1}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.02 budget=39.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 1, "rank": 9, "residual": 0.28233659491884144, "solved": false, "secs": 1319.6}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.02 budget=39.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 2, "rank": 9, "residual": 0.28057204944072467, "solved": false, "secs": 1228.5}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.02 budget=39.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 3, "rank": 9, "residual": 0.2805720494407249, "solved": false, "secs": 1200.2}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.02 budget=39.6M", "g": 1, "sizes": [4, 4, 1], "seed": 0, "rank": 9, "residual": 0.2781089434541689, "solved": false, "secs": 664.8}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.02 budget=39.6M", "g": 1, "sizes": [4, 4, 1], "seed": 1, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 690.5}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.02 budget=39.6M", "g": 1, "sizes": [4, 4, 1], "seed": 2, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 666.6}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.02 budget=39.6M", "g": 1, "sizes": [4, 4, 1], "seed": 3, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 680.7}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.15 budget=39.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.2806972013601849, "solved": false, "secs": 678.5}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.15 budget=39.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 1, "rank": 9, "residual": 0.27190923676801804, "solved": false, "secs": 696.1}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.15 budget=39.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 2, "rank": 9, "residual": 0.2776618989685695, "solved": false, "secs": 654.6}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.15 budget=39.6M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 3, "rank": 9, "residual": 0.2719092367680174, "solved": false, "secs": 680.1}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.15 budget=39.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 0, "rank": 9, "residual": 0.2805720494407249, "solved": false, "secs": 1839.6}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.15 budget=39.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 1, "rank": 9, "residual": 0.29306067705277483, "solved": false, "secs": 1838.5}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.15 budget=39.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 2, "rank": 9, "residual": 0.28375814081065387, "solved": false, "secs": 1716.1}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.15 budget=39.6M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 3, "rank": 9, "residual": 0.2805720494407245, "solved": false, "secs": 1738.1}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.15 budget=39.6M", "g": 1, "sizes": [4, 4, 1], "seed": 0, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 839.4}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.15 budget=39.6M", "g": 1, "sizes": [4, 4, 1], "seed": 1, "rank": 9, "residual": 0.2781089434541683, "solved": false, "secs": 766.6}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.15 budget=39.6M", "g": 1, "sizes": [4, 4, 1], "seed": 2, "rank": 9, "residual": 0.27810894345416853, "solved": false, "secs": 782.2}
+{"label": "T0=2.0 rate=0.99985 iters=600 reseed=0.15 budget=39.6M", "g": 1, "sizes": [4, 4, 1], "seed": 3, "rank": 9, "residual": 0.27810894345416853, "solved": false, "secs": 786.0}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.02 budget=276.1M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.20173823523912615, "solved": false, "secs": 3530.8}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.02 budget=276.1M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 1, "rank": 9, "residual": 0.20173823523912726, "solved": false, "secs": 3512.3}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.02 budget=276.1M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 2, "rank": 9, "residual": 0.20173823523912698, "solved": false, "secs": 3441.9}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.02 budget=276.1M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 3, "rank": 9, "residual": 0.24036875935486132, "solved": false, "secs": 3514.3}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.02 budget=276.1M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 0, "rank": 9, "residual": 0.2775576874040751, "solved": false, "secs": 10759.4}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.02 budget=276.1M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 1, "rank": 9, "residual": 0.2626408196565455, "solved": false, "secs": 8526.7}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.02 budget=276.1M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 2, "rank": 9, "residual": 0.27006843090842436, "solved": false, "secs": 7895.3}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.02 budget=276.1M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 3, "rank": 9, "residual": 0.2626408196565447, "solved": false, "secs": 7623.8}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.02 budget=276.1M", "g": 1, "sizes": [4, 4, 1], "seed": 0, "rank": 9, "residual": 0.2781089434541679, "solved": false, "secs": 4885.4}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.02 budget=276.1M", "g": 1, "sizes": [4, 4, 1], "seed": 1, "rank": 9, "residual": 0.2781089434541679, "solved": false, "secs": 4872.0}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.02 budget=276.1M", "g": 1, "sizes": [4, 4, 1], "seed": 2, "rank": 9, "residual": 0.2781089434541681, "solved": false, "secs": 4739.6}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.02 budget=276.1M", "g": 1, "sizes": [4, 4, 1], "seed": 3, "rank": 9, "residual": 0.2781089434541681, "solved": false, "secs": 4884.6}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.15 budget=276.1M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.23599279362081893, "solved": false, "secs": 4530.9}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.15 budget=276.1M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 1, "rank": 9, "residual": 0.2716953675916955, "solved": false, "secs": 4502.0}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.15 budget=276.1M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 2, "rank": 9, "residual": 0.20173823523912782, "solved": false, "secs": 4723.0}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.15 budget=276.1M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 3, "rank": 9, "residual": 0.20173823523912587, "solved": false, "secs": 4742.6}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.15 budget=276.1M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 0, "rank": 9, "residual": 0.2805720494407249, "solved": false, "secs": 10878.3}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.15 budget=276.1M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 1, "rank": 9, "residual": 0.28057204944072406, "solved": false, "secs": 9575.5}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.15 budget=276.1M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 2, "rank": 9, "residual": 0.28057204944072506, "solved": false, "secs": 10936.6}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.15 budget=276.1M", "g": 1, "sizes": [2, 2, 2, 2, 1], "seed": 3, "rank": 9, "residual": 0.2805720494407249, "solved": false, "secs": 10622.3}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.15 budget=276.1M", "g": 1, "sizes": [4, 4, 1], "seed": 0, "rank": 9, "residual": 0.2781089434541681, "solved": false, "secs": 5687.9}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.15 budget=276.1M", "g": 1, "sizes": [4, 4, 1], "seed": 1, "rank": 9, "residual": 0.2781089434541681, "solved": false, "secs": 5717.3}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.15 budget=276.1M", "g": 1, "sizes": [4, 4, 1], "seed": 2, "rank": 9, "residual": 0.2781089434541679, "solved": false, "secs": 5839.7}
+{"label": "T0=0.1 rate=0.9985 iters=60000 reseed=0.15 budget=276.1M", "g": 1, "sizes": [4, 4, 1], "seed": 3, "rank": 9, "residual": 0.2781089434541679, "solved": false, "secs": 5771.5}
+{"label": "T0=0.1 rate=0.99985 iters=6000 reseed=0.02 budget=276.3M", "g": 2, "sizes": [2, 2, 2, 1, 1, 1], "seed": 0, "rank": 9, "residual": 0.22135532298344107, "solved": false, "secs": 39760.5}

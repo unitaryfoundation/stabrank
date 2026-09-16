@@ -11,5 +11,9 @@
     "date": "2020-03-02",
     "github": []
   },
-  "notes": "tight; lower bound certified in this repo"
+  "notes": "Tight: the matching lower bound is certified in this repository. The carry decomposition is formalized in Lean as t3_m2_vector_decomposition, which proves the pointwise identity at all nine points of F_3^2 and depends on no axioms beyond propext, Classical.choice and Quot.sound. The decomposition is due to Kocia and Sarovar; the formalization is this repository's.",
+  "lean": {
+    "module": "LeanProofs.T3M2Pointwise",
+    "theorem": "t3_m2_vector_decomposition"
+  }
 }
