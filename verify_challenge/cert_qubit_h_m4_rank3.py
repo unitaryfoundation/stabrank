@@ -7,7 +7,8 @@ If psi lies in span(s_i, s_j, s_k) then the images of s_j and s_k in the
 quotient C^16 / span(psi, s_i) are parallel (the converse fails only for
 dependent triples, which are retested in the full space), so with s_i as a pivot the search
 over the 36720 four-qubit stabilizer states is one canonicalise-and-sort per
-pivot; rank_exclusion.py documents the method, the random projection that
+pivot; rank_exclusion.py documents the method, the symmetry reduction to one pivot
+per orbit of the target's Clifford symmetry group, the random projection that
 speeds up the sort without being able to lose a configuration, and the margin
 the exclusion rests on. Rank 2 is excluded in the same pass. The states are
 enumerated by closing the Clifford orbit of |0000>, with the count checked
