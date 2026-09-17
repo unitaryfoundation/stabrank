@@ -167,6 +167,15 @@ mapping is:
   `stabVecN` is over `ℤ[ω₃]`, so every `IsStab` vector is a multiple of one,
   and `t3_three_le` applies to any set of at most two of them.
 
+- `LeanProofs/T3GaloisM.lean` — the Galois lower bound at every number of
+  copies: `t3M_stabRank_gt_two m : stabRank IsStab |T3⟩^⊗m > 2` for `m ≥ 1`
+  (the conjugates `tConjM m a`, entries `ω₉^(e_a · digit sum)`, are
+  independent since restriction to `firstDigit` indices gives the one-qutrit
+  Vandermonde; the closure of the span is the descent of `T3GaloisDescent`
+  on `Fin (3^m)`), `stabRank_smul` (rescaling the target does not change the
+  rank) and the normalised form `t3TargetM_stabRank_gt_two`;
+  `t3_m2_stabRank_gt_two` is the `m = 2` instance the board cites.
+
 ## Build
 
 Requires Lean 4 + mathlib4 (cached). From the `lean_proofs/` directory:
