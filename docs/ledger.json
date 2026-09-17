@@ -49,7 +49,7 @@
    "m": 5,
    "direction": "upper",
    "rank": 6,
-   "tier": "cited",
+   "tier": "verified",
    "ok": true,
    "gamma": 0.5169925001442313,
    "date": "2015-06-03",
@@ -57,7 +57,12 @@
    "github": [],
    "method": "literature",
    "reference": "arXiv:1506.01396",
-   "compute": null
+   "compute": {
+    "cpu_hours": 0.02,
+    "wall_clock_hours": 0.02,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, 8 annealing chains"
+   }
   },
   {
    "slug": "qubit_H-m6-upper-7",
@@ -558,7 +563,7 @@
    "m": 2,
    "direction": "lower",
    "rank": 3,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "gamma": null,
    "date": "2026-09-07",
@@ -702,7 +707,7 @@
    "m": 1,
    "direction": "lower",
    "rank": 3,
-   "tier": "reproduced",
+   "tier": "lean",
    "ok": true,
    "gamma": null,
    "date": "2026-09-16",

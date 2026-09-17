@@ -18,5 +18,9 @@
       "vprusso"
     ]
   },
-  "notes": "Holds for every m. With the rank-3 witness at m=2 this settles that cell exactly. Field-of-definition arguments for stabilizer rank are prior art (Lovitz and Steffan, over Q(i)); the Galois-orbit step and the Z[w3] instantiation are not. The certificate is exact throughout: the only computation is the rank of a 3-column matrix over Q(w9), taken symbolically, so no floating-point margin stands under it."
+  "notes": "Holds for every m. With the rank-3 witness at m=2 this settles that cell exactly. Field-of-definition arguments for stabilizer rank are prior art (Lovitz and Steffan, over Q(i)); the Galois-orbit step and the Z[w3] instantiation are not. The certificate is exact throughout: the only computation is the rank of a 3-column matrix over Q(w9), taken symbolically, so no floating-point margin stands under it. Also proved in Lean against stabRank: T3GaloisM proves stabRank IsStab |T3>^m > 2 for every m >= 1 (the conjugates of |T3>^m are independent because restricting to indices with a single nonzero digit recovers the one-qutrit Vandermonde, and the Galois closure of the span is T3GaloisDescent applied on Fin (3^m)), and t3_m2_stabRank_gt_two is its m=2 instance. With the Lean rank-3 decomposition of T3M2Pointwise the cell is settled at 3 with both directions machine-checked.",
+  "lean": {
+    "module": "LeanProofs.T3GaloisM",
+    "theorem": "t3_m2_stabRank_gt_two"
+  }
 }

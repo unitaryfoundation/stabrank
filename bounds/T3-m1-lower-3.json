@@ -17,5 +17,9 @@
       "vprusso"
     ]
   },
-  "notes": "Settles chi(|T3>) = 3 with the rank-3 upper bound. On one qutrit there are only 12 stabilizer states, so the rank-2 question is 66 pairs and is decided by exhaustion rather than by the Galois argument, which reaches the same bound at every m but is not yet formalized. The exclusion is numerical and rests on a margin: the closest any two candidate directions come to parallel is 0.956 against a threshold of 1 - 1e-6, so no rounding at the 1e-15 level of these inputs can close the gap. The Strange state at m=1 has a known rank-2 decomposition, which the same code finds as a positive control."
+  "notes": "Settles chi(|T3>) = 3 with the rank-3 upper bound. On one qutrit there are only 12 stabilizer states, so the rank-2 question is 66 pairs and is decided by exhaustion rather than by the Galois argument, which reaches the same bound at every m but is not yet formalized. The exclusion is numerical and rests on a margin: the closest any two candidate directions come to parallel is 0.956 against a threshold of 1 - 1e-6, so no rounding at the 1e-15 level of these inputs can close the gap. The Strange state at m=1 has a known rank-2 decomposition, which the same code finds as a positive control. Now also proved in Lean, and against stabRank itself: t3_m1_stabRank_gt_two shows Stabilizer.stabRank IsStab |T3> > 2 by the Galois argument. T3Galois gives the dimension count (the three conjugates t_1, t_4, t_7 are independent, a Vandermonde), T3GaloisDescent discharges its hypothesis (the span of vectors over Z[w3] containing t_1 contains every conjugate: descend coefficients to Q(w9), then apply the embedding w9 -> w9^e for e in {1, 4, 7}, which fixes Z[w3]), and every IsStab vector is a multiple of a vector over Z[w3]. The pair exhaustion above remains as the reproduced-tier certificate; the Lean theorem is what the cell now holds.",
+  "lean": {
+    "module": "LeanProofs.T3M1StabRank",
+    "theorem": "t3_m1_stabRank_gt_two"
+  }
 }

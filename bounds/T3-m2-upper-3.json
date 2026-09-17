@@ -11,9 +11,9 @@
     "date": "2020-03-02",
     "github": []
   },
-  "notes": "Tight: the matching lower bound is certified in this repository. The carry decomposition is formalized in Lean as t3_m2_vector_decomposition, which proves the pointwise identity at all nine points of F_3^2 and depends on no axioms beyond propext, Classical.choice and Quot.sound. The decomposition is due to Kocia and Sarovar; the formalization is this repository's.",
+  "notes": "Tight: the matching lower bound is certified in this repository. The carry decomposition is formalized in Lean as t3_m2_vector_decomposition, which proves the pointwise identity at all nine points of F_3^2 and depends on no axioms beyond propext, Classical.choice and Quot.sound. The decomposition is due to Kocia and Sarovar; the formalization is this repository's. Now stated against stabRank: t3_m2_stabRank_le_three proves Stabilizer.stabRank IsStab |T3>^2 <= 3, with each carry block shown to be a stabilizer state in the concrete sense (the line {(t, s - t)} with phase t^2, 2t^2 + t, or 0 for s = 0, 1, 2) rather than asserted in a comment; with t3_m2_stabRank_gt_two this gives t3_m2_stabRank_eq_three, chi(|T3>^2) = 3 as one theorem about stabRank.",
   "lean": {
-    "module": "LeanProofs.T3M2Pointwise",
-    "theorem": "t3_m2_vector_decomposition"
+    "module": "LeanProofs.T3M2StabRank",
+    "theorem": "t3_m2_stabRank_le_three"
   }
 }

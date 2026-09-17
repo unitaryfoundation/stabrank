@@ -84,9 +84,9 @@
       "vprusso"
     ]
   },
-  "notes": "Two full-support terms; the smallest known exponent across the four qutrit orbits.",
+  "notes": "Two full-support terms; the smallest known exponent across the four qutrit orbits. The Lean theorem is now a statement about stabRank itself: strange_m2_stabRank_le_two proves Stabilizer.stabRank IsStab |S>^2 <= 2 against a concrete stabilizer predicate (a nonzero multiple of a sum over an injectively parametrised flat with a quadratic-plus-linear phase mod 3), rather than a pointwise identity between hand-written vectors whose stabilizer-ness Lean never checked. The pointwise identity strange_m2_vector_decomposition in StrangeM2Pointwise is what it builds on.",
   "lean": {
-    "module": "LeanProofs.StrangeM2Pointwise",
-    "theorem": "strange_m2_vector_decomposition"
+    "module": "LeanProofs.Stabilizer.IsStab",
+    "theorem": "strange_m2_stabRank_le_two"
   }
 }

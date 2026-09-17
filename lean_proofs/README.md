@@ -137,6 +137,51 @@ mapping is:
   n₂ = a₀ + a₁ + a₂ and takes the values (0, 1, -1, 3) for n₂ = 0,1,2,3.
   The kernel relations are ω + ω² = -1 and ω³ = 1 (from Basic).
 
+- `LeanProofs/Stabilizer/IsStab.lean` — the concrete stabilizer predicate
+  and the first bounds stated against `Stabilizer.stabRank`. `stabVecN n k
+  x0 W Q l` is the standard parametrisation on `n` qutrits with a
+  quadratic-plus-linear phase mod 3; `IsStab v` says `v` is a nonzero
+  multiple of one whose support parametrisation is injective, so the
+  predicate is at most the true set of stabilizer states and a bound
+  against it is a bound on the stabilizer rank. Proves
+  `strange_m2_stabRank_le_two` (from `StrangeM2Pointwise`, via
+  `stabRank_le_of_decomp`), `strange_m2_stabRank_gt_one` (from
+  `StrangeM2Lower`, whose affine-support hypothesis is derived from the
+  definition, with the computational basis discharging nonemptiness) and
+  `strange_m2_stabRank_eq_two`. The earlier `StabDef.stabVec` accepts an
+  arbitrary phase function and must not be used with
+  `stabRank_le_of_decomp`, since under it any vector with entries that are
+  powers of `ω₃` would count as stabilizer.
+
+- `LeanProofs/T3GaloisDescent.lean` — discharges the Galois-closure
+  hypothesis of `T3Galois.three_le_of_span_galois_orbit`. `mem_span_descend`
+  descends coefficients from `ℂ` to a subfield by a dual-functional
+  argument; `galEmb e` is the `ℚ`-algebra embedding `ℚ(ω₉) → ℂ` with
+  `ω₉ ↦ ω₉^e` from the power basis and the ninth cyclotomic polynomial;
+  for `e ∈ {1, 4, 7}` it fixes `ℤ[ω₃]` and permutes the conjugates.
+  `t3_three_le`: any family of vectors over `ℤ[ω₃]` whose span contains
+  `|T3⟩` has at least three members. No Galois group is used.
+- `LeanProofs/T3M1StabRank.lean` — `t3_m1_stabRank_gt_two`:
+  `stabRank IsStab |T3⟩ > 2`, the Galois lower bound stated against the
+  concrete stabilizer predicate. `stabVecN_mem_Zomega3` shows every
+  `stabVecN` is over `ℤ[ω₃]`, so every `IsStab` vector is a multiple of one,
+  and `t3_three_le` applies to any set of at most two of them.
+
+- `LeanProofs/T3GaloisM.lean` — the Galois lower bound at every number of
+  copies: `t3M_stabRank_gt_two m : stabRank IsStab |T3⟩^⊗m > 2` for `m ≥ 1`
+  (the conjugates `tConjM m a`, entries `ω₉^(e_a · digit sum)`, are
+  independent since restriction to `firstDigit` indices gives the one-qutrit
+  Vandermonde; the closure of the span is the descent of `T3GaloisDescent`
+  on `Fin (3^m)`), `stabRank_smul` (rescaling the target does not change the
+  rank) and the normalised form `t3TargetM_stabRank_gt_two`;
+  `t3_m2_stabRank_gt_two` is the `m = 2` instance the board cites.
+
+- `LeanProofs/T3M2StabRank.lean` — `t3_m2_stabRank_eq_three`:
+  `stabRank IsStab |T3⟩^⊗2 = 3`. The three carry blocks of `T3M2Pointwise`
+  are shown to be `IsStab` (the line `{(t, σ - t)}` with phases `t²`,
+  `2t² + t`, `0`), the carry identity gives `≤ 3` through
+  `stabRank_le_of_decomp`, and `T3GaloisM` gives `> 2`.
+
 ## Build
 
 Requires Lean 4 + mathlib4 (cached). From the `lean_proofs/` directory:
