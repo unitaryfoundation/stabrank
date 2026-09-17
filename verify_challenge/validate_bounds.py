@@ -49,6 +49,13 @@ def tier_requirements(sub):
             errors.append(f"coefficient {c!r} looks like a float; "
                           "coefficients must be exact")
 
+    comp = sub.get("provenance", {}).get("compute")
+    if comp is not None and not comp:
+        errors.append("provenance.compute is present but empty; either report "
+                      "what the search cost or drop the field")
+    if comp and sub.get("provenance", {}).get("method") == "literature":
+        notes.append("compute is reported for a literature value; the ledger "
+                     "attributes it to this submission, not to the cited work")
     if d == "upper" and not w and "lean" not in sub:
         notes.append("no decomposition and no Lean proof, so this records as "
                      "cited and cannot hold a record")

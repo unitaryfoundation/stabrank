@@ -79,7 +79,43 @@
                  "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
                  "description": "when the bound first appeared: the arXiv v1 date for a literature value, otherwise the date of the work"},
         "github": {"type": "array", "items": {"type": "string"},
-                   "description": "GitHub handles, without the @; binds the entry to its authors"}
+                   "description": "GitHub handles, without the @; binds the entry to its authors"},
+        "compute": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "what the search that produced this bound consumed, aggregated by the site into the discovery ledger. Report what was spent finding the bound, across every run including the failed ones, not what the verifier spends checking it",
+          "properties": {
+            "cpu_hours": {"type": "number", "minimum": 0,
+                          "description": "CPU core-hours over every run that led to the bound"},
+            "gpu_hours": {"type": "number", "minimum": 0,
+                          "description": "GPU-hours, if any"},
+            "wall_clock_hours": {"type": "number", "minimum": 0,
+                                 "description": "elapsed time from the first run to the bound"},
+            "runs": {"type": "integer", "minimum": 0,
+                     "description": "independent search runs, successful or not"},
+            "hardware": {"type": "string",
+                         "description": "machine the search ran on, e.g. 'Apple M3 Max, 14 cores' or 'AWS p5.48xlarge'"},
+            "llm": {
+              "type": "array",
+              "description": "LLM usage during the search, one entry per model",
+              "items": {
+                "type": "object",
+                "required": ["model"],
+                "additionalProperties": false,
+                "properties": {
+                  "model": {"type": "string",
+                            "description": "model identifier as the provider names it, e.g. 'claude-fable-5-1'"},
+                  "input_tokens": {"type": "integer", "minimum": 0},
+                  "output_tokens": {"type": "integer", "minimum": 0},
+                  "role": {"type": "string",
+                           "description": "what the model did: 'drove the search', 'wrote the certificate', 'proposed the ansatz'"}
+                }
+              }
+            },
+            "cost_usd": {"type": "number", "minimum": 0,
+                         "description": "total spend in US dollars, if known"}
+          }
+        }
       }
     },
     "notes": {"type": "string", "maxLength": 2000}

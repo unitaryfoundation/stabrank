@@ -1,0 +1,646 @@
+{
+ "generated_from": "bounds/",
+ "rows": [
+  {
+   "slug": "qubit_H-m2-upper-2",
+   "orbit": "qubit_H",
+   "m": 2,
+   "direction": "upper",
+   "rank": 2,
+   "tier": "cited",
+   "ok": true,
+   "gamma": 0.5,
+   "date": "2015-06-03",
+   "author": "Bravyi, Smith and Smolin",
+   "github": [],
+   "method": "literature",
+   "reference": "arXiv:1506.01396",
+   "compute": null
+  },
+  {
+   "slug": "qubit_H-m3-upper-3",
+   "orbit": "qubit_H",
+   "m": 3,
+   "direction": "upper",
+   "rank": 3,
+   "tier": "cited",
+   "ok": true,
+   "gamma": 0.5283208335737187,
+   "date": "2015-06-03",
+   "author": "Bravyi, Smith and Smolin",
+   "github": [],
+   "method": "literature",
+   "reference": "arXiv:1506.01396",
+   "compute": null
+  },
+  {
+   "slug": "qubit_H-m6-upper-6",
+   "orbit": "qubit_H",
+   "m": 6,
+   "direction": "upper",
+   "rank": 6,
+   "tier": "cited",
+   "ok": true,
+   "gamma": 0.43082708345352605,
+   "date": "2016-01-27",
+   "author": "Bravyi and Gosset",
+   "github": [],
+   "method": "literature",
+   "reference": "arXiv:1601.07601",
+   "compute": null
+  },
+  {
+   "slug": "T3-m1-upper-3",
+   "orbit": "T3",
+   "m": 1,
+   "direction": "upper",
+   "rank": 3,
+   "tier": "cited",
+   "ok": true,
+   "gamma": 1.0,
+   "date": "2020-03-02",
+   "author": "Kocia and Sarovar",
+   "github": [],
+   "method": "literature",
+   "reference": "arXiv:2003.01130",
+   "compute": null
+  },
+  {
+   "slug": "T3-m2-upper-3",
+   "orbit": "T3",
+   "m": 2,
+   "direction": "upper",
+   "rank": 3,
+   "tier": "lean",
+   "ok": true,
+   "gamma": 0.5,
+   "date": "2020-03-02",
+   "author": "Kocia and Sarovar",
+   "github": [],
+   "method": "literature",
+   "reference": "arXiv:2003.01130",
+   "compute": null
+  },
+  {
+   "slug": "H3-m2-upper-3",
+   "orbit": "H3",
+   "m": 2,
+   "direction": "upper",
+   "rank": 3,
+   "tier": "lean",
+   "ok": true,
+   "gamma": 0.5,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2605.28586",
+   "compute": null
+  },
+  {
+   "slug": "H3-m3-lower-4",
+   "orbit": "H3",
+   "m": 3,
+   "direction": "lower",
+   "rank": 4,
+   "tier": "cited",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2605.28586",
+   "compute": null
+  },
+  {
+   "slug": "H3-m3-upper-4",
+   "orbit": "H3",
+   "m": 3,
+   "direction": "upper",
+   "rank": 4,
+   "tier": "lean",
+   "ok": true,
+   "gamma": 0.42061983571430495,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2605.28586",
+   "compute": null
+  },
+  {
+   "slug": "H3-m4-upper-8",
+   "orbit": "H3",
+   "m": 4,
+   "direction": "upper",
+   "rank": 8,
+   "tier": "cited",
+   "ok": true,
+   "gamma": 0.4731973151785931,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2605.28586",
+   "compute": null
+  },
+  {
+   "slug": "N-m2-upper-3",
+   "orbit": "N",
+   "m": 2,
+   "direction": "upper",
+   "rank": 3,
+   "tier": "lean",
+   "ok": true,
+   "gamma": 0.5,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2605.28586",
+   "compute": null
+  },
+  {
+   "slug": "N-m3-lower-4",
+   "orbit": "N",
+   "m": 3,
+   "direction": "lower",
+   "rank": 4,
+   "tier": "cited",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2605.28586",
+   "compute": null
+  },
+  {
+   "slug": "N-m3-upper-4",
+   "orbit": "N",
+   "m": 3,
+   "direction": "upper",
+   "rank": 4,
+   "tier": "lean",
+   "ok": true,
+   "gamma": 0.42061983571430495,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2605.28586",
+   "compute": null
+  },
+  {
+   "slug": "N-m4-upper-7",
+   "orbit": "N",
+   "m": 4,
+   "direction": "upper",
+   "rank": 7,
+   "tier": "lean",
+   "ok": true,
+   "gamma": 0.4428109372903556,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2605.28586",
+   "compute": null
+  },
+  {
+   "slug": "S-m1-upper-2",
+   "orbit": "S",
+   "m": 1,
+   "direction": "upper",
+   "rank": 2,
+   "tier": "cited",
+   "ok": true,
+   "gamma": 0.6309297535714574,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2605.28586",
+   "compute": null
+  },
+  {
+   "slug": "S-m2-upper-2",
+   "orbit": "S",
+   "m": 2,
+   "direction": "upper",
+   "rank": 2,
+   "tier": "lean",
+   "ok": true,
+   "gamma": 0.3154648767857287,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "carry decomposition",
+   "reference": "arXiv:2605.28586, Theorem 2",
+   "compute": null
+  },
+  {
+   "slug": "S-m3-lower-4",
+   "orbit": "S",
+   "m": 3,
+   "direction": "lower",
+   "rank": 4,
+   "tier": "cited",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2605.28586",
+   "compute": null
+  },
+  {
+   "slug": "S-m3-upper-4",
+   "orbit": "S",
+   "m": 3,
+   "direction": "upper",
+   "rank": 4,
+   "tier": "lean",
+   "ok": true,
+   "gamma": 0.42061983571430495,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2605.28586",
+   "compute": null
+  },
+  {
+   "slug": "S-m4-lower-4",
+   "orbit": "S",
+   "m": 4,
+   "direction": "lower",
+   "rank": 4,
+   "tier": "cited",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2605.28586",
+   "compute": null
+  },
+  {
+   "slug": "S-m4-upper-4",
+   "orbit": "S",
+   "m": 4,
+   "direction": "upper",
+   "rank": 4,
+   "tier": "cited",
+   "ok": true,
+   "gamma": 0.3154648767857287,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2605.28586",
+   "compute": null
+  },
+  {
+   "slug": "S-m6-upper-8",
+   "orbit": "S",
+   "m": 6,
+   "direction": "upper",
+   "rank": 8,
+   "tier": "cited",
+   "ok": true,
+   "gamma": 0.3154648767857287,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2605.28586",
+   "compute": null
+  },
+  {
+   "slug": "T3-m3-upper-8",
+   "orbit": "T3",
+   "m": 3,
+   "direction": "upper",
+   "rank": 8,
+   "tier": "cited",
+   "ok": true,
+   "gamma": 0.6309297535714574,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2605.28586",
+   "compute": null
+  },
+  {
+   "slug": "T3-m4-upper-9",
+   "orbit": "T3",
+   "m": 4,
+   "direction": "upper",
+   "rank": 9,
+   "tier": "cited",
+   "ok": true,
+   "gamma": 0.5,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2605.28586",
+   "compute": null
+  },
+  {
+   "slug": "qubit_H-m4-upper-4",
+   "orbit": "qubit_H",
+   "m": 4,
+   "direction": "upper",
+   "rank": 4,
+   "tier": "cited",
+   "ok": true,
+   "gamma": 0.5,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2605.28586",
+   "compute": null
+  },
+  {
+   "slug": "qubit_H-m6-lower-4",
+   "orbit": "qubit_H",
+   "m": 6,
+   "direction": "lower",
+   "rank": 4,
+   "tier": "cited",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2605.28586",
+   "compute": null
+  },
+  {
+   "slug": "qubit_T-m4-upper-3",
+   "orbit": "qubit_T",
+   "m": 4,
+   "direction": "upper",
+   "rank": 3,
+   "tier": "cited",
+   "ok": true,
+   "gamma": 0.396240625180289,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2605.28586",
+   "compute": null
+  },
+  {
+   "slug": "qubit_T-m6-upper-6",
+   "orbit": "qubit_T",
+   "m": 6,
+   "direction": "upper",
+   "rank": 6,
+   "tier": "cited",
+   "ok": true,
+   "gamma": 0.43082708345352605,
+   "date": "2026-05-27",
+   "author": "Labib and Russo",
+   "github": [
+    "FarLab",
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2605.28586",
+   "compute": null
+  },
+  {
+   "slug": "T3-m2-lower-3",
+   "orbit": "T3",
+   "m": 2,
+   "direction": "lower",
+   "rank": 3,
+   "tier": "reproduced",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-07",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "Galois descent over Z[w3]; no search",
+   "reference": "stabrank PR #16",
+   "compute": null
+  },
+  {
+   "slug": "T3-m3-lower-6",
+   "orbit": "T3",
+   "m": 3,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "reproduced",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-07",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "Galois descent to cut the search to finitely many candidate lines, then exhaustion",
+   "reference": "stabrank PR #16",
+   "compute": null
+  },
+  {
+   "slug": "H3-m2-lower-3",
+   "orbit": "H3",
+   "m": 2,
+   "direction": "lower",
+   "rank": 3,
+   "tier": "reproduced",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-12",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "exhaustion over all 64620 pairs of 2-qutrit stabilizer states",
+   "reference": "stabrank PR #18",
+   "compute": null
+  },
+  {
+   "slug": "N-m2-lower-3",
+   "orbit": "N",
+   "m": 2,
+   "direction": "lower",
+   "rank": 3,
+   "tier": "reproduced",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-12",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "exhaustion over all 64620 pairs of 2-qutrit stabilizer states",
+   "reference": "stabrank PR #18",
+   "compute": null
+  },
+  {
+   "slug": "qubit_H-m3-lower-3",
+   "orbit": "qubit_H",
+   "m": 3,
+   "direction": "lower",
+   "rank": 3,
+   "tier": "reproduced",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-12",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "exhaustion over all pairs of stabilizer states, via the quotient by the target",
+   "reference": "stabrank PR #18",
+   "compute": null
+  },
+  {
+   "slug": "qubit_H-m4-lower-3",
+   "orbit": "qubit_H",
+   "m": 4,
+   "direction": "lower",
+   "rank": 3,
+   "tier": "reproduced",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-12",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "exhaustion over all pairs of stabilizer states, via the quotient by the target",
+   "reference": "stabrank PR #18",
+   "compute": null
+  },
+  {
+   "slug": "qubit_T-m4-lower-3",
+   "orbit": "qubit_T",
+   "m": 4,
+   "direction": "lower",
+   "rank": 3,
+   "tier": "reproduced",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-12",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "exhaustion over all pairs of stabilizer states, via the quotient by the target",
+   "reference": "stabrank PR #18",
+   "compute": null
+  },
+  {
+   "slug": "S-m2-lower-2",
+   "orbit": "S",
+   "m": 2,
+   "direction": "lower",
+   "rank": 2,
+   "tier": "lean",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-15",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "affine-support obstruction, formalized in Lean",
+   "reference": "stabrank PR #19",
+   "compute": null
+  },
+  {
+   "slug": "T3-m1-lower-3",
+   "orbit": "T3",
+   "m": 1,
+   "direction": "lower",
+   "rank": 3,
+   "tier": "reproduced",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-16",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "exhaustion over all 66 pairs of 1-qutrit stabilizer states",
+   "reference": "stabrank PR #19",
+   "compute": null
+  }
+ ]
+}
