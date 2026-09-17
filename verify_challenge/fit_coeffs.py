@@ -17,6 +17,7 @@ import json
 import os
 import sys
 
+import numpy as np
 import sympy as sp
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -33,11 +34,72 @@ def fit(orbit, m, terms):
     if A.rank() < A.cols:
         raise ValueError("the supplied terms are linearly dependent, so the true "
                          "rank is below the number of terms; drop the redundant ones")
+    if orbit == "T3":
+        return _fit_cyclotomic(m, terms, cols, b)
     G = sp.simplify(A.H * A)
     x = sp.simplify(G.inv() * (A.H * b))
     if any(not is_zero(v)[0] for v in (A * x - b)):
         return None
     return [sp.nsimplify(sp.radsimp(sp.simplify(v))) for v in x]
+
+
+def _fit_cyclotomic(m, terms, cols, b):
+    """Exact coefficients for the T3 orbit, solved inside Q(w9).
+
+    The generic route through sympy's simplify produces coefficients for this
+    orbit that are pages long (nested (-1)**(k/18) radicals), and verifying a
+    submission carrying them takes the verifier the better part of an hour.
+    Every quantity here lives in one number field: a stabilizer term times
+    sqrt(3^k) has entries in {0, 1, w3, w3^2} with w3 = w9^3, and the target
+    times sqrt(3)^m has entries that are powers of w9. Solving there gives each
+    coefficient as a short polynomial in w9 with rational coefficients, times
+    the power of sqrt(3) that restores the normalisations, and the check that
+    the solution reproduces the target is exact field arithmetic rather than
+    simplification.
+    """
+    from sympy.polys.matrices import DomainMatrix
+
+    w9 = sp.exp(2 * sp.pi * sp.I / 9)
+    K = sp.QQ.algebraic_field(w9)
+    x9 = K.from_sympy(w9)
+    dim = 3 ** m
+
+    def as_power(z, order):
+        """z (a numeric complex root of unity) as an exponent of w_order, or None."""
+        if abs(z) < 1e-9:
+            return None
+        e = int(round(np.angle(z) / (2 * np.pi / order))) % order
+        assert abs(z - np.exp(2j * np.pi * e / order)) < 1e-9
+        return e
+
+    rows = []
+    for i in range(dim):
+        row = []
+        for j, col in enumerate(cols):
+            z = complex(sp.N(col[i] * sp.sqrt(3) ** int(terms[j]["k"]), 30))
+            e = as_power(z, 3)
+            row.append(K.zero if e is None else x9 ** (3 * e))
+        rows.append(row)
+    rhs = []
+    for i in range(dim):
+        e = as_power(complex(sp.N(b[i] * sp.sqrt(3) ** m, 30)), 9)
+        rhs.append([K.zero if e is None else x9 ** e])
+    Am = DomainMatrix(rows, (dim, len(cols)), K)
+    bm = DomainMatrix(rhs, (dim, 1), K)
+    # pick independent rows through the rref of the transpose, then solve square
+    _, piv = Am.transpose().rref()
+    sq = DomainMatrix([rows[i] for i in piv], (len(piv), len(cols)), K)
+    if len(piv) != len(cols):
+        raise ValueError("the supplied terms are linearly dependent")
+    x = sq.lu_solve(DomainMatrix([rhs[i] for i in piv], (len(piv), 1), K))
+    if (Am * x - bm).to_Matrix() != sp.zeros(dim, 1):
+        return None
+    out = []
+    for j in range(len(cols)):
+        c = K.to_sympy(x[j, 0].element)
+        c = sp.expand(c * sp.sqrt(3) ** (int(terms[j]["k"]) - m))
+        out.append(c)
+    return out
 
 
 def main(argv):

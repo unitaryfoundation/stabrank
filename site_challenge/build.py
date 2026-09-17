@@ -133,8 +133,9 @@ ORBIT_DEF = {
    "Clifford-equivalent to the phase state (|0&rang; + "
    "e<sup>i&pi;/4</sup>|1&rang;)/&radic;2, which is what the literature "
    "usually means by 'the T state'.",
-   "The most studied cell in the field: &chi; &le; 6 at six copies underpins "
-   "the standard 2<sup>0.47n</sup> figure. The published exponent log&#8322;3/4 "
+   "The most studied cell in the field: &chi; &le; 7 at six copies underpins "
+   "the standard 2<sup>0.47n</sup> figure, and the cat-state rank 6 there "
+   "(exponent 0.431) refuted the conjecture that 7 was optimal. The published exponent log&#8322;3/4 "
    "comes from an asymptotic contracted-cat-state family rather than from any "
    "single m, so every finite-m entry here sits above it."),
  "qubit_T": ("cos(&beta;)|0&rang; + e<sup>i&pi;/4</sup>sin(&beta;)|1&rang;, "

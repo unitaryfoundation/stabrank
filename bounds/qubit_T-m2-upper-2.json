@@ -1,0 +1,83 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_T",
+  "m": 2,
+  "direction": "upper",
+  "rank": 2,
+  "witness": {
+    "terms": [
+      {
+        "k": 1,
+        "x0": [
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0
+          ]
+        ],
+        "l": [
+          1
+        ]
+      },
+      {
+        "k": 2,
+        "x0": [
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "l": [
+          0,
+          0
+        ]
+      }
+    ],
+    "coeffs": [
+      "sqrt(2)/2 - sqrt(6)*I/6",
+      "sqrt(3)/3 + sqrt(3)*I/3"
+    ]
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank annealer",
+    "method": "simulated annealing over stabilizer states, then exact refit",
+    "date": "2026-09-16",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.01,
+      "wall_clock_hours": 0.01,
+      "runs": 1,
+      "hardware": "Apple silicon laptop, 8 annealing chains"
+    }
+  },
+  "notes": "Found here by the package's annealer (search_decomposition.py, target qubit_ttype, seed 1, one run of 8 chains) and verified in exact arithmetic with coefficients recovered by fit_coeffs. The phases need the fourth roots of unity, which the witness format now carries for qubits. Rank 1 is impossible since the amplitudes of |T>^2 do not share a modulus, so this settles chi(|T>^2) = 2."
+}

@@ -14,5 +14,31 @@
       "vprusso"
     ]
   },
-  "notes": "single copy"
+  "notes": "single copy Witness: |1> and |2>, verified here. The support {1,2} has two points and so is not an affine flat, which is the rank-1 exclusion.",
+  "witness": {
+    "terms": [
+      {
+        "k": 0,
+        "x0": [
+          1
+        ],
+        "W": [],
+        "Q": [],
+        "l": []
+      },
+      {
+        "k": 0,
+        "x0": [
+          2
+        ],
+        "W": [],
+        "Q": [],
+        "l": []
+      }
+    ],
+    "coeffs": [
+      "sqrt(2)/2",
+      "-sqrt(2)/2"
+    ]
+  }
 }
