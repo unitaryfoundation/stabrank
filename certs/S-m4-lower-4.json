@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "tier": "reproduced",
+  "detail": "certificate script asserted: CERTIFIED chi(S^4) >= 4",
+  "gamma": null,
+  "content_hash": "221a56230af3d52b"
+}

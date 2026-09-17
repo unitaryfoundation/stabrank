@@ -14,7 +14,7 @@
       "vprusso"
     ]
   },
-  "notes": "matches the QPG exponent by direct algebra Witness: the three states sigma_1, sigma_2, sigma_3 of LeanProofs.QubitTM4, with phases in the fourth roots of unity, verified here in exact arithmetic. The Lean module itself does not build at present, so this witness is what stands behind the cell.",
+  "notes": "matches the QPG exponent by direct algebra Witness: the three states sigma_1, sigma_2, sigma_3 of LeanProofs.QubitTM4, with phases in the fourth roots of unity, verified here in exact arithmetic. The Lean module was broken and orphaned from the library root when this witness was added; its main case proof has since been rewritten (one controlled simp only, then linear_combination over I*I = -1 and sqrt2*sqrt2 = 2) and it builds, so the cell now holds the lean tier with the witness as an independent check.",
   "lean": {
     "module": "LeanProofs.QubitTM4",
     "theorem": "stabilizer_rank_le_three"
