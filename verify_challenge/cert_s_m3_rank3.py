@@ -8,7 +8,8 @@ If psi lies in span(s_i, s_j, s_k) then the images of s_j and s_k in the
 quotient C^27 / span(psi, s_i) are parallel (the converse fails only for
 dependent triples, which are retested in the full space), so with s_i as a pivot the search
 over pairs (j, k) is one canonicalise-and-sort per pivot rather than a solve
-per triple; rank_exclusion.py documents the method, the random projection that
+per triple; rank_exclusion.py documents the method, the symmetry reduction to one pivot
+per orbit of the target's Clifford symmetry group, the random projection that
 speeds up the sort without being able to lose a configuration, and the margin
 the exclusion rests on. Every collinear candidate is then tested in the full
 space. Rank 2 is excluded in the same pass, since a state s_j landing in
