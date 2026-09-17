@@ -63,7 +63,9 @@
       "description": "required for a lower bound to earn the reproduced tier",
       "properties": {
         "script": {"type": "string", "description": "path relative to the repository root"},
-        "expect": {"type": "string", "description": "string the script must print"}
+        "expect": {"type": "string", "description": "string the script must print"},
+        "exact": {"type": "boolean",
+                  "description": "true when the whole argument is exact, including how candidates were enumerated, so that no floating-point margin stands anywhere under the bound; declared by the submitter and checked at review, and it lifts a passing certificate from reproduced to verified. A numerical search followed by an exact rejection does not qualify"}
       }
     },
     "provenance": {

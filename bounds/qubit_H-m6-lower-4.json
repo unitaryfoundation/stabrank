@@ -12,7 +12,17 @@
     "github": [
       "FarLab",
       "vprusso"
-    ]
+    ],
+    "compute": {
+      "cpu_hours": 0.3,
+      "wall_clock_hours": 0.08,
+      "runs": 1,
+      "hardware": "Apple silicon laptop, 8 worker processes"
+    }
   },
-  "notes": "projection monotonicity"
+  "notes": "Projection monotonicity from m=4, with the m=4 rank-3 exclusion re-run inside the certificate rather than taken from the board: chi(psi (x) phi) >= chi(psi) whenever phi has a nonzero computational amplitude, since applying I (x) <x| to a decomposition of psi (x) phi maps each stabilizer state to a stabilizer state or zero (the lemma is written out in the certificate). Leaves the cell at 4 <= chi <= 6.",
+  "certificate": {
+    "script": "verify_challenge/cert_qubit_h_m6_from_m4.py",
+    "expect": "CERTIFIED chi(qubit_H^6) >= 4"
+  }
 }

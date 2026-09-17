@@ -24,7 +24,8 @@ recorded at the `cited` tier and is never allowed to set a leaderboard record.
 
 Tiers, in decreasing strength:
     lean        a Lean theorem proves it, and the build receipt confirms it compiles
-    verified    exact arithmetic confirmed the decomposition here
+    verified    exact arithmetic confirmed the decomposition here, or a
+                lower-bound certificate exact throughout, with no margin
     reproduced  a certificate script ran to completion and asserted the bound
     cited       attributed to the literature; not machine-checked
 
@@ -261,9 +262,22 @@ def verify_lower(sub, budget_s=900):
         return Result(False, None, f"certificate exceeded the {budget_s}s budget")
     if proc.returncode != 0:
         return Result(False, None, f"certificate exited {proc.returncode}")
-    if expect and expect not in proc.stdout:
-        return Result(False, None, f"certificate ran but did not print {expect!r}")
-    return Result(True, "reproduced", f"certificate script asserted: {expect or 'ok'}")
+    if not expect:
+        return Result(False, None, "certificate declares no claim string to expect")
+    if expect.strip() not in (line.strip() for line in proc.stdout.splitlines()):
+        return Result(False, None, f"certificate ran but did not print the line {expect!r}")
+    if cert.get("exact"):
+        # The submission declares that the whole argument is exact: no
+        # floating-point margin anywhere, including in how candidates were
+        # enumerated. The pipeline cannot audit that from outside any more
+        # than it can audit that the claim string follows from what the
+        # script computed; both are what review of the script is for. A bound
+        # with no margin under it is the same kind of evidence as a verified
+        # witness, which is why the flag changes the tier.
+        return Result(True, "verified",
+                      f"certificate script asserted: {expect}, by an argument declared "
+                      "exact throughout (no floating-point margin)")
+    return Result(True, "reproduced", f"certificate script asserted: {expect}")
 
 
 LEAN_ROOT = os.path.join(ROOT, "lean_proofs")
