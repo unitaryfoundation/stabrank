@@ -32,7 +32,15 @@ An upper bound carries its decomposition, and each term is given by its stabiliz
 
     sum_{y in F_p^k} w_p^{Q(y) + l.y} |x0 + W y>
 
-Here `k` is the dimension of the support flat, `x0` is a coset representative of length `m`, `W` has `k` rows of length `m` spanning the flat, `Q` is a quadratic form read upper-triangular, `l` is a linear phase of length `k`, and `w_p` is a primitive p-th root of unity. A vector that is not a stabilizer state cannot be written in this form at all, and `W` is separately checked for injectivity, so the verifier never has to decide whether a supplied amplitude vector is stabilizer.
+Here `k` is the dimension of the support flat, `x0` is a coset representative of length `m`, `W` has `k` rows of length `m` spanning the flat, `Q` is a quadratic form read upper-triangular, `l` is a linear phase of length `k`, and `w_p` is a primitive p-th root of unity. For qubits the phase is `i^(l.y) (-1)^Q(y)` instead, with `l` read mod 4, since qubit stabilizer states carry fourth roots of unity and `w_2 = -1` alone would miss the Y eigenstates. A vector that is not a stabilizer state cannot be written in this form at all, and `W` is separately checked for injectivity, so the verifier never has to decide whether a supplied amplitude vector is stabilizer.
+
+If you have the decomposition as amplitude vectors, from the annealer or by hand, `verify_challenge/to_witness.py` recovers the parametrisation of each term and the exact coefficients and writes the submission skeleton:
+
+```
+uv run --extra challenge python verify_challenge/to_witness.py S 4 solution.npz -o bounds/S-m4-upper-4.json
+```
+
+It refuses any vector that is not a stabilizer state, and it reads either an `.npz` written by `stabrank/examples/search_decomposition.py` or a JSON list of amplitude vectors.
 
 Coefficients are exact sympy expressions as strings, never floats: `"3/4 + sqrt(3)*I/4"`, not `"0.75 + 0.433*I"`. The verifier rebuilds every term and the target and requires the identity to hold on the nose. A floating-point near-miss earns nothing, and the schema check rejects anything that looks like a decimal.
 
