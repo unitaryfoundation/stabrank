@@ -14,3 +14,5 @@ import LeanProofs.NorrellM4Pointwise
 import LeanProofs.QubitTM4
 import LeanProofs.Stabilizer.Rank
 import LeanProofs.Stabilizer.IsStab
+import LeanProofs.T3GaloisDescent
+import LeanProofs.T3M1StabRank

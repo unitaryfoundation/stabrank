@@ -153,6 +153,20 @@ mapping is:
   `stabRank_le_of_decomp`, since under it any vector with entries that are
   powers of `ω₃` would count as stabilizer.
 
+- `LeanProofs/T3GaloisDescent.lean` — discharges the Galois-closure
+  hypothesis of `T3Galois.three_le_of_span_galois_orbit`. `mem_span_descend`
+  descends coefficients from `ℂ` to a subfield by a dual-functional
+  argument; `galEmb e` is the `ℚ`-algebra embedding `ℚ(ω₉) → ℂ` with
+  `ω₉ ↦ ω₉^e` from the power basis and the ninth cyclotomic polynomial;
+  for `e ∈ {1, 4, 7}` it fixes `ℤ[ω₃]` and permutes the conjugates.
+  `t3_three_le`: any family of vectors over `ℤ[ω₃]` whose span contains
+  `|T3⟩` has at least three members. No Galois group is used.
+- `LeanProofs/T3M1StabRank.lean` — `t3_m1_stabRank_gt_two`:
+  `stabRank IsStab |T3⟩ > 2`, the Galois lower bound stated against the
+  concrete stabilizer predicate. `stabVecN_mem_Zomega3` shows every
+  `stabVecN` is over `ℤ[ω₃]`, so every `IsStab` vector is a multiple of one,
+  and `t3_three_le` applies to any set of at most two of them.
+
 ## Build
 
 Requires Lean 4 + mathlib4 (cached). From the `lean_proofs/` directory:
