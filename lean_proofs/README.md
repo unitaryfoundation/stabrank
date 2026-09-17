@@ -137,6 +137,22 @@ mapping is:
   n₂ = a₀ + a₁ + a₂ and takes the values (0, 1, -1, 3) for n₂ = 0,1,2,3.
   The kernel relations are ω + ω² = -1 and ω³ = 1 (from Basic).
 
+- `LeanProofs/Stabilizer/IsStab.lean` — the concrete stabilizer predicate
+  and the first bounds stated against `Stabilizer.stabRank`. `stabVecN n k
+  x0 W Q l` is the standard parametrisation on `n` qutrits with a
+  quadratic-plus-linear phase mod 3; `IsStab v` says `v` is a nonzero
+  multiple of one whose support parametrisation is injective, so the
+  predicate is at most the true set of stabilizer states and a bound
+  against it is a bound on the stabilizer rank. Proves
+  `strange_m2_stabRank_le_two` (from `StrangeM2Pointwise`, via
+  `stabRank_le_of_decomp`), `strange_m2_stabRank_gt_one` (from
+  `StrangeM2Lower`, whose affine-support hypothesis is derived from the
+  definition, with the computational basis discharging nonemptiness) and
+  `strange_m2_stabRank_eq_two`. The earlier `StabDef.stabVec` accepts an
+  arbitrary phase function and must not be used with
+  `stabRank_le_of_decomp`, since under it any vector with entries that are
+  powers of `ω₃` would count as stabilizer.
+
 ## Build
 
 Requires Lean 4 + mathlib4 (cached). From the `lean_proofs/` directory:

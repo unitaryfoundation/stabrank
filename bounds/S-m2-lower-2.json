@@ -5,8 +5,8 @@
   "direction": "lower",
   "rank": 2,
   "lean": {
-    "module": "LeanProofs.StrangeM2Lower",
-    "theorem": "strange_m2_chi_ge_two"
+    "module": "LeanProofs.Stabilizer.IsStab",
+    "theorem": "strange_m2_stabRank_gt_one"
   },
   "provenance": {
     "author": "this repository",
@@ -17,5 +17,5 @@
       "vprusso"
     ]
   },
-  "notes": "The first lower bound in this development proved in Lean, and with the rank-2 decomposition of StrangeM2Pointwise it settles chi(|S>^2) = 2 with both directions machine-checked. Lower bounds are universally quantified, which is why the rest of the Lean development proves only upper bounds; at r = 1 the quantifier is over a single state and one structural fact closes it with no enumeration. The support of a stabilizer state is an affine subspace of F_3^n, so it is closed under a - b + c. |S>^2 is supported on the four points of {1,2}^2, and taking a = c = (1,1) with b = (2,2) lands on (0,0), where the amplitude vanishes. The affine-support property enters as a hypothesis rather than being derived, exactly as the Pointwise files carry stabilizer-ness in the shape of their definitions; anything satisfying it is covered, so the theorem is strictly more general than the stabilizer case."
+  "notes": "The first lower bound in this development proved in Lean, and with the rank-2 decomposition of StrangeM2Pointwise it settles chi(|S>^2) = 2 with both directions machine-checked. Lower bounds are universally quantified, which is why the rest of the Lean development proves only upper bounds; at r = 1 the quantifier is over a single state and one structural fact closes it with no enumeration. The support of a stabilizer state is an affine subspace of F_3^n, so it is closed under a - b + c. |S>^2 is supported on the four points of {1,2}^2, and taking a = c = (1,1) with b = (2,2) lands on (0,0), where the amplitude vanishes. The affine-support property enters as a hypothesis rather than being derived, exactly as the Pointwise files carry stabilizer-ness in the shape of their definitions; anything satisfying it is covered, so the theorem is strictly more general than the stabilizer case. Now stated against stabRank directly: strange_m2_stabRank_gt_one proves Stabilizer.stabRank IsStab |S>^2 > 1, with the affine-support hypothesis of strange_m2_chi_ge_two discharged from the definition of IsStab (the support of a stabilizer state is the image of its affine parametrisation, closed under a - b + d) and the nonemptiness hypothesis of the reduction lemma discharged by the computational basis. With strange_m2_stabRank_le_two this gives strange_m2_stabRank_eq_two: chi(|S>^2) = 2 as one Lean theorem about stabRank."
 }
