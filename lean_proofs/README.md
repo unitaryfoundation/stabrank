@@ -176,6 +176,12 @@ mapping is:
   rank) and the normalised form `t3TargetM_stabRank_gt_two`;
   `t3_m2_stabRank_gt_two` is the `m = 2` instance the board cites.
 
+- `LeanProofs/T3M2StabRank.lean` — `t3_m2_stabRank_eq_three`:
+  `stabRank IsStab |T3⟩^⊗2 = 3`. The three carry blocks of `T3M2Pointwise`
+  are shown to be `IsStab` (the line `{(t, σ - t)}` with phases `t²`,
+  `2t² + t`, `0`), the carry identity gives `≤ 3` through
+  `stabRank_le_of_decomp`, and `T3GaloisM` gives `> 2`.
+
 ## Build
 
 Requires Lean 4 + mathlib4 (cached). From the `lean_proofs/` directory:

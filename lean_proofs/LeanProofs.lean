@@ -17,3 +17,4 @@ import LeanProofs.Stabilizer.IsStab
 import LeanProofs.T3GaloisDescent
 import LeanProofs.T3M1StabRank
 import LeanProofs.T3GaloisM
+import LeanProofs.T3M2StabRank
