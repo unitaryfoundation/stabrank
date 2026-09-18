@@ -14,9 +14,9 @@
       "vprusso"
     ]
   },
-  "notes": "",
+  "notes": "Now stated against stabRank: norrell_m2_stabRank_le_three proves Stabilizer.stabRank IsStab |N>^2 <= 3 with the three terms shown to be stabilizer states in the concrete sense (full support with phase y0 + y1 + y0 y1, the point |2,2>, and full support with twice that phase). With the rank-2 exclusion certificate the cell is settled at 3.",
   "lean": {
-    "module": "LeanProofs.NorrellM2Pointwise",
-    "theorem": "norrell_m2_vector_decomposition"
+    "module": "LeanProofs.M2StabRank",
+    "theorem": "norrell_m2_stabRank_le_three"
   }
 }
