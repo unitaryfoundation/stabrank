@@ -239,7 +239,7 @@ def confirm_lift(terms, alpha, target_m):
 
 # ------------------------------------------------- enumerating decompositions
 
-def decompositions_with_pivot(psi, D, i, rank, partners=None, rng=None, workers=1):
+def decompositions_with_pivot(psi, D, i, rank, partners=None, rng=None, workers=1, members=None):
     """Every rank-`rank` decomposition of psi (rank 2, 3 or 4) that contains
     dictionary state i and, for rank 4, a partner from `partners` (default:
     every other state), as sorted index tuples.
@@ -297,8 +297,11 @@ def decompositions_with_pivot(psi, D, i, rank, partners=None, rng=None, workers=
     p1 = D - np.outer(e_i, e_i.conj() @ D)
     partners = np.arange(N) if partners is None else np.asarray(partners)
     partners = partners[(partners != i) & (n1[partners] > 1e-7)]
+    allowed = np.ones(N, bool) if members is None else np.zeros(N, bool)
+    if members is not None:
+        allowed[np.asarray(members)] = True
     ctx = dict(D=D, psi=psi, i=int(i), q1=q1, n1=n1, p1=p1, R=R, RQ1=R @ q1, RP1=R @ p1,
-               np1=np.linalg.norm(p1, axis=0), rng_seed=int(rng.integers(1 << 31)))
+               np1=np.linalg.norm(p1, axis=0), allowed=allowed, rng_seed=int(rng.integers(1 << 31)))
     if workers and workers > 1 and len(partners) >= 4 * workers:
         import multiprocessing as mp
         global _CTX
@@ -349,7 +352,7 @@ def _rank4_partners_ctx(c, chunk):
         v = q1[:, j] / n1[j]
         w = v.conj() @ q1
         nq2 = np.sqrt(np.maximum(n1 ** 2 - np.abs(w) ** 2, 0))
-        keep = nq2 > 1e-7
+        keep = (nq2 > 1e-7) & c["allowed"]
         keep[i] = keep[j] = False
         ids = np.flatnonzero(keep)
         U = RQ1[:, ids] - np.outer(R @ v, w[ids])
@@ -365,20 +368,19 @@ def _rank4_partners_ctx(c, chunk):
         for g in groups:
             gi = ids[g]
             V2 = U2[:, g]
-            small = n2[g] < 1e-7 * np.maximum(1, np1[gi])
-            k2 = (key @ V2) / (can @ V2)
-            for a in range(len(g)):
-                for b in range(a + 1, len(g)):
-                    if small[a] or small[b]:
-                        pass                    # a state in span(s_i, s_j): dependent
-                    elif abs(k2[a] - k2[b]) < 1e-6 * (1 + abs(k2[a])) and \
-                            abs(abs(np.vdot(V2[:, a], V2[:, b])) - n2[g][a] * n2[g][b]) \
-                            < 1e-6 * n2[g][a] * n2[g][b]:
-                        pass                    # still parallel: dependent quadruple
-                    else:
-                        cols = tuple(sorted((i, j, int(gi[a]), int(gi[b]))))
-                        if confirm(cols):
-                            found.add(cols)
+            ng = n2[g]
+            small = ng < 1e-7 * np.maximum(1, np1[gi])
+            k2 = (key @ V2) / np.where(small, 1, can @ V2)
+            # pairs whose second-quotient keys differ are the candidates;
+            # a pair with equal keys is confirmed parallel by its overlap
+            same_key = np.abs(k2[:, None] - k2[None, :]) < 1e-6 * (1 + np.abs(k2[:, None]))
+            ov = np.abs(V2.conj().T @ V2)
+            parallel2 = same_key & (np.abs(ov - ng[:, None] * ng[None, :]) < 1e-6 * ng[:, None] * ng[None, :])
+            cand = ~parallel2 & ~small[:, None] & ~small[None, :]
+            for a, b in np.argwhere(np.triu(cand, 1)):
+                cols = tuple(sorted((i, j, int(gi[a]), int(gi[b]))))
+                if confirm(cols):
+                    found.add(cols)
     return found
     return sorted(found)
 
@@ -449,20 +451,24 @@ def all_decompositions(orbit, m, rank, D=None, verbose=True, workers=1):
     # can be restricted to those states.
     # Within a pivot, a symmetry fixing the pivot carries decompositions
     # containing (pivot, partner) to ones containing (pivot, image of the
-    # partner), so one partner per orbit of the pivot's stabilizer suffices.
+    # partner), so one partner per orbit of the pivot's stabilizer suffices;
+    # and the other two members also lie in orbits at or above the pivot's.
     roots = info["roots"]
     out = set()
     for n, i in enumerate(np.sort(reps)):
         t = time.time()
         partners = None
         note = ""
+        members = None
         if rank == 4:
             labels, ngens = stabilizer_orbit_labels(info["perms"], int(i))
             cand = np.flatnonzero(roots >= i)
             _, first = np.unique(labels[cand], return_index=True)
             partners = cand[first]
+            members = cand
             note = f", {len(partners)} partners of {len(cand)}"
-        decs = decompositions_with_pivot(psi, D, int(i), rank, partners=partners, workers=workers)
+        decs = decompositions_with_pivot(psi, D, int(i), rank, partners=partners, workers=workers,
+                                         members=members)
         out.update(decs)
         if verbose:
             print(f"  pivot {n + 1}/{len(reps)} (state {i}): {len(decs)} decompositions{note}, "
@@ -551,6 +557,49 @@ def lift_all(orbit, m, decs, D, verbose=True):
               + (f"; every rejected Pauli assignment misses the slice equation by at least {floor:.2e}"
                  if floor < float("inf") else ""), flush=True)
     return lifted
+
+
+def lift_chain(orbit, m0, rank, m_target, workers=1, verbose=True):
+    """Enumerate the rank-`rank` decompositions of |M>^m0 up to unitary
+    symmetry and lift them copy by copy to m_target.
+
+    Returns (counts, gap): counts[m] is the number of rank-`rank`
+    decompositions held at m copies (representatives at m0, all lifts
+    above), and gap is the smallest certified miss of a rejected Pauli
+    assignment over the chain. counts[m_target] == 0 means
+    chi(|M>^m_target) > rank, given chi(|M>^m) == rank for m0 <= m < m_target.
+    """
+    from stabrank_verify import orbit_state, ORBIT_P
+    p = ORBIT_P[orbit]
+    D = dictionary(p, m0)
+    decs, _ = all_decompositions(orbit, m0, rank, D, verbose=verbose, workers=workers)
+    counts = {m0: len(decs)}
+    current = lift_all(orbit, m0, decs, D, verbose=verbose)
+    counts[m0 + 1] = len(current)
+    alpha = np.array([complex(x) for x in orbit_state(orbit)]).ravel()
+    lifter = lifts if p == 3 else lifts_qubit
+    gap = float("inf")
+    for m in range(m0 + 1, m_target):
+        psi = psi_for(orbit, m)
+        nxt = []
+        for terms in current:
+            A = np.column_stack(terms)
+            d, *_ = np.linalg.lstsq(A, psi, rcond=None)
+            if np.linalg.norm(A @ d - psi) > 1e-9:
+                raise AssertionError("a lifted decomposition does not reproduce the target")
+            L, (_, g) = lifter(terms, d, alpha, psi, m)
+            gap = min(gap, g)
+            for t in L:
+                if confirm_lift(t, alpha, psi) > 1e-8:
+                    raise AssertionError("a lift failed its confirmation")
+            nxt.extend(L)
+        if verbose:
+            print(f"{orbit} m={m} -> {m + 1}: {len(current)} decompositions, {len(nxt)} lifts"
+                  + (f"; every rejected Pauli assignment misses by at least {gap:.2e}"
+                     if gap < float("inf") else ""), flush=True)
+        current = nxt
+        counts[m + 1] = len(current)
+    return counts, gap
 
 
 if __name__ == "__main__":

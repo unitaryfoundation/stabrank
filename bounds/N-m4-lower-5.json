@@ -1,0 +1,28 @@
+{
+  "schema_version": "0.1",
+  "orbit": "N",
+  "m": 4,
+  "direction": "lower",
+  "rank": 5,
+  "certificate": {
+    "script": "verify_challenge/cert_n_m4_lift.py",
+    "expect": "CERTIFIED chi(N^4) >= 5",
+    "budget_s": 3600
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank slice_lift.py",
+    "method": "slice-and-lift: the single rank-4 decomposition of |N>^3 up to symmetry does not extend to |N>^4",
+    "date": "2026-09-18",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 7.0,
+      "wall_clock_hours": 6.9,
+      "runs": 2,
+      "hardware": "Apple silicon laptop at low priority; the first enumeration ran 6.4 hours on one core"
+    }
+  },
+  "notes": "chi(N^3) = 4 exactly (Lean witness and rank-3 exclusion). A rank-4 decomposition of |N>^4 sliced along one qutrit gives a rank-4 decomposition of |N>^3 whose terms are related slice to slice by a Pauli and cube roots of unity. |N>^3 has one rank-4 decomposition up to its unitary symmetries, the Lean witness of M3StabRank, and no Pauli assignment satisfies the other two slices: every one misses by at least 1e-4. Supersedes the rank-3 exclusion at m=4 (chi >= 4, 63 CPU-minutes), which never fit the certificate budget. Puts the cell at 5 <= chi <= 7."
+}
