@@ -129,6 +129,10 @@ CI validates every submission against `schema/bound.schema.json` and runs the ve
 
 If you need to change the verifier, the schema, or the site builder, do that in a pull request separate from any submission.
 
+## The autoresearch loop
+
+`autoresearch/run.py ORBIT M RANK` is one iteration of search, exact refit, verification and cost recording. Every annealing run it makes, successful or not, is appended to `autoresearch/runs.jsonl` with its configuration, seed, wall-clock, CPU time and residual; a run that reaches the rank is refit exactly and written as a submission whose `compute` block sums every logged run for that cell. `autoresearch/summary.py` prints CPU-hours per exact solution by cell, joined with the board's tiers. Use it rather than the bare annealer when the cost of the search is part of the result, which on this board it always is.
+
 ## Contributing with an LLM
 
 An agent can do the whole loop: pick a cell, search for a decomposition, verify it, and open the pull request. Paste the prompt below.
