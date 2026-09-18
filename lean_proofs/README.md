@@ -196,6 +196,12 @@ mapping is:
   `|0,0,+⟩` via `stabVecN_k1`. `stabRank_le_four_of` is the four-term
   analogue of the m=2 lemma.
 
+- `LeanProofs/M4StabRank.lean` — `norrell_m4_stabRank_le_seven`: the
+  seven-term Norrell decomposition at four copies against `stabRank`. Adds
+  `stabVecN_k3` (27-term expansion), general-`n` injectivity lemmas for
+  planes and 3-flats, and a seven-term span lemma. With this every lean-tier
+  upper bound on the board is a statement about `stabRank`.
+
 ## Build
 
 Requires Lean 4 + mathlib4 (cached). From the `lean_proofs/` directory:
