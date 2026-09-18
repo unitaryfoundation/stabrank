@@ -14,6 +14,7 @@
 #include "stabrank/clifford.hpp"
 #include "stabrank/fidelity.hpp"
 #include "stabrank/symmetric_engine.hpp"
+#include "stabrank/pivot_pair.hpp"
 
 #include <complex>
 #include <cstdint>
@@ -365,6 +366,39 @@ NB_MODULE(stabrank_core, m) {
         "Apply a random Pauli string projector to a state vector.");
 
     // --- max_stabilizer_fidelity ---
+    m.def("rank4_pivot_partners",
+          [](nb::ndarray<const std::complex<double>, nb::ndim<2>, nb::c_contig> D,
+             nb::ndarray<const std::complex<double>, nb::ndim<1>, nb::c_contig> psi,
+             int i,
+             nb::ndarray<const int64_t, nb::ndim<1>, nb::c_contig> partners,
+             nb::ndarray<const uint8_t, nb::ndim<1>, nb::c_contig> allowed,
+             int proj_dim, uint64_t seed) {
+              const size_t dim = D.shape(0), N = D.shape(1);
+              Eigen::MatrixXcd Dm(dim, N);
+              for (size_t r = 0; r < dim; ++r)
+                  for (size_t c = 0; c < N; ++c) Dm(r, c) = D(r, c);
+              Eigen::VectorXcd pv(psi.shape(0));
+              for (size_t r = 0; r < psi.shape(0); ++r) pv[r] = psi(r);
+              std::vector<int> part(partners.shape(0));
+              for (size_t k = 0; k < partners.shape(0); ++k) part[k] = static_cast<int>(partners(k));
+              std::vector<uint8_t> allow(allowed.shape(0));
+              for (size_t k = 0; k < allowed.shape(0); ++k) allow[k] = allowed(k);
+              stabrank::PivotPairConfig cfg;
+              cfg.proj_dim = proj_dim;
+              cfg.seed = seed;
+              auto found = stabrank::rank4_pivot_partners(Dm, pv, i, part, allow, cfg);
+              const size_t n = found.size();
+              auto* data = new int64_t[n * 4];
+              for (size_t k = 0; k < n; ++k)
+                  for (int t = 0; t < 4; ++t) data[k * 4 + t] = found[k][t];
+              nb::capsule owner(data, [](void* p) noexcept { delete[] static_cast<int64_t*>(p); });
+              return nb::ndarray<nb::numpy, int64_t, nb::ndim<2>>(data, {n, 4}, owner);
+          },
+          "D"_a, "psi"_a, "i"_a, "partners"_a, "allowed"_a, "proj_dim"_a = 10, "seed"_a = 11,
+          "Every rank-4 decomposition of psi over the dictionary D (dim x N, unit columns) "
+          "containing pivot i and a partner from `partners`, with the other two members among "
+          "the columns marked in `allowed`; sorted index quadruples, one per row.");
+
     m.def("max_stabilizer_fidelity",
         [](nb::ndarray<std::complex<double>, nb::ndim<1>> target_arr,
            int n, int d) {

@@ -120,3 +120,24 @@ def test_stabilizer_reduction_covers_every_orbit():
     reduced, _ = all_decompositions("N", 2, 4, D, verbose=False)
     assert len(reduced) < len(full)
     assert closure(full, info["perms"]) == closure(set(reduced), info["perms"])
+
+
+def test_native_kernel_matches_numpy_reference():
+    """The C++ pivot-pair search returns exactly the numpy reference's
+    quadruples on three two-copy cells (skipped without stabrank_core)."""
+    import numpy as np
+    from rank_exclusion import psi_for
+    import slice_lift as sl
+    if sl._native_kernel() is None:
+        pytest.skip("stabrank_core without rank4_pivot_partners")
+    for orbit, m, pivots in [("N", 2, (0, 77)), ("T3", 2, (0, 77)), ("H3", 2, (0, 77))]:
+        D = dictionary(3, m)
+        psi = psi_for(orbit, m)
+        for piv in pivots:
+            os.environ["STABRANK_NO_NATIVE"] = "1"
+            try:
+                ref = sl.decompositions_with_pivot(psi, D, piv, 4)
+            finally:
+                os.environ.pop("STABRANK_NO_NATIVE", None)
+            assert sl.decompositions_with_pivot(psi, D, piv, 4) == ref
+            assert ref                      # every case here has decompositions

@@ -323,8 +323,32 @@ def _rank4_partners(chunk):
     return _rank4_partners_ctx(_CTX, chunk)
 
 
+def _native_kernel():
+    """The compiled pivot-pair search from stabrank_core, or None."""
+    if os.environ.get("STABRANK_NO_NATIVE"):
+        return None
+    try:
+        from stabrank.stabrank_core import rank4_pivot_partners
+    except ImportError:
+        return None
+    return rank4_pivot_partners
+
+
+def _rank4_partners_native(c, chunk, kernel):
+    """The same search as `_rank4_partners_ctx`, in C++ (cpp/src/pivot_pair.cpp)."""
+    D = np.ascontiguousarray(c["D"], dtype=np.complex128)
+    psi = np.ascontiguousarray(c["psi"], dtype=np.complex128)
+    out = kernel(D, psi, int(c["i"]), np.ascontiguousarray(chunk, dtype=np.int64),
+                 np.ascontiguousarray(c["allowed"], dtype=np.uint8), PROJ_DIM, c["rng_seed"])
+    return {tuple(int(x) for x in row) for row in np.asarray(out)}
+
+
 def _rank4_partners_ctx(c, chunk):
     """Rank-4 decompositions {i, j, a, b} for every partner j in `chunk`.
+
+    Dispatches to the compiled kernel when stabrank_core provides it (set
+    STABRANK_NO_NATIVE=1 to force this numpy reference, which the tests
+    compare against the kernel).
 
     Modulo span(psi, s_i, s_j) the images of s_a and s_b must be parallel;
     modulo span(s_i, s_j) alone they must not be (else the quadruple is
@@ -333,6 +357,9 @@ def _rank4_partners_ctx(c, chunk):
     canonical key of the second quotient, so a group contributes only its
     cross-key pairs. Survivors are confirmed by an exact solve.
     """
+    kernel = _native_kernel()
+    if kernel is not None:
+        return _rank4_partners_native(c, chunk, kernel)
     D, psi, i = c["D"], c["psi"], c["i"]
     q1, n1, p1, R, RQ1, RP1, np1 = c["q1"], c["n1"], c["p1"], c["R"], c["RQ1"], c["RP1"], c["np1"]
     rng = np.random.default_rng(c["rng_seed"])
