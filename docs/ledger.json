@@ -933,6 +933,29 @@
    }
   },
   {
+   "slug": "S-m5-lower-5",
+   "orbit": "S",
+   "m": 5,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "reproduced",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-18",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "slice-and-lift twice: every rank-4 decomposition of |S>^3 up to symmetry, lifted to |S>^4, none extends to |S>^5",
+   "reference": "stabrank slice_lift.py",
+   "compute": {
+    "cpu_hours": 2.7,
+    "wall_clock_hours": 2.6,
+    "runs": 3,
+    "hardware": "Apple silicon laptop at low priority; the first enumeration ran 2.2 hours on one core, the certificate takes about two minutes on four"
+   }
+  },
+  {
    "slug": "S-m5-upper-8",
    "orbit": "S",
    "m": 5,
