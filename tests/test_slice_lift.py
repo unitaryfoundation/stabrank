@@ -3,6 +3,10 @@
 import os
 import sys
 
+import pytest
+
+sp = pytest.importorskip("sympy")
+
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                                 "verify_challenge"))
 
