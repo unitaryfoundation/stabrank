@@ -24,7 +24,8 @@ struct PivotPairConfig {
 // Every rank-4 decomposition {i, j, a, b} of psi over the dictionary D
 // (one unit-norm state per column) that contains the pivot i and a partner
 // j from `partners`, with a and b drawn from the columns marked in
-// `allowed`. Quotient by span(psi, s_i, s_j): a decomposition's other two
+// `allowed` and of index larger than j (so j is the least non-pivot
+// member; a decomposition is reported once per such partner). Quotient by span(psi, s_i, s_j): a decomposition's other two
 // members have parallel images there, and a parallel pair whose images
 // modulo span(s_i, s_j) alone are not parallel is a decomposition (the psi
 // coefficient is nonzero). Both tests run on the same random projection,
