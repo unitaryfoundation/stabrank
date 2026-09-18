@@ -1,0 +1,27 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_T",
+  "m": 5,
+  "direction": "lower",
+  "rank": 4,
+  "certificate": {
+    "script": "verify_challenge/cert_qubit_t_m5_lift.py",
+    "expect": "CERTIFIED chi(qubit_T^5) >= 4"
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank slice_lift.py",
+    "method": "slice-and-lift: every rank-3 decomposition of |T>^4 up to symmetry, none extends to |T>^5",
+    "date": "2026-09-18",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.01,
+      "wall_clock_hours": 0.005,
+      "runs": 1,
+      "hardware": "Apple silicon laptop"
+    }
+  },
+  "notes": "A rank-3 decomposition of |T>^5 sliced along one qubit gives a rank-3 decomposition of |T>^4 whose terms are related slice to slice by a Pauli and a fourth root of unity. |T>^4 has one rank-3 decomposition up to its unitary symmetries (the QubitTM4 witness), and no choice of Paulis and phases satisfies the second slice, so rank 3 is impossible at m=5. Puts the cell at 4 <= chi <= 6."
+}
