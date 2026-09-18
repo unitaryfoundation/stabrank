@@ -35,6 +35,9 @@ TEST_CASE("pivot-pair search finds the planted rank-4 decomposition and nothing 
     auto found = rank4_pivot_partners(D, psi, 17, partners, allowed);
     REQUIRE(found.size() == 1);
     CHECK(found[0] == std::array<int, 4>{5, 17, 23, 41});
+    // the partner must be the least non-pivot member: 23 and 41 as partners find nothing
+    CHECK(rank4_pivot_partners(D, psi, 17, {23, 41}, allowed).empty());
+    CHECK(rank4_pivot_partners(D, psi, 17, {5}, allowed).size() == 1);
     // restricting the partners away from the decomposition finds nothing
     std::vector<int> others;
     for (int k = 0; k < N; ++k) if (k != 5 && k != 23 && k != 41) others.push_back(k);

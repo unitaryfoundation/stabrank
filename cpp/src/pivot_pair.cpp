@@ -55,12 +55,14 @@ std::vector<std::vector<int>> parallel_groups(const Eigen::MatrixXcd& U, std::mt
     }
     if (!ok) throw std::runtime_error("could not draw a canonicalising functional nonzero on every direction");
     Eigen::RowVectorXcd kk = (key.transpose() * U).cwiseQuotient(c);
-    std::vector<int> order(n);
-    std::iota(order.begin(), order.end(), 0);
-    std::sort(order.begin(), order.end(), [&](int a, int b) {
-        if (kk[a].real() != kk[b].real()) return kk[a].real() < kk[b].real();
-        return kk[a].imag() < kk[b].imag();
+    struct Keyed { double re, im; int idx; };
+    std::vector<Keyed> sorted(n);
+    for (Eigen::Index k = 0; k < n; ++k) sorted[k] = {kk[k].real(), kk[k].imag(), static_cast<int>(k)};
+    std::sort(sorted.begin(), sorted.end(), [](const Keyed& a, const Keyed& b) {
+        return a.re != b.re ? a.re < b.re : a.im < b.im;
     });
+    std::vector<int> order(n);
+    for (Eigen::Index k = 0; k < n; ++k) order[k] = sorted[k].idx;
     Eigen::Index start = 0;
     while (start < n) {
         Eigen::Index end = start + 1;
@@ -148,8 +150,12 @@ std::vector<std::array<int, 4>> rank4_pivot_partners(
         Eigen::VectorXcd Rv = R * v;
         std::vector<int> ids;
         ids.reserve(N);
-        for (Eigen::Index k = 0; k < N; ++k) {
-            if (k == i || k == j || !allowed[k]) continue;
+        // The other two members carry indices above the partner: with the
+        // partner the least index of the non-pivot members (the caller makes
+        // it minimal in its orbit under the pivot's stabilizer, and the two
+        // conditions hold together, see slice_lift.all_decompositions).
+        for (Eigen::Index k = j + 1; k < N; ++k) {
+            if (k == i || !allowed[k]) continue;
             double nq2sq = n1[k] * n1[k] - std::norm(w[k]);
             if (nq2sq > cfg.zero * cfg.zero) ids.push_back(static_cast<int>(k));
         }

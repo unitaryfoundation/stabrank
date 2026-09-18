@@ -239,10 +239,22 @@ def confirm_lift(terms, alpha, target_m):
 
 # ------------------------------------------------- enumerating decompositions
 
-def decompositions_with_pivot(psi, D, i, rank, partners=None, rng=None, workers=1, members=None):
-    """Every rank-`rank` decomposition of psi (rank 2, 3 or 4) that contains
-    dictionary state i and, for rank 4, a partner from `partners` (default:
-    every other state), as sorted index tuples.
+def decompositions_with_pivot(psi, D, i, rank, partners=None, rng=None, workers=1, members=None,
+                              least_partner=True):
+    """Every minimal rank-`rank` decomposition of psi (rank 2, 3 or 4) that
+    contains dictionary state i and, for rank 4, a partner from `partners`
+    (default: every other state), as sorted index tuples.
+
+    Minimal means no proper subset of the states spans psi. When chi(psi)
+    equals `rank`, which the certificates establish first, every
+    decomposition is minimal and the list is complete. A state whose image
+    modulo span(psi, s_i, s_j) vanishes lies in a rank-3 span of psi and is
+    dropped, so non-minimal four-sets are not listed systematically.
+
+    With `least_partner` (the default, and always in the compiled kernel)
+    the two remaining members are searched above the partner's index, the
+    partner being the least non-pivot member; `least_partner=False` is the
+    numpy reference without that restriction, for tests.
 
     Rank 4 quotients out psi, s_i and the partner s_j, then collects pairs
     whose images are parallel. Such a pair (a, b) has s_a - c s_b in
@@ -301,7 +313,8 @@ def decompositions_with_pivot(psi, D, i, rank, partners=None, rng=None, workers=
     if members is not None:
         allowed[np.asarray(members)] = True
     ctx = dict(D=D, psi=psi, i=int(i), q1=q1, n1=n1, p1=p1, R=R, RQ1=R @ q1, RP1=R @ p1,
-               np1=np.linalg.norm(p1, axis=0), allowed=allowed, rng_seed=int(rng.integers(1 << 31)))
+               np1=np.linalg.norm(p1, axis=0), allowed=allowed, rng_seed=int(rng.integers(1 << 31)),
+               least_partner=bool(least_partner))
     if workers and workers > 1 and len(partners) >= 4 * workers:
         import multiprocessing as mp
         global _CTX
@@ -357,7 +370,7 @@ def _rank4_partners_ctx(c, chunk):
     canonical key of the second quotient, so a group contributes only its
     cross-key pairs. Survivors are confirmed by an exact solve.
     """
-    kernel = _native_kernel()
+    kernel = _native_kernel() if c.get("least_partner", True) else None
     if kernel is not None:
         return _rank4_partners_native(c, chunk, kernel)
     D, psi, i = c["D"], c["psi"], c["i"]
@@ -380,7 +393,11 @@ def _rank4_partners_ctx(c, chunk):
         w = v.conj() @ q1
         nq2 = np.sqrt(np.maximum(n1 ** 2 - np.abs(w) ** 2, 0))
         keep = (nq2 > 1e-7) & c["allowed"]
-        keep[i] = keep[j] = False
+        keep[i] = False
+        if c.get("least_partner", True):
+            keep[:j + 1] = False                # the partner is the least non-pivot member
+        else:
+            keep[j] = False
         ids = np.flatnonzero(keep)
         U = RQ1[:, ids] - np.outer(R @ v, w[ids])
         U /= np.linalg.norm(U, axis=0)
@@ -476,10 +493,14 @@ def all_decompositions(orbit, m, rank, D=None, verbose=True, workers=1):
     # orbit (by representative index) to the pivot and the other members lie
     # in orbits with representative index at least the pivot's. So partners
     # can be restricted to those states.
-    # Within a pivot, a symmetry fixing the pivot carries decompositions
-    # containing (pivot, partner) to ones containing (pivot, image of the
-    # partner), so one partner per orbit of the pivot's stabilizer suffices;
-    # and the other two members also lie in orbits at or above the pivot's.
+    # Within a pivot, a symmetry h fixing the pivot carries decompositions
+    # containing (pivot, partner) to ones containing (pivot, h(partner)).
+    # Choose h to minimise the least index among the non-pivot members: that
+    # member is then minimal in its orbit under the stabilizer and every
+    # other member has a larger index. So the partners are one state per
+    # stabilizer orbit (its least index) and the remaining two members are
+    # searched above the partner; all of them lie in orbits at or above the
+    # pivot's, since the pivot is the least orbit of the decomposition.
     roots = info["roots"]
     out = set()
     for n, i in enumerate(np.sort(reps)):

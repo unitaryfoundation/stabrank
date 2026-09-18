@@ -89,37 +89,53 @@ def test_rank4_pivot_search_matches_brute_force():
         assert ok == (cols in found), cols
 
 
+def _closure(decs, perms):
+    seen = set(decs)
+    frontier = list(decs)
+    while frontier:
+        nxt = []
+        for d in frontier:
+            for p in perms:
+                e = tuple(sorted(int(p[c]) for c in d))
+                if e not in seen:
+                    seen.add(e)
+                    nxt.append(e)
+        frontier = nxt
+    return seen
+
+
+def _minimal(decs, rank3):
+    """Drop four-sets that contain a rank-3 decomposition."""
+    return {d for d in decs if not any(t <= set(d) for t in rank3)}
+
+
 def test_stabilizer_reduction_covers_every_orbit():
-    """The partner loop reduced by the pivot's stabilizer finds the same
-    rank-4 decompositions of |N>^2 as the full loop, up to the symmetry
-    group (compared after closing both lists under the generators)."""
+    """The partner loop reduced by the pivot's stabilizer, with the other two
+    members searched above the partner, finds every minimal rank-4
+    decomposition of |N>^2 that the unrestricted loop finds, up to the
+    symmetry group. |N>^2 has rank 3, so its non-minimal four-sets (those
+    containing one of its rank-3 decompositions) are removed from both
+    sides first: the search only promises the minimal ones."""
     import numpy as np
     from rank_exclusion import psi_for, symmetry_orbit_reps
     from slice_lift import decompositions_with_pivot
 
-    def closure(decs, perms):
-        seen = set(decs)
-        frontier = list(decs)
-        while frontier:
-            nxt = []
-            for d in frontier:
-                for p in perms:
-                    e = tuple(sorted(int(p[c]) for c in d))
-                    if e not in seen:
-                        seen.add(e)
-                        nxt.append(e)
-            frontier = nxt
-        return seen
-
     D = dictionary(3, 2)
     psi = psi_for("N", 2)
     reps, info = symmetry_orbit_reps("N", 2, D, antiunitary=False)
+    rank3 = set()
+    for i in reps:
+        rank3.update(decompositions_with_pivot(psi, D, int(i), 3))
+    rank3 = [set(t) for t in _closure(rank3, info["perms"])]
+    assert len(rank3) == 48
     full = set()
     for i in reps:
-        full.update(decompositions_with_pivot(psi, D, int(i), 4))
+        full.update(decompositions_with_pivot(psi, D, int(i), 4, least_partner=False))
     reduced, _ = all_decompositions("N", 2, 4, D, verbose=False)
     assert len(reduced) < len(full)
-    assert closure(full, info["perms"]) == closure(set(reduced), info["perms"])
+    cf = _minimal(_closure(full, info["perms"]), rank3)
+    cr = _minimal(_closure(set(reduced), info["perms"]), rank3)
+    assert cf == cr and cf
 
 
 def test_native_kernel_matches_numpy_reference():
