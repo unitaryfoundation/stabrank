@@ -59,6 +59,12 @@ def tier_requirements(sub):
     if d == "upper" and not w and "lean" not in sub:
         notes.append("no decomposition and no Lean proof, so this records as "
                      "cited and cannot hold a record")
+    budget = (sub.get("certificate") or {}).get("budget_s")
+    if budget is not None and budget > 900 and not comp:
+        errors.append("a certificate budget above the default 900 s must come with "
+                      "provenance.compute, so the ledger records what the bound cost")
+    if budget is not None and budget <= 900:
+        notes.append("budget_s at or below the default 900 s has no effect; drop it")
     if d == "lower" and "certificate" not in sub and "lean" not in sub:
         notes.append("no certificate and no Lean proof, so this records as "
                      "cited and cannot hold a record")

@@ -814,6 +814,7 @@ def write_ledger(entries):
             "github": prov.get("github") or [], "method": prov.get("method"),
             "reference": prov.get("reference"),
             "compute": prov.get("compute"),
+            "budget_s": (s.get("certificate") or {}).get("budget_s"),
         })
     rows.sort(key=lambda x: (x["date"] or "", x["slug"]))
     with open(os.path.join(DOCS, "ledger.json"), "w") as f:
@@ -847,6 +848,10 @@ def tier_pill(tier, ok=True, sub=None, compact=True):
             return (f"<a class='pill t-cited' href='{u}' "
                     f"title='cited from {E(sub[chr(39)+chr(39)] if False else sub['provenance'].get('reference',''))}'>"
                     f"cited</a>")
+    budget = ((sub or {}).get("certificate") or {}).get("budget_s")
+    if tier == "reproduced" and budget and int(budget) > 900:
+        return (f"<span class='pill t-{tier}' title='the certificate ran within a declared "
+                f"{int(budget)} s budget, above the 900 s default'>{tier} &middot; {int(budget)} s</span>")
     return f"<span class='pill t-{tier}'>{tier}</span>"
 
 

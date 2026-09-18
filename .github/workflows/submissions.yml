@@ -20,7 +20,10 @@ jobs:
   bounds:
     name: Verify submitted bounds
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # A certificate may declare up to 3600 s (schema/bound.schema.json,
+    # certificate.budget_s); this leaves room for one such certificate plus
+    # setup. A pull request adding several long certificates should be split.
+    timeout-minutes: 90
 
     steps:
       - name: Check out repository
