@@ -1,0 +1,27 @@
+{
+  "schema_version": "0.1",
+  "orbit": "T3",
+  "m": 5,
+  "direction": "lower",
+  "rank": 6,
+  "certificate": {
+    "script": "verify_challenge/cert_t3_m5_from_m3.py",
+    "expect": "CERTIFIED chi(T3^5) >= 6"
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank cert_t3m3_rank6.py",
+    "method": "projection monotonicity applied twice to the certified chi(T3^3) >= 6",
+    "date": "2026-09-18",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.15,
+      "wall_clock_hours": 0.03,
+      "runs": 1,
+      "hardware": "Apple silicon laptop, 6 worker processes"
+    }
+  },
+  "notes": "Puts the cell at 6 <= chi <= 18. The certificate re-runs the m=3 rank-6 exclusion (Galois descent cutting the search to 45 candidate lines, then exhaustion with every candidate rejected in exact arithmetic over Q(w9)) and applies projection monotonicity: chi(psi (x) phi) >= chi(psi) whenever phi has a nonzero computational amplitude. The sector decomposition behind the upper bound gives no better lower bound, since max_j chi(c_j) <= chi(T3^5) and the sectors are only known to have rank between 5 and 6. Beating the published exponent 1/2 at m=5 needs rank 15, which is rank 5 in every sector."
+}
