@@ -1,0 +1,9 @@
+{
+  "module": "LeanProofs.M3StabRank",
+  "ok": true,
+  "log": [
+    "  [apply] simp (config := { decide := true }) only [Fin.reduceFinMk, Fin.mk_one, Fin.isValue]",
+    "info: LeanProofs/StabDef.lean:100:12: 'rw [show (4 : \u2115) = 3 + 1 from rfl, pow_add, pow_one, omega3_pow_three, one_mul]' uses '\u22a2'!",
+    "Build completed successfully (3320 jobs)."
+  ]
+}

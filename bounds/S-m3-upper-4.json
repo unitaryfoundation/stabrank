@@ -14,9 +14,9 @@
       "vprusso"
     ]
   },
-  "notes": "exhaustive small-m value; tight",
+  "notes": "exhaustive small-m value; tight Now stated against stabRank: strange_m3_stabRank_le_four proves Stabilizer.stabRank IsStab |M>^3 <= 4 with the four terms shown to be stabilizer states in the concrete sense (two planes y1 = 2 and y1 = 1 with quadratic phases in (y0, y2)). With the exhaustive rank-3 exclusion certificate the cell is settled at 4.",
   "lean": {
-    "module": "LeanProofs.StrangeM3Pointwise",
-    "theorem": "strange_m3_vector_decomposition"
+    "module": "LeanProofs.M3StabRank",
+    "theorem": "strange_m3_stabRank_le_four"
   }
 }
