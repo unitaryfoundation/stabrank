@@ -14,9 +14,9 @@
       "vprusso"
     ]
   },
-  "notes": "",
+  "notes": "Now stated against stabRank: h3_m2_stabRank_le_three proves Stabilizer.stabRank IsStab |H3>^2 <= 3 with the three terms shown to be stabilizer states in the concrete sense (the lines |0,+> and |+,0>, and full support with phase 2 y0^2 + y1^2). With the rank-2 exclusion certificate the cell is settled at 3.",
   "lean": {
-    "module": "LeanProofs.H3M2Pointwise",
-    "theorem": "h3_m2_vector_decomposition"
+    "module": "LeanProofs.M2StabRank",
+    "theorem": "h3_m2_stabRank_le_three"
   }
 }

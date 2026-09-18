@@ -182,6 +182,12 @@ mapping is:
   `2t² + t`, `0`), the carry identity gives `≤ 3` through
   `stabRank_le_of_decomp`, and `T3GaloisM` gives `> 2`.
 
+- `LeanProofs/M2StabRank.lean` — the Norrell and H₃ two-copy upper bounds
+  against `stabRank`: `norrell_m2_stabRank_le_three` and
+  `h3_m2_stabRank_le_three`, with each term of the pointwise files shown to
+  be `IsStab` (full-support phases via `stabVecN_id`, the point `|2,2⟩` via
+  `stabVecN_zero`, the lines `|0,+⟩`, `|+,0⟩` via `stabVecN_k1`).
+
 ## Build
 
 Requires Lean 4 + mathlib4 (cached). From the `lean_proofs/` directory:
