@@ -108,8 +108,9 @@ def anneal_once(orbit, m, rank, seed, chains, iters, cooling, warm=None):
         random_replace_prob=0.05, use_real_qubit_moves=False, clifford_ratio=0.5,
         early_exit_threshold=1e-9, seed=seed, num_chains=chains)
     secs, cpu = time.time() - t0, time.process_time() - c0
-    vecs = [np.asarray(f, dtype=complex) for f in funcs] if err < 1e-9 else None
-    return vecs, float(err), secs, cpu
+    final = [np.asarray(f, dtype=complex) for f in funcs]
+    vecs = final if err < 1e-9 else None
+    return vecs, float(err), secs, cpu, final
 
 
 def log_run(rec):
@@ -153,6 +154,8 @@ def main(argv):
     ap.add_argument("--out", help="submission path; default bounds/ORBIT-mM-upper-RANK.json")
     ap.add_argument("--warm-from", default="", help="a bound file whose witness, pruned to the "
                     "target rank, seeds the annealer instead of random states")
+    ap.add_argument("--save-plateaus", default="", help="directory in which to save the final "
+                    "basis of every failed run, for completion search (autoresearch/kopt.py)")
     a = ap.parse_args(argv[1:])
 
     from to_witness import witness_from_vectors, NotStabilizer
@@ -161,8 +164,13 @@ def main(argv):
     out = a.out or os.path.join(ROOT, "bounds", f"{a.orbit}-m{a.m}-upper-{a.rank}.json")
     residuals = []
     for seed in range(a.seed0, a.seed0 + a.seeds):
-        vecs, err, secs, cpu = anneal_once(a.orbit, a.m, a.rank, seed, a.chains, a.iters,
-                                           a.cooling, warm=a.warm_from or None)
+        vecs, err, secs, cpu, final = anneal_once(a.orbit, a.m, a.rank, seed, a.chains,
+                                                  a.iters, a.cooling, warm=a.warm_from or None)
+        if vecs is None and a.save_plateaus:
+            os.makedirs(a.save_plateaus, exist_ok=True)
+            np.savez(os.path.join(a.save_plateaus,
+                                  f"plateau_{a.orbit}_m{a.m}_r{a.rank}_seed{seed}.npz"),
+                     residual=err, *final)
         rec = {"when": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
                "orbit": a.orbit, "m": a.m, "rank": a.rank, "seed": seed, "chains": a.chains,
                "iters": a.iters, "cooling": a.cooling, "wall_s": round(secs, 1),
