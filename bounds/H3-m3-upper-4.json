@@ -14,9 +14,9 @@
       "vprusso"
     ]
   },
-  "notes": "tight",
+  "notes": "tight Now stated against stabRank: h3_m3_stabRank_le_four proves Stabilizer.stabRank IsStab |M>^3 <= 4 with the four terms shown to be stabilizer states in the concrete sense (two full-support states with phases 2y0^2 + 2y1^2 + y2^2 and y0^2 + y1^2 + 2y2^2, the line |0,0,+> and the plane |+,+,0>). With the exhaustive rank-3 exclusion certificate the cell is settled at 4.",
   "lean": {
-    "module": "LeanProofs.H3M3Pointwise",
-    "theorem": "h3_m3_vector_decomposition"
+    "module": "LeanProofs.M3StabRank",
+    "theorem": "h3_m3_stabRank_le_four"
   }
 }

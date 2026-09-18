@@ -188,6 +188,14 @@ mapping is:
   be `IsStab` (full-support phases via `stabVecN_id`, the point `|2,2⟩` via
   `stabVecN_zero`, the lines `|0,+⟩`, `|+,0⟩` via `stabVecN_k1`).
 
+- `LeanProofs/M3StabRank.lean` — the three-copy upper bounds against
+  `stabRank`: `strange_m3_stabRank_le_four`, `norrell_m3_stabRank_le_four`,
+  `h3_m3_stabRank_le_four`. Plane terms (`k = 2`) are evaluated by
+  `stabVecN_k2` (nine-term sum) and decided at all 27 points; full-support
+  terms via `stabVecN_id` with a mod-3 phase agreement lemma; the line
+  `|0,0,+⟩` via `stabVecN_k1`. `stabRank_le_four_of` is the four-term
+  analogue of the m=2 lemma.
+
 ## Build
 
 Requires Lean 4 + mathlib4 (cached). From the `lean_proofs/` directory:

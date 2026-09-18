@@ -14,9 +14,9 @@
       "vprusso"
     ]
   },
-  "notes": "tight",
+  "notes": "tight Now stated against stabRank: norrell_m3_stabRank_le_four proves Stabilizer.stabRank IsStab |M>^3 <= 4 with the four terms shown to be stabilizer states in the concrete sense (the three planes y_i = 2 with phases built from the indicator [y = 2] = 2y^2 + y, and |+>^3). With the exhaustive rank-3 exclusion certificate the cell is settled at 4.",
   "lean": {
-    "module": "LeanProofs.NorrellM3Pointwise",
-    "theorem": "norrell_m3_vector_decomposition"
+    "module": "LeanProofs.M3StabRank",
+    "theorem": "norrell_m3_stabRank_le_four"
   }
 }
