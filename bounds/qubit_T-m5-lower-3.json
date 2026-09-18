@@ -1,0 +1,27 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_T",
+  "m": 5,
+  "direction": "lower",
+  "rank": 3,
+  "certificate": {
+    "script": "verify_challenge/cert_qubit_t_m5_from_m4.py",
+    "expect": "CERTIFIED chi(qubit_T^5) >= 3"
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank rank_exclusion.py",
+    "method": "projection monotonicity applied to an exhaustive exclusion at lower m",
+    "date": "2026-09-18",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.01,
+      "wall_clock_hours": 0.005,
+      "runs": 1,
+      "hardware": "Apple silicon laptop"
+    }
+  },
+  "notes": "Projection monotonicity from the m=4 rank-2 exclusion, re-run inside the certificate. Puts the new cell at 3 <= chi <= 6."
+}
