@@ -1,0 +1,27 @@
+{
+  "schema_version": "0.1",
+  "orbit": "H3",
+  "m": 4,
+  "direction": "lower",
+  "rank": 3,
+  "certificate": {
+    "script": "verify_challenge/cert_h3_m4_rank2.py",
+    "expect": "CERTIFIED chi(H3^4) >= 3"
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank rank_exclusion_codes.py",
+    "method": "rank-2 exclusion over all 7,439,040 four-qutrit stabilizer states, held as phase codes",
+    "date": "2026-09-18",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.05,
+      "wall_clock_hours": 0.03,
+      "runs": 1,
+      "hardware": "Apple silicon laptop, one core"
+    }
+  },
+  "notes": "Closes this cell as a route to the published exponent, which would need rank 2 here. The dictionary is enumerated as int8 phase codes in about 30 s and 600 MB (the complex form is 4.8 GB), and the rank-2 test is one canonicalise-and-sort over quotient directions, so the certificate runs in about two minutes against the 2.2 hours of the streaming version proposed in PR #20, which this supersedes. The exclusion is numerical and rests on a margin: the closest any two key-adjacent quotient directions come to parallel is reported by the script and must clear 1 - 1e-6 by 0.01. A rank-3 exclusion for the same cell has also been run here (chi >= 4) and exceeds the default certificate budget."
+}
