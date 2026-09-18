@@ -34,6 +34,14 @@ def test_t3_rank3_lifts_one_copy():
     assert lift_all("T3", 1, decs, D, verbose=False)
 
 
+def test_strange_rank2_lifts_with_a_zero_amplitude():
+    """|S> has alpha_0 = 0, so the slice-0 equation is homogeneous."""
+    D = dictionary(3, 1)
+    decs, _ = all_decompositions("S", 1, 2, D, verbose=False)
+    assert decs
+    assert lift_all("S", 1, decs, D, verbose=False)
+
+
 def test_norrell_rank3_does_not_lift():
     D = dictionary(3, 2)
     decs, _ = all_decompositions("N", 2, 3, D, verbose=False)
@@ -79,3 +87,36 @@ def test_rank4_pivot_search_matches_brute_force():
             x, *_ = np.linalg.lstsq(A, psi, rcond=None)
             ok = np.linalg.norm(A @ x - psi) < 1e-9
         assert ok == (cols in found), cols
+
+
+def test_stabilizer_reduction_covers_every_orbit():
+    """The partner loop reduced by the pivot's stabilizer finds the same
+    rank-4 decompositions of |N>^2 as the full loop, up to the symmetry
+    group (compared after closing both lists under the generators)."""
+    import numpy as np
+    from rank_exclusion import psi_for, symmetry_orbit_reps
+    from slice_lift import decompositions_with_pivot
+
+    def closure(decs, perms):
+        seen = set(decs)
+        frontier = list(decs)
+        while frontier:
+            nxt = []
+            for d in frontier:
+                for p in perms:
+                    e = tuple(sorted(int(p[c]) for c in d))
+                    if e not in seen:
+                        seen.add(e)
+                        nxt.append(e)
+            frontier = nxt
+        return seen
+
+    D = dictionary(3, 2)
+    psi = psi_for("N", 2)
+    reps, info = symmetry_orbit_reps("N", 2, D, antiunitary=False)
+    full = set()
+    for i in reps:
+        full.update(decompositions_with_pivot(psi, D, int(i), 4))
+    reduced, _ = all_decompositions("N", 2, 4, D, verbose=False)
+    assert len(reduced) < len(full)
+    assert closure(full, info["perms"]) == closure(set(reduced), info["perms"])
