@@ -833,6 +833,58 @@
     "runs": 1,
     "hardware": "Apple silicon laptop, 8 annealing chains"
    }
+  },
+  {
+   "slug": "T3-m5-upper-18",
+   "orbit": "T3",
+   "m": 5,
+   "direction": "upper",
+   "rank": 18,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.5261859507142915,
+   "date": "2026-09-17",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "Z^5 sector (qutrit cat-state) decomposition: each of the three sector projections of |T3>^5 is a 4-qutrit carry state, annealed to rank 6 on its code space and lifted; exact coefficients over Q(w9)",
+   "reference": "stabrank sector-state search",
+   "compute": {
+    "cpu_hours": 0.6,
+    "wall_clock_hours": 0.5,
+    "runs": 8,
+    "hardware": "Apple silicon laptop under heavy load from other jobs, 8 annealing chains per run",
+    "llm": [
+     {
+      "model": "claude-fable-5-1",
+      "role": "designed the sector decomposition and drove the search"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "T3-m5-lower-6",
+   "orbit": "T3",
+   "m": 5,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "reproduced",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-18",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "projection monotonicity applied twice to the certified chi(T3^3) >= 6",
+   "reference": "stabrank cert_t3m3_rank6.py",
+   "compute": {
+    "cpu_hours": 0.15,
+    "wall_clock_hours": 0.03,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, 6 worker processes"
+   }
   }
  ]
 }
