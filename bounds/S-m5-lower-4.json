@@ -1,0 +1,27 @@
+{
+  "schema_version": "0.1",
+  "orbit": "S",
+  "m": 5,
+  "direction": "lower",
+  "rank": 4,
+  "certificate": {
+    "script": "verify_challenge/cert_s_m5_from_m3.py",
+    "expect": "CERTIFIED chi(S^5) >= 4"
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank rank_exclusion.py",
+    "method": "projection monotonicity applied to an exhaustive exclusion at lower m",
+    "date": "2026-09-18",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.01,
+      "wall_clock_hours": 0.005,
+      "runs": 1,
+      "hardware": "Apple silicon laptop"
+    }
+  },
+  "notes": "Projection monotonicity from the m=3 rank-3 exclusion, re-run inside the certificate. Puts the new cell at 4 <= chi <= 8."
+}
