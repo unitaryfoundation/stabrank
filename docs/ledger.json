@@ -864,6 +864,98 @@
    }
   },
   {
+   "slug": "H3-m4-lower-3",
+   "orbit": "H3",
+   "m": 4,
+   "direction": "lower",
+   "rank": 3,
+   "tier": "reproduced",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-18",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "rank-2 exclusion over all 7,439,040 four-qutrit stabilizer states, held as phase codes",
+   "reference": "stabrank rank_exclusion_codes.py",
+   "compute": {
+    "cpu_hours": 0.05,
+    "wall_clock_hours": 0.03,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core"
+   }
+  },
+  {
+   "slug": "N-m4-lower-3",
+   "orbit": "N",
+   "m": 4,
+   "direction": "lower",
+   "rank": 3,
+   "tier": "reproduced",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-18",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "rank-2 exclusion over all 7,439,040 four-qutrit stabilizer states, held as phase codes",
+   "reference": "stabrank rank_exclusion_codes.py",
+   "compute": {
+    "cpu_hours": 0.05,
+    "wall_clock_hours": 0.03,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core"
+   }
+  },
+  {
+   "slug": "S-m5-lower-4",
+   "orbit": "S",
+   "m": 5,
+   "direction": "lower",
+   "rank": 4,
+   "tier": "reproduced",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-18",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "projection monotonicity applied to an exhaustive exclusion at lower m",
+   "reference": "stabrank rank_exclusion.py",
+   "compute": {
+    "cpu_hours": 0.01,
+    "wall_clock_hours": 0.005,
+    "runs": 1,
+    "hardware": "Apple silicon laptop"
+   }
+  },
+  {
+   "slug": "S-m5-upper-8",
+   "orbit": "S",
+   "m": 5,
+   "direction": "upper",
+   "rank": 8,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.37855785214287446,
+   "date": "2026-09-18",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "tensor product of verified lower-m witnesses",
+   "reference": "product of board witnesses",
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop"
+   }
+  },
+  {
    "slug": "T3-m5-lower-6",
    "orbit": "T3",
    "m": 5,
@@ -884,6 +976,75 @@
     "wall_clock_hours": 0.03,
     "runs": 1,
     "hardware": "Apple silicon laptop, 6 worker processes"
+   }
+  },
+  {
+   "slug": "qubit_T-m5-lower-3",
+   "orbit": "qubit_T",
+   "m": 5,
+   "direction": "lower",
+   "rank": 3,
+   "tier": "reproduced",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-18",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "projection monotonicity applied to an exhaustive exclusion at lower m",
+   "reference": "stabrank rank_exclusion.py",
+   "compute": {
+    "cpu_hours": 0.01,
+    "wall_clock_hours": 0.005,
+    "runs": 1,
+    "hardware": "Apple silicon laptop"
+   }
+  },
+  {
+   "slug": "qubit_T-m5-lower-4",
+   "orbit": "qubit_T",
+   "m": 5,
+   "direction": "lower",
+   "rank": 4,
+   "tier": "reproduced",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-18",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "slice-and-lift: every rank-3 decomposition of |T>^4 up to symmetry, none extends to |T>^5",
+   "reference": "stabrank slice_lift.py",
+   "compute": {
+    "cpu_hours": 0.01,
+    "wall_clock_hours": 0.005,
+    "runs": 1,
+    "hardware": "Apple silicon laptop"
+   }
+  },
+  {
+   "slug": "qubit_T-m5-upper-6",
+   "orbit": "qubit_T",
+   "m": 5,
+   "direction": "upper",
+   "rank": 6,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.5169925001442313,
+   "date": "2026-09-18",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "tensor product of verified lower-m witnesses",
+   "reference": "product of board witnesses",
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop"
    }
   }
  ]
