@@ -491,7 +491,7 @@ def symmetry_orbit_reps(orbit, m, D, antiunitary=True):
     reps = np.unique(roots)
     order = (2 if anti else 1) * len(uni) ** m * math.factorial(m)
     return reps, {"order": order, "orbits": len(reps), "local": len(uni),
-                  "antiunitary": bool(anti), "roots": roots}
+                  "antiunitary": bool(anti), "roots": roots, "perms": perms}
 
 
 def psi_for(orbit, m):

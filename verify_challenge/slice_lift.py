@@ -2,12 +2,13 @@
 one copy down.
 
 Lemma (slice-and-lift). Let phi be a single-qutrit state with amplitudes
-alpha_0, alpha_1, alpha_2, all nonzero, and let r = chi(phi^m). Suppose
+alpha_0, alpha_1, alpha_2, with alpha_1 nonzero, and let r = chi(phi^m). Suppose
 phi^(m+1) = sum_i c_i s_i is a stabilizer decomposition with r terms, and
 slice it along the first qutrit, u_i^(k) = (<k| (x) I) s_i. Then
 
-  (a) for each k, phi^m = sum_i (c_i / alpha_k) u_i^(k), so every slice is a
-      minimal decomposition of phi^m and no u_i^(k) vanishes;
+  (a) for each k with alpha_k nonzero, phi^m = sum_i (c_i / alpha_k) u_i^(k),
+      so that slice is a minimal decomposition of phi^m and no u_i^(k)
+      vanishes there (and sum_i c_i u_i^(k) = 0 when alpha_k = 0);
   (b) for each term i there is a Pauli operator Q_i = X^a Z^c on m qutrits
       and cube roots of unity mu_i, nu_i with
           u_i^(2) = mu_i Q_i u_i^(1)   and   u_i^(0) = nu_i Q_i^-1 u_i^(1).
@@ -87,6 +88,18 @@ def _canon_key(v):
     return (np.round(w, 6) + 0.0).tobytes()
 
 
+def _canon_columns(V):
+    """Columns of V with their global phase fixed (first nonzero entry real
+    positive), and the indices of one representative per distinct column."""
+    nz = np.abs(V) > 1e-9
+    first = np.argmax(nz, axis=0)
+    ref = V[first, np.arange(V.shape[1])]
+    W = V * (np.abs(ref) / ref)[None, :]
+    keys = np.ascontiguousarray(np.round(W.T, 6) + 0.0).view(np.float64)
+    _, idx = np.unique(keys, axis=0, return_index=True)
+    return W, np.sort(idx)
+
+
 def pauli_images(u, m):
     """One (Q u, Q^-1 u) pair per Pauli class Q mod the stabilizer of u.
 
@@ -98,51 +111,61 @@ def pauli_images(u, m):
     """
     dim = 3 ** m
     digs = _digits(m)
-    seen = {}
+    Cs = np.array(list(itertools.product(range(3), repeat=m)))            # (3^m, m)
+    PH = W3 ** ((digs @ Cs.T) % 3)                                          # (dim, 3^m)
+    QU, QINV = [], []
     for a in itertools.product(range(3), repeat=m):
         y = ((digs + np.array(a)) % 3) @ (3 ** (m - 1 - np.arange(m)))
-        for c in itertools.product(range(3), repeat=m):
-            ph = W3 ** ((digs @ np.array(c)) % 3)
-            qu = np.zeros(dim, dtype=complex)
-            qu[y] = ph * u
-            qinv = np.conj(ph) * u[y]
-            key = _canon_key(qu)
-            if key not in seen:
-                seen[key] = (qu, qinv)
-    pairs = list(seen.values())
-    if len(pairs) != 3 ** m:
-        raise AssertionError(f"{len(pairs)} Pauli images of a state on {m} qutrits, expected {3 ** m}")
-    return pairs
+        qu = np.zeros((dim, len(Cs)), dtype=complex)
+        qu[y, :] = PH * u[:, None]
+        QU.append(qu)
+        QINV.append(np.conj(PH) * u[y][:, None])
+    QU, QINV = np.concatenate(QU, axis=1), np.concatenate(QINV, axis=1)
+    _, idx = _canon_columns(QU)
+    if len(idx) != 3 ** m:
+        raise AssertionError(f"{len(idx)} Pauli images of a state on {m} qutrits, expected {3 ** m}")
+    return [(QU[:, k], QINV[:, k]) for k in idx]
 
 
 # ------------------------------------------------------------- lifting -----
 
-def _match_sums(L, R, rhs, tol=TOL):
-    """Index pairs (l, r) with L[l] + R[r] = rhs within tol, by a random
-    functional, a sort on its real part and a full check of every candidate."""
+def _match_sums(L, R, rhs, tol=TOL, margin=1e-4):
+    """Index pairs (l, r) with L[l] + R[r] = rhs within tol (entrywise), and a
+    certified gap: every other pair misses rhs by at least the returned value.
+
+    Keys are a random functional f; |f.(v - rhs)| <= |f| sqrt(dim) |v - rhs|_inf,
+    so every pair within `margin` entrywise has its key inside a window of
+    that width around the target, and pairs outside the window miss by more
+    than margin. Inside the window every pair is checked in full."""
     rng = np.random.default_rng(5)
     f = rng.normal(size=L.shape[1]) + 1j * rng.normal(size=L.shape[1])
     kl = L @ f
     kr = (rhs[None, :] - R) @ f
     order = np.argsort(kl.real)
     kls = kl.real[order]
-    # |f.(v - rhs)| <= |f| |v - rhs|_2 <= |f| sqrt(dim) |v - rhs|_inf, so every
-    # combination within tol (entrywise) has its key inside this window
-    ktol = tol * np.linalg.norm(f) * np.sqrt(L.shape[1])
-    lo = np.searchsorted(kls, kr.real - ktol, side="left")
-    hi = np.searchsorted(kls, kr.real + ktol, side="right")
+    window = margin * np.linalg.norm(f) * np.sqrt(L.shape[1])
+    lo = np.searchsorted(kls, kr.real - window, side="left")
+    hi = np.searchsorted(kls, kr.real + window, side="right")
+    rows = np.flatnonzero(hi > lo)
+    counts = hi[rows] - lo[rows]
+    rs = np.repeat(rows, counts)
+    starts = np.repeat(lo[rows], counts)
+    offs = np.arange(len(rs)) - np.repeat(np.cumsum(counts) - counts, counts)
+    ls = order[starts + offs]
+    # the imaginary part of the key obeys the same bound, so filter on it too
+    near = np.abs(kl[ls].imag - kr[rs].imag) <= window
+    ls, rs = ls[near], rs[near]
     out = []
-    for r in np.flatnonzero(hi > lo):
-        for l in order[lo[r]:hi[r]]:
-            if np.abs(L[l] + R[r] - rhs).max() < tol:
-                out.append((int(l), int(r)))
-    # A floor on how close any combination comes to the equation: the real
-    # part of a key gap is at most |f| times the vector distance, so the
-    # smallest real gap over all pairs, divided by |f|, is a lower bound.
-    pos = np.clip(np.searchsorted(kls, kr.real), 1, len(kls) - 1)
-    gaps = np.minimum(np.abs(kls[pos] - kr.real), np.abs(kls[pos - 1] - kr.real))
-    floor = float(gaps.min() / np.linalg.norm(f)) if len(kls) > 1 else float("nan")
-    return out, floor
+    gap = margin
+    step = 1 << 16
+    for k in range(0, len(rs), step):
+        l_blk, r_blk = ls[k:k + step], rs[k:k + step]
+        dist = np.abs(L[l_blk] + R[r_blk] - rhs).max(axis=1)
+        hit = dist < tol
+        out += [(int(l), int(r)) for l, r in zip(l_blk[hit], r_blk[hit])]
+        if (~hit).any():
+            gap = min(gap, float(dist[~hit].min()))
+    return out, gap
 
 
 def _sum_table(arrays):
@@ -186,18 +209,20 @@ def lifts(dec_states, dec_coeffs, alpha, target_m, m, tol=TOL):
         combo = _decode(l, sizes[:half]) + (_decode(rr, sizes[half:]) if r > half else [])
         cls = [c // 3 for c in combo]
         mus = [CUBE[c % 3] for c in combo]
-        # slice 0: sum d_i nu_i Q_i^-1 u_i = rhs0 with nu_i cube roots
+        # slice 0: sum d_i nu_i Q_i^-1 u_i = rhs0 with nu_i cube roots. This is
+        # brute-forced over the 3^r assignments rather than solved, because
+        # rhs0 vanishes when alpha_0 = 0 (the strange state) and the
+        # equation is then homogeneous.
         Qinv = np.column_stack([d * imgs[i][cls[i]][1] for i, d in enumerate(dec_coeffs)])
-        nu, *_ = np.linalg.lstsq(Qinv, rhs0, rcond=None)
-        if np.abs(Qinv @ nu - rhs0).max() > tol:
-            continue
-        if np.abs(nu ** 3 - 1).max() > 1e-6:
-            continue
-        terms = []
-        for i in range(r):
-            qu, qinv = imgs[i][cls[i]]
-            terms.append(np.concatenate((nu[i] * qinv, dec_states[i], mus[i] * qu)))
-        found.append(terms)
+        NU = np.array(list(itertools.product(CUBE, repeat=r))).T          # (r, 3^r)
+        err = np.abs(Qinv @ NU - rhs0[:, None]).max(axis=0)
+        for gcol in np.flatnonzero(err < tol):
+            nu = NU[:, gcol]
+            terms = []
+            for i in range(r):
+                qu, qinv = imgs[i][cls[i]]
+                terms.append(np.concatenate((nu[i] * qinv, dec_states[i], mus[i] * qu)))
+            found.append(terms)
     return found, (len(matches), floor)
 
 
@@ -214,7 +239,7 @@ def confirm_lift(terms, alpha, target_m):
 
 # ------------------------------------------------- enumerating decompositions
 
-def decompositions_with_pivot(psi, D, i, rank, partners=None, rng=None):
+def decompositions_with_pivot(psi, D, i, rank, partners=None, rng=None, workers=1):
     """Every rank-`rank` decomposition of psi (rank 2, 3 or 4) that contains
     dictionary state i and, for rank 4, a partner from `partners` (default:
     every other state), as sorted index tuples.
@@ -270,13 +295,59 @@ def decompositions_with_pivot(psi, D, i, rank, partners=None, rng=None):
     # rank 4: the pivot's projection modulo span(s_i) only, for the psi-coefficient test
     e_i = D[:, i] / np.linalg.norm(D[:, i])
     p1 = D - np.outer(e_i, e_i.conj() @ D)
-    partners = range(N) if partners is None else partners
-    RQ1 = R @ q1
-    for j in partners:
-        if j == i or n1[j] < 1e-7:
-            continue
+    partners = np.arange(N) if partners is None else np.asarray(partners)
+    partners = partners[(partners != i) & (n1[partners] > 1e-7)]
+    ctx = dict(D=D, psi=psi, i=int(i), q1=q1, n1=n1, p1=p1, R=R, RQ1=R @ q1, RP1=R @ p1,
+               np1=np.linalg.norm(p1, axis=0), rng_seed=int(rng.integers(1 << 31)))
+    if workers and workers > 1 and len(partners) >= 4 * workers:
+        import multiprocessing as mp
+        global _CTX
+        _CTX = ctx
+        chunks = np.array_split(partners, 4 * workers)
+        with mp.get_context("fork").Pool(workers) as pool:
+            for part in pool.imap_unordered(_rank4_partners, chunks):
+                found.update(part)
+        _CTX = None
+    else:
+        found.update(_rank4_partners_ctx(ctx, partners))
+    return sorted(found)
+
+
+_CTX = None
+
+
+def _rank4_partners(chunk):
+    return _rank4_partners_ctx(_CTX, chunk)
+
+
+def _rank4_partners_ctx(c, chunk):
+    """Rank-4 decompositions {i, j, a, b} for every partner j in `chunk`.
+
+    Modulo span(psi, s_i, s_j) the images of s_a and s_b must be parallel;
+    modulo span(s_i, s_j) alone they must not be (else the quadruple is
+    dependent and psi is absent). Both tests run on the same random
+    projection: the second as a sub-grouping of each parallel group by the
+    canonical key of the second quotient, so a group contributes only its
+    cross-key pairs. Survivors are confirmed by an exact solve.
+    """
+    D, psi, i = c["D"], c["psi"], c["i"]
+    q1, n1, p1, R, RQ1, RP1, np1 = c["q1"], c["n1"], c["p1"], c["R"], c["RQ1"], c["RP1"], c["np1"]
+    rng = np.random.default_rng(c["rng_seed"])
+    can = rng.normal(size=R.shape[0]) + 1j * rng.normal(size=R.shape[0])
+    key = rng.normal(size=R.shape[0]) + 1j * rng.normal(size=R.shape[0])
+    found = set()
+
+    def confirm(cols):
+        A = D[:, list(cols)]
+        if np.linalg.matrix_rank(A, tol=1e-8) < len(cols):
+            return False
+        x, *_ = np.linalg.lstsq(A, psi, rcond=None)
+        return np.linalg.norm(A @ x - psi) < 1e-9
+
+    for j in chunk:
+        j = int(j)
         v = q1[:, j] / n1[j]
-        w = v.conj() @ q1                       # components along the partner
+        w = v.conj() @ q1
         nq2 = np.sqrt(np.maximum(n1 ** 2 - np.abs(w) ** 2, 0))
         keep = nq2 > 1e-7
         keep[i] = keep[j] = False
@@ -286,24 +357,82 @@ def decompositions_with_pivot(psi, D, i, rank, partners=None, rng=None):
         groups, _ = _parallel_groups(U, rng)
         if not groups:
             continue
-        # projections modulo span(s_i, s_j) only
-        f = p1[:, j] / np.linalg.norm(p1[:, j])
+        # second quotient, modulo span(s_i, s_j) only, as keys
+        f = p1[:, j] / np1[j]
+        wf = f.conj() @ p1[:, ids]
+        U2 = RP1[:, ids] - np.outer(R @ f, wf)
+        n2 = np.linalg.norm(U2, axis=0)
         for g in groups:
             gi = ids[g]
-            P2 = p1[:, gi] - np.outer(f, f.conj() @ p1[:, gi])
-            P2 /= np.linalg.norm(P2, axis=0)
-            Gm = np.abs(P2.conj().T @ P2)
-            for a in range(len(gi)):
-                for b in range(a + 1, len(gi)):
-                    if Gm[a, b] > 1 - 1e-6:
-                        continue                # dependent quadruple, psi absent
-                    cols = tuple(sorted((int(i), int(j), int(gi[a]), int(gi[b]))))
-                    if confirm(cols):
-                        found.add(cols)
+            V2 = U2[:, g]
+            small = n2[g] < 1e-7 * np.maximum(1, np1[gi])
+            k2 = (key @ V2) / (can @ V2)
+            for a in range(len(g)):
+                for b in range(a + 1, len(g)):
+                    if small[a] or small[b]:
+                        pass                    # a state in span(s_i, s_j): dependent
+                    elif abs(k2[a] - k2[b]) < 1e-6 * (1 + abs(k2[a])) and \
+                            abs(abs(np.vdot(V2[:, a], V2[:, b])) - n2[g][a] * n2[g][b]) \
+                            < 1e-6 * n2[g][a] * n2[g][b]:
+                        pass                    # still parallel: dependent quadruple
+                    else:
+                        cols = tuple(sorted((i, j, int(gi[a]), int(gi[b]))))
+                        if confirm(cols):
+                            found.add(cols)
+    return found
     return sorted(found)
 
 
-def all_decompositions(orbit, m, rank, D=None, verbose=True):
+def stabilizer_orbit_labels(perms, i, max_points=400):
+    """Orbit labels on the dictionary under a subgroup of the stabilizer of
+    state i in the group generated by the permutations `perms`.
+
+    Schreier's lemma: with a transversal T_a (T_a(i) = a) over the orbit of
+    i, the elements T_{g(a)}^-1 g T_a generate the stabilizer. Only the
+    Schreier generators from the first `max_points` orbit points are used,
+    which generate a subgroup; its orbits are finer than the stabilizer's,
+    so using one partner per orbit stays sound and merely does more work.
+    Orbits are the connected components of the union of the generators'
+    permutation graphs.
+    """
+    from scipy.sparse import coo_matrix
+    from scipy.sparse.csgraph import connected_components
+    N = len(perms[0])
+    trans = {int(i): np.arange(N)}
+    frontier = [int(i)]
+    while frontier and len(trans) < max_points:
+        nxt = []
+        for a in frontier:
+            for p in perms:
+                b = int(p[a])
+                if b not in trans:
+                    trans[b] = p[trans[a]]          # (p o T_a)(x) = p[T_a[x]]
+                    nxt.append(b)
+        frontier = nxt
+    trans_inv = {a: np.argsort(T) for a, T in trans.items()}
+    gens, seen = [], set()
+    ident = np.arange(N)
+    for a, Ta in trans.items():
+        for p in perms:
+            b = int(p[a])
+            if b in trans:
+                sgen = trans_inv[b][p[Ta]]
+                if sgen[i] != i:
+                    raise AssertionError("Schreier generator does not fix the pivot")
+                h = sgen.tobytes()
+                if h not in seen and not np.array_equal(sgen, ident):
+                    seen.add(h)
+                    gens.append(sgen)
+    if not gens:
+        return ident.copy(), 0
+    rows = np.concatenate([ident] * len(gens))
+    cols = np.concatenate(gens)
+    graph = coo_matrix((np.ones(len(rows), dtype=np.int8), (rows, cols)), shape=(N, N))
+    _, labels = connected_components(graph, directed=False)
+    return labels, len(gens)
+
+
+def all_decompositions(orbit, m, rank, D=None, verbose=True, workers=1):
     """One member of every unitary-symmetry orbit of rank-`rank`
     decompositions of |M>^m (and possibly more), with the pivot list used."""
     import time
@@ -318,15 +447,25 @@ def all_decompositions(orbit, m, rank, D=None, verbose=True):
     # orbit (by representative index) to the pivot and the other members lie
     # in orbits with representative index at least the pivot's. So partners
     # can be restricted to those states.
+    # Within a pivot, a symmetry fixing the pivot carries decompositions
+    # containing (pivot, partner) to ones containing (pivot, image of the
+    # partner), so one partner per orbit of the pivot's stabilizer suffices.
     roots = info["roots"]
     out = set()
     for n, i in enumerate(np.sort(reps)):
         t = time.time()
-        partners = np.flatnonzero(roots >= i) if rank == 4 else None
-        decs = decompositions_with_pivot(psi, D, int(i), rank, partners=partners)
+        partners = None
+        note = ""
+        if rank == 4:
+            labels, ngens = stabilizer_orbit_labels(info["perms"], int(i))
+            cand = np.flatnonzero(roots >= i)
+            _, first = np.unique(labels[cand], return_index=True)
+            partners = cand[first]
+            note = f", {len(partners)} partners of {len(cand)}"
+        decs = decompositions_with_pivot(psi, D, int(i), rank, partners=partners, workers=workers)
         out.update(decs)
         if verbose:
-            print(f"  pivot {n + 1}/{len(reps)} (state {i}): {len(decs)} decompositions, "
+            print(f"  pivot {n + 1}/{len(reps)} (state {i}): {len(decs)} decompositions{note}, "
                   f"{time.time() - t:.1f}s", flush=True)
     return sorted(out), reps
 
@@ -341,20 +480,18 @@ def pauli_images_qubit(u, m):
     m qubits acting by (Q u)[x xor a] = (-1)^(c.x) u[x]. Exactly 2^m images."""
     dim = 1 << m
     x = np.arange(dim)
-    seen = {}
+    par = np.array([[bin(c & t).count("1") % 2 for c in range(dim)] for t in x])   # (dim, dim)
+    PH = (-1.0) ** par
+    QU = []
     for a in range(dim):
-        y = x ^ a
-        for c in range(dim):
-            ph = (-1.0) ** np.array([bin(c & t).count("1") for t in x])
-            qu = np.zeros(dim, dtype=complex)
-            qu[y] = ph * u
-            key = _canon_key(qu)
-            if key not in seen:
-                seen[key] = qu
-    imgs = list(seen.values())
-    if len(imgs) != dim:
-        raise AssertionError(f"{len(imgs)} Pauli images of a state on {m} qubits, expected {dim}")
-    return imgs
+        qu = np.zeros((dim, dim), dtype=complex)
+        qu[x ^ a, :] = PH * u[:, None]
+        QU.append(qu)
+    QU = np.concatenate(QU, axis=1)
+    _, idx = _canon_columns(QU)
+    if len(idx) != dim:
+        raise AssertionError(f"{len(idx)} Pauli images of a state on {m} qubits, expected {dim}")
+    return [QU[:, k] for k in idx]
 
 
 def lifts_qubit(dec_states, dec_coeffs, alpha, target_m, m, tol=TOL):
@@ -403,8 +540,7 @@ def lift_all(orbit, m, decs, D, verbose=True):
         if np.linalg.norm(np.column_stack(states) @ d - psi) > 1e-9:
             raise AssertionError("a listed decomposition does not reproduce the target")
         L, (nmatch, fl) = lifter(states, d, alpha, psi, m)
-        if not L:
-            floor = min(floor, fl)
+        floor = min(floor, fl)
         for terms in L:
             res = confirm_lift(terms, alpha, psi)
             if res > 1e-8:
@@ -412,7 +548,7 @@ def lift_all(orbit, m, decs, D, verbose=True):
             lifted.append(terms)
     if verbose:
         print(f"{orbit} m={m} -> {m + 1}: {len(decs)} decompositions, {len(lifted)} lifts"
-              + (f"; no unlifted decomposition comes within {floor:.2e} of the slice equation"
+              + (f"; every rejected Pauli assignment misses the slice equation by at least {floor:.2e}"
                  if floor < float("inf") else ""), flush=True)
     return lifted
 
@@ -431,6 +567,11 @@ if __name__ == "__main__":
     L2 = lift_all("N", 2, decs2, D2, verbose=False)
     print(f"control 2: {len(decs2)} rank-3 decompositions of |N>^2, {len(L2)} lifts to m=3 "
           f"(must be 0) [{time.time() - t0:.1f}s]")
+    t0 = time.time()
+    decs0, _ = all_decompositions("S", 1, 2, D1, verbose=False)
+    L0 = lift_all("S", 1, decs0, D1, verbose=False)
+    print(f"control 2b: {len(decs0)} rank-2 decompositions of |S>, {len(L0)} lifts to m=2 "
+          f"(must be > 0; alpha_0 = 0 here) [{time.time() - t0:.1f}s]")
     t0 = time.time()
     D3 = dictionary(2, 3)
     decs3, _ = all_decompositions("qubit_T", 3, 3, D3, verbose=False)
