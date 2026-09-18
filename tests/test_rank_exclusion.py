@@ -73,3 +73,27 @@ def test_symmetry_group_orders(orbit, local, anti, d2, q3):
     assert info["antiunitary"] == anti
     import math
     assert info["order"] == 2 * local ** m * math.factorial(m)
+
+
+def test_code_enumerator_matches_dictionary(d2):
+    """The phase-code enumerator produces exactly the states of the array path."""
+    import numpy as np
+    from qutrit_codes import all_codes, encode, count
+    codes, ks = all_codes(2)
+    assert codes.shape[0] == count(2) == 360
+    ref = encode(d2.astype(np.complex128))
+    assert {c.tobytes() for c in codes} == {c.tobytes() for c in ref}
+    codes3, _ = all_codes(3)
+    assert codes3.shape[0] == count(3) == 30240
+
+
+def test_code_path_finds_known_decompositions(d2):
+    from qutrit_codes import all_codes
+    from rank_exclusion_codes import (_Geometry, rank2_search_codes, rank3_search_codes,
+                                      symmetry_orbit_reps_codes, psi_for as psi_codes)
+    c, k = all_codes(2)
+    geo = _Geometry(psi_codes("N", 2), c, k)
+    reps, _ = symmetry_orbit_reps_codes("N", 2, c, k)
+    assert rank3_search_codes(geo, reps, workers=1)["found"]
+    pairs, _ = rank2_search_codes(_Geometry(psi_codes("S", 2), c, k))
+    assert pairs and pairs != "RANK1"

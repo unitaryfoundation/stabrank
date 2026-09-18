@@ -49,16 +49,57 @@ def target(orbit, m):
     return v / np.linalg.norm(v)
 
 
-def anneal_once(orbit, m, rank, seed, chains, iters, cooling):
+def sector_target(m, s):
+    """The Z^m eigensector s of |T3>^m, as the (m-1)-qutrit carry state.
+
+    Since Z t_a = t_{a+3}, the three Galois cat states of |T3>^m are its Z^m
+    eigensector projections; each lives in a 3^(m-1)-dimensional stabilizer
+    code and, after the Clifford (x_1..x_m) -> (x_1..x_{m-1}, sum x), is the
+    state psi_s(x) = w3^ceil((sum x - s)/3) on m-1 qutrits. Its stabilizer
+    rank r_m bounds chi(|T3>^m) <= 3 r_m, and r_{m+m'-2} <= r_m r_{m'} by
+    contraction; the cell that would beat the T3 exponent is r_5 <= 5 or
+    r_6 <= 8.
+    """
+    n = m - 1
+    w3 = np.exp(2j * np.pi / 3)
+    v = np.empty(3 ** n, dtype=complex)
+    for i in range(3 ** n):
+        digits = [(i // 3 ** (n - 1 - j)) % 3 for j in range(n)]
+        v[i] = w3 ** int(np.ceil((sum(digits) - s) / 3))
+    return v / np.linalg.norm(v)
+
+
+def warm_basis(path, p, m, rank, psi):
+    """The terms of a verified witness, pruned to `rank` by dropping the least
+    significant term repeatedly; a warm start for annealing one rank below a
+    known decomposition."""
+    from stabrank import (can_represent_as_linear_combination,
+                          prune_least_significant_basis_function)
+    from stabrank_verify import stabilizer_vector
+    sub = json.load(open(path))
+    funcs = [np.array([complex(z) for z in stabilizer_vector(t, p, m)])
+             for t in sub["witness"]["terms"]]
+    while len(funcs) > rank:
+        funcs, _, _ = prune_least_significant_basis_function(
+            psi, funcs, can_represent_as_linear_combination)
+    return funcs
+
+
+def anneal_once(orbit, m, rank, seed, chains, iters, cooling, warm=None):
     """One annealing run at fixed rank. Returns (vectors or None, residual, secs, cpu)."""
     from stabrank import generate_random_stabilizer_state
     from stabrank.stabrank_core import run_sa_pauli_expansion
     from stabrank_verify import ORBIT_P
-    p = ORBIT_P[orbit]
-    rng = np.random.RandomState(seed)
+    if orbit.startswith("T3sector"):
+        p, psi = 3, sector_target(m + 1, int(orbit[len("T3sector"):]))
+    else:
+        p = ORBIT_P[orbit]
+        psi = target(orbit, m)
     np.random.seed(seed)
-    psi = target(orbit, m)
-    basis = [generate_random_stabilizer_state(m, p=p) for _ in range(rank)]
+    if warm:
+        basis = warm_basis(warm, p, m, rank, psi)
+    else:
+        basis = [generate_random_stabilizer_state(m, p=p) for _ in range(rank)]
     t0, c0 = time.time(), time.process_time()
     _, funcs, _, err, _, _ = run_sa_pauli_expansion(
         target=psi, n_orig=m, p_prime=p, k_subset_size=rank, initial_basis=basis,
@@ -97,7 +138,8 @@ def cell_compute(orbit, m, rank, llm):
 
 def main(argv):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("orbit")
+    ap.add_argument("orbit", help="an orbit name, or T3sector<s> for the Z-eigensector s of "
+                                  "|T3>^(m+1) as an m-qutrit carry state (logged, not submitted)")
     ap.add_argument("m", type=int)
     ap.add_argument("rank", type=int)
     ap.add_argument("--seeds", type=int, default=4)
@@ -109,6 +151,8 @@ def main(argv):
     ap.add_argument("--github", nargs="*", default=[])
     ap.add_argument("--llm", default="", help="model identifier, if an LLM drove this search")
     ap.add_argument("--out", help="submission path; default bounds/ORBIT-mM-upper-RANK.json")
+    ap.add_argument("--warm-from", default="", help="a bound file whose witness, pruned to the "
+                    "target rank, seeds the annealer instead of random states")
     a = ap.parse_args(argv[1:])
 
     from to_witness import witness_from_vectors, NotStabilizer
@@ -118,15 +162,16 @@ def main(argv):
     residuals = []
     for seed in range(a.seed0, a.seed0 + a.seeds):
         vecs, err, secs, cpu = anneal_once(a.orbit, a.m, a.rank, seed, a.chains, a.iters,
-                                           a.cooling)
+                                           a.cooling, warm=a.warm_from or None)
         rec = {"when": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
                "orbit": a.orbit, "m": a.m, "rank": a.rank, "seed": seed, "chains": a.chains,
                "iters": a.iters, "cooling": a.cooling, "wall_s": round(secs, 1),
                "cpu_s": round(cpu, 1), "residual": err, "solved": vecs is not None,
-               "hardware": hardware(), "llm": a.llm or None}
+               "hardware": hardware(), "llm": a.llm or None,
+               "warm_from": os.path.relpath(a.warm_from, ROOT) if a.warm_from else None}
         residuals.append(err)
         exact = None
-        if vecs is not None:
+        if vecs is not None and not a.orbit.startswith("T3sector"):
             try:
                 w = witness_from_vectors(a.orbit, a.m, vecs)
                 exact = True
@@ -135,10 +180,16 @@ def main(argv):
                 rec["refit"] = f"failed: {exc}"
         rec["exact"] = exact
         log_run(rec)
+        if vecs is not None and a.orbit.startswith("T3sector"):
+            np.savez(os.path.join(ROOT, "autoresearch",
+                                  f"found_{a.orbit}_m{a.m}_r{a.rank}_seed{seed}.npz"), *vecs)
+            print(f"sector decomposition found and saved; lift it with the cat construction "
+                  f"(see the T3 m=5 bound notes) before submitting")
+            return 0
         print(f"seed {seed}: residual {err:.3e} in {secs:.0f}s wall, {cpu:.0f}s CPU"
               + (", refit exact" if exact else (", refit FAILED" if exact is False else "")),
               flush=True)
-        if exact:
+        if exact and not a.orbit.startswith("T3sector"):
             gamma = implied_gamma(ORBIT_P[a.orbit], a.rank, a.m)
             sub = {
                 "schema_version": "0.1", "orbit": a.orbit, "m": a.m, "direction": "upper",
