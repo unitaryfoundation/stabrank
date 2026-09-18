@@ -245,8 +245,29 @@ def verify_upper(sub):
                   implied_gamma(p, rank, m))
 
 
-def verify_lower(sub, budget_s=900):
-    """Run the certificate script; require exit zero and its claim on stdout."""
+BUDGET_DEFAULT_S = 900
+BUDGET_CAP_S = 3600
+
+
+def certificate_budget(sub, default=BUDGET_DEFAULT_S):
+    """The wall-clock budget a lower bound's certificate runs under: the
+    default, or the submission's declared `budget_s`, never above the cap."""
+    cert = sub.get("certificate") or {}
+    declared = cert.get("budget_s")
+    if declared is None:
+        return default
+    return max(1, min(int(declared), BUDGET_CAP_S))
+
+
+def verify_lower(sub, budget_s=BUDGET_DEFAULT_S):
+    """Run the certificate script; require exit zero and its claim on stdout.
+
+    The script gets `budget_s` seconds of wall clock, or the submission's own
+    `certificate.budget_s` when it declares one (capped at BUDGET_CAP_S). A
+    declared budget is part of the submission and is shown on the board, so
+    the cost of a bound stays visible rather than being absorbed into a
+    longer default for everyone.
+    """
     cert = sub.get("certificate")
     if not cert or not cert.get("script"):
         return Result(True, "cited",
@@ -255,6 +276,8 @@ def verify_lower(sub, budget_s=900):
     if not os.path.isfile(path):
         return Result(False, None, f"certificate script not found: {cert['script']}")
     expect = cert.get("expect", "")
+    if cert.get("budget_s") is not None:
+        budget_s = certificate_budget(sub, budget_s)
     try:
         proc = subprocess.run([sys.executable, path], capture_output=True,
                               text=True, timeout=budget_s, cwd=ROOT)
@@ -277,7 +300,9 @@ def verify_lower(sub, budget_s=900):
         return Result(True, "verified",
                       f"certificate script asserted: {expect}, by an argument declared "
                       "exact throughout (no floating-point margin)")
-    return Result(True, "reproduced", f"certificate script asserted: {expect}")
+    extra = (f" within a declared {budget_s}s budget" if cert.get("budget_s") is not None
+             and budget_s > BUDGET_DEFAULT_S else "")
+    return Result(True, "reproduced", f"certificate script asserted: {expect}{extra}")
 
 
 LEAN_ROOT = os.path.join(ROOT, "lean_proofs")
@@ -317,7 +342,7 @@ def verify_lean(sub):
     return Result(True, "lean", f"{thm} in {mod}, machine-checked by Lean", g)
 
 
-def verify(sub, budget_s=900):
+def verify(sub, budget_s=BUDGET_DEFAULT_S):
     for field in ("schema_version", "orbit", "m", "direction", "rank", "provenance"):
         if field not in sub:
             return Result(False, None, f"missing required field {field!r}")
