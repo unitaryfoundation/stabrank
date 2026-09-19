@@ -980,5 +980,9 @@
       "3*sqrt(3)*I/8",
       "-3*sqrt(3)*I/8"
     ]
+  },
+  "lean": {
+    "module": "LeanProofs.TensorStabRank",
+    "theorem": "strange_m6_stabRank_le_eight"
   }
 }

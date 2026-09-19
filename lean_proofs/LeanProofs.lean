@@ -20,3 +20,5 @@ import LeanProofs.T3GaloisM
 import LeanProofs.T3M2StabRank
 import LeanProofs.M3StabRank
 import LeanProofs.M4StabRank
+import LeanProofs.TensorStabRank
+import LeanProofs.M1StabRank

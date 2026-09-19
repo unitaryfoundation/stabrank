@@ -47,5 +47,9 @@
       "sqrt(3)*exp(2*I*pi/9)/3",
       "sqrt(3)*exp(4*I*pi/9)/3"
     ]
+  },
+  "lean": {
+    "module": "LeanProofs.M1StabRank",
+    "theorem": "t3_m1_stabRank_le_three"
   }
 }
