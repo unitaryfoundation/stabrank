@@ -14,7 +14,7 @@
       "vprusso"
     ]
   },
-  "notes": "rank 6 floors at sqrt(211/4043) Now stated against stabRank: norrell_m4_stabRank_le_seven proves Stabilizer.stabRank IsStab |N>^4 <= 7 with all seven terms shown to be stabilizer states in the concrete sense (two 3-flats y1 = 2 and y0 = 2, three planes with two coordinates fixed at 2, and two full-support states, the phases being sums of the indicators [y_i = 2] = 2y_i^2 + y_i). With this every lean-tier upper bound on the board is a theorem about stabRank.",
+  "notes": "rank 6 floors at sqrt(211/4043) Now stated against stabRank: norrell_m4_stabRank_le_seven proves Stabilizer.stabRank IsStab |N>^4 <= 7 with all seven terms shown to be stabilizer states in the concrete sense (two 3-flats y1 = 2 and y0 = 2, three planes with two coordinates fixed at 2, and two full-support states, the phases being sums of the indicators [y_i = 2] = 2y_i^2 + y_i). With this every lean-tier qutrit upper bound on the board is a theorem about stabRank (the qubit_T m=4 module is a pointwise identity over three hand-written amplitude functions until a qubit predicate exists).",
   "lean": {
     "module": "LeanProofs.M4StabRank",
     "theorem": "norrell_m4_stabRank_le_seven"

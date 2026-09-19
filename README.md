@@ -40,8 +40,8 @@ verifier so that no result depends on trusting the search heuristic.
   over the qutrit stabilizer-state dictionary at _m_ = 1, 2, 3 (dictionary
   sizes 12, 414, 41,580); per-orbit JSON certificates record the
   witnessing tuple or the minimum-residual non-spanning tuple.
-- **Verify** every closed-form decomposition independently. The seven
-  qutrit identities are checked at three levels: numerical re-check at
+- **Verify** every closed-form decomposition independently. The
+  closed-form identities are checked at three levels: numerical re-check at
   machine precision, exact rational re-check in
   [SymPy](https://www.sympy.org/) where available, and machine-checked
   [Lean 4](https://lean-lang.org/) +

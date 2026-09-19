@@ -196,7 +196,7 @@ numerically. If only numerically, say so plainly rather than submitting.
 
 A bound matters when it moves a cell. Each orbit page names the cheapest cell that would beat its published exponent, which is more actionable than a leaderboard position; as of this writing no published exponent has been beaten, and the headline counter says so.
 
-Bounds that match rather than beat the literature are still worth submitting, because a `cited` value carries no machine-checked evidence and a `verified` or `lean` one at the same rank replaces it with something the pipeline stands behind. Tightening a lower bound is equally welcome and usually more tractable: the T3 cell at `m=3` sits at `6 <= chi <= 8`, and both sides are open.
+Bounds that match rather than beat the literature are still worth submitting, because a `cited` value carries no machine-checked evidence and a `verified` or `lean` one at the same rank replaces it with something the pipeline stands behind. Tightening a lower bound is equally welcome and usually more tractable: the T3 cell at `m=3` sits at `7 <= chi <= 8` after the exact rank-6 exclusion, and rank 7 is the one value left to settle.
 
 ## Tips
 
