@@ -3,9 +3,12 @@ Stabilizer rank: Phase 1 scaffolding.
 
 We define the n-qutrit ambient vector space `QutritVec n := Fin (3^n) → ℂ`
 and the stabilizer rank `stabRank` relative to an abstract predicate
-`IsStab : QutritVec n → Prop`. The predicate is left abstract here; a
-concrete definition (canonical-form data + amplitude function) lands
-in a later phase.
+`IsStab : (ι → ℂ) → Prop` on vectors indexed by any type `ι`. The
+predicate is left abstract here; the concrete qutrit definition is
+`StabRank.IsStab` in `Stabilizer/IsStab.lean` and the qudit-generic one
+is `StabRank.IsStabP` in `Stabilizer/IsStabP.lean`. Everything below is
+stated for `ι → ℂ`, so it applies verbatim to `QutritVec n = Fin (3 ^ n) → ℂ`
+and to `Fin (p ^ n) → ℂ`.
 
 The key result of this file is the **reduction lemma**:
 
@@ -32,32 +35,34 @@ namespace Stabilizer
 /-- The ambient amplitude space for `n` qutrits. -/
 abbrev QutritVec (n : ℕ) : Type := Fin (3 ^ n) → ℂ
 
+variable {ι : Type*}
+
 /-- The set of natural numbers `k` for which `ψ` admits a `k`-element
     decomposition into states satisfying `IsStab`. -/
-def DecompCards (IsStab : QutritVec n → Prop) (ψ : QutritVec n) : Set ℕ :=
-  { k | ∃ S : Finset (QutritVec n),
+def DecompCards (IsStab : (ι → ℂ) → Prop) (ψ : ι → ℂ) : Set ℕ :=
+  { k | ∃ S : Finset (ι → ℂ),
           S.card = k ∧ (∀ σ ∈ S, IsStab σ) ∧
-          ψ ∈ Submodule.span ℂ (↑S : Set (QutritVec n)) }
+          ψ ∈ Submodule.span ℂ (↑S : Set (ι → ℂ)) }
 
 /-- **Stabilizer rank**: the smallest `k` for which `ψ` is in the span
     of `k` distinct states satisfying `IsStab`. Returns `0` when the
     set of decomposition cardinalities is empty (i.e. no finite
     stabilizer decomposition exists at all); in our setting this
     fallback is later eliminated by exhibiting a stabilizer basis. -/
-noncomputable def stabRank (IsStab : QutritVec n → Prop) (ψ : QutritVec n) : ℕ :=
+noncomputable def stabRank (IsStab : (ι → ℂ) → Prop) (ψ : ι → ℂ) : ℕ :=
   sInf (DecompCards IsStab ψ)
 
 /-- A witnessing Finset shows membership in `DecompCards`. -/
-lemma DecompCards.of_witness {IsStab : QutritVec n → Prop} {ψ : QutritVec n}
-    {S : Finset (QutritVec n)} (hstab : ∀ σ ∈ S, IsStab σ)
-    (hspan : ψ ∈ Submodule.span ℂ (↑S : Set (QutritVec n))) :
+lemma DecompCards.of_witness {IsStab : (ι → ℂ) → Prop} {ψ : ι → ℂ}
+    {S : Finset (ι → ℂ)} (hstab : ∀ σ ∈ S, IsStab σ)
+    (hspan : ψ ∈ Submodule.span ℂ (↑S : Set (ι → ℂ))) :
     S.card ∈ DecompCards IsStab ψ :=
   ⟨S, rfl, hstab, hspan⟩
 
 /-- Decomposition existence ⇒ stabilizer rank bounded above. -/
-lemma stabRank_le_of_decomp {IsStab : QutritVec n → Prop} {ψ : QutritVec n}
-    {S : Finset (QutritVec n)} (hstab : ∀ σ ∈ S, IsStab σ)
-    (hspan : ψ ∈ Submodule.span ℂ (↑S : Set (QutritVec n))) :
+lemma stabRank_le_of_decomp {IsStab : (ι → ℂ) → Prop} {ψ : ι → ℂ}
+    {S : Finset (ι → ℂ)} (hstab : ∀ σ ∈ S, IsStab σ)
+    (hspan : ψ ∈ Submodule.span ℂ (↑S : Set (ι → ℂ))) :
     stabRank IsStab ψ ≤ S.card :=
   Nat.sInf_le (DecompCards.of_witness hstab hspan)
 
@@ -73,11 +78,11 @@ lemma stabRank_le_of_decomp {IsStab : QutritVec n → Prop} {ψ : QutritVec n}
     decomposition; in the qutrit setting it is discharged by the
     computational basis (a stabilizer basis on `n` qutrits). -/
 theorem stabRank_gt_of_no_decomp_le
-    (IsStab : QutritVec n → Prop) (ψ : QutritVec n) (k : ℕ)
+    (IsStab : (ι → ℂ) → Prop) (ψ : ι → ℂ) (k : ℕ)
     (hNonempty : (DecompCards IsStab ψ).Nonempty)
-    (h : ∀ S : Finset (QutritVec n), S.card ≤ k →
+    (h : ∀ S : Finset (ι → ℂ), S.card ≤ k →
           (∀ σ ∈ S, IsStab σ) →
-          ψ ∉ Submodule.span ℂ (↑S : Set (QutritVec n))) :
+          ψ ∉ Submodule.span ℂ (↑S : Set (ι → ℂ))) :
     stabRank IsStab ψ > k := by
   -- Nat.sInf is attained at some witness when the set is nonempty.
   have hmem : sInf (DecompCards IsStab ψ) ∈ DecompCards IsStab ψ :=
@@ -91,11 +96,11 @@ theorem stabRank_gt_of_no_decomp_le
     exceeds `k`, then no decomposition with `≤ k` stabilizer states
     spans `ψ`. -/
 theorem no_decomp_le_of_stabRank_gt
-    (IsStab : QutritVec n → Prop) (ψ : QutritVec n) (k : ℕ)
+    (IsStab : (ι → ℂ) → Prop) (ψ : ι → ℂ) (k : ℕ)
     (hrank : stabRank IsStab ψ > k) :
-    ∀ S : Finset (QutritVec n), S.card ≤ k →
+    ∀ S : Finset (ι → ℂ), S.card ≤ k →
       (∀ σ ∈ S, IsStab σ) →
-      ψ ∉ Submodule.span ℂ (↑S : Set (QutritVec n)) := by
+      ψ ∉ Submodule.span ℂ (↑S : Set (ι → ℂ)) := by
   intro S hcard hstab hspan
   have hmem : S.card ∈ DecompCards IsStab ψ :=
     DecompCards.of_witness hstab hspan

@@ -18,6 +18,10 @@
     }
   },
   "notes": "Witness found here by the package's annealer (search_decomposition.py, target qubit_real, seed 1, one run of 8 chains) and re-verified in exact arithmetic with coefficients recovered by fit_coeffs.",
+  "lean": {
+    "module": "LeanProofs.QubitHStabRank",
+    "theorem": "qubit_h_m3_stabRankP_le_three"
+  },
   "witness": {
     "terms": [
       {

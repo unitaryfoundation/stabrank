@@ -143,5 +143,9 @@
       "hardware": "Apple silicon laptop, 8 annealing chains"
     }
   },
-  "notes": "Found here by the package's annealer (search_decomposition.py, target qubit_ttype, seed 1, one run of 8 chains) and verified in exact arithmetic with coefficients recovered by fit_coeffs. The phases need the fourth roots of unity, which the witness format now carries for qubits. Whether rank 2 is possible at m=3 is left open here."
+  "notes": "Found here by the package's annealer (search_decomposition.py, target qubit_ttype, seed 1, one run of 8 chains) and verified in exact arithmetic with coefficients recovered by fit_coeffs. The phases need the fourth roots of unity, which the witness format now carries for qubits. Whether rank 2 is possible at m=3 is left open here.",
+  "lean": {
+    "module": "LeanProofs.QubitTStabRank",
+    "theorem": "qubit_t_m3_stabRankP_le_three"
+  }
 }
