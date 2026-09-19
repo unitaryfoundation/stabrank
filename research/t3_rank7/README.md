@@ -35,6 +35,14 @@ been run.
 - `scan3.py`, `count_steps.py`, `results/`: the prototype and the counts the
   note is based on, unchanged. `scan3.py`'s `kernel3` is the reference the
   batch kernel is compared against.
+- `rare_pivot_m2.py`: the finite checks behind
+  `docs/notes/t3_rank7_rare_pivot.md` (the rare-type pivot lemma cannot be
+  obtained from the slice structure): restriction of V_3 to every
+  coordinate slice is V_2, the two-qutrit spanning configurations of V_2 of
+  sizes 3, 4, 5 and 7 named in that note, and the lift table from
+  two-qutrit orbits to three-qutrit orbits. Exact arithmetic throughout.
+  Writes `results/rare_pivot_m2.json`; about one minute, run with
+  `uv run --extra challenge python research/t3_rank7/rare_pivot_m2.py`.
 - `batches/`: the stored outputs of the m=3 batches run so far (three
   validation batches at present); `batches_m2/`: the m=2 control outputs.
 - `partition_m2.json`, `manifest_m2.json`: the m=2 miniature (7 batches,

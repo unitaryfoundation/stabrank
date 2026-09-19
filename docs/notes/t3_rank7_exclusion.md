@@ -268,7 +268,10 @@ fraction of such states, about 28x. The rank-8 witness contains two line
 states and the excluded rank-5 configuration contained only line and plane
 states, so the pattern is not implausible, but no argument is known and
 none was found here. Worth an hour of thought before the scan runs, not a
-dependency.
+dependency. Follow-up: `t3_rank7_rare_pivot.md` shows that the slice
+structure cannot give it (five full-support two-qutrit states already span
+V_2, and the best pivot restriction the slice route can yield is a factor
+of 1.38), so the scan should run without it.
 
 The one reduction that is both sound and unused is the orbit-block order
 of section 2.
@@ -278,8 +281,8 @@ of section 2.
 Run the three-pivot scan in the orbit-block order with the Stab(i, j)
 mask, in a compiled kernel, as idle-time batches. The case split does not
 reduce the work, and the structural routes give filters, not lemmas.
-Before the scan, spend an hour on the rare-type lemma; if it holds, the
-scan drops to a few CPU-hours.
+The rare-type lemma was examined in `t3_rank7_rare_pivot.md` and gives
+nothing by the slice route; do not wait for it.
 
 Kernel. Port `kernel3` to C++ next to `cpp/src/pivot_pair.cpp` (or keep
 numba if 25 ns per step on idle cores is acceptable): coordinates as
