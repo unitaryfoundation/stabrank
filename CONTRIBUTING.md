@@ -137,6 +137,16 @@ If you need to change the verifier, the schema, or the site builder, do that in 
 
 `autoresearch/loop.py run MANIFEST` runs many such iterations unattended: a JSON manifest lists cells, seed ranges, annealer settings, priorities and a wall-clock cap per job, and the loop runs one seed at a time under `nice -n 19` with a single thread, round-robin over the cells so none starves. It checkpoints after every job to `autoresearch/state/`, continues with `--resume`, re-runs a recorded sequence with `replay`, classifies every failure from the exit code and stderr into `autoresearch/loop.log`, retries once on infrastructure failures and never on a search miss, and `loop.py status --since 72` prints the uptime covered and the longest gap between jobs. `autoresearch/manifests/plateau_cells.json` is the current set of open cells; `example.json` finishes in seconds. The loop never writes `runs.jsonl` itself, so the run ledger keeps its one-line-per-annealing-run contract.
 
+## The progress report
+
+`site_challenge/report.py` writes `docs/report/index.html` and `docs/evidence_index.json` on every build. The page compares the best exponent on the board with the published one per orbit, lists the interval `lower <= chi <= upper` on every cell with the date each side last moved, draws cumulative CPU-hours against cumulative record-tier bounds from the run log and the compute blocks, and indexes the evidence behind every bound: the pull request and merge commit that brought it to main, its receipt under `certs/`, its Lean module, and its compute block. The JSON file holds the same data. To rebuild the page without running any certificate:
+
+```
+uv run --extra challenge python site_challenge/build.py --no-verify
+```
+
+This uses the receipts in `certs/` and `docs/ledger.json` as they are; a bound with neither is left off the board and shown as unverified in the evidence index. The default `make build` re-verifies every bound whose receipt is missing or stale.
+
 ## Contributing with an LLM
 
 An agent can do the whole loop: pick a cell, search for a decomposition, verify it, and open the pull request. Paste the prompt below.

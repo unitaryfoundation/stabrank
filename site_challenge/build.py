@@ -13,10 +13,14 @@ to take a record is to submit something the pipeline can check.
 
 Expensive certificates are not re-run on every build: a cached result in
 certs/<slug>.json is trusted if it matches the submission's content hash.
+`--no-verify` goes one step further and runs no certificate at all: a bound
+without a matching receipt takes its tier from docs/ledger.json, and one absent
+from both is left off the board for that build.
 """
 
 from __future__ import annotations
 
+import argparse
 import glob
 import hashlib
 import html
@@ -165,8 +169,17 @@ def content_hash(sub):
     ).hexdigest()[:16]
 
 
-def load_bounds():
+def ledger_rows():
+    """docs/ledger.json as {slug: row}, or {} when there is no ledger yet."""
+    path = os.path.join(DOCS, "ledger.json")
+    if not os.path.exists(path):
+        return {}
+    return {r["slug"]: r for r in json.load(open(path)).get("rows", [])}
+
+
+def load_bounds(no_verify=False):
     out = []
+    ledger = ledger_rows() if no_verify else {}
     for path in sorted(glob.glob(os.path.join(BOUNDS, "*.json"))):
         sub = json.load(open(path))
         s, h = slug(sub), content_hash(sub)
@@ -176,6 +189,16 @@ def load_bounds():
             cached = json.load(open(cpath))
             if cached.get("content_hash") == h:
                 res = cached
+        if res is None and no_verify:
+            row = ledger.get(s)
+            if row is None:
+                print(f"--no-verify: skipping {s}, no receipt and not in docs/ledger.json",
+                      file=sys.stderr)
+                continue
+            res = {"ok": row["ok"], "tier": row["tier"],
+                   "detail": "tier taken from docs/ledger.json; not re-verified in "
+                             "this build (--no-verify)",
+                   "gamma": row.get("gamma"), "content_hash": h}
         if res is None:
             r = verify(sub)
             res = {"ok": r.ok, "tier": r.tier, "detail": r.detail,
@@ -419,6 +442,7 @@ box-shadow:0 4px 14px rgba(0,0,0,.35)}
 .lbcta:hover{background:#5b21b6}
 
 h2{font-size:22px;font-weight:700;margin:44px 0 4px;letter-spacing:-.01em}
+h3{font-family:Manrope,system-ui,sans-serif;font-size:17px;margin:26px 0 4px}
 .h2sub{color:var(--mut);font-size:14px;margin:0 0 14px}
 section p{max-width:74ch}
 
@@ -623,6 +647,7 @@ def hero(title, tagline, rel=""):
         "Participate</button></div>"
         f"<h1>{title}</h1><p>{tagline}</p>"
         "<nav class=topnav>"
+        f"<a href='{rel}report/index.html'>Report</a>"
         f"<a href='{rel}references.html'>References</a>"
         f"<a href='{REPO}'>{GHICON}GitHub</a>"
         "</nav></div></header>"
@@ -925,8 +950,8 @@ def references_page(refs):
 
 # ------------------------------------------------------------------ build ---
 
-def build():
-    entries = load_bounds()
+def build(no_verify=False):
+    entries = load_bounds(no_verify)
     cells = best_by_cell(entries)
     board = leaderboard(entries)
     people = contributors(entries)
@@ -1111,7 +1136,9 @@ def build():
     with open(os.path.join(DOCS, "favicon.svg"), "w") as f:
         f.write(FAVICON)
     references_page(parse_bib(os.path.join(DOCS, "refs.bib")))
-    write_ledger(entries)
+    rows = write_ledger(entries)
+    from report import write_report  # noqa: E402  (report imports this module)
+    write_report(entries, rows)
     for e in entries:
         detail_page(e)
     for orbit in ORBIT_ORDER:
@@ -1255,4 +1282,8 @@ def detail_page(e):
 
 
 if __name__ == "__main__":
-    build()
+    ap = argparse.ArgumentParser(description="Generate the challenge site into docs/.")
+    ap.add_argument("--no-verify", action="store_true",
+                    help="run no certificate: use certs/ receipts and docs/ledger.json "
+                         "as they are, and leave a bound with neither off the board")
+    build(ap.parse_args().no_verify)
