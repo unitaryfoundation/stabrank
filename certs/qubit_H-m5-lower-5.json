@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "tier": "reproduced",
+  "detail": "certificate script asserted: CERTIFIED chi(qubit_H^5) >= 5 within a declared 3600s budget",
+  "gamma": null,
+  "content_hash": "6156692c6d174c35"
+}

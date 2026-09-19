@@ -955,6 +955,30 @@
    "budget_s": null
   },
   {
+   "slug": "H3-m4-lower-5",
+   "orbit": "H3",
+   "m": 4,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "reproduced",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-18",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "slice-and-lift: the single rank-4 decomposition of |H3>^3 up to symmetry does not extend to |H3>^4",
+   "reference": "stabrank slice_lift.py",
+   "compute": {
+    "cpu_hours": 1.4,
+    "wall_clock_hours": 0.35,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, four workers at low priority under a load average near 12: 1183 s for the enumeration and lift"
+   },
+   "budget_s": 3600
+  },
+  {
    "slug": "N-m4-lower-3",
    "orbit": "N",
    "m": 4,
@@ -1121,6 +1145,30 @@
     "hardware": "Apple silicon laptop; the m=4 rank-3 exclusion re-runs inside the certificate"
    },
    "budget_s": null
+  },
+  {
+   "slug": "qubit_H-m5-lower-5",
+   "orbit": "qubit_H",
+   "m": 5,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "reproduced",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-18",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "slice-and-lift: none of the 30 rank-4 decompositions of |H>^4 up to symmetry extends to |H>^5",
+   "reference": "stabrank slice_lift.py",
+   "compute": {
+    "cpu_hours": 1.9,
+    "wall_clock_hours": 0.46,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, four workers at low priority under a load average near 12: 1649 s for the enumeration and lift"
+   },
+   "budget_s": 3600
   },
   {
    "slug": "qubit_T-m5-lower-3",
