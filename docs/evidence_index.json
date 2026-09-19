@@ -1,7 +1,7 @@
 {
  "generated_from": "bounds/",
- "head": "156d0da171768e167a2348c7de0e32e7b8b3209c",
- "generated": "2026-09-18",
+ "head": "7ecdfa9075bbf0d2d5e6545d5e025ada7a585c61",
+ "generated": "2026-09-19",
  "since": "2026-09-15",
  "exponents": [
   {
@@ -334,9 +334,9 @@
    "orbit": "H3",
    "m": 4,
    "lower": {
-    "rank": 3,
+    "rank": 5,
     "tier": "reproduced",
-    "slug": "H3-m4-lower-3",
+    "slug": "H3-m4-lower-5",
     "date": "2026-09-18",
     "board_date": "2026-09-18",
     "moved_since": true
@@ -525,11 +525,11 @@
    "orbit": "qubit_H",
    "m": 5,
    "lower": {
-    "rank": 4,
+    "rank": 5,
     "tier": "reproduced",
-    "slug": "qubit_H-m5-lower-4",
+    "slug": "qubit_H-m5-lower-5",
     "date": "2026-09-18",
-    "board_date": "2026-09-18",
+    "board_date": "2026-09-19",
     "moved_since": true
    },
    "upper": {
@@ -813,6 +813,22 @@
   {
    "orbit": "H3",
    "m": 4,
+   "rank": 5,
+   "runs": 1,
+   "log_runs": 0,
+   "cpu_hours": 1.4,
+   "solutions": 1,
+   "cpu_hours_per_solution": 1.4,
+   "bounds": [
+    "H3-m4-lower-5"
+   ],
+   "board": [
+    "reproduced"
+   ]
+  },
+  {
+   "orbit": "H3",
+   "m": 4,
    "rank": 6,
    "runs": 3,
    "log_runs": 3,
@@ -996,6 +1012,22 @@
    "cpu_hours_per_solution": 0.02,
    "bounds": [
     "qubit_H-m5-lower-4"
+   ],
+   "board": [
+    "reproduced"
+   ]
+  },
+  {
+   "orbit": "qubit_H",
+   "m": 5,
+   "rank": 5,
+   "runs": 1,
+   "log_runs": 0,
+   "cpu_hours": 1.9,
+   "solutions": 1,
+   "cpu_hours_per_solution": 1.9,
+   "bounds": [
+    "qubit_H-m5-lower-5"
    ],
    "board": [
     "reproduced"
@@ -1264,11 +1296,11 @@
   {
    "date": "2026-09-18",
    "seeded": false,
-   "cpu_hours": 15.291972222222213,
-   "discoveries": 11,
-   "median_declared": 0.02,
-   "cum_cpu_hours": 17.162972222222212,
-   "cum_discoveries": 55
+   "cpu_hours": 18.59197222222221,
+   "discoveries": 13,
+   "median_declared": 0.05,
+   "cum_cpu_hours": 20.46297222222221,
+   "cum_discoveries": 57
   },
   {
    "date": "2026-09-19",
@@ -1276,8 +1308,8 @@
    "cpu_hours": 0.0,
    "discoveries": 0,
    "median_declared": null,
-   "cum_cpu_hours": 17.162972222222212,
-   "cum_discoveries": 55
+   "cum_cpu_hours": 20.46297222222221,
+   "cum_discoveries": 57
   }
  ],
  "bounds": [
@@ -1434,6 +1466,40 @@
     "wall_clock_hours": 0.03,
     "runs": 1,
     "hardware": "Apple silicon laptop, one core"
+   }
+  },
+  {
+   "slug": "H3-m4-lower-5",
+   "file": "bounds/H3-m4-lower-5.json",
+   "orbit": "H3",
+   "m": 4,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "reproduced",
+   "ok": true,
+   "date": "2026-09-18",
+   "author": "this repository",
+   "reference": "stabrank slice_lift.py",
+   "method": "slice-and-lift: the single rank-4 decomposition of |H3>^3 up to symmetry does not extend to |H3>^4",
+   "pull_request": 55,
+   "merge_commit": "517edd3c5b9955575fbc09076f9a539af718fa62",
+   "merge_date": "2026-09-18",
+   "added_commit": "0376132f65d7f960b5de58664273bc9609ab65d8",
+   "added_date": "2026-09-18",
+   "added_subject": "chi(H3^4) >= 5 by slice-and-lift",
+   "receipt": "certs/H3-m4-lower-5.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_h3_m4_lift.py",
+   "certificate_budget_s": 3600,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 1.4,
+    "wall_clock_hours": 0.35,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, four workers at low priority under a load average near 12: 1183 s for the enumeration and lift"
    }
   },
   {
@@ -2593,6 +2659,40 @@
     "wall_clock_hours": 0.01,
     "runs": 1,
     "hardware": "Apple silicon laptop; the m=4 rank-3 exclusion re-runs inside the certificate"
+   }
+  },
+  {
+   "slug": "qubit_H-m5-lower-5",
+   "file": "bounds/qubit_H-m5-lower-5.json",
+   "orbit": "qubit_H",
+   "m": 5,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "reproduced",
+   "ok": true,
+   "date": "2026-09-18",
+   "author": "this repository",
+   "reference": "stabrank slice_lift.py",
+   "method": "slice-and-lift: none of the 30 rank-4 decompositions of |H>^4 up to symmetry extends to |H>^5",
+   "pull_request": 56,
+   "merge_commit": "7ecdfa9075bbf0d2d5e6545d5e025ada7a585c61",
+   "merge_date": "2026-09-19",
+   "added_commit": "3fe935de6e06c3f9da5ff8455ef56e47a55d4cfb",
+   "added_date": "2026-09-18",
+   "added_subject": "chi(H^5) >= 5 for the qubit H-type state by slice-and-lift",
+   "receipt": "certs/qubit_H-m5-lower-5.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_h_m5_lift.py",
+   "certificate_budget_s": 3600,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 1.9,
+    "wall_clock_hours": 0.46,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, four workers at low priority under a load average near 12: 1649 s for the enumeration and lift"
    }
   },
   {
