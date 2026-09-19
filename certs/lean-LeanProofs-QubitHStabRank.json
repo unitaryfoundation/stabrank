@@ -1,0 +1,8 @@
+{
+  "module": "LeanProofs.QubitHStabRank",
+  "ok": true,
+  "log": [
+    "\u2714 [3307/3307] Built LeanProofs.QubitHStabRank (9.7s)",
+    "Build completed successfully (3307 jobs)."
+  ]
+}

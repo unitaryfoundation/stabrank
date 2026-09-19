@@ -12,6 +12,7 @@ mapping is:
 | Appendix A.1, Strange m=2,3 | `StrangeM2Pointwise.lean`, `StrangeM3.lean`, `StrangeM3Pointwise.lean` |
 | Appendix A.2, H_3 m=2,3 | `H3M2Pointwise.lean`, `H3M3.lean`, `H3M3Pointwise.lean` |
 | Appendix A.3, Norrell m=2,3,4 | `NorrellM2Pointwise.lean`, `NorrellM3.lean`, `NorrellM3Pointwise.lean`, `NorrellM4Pointwise.lean` |
+| Qubit H-type m=2,3,4 and T-type m=2,3,4 (bound files) | `QubitShared.lean`, `QubitHStabRank.lean`, `QubitTStabRank.lean`, `QubitTM4StabRank.lean` |
 
 ## What's here
 
@@ -220,6 +221,111 @@ mapping is:
   `strange_m1_stabRank_le_two` (`|S⟩ = (|1⟩ - |2⟩)/√2`),
   `t3_m1_stabRank_le_three`, and with `T3M1StabRank` the exact value
   `t3_m1_stabRank_eq_three`.
+
+- `LeanProofs/Stabilizer/Rank.lean` — `DecompCards`, `stabRank` and the
+  reduction lemmas, stated for an abstract predicate on `ι → ℂ` for any index
+  type `ι`, so the same definitions serve `QutritVec n = Fin (3 ^ n) → ℂ` and
+  `Fin (p ^ n) → ℂ`.
+
+- `LeanProofs/Stabilizer/IsStabP.lean` — the stabilizer predicate for qudits
+  of any prime dimension, `IsStabP (p : ℕ) [Fact p.Prime] (v : Fin (p ^ n) → ℂ)`,
+  and `stabRankP p v := stabRank (IsStabP p) v`. It follows the verifier's
+  conventions (`verify_challenge/stabrank_verify.py`): digits in `ZMod p`
+  (`digitsP`), affine flats `y ↦ x₀ + Wᵀ y` over `ZMod p` (`affinePtP`), and
+  the phase `ζ_D ^ (Q(y) · (D / p) + l·y)` (`stabVecP`, `quadPhaseP`) with
+  `D = stabPeriod p` (`p` for odd `p`, `4` for `p = 2`), `ζ_D = exp(2πi/D)`
+  (`zeta p`) and `l ∈ (ZMod D)^k`. For odd `p` this is `ω_p^(Q(y) + l·y)`; for
+  `p = 2` it is `i^(l·y) (-1)^(Q(y))`. `ZMod 3` is `Fin 3` by definition and
+  its ring structure and `ZMod.val` unfold to those of `Fin 3`, so the bridge
+  `isStab_iff_isStabP : IsStab v ↔ IsStabP 3 v` and
+  `stabRank_eq_stabRankP : stabRank IsStab v = stabRankP 3 v` are proved by
+  `rfl` plus `zeta_three : zeta 3 = ω₃` and the factor `D / p = 1`; the qutrit
+  files are unchanged and every `stabRank IsStab` theorem in them is a
+  `stabRankP 3` theorem through `stabRank_eq_stabRankP`. Also here: the
+  generic forms of the qutrit tools (`stabVecP_id`, `stabVecP_zero`,
+  `isStabP_single`, `decompCardsP_nonempty`, `stabRankP_le_pow`),
+  `affinePtP_injective_of_pivots` (injectivity from pivot columns of `W`),
+  `stabTerm` (a `stabVecP` on computational-basis indices, `IsStabP` by
+  `isStabP_stabTerm`) and `stabRankP_le_of_terms` (a pointwise identity
+  `ψ = Σ αⱼ • σⱼ` gives `stabRankP p ψ ≤ r`), and the explicit sums over
+  `F_2^k` for `k ≤ 3` (`stabVecP_two_k1`, `_k2`, `_k3`).
+
+- `LeanProofs/Stabilizer/TensorP.lean` — `TensorStabRank.lean` for
+  `IsStabP p`: `tensorP`, `IsStabP.tensor`, and
+  `stabRankP_tensor_le : stabRankP p (ψ ⊗ φ) ≤ stabRankP p ψ * stabRankP p φ`.
+
+- `LeanProofs/QubitShared.lean` — the qubit magic states on digit strings,
+  `hVec m` (`|H⟩ = cos(π/8)|0⟩ + sin(π/8)|1⟩`) and `tVec m`
+  (`|T⟩ = cos β|0⟩ + e^{iπ/4} sin β|1⟩`, `β = arccos(1/√3)/2`), with the
+  trigonometric relations the cells use: the squares and the product of the
+  cosine and sine (`cH_sq`, `sH_sq`, `sH_mul_cH`, `cT_sq`, `sT_sq`,
+  `sT_mul_cT`), the linear relations `cH_eq : cos(π/8) = (1 + √2) sin(π/8)`
+  and `cT_eq : cos β = sin β · √2(√3 + 1)/2` that eliminate the cosine, and
+  `exp_pi_div_four_mul_I`.
+
+- `LeanProofs/QubitHStabRank.lean` — `qubit_h_m2_stabRankP_le_two`,
+  `qubit_h_m3_stabRankP_le_three` (the witnesses of the bound files as
+  `stabTerm`s, the identity decided at every digit string) and
+  `qubit_h_m4_stabRankP_le_four` as the tensor square of m=2 through
+  `stabRankP_tensor_le` and `tensorP_hVec`.
+
+- `LeanProofs/QubitTStabRank.lean` — `qubit_t_m2_stabRankP_le_two`,
+  `qubit_t_m3_stabRankP_le_three`, same method.
+
+- `LeanProofs/QubitTM4StabRank.lean` — `qubit_t_m4_stabRankP_le_three`: the
+  three-term decomposition of `QubitTM4.lean` against `stabRankP 2`, from the
+  witness of `bounds/qubit_T-m4-upper-3.json`. `QubitTM4.lean` and its
+  `stabilizer_rank_le_three` are kept as they were.
+
+## Pitfalls
+
+Things that cost time in this development and are not obvious from the
+error messages.
+
+- `StabDef.stabVec` accepts an arbitrary phase function and must not be used
+  with `stabRank_le_of_decomp`: under it any vector with entries that are
+  powers of `ω₃` would count as stabilizer. Use `IsStab` or `IsStabP`.
+- `stabVecN`, `stabVecP` and `stabTerm` carry no `1/√(p^k)` normalisation.
+  A coefficient taken from a bound file has to be divided by `√(p^k)` for the
+  term with `k` generators.
+- `fin_cases` on a variable of type `ZMod 2` substitutes `⟨0, _⟩ : Fin 2`,
+  not the numeral `(0 : ZMod 2)`, so lemmas about `ZMod.val` of numerals
+  never fire afterwards. Split with `rcases zmod2_cases a with rfl | rfl`
+  instead; it substitutes the numerals.
+- `decide` on `Finset.univ = {…}` for `Fin k → ZMod 2` times out in the
+  elaborator's `whnf` even for `k = 1`; `decide +kernel` closes it at once.
+  The same goals over `Fin k → Fin 3` were fine with plain `decide`.
+- Do not put `stabPeriod_two : stabPeriod 2 = 4` in a `simp` set that also
+  has to evaluate `ZMod.val` on `ZMod (stabPeriod 2)`. Rewriting the numeral
+  inside the type leaves `ZMod.val 0` terms that neither `ZMod.val_zero` nor
+  the local `zmod4_val_*` lemmas match. Use `stabPeriod_two_div :
+  stabPeriod 2 / 2 = 2` for the exponent factor and leave the type alone.
+- Reducing powers of `i`: `simp` applies `pow_one` before a lemma about
+  `zeta 2 ^ n`, so `zeta_two_pow` alone leaves a bare `zeta 2`; add
+  `zeta_two`. Exponents above `3` then survive as `I ^ 5`, and a simp lemma
+  `I ^ n = I ^ (n % 4)` loops. `I_pow_reduce (h : 4 ≤ n) : I ^ n = I ^ (n - 4)`
+  terminates because `simp` decides the side condition on numerals.
+- `Real.cos_pi_div_eight` and `Real.sin_pi_div_eight` are simp lemmas, so a
+  bare `simp` turns `cos(π/8)` into `√(2 + √2) / 2` and the trigonometric
+  relations no longer apply. Wrap the atoms in definitions (`cH`, `sH`, `cT`,
+  `sT`) and never unfold them in the case analysis.
+- `∏ i : Fin 3, f i` is not expanded by `simp` on its own; add
+  `Fin.prod_univ_three` (and `Fin.prod_univ_four`). `Fin.prod_univ_two` is
+  a simp lemma, which is why the `m = 2` cells worked without it.
+- `linear_combination` cofactors for the qubit identities are found by
+  polynomial division in the atoms `√2, √3, i, sin`, after the cosine has
+  been eliminated through `cH_eq` / `cT_eq` (put the equation in the simp
+  set). Without that elimination the ideal `⟨cos², sin², cos·sin, √2², …⟩`
+  is not a Gröbner basis and the cofactors are much larger. The generators
+  `sin² - β, √2² - 2, √3² - 3, i² + 1` have pairwise coprime leading terms,
+  so division gives remainder `0` exactly when the identity holds.
+- `Finset.univ.image σ` in a theorem statement needs `DecidableEq` on the
+  vector type, which `classical` inside the proof does not provide. State
+  span membership with `Set.range σ` and convert with `Finset.coe_image`,
+  `Finset.coe_univ`, `Set.image_univ` in the proof.
+- `rw` closes goals only with reducible `rfl`. After rewriting the qutrit
+  data into the `ZMod 3` form (`stabVecP_three`) the two `if`s differ only
+  in their `Decidable` instances and need an explicit `rfl`.
 
 ## Build
 
