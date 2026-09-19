@@ -16,3 +16,6 @@ __pycache__/
 # has its own .gitignore covering main.* products.
 texput.log
 .claude/
+
+# Plateau bases saved by autoresearch/loop.py manifests (binary search scratch).
+autoresearch/state/plateaus/
