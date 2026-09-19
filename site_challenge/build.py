@@ -249,11 +249,13 @@ def leaderboard(entries):
     return rows
 
 
-def next_target(orbit, base):
+def next_target(orbit, base, cells=None, lead="needs "):
     """The cheapest cell that would beat the published exponent.
 
     An empty progress bar on every row carries no information; naming the
-    smallest rank at each m that would move the number is actionable.
+    smallest rank at each m that would move the number is actionable. A rank
+    below the board's own lower bound at that m is not a target, so when the
+    per-cell records are given those m are skipped.
     """
     p = ORBIT_P[orbit]
     best = None
@@ -263,13 +265,16 @@ def next_target(orbit, base):
             r -= 1
         if r < 2:
             continue
+        low = cells.get((orbit, m, "lower")) if cells else None
+        if low is not None and r < int(low["sub"]["rank"]):
+            continue
         g = math.log(r, p) / m
         if g < base - 1e-12 and (best is None or g < best[2]):
             best = (m, r, g)
     if best is None:
         return "<span class=none>&mdash;</span>"
     m, r, g = best
-    return (f"<span class=tgt>needs &chi; &le; {r} at m={m}"
+    return (f"<span class=tgt>{lead}&chi; &le; {r} at m={m}"
             f"<span class=tgtg>&rarr; {g:.4f}</span></span>")
 
 
@@ -1035,10 +1040,10 @@ def build(no_verify=False):
                     f"{tier_pill(best['res']['tier'], True, best['sub'])}")
             gtxt = f"<span class=gain>{g:.4f}</span>" if beat else f"{g:.4f}"
             bar = (f"<span class=gain>beaten by {base - g:.4f}</span>" if beat
-                   else next_target(orbit, base))
+                   else next_target(orbit, base, cells))
         else:
             gtxt, held = "<span class=none>&mdash;</span>", "<span class=none>open</span>"
-            bar = next_target(orbit, base)
+            bar = next_target(orbit, base, cells)
         o.append(f"<tr{' class=rec' if best and best['res']['gamma'] < base - 1e-12 else ''}>"
                  f"<td><b><a href='orbits/{orbit}.html'>{ORBIT_LABEL[orbit]}</a></b></td>"
                  f"<td class=mono style='color:var(--mut)'>{SYSTEM[orbit]}</td>"
@@ -1185,7 +1190,7 @@ def orbit_page(orbit, entries, cells):
                  f"</span></td></tr>")
     o.append("</tbody></table></div>")
     o.append(f"<h2>What would move it</h2><p>Beating the published exponent needs "
-             f"{next_target(orbit, base)}.</p>")
+             f"{next_target(orbit, base, cells, lead='')}.</p>")
     o.append("</div>" + footer(rel="../") + "</body></html>")
     os.makedirs(os.path.join(DOCS, "orbits"), exist_ok=True)
     with open(os.path.join(DOCS, "orbits", f"{orbit}.html"), "w") as f:

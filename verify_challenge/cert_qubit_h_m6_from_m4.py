@@ -14,6 +14,7 @@ is a combination of at most r stabilizer states. Here phi = |H>^{ot 2}, whose
 amplitude on |00> is cos^2(pi/8) > 0.
 
 Printed claims: CERTIFIED chi(qubit_H^4) >= 4
+                CERTIFIED chi(qubit_H^5) >= 4
                 CERTIFIED chi(qubit_H^6) >= 4
 """
 
@@ -28,4 +29,4 @@ from rank_exclusion import run_certificate  # noqa: E402
 
 if __name__ == "__main__":
     raise SystemExit(run_certificate(cells=[("qubit_H", 4)], controls=[("qubit_H", 3)],
-                                     also=[("qubit_H", 6, 4)]))
+                                     also=[("qubit_H", 5, 4), ("qubit_H", 6, 4)]))

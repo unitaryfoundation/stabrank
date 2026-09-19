@@ -1,10 +1,10 @@
 # Lean 4 formalization of m ∈ {2, 3, 4} appendix identities
 
 Scope: machine-verify the closed-form χ ≤ k stabilizer decompositions of
-`paper/main.tex` Appendix A at m ∈ {2, 3, 4}, using Lean 4 and mathlib4.
+Appendix A of Labib and Russo, arXiv:2605.28586, at m ∈ {2, 3, 4}, using Lean 4 and mathlib4.
 
 These files are an audit artifact for the appendix identities, not a
-replacement for the mathematical exposition in the paper. The paper-level
+replacement for the mathematical exposition in that paper. The paper-level
 mapping is:
 
 | Paper location | Lean files |
