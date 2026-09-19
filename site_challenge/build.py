@@ -5,11 +5,15 @@ verify_challenge/stabrank_verify.py and displayed at the tier it earns:
 
     verified    the pipeline rebuilt the decomposition and confirmed it here
     reproduced  a certificate script ran and asserted the bound
+    attested    an exact argument over an offline enumeration too large for
+                any budget; the certificate hashed every stored batch output,
+                re-decided the stored exceptions and re-ran a declared subset
     cited       attributed to the literature, not machine-checked
 
-Only `verified` and `reproduced` bounds may hold a record. A cited value is
-shown so the picture is complete, but it never crowns a cell, so the only way
-to take a record is to submit something the pipeline can check.
+Every tier but `cited` may hold a record. A cited value is shown so the picture
+is complete, but it never crowns a cell, so the only way to take a record is to
+submit something the pipeline can check. `attested` ranks below `reproduced`,
+so a certificate that re-runs the whole argument at the same rank displaces it.
 
 Expensive certificates are not re-run on every build: a cached result in
 certs/<slug>.json is trusted if it matches the submission's content hash.
@@ -21,6 +25,7 @@ from both is left off the board for that build.
 from __future__ import annotations
 
 import argparse
+import functools
 import glob
 import hashlib
 import html
@@ -33,7 +38,8 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "verify_challenge"))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from stabrank_verify import ORBIT_LABEL, ORBIT_P, implied_gamma, verify  # noqa: E402
+from stabrank_verify import (ORBIT_LABEL, ORBIT_P, implied_gamma, load_batch_manifest,  # noqa: E402
+                             verify)
 from _assets import GHICON, UFLOGO  # noqa: E402
 
 import latex2mathml.converter as _l2m
@@ -153,8 +159,15 @@ ORBIT_DEF = {
 
 COLOR = {"S": "#6d28d9", "N": "#0369a1", "H3": "#059669",
          "T3": "#b45309", "qubit_H": "#be185d", "qubit_T": "#128081"}
-TIER_RANK = {"lean": 4, "verified": 3, "reproduced": 2, "cited": 1, None: 0}
-RECORD_TIERS = ("lean", "verified", "reproduced")
+TIER_RANK = {"lean": 5, "verified": 4, "reproduced": 3, "attested": 2, "cited": 1, None: 0}
+# `attested` holds records: the pipeline checked every stored batch output
+# against its hash, the exact re-decision of the exceptions and a bit-for-bit
+# re-run of a declared subset, and the committed runner regenerates the rest.
+# That is machine-checked evidence, unlike a citation, and leaving it out would
+# show a weaker bound on the board than the repository holds. It ranks below
+# `reproduced` so that a full re-run at the same rank replaces it. The argument
+# is written out in CONTRIBUTING.md, "Attested offline enumerations".
+RECORD_TIERS = ("lean", "verified", "reproduced", "attested")
 
 E = html.escape
 
@@ -203,7 +216,7 @@ def load_bounds(no_verify=False):
             r = verify(sub)
             res = {"ok": r.ok, "tier": r.tier, "detail": r.detail,
                    "gamma": r.gamma, "content_hash": h}
-            if r.ok and r.tier in ("verified", "reproduced"):
+            if r.ok and r.tier in ("verified", "reproduced", "attested"):
                 os.makedirs(CERTS, exist_ok=True)
                 with open(cpath, "w") as f:
                     json.dump(res, f, indent=2)
@@ -497,6 +510,8 @@ padding:2px 8px;border-radius:999px;border:1px solid currentColor}
 .t-leanpend{color:var(--mut);text-decoration:none}
 .t-lean:hover{background:#6d28d9;color:#fff}
 .t-verified{color:var(--ex)}.t-reproduced{color:var(--ac)}
+.t-attested{color:#92400e;border-style:dashed;
+background:repeating-linear-gradient(135deg,transparent 0 3px,#fef3c7 3px 5px)}
 .t-cited{color:var(--mut)}.t-failed{color:var(--bad)}
 a.pill{text-decoration:none}
 a.t-cited:hover{color:var(--ac);border-color:var(--ac)}
@@ -824,12 +839,31 @@ def compute_summary(comp):
     return "; ".join(parts) + "." if parts else "reported, but empty."
 
 
+def attested_summary(sub):
+    """The `certificate.attested` block with the manifest's batch count added
+    as `total` (None when the manifest cannot be read), or None when the bound
+    does not declare one. Cheap: the manifest is small and read once per path.
+    """
+    att = (sub.get("certificate") or {}).get("attested")
+    if not att:
+        return None
+    batches, _ = _manifest(att["batches"])
+    return {**att, "total": len(batches) if batches else None}
+
+
+@functools.lru_cache(maxsize=None)
+def _manifest(rel):
+    return load_batch_manifest(rel)
+
+
 def write_ledger(entries):
     """docs/ledger.json: every bound with its tier and what finding it cost.
 
     The board shows results; the ledger is the data behind a cost-per-discovery
     curve, one row per submission, machine-readable and regenerated on every
-    build so nothing has to be back-filled later.
+    build so nothing has to be back-filled later. An attested bound's row
+    carries its `attested` block plus the manifest's batch count, so the
+    re-run fraction behind the tier is on record.
     """
     rows = []
     for e in entries:
@@ -845,6 +879,7 @@ def write_ledger(entries):
             "reference": prov.get("reference"),
             "compute": prov.get("compute"),
             "budget_s": (s.get("certificate") or {}).get("budget_s"),
+            "attested": attested_summary(s),
         })
     rows.sort(key=lambda x: (x["date"] or "", x["slug"]))
     with open(os.path.join(DOCS, "ledger.json"), "w") as f:
@@ -879,6 +914,15 @@ def tier_pill(tier, ok=True, sub=None, compact=True):
                     f"title='cited from {E(sub[chr(39)+chr(39)] if False else sub['provenance'].get('reference',''))}'>"
                     f"cited</a>")
     budget = ((sub or {}).get("certificate") or {}).get("budget_s")
+    if tier == "attested" and sub is not None:
+        a = attested_summary(sub)
+        if a:
+            frac = f"{a['recomputed']}/{a['total']}" if a["total"] else str(a["recomputed"])
+            pct = (f" ({100 * a['recomputed'] / a['total']:.0f}%)" if a["total"] else "")
+            return (f"<span class='pill t-attested' title='offline enumeration, "
+                    f"{a['compute_hours']:g} CPU-h on {E(a['hardware'])}, not re-run; the "
+                    f"certificate re-ran {frac} batches{pct} from scratch and checked the "
+                    f"hashes of the rest'>attested &middot; {frac} re-run</span>")
     if tier == "reproduced" and budget and int(budget) > 900:
         return (f"<span class='pill t-{tier}' title='the certificate ran within a declared "
                 f"{int(budget)} s budget, above the 900 s default'>{tier} &middot; {int(budget)} s</span>")
@@ -964,7 +1008,8 @@ def build(no_verify=False):
     leanclaim_n = sum(1 for e in entries if e["sub"].get("lean"))
     ver_n = sum(1 for e in entries if e["res"]["ok"] and e["res"]["tier"] == "verified")
     rep_n = sum(1 for e in entries if e["res"]["ok"] and e["res"]["tier"] == "reproduced")
-    moved = [r for r in board if r["best"] and r["best"]["res"]["gamma"] < r["baseline"] - 1e-12]
+    att_n = sum(1 for e in entries if e["res"]["ok"] and e["res"]["tier"] == "attested")
+    moved =[r for r in board if r["best"] and r["best"]["res"]["gamma"] < r["baseline"] - 1e-12]
     tight = min((r for r in board if r["best"]),
                 key=lambda r: r["best"]["res"]["gamma"], default=None)
 
@@ -1152,7 +1197,8 @@ def build(no_verify=False):
         person_page(a, entries, cells)
     print(f"docs/ written: {len(entries)} bounds, {lean_n} lean-certified "
           f"({leanclaim_n} claim a proof), "
-          f"{ver_n} verified, {rep_n} reproduced, {len(moved)} exponents beaten, "
+          f"{ver_n} verified, {rep_n} reproduced, {att_n} attested, "
+          f"{len(moved)} exponents beaten, "
           f"{len(people)} contributors")
 
 

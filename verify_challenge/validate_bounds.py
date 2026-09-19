@@ -65,6 +65,21 @@ def tier_requirements(sub):
                       "provenance.compute, so the ledger records what the bound cost")
     if budget is not None and budget <= 900:
         notes.append("budget_s at or below the default 900 s has no effect; drop it")
+    cert = sub.get("certificate") or {}
+    if cert.get("attested"):
+        # An attested bound rests on an enumeration the certificate does not
+        # re-run. Its cost belongs in the ledger, and it cannot at the same
+        # time claim that the pipeline confirmed the whole argument.
+        if not comp:
+            errors.append("certificate.attested requires provenance.compute, so the "
+                          "ledger records what the offline enumeration cost")
+        if cert.get("exact"):
+            errors.append("certificate.attested and exact: true are mutually exclusive; "
+                          "the enumeration is not re-run under the budget, so the "
+                          "bound earns attested, not verified")
+        notes.append("attested: the certificate must re-run the declared number of "
+                     "batches from scratch and only hash the rest; say in notes what "
+                     "completeness rests on")
     if d == "lower" and "certificate" not in sub and "lean" not in sub:
         notes.append("no certificate and no Lean proof, so this records as "
                      "cited and cannot hold a record")

@@ -339,6 +339,14 @@ strong sense: every step is deterministic (fixed projection seed, fixed
 dictionary order, fixed block order) and any batch can be re-run and
 compared bit for bit.
 
+Decided 2026-09-19: the new marker exists as the `attested` tier
+(CONTRIBUTING, "Attested offline enumerations"). The submission declares
+`certificate.attested` with the manifest path, the number of batches the
+aggregator re-runs, the offline cost and hardware, and a note on what
+completeness rests on; the verifier checks every stored output against
+the manifest's hashes before the script runs, and the tier holds records
+below `reproduced`.
+
 ## Numbers
 
 From `research/t3_rank7/results/step_counts.json` (exact counts under the
