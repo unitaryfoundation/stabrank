@@ -40,11 +40,11 @@ def main():
         print("negative control FAILED: a rank-3 decomposition of |N>^2 lifted", file=sys.stderr)
         return 1
     print("controls: |S> lifts to |S>^2, |N>^2 does not lift to |N>^3")
-    if not certify_rank3("N", 3, D3, workers=1, symmetry=True):
+    workers = max(1, min(4, os.cpu_count() or 1))
+    if not certify_rank3("N", 3, D3, workers=workers, symmetry=True):
         print("rank-3 exclusion at m=3 did not hold", file=sys.stderr)
         return 1
     print("chi(N^3) >= 4; with the Lean witness, chi(N^3) = 4")
-    workers = max(1, min(4, os.cpu_count() or 1))
     counts, gap = lift_chain("N", 3, 4, 4, workers=workers)
     if counts[3] == 0:
         print("no rank-4 decomposition of |N>^3 found, but the board holds one", file=sys.stderr)
