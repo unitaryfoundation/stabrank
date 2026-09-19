@@ -15,16 +15,17 @@ Six orbits are open, with the published exponent each one is measured against:
 | `qubit_H` | qubit H-type, the edge centre | `log_2(3)/4` = 0.3962 |
 | `qubit_T` | qubit Bravyi-Kitaev T-type | `log_2(3)/4` = 0.3962 |
 
-## Four tiers, and only the top three hold records
+## Five tiers, and only `cited` holds no record
 
 | tier | meaning |
 |---|---|
 | `lean` | a Lean module builds and its theorem is the bound as stated |
 | `verified` | the pipeline rebuilt the decomposition and confirmed the identity, or a lower-bound certificate is exact throughout, with no floating-point margin anywhere |
 | `reproduced` | a certificate script ran under the budget and asserted the bound |
+| `attested` | the argument is exact but rests on an offline enumeration no budget can re-run; the certificate hashed every stored batch output, re-decided the stored exceptions exactly and re-ran a declared subset of batches bit for bit |
 | `cited` | attributed to the literature, not machine-checked here |
 
-Seeded literature values populate the ledger so the picture is complete, and they can never crown a cell. The only way to take a record is to submit something the pipeline can check, which is the whole point of the distinction.
+Seeded literature values populate the ledger so the picture is complete, and they can never crown a cell. The only way to take a record is to submit something the pipeline can check, which is the whole point of the distinction. When two bounds on a cell have the same rank, the higher tier holds it, so an `attested` bound gives way to a `reproduced` or `verified` one at the same rank.
 
 ## Upper bounds
 
@@ -70,6 +71,32 @@ A certificate that is exact throughout, so that no floating-point margin stands 
 Two ways to reach a lower bound without a fresh exhaustion at the target size are in `verify_challenge/`. Projection monotonicity, chi(psi (x) phi) >= chi(psi) when phi has a nonzero computational amplitude, carries any lower bound up in m unchanged (`cert_s_m4_from_m3.py`). Slice-and-lift (`slice_lift.py`) raises it by one when chi(|M>^m) = r is known exactly: a rank-r decomposition of |M>^(m+1) sliced along one qudit gives, at every level, a rank-r decomposition of |M>^m whose terms are related slice to slice by a Pauli and a root of unity, so if no rank-r decomposition of |M>^m (listed up to the unitary symmetries by a pivot search) admits such Paulis, chi(|M>^(m+1)) >= r + 1. `cert_qubit_t_m5_lift.py` is the smallest case: the single rank-3 decomposition of |T>^4 up to symmetry does not extend, so chi(|T>^5) >= 4 in eight seconds. `cert_s_m5_lift.py` applies it twice, from the 15 rank-4 decompositions of |S>^3 through the 69 of |S>^4 to none of |S>^5, in about two minutes on four cores; the partner loop of its pivot-pair search is reduced by the pivot's stabilizer subgroup, which is what brought a 2.2-hour enumeration under the budget.
 
 Write the script so it fails loudly. A certificate that prints its claim unconditionally is worse than no certificate, since it converts a bug into a board entry.
+
+## Attested offline enumerations
+
+Some exclusions are exact and machine-checked at every step and still cannot run under any budget the board allows. The rank-7 exclusion for T3 at `m=3` (`docs/notes/t3_rank7_exclusion.md`) is the case that forced the question: the arithmetic is exact throughout, but the enumeration behind it is about 90 CPU-hours, and the 3600-second cap is not a rounding error away from that. Claiming `verified` for it would misstate what the pipeline checked, since `verified` means the pipeline confirmed the argument, and here it confirms the decision and a sample of the enumeration. Claiming `reproduced` would be wrong for the same reason. The `attested` tier is for exactly this situation and for nothing else: an enumeration that fits the budget after restating belongs at `reproduced` or `verified`, and a numerical search that is merely long does not qualify, because the tier is about where the completeness argument lives, not about how slow the script is.
+
+The enumeration runs offline, in batches, with a committed runner, and every batch writes a result file into the repository. The submission then declares, inside the `certificate` block,
+
+```json
+"attested": {
+  "batches": "research/t3_rank7/results/manifest.json",
+  "recomputed": 12,
+  "compute_hours": 91,
+  "hardware": "Apple M3 Max, 14 cores",
+  "note": "completeness rests on the stored batch outputs; research/t3_rank7/batch.py regenerates any of them in the recorded time"
+}
+```
+
+`batches` is a JSON manifest listing every batch: a list of `{"id", "params", "output", "sha256"}` entries, with `output` the stored result file relative to the repository root and `sha256` its digest. Before the script runs, the verifier requires the manifest to exist and every listed output to be present with the stated hash, and fails the bound otherwise. That check is cheap and it is the whole reason the outputs are committed: a result file that has changed since it was recorded is not the enumeration the bound rests on. `recomputed` is the number of batches the script re-runs from scratch, and `compute_hours` and `hardware` record what the offline run cost; `provenance.compute` is required alongside, so the ledger carries the cost. `exact: true` is an error next to `attested`, since the pipeline did not confirm the whole argument. `budget_s` may be declared as usual and will typically be the cap.
+
+The certificate must do four things under the budget. Rebuild whatever the batches depend on (the dictionary, the symmetry data, the projection) so that the re-run is a re-run and not a replay. Check that the batch files cover the search space exactly once, with matching code and data hashes, and that no batch reports an unresolved case. Re-decide every stored exception exactly, by the same arithmetic the runner used. Choose `recomputed` batches deterministically from a seed, print that seed on a line `seed: <value>`, re-run them from scratch and compare their outputs bit for bit with the stored ones. Print the claim string only if all four pass. The verifier's detail then says what was re-run and what was only hashed, and the board pill shows the re-run fraction, so no reader mistakes the tier for a full reproduction.
+
+Say in `notes` what the completeness rests on, in those words: that the enumeration was not re-run under the budget, that it is attested by the stored outputs and the committed runner, and how a reader would regenerate any batch or all of them. Record the offline cost in `provenance.compute` with the hardware, dates and the git hash of the runner.
+
+`attested` holds records. The alternative would leave the board showing a weaker lower bound than the repository holds, on a cell where the bound is exact, every step of the argument is machine-checked, and any batch can be regenerated by anyone with the runner and the recorded CPU time. That is machine-checked evidence in a way a citation is not, and the tier sits below `reproduced` so that a certificate which re-runs the argument in full at the same rank displaces it. The trust it asks for is the same kind the other lower-bound tiers already ask for: the pipeline cannot audit that a script's claim follows from what it computed, or that an `exact` flag is honest, and both are settled at review. What the tier adds is a stored enumeration that review can spot-check and the verifier re-runs in part, chosen by a seed the script prints. What it does not add is a guarantee against a batch output that is wrong but consistently hashed; the deterministic subset re-run bounds how many such batches can hide, and the committed runner is how a reader closes the gap for good.
+
+The tier is meant to be temporary for any given bound. A later full re-run, a smarter certificate that fits the budget, or a Lean proof should replace an `attested` bound at the higher tier, and the equal-rank rule above makes that replacement automatic once the new bound is on the board.
 
 ## The Lean tier
 
@@ -139,7 +166,7 @@ If you need to change the verifier, the schema, or the site builder, do that in 
 
 ## The progress report
 
-`site_challenge/report.py` writes `docs/report/index.html` and `docs/evidence_index.json` on every build. The page compares the best exponent on the board with the published one per orbit, lists the interval `lower <= chi <= upper` on every cell with the date each side last moved, draws cumulative CPU-hours against cumulative record-tier bounds from the run log and the compute blocks, and indexes the evidence behind every bound: the pull request and merge commit that brought it to main, its receipt under `certs/`, its Lean module, and its compute block. The JSON file holds the same data. To rebuild the page without running any certificate:
+`site_challenge/report.py` writes `docs/report/index.html` and `docs/evidence_index.json` on every build. The page compares the best exponent on the board with the published one per orbit, lists the interval `lower <= chi <= upper` on every cell with the date each side last moved, draws cumulative CPU-hours against cumulative record-tier bounds from the run log and the compute blocks, and indexes the evidence behind every bound, with a tally by tier: the pull request and merge commit that brought it to main, its receipt under `certs/`, its Lean module, its `attested` block and the manifest's batch count when it has one, and its compute block. The JSON file holds the same data. To rebuild the page without running any certificate:
 
 ```
 uv run --extra challenge python site_challenge/build.py --no-verify

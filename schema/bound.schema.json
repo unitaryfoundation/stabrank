@@ -143,7 +143,7 @@
         "expect"
       ],
       "additionalProperties": false,
-      "description": "required for a lower bound to earn the reproduced tier",
+      "description": "required for a lower bound to earn the reproduced tier; with `attested` a passing script earns attested, and with `exact` it earns verified",
       "properties": {
         "script": {
           "type": "string",
@@ -162,6 +162,55 @@
           "minimum": 1,
           "maximum": 3600,
           "description": "wall-clock seconds the script may run under the verifier, default 900. Declare more only when the search has already been restated as tightly as you can; the value is shown on the board next to the tier and in the ledger, and 3600 is a hard cap"
+        },
+        "attested": {
+          "type": "object",
+          "required": [
+            "batches",
+            "recomputed",
+            "compute_hours",
+            "hardware",
+            "note"
+          ],
+          "additionalProperties": false,
+          "description": "declares that the argument is exact and machine-checked but rests on an offline enumeration too large for any certificate budget, whose outputs are stored in the repository. The certificate then checks coverage and hashes of every stored batch, re-decides stored exceptions exactly, and re-runs a subset of batches from scratch; a passing script earns the attested tier, between cited and reproduced. Mutually exclusive with `exact: true`, and requires provenance.compute",
+          "properties": {
+            "batches": {
+              "type": "string",
+              "description": "path, relative to the repository root, of a JSON manifest listing every batch of the enumeration: a list (or an object with a `batches` list) of entries {\"id\", \"params\", \"output\", \"sha256\"}, where `output` is the batch's stored result file relative to the repository root and `sha256` its hex digest. The verifier requires every output to exist with the stated hash before the script runs"
+            },
+            "recomputed": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "how many batches the certificate re-runs from scratch and compares bit for bit against the stored output, chosen deterministically from a seed the script prints on a line `seed: <value>`; at most the number of batches in the manifest"
+            },
+            "compute_hours": {
+              "type": "number",
+              "minimum": 0,
+              "description": "CPU core-hours the offline enumeration took"
+            },
+            "hardware": {
+              "type": "string",
+              "description": "machine the enumeration ran on"
+            },
+            "note": {
+              "type": "string",
+              "maxLength": 2000,
+              "description": "what the completeness of the bound rests on that the certificate does not re-run: the stored batch outputs, the committed runner that regenerates them, and how a reader would re-run the whole enumeration"
+            }
+          }
+        }
+      },
+      "not": {
+        "$comment": "attested and exact: true are mutually exclusive; the enumeration behind an attested bound is not re-run, so the pipeline did not confirm the whole argument",
+        "required": [
+          "attested",
+          "exact"
+        ],
+        "properties": {
+          "exact": {
+            "const": true
+          }
         }
       }
     },

@@ -27,6 +27,10 @@ Tiers, in decreasing strength:
     verified    exact arithmetic confirmed the decomposition here, or a
                 lower-bound certificate exact throughout, with no margin
     reproduced  a certificate script ran to completion and asserted the bound
+    attested    the argument is exact but rests on an offline enumeration too
+                large for any budget; the certificate checked the hashes of
+                every stored batch output, re-decided the stored exceptions,
+                and re-ran a declared subset of batches from scratch
     cited       attributed to the literature; not machine-checked
 
 The Lean tier is the one that does not depend on trusting this file. Building
@@ -39,6 +43,7 @@ inflate a tier on its own.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import re
@@ -259,6 +264,74 @@ def certificate_budget(sub, default=BUDGET_DEFAULT_S):
     return max(1, min(int(declared), BUDGET_CAP_S))
 
 
+BATCH_FIELDS = ("id", "params", "output", "sha256")
+
+
+def sha256_file(path):
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def load_batch_manifest(rel, root=ROOT):
+    """The batch manifest behind an attested bound, as a list of entries.
+
+    Returns (batches, error). The file is JSON, either a list or an object with
+    a `batches` list; every entry names the batch, its parameters, its stored
+    output relative to the repository root and that output's SHA-256.
+    """
+    path = os.path.join(root, rel)
+    if not os.path.isfile(path):
+        return None, f"batch manifest not found: {rel}"
+    try:
+        doc = json.load(open(path))
+    except json.JSONDecodeError as exc:
+        return None, f"batch manifest {rel} is not valid JSON: {exc}"
+    batches = doc.get("batches") if isinstance(doc, dict) else doc
+    if not isinstance(batches, list) or not batches:
+        return None, f"batch manifest {rel} lists no batches"
+    ids = set()
+    for i, b in enumerate(batches):
+        missing = [k for k in BATCH_FIELDS if not isinstance(b, dict) or k not in b]
+        if missing:
+            return None, f"batch {i} in {rel} lacks {', '.join(missing)}"
+        if b["id"] in ids:
+            return None, f"batch id {b['id']!r} is listed twice in {rel}"
+        ids.add(b["id"])
+    return batches, None
+
+
+def check_attested(cert, root=ROOT):
+    """The cheap half of an attested bound: the manifest exists, the declared
+    re-run count fits it, and every stored batch output is present with the
+    stated hash. Returns (batches, error); a hash mismatch is an error, since
+    an output that has changed since it was recorded is not the enumeration
+    the bound rests on.
+    """
+    att = cert["attested"]
+    batches, err = load_batch_manifest(att["batches"], root)
+    if err:
+        return None, err
+    n = len(batches)
+    k = int(att["recomputed"])
+    if k < 1 or k > n:
+        return None, f"attested.recomputed is {k} but the manifest lists {n} batches"
+    for b in batches:
+        out = os.path.join(root, b["output"])
+        if not os.path.isfile(out):
+            return None, f"batch {b['id']!r} output not found: {b['output']}"
+        got = sha256_file(out)
+        if got.lower() != str(b["sha256"]).lower():
+            return None, (f"batch {b['id']!r} output {b['output']} has SHA-256 "
+                          f"{got[:16]}..., manifest says {str(b['sha256'])[:16]}...")
+    return batches, None
+
+
+SEED_LINE = re.compile(r"^\s*seed\s*[:=]\s*(\S+)", re.I | re.M)
+
+
 def verify_lower(sub, budget_s=BUDGET_DEFAULT_S):
     """Run the certificate script; require exit zero and its claim on stdout.
 
@@ -267,6 +340,11 @@ def verify_lower(sub, budget_s=BUDGET_DEFAULT_S):
     declared budget is part of the submission and is shown on the board, so
     the cost of a bound stays visible rather than being absorbed into a
     longer default for everyone.
+
+    With `certificate.attested`, the stored batch outputs are checked against
+    the manifest before the script runs, and a pass earns `attested` rather
+    than `reproduced`: the script re-ran a declared number of batches and only
+    hashed the rest, and the detail says which.
     """
     cert = sub.get("certificate")
     if not cert or not cert.get("script"):
@@ -278,6 +356,15 @@ def verify_lower(sub, budget_s=BUDGET_DEFAULT_S):
     expect = cert.get("expect", "")
     if cert.get("budget_s") is not None:
         budget_s = certificate_budget(sub, budget_s)
+    batches = None
+    if cert.get("attested"):
+        if cert.get("exact"):
+            return Result(False, None,
+                          "certificate declares both exact and attested; an attested "
+                          "enumeration was not re-run, so it cannot claim verified")
+        batches, err = check_attested(cert)
+        if err:
+            return Result(False, None, err)
     try:
         proc = subprocess.run([sys.executable, path], capture_output=True,
                               text=True, timeout=budget_s, cwd=ROOT)
@@ -289,6 +376,23 @@ def verify_lower(sub, budget_s=BUDGET_DEFAULT_S):
         return Result(False, None, "certificate declares no claim string to expect")
     if expect.strip() not in (line.strip() for line in proc.stdout.splitlines()):
         return Result(False, None, f"certificate ran but did not print the line {expect!r}")
+    if batches is not None:
+        # The enumeration itself was not re-run here and no budget the board
+        # allows could re-run it. What the pipeline confirmed is the manifest
+        # (every stored output present with its recorded hash), the script's
+        # exact re-decision of the stored exceptions, and a bit-for-bit re-run
+        # of `recomputed` batches; the rest of the enumeration is attested by
+        # its stored outputs and the committed runner that regenerates them.
+        att = cert["attested"]
+        n, k = len(batches), int(att["recomputed"])
+        m = SEED_LINE.search(proc.stdout)
+        seed = f" chosen from seed {m.group(1)}" if m else ""
+        return Result(True, "attested",
+                      f"certificate script asserted: {expect}; re-ran {k} of {n} stored "
+                      f"batches from scratch{seed} and only checked the SHA-256 of the "
+                      f"other {n - k} against {att['batches']}; the full enumeration "
+                      f"({att['compute_hours']:g} CPU-h on {att['hardware']}) was not "
+                      "re-run")
     if cert.get("exact"):
         # The submission declares that the whole argument is exact: no
         # floating-point margin anywhere, including in how candidates were

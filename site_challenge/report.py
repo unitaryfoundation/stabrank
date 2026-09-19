@@ -430,12 +430,29 @@ def evidence_entry(sub, slug, res, history, cert, lean_receipt_ok):
         "receipt_matches": cert[1] if cert else None,
         "certificate_script": cert_block.get("script"),
         "certificate_budget_s": cert_block.get("budget_s"),
+        "certificate_attested": site.attested_summary(sub),
         "lean_module": ln.get("module"), "lean_theorem": ln.get("theorem"),
         "lean_receipt": (f"certs/lean-{ln['module'].replace('.', '-')}.json"
                          if ln.get("module") else None),
         "lean_receipt_ok": lean_receipt_ok,
         "compute": sub["provenance"].get("compute"),
     }
+
+
+TIER_ORDER = ("lean", "verified", "reproduced", "attested", "cited")
+
+
+def tier_counts(evidence):
+    """How many evidence rows sit at each tier, plus `failed` and `unverified`."""
+    out = collections.Counter()
+    for e in evidence:
+        if e["tier"] is None and e["ok"] is None:
+            out["unverified"] += 1
+        elif not e["ok"]:
+            out["failed"] += 1
+        else:
+            out[e["tier"]] += 1
+    return dict(out)
 
 
 def evidence_index(entries, root=ROOT):
@@ -640,10 +657,13 @@ def report_page(comparison, cells, table, curve, evidence, refs, generated, head
     # ---- evidence
     with_pr = sum(1 for e in evidence if e["pull_request"] is not None)
     with_receipt = sum(1 for e in evidence if e["receipt"] and e["receipt_matches"])
+    tally = tier_counts(evidence)
+    by_tier = ", ".join(f"{tally[t]} {t}" for t in TIER_ORDER if tally.get(t))
     o.append("<h2>Evidence index</h2>")
     o.append(f"<p class=h2sub>{len(evidence)} bounds in <code>bounds/</code>: {with_pr} "
              f"reached main through a pull request, {with_receipt} carry a verification "
-             "receipt matching the file's content hash. Machine-readable copy: "
+             "receipt matching the file's content hash. "
+             f"By tier: {by_tier or 'none verified at this build'}. Machine-readable copy: "
              f"<a href='{rel}evidence_index.json'>evidence_index.json</a>.</p>")
     o.append("<div class='tw scroll'><table><thead><tr><th>bound</th><th>tier</th>"
              "<th>PR</th><th>merge</th><th>added</th><th>receipt</th><th>Lean</th>"
