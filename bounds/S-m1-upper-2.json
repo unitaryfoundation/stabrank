@@ -40,5 +40,9 @@
       "sqrt(2)/2",
       "-sqrt(2)/2"
     ]
+  },
+  "lean": {
+    "module": "LeanProofs.M1StabRank",
+    "theorem": "strange_m1_stabRank_le_two"
   }
 }

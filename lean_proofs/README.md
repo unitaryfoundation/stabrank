@@ -202,6 +202,25 @@ mapping is:
   planes and 3-flats, and a seven-term span lemma. With this every lean-tier
   upper bound on the board is a statement about `stabRank`.
 
+- `LeanProofs/TensorStabRank.lean` — tensor products against `stabRank`.
+  `tensor ψ φ` is the product state on `n + m` qutrits (a digit string is
+  split into its first `n` and last `m` digits). `IsStab.tensor`: the tensor
+  product of two `IsStab` vectors is `IsStab`, with `Fin.append` on `x₀` and
+  `l`, block-diagonal `W` and `Q`, and the sum over `F_3^(k+k')` factored
+  through `Fin.appendEquiv`. `stabRank_tensor_le`:
+  `stabRank IsStab (ψ ⊗ φ) ≤ stabRank IsStab ψ * stabRank IsStab φ`, from
+  minimal decompositions of each factor and their pairwise products.
+  `strange_m4_stabRank_le_four` and `strange_m6_stabRank_le_eight` are the
+  tensor square and cube of `strange_m2_stabRank_le_two`;
+  `strangeVec4_apply`, `strangeVec6_apply` identify the states as the
+  four- and six-fold products of the one-qutrit Strange amplitude.
+
+- `LeanProofs/M1StabRank.lean` — one-copy upper bounds. `stabRank_le_pow`:
+  the computational basis bounds `stabRank IsStab ψ ≤ 3^n` for every `ψ`.
+  `strange_m1_stabRank_le_two` (`|S⟩ = (|1⟩ - |2⟩)/√2`),
+  `t3_m1_stabRank_le_three`, and with `T3M1StabRank` the exact value
+  `t3_m1_stabRank_eq_three`.
+
 ## Build
 
 Requires Lean 4 + mathlib4 (cached). From the `lean_proofs/` directory:

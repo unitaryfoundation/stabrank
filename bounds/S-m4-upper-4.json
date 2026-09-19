@@ -292,5 +292,9 @@
       "-3/8 - 3*sqrt(3)*I/8",
       "3/8 + 3*sqrt(3)*I/8"
     ]
+  },
+  "lean": {
+    "module": "LeanProofs.TensorStabRank",
+    "theorem": "strange_m4_stabRank_le_four"
   }
 }
