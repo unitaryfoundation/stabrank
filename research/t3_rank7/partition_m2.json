@@ -1,0 +1,212 @@
+{
+ "m": 2,
+ "rank": 7,
+ "need": 4,
+ "target_steps": 2000000,
+ "total_steps": 3939702,
+ "n_batches": 7,
+ "setup": {
+  "m": 2,
+  "N": 360,
+  "group_order": 324,
+  "orbits": 8,
+  "nfree": 3,
+  "projection_dim": 6,
+  "projection_seed": 2024,
+  "ell": 65521,
+  "ell2": 2147483647,
+  "dictionary_sha256": "d6a982c074309ea82e8be334f27dc5b28f04e521d4e162f18cfab58d27521e33",
+  "setup_sha256": "59b04a72bacf24d368567f0d40536db24a63dad305c9981f678ba5df3c5e6cce",
+  "blocks": [
+   {
+    "block": 0,
+    "rep": 67,
+    "orbit_size": 6,
+    "start": 3,
+    "end": 9
+   },
+   {
+    "block": 1,
+    "rep": 0,
+    "orbit_size": 9,
+    "start": 9,
+    "end": 18
+   },
+   {
+    "block": 2,
+    "rep": 63,
+    "orbit_size": 18,
+    "start": 18,
+    "end": 36
+   },
+   {
+    "block": 3,
+    "rep": 36,
+    "orbit_size": 27,
+    "start": 36,
+    "end": 63
+   },
+   {
+    "block": 4,
+    "rep": 9,
+    "orbit_size": 54,
+    "start": 63,
+    "end": 117
+   },
+   {
+    "block": 5,
+    "rep": 117,
+    "orbit_size": 81,
+    "start": 117,
+    "end": 198
+   },
+   {
+    "block": 6,
+    "rep": 118,
+    "orbit_size": 162,
+    "start": 198,
+    "end": 360
+   }
+  ]
+ },
+ "per_block": [
+  {
+   "block": 0,
+   "rep": 67,
+   "orbit_size": 6,
+   "start": 3,
+   "pairs": 17,
+   "pairs_with_nontrivial_stab_ij": 14,
+   "steps": 239461,
+   "first_batch": 0,
+   "batches": 1
+  },
+  {
+   "block": 1,
+   "rep": 0,
+   "orbit_size": 9,
+   "start": 9,
+   "pairs": 22,
+   "pairs_with_nontrivial_stab_ij": 16,
+   "steps": 326497,
+   "first_batch": 1,
+   "batches": 1
+  },
+  {
+   "block": 2,
+   "rep": 63,
+   "orbit_size": 18,
+   "start": 18,
+   "pairs": 31,
+   "pairs_with_nontrivial_stab_ij": 15,
+   "steps": 522888,
+   "first_batch": 2,
+   "batches": 1
+  },
+  {
+   "block": 3,
+   "rep": 36,
+   "orbit_size": 27,
+   "start": 36,
+   "pairs": 40,
+   "pairs_with_nontrivial_stab_ij": 21,
+   "steps": 704371,
+   "first_batch": 3,
+   "batches": 1
+  },
+  {
+   "block": 4,
+   "rep": 9,
+   "orbit_size": 54,
+   "start": 63,
+   "pairs": 59,
+   "pairs_with_nontrivial_stab_ij": 17,
+   "steps": 896907,
+   "first_batch": 4,
+   "batches": 1
+  },
+  {
+   "block": 5,
+   "rep": 117,
+   "orbit_size": 81,
+   "start": 117,
+   "pairs": 71,
+   "pairs_with_nontrivial_stab_ij": 20,
+   "steps": 799077,
+   "first_batch": 5,
+   "batches": 1
+  },
+  {
+   "block": 6,
+   "rep": 118,
+   "orbit_size": 162,
+   "start": 198,
+   "pairs": 83,
+   "pairs_with_nontrivial_stab_ij": 5,
+   "steps": 450501,
+   "first_batch": 6,
+   "batches": 1
+  }
+ ],
+ "batches": [
+  {
+   "index": 0,
+   "block": 0,
+   "j_lo": 4,
+   "j_hi": 360,
+   "pairs": 17,
+   "steps": 239461
+  },
+  {
+   "index": 1,
+   "block": 1,
+   "j_lo": 10,
+   "j_hi": 360,
+   "pairs": 22,
+   "steps": 326497
+  },
+  {
+   "index": 2,
+   "block": 2,
+   "j_lo": 19,
+   "j_hi": 360,
+   "pairs": 31,
+   "steps": 522888
+  },
+  {
+   "index": 3,
+   "block": 3,
+   "j_lo": 37,
+   "j_hi": 360,
+   "pairs": 40,
+   "steps": 704371
+  },
+  {
+   "index": 4,
+   "block": 4,
+   "j_lo": 64,
+   "j_hi": 360,
+   "pairs": 59,
+   "steps": 896907
+  },
+  {
+   "index": 5,
+   "block": 5,
+   "j_lo": 118,
+   "j_hi": 360,
+   "pairs": 71,
+   "steps": 799077
+  },
+  {
+   "index": 6,
+   "block": 6,
+   "j_lo": 199,
+   "j_hi": 360,
+   "pairs": 83,
+   "steps": 450501
+  }
+ ],
+ "generated": "2026-09-19T13:04:41+00:00",
+ "git_commit": "c0f1b9c475eab7d133ac6b613fb8087b486fe8d1",
+ "sha256": "8c5291e78f33321284dcb508336d6f3e9b127d3a149b4c0946dc5a421147b087"
+}

@@ -1,72 +1,182 @@
-# Rank-7 exclusion for |T3>^3: prototype
+# Rank-7 exclusion for |T3>^3: batch pipeline
 
 Design note: `docs/notes/t3_rank7_exclusion.md`. Nothing in this directory
-is a certificate. The full scan was not run.
+is a certificate; `aggregate.py` prints `CERTIFIED chi(T3^3) >= 8` only once
+every batch of `partition.json` is stored and checked. The full scan has not
+been run.
 
 ## Files
 
-- `scan3.py`: the three-pivot kernel (`kernel3`, numba), the exact
-  class-set decision (`decide`), and the validation entry points listed
-  below. It imports `verify_challenge/cert_t3m3_rank7.py` for the
-  dictionary, the descent, the reduction mod 65521, the projection, the
-  hashing primitives and the symmetry group.
-- `count_steps.py`: exact inner-step counts of the m=3 scan under the
-  symmetry of V_3, for the pivot order of the merged certificate and for
-  the orbit-block order of the note, with and without the Stab(i, j)
-  reduction of the third pivot. Writes `results/step_counts.json`.
-- `results/step_counts.json`: output of `count_steps.py`.
-- `results/m3_pair_timings.json`: per-step timings of `kernel3` on real
-  m=3 data for a few pivot pairs, measured on a machine under load (see
-  the note for the load figures).
+- `common.py`: shared setup. Dictionary, descent to V_m, reduction mod
+  65521, the projection of the quotient to F_ell^6 (seed 2024), the
+  symmetry group of V_m and the dictionary permutations it induces, and the
+  orbit-block relabelling of the note: states inside V_m first, then every
+  G-orbit as a contiguous block in increasing order of size. The first pivot
+  of a block is its first label; the admissible second pivots j are the
+  labels above it minimal in their Stab(i)-orbit; the admissible third
+  pivots k > j are minimal in their Stab(i, j)-orbit. Also the partition
+  loader and the canonical-JSON hash used everywhere.
+- `make_partition.py`: writes `partition.json` (the fixed batch geometry:
+  for every batch its block, j-range, pair count and exact inner-step count)
+  and `manifest_rank7.json` for `autoresearch/loop.py`. The inner-step count
+  of a pair (i, j) is the sum over admissible k of N - k - 1, the quantity
+  `count_steps.py` reports; the sum over batches is 13,125,302,318,795, the
+  `blocked_steps_with_stab_ij` total of `results/step_counts.json`, and the
+  per-block totals match `count_steps.py` block by block. 459 batches of
+  about 3e10 steps (median 3.0e10, smallest 8.3e8, largest 3.04e10; block 0
+  is a single batch of 1.59e10).
+- `batch.py`: one batch. Accepts the `run.py` command line the loop builds,
+  with `--seed0` as the batch index and the annealer flags ignored. Runs the
+  scan for the batch's (block, j-range) in the compiled kernel `scan_pairs`
+  and writes `batches/batch_<K>.json`.
+- `aggregate.py`: the certificate-side check (below).
+- `check_order.py`: combinatorial check of the pivot order: random 7-sets
+  have a canonical form the masks admit.
+- `scan3.py`, `count_steps.py`, `results/`: the prototype and the counts the
+  note is based on, unchanged. `scan3.py`'s `kernel3` is the reference the
+  batch kernel is compared against.
+- `partition_m2.json`, `manifest_m2.json`: the m=2 miniature (7 batches,
+  3.9e6 steps) used as a control.
 
-Run from the repository root with `uv run --extra challenge python
-research/t3_rank7/scan3.py {small,sym,m3,m3big}` and
-`uv run --extra challenge python research/t3_rank7/count_steps.py`.
+## Kernel
+
+`scan_pairs` in `batch.py` is `kernel3` of `scan3.py` with three changes.
+The per-j third-pivot mask (`kok_index`, `kok_rows`) implements the Stab(i,
+j) reduction; the nominal step count is accumulated for every admissible k
+whether or not the kernel skips it as a member of span(V_m, s_i, s_j), so
+it equals the partition's count exactly; and the class lists are replaced by
+an in-place exact decision. For every candidate class set the kernel gathers
+the members (three pivots, the states above j inside span(V_m, s_i, s_j),
+the states above k with zero image modulo span(q_i, q_j, q_k), one group of
+mutually parallel images there, and the states inside V_m), reduces their
+rows to echelon form mod 2^31 - 1 and, when the rank is at most 7, reduces
+the three descent vectors psi_r against that row space. A rank of at most 8
+mod 2^31 - 1 is the rank over Q(w3) (Hadamard, as in the certificate), and
+rank(class with V_m) = rank(class) is the same statement as "the psi_r
+reduce to zero", so the decision is exact. A class of rank at least 8 cannot
+lie in the 7-dimensional preimage of its image space and is a projection
+collision; the kernel stores it and `batch.py` re-splits it in Python
+against the unprojected quotient images modulo the three pivots, deciding
+each subclass by the rank pair, or by its 7-subsets if a subclass still has
+rank at least 8. Anything left is an `undecided` entry, which fails the
+batch. Only counts, a histogram by (zero members, parallel members) and the
+exceptions are stored.
+
+The kernel reproduces `kernel3` on the five pairs of
+`results/m3_pair_timings.json` (same candidate counts, histograms and inner
+steps, in the original labelling with trivial masks).
+
+## Batch output
+
+`batches/batch_<K>.json`: the geometry (`batch`: index, block, j_lo, j_hi,
+pairs, steps, first pivot as an original index, orbit size), m, rank, need,
+the partition, setup and dictionary hashes, `steps_nominal` and
+`steps_done`, pairs scanned and pairs with a nontrivial Stab(i, j), Z-member
+and parallel-to-pivot totals, `candidates`, `decided`, `histogram`,
+`found_count` and `found` (class sets whose span contains V_m, as original
+indices with their rank and the smallest spanning subset, up to 256
+stored), `spurious_count` and `spurious` (re-split records), `oversize_count`,
+`undecided`; then `deterministic_sha256` over everything above; then wall,
+CPU, setup and kernel times, ns per step, timestamps, hostname, git commit,
+kernel version string, interpreter versions; then `sha256` over everything
+above it.
+
+Exit codes: 0 when the batch completes and no class set contains V_m
+(`loop.py` logs this as `discovery`, its word for exit 0); 2 when one does
+(`loop.py` logs `miss`; the last stdout line begins `DECOMPOSITION FOUND`
+and names the class); a traceback (exit 1) when a class set is undecided,
+the geometry or step count disagrees with the partition, or the setup hash
+differs from the partition's. The loop retries only infrastructure
+failures, so a batch that fails on its own content is logged once as
+`exception:<Type>`.
+
+## Launch, resume, aggregate
+
+From the repository root, one core, `nice -n 19` applied by the loop:
+
+```
+uv run --extra challenge python autoresearch/loop.py run research/t3_rank7/manifest_rank7.json \
+    --runner research/t3_rank7/batch.py --max-hours 60
+uv run --extra challenge python autoresearch/loop.py run research/t3_rank7/manifest_rank7.json \
+    --runner research/t3_rank7/batch.py --resume --max-hours 60
+uv run --extra challenge python autoresearch/loop.py status --since 72
+uv run --extra challenge python research/t3_rank7/aggregate.py --dry-run --partial
+```
+
+The manifest has one job per block (45 jobs), the block's batch indices as
+its seeds in a single round, priority decreasing with the block index, so
+the batches run block 0 first, then block 1, and so on; `stop_on_solve` is
+false and `cap_s` is 10800 (three hours; the largest batch took under 15
+minutes at the measured rate, so a timeout means the machine was starved,
+and `--resume` runs that batch again). `extra_args` carries the partition
+path and the output directory. The loop's state file
+`autoresearch/state/manifest_rank7.json` records which batches are done;
+`--resume` continues from it, and a batch that was interrupted is run again.
+The batch files themselves are the audit trail and can be regenerated one at
+a time with `batch.py T3 3 7 --seeds 1 --seed0 K --partition
+research/t3_rank7/partition.json`.
+
+Several loops can run at once on different machines by giving each a
+manifest that covers a subset of the jobs, provided they write to different
+state files (the manifest `name`) and the batch files are collected into one
+directory before aggregating.
+
+`aggregate.py` checks the partition's hash, that every batch file is
+present, both hashes of every file, that the geometry, partition hash, setup
+hash, cell and nominal step count match the partition, that the j-ranges of
+every block tile [start + 1, N), that the step counts sum to the partition
+total, that every `undecided` list is empty and every `found` list empty.
+Then it re-runs `--recheck N` batches from scratch (symmetry cache bypassed,
+indices drawn from `numpy.random.default_rng(--recheck-seed)`, seed and
+indices printed) into a scratch directory and compares their
+`deterministic_sha256` with the stored ones. `--dry-run` skips the re-runs
+and never certifies; `--partial` reports over the batches present (and
+re-runs among them) while the scan is in progress. Exit 0 when certified
+(or, in a dry run, when every stored check passes), 2 when a stored batch
+reports a decomposition, 1 otherwise.
 
 ## What is validated
 
-- `brute_force_check`: on random sub-dictionaries of 22 to 26 two-qutrit
-  states, every 7-subset whose projected images span at most four
-  dimensions mod 65521 (found by enumerating all 7-subsets and computing
-  ranks) lies inside a class set of the three-pivot scan with trivial
-  symmetry. Run with planted targets (a random 3-dimensional subspace of
-  the span of seven chosen states) and with the true V_2.
-- `planted_check`: on the full m=2 dictionary (360 states) with a planted
-  target, the scan for the plant's two least members produces a class set
-  containing the plant, and the mod-ell rank pair accepts it.
-- `m2_kernel2_consistency`: at m=2 with V_2, every class set of the
-  two-pivot kernel of the merged certificate (six-state configurations) is
-  contained in a class set of the three-pivot kernel for the same pivot.
-- `m2_symmetry_check`: at m=2 with V_2, on a G-invariant sub-dictionary
-  (57 states: one orbit of 54 under the 2-copy symmetry group of V_2, of
-  order 324, plus the three states inside V_2), the set of projected image
-  spaces of the class sets found with one first pivot per orbit and a
-  stabilizer-minimal second pivot, closed under the group, equals the set
-  found with trivial symmetry (77,091 image spaces either way). This
-  checks the pivot-order argument, not the orbit-block order of the note,
-  which is only counted, not implemented. Larger sub-dictionaries flood
-  (the run on 80 states was stopped after six minutes in the Python-side
-  class assembly).
-- `time_m3_pairs`: `kernel3` runs on the real m=3 data (30240 states, V_3)
-  for single pivot pairs, every candidate class is decided exactly mod
-  2^31 - 1, and no class set contains V_3 for the pairs tried. This is a
-  timing measurement on a few pairs out of 326,368, not evidence about
-  rank 7.
+- Partition: the sum of the batch step counts equals `count_steps.py`'s
+  total for the orbit-block order with the Stab(i, j) mask,
+  13,125,302,318,795, and every block's total matches `per_rep_blocked`
+  in `results/step_counts.json`. Every batch asserts that its kernel's
+  nominal count equals its partition entry.
+- Kernel against the prototype: `scan_pairs` and `kernel3` agree on the five
+  recorded m=3 pairs (0 to 4602 candidate classes each).
+- Pivot order: `check_order.py` finds an admissible canonical form for 3000
+  random 7-sets at m=2 and 2000 at m=3.
+- End to end at m=3: batches 15, 60 and 69 (the three smallest, 8.3e8 to
+  1.4e9 steps, 2435 to 5494 candidate classes) run clean through `batch.py`,
+  aggregate under `--dry-run --partial`, and their from-scratch re-runs
+  match bit for bit under `--partial --recheck`.
+- Control at m=2 through the same code path: `partition_m2.json` and
+  `manifest_m2.json`, run by `loop.py` with `--runner
+  research/t3_rank7/batch.py`, then `aggregate.py --partition
+  research/t3_rank7/partition_m2.json --batches-dir
+  research/t3_rank7/batches_m2`. Every one of the 1,930,049 class sets
+  contains V_2 (the three states inside V_2 are members of every class),
+  the aggregator reports the smallest spanning subset as 3 states, so
+  chi(T3^2) <= 3, and dim V_2 = 3 gives equality. This exercises the found
+  path; nothing at m=2 exercises a negative outcome.
+- Timing: 17 to 21 ns per inner step at load average about 5 on 18 cores
+  (the note measured 42 to 45 ns at load 27 to 120); 30 s of setup per
+  batch with the symmetry cache, 60 s without. Projected total at 20 ns:
+  73 CPU-hours for the 1.31e13 steps, plus 4 hours of setup over 459
+  batches; at the note's 45 ns, 164 CPU-hours. The decision cost is
+  negligible at the observed candidate rate (about 3e-6 per step).
 
 ## What is not validated
 
-- The orbit-block pivot order (the factor of about three in the note) is
-  counted exactly by `count_steps.py` but not implemented in `kernel3`,
-  which uses the pivot order of the merged certificate.
-- The Stab(i, j) reduction of the third pivot is counted, not implemented.
-- The re-splitting of spurious class sets (rank at least 8 mod 2^31 - 1,
-  which a projection collision could produce) is described in the note and
-  counted by `decide`, not implemented; none occurred in the pairs tried.
-- Case B of the note (five coplanar images) has no script here; the merged
-  certificate's kernel with `need = 3` plus the rank filter of the note
-  would be the starting point.
-- The batch runner, the manifest and the aggregator of the note's
-  recommendation do not exist yet.
-- The per-step timing was measured on a machine with a load average
-  between 30 and 120 on 18 cores at `nice -n 19`; treat it as an upper
-  bound on the cost per step of this numba kernel.
+- The full scan has not been run; the three m=3 batches are 0.02 percent of
+  the steps and their j-ranges are the cheap tails of their blocks, so the
+  candidate flood at small j (the note's 1e-5 classes per step) has been
+  seen only in `kernel3`'s pair timings, not in a stored batch.
+- No spurious class (rank at least 8 mod 2^31 - 1) has occurred, so the
+  re-split path of `batch.py` has not run on real data; it is exercised
+  only by reading.
+- The negative (`CERTIFIED`) branch of `aggregate.py` has not been reached
+  by any run, since m=2 always finds V_2 and the m=3 set is partial.
+- Case B of the note has no separate script; the three-pivot scan covers
+  it.
+- No C++ port of the kernel; the numba kernel is what the batches run.

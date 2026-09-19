@@ -19,3 +19,6 @@ texput.log
 
 # Plateau bases saved by autoresearch/loop.py manifests (binary search scratch).
 autoresearch/state/plateaus/
+
+# Symmetry-group cache of research/t3_rank7/common.py (rebuilt on demand).
+research/t3_rank7/cache/

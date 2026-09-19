@@ -1,0 +1,94 @@
+{
+ "name": "manifest_m2",
+ "description": "batches of the three-pivot scan excluding rank 7 for |T3>^2; run with --runner research/t3_rank7/batch.py; the seed is the batch index into research/t3_rank7/partition_m2.json",
+ "defaults": {
+  "seeds": 1,
+  "stop_on_solve": false,
+  "cap_s": 600,
+  "extra_args": [
+   "--partition",
+   "research/t3_rank7/partition_m2.json",
+   "--out-dir",
+   "research/t3_rank7/batches_m2"
+  ]
+ },
+ "jobs": [
+  {
+   "id": "T3-m2-r7-block-00",
+   "orbit": "T3",
+   "m": 2,
+   "rank": 7,
+   "seed0": 0,
+   "seeds": 1,
+   "seeds_per_round": 1,
+   "priority": 7,
+   "note": "orbit of size 6 (representative 67), 17 pivot pairs, 2.395e+05 inner steps"
+  },
+  {
+   "id": "T3-m2-r7-block-01",
+   "orbit": "T3",
+   "m": 2,
+   "rank": 7,
+   "seed0": 1,
+   "seeds": 1,
+   "seeds_per_round": 1,
+   "priority": 6,
+   "note": "orbit of size 9 (representative 0), 22 pivot pairs, 3.265e+05 inner steps"
+  },
+  {
+   "id": "T3-m2-r7-block-02",
+   "orbit": "T3",
+   "m": 2,
+   "rank": 7,
+   "seed0": 2,
+   "seeds": 1,
+   "seeds_per_round": 1,
+   "priority": 5,
+   "note": "orbit of size 18 (representative 63), 31 pivot pairs, 5.229e+05 inner steps"
+  },
+  {
+   "id": "T3-m2-r7-block-03",
+   "orbit": "T3",
+   "m": 2,
+   "rank": 7,
+   "seed0": 3,
+   "seeds": 1,
+   "seeds_per_round": 1,
+   "priority": 4,
+   "note": "orbit of size 27 (representative 36), 40 pivot pairs, 7.044e+05 inner steps"
+  },
+  {
+   "id": "T3-m2-r7-block-04",
+   "orbit": "T3",
+   "m": 2,
+   "rank": 7,
+   "seed0": 4,
+   "seeds": 1,
+   "seeds_per_round": 1,
+   "priority": 3,
+   "note": "orbit of size 54 (representative 9), 59 pivot pairs, 8.969e+05 inner steps"
+  },
+  {
+   "id": "T3-m2-r7-block-05",
+   "orbit": "T3",
+   "m": 2,
+   "rank": 7,
+   "seed0": 5,
+   "seeds": 1,
+   "seeds_per_round": 1,
+   "priority": 2,
+   "note": "orbit of size 81 (representative 117), 71 pivot pairs, 7.991e+05 inner steps"
+  },
+  {
+   "id": "T3-m2-r7-block-06",
+   "orbit": "T3",
+   "m": 2,
+   "rank": 7,
+   "seed0": 6,
+   "seeds": 1,
+   "seeds_per_round": 1,
+   "priority": 1,
+   "note": "orbit of size 162 (representative 118), 83 pivot pairs, 4.505e+05 inner steps"
+  }
+ ]
+}
