@@ -453,9 +453,22 @@ def git_commit():
         return None
 
 
-def run_batch(part, index, S, verbose=True):
+def kernel_for(engine):
+    """(callable, name): the numba kernel, or the C++ port `t3_scan_pairs` from
+    stabrank_core (cpp/src/t3_scan.cpp). Both take the same arguments, fill
+    the same buffers and produce identical records; the C++ port measured no
+    faster (18 to 21 ns per step against 15 to 21 for numba), so numba is the
+    default."""
+    if engine == "cpp":
+        from stabrank.stabrank_core import t3_scan_pairs
+        return t3_scan_pairs, "cpp"
+    return scan_pairs, "numba"
+
+
+def run_batch(part, index, S, verbose=True, engine="numba"):
     """Run batch `index` of the partition on the setup S. Returns the result
-    record (deterministic part only)."""
+    record (deterministic part only) and the timing."""
+    kernel, engine_name = kernel_for(engine)
     geo = common.batch_geometry(part, index)
     assert part["setup"]["setup_sha256"] == S.setup_sha256, "setup differs from the partition's"
     assert part["m"] == S.m
@@ -486,9 +499,9 @@ def run_batch(part, index, S, verbose=True):
     counters = np.zeros(N_COUNTERS, dtype=np.int64)
     t0 = time.time()
     c0 = time.process_time()
-    scan_pairs(S.PD_b, INV, ELL, S.E2_b, S.T2, ELL2, int(i), js.astype(np.int64), kok_index,
-               kok_rows, S.isfree_b, int(need), hist, found_buf, found_len, found_meta,
-               spur_buf, spur_len, spur_meta, over_meta, counters)
+    kernel(S.PD_b, INV, ELL, S.E2_b, S.T2, ELL2, int(i), js.astype(np.int64), kok_index,
+           kok_rows, S.isfree_b, int(need), hist, found_buf, found_len, found_meta,
+           spur_buf, spur_len, spur_meta, over_meta, counters)
     kernel_s = time.time() - t0
     kernel_cpu = time.process_time() - c0
     assert counters[C_STEPS_NOMINAL] == geo["steps"], (int(counters[C_STEPS_NOMINAL]), geo["steps"])
@@ -542,11 +555,11 @@ def run_batch(part, index, S, verbose=True):
     }
     rec["deterministic_sha256"] = common.sha256_json(rec)
     timing = {"kernel_s": kernel_s, "kernel_cpu_s": kernel_cpu,
-              "ns_per_step_done": 1e9 * kernel_s / max(1, rec["steps_done"])}
+              "ns_per_step_done": 1e9 * kernel_s / max(1, rec["steps_done"]), "engine": engine_name}
     if verbose:
         print(f"batch {index}: block {block} j in [{geo['j_lo']}, {geo['j_hi']}), {geo['pairs']} "
               f"pairs, {rec['steps_nominal']:.4e} steps ({rec['steps_done']:.4e} done) in "
-              f"{kernel_s:.1f}s ({timing['ns_per_step_done']:.1f} ns/step); {rec['candidates']} "
+              f"{kernel_s:.1f}s ({timing['ns_per_step_done']:.1f} ns/step, {engine_name}); {rec['candidates']} "
               f"candidates, {rec['decided']} decided, {rec['found_count']} contain V, "
               f"{rec['spurious_count']} spurious, {len(undecided)} undecided", flush=True)
     return rec, timing
@@ -564,6 +577,8 @@ def main(argv):
     ap.add_argument("--partition", default=os.path.join(common.HERE, "partition.json"))
     ap.add_argument("--out-dir", default=os.path.join(common.HERE, "batches"))
     ap.add_argument("--no-cache", action="store_true", help="rebuild the symmetry group")
+    ap.add_argument("--engine", choices=("numba", "cpp"), default="numba",
+                    help="kernel: numba (default) or the C++ port in stabrank_core")
     a = ap.parse_args(argv[1:])
     assert a.orbit == "T3", "this runner is specific to |T3>^m"
     assert a.seeds == 1, "one batch per invocation"
@@ -579,7 +594,7 @@ def main(argv):
     S = common.Setup(a.m, cache=not a.no_cache)
     setup_s = time.time() - t0
     print(f"setup {setup_s:.1f}s, setup hash {S.setup_sha256[:16]}", flush=True)
-    rec, timing = run_batch(part, index, S)
+    rec, timing = run_batch(part, index, S, engine=a.engine)
     ended = datetime.datetime.now(datetime.timezone.utc)
     ru = os.times()
     rec.update({

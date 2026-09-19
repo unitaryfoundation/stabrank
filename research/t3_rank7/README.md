@@ -35,6 +35,8 @@ been run.
 - `scan3.py`, `count_steps.py`, `results/`: the prototype and the counts the
   note is based on, unchanged. `scan3.py`'s `kernel3` is the reference the
   batch kernel is compared against.
+- `batches/`: the stored outputs of the m=3 batches run so far (three
+  validation batches at present); `batches_m2/`: the m=2 control outputs.
 - `partition_m2.json`, `manifest_m2.json`: the m=2 miniature (7 batches,
   3.9e6 steps) used as a control.
 
@@ -65,6 +67,20 @@ exceptions are stored.
 The kernel reproduces `kernel3` on the five pairs of
 `results/m3_pair_timings.json` (same candidate counts, histograms and inner
 steps, in the original labelling with trivial masks).
+
+`cpp/src/t3_scan.cpp` is a C++ port of the same kernel (same hash, same
+table, fused reduction and grouping, compile-time modulus, one array of
+structs for the table), bound as `stabrank_core.t3_scan_pairs` with the
+argument list and output buffers of the numba kernel, and tested in
+`cpp/tests/test_t3_scan.cpp` (planted rank-7 configuration found and
+decided, generic target in no class span, third-pivot mask honoured,
+determinism). `batch.py --engine cpp` selects it. Its records are identical
+to the numba kernel's (same `deterministic_sha256` on m=3 batch 15 and m=2
+batch 4, same counts on the five recorded pairs) but it is not faster: 18
+to 21 ns per step against 15 to 21 for numba back to back on the same load,
+so numba is the default. The note's 10 ns estimate assumed 32-bit
+coordinates and a direct-indexed count array in place of the hash table,
+which this port does not do.
 
 ## Batch output
 
@@ -106,9 +122,10 @@ uv run --extra challenge python research/t3_rank7/aggregate.py --dry-run --parti
 The manifest has one job per block (45 jobs), the block's batch indices as
 its seeds in a single round, priority decreasing with the block index, so
 the batches run block 0 first, then block 1, and so on; `stop_on_solve` is
-false and `cap_s` is 10800 (three hours; the largest batch took under 15
-minutes at the measured rate, so a timeout means the machine was starved,
-and `--resume` runs that batch again). `extra_args` carries the partition
+false and `cap_s` is 10800 (three hours; the largest batch is 3.04e10
+steps, about 9 minutes at the measured 18 ns per step and 23 at the note's
+45 ns, so a timeout means the machine was starved, and `--resume` runs that
+batch again). `extra_args` carries the partition
 path and the output directory. The loop's state file
 `autoresearch/state/manifest_rank7.json` records which batches are done;
 `--resume` continues from it, and a batch that was interrupted is run again.
@@ -159,12 +176,13 @@ reports a decomposition, 1 otherwise.
   the aggregator reports the smallest spanning subset as 3 states, so
   chi(T3^2) <= 3, and dim V_2 = 3 gives equality. This exercises the found
   path; nothing at m=2 exercises a negative outcome.
-- Timing: 17 to 21 ns per inner step at load average about 5 on 18 cores
-  (the note measured 42 to 45 ns at load 27 to 120); 30 s of setup per
-  batch with the symmetry cache, 60 s without. Projected total at 20 ns:
-  73 CPU-hours for the 1.31e13 steps, plus 4 hours of setup over 459
-  batches; at the note's 45 ns, 164 CPU-hours. The decision cost is
-  negligible at the observed candidate rate (about 3e-6 per step).
+- Timing: 15 to 21 ns per inner step for the numba kernel at load average
+  about 5 on 18 cores (the note measured 42 to 45 ns at load 27 to 120);
+  30 s of setup per batch with the symmetry cache, 60 s without. Projected
+  total at 18 ns: 66 CPU-hours for the 1.31e13 steps, plus 4 hours of
+  setup over 459 batches, about 9 minutes per median batch; at the note's
+  45 ns, 164 CPU-hours. The decision cost is negligible at the observed
+  candidate rate (about 3e-6 per step).
 
 ## What is not validated
 
@@ -179,4 +197,6 @@ reports a decomposition, 1 otherwise.
   by any run, since m=2 always finds V_2 and the m=3 set is partial.
 - Case B of the note has no separate script; the three-pivot scan covers
   it.
-- No C++ port of the kernel; the numba kernel is what the batches run.
+- The C++ kernel has been compared with the numba kernel on two batches
+  and five pairs, not on a batch with a spurious class or an oversize
+  class, where the two record paths could differ in ordering.

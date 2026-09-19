@@ -15,6 +15,7 @@
 #include "stabrank/fidelity.hpp"
 #include "stabrank/symmetric_engine.hpp"
 #include "stabrank/pivot_pair.hpp"
+#include "stabrank/t3_scan.hpp"
 
 #include <complex>
 #include <cstdint>
@@ -398,6 +399,55 @@ NB_MODULE(stabrank_core, m) {
           "Every rank-4 decomposition of psi over the dictionary D (dim x N, unit columns) "
           "containing pivot i and a partner from `partners`, with the other two members among "
           "the columns marked in `allowed`; sorted index quadruples, one per row.");
+
+    // --- t3_scan_pairs ---
+    m.def("t3_scan_pairs",
+          [](nb::ndarray<const int64_t, nb::ndim<2>, nb::c_contig> PD,
+             nb::ndarray<const int64_t, nb::ndim<1>, nb::c_contig> inv, int64_t ell,
+             nb::ndarray<const int64_t, nb::ndim<2>, nb::c_contig> E2,
+             nb::ndarray<const int64_t, nb::ndim<2>, nb::c_contig> T2, int64_t ell2, int64_t i,
+             nb::ndarray<const int64_t, nb::ndim<1>, nb::c_contig> jlist,
+             nb::ndarray<const int64_t, nb::ndim<1>, nb::c_contig> kok_index,
+             nb::ndarray<const int8_t, nb::ndim<2>, nb::c_contig> kok_rows,
+             nb::ndarray<const int8_t, nb::ndim<1>, nb::c_contig> isfree, int64_t need,
+             nb::ndarray<int64_t, nb::ndim<2>, nb::c_contig> hist,
+             nb::ndarray<int64_t, nb::ndim<2>, nb::c_contig> found_buf,
+             nb::ndarray<int64_t, nb::ndim<1>, nb::c_contig> found_len,
+             nb::ndarray<int64_t, nb::ndim<2>, nb::c_contig> found_meta,
+             nb::ndarray<int64_t, nb::ndim<2>, nb::c_contig> spur_buf,
+             nb::ndarray<int64_t, nb::ndim<1>, nb::c_contig> spur_len,
+             nb::ndarray<int64_t, nb::ndim<2>, nb::c_contig> spur_meta,
+             nb::ndarray<int64_t, nb::ndim<2>, nb::c_contig> over_meta,
+             nb::ndarray<int64_t, nb::ndim<1>, nb::c_contig> counters) {
+              const int64_t N = static_cast<int64_t>(PD.shape(0));
+              if (static_cast<int64_t>(E2.shape(0)) != N || static_cast<int64_t>(isfree.shape(0)) != N
+                  || static_cast<int64_t>(kok_rows.shape(1)) != N
+                  || E2.shape(1) != T2.shape(1) || jlist.shape(0) != kok_index.shape(0)
+                  || hist.shape(0) != hist.shape(1) || found_buf.shape(1) != spur_buf.shape(1)
+                  || found_meta.shape(1) != 3 || spur_meta.shape(1) != 3 || over_meta.shape(1) != 3
+                  || found_len.shape(0) != found_buf.shape(0) || spur_len.shape(0) != spur_buf.shape(0)
+                  || found_meta.shape(0) != found_buf.shape(0) || spur_meta.shape(0) != spur_buf.shape(0)
+                  || counters.shape(0) < 10 || inv.shape(0) != static_cast<size_t>(ell))
+                  throw nb::value_error("t3_scan_pairs: array shapes disagree");
+              stabrank::T3ScanInputs in{PD.data(), N, static_cast<int64_t>(PD.shape(1)), inv.data(), ell,
+                                        E2.data(), static_cast<int64_t>(E2.shape(1)), T2.data(),
+                                        static_cast<int64_t>(T2.shape(0)), ell2, i, jlist.data(),
+                                        static_cast<int64_t>(jlist.shape(0)), kok_index.data(),
+                                        kok_rows.data(), isfree.data(), need};
+              stabrank::T3ScanOutputs out{hist.data(), static_cast<int64_t>(hist.shape(0)),
+                                          found_buf.data(), found_len.data(), found_meta.data(),
+                                          static_cast<int64_t>(found_buf.shape(0)), spur_buf.data(),
+                                          spur_len.data(), spur_meta.data(),
+                                          static_cast<int64_t>(spur_buf.shape(0)), over_meta.data(),
+                                          static_cast<int64_t>(over_meta.shape(0)),
+                                          static_cast<int64_t>(found_buf.shape(1)), counters.data()};
+              stabrank::t3_scan_pairs(in, out);
+          },
+          "PD"_a, "inv"_a, "ell"_a, "E2"_a, "T2"_a, "ell2"_a, "i"_a, "jlist"_a, "kok_index"_a,
+          "kok_rows"_a, "isfree"_a, "need"_a, "hist"_a, "found_buf"_a, "found_len"_a, "found_meta"_a,
+          "spur_buf"_a, "spur_len"_a, "spur_meta"_a, "over_meta"_a, "counters"_a,
+          "One three-pivot scan of research/t3_rank7/batch.py with the exact in-place decision; "
+          "same arguments and output buffers as the numba kernel scan_pairs.");
 
     m.def("max_stabilizer_fidelity",
         [](nb::ndarray<std::complex<double>, nb::ndim<1>> target_arr,
