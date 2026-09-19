@@ -135,6 +135,8 @@ If you need to change the verifier, the schema, or the site builder, do that in 
 
 `autoresearch/run.py ORBIT M RANK` is one iteration of search, exact refit, verification and cost recording. Every annealing run it makes, successful or not, is appended to `autoresearch/runs.jsonl` with its configuration, seed, wall-clock, CPU time and residual; a run that reaches the rank is refit exactly and written as a submission whose `compute` block sums every logged run for that cell. `autoresearch/summary.py` prints CPU-hours per exact solution by cell, joined with the board's tiers. Use it rather than the bare annealer when the cost of the search is part of the result, which on this board it always is.
 
+`autoresearch/loop.py run MANIFEST` runs many such iterations unattended: a JSON manifest lists cells, seed ranges, annealer settings, priorities and a wall-clock cap per job, and the loop runs one seed at a time under `nice -n 19` with a single thread, round-robin over the cells so none starves. It checkpoints after every job to `autoresearch/state/`, continues with `--resume`, re-runs a recorded sequence with `replay`, classifies every failure from the exit code and stderr into `autoresearch/loop.log`, retries once on infrastructure failures and never on a search miss, and `loop.py status --since 72` prints the uptime covered and the longest gap between jobs. `autoresearch/manifests/plateau_cells.json` is the current set of open cells; `example.json` finishes in seconds. The loop never writes `runs.jsonl` itself, so the run ledger keeps its one-line-per-annealing-run contract.
+
 ## Contributing with an LLM
 
 An agent can do the whole loop: pick a cell, search for a decomposition, verify it, and open the pull request. Paste the prompt below.

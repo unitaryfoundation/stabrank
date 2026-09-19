@@ -1,0 +1,19 @@
+{
+  "name": "plateau_cells",
+  "defaults": {"chains": 4, "iters": 20000, "cooling": 0.995, "cap_s": 7200,
+               "save_plateaus": "autoresearch/state/plateaus"},
+  "jobs": [
+    {"id": "T3sector0-5copies-r5", "orbit": "T3sector0", "m": 4, "rank": 5,
+     "seed0": 2001, "seeds": 48, "priority": 3,
+     "note": "run.py's m for a sector is the carry-state qutrit count, so m=4 is the Z-eigensector of |T3>^5 (81-dim). Rank 5 here gives chi(T3^5) <= 15, exponent 0.493. Twelve seeds in 2026-09 stopped on five exact plateau values between 0.448 and 0.464."},
+    {"id": "T3-m3-r7", "orbit": "T3", "m": 3, "rank": 7,
+     "seed0": 1001, "seeds": 48, "priority": 2,
+     "note": "6 <= chi(T3^3) <= 8 on the board; the 15 seeds logged so far plateau between 0.099 and 0.116."},
+    {"id": "qubit_T-m5-r5", "orbit": "qubit_T", "m": 5, "rank": 5,
+     "seed0": 4001, "seeds": 32, "priority": 1,
+     "note": "log2(5)/5 = 0.464 against the board's rank 6; four seeds logged so far."},
+    {"id": "qubit_H-m6-r5", "orbit": "qubit_H", "m": 6, "rank": 5,
+     "seed0": 3001, "seeds": 32, "priority": 0,
+     "note": "log2(5)/6 = 0.387 would beat the published log2(3)/4; four seeds logged so far."}
+  ]
+}

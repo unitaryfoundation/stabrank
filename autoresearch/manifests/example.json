@@ -1,0 +1,11 @@
+{
+  "name": "example",
+  "defaults": {"chains": 1, "iters": 20, "cooling": 0.9, "cap_s": 120, "seeds": 1},
+  "jobs": [
+    {"orbit": "qubit_H", "m": 2, "rank": 1, "seed0": 1, "priority": 2,
+     "note": "rank 1 is impossible for a magic state, so this always ends as a miss in a few seconds"},
+    {"orbit": "T3", "m": 2, "rank": 1, "seed0": 1, "seeds": 2, "priority": 1},
+    {"orbit": "T3sector0", "m": 2, "rank": 2, "seed0": 1,
+     "note": "the Z-eigensector of |T3>^3 has rank exactly 3, so rank 2 exercises the sector path without finding anything"}
+  ]
+}
