@@ -44,6 +44,7 @@ add_library(stabrank_core_lib STATIC
   src/sa_engine.cpp
   src/symmetric_engine.cpp
   src/pivot_pair.cpp
+  src/t3_scan.cpp
 )
 
 target_include_directories(stabrank_core_lib PUBLIC
@@ -67,6 +68,7 @@ if(BUILD_TESTING)
     tests/test_symmetric_engine.cpp
     tests/test_kernel_properties.cpp
     tests/test_pivot_pair.cpp
+    tests/test_t3_scan.cpp
   )
 
   target_link_libraries(stabrank_tests PRIVATE
