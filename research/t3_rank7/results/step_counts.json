@@ -1,0 +1,785 @@
+{
+ "N": 30240,
+ "group_order": 2916,
+ "orbits": 45,
+ "pairs": 326368,
+ "pairs_with_nontrivial_stab_ij": 21219,
+ "steps_plain": 58289144027230,
+ "steps_with_stab_ij": 55189989197867,
+ "estimate_N4_over_6G": 47795650560000.0,
+ "blocked_pairs": 171832,
+ "blocked_steps_plain": 14974544290379,
+ "blocked_steps_with_stab_ij": 13125302318795,
+ "orbit_sizes_increasing": [
+  9,
+  9,
+  9,
+  27,
+  27,
+  27,
+  54,
+  54,
+  54,
+  54,
+  81,
+  81,
+  81,
+  108,
+  162,
+  162,
+  162,
+  162,
+  243,
+  243,
+  243,
+  243,
+  486,
+  486,
+  486,
+  486,
+  729,
+  729,
+  729,
+  729,
+  729,
+  729,
+  729,
+  972,
+  972,
+  1458,
+  1458,
+  1458,
+  1458,
+  1458,
+  1458,
+  1458,
+  2916,
+  2916,
+  2916
+ ],
+ "per_rep": [
+  {
+   "rep": 0,
+   "stab_order": 108,
+   "orbit_size": 27,
+   "pairs": 471,
+   "steps_plain": 130536716774,
+   "steps_stab": 74967852301
+  },
+  {
+   "rep": 27,
+   "stab_order": 12,
+   "orbit_size": 243,
+   "pairs": 2756,
+   "steps_plain": 557368925526,
+   "steps_stab": 496262811801
+  },
+  {
+   "rep": 108,
+   "stab_order": 12,
+   "orbit_size": 243,
+   "pairs": 2738,
+   "steps_plain": 643193236564,
+   "steps_stab": 592312154242
+  },
+  {
+   "rep": 189,
+   "stab_order": 18,
+   "orbit_size": 162,
+   "pairs": 2304,
+   "steps_plain": 573760615773,
+   "steps_stab": 394491682476
+  },
+  {
+   "rep": 192,
+   "stab_order": 108,
+   "orbit_size": 27,
+   "pairs": 467,
+   "steps_plain": 128200254834,
+   "steps_stab": 74178305691
+  },
+  {
+   "rep": 193,
+   "stab_order": 54,
+   "orbit_size": 54,
+   "pairs": 776,
+   "steps_plain": 199082972314,
+   "steps_stab": 135262141570
+  },
+  {
+   "rep": 351,
+   "stab_order": 324,
+   "orbit_size": 9,
+   "pairs": 186,
+   "steps_plain": 53774426124,
+   "steps_stab": 26112518931
+  },
+  {
+   "rep": 352,
+   "stab_order": 324,
+   "orbit_size": 9,
+   "pairs": 186,
+   "steps_plain": 53774426124,
+   "steps_stab": 26112518931
+  },
+  {
+   "rep": 353,
+   "stab_order": 324,
+   "orbit_size": 9,
+   "pairs": 186,
+   "steps_plain": 53774426124,
+   "steps_stab": 26112518931
+  },
+  {
+   "rep": 354,
+   "stab_order": 54,
+   "orbit_size": 54,
+   "pairs": 888,
+   "steps_plain": 239126011582,
+   "steps_stab": 144565432909
+  },
+  {
+   "rep": 432,
+   "stab_order": 12,
+   "orbit_size": 243,
+   "pairs": 2765,
+   "steps_plain": 617187167281,
+   "steps_stab": 563086448932
+  },
+  {
+   "rep": 1080,
+   "stab_order": 4,
+   "orbit_size": 729,
+   "pairs": 8012,
+   "steps_plain": 1502652973641,
+   "steps_stab": 1421441061446
+  },
+  {
+   "rep": 1081,
+   "stab_order": 2,
+   "orbit_size": 1458,
+   "pairs": 15212,
+   "steps_plain": 2530933003459,
+   "steps_stab": 2506387617460
+  },
+  {
+   "rep": 1809,
+   "stab_order": 4,
+   "orbit_size": 729,
+   "pairs": 8012,
+   "steps_plain": 1470372319832,
+   "steps_stab": 1370492711921
+  },
+  {
+   "rep": 1810,
+   "stab_order": 4,
+   "orbit_size": 729,
+   "pairs": 8012,
+   "steps_plain": 1470372319832,
+   "steps_stab": 1370492711921
+  },
+  {
+   "rep": 1811,
+   "stab_order": 4,
+   "orbit_size": 729,
+   "pairs": 8012,
+   "steps_plain": 1470372319832,
+   "steps_stab": 1370492711921
+  },
+  {
+   "rep": 2538,
+   "stab_order": 6,
+   "orbit_size": 486,
+   "pairs": 5328,
+   "steps_plain": 984934180675,
+   "steps_stab": 915955360482
+  },
+  {
+   "rep": 2547,
+   "stab_order": 36,
+   "orbit_size": 81,
+   "pairs": 1061,
+   "steps_plain": 229177956331,
+   "steps_stab": 170088480340
+  },
+  {
+   "rep": 2548,
+   "stab_order": 18,
+   "orbit_size": 162,
+   "pairs": 1838,
+   "steps_plain": 363972871335,
+   "steps_stab": 316043769138
+  },
+  {
+   "rep": 2565,
+   "stab_order": 3,
+   "orbit_size": 972,
+   "pairs": 10206,
+   "steps_plain": 1736493111606,
+   "steps_stab": 1699814378811
+  },
+  {
+   "rep": 2574,
+   "stab_order": 6,
+   "orbit_size": 486,
+   "pairs": 5108,
+   "steps_plain": 924112123631,
+   "steps_stab": 902510232768
+  },
+  {
+   "rep": 3996,
+   "stab_order": 4,
+   "orbit_size": 729,
+   "pairs": 8012,
+   "steps_plain": 1609462626539,
+   "steps_stab": 1529750635001
+  },
+  {
+   "rep": 3997,
+   "stab_order": 2,
+   "orbit_size": 1458,
+   "pairs": 15212,
+   "steps_plain": 2645302134778,
+   "steps_stab": 2622954220876
+  },
+  {
+   "rep": 6912,
+   "stab_order": 108,
+   "orbit_size": 27,
+   "pairs": 471,
+   "steps_plain": 129638654044,
+   "steps_stab": 74080052517
+  },
+  {
+   "rep": 6913,
+   "stab_order": 36,
+   "orbit_size": 81,
+   "pairs": 1190,
+   "steps_plain": 304703526853,
+   "steps_stab": 203688060715
+  },
+  {
+   "rep": 6914,
+   "stab_order": 36,
+   "orbit_size": 81,
+   "pairs": 1190,
+   "steps_plain": 304703526853,
+   "steps_stab": 203688060715
+  },
+  {
+   "rep": 6917,
+   "stab_order": 54,
+   "orbit_size": 54,
+   "pairs": 760,
+   "steps_plain": 200963486230,
+   "steps_stab": 142339328194
+  },
+  {
+   "rep": 6921,
+   "stab_order": 54,
+   "orbit_size": 54,
+   "pairs": 888,
+   "steps_plain": 239223739569,
+   "steps_stab": 144944821623
+  },
+  {
+   "rep": 6922,
+   "stab_order": 18,
+   "orbit_size": 162,
+   "pairs": 2304,
+   "steps_plain": 573760615773,
+   "steps_stab": 394491682476
+  },
+  {
+   "rep": 6923,
+   "stab_order": 18,
+   "orbit_size": 162,
+   "pairs": 2304,
+   "steps_plain": 573760615773,
+   "steps_stab": 394491682476
+  },
+  {
+   "rep": 6926,
+   "stab_order": 27,
+   "orbit_size": 108,
+   "pairs": 1488,
+   "steps_plain": 384701905650,
+   "steps_stab": 278103314369
+  },
+  {
+   "rep": 10557,
+   "stab_order": 12,
+   "orbit_size": 243,
+   "pairs": 2955,
+   "steps_plain": 661158642210,
+   "steps_stab": 561738647431
+  },
+  {
+   "rep": 10558,
+   "stab_order": 4,
+   "orbit_size": 729,
+   "pairs": 8012,
+   "steps_plain": 1502671294212,
+   "steps_stab": 1421368914637
+  },
+  {
+   "rep": 10559,
+   "stab_order": 4,
+   "orbit_size": 729,
+   "pairs": 8012,
+   "steps_plain": 1502671294212,
+   "steps_stab": 1421368914637
+  },
+  {
+   "rep": 10562,
+   "stab_order": 6,
+   "orbit_size": 486,
+   "pairs": 5098,
+   "steps_plain": 1101787004518,
+   "steps_stab": 1085705010534
+  },
+  {
+   "rep": 10638,
+   "stab_order": 2,
+   "orbit_size": 1458,
+   "pairs": 15840,
+   "steps_plain": 2679610434519,
+   "steps_stab": 2536737008541
+  },
+  {
+   "rep": 10639,
+   "stab_order": 1,
+   "orbit_size": 2916,
+   "pairs": 30240,
+   "steps_plain": 4608409085280,
+   "steps_stab": 4608409085280
+  },
+  {
+   "rep": 10640,
+   "stab_order": 1,
+   "orbit_size": 2916,
+   "pairs": 30240,
+   "steps_plain": 4608409085280,
+   "steps_stab": 4608409085280
+  },
+  {
+   "rep": 10642,
+   "stab_order": 2,
+   "orbit_size": 1458,
+   "pairs": 15840,
+   "steps_plain": 2679610434519,
+   "steps_stab": 2536737008541
+  },
+  {
+   "rep": 10643,
+   "stab_order": 1,
+   "orbit_size": 2916,
+   "pairs": 30240,
+   "steps_plain": 4608409085280,
+   "steps_stab": 4608409085280
+  },
+  {
+   "rep": 10646,
+   "stab_order": 2,
+   "orbit_size": 1458,
+   "pairs": 15840,
+   "steps_plain": 2679610434519,
+   "steps_stab": 2536737008541
+  },
+  {
+   "rep": 11448,
+   "stab_order": 2,
+   "orbit_size": 1458,
+   "pairs": 15212,
+   "steps_plain": 2676994247274,
+   "steps_stab": 2655577908072
+  },
+  {
+   "rep": 11449,
+   "stab_order": 3,
+   "orbit_size": 972,
+   "pairs": 10128,
+   "steps_plain": 2102781938592,
+   "steps_stab": 2092441003574
+  },
+  {
+   "rep": 11450,
+   "stab_order": 2,
+   "orbit_size": 1458,
+   "pairs": 15212,
+   "steps_plain": 2853622774039,
+   "steps_stab": 2834656537587
+  },
+  {
+   "rep": 11456,
+   "stab_order": 6,
+   "orbit_size": 486,
+   "pairs": 5156,
+   "steps_plain": 1124005081520,
+   "steps_stab": 1095978698047
+  }
+ ],
+ "per_rep_blocked": [
+  {
+   "rep": 351,
+   "orbit_size": 9,
+   "block_start": 0,
+   "pairs": 185,
+   "steps_plain": 49603702432,
+   "steps_stab": 15862037535
+  },
+  {
+   "rep": 352,
+   "orbit_size": 9,
+   "block_start": 9,
+   "pairs": 182,
+   "steps_plain": 48232605633,
+   "steps_stab": 15836922704
+  },
+  {
+   "rep": 353,
+   "orbit_size": 9,
+   "block_start": 18,
+   "pairs": 179,
+   "steps_plain": 46862325017,
+   "steps_stab": 15812200865
+  },
+  {
+   "rep": 0,
+   "orbit_size": 27,
+   "block_start": 27,
+   "pairs": 461,
+   "steps_plain": 113620783225,
+   "steps_stab": 46875953052
+  },
+  {
+   "rep": 192,
+   "orbit_size": 27,
+   "block_start": 54,
+   "pairs": 455,
+   "steps_plain": 111455115251,
+   "steps_stab": 46603126284
+  },
+  {
+   "rep": 6912,
+   "orbit_size": 27,
+   "block_start": 81,
+   "pairs": 450,
+   "steps_plain": 108579700292,
+   "steps_stab": 46466794540
+  },
+  {
+   "rep": 193,
+   "orbit_size": 54,
+   "block_start": 108,
+   "pairs": 750,
+   "steps_plain": 167603672152,
+   "steps_stab": 90210519113
+  },
+  {
+   "rep": 354,
+   "orbit_size": 54,
+   "block_start": 162,
+   "pairs": 837,
+   "steps_plain": 194503359596,
+   "steps_stab": 91341419204
+  },
+  {
+   "rep": 6917,
+   "orbit_size": 54,
+   "block_start": 216,
+   "pairs": 712,
+   "steps_plain": 152864988818,
+   "steps_stab": 89496087261
+  },
+  {
+   "rep": 6921,
+   "orbit_size": 54,
+   "block_start": 270,
+   "pairs": 806,
+   "steps_plain": 180476970522,
+   "steps_stab": 89958996674
+  },
+  {
+   "rep": 2547,
+   "orbit_size": 81,
+   "block_start": 324,
+   "pairs": 1038,
+   "steps_plain": 185735123903,
+   "steps_stab": 129543435198
+  },
+  {
+   "rep": 6913,
+   "orbit_size": 81,
+   "block_start": 405,
+   "pairs": 1078,
+   "steps_plain": 224751382817,
+   "steps_stab": 130884643721
+  },
+  {
+   "rep": 6914,
+   "orbit_size": 81,
+   "block_start": 486,
+   "pairs": 1054,
+   "steps_plain": 214092544153,
+   "steps_stab": 129457798170
+  },
+  {
+   "rep": 6926,
+   "orbit_size": 108,
+   "block_start": 567,
+   "pairs": 1300,
+   "steps_plain": 252381581866,
+   "steps_stab": 170515014158
+  },
+  {
+   "rep": 189,
+   "orbit_size": 162,
+   "block_start": 675,
+   "pairs": 1955,
+   "steps_plain": 367847629424,
+   "steps_stab": 251282132680
+  },
+  {
+   "rep": 2548,
+   "orbit_size": 162,
+   "block_start": 837,
+   "pairs": 1764,
+   "steps_plain": 281104425353,
+   "steps_stab": 241463817381
+  },
+  {
+   "rep": 6922,
+   "orbit_size": 162,
+   "block_start": 999,
+   "pairs": 1856,
+   "steps_plain": 324802882280,
+   "steps_stab": 242439979558
+  },
+  {
+   "rep": 6923,
+   "orbit_size": 162,
+   "block_start": 1161,
+   "pairs": 1766,
+   "steps_plain": 286539672539,
+   "steps_stab": 237947414297
+  },
+  {
+   "rep": 27,
+   "orbit_size": 243,
+   "block_start": 1323,
+   "pairs": 2606,
+   "steps_plain": 396957414575,
+   "steps_stab": 347265721122
+  },
+  {
+   "rep": 108,
+   "orbit_size": 243,
+   "block_start": 1566,
+   "pairs": 2567,
+   "steps_plain": 386471646800,
+   "steps_stab": 344464876410
+  },
+  {
+   "rep": 432,
+   "orbit_size": 243,
+   "block_start": 1809,
+   "pairs": 2558,
+   "steps_plain": 376856787796,
+   "steps_stab": 334159417549
+  },
+  {
+   "rep": 10557,
+   "orbit_size": 243,
+   "block_start": 2052,
+   "pairs": 2692,
+   "steps_plain": 401983422233,
+   "steps_stab": 328632184863
+  },
+  {
+   "rep": 2538,
+   "orbit_size": 486,
+   "block_start": 2295,
+   "pairs": 4865,
+   "steps_plain": 665865969854,
+   "steps_stab": 620941294888
+  },
+  {
+   "rep": 2574,
+   "orbit_size": 486,
+   "block_start": 2781,
+   "pairs": 4624,
+   "steps_plain": 603486268750,
+   "steps_stab": 588726169588
+  },
+  {
+   "rep": 10562,
+   "orbit_size": 486,
+   "block_start": 3267,
+   "pairs": 4522,
+   "steps_plain": 577465232687,
+   "steps_stab": 569993960033
+  },
+  {
+   "rep": 11456,
+   "orbit_size": 486,
+   "block_start": 3753,
+   "pairs": 4481,
+   "steps_plain": 556604542626,
+   "steps_stab": 541085153589
+  },
+  {
+   "rep": 1080,
+   "orbit_size": 729,
+   "block_start": 4239,
+   "pairs": 6812,
+   "steps_plain": 816348997786,
+   "steps_stab": 758095805382
+  },
+  {
+   "rep": 1809,
+   "orbit_size": 729,
+   "block_start": 4968,
+   "pairs": 6605,
+   "steps_plain": 745141117338,
+   "steps_stab": 693336016445
+  },
+  {
+   "rep": 1810,
+   "orbit_size": 729,
+   "block_start": 5697,
+   "pairs": 6398,
+   "steps_plain": 680237974704,
+   "steps_stab": 635864670782
+  },
+  {
+   "rep": 1811,
+   "orbit_size": 729,
+   "block_start": 6426,
+   "pairs": 6191,
+   "steps_plain": 619058626035,
+   "steps_stab": 581712326930
+  },
+  {
+   "rep": 3996,
+   "orbit_size": 729,
+   "block_start": 7155,
+   "pairs": 5984,
+   "steps_plain": 569723180709,
+   "steps_stab": 539500073879
+  },
+  {
+   "rep": 10558,
+   "orbit_size": 729,
+   "block_start": 7884,
+   "pairs": 5777,
+   "steps_plain": 510735360159,
+   "steps_stab": 486425200355
+  },
+  {
+   "rep": 10559,
+   "orbit_size": 729,
+   "block_start": 8613,
+   "pairs": 5570,
+   "steps_plain": 460026280192,
+   "steps_stab": 441467855459
+  },
+  {
+   "rep": 2565,
+   "orbit_size": 972,
+   "block_start": 9342,
+   "pairs": 7037,
+   "steps_plain": 534223231826,
+   "steps_stab": 519605801492
+  },
+  {
+   "rep": 11449,
+   "orbit_size": 972,
+   "block_start": 10314,
+   "pairs": 6659,
+   "steps_plain": 472570298672,
+   "steps_stab": 469355746931
+  },
+  {
+   "rep": 1081,
+   "orbit_size": 1458,
+   "block_start": 11286,
+   "pairs": 9494,
+   "steps_plain": 586801081148,
+   "steps_stab": 584163697811
+  },
+  {
+   "rep": 3997,
+   "orbit_size": 1458,
+   "block_start": 12744,
+   "pairs": 8756,
+   "steps_plain": 465412618613,
+   "steps_stab": 464263373594
+  },
+  {
+   "rep": 10638,
+   "orbit_size": 1458,
+   "block_start": 14202,
+   "pairs": 8261,
+   "steps_plain": 371929395086,
+   "steps_stab": 349490961224
+  },
+  {
+   "rep": 10642,
+   "orbit_size": 1458,
+   "block_start": 15660,
+   "pairs": 7451,
+   "steps_plain": 276413417297,
+   "steps_stab": 262940924951
+  },
+  {
+   "rep": 10646,
+   "orbit_size": 1458,
+   "block_start": 17118,
+   "pairs": 6641,
+   "steps_plain": 198166201460,
+   "steps_stab": 192133312712
+  },
+  {
+   "rep": 11448,
+   "orbit_size": 1458,
+   "block_start": 18576,
+   "pairs": 5849,
+   "steps_plain": 142411589033,
+   "steps_stab": 141444994578
+  },
+  {
+   "rep": 11450,
+   "orbit_size": 1458,
+   "block_start": 20034,
+   "pairs": 5111,
+   "steps_plain": 99944712662,
+   "steps_stab": 99584028768
+  },
+  {
+   "rep": 10639,
+   "orbit_size": 2916,
+   "block_start": 21492,
+   "pairs": 8747,
+   "steps_plain": 111500589365,
+   "steps_stab": 111500589365
+  },
+  {
+   "rep": 10640,
+   "orbit_size": 2916,
+   "block_start": 24408,
+   "pairs": 5831,
+   "steps_plain": 33025880195,
+   "steps_stab": 33025880195
+  },
+  {
+   "rep": 10643,
+   "orbit_size": 2916,
+   "block_start": 27324,
+   "pairs": 2915,
+   "steps_plain": 4123987505,
+   "steps_stab": 4123987505
+  }
+ ],
+ "seconds": 117.0811402797699
+}
