@@ -6,7 +6,8 @@
   "rank": 7,
   "certificate": {
     "script": "verify_challenge/cert_t3m3_rank7.py",
-    "expect": "CERTIFIED chi(T3^3) >= 7"
+    "expect": "CERTIFIED chi(T3^3) >= 7",
+    "exact": true
   },
   "provenance": {
     "author": "this repository",
@@ -15,7 +16,13 @@
     "date": "2026-09-16",
     "github": [
       "vprusso"
-    ]
+    ],
+    "compute": {
+      "cpu_hours": 0.15,
+      "wall_clock_hours": 0.04,
+      "runs": 2,
+      "hardware": "Apple silicon laptop, 8 workers: 99 s wall and 270 s CPU in the worktree, 135 s wall and 486 s CPU on the rebased branch; about three minutes on the 4-core CI runner"
+    }
   },
-  "notes": "Pairs with the verified rank-8 witness to put this cell at 7 <= chi <= 8. The Galois descent is made explicit: |T3>^3 = (psi_0 + w9 psi_1 + w9^2 psi_2)/sqrt(27) with psi_r supported on the coset x1+x2+x3 = r mod 3 and entries w3^q (q the carry), so a stabilizer span contains the state iff it contains V_3 = span{psi_0, psi_1, psi_2}, and the problem is over Q(w3). Six states whose span contains V_3 have images mod V_3 spanning at most 3 dimensions; the scan runs mod ell = 65521 with exact hashing (reduction and linear projection can only add candidates), the first pivot over the 45 orbits of the 2916 monomial (anti)unitary symmetries of V_3, the second pivot minimal in its orbit under the pivot stabilizer (326,368 pivot pairs). All members of a candidate class lie in one 6-dim space containing V_3, so one rank pair per class (class set, class set with the psi_r) decides every subset; the 259,423 classes are all rejected. Ranks are computed mod 2^31 - 1 and are exact by a Hadamard bound (minors of size <= 9 of root-of-unity matrices have norm below the prime), asserted per class, so the rejection is exact arithmetic, not least squares; the pipeline still records lower bounds as reproduced. Control inside the script: at m = 2 exactly three states lie in V_2 and the five-state scan finds class sets containing it. Outside it, the same kernel recovers the Lean rank-4 decomposition of |S>^3 as a class set, and shows the 45 rank-5 groups of the earlier certificate are one configuration under symmetry: five states spanning only three dimensions. Rank 7 was not excluded: the three-pivot scan costs about N^4/(6|G|) = 5e13 inner steps, about 70 CPU-hours in this kernel; simulated annealing at k = 7 stalls near residual 0.08 and an exact swap-neighbourhood search around the eight-term witness (three or more shared states) finds no seven-state span containing V_3."
+  "notes": "Pairs with the verified rank-8 witness to put this cell at 7 <= chi <= 8. The Galois descent is made explicit: |T3>^3 = (psi_0 + w9 psi_1 + w9^2 psi_2)/sqrt(27) with psi_r supported on the coset x1+x2+x3 = r mod 3 and entries w3^q (q the carry), so a stabilizer span contains the state iff it contains V_3 = span{psi_0, psi_1, psi_2}, and the problem is over Q(w3). Six states whose span contains V_3 have images mod V_3 spanning at most 3 dimensions; the scan runs mod ell = 65521 with exact hashing (reduction and linear projection can only add candidates), the first pivot over the 45 orbits of the 2916 monomial (anti)unitary symmetries of V_3, the second pivot minimal in its orbit under the pivot stabilizer (326,368 pivot pairs). All members of a candidate class lie in one 6-dim space containing V_3, so one rank pair per class (class set, class set with the psi_r) decides every subset; the 259,423 classes are all rejected. Ranks are computed mod 2^31 - 1 and are exact by a Hadamard bound (minors of size <= 9 of root-of-unity matrices have norm below the prime), asserted per class, so the rejection is exact arithmetic, not least squares, and the candidate harvest (exact hashing mod 65521) is exact too; the certificate declares exact: true and takes the verified tier. Control inside the script: at m = 2 exactly three states lie in V_2 and the five-state scan finds class sets containing it. Outside it, the same kernel recovers the Lean rank-4 decomposition of |S>^3 as a class set, and shows the 45 rank-5 groups of the earlier certificate are one configuration under symmetry: five states spanning only three dimensions. Rank 7 was not excluded: the three-pivot scan costs about N^4/(6|G|) = 5e13 inner steps, about 70 CPU-hours in this kernel; simulated annealing at k = 7 stalls near residual 0.08 and an exact swap-neighbourhood search around the eight-term witness (three or more shared states) finds no seven-state span containing V_3."
 }
