@@ -132,6 +132,8 @@ font-family:"Space Mono",monospace;font-size:12px;color:var(--mut)}
 .refs .vn{color:var(--mut)}
 .refs .nt{color:var(--mut);font-size:13.5px;margin-top:3px}
 .chart .leader{fill:none;stroke-width:1.2;opacity:.55}
+.prose code,p code{font-family:"Space Mono",monospace;font-size:.92em;background:var(--soft);
+padding:1px 4px;border-radius:4px}
 .chart .hit{cursor:pointer}
 .chart .hit:hover{fill:rgba(15,23,42,.06)}
 #tip{position:fixed;z-index:50;max-width:310px;padding:7px 10px;border-radius:8px;
