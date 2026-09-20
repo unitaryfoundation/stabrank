@@ -25,6 +25,9 @@ from rank_exclusion import dictionary  # noqa: E402
 def main(argv):
     orbit, m, rank = argv[1], int(argv[2]), int(argv[3])
     p = ORBIT_P[orbit]
+    if (p, m) not in {(3, 1), (3, 2), (3, 3), (2, 1), (2, 2), (2, 3), (2, 4)}:
+        print(f"{orbit} m={m}: the {m}-qudit dictionary is too large to hold; not run")
+        return 0
     decs, _ = load_decompositions(orbit, m, rank)
     D = dictionary(p, m)
     counts = []

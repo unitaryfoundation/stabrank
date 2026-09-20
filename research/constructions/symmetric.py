@@ -60,9 +60,13 @@ def main(argv):
     index = {key(D[:, i]): i for i in range(D.shape[1])}
     if a.bound:
         sub = json.load(open(a.bound))
+        if "witness" not in sub:
+            print(f"{a.bound}: no witness terms (Lean-only bound)")
+            return 0
         decs = [([term_vector(t, p, a.m) for t in sub["witness"]["terms"]], None)]
     else:
         decs, _ = load_decompositions(a.orbit, a.m, a.rank)
+    import math
     for anti in (False, True):
         reps, info = symmetry_orbit_reps(a.orbit, a.m, D, antiunitary=anti)
         if anti and not info["antiunitary"]:
@@ -76,6 +80,16 @@ def main(argv):
         label = "unitary + antiunitary" if anti else "unitary"
         print(f"{a.orbit} m={a.m} rank {a.rank}: {label} group of order {info['order']}; "
               f"set-stabilizer orders of the {len(decs)} decompositions: {orders}")
+        if not anti and a.m >= 2:
+            # the copy permutations alone: generators are the last two perms
+            # (the transposition (0 1) and the m-cycle), the local ones first
+            nloc = info["local"]
+            perm_gens = info["perms"][nloc:nloc + 2]
+            loc_gens = info["perms"][:nloc]
+            po = [math.factorial(a.m) // orbit_size([index[key(v)] for v in u], perm_gens) for u, _ in decs]
+            lo = [nloc // orbit_size([index[key(v)] for v in u], loc_gens) for u, _ in decs]
+            print(f"    copy permutations only (S_{a.m}): set-stabilizer orders {po}; "
+                  f"local Clifford stabilizer on copy 1 only (order {nloc}): {lo}")
     return 0
 
 
