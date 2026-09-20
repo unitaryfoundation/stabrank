@@ -22,3 +22,6 @@ autoresearch/state/plateaus/
 
 # Symmetry-group cache of research/t3_rank7/common.py (rebuilt on demand).
 research/t3_rank7/cache/
+
+# Plateau bases saved by the merge-recipe anneals (research/merges).
+autoresearch/state/plateaus_merges/
