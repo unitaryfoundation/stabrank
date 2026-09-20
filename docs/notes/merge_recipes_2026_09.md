@@ -265,3 +265,15 @@ stabilizer-states-in-span lists (up to a 1e-8 eigenvalue tolerance on
 orthonormal data and the 1e-7 phase tolerance of `term_from_vector`), and
 the T3 one-state completion over all 36 pairs. Numerical evidence only: the
 anneal residuals. None of this is a lower bound on any cell.
+
+## Follow-up: lifting the irreducible rank-5 decompositions of H3^3
+
+The two irreducible rank-5 decompositions found through the point term,
+(0, 28, 9828, 11016, 11151) and (0, 29, 9828, 11016, 11151), were run
+through `slice_lift.lifts` as five-term slice-1 decompositions of |H3>^3.
+Three Pauli assignments satisfy the slice-2 equation and none satisfies
+the slice-0 equation, so neither is a slice of a rank-5 decomposition of
+|H3>^4. A rank-5 decomposition of |H3>^4 would need an irreducible rank-5
+slice not in this list; the full irreducible rank-5 enumeration (about 60
+core-days in the current kernel) is what would settle that, and is a job
+for a pod rather than this machine.
