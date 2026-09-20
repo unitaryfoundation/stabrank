@@ -95,6 +95,8 @@ padding:2px 8px;border-radius:999px;border:1px solid currentColor}
 .t-leanpend{color:var(--mut);text-decoration:none}
 .t-lean:hover{background:#6d28d9;color:#fff}
 .t-verified{color:var(--ex)}.t-reproduced{color:var(--ac)}
+.t-attested{color:#92400e;border-style:dashed;
+background:repeating-linear-gradient(135deg,transparent 0 3px,#fef3c7 3px 5px)}
 .t-cited{color:var(--mut)}.t-failed{color:var(--bad)}
 a.pill{text-decoration:none}
 a.t-cited:hover{color:var(--ac);border-color:var(--ac)}
