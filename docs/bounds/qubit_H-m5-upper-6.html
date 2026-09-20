@@ -21,14 +21,14 @@ the identity in exact arithmetic. If it passes, open a pull request adding the
 file and the leaderboard picks it up on the next build.</p>
 <p>A bound the pipeline cannot check is recorded as <span class='pill t-cited'>cited</span>
 and never takes a record.</p>
-</dialog><div class=wrap><p><a href='../index.html'>&larr; back to the board</a></p><h2>Verification</h2><p><span class='pill t-verified'>verified</span> &nbsp; 6 stabilizer terms reproduce |qubit_H&gt;^{ot 5}, checked symbolically</p><p>Implied per-copy exponent &gamma; &le; <b>0.5170</b>, against a published 0.3962 &mdash; no improvement.</p><h2>Compute</h2><p>1 run; 0.02 CPU-hours; 0.02 h wall-clock; on Apple silicon laptop, 8 annealing chains.</p><h2>Notes</h2><p>The five-copy value of Bravyi, Smith and Smolin, found there by Monte Carlo and conjectured optimal. Witness found here by the package&#x27;s annealer (search_decomposition.py, target qubit_real, seed 1, starting rank 6, one run of 8 chains) and verified in exact arithmetic. Whether rank 5 is possible at m=5 is open; the rank-3 exclusion at m=4 and projection monotonicity give chi &gt;= 4 here.</p><h2>Attribution</h2><p>Bravyi, Smith and Smolin &middot; <span class=mono>arXiv:1506.01396</span> &middot; literature</p><h2>Submission</h2><details><summary>JSON</summary><pre>{
+</dialog><div class=wrap><p><a href='../index.html'>&larr; back to the board</a></p><h2>Verification</h2><p><span class='pill t-verified'>verified</span> &nbsp; 6 stabilizer terms reproduce |qubit_H&gt;^{ot 5}, checked symbolically</p><p>Implied per-copy exponent &gamma; &le; <b>0.5170</b> against a published 0.3962, no improvement.</p><h2>Compute</h2><p>1 run; 0.02 CPU-hours; 0.02 h wall-clock; on Apple silicon laptop, 8 annealing chains.</p><h2>Notes</h2><p class=prose>The five-copy value of Bravyi, Smith, and Smolin, found there by Monte Carlo and conjectured optimal. Witness found here by the package&#x27;s annealer (<code>search_decomposition.py</code>, target <code>qubit_real</code>, seed 1, starting rank 6, one run of 8 chains) and verified in exact arithmetic. Whether rank 5 is possible at m=5 is open; the rank-3 exclusion at m=4 and projection monotonicity give &chi; &ge; 4 here.</p><h2>Attribution</h2><p>Bravyi, Smith, and Smolin &middot; <span class=mono><a href='https://arxiv.org/abs/1506.01396'>arXiv:1506.01396</a></span> &middot; literature</p><h2>Submission</h2><details><summary>JSON</summary><pre>{
   &quot;schema_version&quot;: &quot;0.1&quot;,
   &quot;orbit&quot;: &quot;qubit_H&quot;,
   &quot;m&quot;: 5,
   &quot;direction&quot;: &quot;upper&quot;,
   &quot;rank&quot;: 6,
   &quot;provenance&quot;: {
-    &quot;author&quot;: &quot;Bravyi, Smith and Smolin&quot;,
+    &quot;author&quot;: &quot;Bravyi, Smith, and Smolin&quot;,
     &quot;reference&quot;: &quot;arXiv:1506.01396&quot;,
     &quot;method&quot;: &quot;literature&quot;,
     &quot;date&quot;: &quot;2015-06-03&quot;,
@@ -40,7 +40,7 @@ and never takes a record.</p>
       &quot;hardware&quot;: &quot;Apple silicon laptop, 8 annealing chains&quot;
     }
   },
-  &quot;notes&quot;: &quot;The five-copy value of Bravyi, Smith and Smolin, found there by Monte Carlo and conjectured optimal. Witness found here by the package&#x27;s annealer (search_decomposition.py, target qubit_real, seed 1, starting rank 6, one run of 8 chains) and verified in exact arithmetic. Whether rank 5 is possible at m=5 is open; the rank-3 exclusion at m=4 and projection monotonicity give chi &gt;= 4 here.&quot;,
+  &quot;notes&quot;: &quot;The five-copy value of Bravyi, Smith, and Smolin, found there by Monte Carlo and conjectured optimal. Witness found here by the package&#x27;s annealer (search_decomposition.py, target qubit_real, seed 1, starting rank 6, one run of 8 chains) and verified in exact arithmetic. Whether rank 5 is possible at m=5 is open; the rank-3 exclusion at m=4 and projection monotonicity give chi &gt;= 4 here.&quot;,
   &quot;witness&quot;: {
     &quot;terms&quot;: [
       {
