@@ -216,7 +216,7 @@ hold.
 finite m on the board: chi(|H>^4) = 4 is settled in both directions
 (`bounds/qubit_H-m4-lower-4.json`, `qubit_H-m4-upper-4.json`), so rank 3 at
 m = 4 is impossible for this orbit, unlike `qubit_T`. The best cell is the
-rank-6 cat-state decomposition of Qassim, Pashayan and Gosset at m = 6
+rank-6 cat-state decomposition of Qassim, Pashayan, and Gosset at m = 6
 (0.4308), which the board holds as a verified witness built from their three
 terms (`bounds/qubit_H-m6-upper-6.json`, notes). The annealer did not find it
 unaided: two runs from rank 6 stopped at residual 0.101

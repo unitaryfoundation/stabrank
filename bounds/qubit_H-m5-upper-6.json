@@ -5,7 +5,7 @@
   "direction": "upper",
   "rank": 6,
   "provenance": {
-    "author": "Bravyi, Smith and Smolin",
+    "author": "Bravyi, Smith, and Smolin",
     "reference": "arXiv:1506.01396",
     "method": "literature",
     "date": "2015-06-03",
@@ -17,7 +17,7 @@
       "hardware": "Apple silicon laptop, 8 annealing chains"
     }
   },
-  "notes": "The five-copy value of Bravyi, Smith and Smolin, found there by Monte Carlo and conjectured optimal. Witness found here by the package's annealer (search_decomposition.py, target qubit_real, seed 1, starting rank 6, one run of 8 chains) and verified in exact arithmetic. Whether rank 5 is possible at m=5 is open; the rank-3 exclusion at m=4 and projection monotonicity give chi >= 4 here.",
+  "notes": "The five-copy value of Bravyi, Smith, and Smolin, found there by Monte Carlo and conjectured optimal. Witness found here by the package's annealer (search_decomposition.py, target qubit_real, seed 1, starting rank 6, one run of 8 chains) and verified in exact arithmetic. Whether rank 5 is possible at m=5 is open; the rank-3 exclusion at m=4 and projection monotonicity give chi >= 4 here.",
   "witness": {
     "terms": [
       {

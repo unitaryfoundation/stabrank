@@ -583,7 +583,7 @@
     ]
   },
   "provenance": {
-    "author": "Bravyi, Smith and Smolin",
+    "author": "Bravyi, Smith, and Smolin",
     "reference": "arXiv:1506.01396",
     "method": "literature",
     "date": "2015-06-03",
@@ -595,5 +595,5 @@
       "hardware": "Apple silicon laptop, 8 annealing chains per run"
     }
   },
-  "notes": "The six-copy value of Bravyi, Smith and Smolin, chi(|H>^6) <= 7, behind the 2^{0.47n} figure (log_2(7)/6 = 0.468); they conjectured it optimal, and Qassim, Pashayan and Gosset later gave rank 6, which is the cell's record. Kept on the ledger as the historical value with a witness: found here by the package's annealer (search_decomposition.py, target qubit_real, seed 3, starting rank 7) and verified in exact arithmetic. Two runs starting at rank 6 (seeds 1 and 2) both stopped at residual 0.101, so the annealer did not find the rank-6 cat-state decomposition on its own."
+  "notes": "The six-copy value of Bravyi, Smith, and Smolin, chi(|H>^6) <= 7, behind the 2^{0.47n} figure (log_2(7)/6 = 0.468); they conjectured it optimal, and Qassim, Pashayan, and Gosset later gave rank 6, which is the cell's record. Kept on the ledger as the historical value with a witness: found here by the package's annealer (search_decomposition.py, target qubit_real, seed 3, starting rank 7) and verified in exact arithmetic. Two runs starting at rank 6 (seeds 1 and 2) both stopped at residual 0.101, so the annealer did not find the rank-6 cat-state decomposition on its own."
 }
