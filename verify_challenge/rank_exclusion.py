@@ -73,17 +73,44 @@ PROJ_DIM = 10          # random projection dimension for the per-pivot sort
 RESID = 1e-9           # a candidate spans psi if its residual is below this
 
 
+def _is_prime(p):
+    return p >= 2 and all(p % q for q in range(2, int(p ** 0.5) + 1))
+
+
+def _distinct_up_to_phase(raw, dim):
+    """Collapse rows (or columns) of `raw` that agree up to a global phase,
+    returning one column per state. The key is the vector divided by its
+    first nonzero entry, rounded to six places, as in the qutrit path."""
+    S = raw if raw.shape[1] == dim else raw.T
+    seen = {}
+    for row in S:
+        pivot = row[np.flatnonzero(np.abs(row) > 1e-9)[0]]
+        canon = np.round(row * (abs(pivot) / pivot), 6) + 0.0
+        seen.setdefault(canon.real.tobytes() + canon.imag.tobytes(), row)
+    return np.stack(list(seen.values()), axis=1)
+
+
 def dictionary(p, n):
-    """Every n-qudit stabilizer state for p in {2, 3}, one column each,
-    distinct up to phase and unit norm."""
+    """Every n-qudit stabilizer state for a prime p, one column each,
+    distinct up to phase and unit norm.
+
+    p = 2 closes the Clifford orbit of |0..0> (qubit_states), p = 3 uses the
+    qutrit enumeration behind the T3 Galois bound, and an odd prime p >= 5
+    lists the (flat, coset, phase-polynomial) triples of
+    stabrank.stabilizer_extent and collapses the repeats up to a global
+    phase. Every path is checked against p^n prod_{j<=n} (p^j + 1), which
+    is 30 and 3900 for one and two ququints."""
     if p == 2:
         from qubit_states import all_states
         D = all_states(n)          # asserts the count itself
     elif p == 3:
         from stabrank.examples.t3_galois_lower_bound import distinct_states
         D = distinct_states(n)
+    elif _is_prime(p):
+        from stabrank.stabilizer_extent import enumerate_stabilizer_states
+        D = _distinct_up_to_phase(enumerate_stabilizer_states(n, p), p ** n)
     else:
-        raise ValueError("dictionaries are available for p = 2 and p = 3")
+        raise ValueError("the local dimension p must be prime")
     want = p ** n
     for j in range(1, n + 1):
         want *= p ** j + 1
@@ -352,19 +379,24 @@ def rank3_search(psi, D, workers=None, seed=7, pivots=None):
 # ------------------------------------------------------------- symmetry ----
 
 def clifford_group(p):
-    """The single-qudit Clifford group mod phase, as unitaries, by closure."""
-    if p == 3:
-        w = np.exp(2j * np.pi / 3)
-        F = np.array([[w ** (j * k) for k in range(3)] for j in range(3)]) / np.sqrt(3)
-        S = np.diag([1, 1, w])
-        X = np.roll(np.eye(3), 1, axis=0)
-        gens = [F, S, X]
-    elif p == 2:
+    """The single-qudit Clifford group mod phase, as unitaries, by closure.
+
+    For an odd prime the generators are the Fourier transform, the phase
+    gate diag(w^{j(j-1)/2}) and the shift X, and the group has
+    p^3 (p^2 - 1) elements mod phase: 216 for qutrits, 3000 for ququints.
+    For qubits H and S generate the 24 elements."""
+    if p == 2:
         H = np.array([[1, 1], [1, -1]]) / np.sqrt(2)
         S = np.diag([1, 1j])
         gens = [H, S]
+    elif _is_prime(p):
+        w = np.exp(2j * np.pi / p)
+        F = np.array([[w ** (j * k) for k in range(p)] for j in range(p)]) / np.sqrt(p)
+        S = np.diag([w ** ((j * (j - 1) // 2) % p) for j in range(p)])
+        X = np.roll(np.eye(p), 1, axis=0)
+        gens = [F, S, X]
     else:
-        raise ValueError("p must be 2 or 3")
+        raise ValueError("p must be prime")
 
     def key(U):
         v = U.ravel()
@@ -384,7 +416,7 @@ def clifford_group(p):
                     seen[k] = V
                     nxt.append(V)
         frontier = nxt
-    want = {2: 24, 3: 216}[p]
+    want = 24 if p == 2 else p ** 3 * (p * p - 1)
     if len(seen) != want:
         raise AssertionError(f"Clifford closure found {len(seen)} elements, expected {want}")
     return list(seen.values())
@@ -573,8 +605,8 @@ def run_certificate(cells, controls, workers=None, also=()):
         key = (ORBIT_P[orbit], m)
         if key not in dicts:
             dicts[key] = dictionary(*key)
-            print(f"{m} qu{'bit' if key[0] == 2 else 'trit'}s: "
-                  f"{dicts[key].shape[1]} stabilizer states")
+            unit = {2: "qubit", 3: "qutrit", 5: "ququint"}.get(key[0], f"qudit(p={key[0]})")
+            print(f"{m} {unit}s: {dicts[key].shape[1]} stabilizer states")
         return dicts[key]
 
     for orbit, m in controls:
