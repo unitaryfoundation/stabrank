@@ -60,7 +60,8 @@ jobs:
       # The receipt says the module built, which a PR could assert about itself,
       # so the guarantee behind it is the Tests workflow's "Lean library" job,
       # which compiles the whole library from the PR against mathlib. A module
-      # that does not build fails there.
+      # that does not build fails there. An attested bound's stored batch
+      # outputs and manifest live under research/, so that is staged too.
       - name: Stage base-branch checks against submitted data
         if: github.event_name == 'pull_request'
         env:
@@ -72,7 +73,7 @@ jobs:
           git checkout "$head" -- bounds/
           if [ "$SAME_REPO" = "true" ]; then
             git checkout "$head" -- verify_challenge/ stabrank/ schema/ pyproject.toml \
-                                    lean_proofs/ certs/
+                                    lean_proofs/ certs/ research/
             echo "branch in this repository: certificate scripts and Lean sources run from the PR"
           else
             echo "::notice::fork pull request: the schema and verifier are the base branch's, so a certificate script added by this PR is reported missing and left for a maintainer to run"

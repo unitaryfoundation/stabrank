@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.1",
+  "orbit": "T3",
+  "m": 3,
+  "direction": "lower",
+  "rank": 8,
+  "certificate": {
+    "script": "verify_challenge/cert_t3m3_rank8_attested.py",
+    "expect": "CERTIFIED chi(T3^3) >= 8",
+    "budget_s": 3600,
+    "attested": {
+      "batches": "research/t3_rank7/batch_manifest.json",
+      "recomputed": 2,
+      "compute_hours": 80.1,
+      "hardware": "Apple silicon laptop (18 cores), four batches at a time at nice 19 under a shared load; 2026-09-19 13:33 to 2026-09-20 11:33 UTC",
+      "note": "The enumeration of every rank-7 candidate class set (1.31e13 inner steps, 1.21e9 class sets, all decided exactly) lives in the 459 stored batch outputs; the certificate verifies their hashes, geometry and totals and re-runs two of them from scratch, so completeness rests on the stored outputs and on the committed runner that regenerates any batch."
+    }
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank research/t3_rank7",
+    "method": "Galois descent to Q(w3), then exhaustive three-pivot scan of seven-state configurations in exact arithmetic, batched and attested",
+    "date": "2026-09-20",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 80.1,
+      "wall_clock_hours": 22.0,
+      "runs": 1,
+      "hardware": "Apple silicon laptop, four loop.py instances at nice 19 over the 459-batch partition, 21 ns per inner step averaged"
+    }
+  },
+  "notes": "With the verified rank-8 witness this settles chi(T3^3) = 8. A rank-7 decomposition would be seven independent stabilizer states whose images modulo V_3 span four dimensions; the three-pivot scan in orbit-block order with Stab(i, j) masks (docs/notes/t3_rank7_exclusion.md) lists every candidate class set and decides exactly, mod 2^31 - 1 under the Hadamard bound, whether V_3 lies in its span. 1,213,458,815 class sets over 459 batches, none containing V_3, none spurious or undecided. The rare-type pivot lemma that would have cut the scan 28x is false (docs/notes/t3_rank7_rare_pivot.md). Cost 80 CPU-hours at 21 ns per step; batch outputs, partition and manifests are committed under research/t3_rank7/, and aggregate.py re-derives any batch from scratch. Attested rather than reproduced because no certificate budget re-runs the enumeration; a faster kernel or an independent re-run elsewhere would lift the tier."
+}
