@@ -1,0 +1,22 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_H",
+  "m": 2,
+  "direction": "lower",
+  "rank": 2,
+  "certificate": {
+    "script": "verify_challenge/cert_rank1_moduli.py",
+    "expect": "CERTIFIED chi(qubit_H^2) >= 2",
+    "exact": true
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank verify_challenge",
+    "method": "exact: the state is not a stabilizer state (two distinct amplitude moduli)",
+    "date": "2026-09-20",
+    "github": [
+      "vprusso"
+    ]
+  },
+  "notes": "Settles chi(H^2) = 2 with the Lean upper bound qubit_h_m2_stabRankP_le_two. A stabilizer state has one modulus on its support; |H>^2 has moduli cos^2(pi/8) and cos(pi/8) sin(pi/8), which differ."
+}
