@@ -21,7 +21,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop, 8 annealing chains"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_H-m3-upper-3",
@@ -43,7 +44,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop, 8 annealing chains"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_H-m5-upper-6",
@@ -65,7 +67,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop, 8 annealing chains"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_H-m6-upper-7",
@@ -87,7 +90,8 @@
     "runs": 3,
     "hardware": "Apple silicon laptop, 8 annealing chains per run"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "T3-m1-upper-3",
@@ -104,7 +108,8 @@
    "method": "literature",
    "reference": "arXiv:2003.01130",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "T3-m2-upper-3",
@@ -121,7 +126,8 @@
    "method": "literature",
    "reference": "arXiv:2003.01130",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_H-m6-upper-6",
@@ -138,7 +144,8 @@
    "method": "literature",
    "reference": "arXiv:2106.07740",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "H3-m2-upper-3",
@@ -158,7 +165,8 @@
    "method": "literature",
    "reference": "arXiv:2605.28586",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "H3-m3-lower-4",
@@ -183,7 +191,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop, 8 worker processes"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "H3-m3-upper-4",
@@ -203,7 +212,8 @@
    "method": "literature",
    "reference": "arXiv:2605.28586",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "H3-m4-upper-8",
@@ -223,7 +233,8 @@
    "method": "literature",
    "reference": "arXiv:2605.28586",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "N-m2-upper-3",
@@ -243,7 +254,8 @@
    "method": "literature",
    "reference": "arXiv:2605.28586",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "N-m3-lower-4",
@@ -268,7 +280,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop, 8 worker processes"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "N-m3-upper-4",
@@ -288,7 +301,8 @@
    "method": "literature",
    "reference": "arXiv:2605.28586",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "N-m4-upper-7",
@@ -308,7 +322,8 @@
    "method": "literature",
    "reference": "arXiv:2605.28586",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "S-m1-upper-2",
@@ -328,7 +343,8 @@
    "method": "literature",
    "reference": "arXiv:2605.28586",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "S-m2-upper-2",
@@ -348,7 +364,8 @@
    "method": "carry decomposition",
    "reference": "arXiv:2605.28586, Theorem 2",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "S-m3-lower-4",
@@ -373,7 +390,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop, 8 worker processes"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "S-m3-upper-4",
@@ -393,7 +411,8 @@
    "method": "literature",
    "reference": "arXiv:2605.28586",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "S-m4-lower-4",
@@ -413,7 +432,8 @@
    "method": "literature",
    "reference": "arXiv:2605.28586",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "S-m4-upper-4",
@@ -433,7 +453,8 @@
    "method": "literature",
    "reference": "arXiv:2605.28586",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "S-m6-upper-8",
@@ -453,7 +474,8 @@
    "method": "literature",
    "reference": "arXiv:2605.28586",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "T3-m3-upper-8",
@@ -473,7 +495,8 @@
    "method": "literature",
    "reference": "arXiv:2605.28586",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "T3-m4-upper-9",
@@ -493,7 +516,8 @@
    "method": "literature",
    "reference": "arXiv:2605.28586",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_H-m4-upper-4",
@@ -518,7 +542,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop, 8 annealing chains"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_H-m6-lower-4",
@@ -543,7 +568,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop, 8 worker processes"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_T-m4-upper-3",
@@ -563,7 +589,8 @@
    "method": "literature",
    "reference": "arXiv:2605.28586",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_T-m6-upper-6",
@@ -583,7 +610,8 @@
    "method": "literature",
    "reference": "arXiv:2605.28586",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "T3-m2-lower-3",
@@ -602,7 +630,8 @@
    "method": "Galois descent over Z[w3]; no search",
    "reference": "stabrank PR #16",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "T3-m3-lower-6",
@@ -621,7 +650,8 @@
    "method": "Galois descent to cut the search to finitely many candidate lines, then exhaustion",
    "reference": "stabrank PR #16",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "H3-m2-lower-3",
@@ -640,7 +670,8 @@
    "method": "exhaustion over all 64620 pairs of 2-qutrit stabilizer states",
    "reference": "stabrank PR #18",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "N-m2-lower-3",
@@ -659,7 +690,8 @@
    "method": "exhaustion over all 64620 pairs of 2-qutrit stabilizer states",
    "reference": "stabrank PR #18",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_H-m3-lower-3",
@@ -678,7 +710,8 @@
    "method": "exhaustion over all pairs of stabilizer states, via the quotient by the target",
    "reference": "stabrank PR #18",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_H-m4-lower-3",
@@ -697,7 +730,8 @@
    "method": "exhaustion over all pairs of stabilizer states, via the quotient by the target",
    "reference": "stabrank PR #18",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_T-m4-lower-3",
@@ -716,7 +750,8 @@
    "method": "exhaustion over all pairs of stabilizer states, via the quotient by the target",
    "reference": "stabrank PR #18",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "S-m2-lower-2",
@@ -735,7 +770,8 @@
    "method": "affine-support obstruction, formalized in Lean",
    "reference": "stabrank PR #19",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "T3-m1-lower-3",
@@ -754,7 +790,8 @@
    "method": "exhaustion over all 66 pairs of 1-qutrit stabilizer states",
    "reference": "stabrank PR #19",
    "compute": null,
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "T3-m3-lower-7",
@@ -778,7 +815,8 @@
     "runs": 2,
     "hardware": "Apple silicon laptop, 8 workers: 99 s wall and 270 s CPU in the worktree, 135 s wall and 486 s CPU on the rebased branch; about three minutes on the 4-core CI runner"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "T3-m4-lower-6",
@@ -802,7 +840,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop, 6 worker processes"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_H-m4-lower-4",
@@ -826,7 +865,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop, 8 worker processes"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_T-m2-upper-2",
@@ -850,7 +890,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop, 8 annealing chains"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_T-m3-lower-3",
@@ -874,7 +915,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_T-m3-upper-3",
@@ -898,7 +940,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop, 8 annealing chains"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "T3-m5-upper-18",
@@ -928,7 +971,8 @@
      }
     ]
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "H3-m4-lower-3",
@@ -952,7 +996,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop, one core"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "H3-m4-lower-5",
@@ -976,7 +1021,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop, four workers at low priority under a load average near 12: 1183 s for the enumeration and lift"
    },
-   "budget_s": 3600
+   "budget_s": 3600,
+   "attested": null
   },
   {
    "slug": "N-m4-lower-3",
@@ -1000,7 +1046,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop, one core"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "N-m4-lower-5",
@@ -1024,7 +1071,8 @@
     "runs": 3,
     "hardware": "Apple silicon laptop at low priority for the 6.4-hour first enumeration; the certificate ran in 43 minutes on the 4-core CI runner with the numpy search, and re-runs here with the compiled kernel"
    },
-   "budget_s": 3600
+   "budget_s": 3600,
+   "attested": null
   },
   {
    "slug": "S-m5-lower-4",
@@ -1048,7 +1096,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "S-m5-lower-5",
@@ -1072,7 +1121,8 @@
     "runs": 3,
     "hardware": "Apple silicon laptop at low priority; the first enumeration ran 2.2 hours on one core, the certificate takes about two minutes on four"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "S-m5-upper-8",
@@ -1096,7 +1146,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "T3-m5-lower-6",
@@ -1120,7 +1171,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop, 6 worker processes"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_H-m5-lower-4",
@@ -1144,7 +1196,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop; the m=4 rank-3 exclusion re-runs inside the certificate"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_H-m5-lower-5",
@@ -1168,7 +1221,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop, four workers at low priority under a load average near 12: 1649 s for the enumeration and lift"
    },
-   "budget_s": 3600
+   "budget_s": 3600,
+   "attested": null
   },
   {
    "slug": "qubit_T-m5-lower-3",
@@ -1192,7 +1246,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_T-m5-lower-4",
@@ -1216,7 +1271,8 @@
     "runs": 1,
     "hardware": "Apple silicon laptop"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_T-m5-upper-6",
@@ -1240,7 +1296,150 @@
     "runs": 1,
     "hardware": "Apple silicon laptop"
    },
-   "budget_s": null
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "S-m1-lower-2",
+   "orbit": "S",
+   "m": 1,
+   "direction": "lower",
+   "rank": 2,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-20",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "exact: the state is not a stabilizer state (support size 2 is not an affine flat of F_3)",
+   "reference": "stabrank verify_challenge",
+   "compute": null,
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "S-m6-lower-5",
+   "orbit": "S",
+   "m": 6,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "reproduced",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-20",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "projection monotonicity applied to the slice-and-lift bound at m=5",
+   "reference": "stabrank verify_challenge",
+   "compute": {
+    "cpu_hours": 0.05,
+    "wall_clock_hours": 0.04,
+    "runs": 1,
+    "hardware": "the m=5 certificate, four cores"
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "T3-m3-lower-8",
+   "orbit": "T3",
+   "m": 3,
+   "direction": "lower",
+   "rank": 8,
+   "tier": "attested",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-20",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "Galois descent to Q(w3), then exhaustive three-pivot scan of seven-state configurations in exact arithmetic, batched and attested",
+   "reference": "stabrank research/t3_rank7",
+   "compute": {
+    "cpu_hours": 80.1,
+    "wall_clock_hours": 22.0,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, four loop.py instances at nice 19 over the 459-batch partition, 21 ns per inner step averaged"
+   },
+   "budget_s": 3600,
+   "attested": {
+    "batches": "research/t3_rank7/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 80.1,
+    "hardware": "Apple silicon laptop (18 cores), four batches at a time at nice 19 under a shared load; 2026-09-19 13:33 to 2026-09-20 11:33 UTC",
+    "note": "The enumeration of every rank-7 candidate class set (1.31e13 inner steps, 1.21e9 class sets, all decided exactly) lives in the 459 stored batch outputs; the certificate verifies their hashes, geometry and totals and re-runs two of them from scratch, so completeness rests on the stored outputs and on the committed runner that regenerates any batch.",
+    "total": 459
+   }
+  },
+  {
+   "slug": "qubit_H-m2-lower-2",
+   "orbit": "qubit_H",
+   "m": 2,
+   "direction": "lower",
+   "rank": 2,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-20",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "exact: the state is not a stabilizer state (two distinct amplitude moduli)",
+   "reference": "stabrank verify_challenge",
+   "compute": null,
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_T-m2-lower-2",
+   "orbit": "qubit_T",
+   "m": 2,
+   "direction": "lower",
+   "rank": 2,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-20",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "exact: the state is not a stabilizer state (two distinct amplitude moduli)",
+   "reference": "stabrank verify_challenge",
+   "compute": null,
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_T-m6-lower-4",
+   "orbit": "qubit_T",
+   "m": 6,
+   "direction": "lower",
+   "rank": 4,
+   "tier": "reproduced",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-20",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "projection monotonicity applied to the slice-and-lift bound at m=5",
+   "reference": "stabrank verify_challenge",
+   "compute": {
+    "cpu_hours": 0.01,
+    "wall_clock_hours": 0.003,
+    "runs": 1,
+    "hardware": "the m=5 certificate"
+   },
+   "budget_s": null,
+   "attested": null
   }
  ]
 }
