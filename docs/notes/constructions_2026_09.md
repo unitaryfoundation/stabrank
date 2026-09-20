@@ -6,15 +6,15 @@ on the shared machine; no annealing.
 
 ## Cells and what would beat the literature
 
-| cell | board | rank that beats the published exponent | gamma |
-|---|---|---|---|
-| N m=4 | 5 <= chi <= 7 | 6 (0.4077 < 0.4206), 5 (0.3662) | |
-| H3 m=4 | 5 <= chi <= 8 | 6 (0.4077); 7 improves the cell only (0.4428) | |
-| T3 m=4 | 6 <= chi <= 9 on the board | 8 (0.4732 < 0.5); rank 7 is excluded, see below | |
-| S m=5 | 5 <= chi <= 8 | 5 (0.2930), 6 (0.3261 > 0.3155: does not beat), 7 improves the cell | |
-| S m=6 | 5 <= chi <= 8 | 7 (0.2952) | |
-| qubit_H m=6 | 4 <= chi <= 6 | 5 (0.3870 < 0.3963) | |
-| qubit_T m=6 | 4 <= chi <= 6 | 5 (0.3870) | |
+| cell | board | rank that beats the published exponent (gamma) |
+|---|---|---|
+| N m=4 | 5 <= chi <= 7 | 6 (0.4077 < 0.4206), 5 (0.3662) |
+| H3 m=4 | 5 <= chi <= 8 | 6 (0.4077); 7 improves the cell only (0.4428) |
+| T3 m=4 | 6 <= chi <= 9 on the board | 8 (0.4732 < 0.5); rank 7 is excluded, see below |
+| S m=5 | 5 <= chi <= 8 | 5 (0.2930); 6 (0.3261) does not beat 0.3155, 6 and 7 tighten the cell |
+| S m=6 | 5 <= chi <= 8 | 7 (0.2952) |
+| qubit_H m=6 | 4 <= chi <= 6 | 5 (0.3870 < 0.3963) |
+| qubit_T m=6 | 4 <= chi <= 6 | 5 (0.3870) |
 
 Correction to the target list: at S m=5 rank 6 gives log_3(6)/5 = 0.3261,
 above the published 0.3155, so only rank 5 moves the exponent there (rank 6
@@ -126,13 +126,28 @@ size 4, 2832 of size 6; about 100 s to enumerate):
 |---|---|---|---|---|
 | N m=4 | 6 | 4416 | 2: 1, 3: 1584, 4: 8040, 5: 17296, 6: 194580 | none |
 | H3 m=4 | 7 | 4416 | 2: 1, 3: 1584, 4: 74856, 5: 179728, 6: 194580, 7: 1712304 | none |
-| T3 m=4 | 8 | 4572 (156 more of size 8) | T3_PERM | T3_PERM_RESULT |
+| T3 m=4 | 8 | 4572 (156 more of size 8) | 2: 1, 3: 4416; unions of 4 to 8 orbits not scanned (the uncapped run passed ten minutes in the 4-orbit stage and was stopped) | none among unions of at most 3 orbits |
 
 So the symmetry that the rank-4 decompositions of N^3 and H3^3 have does
 not extend: no S_4-invariant set of at most 6 (N) or 7 (H3) stabilizer
 states spans the four-copy state.
 
-QUBIT_PERM
+For T3 the single-orbit and 3-orbit stages also show that |T3>^4 is not in
+the span of the orbit vectors of size 1 and 3 together (it is once size-4
+orbits are included), so an S_4-invariant rank-8 decomposition would need
+at least one orbit of size 4, 6 or 8, and the unscanned stages are exactly
+the 4-, 5-, 6-, 7- and 8-orbit unions with cost 8.
+
+Qubits (`perm_symmetric_qubit.py`; controls at m=3 recover S_3-invariant
+rank-3 decompositions of |H>^3 and |T>^3, and at |H>^4 the S_4-invariant
+rank-4 ones): at m=6 with R = 5 only flats with an S_6-stabilizer of order
+at least 144 can carry a term, there are 6 such flats, and of the
+136,314,886 phase forms on them exactly 18 states have an orbit of size at
+most 5 (all 18 are fully S_6-symmetric). Neither |H>^6 nor |T>^6 lies in
+the span of those 18 states, so there is no S_6-invariant decomposition of
+either with at most 5 terms. Each of these two scans took about 15 minutes
+of one core, over the ten-minute guideline; the phase-form scan is the
+whole cost and is not resumable in the current script.
 
 Not done: subgroups of S_m other than S_m itself, and subgroups involving
 the local Cliffords. The set-stabilizers above show which would be needed
@@ -207,6 +222,12 @@ were not run at m >= 4.
    stabilizer or rank-2 residual.
 4. Pauli sectors at m=4 all have rank at least 3 for N, H3, S and T3.
 5. No pair of product terms merges at any of the cells.
+6. No decomposition with an S_4-invariant term set has at most 6 terms for
+   |N>^4 or at most 7 for |H3>^4, although the unique rank-4
+   decompositions one copy down are S_3-invariant; no decomposition with an
+   S_6-invariant term set has at most 5 terms for |H>^6 or |T>^6 (only 18
+   six-qubit stabilizer states have an S_6-orbit of size at most 5, and the
+   targets are outside their span).
 
 ## What is worth doing next, if anything
 

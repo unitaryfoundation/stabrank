@@ -15,6 +15,7 @@ repository root with `uv run --extra challenge python research/constructions/<sc
 | `products.py` | product decompositions from the stored lists and pairwise merge tests |
 | `inspan.py` | dictionary states inside the span of each minimal decomposition |
 | `symmetric.py` | set-stabilizer order of each stored decomposition under the symmetry group of the target |
+| `perm_symmetric_qubit.py` | the same for the qubit orbits (phase group Z_4), scanning the phase forms of each kept flat against generators of its permutation stabilizer |
 | `perm_symmetric.py` | exact search for decompositions whose term set is invariant under all copy permutations, from orbit vectors generated flat by flat without the full dictionary |
 
 ## What is validated
@@ -40,7 +41,9 @@ repository root with `uv run --extra challenge python research/constructions/<sc
 - `perm_symmetric.py` controls: at N m=3 and H3 m=3 with R = 4 it returns
   exactly the known S_3-invariant rank-4 decomposition; at S m=3 it returns
   none, as the set-stabilizers from `symmetric.py` (order <= 2 in S_3)
-  predict.
+  predict. `perm_symmetric_qubit.py` controls: S_3-invariant rank-3
+  decompositions of |H>^3 (4) and |T>^3 (6), and S_4-invariant rank-4
+  decompositions of |H>^4 (10), matching the set-stabilizer orders.
 - Every hit any script reports is checked numerically against the target and
   written as amplitude vectors under `results/` (not committed) for
   `verify_challenge/to_witness.py`, which is the exact step.

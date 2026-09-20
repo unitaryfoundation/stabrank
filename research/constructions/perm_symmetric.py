@@ -31,7 +31,7 @@ can only involve orbits of cost 1 and 2. Everything is exact up to the
 1e-9 residual tolerance of those searches; a hit is written as amplitude
 vectors for to_witness.py.
 
-Usage: perm_symmetric.py ORBIT M RMAX
+Usage: perm_symmetric.py ORBIT M RMAX [MAX_ORBITS]
 """
 
 from __future__ import annotations
@@ -114,7 +114,7 @@ def phase_chunks(Mono, nf, p, flat_perms, chunk=1 << 17):
         yield E, stab_count, char_trivial
 
 
-def cost_rank_search(D, psi, costs, R):
+def cost_rank_search(D, psi, costs, R, max_orbits=None):
     """Every index set S with sum of costs <= R and psi in span(D[:, S]),
     minimal in the sense that no proper subset spans psi.
 
@@ -182,7 +182,7 @@ def cost_rank_search(D, psi, costs, R):
     def level(c):
         return min(x for x in cost_levels if x >= c) if any(x >= c for x in cost_levels) else cost_levels[-1]
 
-    for size in range(2, R + 1):
+    for size in range(2, (R if max_orbits is None else min(R, max_orbits)) + 1):
         count = 0
         # pivot tuples: s-2 indices in increasing order with total cost <= R - 2
         def rec(pivots, start, spent):
@@ -212,6 +212,7 @@ def cost_rank_search(D, psi, costs, R):
 
 def main(argv):
     orbit, m, R = argv[1], int(argv[2]), int(argv[3])
+    max_orbits = int(argv[4]) if len(argv) > 4 else None
     p = ORBIT_P[orbit]
     assert p == 3, "qutrit orbits only"
     psi = target(orbit, m)
@@ -274,9 +275,11 @@ def main(argv):
     if not orbit_vecs:
         return 0
     D = np.column_stack(orbit_vecs)
-    hits, tested = cost_rank_search(D, psi, costs, R)
+    hits, tested = cost_rank_search(D, psi, costs, R, max_orbits)
     for size in sorted(tested):
         print(f"  {size}-orbit unions within cost {R}: {tested[size]} pivot sets scanned", flush=True)
+    if max_orbits is not None and max_orbits < R:
+        print(f"  unions of more than {max_orbits} orbits were not scanned", flush=True)
     print(f"{len(hits)} S_{m}-invariant decompositions with at most {R} terms")
     out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
     os.makedirs(out, exist_ok=True)
