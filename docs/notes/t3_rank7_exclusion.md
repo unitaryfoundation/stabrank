@@ -1,6 +1,21 @@
 # Excluding rank 7 for |T3>^3: design note
 
-Status of the cell: 7 <= chi(T3^3) <= 8, lower bound from
+Outcome (2026-09-20). The scan described here ran to completion and
+excluded rank 7: chi(T3^3) = 8. 459 batches, 1.31e13 inner steps,
+1,213,458,815 candidate class sets decided exactly, none containing V_3,
+none spurious or undecided; 80.1 CPU-hours over 22 hours of wall time on
+four low-priority cores of an 18-core laptop, 21 ns per step averaged
+(the design estimate below was 66 CPU-hours at 18 ns on idle cores). The
+bound is `bounds/T3-m3-lower-8.json` on the attested tier (PR #62): the
+certificate re-runs two batches from scratch and hashes the rest, and took
+58 minutes on the 4-core CI runner against the 3600 s budget. A full
+aggregation with three re-runs (batches 94, 109, 363) also matched bit for
+bit. The rare-type pivot lemma of section 4 turned out false
+(`t3_rank7_rare_pivot.md`), so this was the unreduced scan. What would lift
+the tier: a kernel near 10 ns per step with a re-run of a larger subset, or
+an independent re-run of every batch on other hardware.
+
+Status of the cell before the scan: 7 <= chi(T3^3) <= 8, lower bound from
 `verify_challenge/cert_t3m3_rank7.py` (PR #41), upper bound from the
 eight-term witness in `bounds/T3-m3-upper-8.json`. Excluding rank 7 settles
 chi(T3^3) = 8, the cell named by goal G4. Prototype code and measured

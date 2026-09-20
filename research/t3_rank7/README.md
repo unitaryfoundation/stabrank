@@ -1,9 +1,15 @@
 # Rank-7 exclusion for |T3>^3: batch pipeline
 
-Design note: `docs/notes/t3_rank7_exclusion.md`. Nothing in this directory
-is a certificate; `aggregate.py` prints `CERTIFIED chi(T3^3) >= 8` only once
-every batch of `partition.json` is stored and checked. The full scan has not
-been run.
+Design note: `docs/notes/t3_rank7_exclusion.md`. The full scan ran on
+2026-09-19 and 2026-09-20 (four `loop.py` instances over
+`manifest_rank7_p0.json` to `manifest_rank7_p3.json`, disjoint quarters of
+every block); all 459 batch outputs are stored under `batches/` and listed
+with their hashes in `batch_manifest.json`. `aggregate.py` prints
+`CERTIFIED chi(T3^3) >= 8` after checking them and re-running a seeded
+subset from scratch; `verify_challenge/cert_t3m3_rank8_attested.py` is the
+certificate behind `bounds/T3-m3-lower-8.json` (attested tier). The result:
+1,213,458,815 candidate class sets, none containing V_3, none spurious or
+undecided, 80.1 CPU-hours.
 
 ## Files
 

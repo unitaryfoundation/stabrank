@@ -286,9 +286,11 @@ side (`docs/evidence_index.json`, `cells`, `settled: true`):
 
 Thirteen of 27 cells are settled (`docs/report/index.html`, "27 cells, 13
 settled"). The goals document's G4 target for the board, "close or narrow the
-open T3 cell at m = 3 (currently 6 to 8)", is met by narrowing: the cell is
-7 <= chi <= 8 in `bounds/` (`bounds/T3-m3-lower-7.json`, notes), still
-6 <= chi <= 8 on the committed site.
+open T3 cell at m = 3 (currently 6 to 8)", is met in full: the cell is
+closed at chi(T3^3) = 8 (`bounds/T3-m3-lower-8.json`, attested tier, PR #62,
+2026-09-20: an exact three-pivot scan of every rank-7 configuration after
+Galois descent, 1,213,458,815 candidate class sets over 459 stored batches,
+80.1 CPU-hours), against the verified eight-term witness.
 
 ### Upper bounds
 
@@ -528,15 +530,14 @@ Both notes recommend a lower-bound exclusion inside the relevant space
 rather than more annealing (`bounds/T3-m5-upper-18.json`: "a rank-4 exclusion
 inside the 81-dimensional code is the natural companion").
 
-`T3` m = 3, rank 7 or 8. The cell is 7 <= chi <= 8 in `bounds/`. Excluding
-rank 7 is costed in the bound file at "about N^4/(6|G|) = 5e13 inner steps,
-about 70 CPU-hours in this kernel" (`bounds/T3-m3-lower-7.json`, notes). The
-project progress note of 18 September gives a different figure for the same
-step: "Rank 7 is excluded in two of three geometric cases; the third is costed
-at 500 to 770 CPU-hours after an exact computation showed the symmetry group is
-no larger than the known one" (`../genesis-grant/progress-2026-09-18.html`,
-G4 row). The two statements should be reconciled before either is quoted;
-the repository holds neither the two-case exclusion nor its cost.
+`T3` m = 3 is closed: chi = 8 (`bounds/T3-m3-lower-8.json`). The rank-7
+exclusion cost 80.1 CPU-hours, between the 70 CPU-hours the rank-7 bound
+file estimated and the 500 to 770 the project progress note of 18 September
+quoted; the difference against the latter is the orbit-block pivot order of
+`docs/notes/t3_rank7_exclusion.md`, a factor 4.4, and the kernel's 21 ns per
+step. The bound sits on the attested tier because no certificate budget
+re-runs the enumeration; the certificate re-runs two of the 459 batches and
+hashes the rest (58 minutes on the CI runner).
 
 Ledger and receipt staleness. The committed `docs/ledger.json` and site
 predate PRs #41, #42, #48 and #49: two bounds are missing and four tiers are
