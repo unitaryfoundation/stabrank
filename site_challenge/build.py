@@ -344,15 +344,15 @@ def progress_chart(entries):
             g = e["res"]["gamma"]
             if best is None or g < best:
                 best = g
-                pts.append((yr, g))
+                pts.append((yr, g, e))
         if pts:
             series[orbit] = pts
     if not series:
         return ""
 
-    years = sorted({y for pts in series.values() for y, _ in pts})
+    years = sorted({y for pts in series.values() for y, _, _ in pts})
     y0, y1 = min(years), max(years) + 1
-    gs = [g for pts in series.values() for _, g in pts] + \
+    gs = [g for pts in series.values() for _, g, _ in pts] + \
          [b for b, _ in BASELINE.values()]
     lo, hi = min(gs) * 0.96, max(gs) * 1.04
 
@@ -377,7 +377,7 @@ def progress_chart(entries):
     for orbit, pts in series.items():
         c = COLOR[orbit]
         d = []
-        for i, (yr, g) in enumerate(pts):
+        for i, (yr, g, _) in enumerate(pts):
             if i == 0:
                 d.append(f"M{X(yr):.1f},{Y(g):.1f}")
             else:
@@ -385,9 +385,21 @@ def progress_chart(entries):
                 d.append(f"L{X(yr):.1f},{Y(g):.1f}")
         d.append(f"L{X(y1):.1f},{Y(pts[-1][1]):.1f}")
         o.append(f"<path class=ln d='{' '.join(d)}' stroke='{c}'/>")
-        for yr, g in pts:
+        for yr, g, e in pts:
             o.append(f"<circle cx='{X(yr):.1f}' cy='{Y(g):.1f}' r='4' "
                      f"fill='#fff' stroke='{c}' stroke-width='2'/>")
+    # Hit targets last so they sit on top of every line: an invisible larger
+    # circle per point carries the tooltip text and the bound's page, and the
+    # page's script positions one shared tooltip element on hover.
+    for orbit, pts in series.items():
+        for yr, g, e in pts:
+            sub, res = e["sub"], e["res"]
+            who = sub["provenance"].get("author", "")
+            tip = (f"{ORBIT_LABEL[orbit]} · χ ≤ {sub['rank']} at m={sub['m']} · γ = {g:.4f} · "
+                   f"{sub['provenance'].get('date', '')} · {res['tier']} · {who}")
+            o.append(f"<circle class=hit cx='{X(yr):.1f}' cy='{Y(g):.1f}' r='11' "
+                     f"fill='transparent' data-tip='{E(tip)}' "
+                     f"data-href='bounds/{e['slug']}.html'/>")
     # right-edge labels collide when orbits share an exponent, so lay them out
     # in one pass with a minimum vertical gap and a leader line back to the line
     ends = sorted(((pts[-1][1], ob) for ob, pts in series.items()),
@@ -547,6 +559,12 @@ font-family:"Space Mono",monospace;font-size:12px;color:var(--mut)}
 .refs .vn{color:var(--mut)}
 .refs .nt{color:var(--mut);font-size:13.5px;margin-top:3px}
 .chart .leader{fill:none;stroke-width:1.2;opacity:.55}
+.chart .hit{cursor:pointer}
+.chart .hit:hover{fill:rgba(15,23,42,.06)}
+#tip{position:fixed;z-index:50;max-width:310px;padding:7px 10px;border-radius:8px;
+background:var(--ink);color:#fff;font-family:"Space Mono",monospace;font-size:11.5px;
+line-height:1.45;pointer-events:none;opacity:0;transition:opacity .08s}
+#tip.show{opacity:1}
 .h2note{font-weight:400;font-size:14px;color:var(--mut);letter-spacing:0}
 
 .modal{border:none;border-radius:14px;padding:0;max-width:620px;width:calc(100% - 32px);
@@ -684,6 +702,27 @@ FAVICON = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">'
 
 FOOTMARK = ('<svg width=34 height=34 viewBox="0 0 64 64" aria-hidden="true">'
             + MARK_BODY + '</svg>')
+
+
+CHART_SCRIPT = """<script>
+(function(){
+ const tip=document.getElementById('tip');if(!tip)return;
+ document.addEventListener('mouseover',e=>{
+  const c=e.target.closest('.hit[data-tip]');if(!c)return;
+  tip.textContent=c.getAttribute('data-tip');tip.classList.add('show');});
+ document.addEventListener('mousemove',e=>{
+  if(!tip.classList.contains('show'))return;
+  let x=e.clientX+14,y=e.clientY+14;
+  if(x+310>innerWidth)x=e.clientX-tip.offsetWidth-14;
+  if(y+tip.offsetHeight+8>innerHeight)y=e.clientY-tip.offsetHeight-14;
+  tip.style.left=x+'px';tip.style.top=y+'px';});
+ document.addEventListener('mouseout',e=>{
+  if(e.target.closest('.hit[data-tip]'))tip.classList.remove('show');});
+ document.addEventListener('click',e=>{
+  const c=e.target.closest('.hit[data-href]');
+  if(c)location.href=c.getAttribute('data-href');});
+})();
+</script>"""
 
 
 def footer(rel=""):
@@ -1025,6 +1064,8 @@ def build(no_verify=False):
              "Lower is better; a line steps down when a submission improved that "
              "orbit's best bound.</p>")
     o.append("<div class=chartbox>" + progress_chart(entries) + "</div>")
+    o.append("<div id=tip role=tooltip></div>")
+    o.append(CHART_SCRIPT)
     o.append("<div class=legend>" + "".join(
         f"<a class=lgd href='orbits/{ob}.html'><i style='background:{COLOR[ob]}'></i>"
         f"{ORBIT_LABEL[ob]} ({SYSTEM[ob]})</a>" for ob in ORBIT_ORDER) + "</div>")
