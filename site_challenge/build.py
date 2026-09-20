@@ -389,14 +389,13 @@ def progress_chart(entries):
             o.append(f"<circle cx='{X(yr):.1f}' cy='{Y(g):.1f}' r='4' "
                      f"fill='#fff' stroke='{c}' stroke-width='2'/>")
     # Hit targets last so they sit on top of every line: an invisible larger
-    # circle per point carries the tooltip text and the bound's page, and the
-    # page's script positions one shared tooltip element on hover.
+    # circle per point carries a one-line tooltip (the bound, its copies and
+    # its exponent; date, tier and author are on the page a click opens) and
+    # the page's script positions one shared tooltip element on hover.
     for orbit, pts in series.items():
         for yr, g, e in pts:
-            sub, res = e["sub"], e["res"]
-            who = sub["provenance"].get("author", "")
-            tip = (f"{ORBIT_LABEL[orbit]} · χ ≤ {sub['rank']} at m={sub['m']} · γ = {g:.4f} · "
-                   f"{sub['provenance'].get('date', '')} · {res['tier']} · {who}")
+            sub = e["sub"]
+            tip = f"{ORBIT_LABEL[orbit]} · χ ≤ {sub['rank']} at m={sub['m']} · γ = {g:.4f}"
             o.append(f"<circle class=hit cx='{X(yr):.1f}' cy='{Y(g):.1f}' r='11' "
                      f"fill='transparent' data-tip='{E(tip)}' "
                      f"data-href='bounds/{e['slug']}.html'/>")
