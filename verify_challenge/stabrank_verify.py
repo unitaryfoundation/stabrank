@@ -114,14 +114,24 @@ def orbit_state(orbit):
     if orbit == "qubit_T":                # qubit Bravyi-Kitaev T-type, face centre
         b = sp.acos(1 / sp.sqrt(3)) / 2
         return sp.Matrix([sp.cos(b), sp.exp(sp.I * sp.pi / 4) * sp.sin(b)])
+    if orbit == "T5":                     # ququint T-type (Howard-Vala, Campbell-Anwar-Browne)
+        # For p >= 5 the qudit pi/8 gate is diag(w_p^{P(x)}) with P a cubic
+        # over F_p (Howard and Vala, arXiv:1206.1598, eq. 25), and every
+        # nonzero cubic coefficient is Clifford-equivalent to x^3 since the
+        # quadratic and linear parts are Clifford phases and x -> ax is a
+        # Clifford permutation with a^3 ranging over F_5^*. The magic state
+        # is the gate applied to |+>, and lives in Q(w_5) like the
+        # stabilizer states themselves, unlike T3 which needs Q(w_9).
+        w5 = sp.exp(2 * sp.pi * sp.I / 5)
+        return sp.Matrix([w5 ** ((x ** 3) % 5) for x in range(5)]) / sp.sqrt(5)
     raise ValueError(f"unknown orbit {orbit!r}")
 
 
-ORBIT_P = {"S": 3, "N": 3, "H3": 3, "T3": 3, "qubit_H": 2, "qubit_T": 2}
+ORBIT_P = {"S": 3, "N": 3, "H3": 3, "T3": 3, "qubit_H": 2, "qubit_T": 2, "T5": 5}
 
 ORBIT_LABEL = {
     "S": "Strange", "N": "Norrell", "H3": "H₃", "T3": "T₃",
-    "qubit_H": "H-type", "qubit_T": "BK T-type",
+    "qubit_H": "H-type", "qubit_T": "BK T-type", "T5": "T₅",
 }
 
 
