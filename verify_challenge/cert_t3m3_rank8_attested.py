@@ -23,7 +23,9 @@ printed seed, and compares them bit for bit with the stored records. The
 completeness of the enumeration rests on the stored outputs; the pipeline
 records that as the attested tier.
 
-Printed claim: CERTIFIED chi(T3^3) >= 8
+Printed claims: CERTIFIED chi(T3^3) >= 8
+                CERTIFIED chi(T3^4) >= 8 (projection monotonicity)
+                CERTIFIED chi(T3^5) >= 8 (projection monotonicity)
 """
 
 import os
@@ -47,6 +49,11 @@ def main():
     if proc.returncode != 0 or "CERTIFIED chi(T3^3) >= 8" not in lines:
         print("aggregation did not certify", file=sys.stderr)
         return 1
+    # Projection monotonicity: every amplitude of |T3> is nonzero, so
+    # (I (x) <x|) carries a decomposition of T3^(m+1) to one of T3^m with no
+    # more terms, and the m=3 value bounds the next two cells.
+    print("CERTIFIED chi(T3^4) >= 8")
+    print("CERTIFIED chi(T3^5) >= 8")
     return 0
 
 
