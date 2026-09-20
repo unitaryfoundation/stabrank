@@ -558,6 +558,8 @@ font-family:"Space Mono",monospace;font-size:12px;color:var(--mut)}
 .refs .vn{color:var(--mut)}
 .refs .nt{color:var(--mut);font-size:13.5px;margin-top:3px}
 .chart .leader{fill:none;stroke-width:1.2;opacity:.55}
+.prose code,p code{font-family:"Space Mono",monospace;font-size:.92em;background:var(--soft);
+padding:1px 4px;border-radius:4px}
 .chart .hit{cursor:pointer}
 .chart .hit:hover{fill:rgba(15,23,42,.06)}
 #tip{position:fixed;z-index:50;max-width:310px;padding:7px 10px;border-radius:8px;
@@ -787,6 +789,67 @@ def source_link(e, rel=""):
     return f"{rel}bounds/{e['slug']}.html", "details"
 
 
+PR_REF = re.compile(r"(?<![\w#])#(\d{1,5})\b")
+IDENT = re.compile(
+    r"(?<![\w/`.])("
+    r"(?:[\w\-]+/)+[\w\-]+\.\w+"                                 # paths: docs/notes/x.md
+    r"|[A-Za-z][\w]*\.(?:py|lean|json|jsonl|md|cpp|hpp)"         # file names
+    r"|[A-Za-z][\w]*(?:\.[A-Za-z][\w]*)+"                        # dotted names: Stabilizer.stabRank
+    r"|[A-Za-z][\w]*(?:_[\w]+)+"                                 # snake_case identifiers
+    r"|[A-Z][a-z]+(?:[A-Z][a-z0-9]+)+(?:[A-Z]\w*)?"              # CamelCase modules: StrangeM2Pointwise
+    r")(?![\w/])")
+SUBSCRIPT = re.compile(r"\b(psi|phi|[A-Za-z])_([0-9a-z])\b")
+KET = re.compile(r"\|([\w+\-]+)&gt;(?:\^\{?(?:ot\s*)?([0-9a-z]+)\}?|\^\(([^)]+)\))?")
+BRA = re.compile(r"&lt;([\w+\-]+)\|")
+SYMBOLS = [(re.compile(r"\bchi\b"), "&chi;"), (re.compile(r"\bgamma\b"), "&gamma;"),
+           (re.compile(r"\bomega\b"), "&omega;"), (re.compile(r"\bw3\b"), "&omega;<sub>3</sub>"),
+           (re.compile(r"\bw9\b"), "&omega;<sub>9</sub>"), (re.compile(r"\bpi\b"), "&pi;"),
+           (re.compile(r"\bsqrt\((\d+)\)"), r"&radic;\1"), (re.compile(r"\bsqrt(\d+)\b"), r"&radic;\1"),
+           (re.compile(r"\bsqrt\b"), "&radic;"), (re.compile(r"\bpsi\b"), "&psi;"), (re.compile(r"\bphi\b"), "&phi;"),
+           (re.compile(r"\bbeta\b"), "&beta;"), (re.compile(r"\balpha\b"), "&alpha;")]
+
+
+def fmt_prose(text):
+    """Render a submission's free text (notes, method) as HTML.
+
+    The files are written in plain ASCII: |S>^2, chi(T3^3) >= 8, <= and >=,
+    (x) for the tensor product, w3 for a cube root of unity, snake_case and
+    dotted Lean names, file names, and #41 for a pull request. This turns
+    each into the typographic or linked form so the page does not show
+    "IS>^2 <= 2" for a ket, and code names read as code. Escaping happens
+    first, so nothing in the text can inject markup.
+    """
+    t = E(text or "")
+    # comparison operators and arrows (after escaping, < is &lt; and > is &gt;)
+    t = t.replace("&lt;=", "&le;").replace("&gt;=", "&ge;").replace("!=", "&ne;")
+    t = t.replace("-&gt;", "&rarr;").replace(" (x) ", " &otimes; ")
+    # kets and bras, matched on the escaped text so the tags emitted survive
+    def ket(m):
+        exp = m.group(2) or m.group(3)
+        sup = f"<sup>&otimes;{exp}</sup>" if exp else ""
+        name = re.sub(r"^(\w+?)_(\w+)$", r"\1<sub>\2</sub>", m.group(1))
+        return f"|{name}&rang;{sup}"
+    t = KET.sub(ket, t)
+    t = BRA.sub(lambda m: f"&lang;{m.group(1)}|", t)
+    # links
+    t = ARXIV.sub(lambda m: f"<a href='https://arxiv.org/abs/{m.group(1)}'>{m.group(0)}</a>", t)
+    t = PR_REF.sub(lambda m: f"<a href='{REPO}/pull/{m.group(1)}'>#{m.group(1)}</a>", t)
+    # code-like tokens, protecting what is already inside a tag or link
+    parts = re.split(r"(<[^>]+>[^<]*</a>|<[^>]+>)", t)
+    out = []
+    for part in parts:
+        if part.startswith("<"):
+            out.append(part)
+            continue
+        for rx, rep in SYMBOLS:
+            part = rx.sub(rep, part)
+        part = SUBSCRIPT.sub(lambda m: (f"&{m.group(1)};" if len(m.group(1)) > 1 else m.group(1))
+                             + f"<sub>{m.group(2)}</sub>", part)
+        part = IDENT.sub(lambda m: f"<code>{m.group(1)}</code>", part)
+        out.append(part)
+    return "".join(out)
+
+
 def ref_link(prov):
     """Render a reference string, linking the arXiv id if there is one."""
     txt = prov.get("reference", "") or ""
@@ -843,7 +906,7 @@ def lean_badge(sub, rel="", compact=True):
     mark = "" if ok else (" &#9888;" if ok is False else " &middot; unbuilt")
     label = "lean" if compact else f"Lean &middot; {E(ln['theorem'])}"
     return (f"<a class='pill {cls}' href='{url}' "
-            f"title='{E(ln['theorem'])} in {E(ln['module'])} &mdash; {tip}'>"
+            f"title='{E(ln['theorem'])} in {E(ln['module'])}: {tip}'>"
             f"{label}{'' if compact else mark}</a>")
 
 
@@ -1341,8 +1404,8 @@ def detail_page(e):
     if r.get("gamma") is not None and s["direction"] == "upper":
         base = BASELINE[s["orbit"]][0]
         beat = r["gamma"] < base - 1e-12
-        o.append(f"<p>Implied per-copy exponent &gamma; &le; <b>{r['gamma']:.4f}</b>, "
-                 f"against a published {base:.4f} &mdash; "
+        o.append(f"<p>Implied per-copy exponent &gamma; &le; <b>{r['gamma']:.4f}</b> "
+                 f"against a published {base:.4f}, "
                  + ("<span class=gain>an improvement</span>." if beat else "no improvement.")
                  + "</p>")
     if s.get("lean"):
@@ -1360,10 +1423,10 @@ def detail_page(e):
     if comp:
         o.append("<h2>Compute</h2><p>" + compute_summary(comp) + "</p>")
     if s.get("notes"):
-        o.append(f"<h2>Notes</h2><p>{E(s['notes'])}</p>")
+        o.append(f"<h2>Notes</h2><p class=prose>{fmt_prose(s['notes'])}</p>")
     o.append("<h2>Attribution</h2><p>" + E(s["provenance"].get("author", ""))
-             + " &middot; <span class=mono>" + E(s["provenance"].get("reference", ""))
-             + "</span>" + (" &middot; " + E(s["provenance"]["method"])
+             + " &middot; <span class=mono>" + ref_link(s["provenance"])
+             + "</span>" + (" &middot; " + fmt_prose(s["provenance"]["method"])
                             if s["provenance"].get("method") else "") + "</p>")
     o.append("<h2>Submission</h2><details><summary>JSON</summary><pre>"
              + E(json.dumps(s, indent=2)) + "</pre></details>")
