@@ -27,7 +27,8 @@ External controls: the rank-2 decomposition of |S> lifts to |S>^2 (the
 slice-0 equation is homogeneous there too), and the rank-3 decompositions
 of |N>^2 do not lift to |N>^3 (chi(N^3) = 4).
 
-Printed claim: CERTIFIED chi(S^5) >= 5
+Printed claims: CERTIFIED chi(S^5) >= 5
+                CERTIFIED chi(S^6) >= 5 (projection monotonicity)
 """
 
 import os
@@ -98,6 +99,8 @@ def main():
           f"misses the slice equation by at least {gap:.2e}")
     print(f"[{time.time() - t0:.0f}s]")
     print("CERTIFIED chi(S^5) >= 5")
+    # projection onto <1| of one qutrit carries a decomposition of S^6 to one of S^5
+    print("CERTIFIED chi(S^6) >= 5")
     return 0
 
 

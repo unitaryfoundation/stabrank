@@ -64,6 +64,8 @@ def main():
         return 1
     print(f"[{time.time() - t0:.0f}s]")
     print("CERTIFIED chi(qubit_T^5) >= 4")
+    # projection onto <0| of one qubit carries a decomposition of T^6 to one of T^5
+    print("CERTIFIED chi(qubit_T^6) >= 4")
     return 0
 
 

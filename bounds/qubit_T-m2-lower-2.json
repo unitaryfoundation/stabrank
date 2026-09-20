@@ -1,0 +1,22 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_T",
+  "m": 2,
+  "direction": "lower",
+  "rank": 2,
+  "certificate": {
+    "script": "verify_challenge/cert_rank1_moduli.py",
+    "expect": "CERTIFIED chi(qubit_T^2) >= 2",
+    "exact": true
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank verify_challenge",
+    "method": "exact: the state is not a stabilizer state (two distinct amplitude moduli)",
+    "date": "2026-09-20",
+    "github": [
+      "vprusso"
+    ]
+  },
+  "notes": "Settles chi(T^2) = 2 with the Lean upper bound qubit_t_m2_stabRankP_le_two. |T>^2 has moduli cos^2(beta) and cos(beta) sin(beta) with beta = arccos(1/sqrt3)/2, which differ."
+}

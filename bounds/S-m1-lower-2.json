@@ -1,0 +1,22 @@
+{
+  "schema_version": "0.1",
+  "orbit": "S",
+  "m": 1,
+  "direction": "lower",
+  "rank": 2,
+  "certificate": {
+    "script": "verify_challenge/cert_rank1_moduli.py",
+    "expect": "CERTIFIED chi(S^1) >= 2",
+    "exact": true
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank verify_challenge",
+    "method": "exact: the state is not a stabilizer state (support size 2 is not an affine flat of F_3)",
+    "date": "2026-09-20",
+    "github": [
+      "vprusso"
+    ]
+  },
+  "notes": "Settles chi(S) = 2 with the Lean upper bound strange_m1_stabRank_le_two. Exact throughout: a stabilizer state is supported on an affine flat, of size 1 or 3 for one qutrit, and |S> has support 2."
+}
