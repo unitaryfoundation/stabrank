@@ -514,9 +514,7 @@ def report_page(comparison, cells, table, curve, evidence, refs, generated, head
     o.append(site.hero(
         "Progress report",
         "Exponents against the literature, the interval on every cell, what each "
-        "discovery cost, and the evidence behind every bound. Generated "
-        f"{E(generated)} from <code>bounds/</code>, <code>autoresearch/runs.jsonl</code> "
-        f"and the git history at <code>{E(head_sha[:10])}</code>.", rel=rel))
+        "discovery cost, and the evidence behind every bound.", rel=rel))
     o.append(site.PARTICIPATE)
     o.append(f"<div class=wrap><p><a href='{rel}index.html'>&larr; back to the board</a></p>")
 

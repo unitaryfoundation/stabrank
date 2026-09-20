@@ -1,7 +1,7 @@
 """Certificate: chi(|H>^{ot 4}) >= 4 for the qubit H-type state, excluding rank 3.
 
 The cell sat at 3 <= chi <= 4 after the rank-2 exclusion. Excluding rank 3
-settles it at chi = 4, which is the value Bravyi, Smith and Smolin report.
+settles it at chi = 4, which is the value Bravyi, Smith, and Smolin report.
 
 If psi lies in span(s_i, s_j, s_k) then the images of s_j and s_k in the
 quotient C^16 / span(psi, s_i) are parallel (the converse fails only for
