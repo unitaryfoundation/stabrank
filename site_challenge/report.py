@@ -39,6 +39,10 @@ PUBLISHED_REF = {
     "qubit_H": "qassim2021improved", "qubit_T": "qassim2021improved",
 }
 
+# Shown in place of a reference for an orbit with no published exponent, whose
+# baseline is the single-copy product bound (site.UNPUBLISHED).
+UNPUBLISHED_TXT = "<span class=none>none; single-copy product bound</span>"
+
 # A bound written by autoresearch/run.py carries, as its compute block, the sum
 # of every run logged for its cell, so those runs are not added a second time.
 RUNPY_REFERENCE = "stabrank autoresearch/run.py"
@@ -546,7 +550,7 @@ def report_page(comparison, cells, table, curve, evidence, refs, generated, head
                  f"{site.ORBIT_LABEL[r['orbit']]}</a></b></td>"
                  f"<td class=mono style='color:var(--mut)'>{site.SYSTEM[r['orbit']]}</td>"
                  f"<td class=num>{r['published']:.4f}</td>"
-                 f"<td style='white-space:normal'>{_ref(refs, r['reference'])}</td>"
+                 f"<td style='white-space:normal'>{_ref(refs, r['reference']) or UNPUBLISHED_TXT}</td>"
                  f"<td class=num>{best}</td><td>{cell}</td><td>{tier}</td>"
                  f"<td class=num>{gap}</td>"
                  f"<td><span class='{cls}'>{r['verdict']}</span></td></tr>")
@@ -554,6 +558,8 @@ def report_page(comparison, cells, table, curve, evidence, refs, generated, head
     o.append("<p>The published exponents are the four qutrit values of "
              f"{_ref(refs, 'labib2026stabilizer')} and, for both qubit orbits, the "
              f"contracted-cat-state exponent of {_ref(refs, 'qassim2021improved')}. "
+             "No exponent has been published for any p = 5 state, so the T&#8325; "
+             "baseline is the single-copy product bound log&#8325;3 from &chi;(T&#8325;) = 3. "
              "The gap is best minus published; negative would be an improvement. "
              "A match at the same rank replaces a cited value with a machine-checked "
              "one; it does not move the exponent.</p>")

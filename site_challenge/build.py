@@ -77,10 +77,26 @@ BASELINE = {
     "T3": (0.5, "1/2"),
     "qubit_H": (math.log(3, 2) / 4, "log₂3/4"),
     "qubit_T": (math.log(3, 2) / 4, "log₂3/4"),
+    # No exponent has been published for any p = 5 state. The baseline is the
+    # single-copy product bound from chi(T5) = 3, and every page says so.
+    "T5": (math.log(3, 5), "log₅3"),
 }
-ORBIT_ORDER = ["S", "N", "H3", "T3", "qubit_H", "qubit_T"]
+# Orbits whose baseline is a product bound rather than a published exponent.
+UNPUBLISHED = {"T5"}
+ORBIT_ORDER = ["S", "N", "H3", "T3", "qubit_H", "qubit_T", "T5"]
 SYSTEM = {"S": "qutrit", "N": "qutrit", "H3": "qutrit", "T3": "qutrit",
-          "qubit_H": "qubit", "qubit_T": "qubit"}
+          "qubit_H": "qubit", "qubit_T": "qubit", "T5": "ququint"}
+
+
+def base_word(orbit):
+    """'published' or, for an orbit with no published exponent, 'baseline'."""
+    return "baseline" if orbit in UNPUBLISHED else "published"
+
+
+def base_note(orbit):
+    """The qualifier shown next to a baseline that is not a published exponent."""
+    return (" (single-copy product bound; no published exponent)"
+            if orbit in UNPUBLISHED else "")
 ORBIT_TEX = {
  # \left|...\right\rangle rather than |...\rangle: the bare form renders the
  # ket as an identifier (italic, symbol spacing), the fenced form as an
@@ -94,6 +110,8 @@ ORBIT_TEX = {
  "qubit_H": r"\left|H\right\rangle = \cos(\pi/8)\,\left|0\right\rangle + \sin(\pi/8)\,\left|1\right\rangle",
  "qubit_T": r"\left|T\right\rangle = \cos\beta\,\left|0\right\rangle + e^{i\pi/4}\sin\beta\,\left|1\right\rangle,"
             r"\qquad \cos 2\beta = \tfrac{1}{\sqrt{3}}",
+ "T5": r"\left|T_5\right\rangle = \frac{1}{\sqrt{5}} \sum_{x \in \mathbb{F}_5} "
+       r"\omega_5^{x^3} \left|x\right\rangle,\qquad \omega_5 = e^{2\pi i/5}",
 }
 
 BASE_TEX = {
@@ -103,6 +121,7 @@ BASE_TEX = {
  "T3": r"\gamma \le \tfrac{1}{2} = 0.5000",
  "qubit_H": r"\gamma \le \tfrac{\log_2 3}{4} \approx 0.3963",
  "qubit_T": r"\gamma \le \tfrac{\log_2 3}{4} \approx 0.3963",
+ "T5": r"\gamma \le \log_5 3 \approx 0.6826",
 }
 
 ORBIT_DEF = {
@@ -161,10 +180,31 @@ ORBIT_DEF = {
    "overloaded name.",
    "Rank 5 at six copies is conjectured impossible, with search terminating at "
    "exactly &radic;(5/6)&nbsp;sin(&pi;/12)."),
+ "T5": ("5<sup>&minus;1/2</sup> &sum;<sub>x</sub> &omega;&#8325;<sup>x&sup3;</sup>|x&rang;",
+   "The ququint T-type state, 5<sup>&minus;1/2</sup> &sum;<sub>x</sub> "
+   "&omega;&#8325;<sup>x&sup3;</sup>|x&rang;: the qudit &pi;/8 gate of Howard and "
+   "Vala applied to |+&rang;. Every cubic phase over F&#8325; is Clifford-equivalent "
+   "to x&sup3;, since the quadratic and linear parts are Clifford phases and "
+   "x &rarr; ax scales the cubic coefficient by a&sup3;, which ranges over all of "
+   "F&#8325;<sup>*</sup>; so the Howard-Vala family, the Campbell-Anwar-Browne "
+   "M state and the |XV<sub>s</sub>, 1&rang; state of Jain and Prakash are one "
+   "Clifford orbit, this one. Its amplitudes lie in Q(&omega;&#8325;), the same "
+   "field as the stabilizer states, so the Galois argument that works for T&#8323; "
+   "has no analogue here.",
+   "&chi;(T&#8325;) = 3: rank 2 is excluded exactly over the 30 single-ququint "
+   "stabilizer states and a three-term decomposition (two basis states and one "
+   "full-support state) verifies symbolically, so &chi; is below the local "
+   "dimension, unlike T&#8323; where &chi; = 3 = p. At two copies rank 3 and "
+   "rank 4 are excluded over the 3,900 two-ququint states and the annealer found "
+   "a rank-8 decomposition, so 5 &le; &chi;(T&#8325;<sup>&otimes;2</sup>) &le; 8 "
+   "against the product bound 9. No exponent has been published for any p = 5 "
+   "state; the baseline log&#8325;3 = 0.6826 is the single-copy product bound, "
+   "and the rank-8 cell already sits below it at 0.6460."),
 }
 
 COLOR = {"S": "#6d28d9", "N": "#0369a1", "H3": "#059669",
-         "T3": "#b45309", "qubit_H": "#be185d", "qubit_T": "#128081"}
+         "T3": "#b45309", "qubit_H": "#be185d", "qubit_T": "#128081",
+         "T5": "#b91c1c"}
 TIER_RANK = {"lean": 5, "verified": 4, "reproduced": 3, "attested": 2, "cited": 1, None: 0}
 # `attested` holds records: the pipeline checked every stored batch output
 # against its hash, the exact re-decision of the exceptions and a bit-for-bit
@@ -870,7 +910,7 @@ def ref_link(prov):
 TENS = "<span class=tp>&otimes;</span>"
 
 ORB_TEX_NAME = {"S": "S", "N": "N", "H3": "H_3", "T3": "T_3",
-                "qubit_H": r"H", "qubit_T": r"T"}
+                "qubit_H": r"H", "qubit_T": r"T", "T5": "T_5"}
 
 
 def ket(orbit, m, sign=None, rank=None):
@@ -1116,7 +1156,11 @@ def build(no_verify=False):
     ver_n = sum(1 for e in entries if e["res"]["ok"] and e["res"]["tier"] == "verified")
     rep_n = sum(1 for e in entries if e["res"]["ok"] and e["res"]["tier"] == "reproduced")
     att_n = sum(1 for e in entries if e["res"]["ok"] and e["res"]["tier"] == "attested")
-    moved =[r for r in board if r["best"] and r["best"]["res"]["gamma"] < r["baseline"] - 1e-12]
+    # Only orbits with a published exponent count towards "beaten"; a product
+    # bound standing in for an unpublished one is not a record to beat.
+    moved = [r for r in board if r["orbit"] not in UNPUBLISHED and r["best"]
+             and r["best"]["res"]["gamma"] < r["baseline"] - 1e-12]
+    published_n = sum(1 for ob in ORBIT_ORDER if ob not in UNPUBLISHED)
     tight = min((r for r in board if r["best"]),
                 key=lambda r: r["best"]["res"]["gamma"], default=None)
 
@@ -1177,8 +1221,13 @@ def build(no_verify=False):
 
     # ---- exponent table
     o.append("<h2>Exponents</h2>")
-    o.append("<p class=h2sub>Every &gamma; below is published. "
-             f"{len(moved)} of {len(ORBIT_ORDER)} have been beaten here.</p><div class=tw><table>")
+    unpub = [ORBIT_LABEL[ob] for ob in ORBIT_ORDER if ob in UNPUBLISHED]
+    o.append("<p class=h2sub>Every &gamma; below is published"
+             + (", except for " + ", ".join(unpub) + ", where no exponent has been "
+                "published for any state of that dimension and the single-copy "
+                "product bound stands in" if unpub else "")
+             + f". {len(moved)} of the {published_n} published exponents have been beaten here.</p>"
+             "<div class=tw><table>")
     o.append("<thead><tr><th>orbit</th><th></th><th class=num>published "
              + M(r"\gamma") + " &le;</th>"
              "<th class=num>best here</th><th>progress</th><th>record held by</th>"
@@ -1216,7 +1265,7 @@ def build(no_verify=False):
         base, base_txt = BASELINE[orbit]
         o.append(f"<div class=orb><h3><a href='orbits/{orbit}.html'>"
                  f"{ORBIT_LABEL[orbit]}</a></h3>"
-                 f"<div class=sub>{SYSTEM[orbit]} &middot; published "
+                 f"<div class=sub>{SYSTEM[orbit]} &middot; {base_word(orbit)} "
                  f"{M(BASE_TEX[orbit])}</div><div class=cells>")
         ms = sorted({int(k[1]) for k in cells if k[0] == orbit})
         if not ms:
@@ -1320,7 +1369,8 @@ def orbit_page(orbit, entries, cells):
     o = [head(f"{ORBIT_LABEL[orbit]} — Stabilizer Rank Challenge", rel="../")]
     o.append(hero(f"{ORBIT_LABEL[orbit]}",
                   f"The {SYSTEM[orbit]} {ORBIT_LABEL[orbit]} orbit. "
-                  f"Published {M(BASE_TEX[orbit])}.", rel="../"))
+                  f"{base_word(orbit).capitalize()} {M(BASE_TEX[orbit])}"
+                  f"{base_note(orbit)}.", rel="../"))
     o.append(PARTICIPATE)
     o.append("<div class=wrap><p><a href='../index.html'>&larr; back to the board</a></p>")
     o.append("<h2>The state</h2><div class=statebox><div class=stateeq>"
@@ -1344,8 +1394,22 @@ def orbit_page(orbit, entries, cells):
                  f"<span class=mono style='font-size:12px'>{ref_link(s_['provenance'])}"
                  f"</span></td></tr>")
     o.append("</tbody></table></div>")
-    o.append(f"<h2>What would move it</h2><p>Beating the published exponent needs "
-             f"{next_target(orbit, base, cells, lead='')}.</p>")
+    # Once the baseline is beaten the target is the board's own best, not
+    # the baseline: naming a cell the board already holds is not a target.
+    best = min((e for e in mine
+                if e["sub"]["direction"] == "upper" and e["res"]["ok"]
+                and e["res"]["tier"] in RECORD_TIERS and e["res"].get("gamma") is not None
+                and int(e["sub"]["m"]) > 1),
+               key=lambda e: e["res"]["gamma"], default=None)
+    if best is not None and best["res"]["gamma"] < base - 1e-12:
+        g, s_ = best["res"]["gamma"], best["sub"]
+        o.append(f"<h2>What would move it</h2><p>The {base_word(orbit)} exponent"
+                 f"{base_note(orbit)} is already beaten: &chi; &le; {s_['rank']} at "
+                 f"m={s_['m']} gives &gamma; = {g:.4f}. Lowering it further needs "
+                 f"{next_target(orbit, g, cells, lead='')}.</p>")
+    else:
+        o.append(f"<h2>What would move it</h2><p>Beating the {base_word(orbit)} exponent"
+                 f"{base_note(orbit)} needs {next_target(orbit, base, cells, lead='')}.</p>")
     o.append("</div>" + footer(rel="../") + "</body></html>")
     os.makedirs(os.path.join(DOCS, "orbits"), exist_ok=True)
     with open(os.path.join(DOCS, "orbits", f"{orbit}.html"), "w") as f:
@@ -1411,7 +1475,7 @@ def detail_page(e):
         base = BASELINE[s["orbit"]][0]
         beat = r["gamma"] < base - 1e-12
         o.append(f"<p>Implied per-copy exponent &gamma; &le; <b>{r['gamma']:.4f}</b> "
-                 f"against a published {base:.4f}, "
+                 f"against a {base_word(s['orbit'])} {base:.4f}{base_note(s['orbit'])}, "
                  + ("<span class=gain>an improvement</span>." if beat else "no improvement.")
                  + "</p>")
     if s.get("lean"):
