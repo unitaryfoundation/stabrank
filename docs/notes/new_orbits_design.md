@@ -356,3 +356,13 @@ For CS (and then CCZ with width 3):
 Estimated effort: CS end to end (items 1 to 7 including the block lift)
 one to two days; T5 remaining plumbing two hours, plus half a day for the
 three-ququint code dictionary if the m = 3 cells are wanted.
+
+
+## Update 2026-09-21: chi(T5^2) >= 5
+
+A rank-4 exclusion over the 3,900 two-ququint stabilizer states (pivot-pair
+search from the 98 orbit representatives of the unitary symmetry group of
+order 50, 82 s on a laptop core) finds no rank-4 decomposition of |T5>^2,
+so with the rank-3 exclusion above and the product bound the cell is
+5 <= chi(T5^2) <= 9. Not yet a board cell: the orbit enum, site constants
+and a certificate are still to be added (section 5).
