@@ -17,6 +17,7 @@ repository root with `uv run --extra challenge python research/constructions/<sc
 | `symmetric.py` | set-stabilizer order of each stored decomposition under the symmetry group of the target |
 | `perm_symmetric_qubit.py` | the same for the qubit orbits (phase group Z_4), scanning the phase forms of each kept flat against generators of its permutation stabilizer |
 | `perm_symmetric.py` | exact search for decompositions whose term set is invariant under all copy permutations, from orbit vectors generated flat by flat without the full dictionary |
+| `kvv_cat.py` | the cat-state witnesses of `bounds/qubit_H-m7-upper-9.json`, `-m8-upper-12.json`, `-m10-upper-18.json` (Kissinger, van de Wetering, and Vilmart, arXiv:2202.09202): the three-term |cat_6>, the cat_{4k+2} gluing at k = 2, and the 4-to-3 partial decomposition of |T>^5, built numerically in the T basis and converted with `to_witness.py`; also regenerates the m = 6 control |
 
 ## What is validated
 

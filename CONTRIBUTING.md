@@ -15,6 +15,8 @@ Six orbits are open, with the published exponent each one is measured against:
 | `qubit_H` | qubit H-type, the edge centre | `log_2(3)/4` = 0.3962 |
 | `qubit_T` | qubit Bravyi-Kitaev T-type | `log_2(3)/4` = 0.3962 |
 
+The qubit exponent is the asymptotic value of the contracted cat-state family of Qassim, Pashayan, and Gosset (arXiv:2106.07740), not the exponent of any single cell. Kissinger, van de Wetering, and Vilmart (arXiv:2202.09202) restate that family in the ZX-calculus and add a partial decomposition of `|T>^5` into three terms that each keep one `|T>`, so `chi(T^t) <= 3 chi(T^(t-4))`; on the board that gives `chi(H^7) <= 9`, `chi(H^8) <= 12`, and the glued `|cat_10>` gives `chi(H^10) <= 18` (0.4170), all as verified witnesses. The finite-`m` values approach `log_2(3)/4` from above and none of them beats it.
+
 ## Five tiers, and only `cited` holds no record
 
 | tier | meaning |
@@ -227,7 +229,7 @@ Bounds that match rather than beat the literature are still worth submitting, be
 
 ## Tips
 
-- Cap is `m <= 8`, set by the verification budget rather than by the mathematics.
+- Cap is `m <= 10`, set by the verification budget rather than by the mathematics; the qubit cells at `m = 10` verify in seconds, and a qutrit witness of that size would not.
 - `make build` rebuilds `docs/`, and `serve` hosts it at `http://localhost:8765/` so links and rendered math behave as deployed.
 - Verification results are cached in `certs/` against the content hash of the whole submission file, so any edit re-verifies it, including one that only touches `notes`. Expect a rebuild to spend the budget again after a typo fix.
 - The verifier escalates from symbolic to 60-digit numeric with a tolerance of `1e-45` when sympy cannot decide that a cyclotomic expression vanishes. If your coefficients defeat both, say so in `notes` rather than loosening the check.

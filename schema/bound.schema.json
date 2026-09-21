@@ -33,8 +33,8 @@
     "m": {
       "type": "integer",
       "minimum": 1,
-      "maximum": 8,
-      "description": "number of copies; capped by the verification budget"
+      "maximum": 10,
+      "description": "number of copies; capped by the verification budget (a 2^10-entry qubit witness verifies in seconds, a 3^10-entry qutrit one would not)"
     },
     "direction": {
       "enum": [
