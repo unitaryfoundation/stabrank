@@ -148,6 +148,81 @@
    "attested": null
   },
   {
+   "slug": "qubit_H-m10-upper-18",
+   "orbit": "qubit_H",
+   "m": 10,
+   "direction": "upper",
+   "rank": 18,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.4169925001442312,
+   "date": "2022-02-18",
+   "author": "Kissinger, van de Wetering, and Vilmart",
+   "github": [
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2202.09202",
+   "compute": {
+    "cpu_hours": 0.01,
+    "wall_clock_hours": 0.01,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_H-m7-upper-9",
+   "orbit": "qubit_H",
+   "m": 7,
+   "direction": "upper",
+   "rank": 9,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.4528464287774732,
+   "date": "2022-02-18",
+   "author": "Kissinger, van de Wetering, and Vilmart",
+   "github": [
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2202.09202",
+   "compute": {
+    "cpu_hours": 0.01,
+    "wall_clock_hours": 0.01,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_H-m8-upper-12",
+   "orbit": "qubit_H",
+   "m": 8,
+   "direction": "upper",
+   "rank": 12,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.4481203125901445,
+   "date": "2022-02-18",
+   "author": "Kissinger, van de Wetering, and Vilmart",
+   "github": [
+    "vprusso"
+   ],
+   "method": "literature",
+   "reference": "arXiv:2202.09202",
+   "compute": {
+    "cpu_hours": 0.01,
+    "wall_clock_hours": 0.01,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
    "slug": "H3-m2-upper-3",
    "orbit": "H3",
    "m": 2,
@@ -1441,6 +1516,31 @@
    }
   },
   {
+   "slug": "T5-m1-upper-3",
+   "orbit": "T5",
+   "m": 1,
+   "direction": "upper",
+   "rank": 3,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.6826061944859853,
+   "date": "2026-09-20",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "pivot search over the 30 single-ququint stabilizer states, then exact refit with fit_coeffs.fit",
+   "reference": "stabrank docs/notes/new_orbits_design.md",
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core"
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
    "slug": "qubit_H-m2-lower-2",
    "orbit": "qubit_H",
    "m": 2,
@@ -1501,6 +1601,76 @@
     "wall_clock_hours": 0.003,
     "runs": 1,
     "hardware": "the m=5 certificate"
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "T5-m1-lower-3",
+   "orbit": "T5",
+   "m": 1,
+   "direction": "lower",
+   "rank": 3,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-21",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "exact: every 3 x 3 minor of [s | t | psi] over all 435 pairs of the 30 single-ququint stabilizer states, decided in Z[w_5]",
+   "reference": "stabrank verify_challenge",
+   "compute": null,
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "T5-m2-lower-5",
+   "orbit": "T5",
+   "m": 2,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "reproduced",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-21",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "rank-3 exclusion by pivot-and-quotient from 66 symmetry representatives, then rank-4 exclusion by the pivot-pair search of slice_lift.py from 98 representatives, over the 3,900 two-ququint stabilizer states",
+   "reference": "stabrank docs/notes/new_orbits_design.md",
+   "compute": {
+    "cpu_hours": 0.04,
+    "wall_clock_hours": 0.04,
+    "runs": 2,
+    "hardware": "Apple silicon laptop, one core: 82 s for the first rank-4 run, 51 s for the certificate"
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "T5-m2-upper-8",
+   "orbit": "T5",
+   "m": 2,
+   "direction": "upper",
+   "rank": 8,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.6460148371100896,
+   "date": "2026-09-21",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "simulated annealing at rank 8 (4 chains, 8000 iterations per temperature, cooling 0.995), then exact refit",
+   "reference": "stabrank autoresearch/run.py",
+   "compute": {
+    "cpu_hours": 0.1513,
+    "wall_clock_hours": 0.0479,
+    "runs": 2,
+    "hardware": "arm64 Darwin, 18 cores"
    },
    "budget_s": null,
    "attested": null
