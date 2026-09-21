@@ -51,7 +51,8 @@ target_include_directories(stabrank_core_lib PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-target_link_libraries(stabrank_core_lib PUBLIC Eigen3::Eigen)
+find_package(Threads REQUIRED)
+target_link_libraries(stabrank_core_lib PUBLIC Eigen3::Eigen Threads::Threads)
 
 if(STABRANK_NATIVE AND NOT MSVC)
   target_compile_options(stabrank_core_lib PUBLIC -march=native)
