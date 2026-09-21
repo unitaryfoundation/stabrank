@@ -1156,7 +1156,11 @@ def build(no_verify=False):
     ver_n = sum(1 for e in entries if e["res"]["ok"] and e["res"]["tier"] == "verified")
     rep_n = sum(1 for e in entries if e["res"]["ok"] and e["res"]["tier"] == "reproduced")
     att_n = sum(1 for e in entries if e["res"]["ok"] and e["res"]["tier"] == "attested")
-    moved =[r for r in board if r["best"] and r["best"]["res"]["gamma"] < r["baseline"] - 1e-12]
+    # Only orbits with a published exponent count towards "beaten"; a product
+    # bound standing in for an unpublished one is not a record to beat.
+    moved = [r for r in board if r["orbit"] not in UNPUBLISHED and r["best"]
+             and r["best"]["res"]["gamma"] < r["baseline"] - 1e-12]
+    published_n = sum(1 for ob in ORBIT_ORDER if ob not in UNPUBLISHED)
     tight = min((r for r in board if r["best"]),
                 key=lambda r: r["best"]["res"]["gamma"], default=None)
 
@@ -1222,7 +1226,7 @@ def build(no_verify=False):
              + (", except for " + ", ".join(unpub) + ", where no exponent has been "
                 "published for any state of that dimension and the single-copy "
                 "product bound stands in" if unpub else "")
-             + f". {len(moved)} of {len(ORBIT_ORDER)} have been beaten here.</p>"
+             + f". {len(moved)} of the {published_n} published exponents have been beaten here.</p>"
              "<div class=tw><table>")
     o.append("<thead><tr><th>orbit</th><th></th><th class=num>published "
              + M(r"\gamma") + " &le;</th>"
