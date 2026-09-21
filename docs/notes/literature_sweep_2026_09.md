@@ -324,3 +324,33 @@ them:
   m = 4 (chi(F^4) = 3, chi(H^4) = 4).
 - Dicke states: stabilizer extent at 6 qubits (de Silva et al.) and
   Monte Carlo rank searches; not magic states in the board's sense.
+
+## 5. Update of 2026-09-21
+
+Nothing new. Query: the arXiv API for "stabilizer rank", "stabilizer
+extent", "stabilizer decomposition(s)" (sorted by last update and by
+submission date), "magic state" with qutrit/qudit/decomposition/rank,
+"magic state(s)"/nonstabilizerness/"stabilizer states" by submission date,
+Clifford + rank + decomposition, and the machine-search terms (machine
+learning, reinforcement learning, language model, AlphaEvolve, simulated
+annealing) crossed with the rank terms; web searches for the same phrases
+and for the challenge itself; the dring-05 repository. Everything posted or
+updated between 2026-09-15 and 2026-09-21 that the queries returned was read
+by title and, where the title or abstract touched stabilizer decompositions,
+by abstract:
+
+- 2609.16460 (thermal decoherence and universality; uses branchwise
+  nonnegative stabilizer decompositions as a sampler, no rank),
+- 2609.19116, 2609.18922, 2609.17706 (magic-state cultivation),
+- 2609.17188, 2609.16935, 2609.18691, 2609.01993v2 (stabilizer Renyi
+  entropy and nonlocal magic),
+- 2609.17044 (state distillation), 2609.16659 (Clifford + sqrt T synthesis),
+- 2510.20890v3 (updated 2026-09-16; non-Clifford gates via lattice surgery),
+- 2609.14252 and 2609.16929 (already in the list above),
+- 2609.20771 and 2609.19210 (false positives on "rank"/"stabilizer").
+
+None carries an exact or approximate stabilizer rank, an extent value, or a
+decomposition of a magic state, and there is still no machine-search paper
+on stabilizer decompositions. The dring-05 repository has one commit, dated
+by its own text to 2026-09-14, and does not claim chi(T3^4) >= 9. No BibTeX
+entry was added.

@@ -237,3 +237,110 @@ were not run at m >= 4.
   them.
 - H3 m=4 at rank 7 and S m=5 at rank 7: these tighten cells, not exponents.
 - Raising `T3-m4-lower` to 8 from the attested m=3 result.
+
+## 2026-09-21: two-qutrit slicing at N m=4 and H3 m=4
+
+Script: `research/constructions/two_qutrit_slice.py` (controls with
+`--control`). Single process at nice 19; H3 took 104 s, N 431 s.
+
+### The structure lemma for two-qutrit slices
+
+Slice a decomposition psi^4 = sum_i c_i s_i along qutrits 1 and 2:
+u_i^(x) = (<x| (x) I) s_i for x in F_3^2, so sum_i c_i u_i^(x) =
+alpha_x psi^2 with alpha_x = alpha_{x_1} alpha_{x_2}. The flat F_i of s_i
+projects to an affine flat pi(F_i) of F_3^2 of dimension 0, 1 or 2, so a
+term has 1, 3 or 9 nonzero slices. The stabilizer group of s_i projected to
+the symplectic coordinates of qutrits 1, 2 has a kernel of at most 9
+elements (those of the form I (x) Q), hence an image of order 9 or 81
+whose X-part is the direction space of pi(F_i). Reading off the group
+elements above the two unit directions gives, for a nine-slice term,
+
+    u^(x_0 + x) = w^{q(x)} Q_2^{x_2} Q_1^{x_1} u^(x_0)
+
+with Q_1, Q_2 two-qutrit Paulis and q a quadratic polynomial on F_3^2 with
+q(0) = 0; conversely every such expression is a stabilizer state (it is
+C_2 C_1 (phi_q (x) u) with C_j = sum_t |t><t| (x) Q_j^t a controlled Pauli,
+which is Clifford because (X^a Z^c)^t = w^{h(t)} X^{at} Z^{ct} with h
+quadratic, and phi_q the full-support state with phases w^q). The nine
+Pauli translates of u form an orthonormal basis, so each slice is one of
+nine basis states times a cube root of unity, the class map is linear (81
+maps) and the phases are quadratic (243), giving 19683 nine-slice shapes per
+base slice; a line-type term (pi(F) a line x_0 + <a>) has slices
+w^{q(t)} Q^t u with 81 shapes per direction, and a point term one. The
+counts close the dictionary exactly: 360 x 19683 + 12 x 360 x 81 + 9 x 360
+= 7,439,040. This is the generalisation asked for: the one-qutrit lemma's
+single X Z^b (x) Q becomes two elements commuting up to phase, and the cube
+roots become a quadratic phase pattern.
+
+### Why "all nine slices nonzero for every term" is not the cheap case
+
+With every term nine-slice, every slice is a six-term, non-minimal
+decomposition of psi^2, so no slice fixes the coefficients c_i, and the
+lift equations are the full rank-6 problem over the 7,085,880 nine-slice
+states with six free complex coefficients (about 10^41 configurations
+before symmetry). The one-qutrit lemma is finite only because a minimal
+slice pins the coefficients and reduces each term to a Pauli class and a
+phase; the two-qutrit analogue of that is a slice with exactly three
+nonzero terms, and that is the case searched.
+
+### Case M: some two-qutrit slice has exactly three nonzero terms
+
+By copy permutations the bipartition {1,2} | {3,4} is general, and the
+monomial Clifford symmetries of |M> (the affine permutations of F_3 fixing
+|M>: the swap 0 <-> 1 for N, the swap 1 <-> 2 for H3) with the swap of
+qutrits 1 and 2 reduce the base slice x_0 to three classes per orbit. At x_0
+the three visible terms form a minimal decomposition of psi^2, one of the
+stored lists (30 for N, 9 for H3) up to the unitary symmetry of psi^2 on
+qutrits 3, 4, and c_i = alpha_{x_0} d_i. Each visible term has one of the
+20008 shapes; each of the R - 3 <= 3 invisible terms vanishes at x_0, so it
+is a line-type term on one of the 8 lines missing x_0 or a point term at one
+of the 8 other points, with a free coefficient. For every multiset of
+invisible shapes (945 distinct coverage vectors k_x over ranks 3 to 6), the
+visible terms must leave at each slice x != x_0 a residual
+alpha_x psi^2 - sum_visible of stabilizer rank at most k_x; every pattern
+leaves at least five slices with k_x <= 1. The search tabulates, per slice,
+the 28^3 visible combos (27 present codes plus absent) whose residual is
+zero or a stabilizer state, joins candidates from the two most constraining
+slices (bucketed shapes, 27 shapes per term pinned at two independent
+slices), checks the remaining k <= 1 slices by table lookup and the k = 2
+slices by a rank-2 test against the 360-state dictionary, and runs an
+exact completion of the invisible terms (private slices pin a term's
+slice; the other two slices on its line run over 81 options with pruning;
+a shared slice is split over the dictionary pairs) on every survivor.
+
+Per-slice allowed sets are tiny. N at x_0 = (0,0): the three slices with
+alpha ratio 1 admit 1 exact and 9 stabilizer-residual combos each, the four
+slices with ratio -2 admit at most 1 stabilizer residual, and the slice
+(2,2) (ratio 4) admits none, so it must be covered twice; nine of the 30
+decompositions (indices 0, 1, 3, 4, 5, 6, 19, 20, 26) keep 17 live patterns
+there, the other 21 none; at x_0 = (0,2) and (2,2) every pattern dies on
+the slices with ratio -1/2 or 1/4. H3 at
+x_0 = (0,0) and (0,1) admits nothing at any slice for any of the nine
+decompositions; at (1,1) three decompositions (indices 3, 7, 8) leave the
+slices (1,2), (2,1), (2,2) (ratio 1) with 1 exact and 9 stabilizer combos
+and the others with at most 1.
+
+| cell | (decomposition, x_0) pairs | coverage patterns | live patterns | pinned pairs | candidates | rank-2 survivors | exact completions |
+|---|---|---|---|---|---|---|---|
+| H3 m=4, ranks 3..6 | 27 | 25515 | 51 | 51 | 315 | 66 | 0 |
+| N m=4, ranks 3..6 | 90 | 85050 | 153 | 153 | 945 | 216 | 0 |
+
+Result: no rank-5 or rank-6 decomposition of |N>^4 or |H3>^4 has a
+two-qutrit slice with exactly three nonzero terms (along any 2 + 2
+bipartition). Combined with the one-qutrit result above (no minimal
+one-qutrit slice), any such decomposition has at least five nonzero terms
+at every one-qutrit slice and at least four at every two-qutrit slice, i.e.
+every two-qutrit slice is a four-, five- or six-term decomposition of
+psi^2 in which the terms are phased Pauli translates of the base states.
+
+Not covered: two-qutrit slices with four or more nonzero terms everywhere
+(the "all nine slices nonzero" case sits here), which has no finite
+reduction of this kind; S m=5 (slices are decompositions of |S>^3, rank 4,
+so a minimal two-qutrit slice has four visible terms with 177147 nine-slice
+shapes each on three qutrits, and the per-slice tables become 244^4; the
+join would have to be a meet in the middle per slice, not written); T3 m=4
+at rank 8 (three visible and five invisible terms cover every slice, so the
+residual-rank pruning is empty); the qubit cells (two-qubit slicing of
+|H>^6 has four slices that are decompositions of |H>^4, rank 4, and a
+minimal slice leaves one invisible term at rank 5, a smaller finite case
+than the qutrit ones and a candidate for the next session).

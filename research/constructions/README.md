@@ -18,6 +18,7 @@ repository root with `uv run --extra challenge python research/constructions/<sc
 | `perm_symmetric_qubit.py` | the same for the qubit orbits (phase group Z_4), scanning the phase forms of each kept flat against generators of its permutation stabilizer |
 | `perm_symmetric.py` | exact search for decompositions whose term set is invariant under all copy permutations, from orbit vectors generated flat by flat without the full dictionary |
 | `kvv_cat.py` | the cat-state witnesses of `bounds/qubit_H-m7-upper-9.json`, `-m8-upper-12.json`, `-m10-upper-18.json` (Kissinger, van de Wetering, and Vilmart, arXiv:2202.09202): the three-term |cat_6>, the cat_{4k+2} gluing at k = 2, and the 4-to-3 partial decomposition of |T>^5, built numerically in the T basis and converted with `to_witness.py`; also regenerates the m = 6 control |
+| `two_qutrit_slice.py` | two-qutrit slicing at N m=4 and H3 m=4 (2026-09-21): every four-qutrit stabilizer state with a given slice at a base point enumerated as per-slice Pauli-class and phase codes (19683 nine-slice, 324 line, 1 point), then the exact search for rank <= 6 decompositions with a minimal two-qutrit slice, by per-slice residual-rank tables, a join from the two most constraining slices, and an exact completion of the invisible terms; `--control` runs its three controls |
 
 ## What is validated
 
@@ -45,6 +46,15 @@ repository root with `uv run --extra challenge python research/constructions/<sc
   predict. `perm_symmetric_qubit.py` controls: S_3-invariant rank-3
   decompositions of |H>^3 (4) and |T>^3 (6), and S_4-invariant rank-4
   decompositions of |H>^4 (10), matching the set-stabilizer orders.
+- `two_qutrit_slice.py --control`: 400 random four-qutrit stabilizer states
+  (random `(k, x0, W, Q, l)` through `common.term_vector`) all have their
+  slice code pattern in the enumeration for their own base slice (211
+  nine-slice, 104 line, 85 point); 40 random sums of one to three
+  line/point terms with random coefficients are recovered exactly by the
+  completion; the driver finds the three-term lift of phi (x) |N>^2 for a
+  random full-support two-qutrit stabilizer state phi. The shape counts
+  also match the dictionary: 360 x 19683 + 12 x 360 x 81 + 9 x 360 =
+  7,439,040 four-qutrit states.
 - Every hit any script reports is checked numerically against the target and
   written as amplitude vectors under `results/` (not committed) for
   `verify_challenge/to_witness.py`, which is the exact step.
