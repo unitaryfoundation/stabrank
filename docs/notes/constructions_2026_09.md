@@ -344,3 +344,139 @@ residual-rank pruning is empty); the qubit cells (two-qubit slicing of
 |H>^6 has four slices that are decompositions of |H>^4, rank 4, and a
 minimal slice leaves one invisible term at rank 5, a smaller finite case
 than the qutrit ones and a candidate for the next session).
+
+## 2026-09-21: two-qubit slicing at qubit_H m=6 (rank 5) and the m=7 cell
+
+Script: `research/constructions/two_qubit_slice.py` (controls with
+`--control`, `--witness`, and the m=4 run below). Single process at nice
+19; the rank-5 search over the 30 stored decompositions took 501 s, the
+witness control 836 s, the m = 4 control 8 s.
+
+### The structure lemma for qubit slices
+
+Slice a decomposition psi^m = sum_i c_i s_i of |H>^m along n_1 qubits:
+u_i^(x) = (<x| (x) I) s_i for x in F_2^{n_1}, a vector on the n_2 = m - n_1
+remaining qubits, with sum_i c_i u_i^(x) = alpha_x psi^{n_2} and
+alpha_x = cos(pi/8)^{n_1 - |x|} sin(pi/8)^{|x|}, never zero. A term is
+nonzero exactly on an affine flat x_0 + V of F_2^{n_1}, and reading the
+stabilizer group elements above a basis v_1, ..., v_j of V gives Paulis
+Q_1, ..., Q_j on the n_2 qubits with
+
+    u^(x_0 + t_1 v_1 + ... + t_j v_j) = i^{l.t} (-1)^{q(t)} Q_j^{t_j} ... Q_1^{t_1} u^(x_0),
+
+l in Z_4^j and q a quadratic form over F_2 without diagonal. Conversely
+every such expression is C_j ... C_1 (phi (x) u) with C_k a controlled
+Pauli and phi the full-support stabilizer state on V with those phases, so
+it is a stabilizer state; changing a class representative only moves
+(l, q). With the 2^{n_2} Pauli classes mod Stab(u) as an orthonormal basis
+of translates, a term with base slice u at x_0 has
+sum_j [subspaces of dim j] (2^{n_2})^j 4^j 2^{j(j-1)/2} shapes: 8385 for
+two sliced qubits and four remaining (8192 four-slice, 192 line, 1 point),
+and the count closes the six-qubit dictionary exactly,
+36720 x 8192 + 6 x 36720 x 64 + 4 x 36720 = 315,057,600. The qutrit
+lemma's cube roots and quadratic phase become fourth roots and a
+Z_4-valued form, and the class map is again linear.
+
+### Case M at m=6: a four-qubit slice with exactly four nonzero terms
+
+Rank 5 would give exponent log_2(5)/6 = 0.387 < 0.3963. By copy symmetry
+the bipartition {1,2} | {3,4,5,6} is general and x_0 is determined by its
+Hamming weight (|H> has no monomial symmetry): 00, 01, 11. At x_0 the four
+visible terms are one of the 30 stored rank-4 decompositions of |H>^4 (up
+to the unitary symmetry, which acts on qubits 3 to 6 and preserves slices)
+with c_i = alpha_{x_0} d_i; the single invisible term is a line term on one
+of the 3 lines missing x_0 or a point term at one of the 3 other points, so
+at least one other slice is exact (k = 0) and the rest have k <= 1. The
+slice ratio alpha_x / alpha_{x_0} is tan(pi/8)^{|x| - |x_0|}, and the
+per-slice tables over all 65^4 = 17,850,625 code combinations (64 codes
+plus absent per visible term) give, for every one of the 30
+decompositions:
+
+| ratio | exact combos | stabilizer-residual combos |
+|---|---|---|
+| 1 | 1 | 260 to 360 (266 for 14 of the 30) |
+| tan(pi/8), cot(pi/8) | 0 | 0 |
+| tan(pi/8)^2, cot(pi/8)^2 | 0 | 0 |
+
+The zero at ratio tan(pi/8) is the slice-and-lift exclusion behind
+`bounds/qubit_H-m5-lower-5.json`, recomputed here rather than assumed; the
+zero in the stabilizer column at ratio tan(pi/8) is new and is what closes
+the case: a slice at Hamming distance one from x_0 can carry neither an
+exact match (k = 0) nor a single invisible term (k = 1), so it needs k >= 2,
+and one invisible term covers each slice at most once. Every coverage
+pattern is dead at the table stage for every decomposition and every x_0:
+90 (decomposition, x_0) pairs, 630 coverage patterns over ranks 4 and 5
+(the rank-4 pattern with no invisible term included), 630 dead, no pinned
+pair, no candidate.
+
+Result: no rank-5 decomposition of |H>^6 has a four-qubit slice (any 2 + 4
+bipartition) with exactly four nonzero terms. Since chi(|H>^4) = 4, every
+four-qubit slice of a rank-5 decomposition has all five terms nonzero, so
+every term's flat projects onto F_2^2 for every pair of qubits: the dual of
+each term's direction space has minimum distance at least 3 (no term is a
+line or point term along any pair of qubits). The same tables say more
+about any rank-R decomposition with a minimal four-qubit slice at x_0:
+every slice whose Hamming weight differs from |x_0| (all three others for
+x_0 = 00 or 11, two of them for x_0 = 01) carries at least two invisible
+terms.
+
+### Controls
+
+- `--control`: 300 random six-qubit, 200 four-qubit, 100 (n_1 = 3) and 6
+  (n_1 = 4) random stabilizer states (random `(k, x0, W, Q, l)` through
+  `common.term_vector`) all have their code pattern in the enumeration for
+  their own base slice; the shape counts match the lemma at every (n_1,
+  n_2); 30 random sums of one or two invisible terms are recovered exactly
+  by the completion at m = 6 and at m = 4.
+- m = 4 from the rank-2 slice of |H>^2 (`--m 4 --n1 2 --rank 4 --x0 all`,
+  8 s): the single rank-2 decomposition of |H>^2 up to symmetry, sliced at
+  x_0 = 01 or 10, yields 33 + 33 = 66 exact rank-4 decompositions of |H>^4
+  (two invisible terms, tables with exact rank-2 classes on two qubits);
+  at x_0 = 00 and 11 every pattern dies at the table stage. For scale, 57
+  of the 180 (decomposition, qubit pair) slicings of the stored rank-4
+  list have a two-term slice, so the control has genuine targets.
+- The rank-6 witness `bounds/qubit_H-m6-upper-6.json` sliced along qubits
+  (i, j), i, j <= 4, has exactly four nonzero terms at x_0 = 01 and 10 (the
+  pairs containing qubit 5 have five), and all 20 such (pair, x_0) cases
+  give the identical base decomposition (same coefficients and slices,
+  checked). The two invisible terms are line terms on the complementary
+  line, which is the one pattern with a single constrained slice; the
+  dedicated path (129^4 = 276,922,881 assignments after pinning at x_0 and
+  the exact slice, the rank-2 support filter on both residuals, the joint
+  moduli filter, the exact rank-2 test, the completion) recovers the
+  witness: the exact slice 01 (ratio 1) admits one exact combination (the
+  identity classes), 332,608 of the 276,922,881 assignments pass the
+  filters, 112 pass the exact rank-2 test on both slices, and exactly one
+  completes, reproducing psi^6 to 1e-15, in 836 s.
+
+### Not covered, and the m=7 cell
+
+- A two-qubit slice with exactly two nonzero terms (slicing four qubits,
+  three invisible terms over 15 slices): the visible terms have 4,703,985
+  shapes each and the 2.3 million multisets of invisible flats make the
+  pattern-by-pattern join too slow at this budget. The two-qubit tables
+  (289 combinations) are cheap and say: ratio 1 admits 1 exact and 32
+  stabilizer combos, ratio tan(pi/8)^{+-1} 0 exact and 4 stabilizer,
+  ratios tan(pi/8)^{+-2}, tan(pi/8)^{+-3}, and tan(pi/8)^{+-4} 0 and 0
+  (`--m 4 --n1 2 --ratio-tables 4`). For x_0 of weight 0 or 4 this
+  alone kills the case by counting (every other slice needs k >= 1, the
+  eleven at weight >= 2 need k >= 2, and three flats give at most 24
+  coverage slots for 26 needed); weights 1 to 3 are open.
+- |H>^7 at rank 8 (exponent 0.4286 < 0.4308) along a 3 + 4 bipartition
+  with the three-qubit slice minimal: 71,113,185 shapes per visible term
+  and five invisible terms that can cover all 15 other slices twice, so
+  the residual-rank pruning is empty for those patterns; not attempted.
+  With the four-qubit slice minimal instead (four visible, four invisible
+  over 7 slices) the four-qubit tables transfer, extended to ratio
+  tan(pi/8)^{+-3} (`--m 6 --n1 2 --ratio-tables 3`, 648 s): for all 30
+  decompositions the ratios tan(pi/8)^j with |j| = 1, 2, 3 admit neither an
+  exact nor a stabilizer-residual combination, so in any rank-8
+  decomposition of |H>^7 with a four-qubit slice of exactly four nonzero
+  terms at x_0, every slice whose Hamming weight differs from |x_0| carries
+  at least two of the four invisible terms (all seven other slices for
+  x_0 = 000, five of them otherwise). Four flats of at most four points
+  give 16 coverage slots against 14 needed at x_0 = 000, so counting does
+  not close it, and the join (2,154,945 shapes per visible term, 73,815
+  multisets of invisible flats) was not run.
+- Slices with more than r nonzero terms everywhere (all terms four-slice),
+  as for the qutrits.

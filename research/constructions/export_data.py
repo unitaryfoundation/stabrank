@@ -5,7 +5,8 @@ member per unitary-symmetry orbit, as dictionary indices) or from lift_all
 (term vectors). Both are converted to the dictionary-independent
 (k, x0, W, Q, l) form so the scripts here do not depend on the dictionary
 order. Usage: export_data.py SCRATCH_DIR, where SCRATCH_DIR holds the
-pickles named below.
+pickles named below, or export_data.py --small [ORBIT,M,RANK] for the small
+cells recomputed in seconds.
 """
 
 import json
@@ -32,15 +33,18 @@ SOURCES = {
 
 
 SMALL = [("N", 2, 3), ("H3", 2, 3), ("S", 2, 2), ("T3", 2, 3), ("qubit_H", 3, 3), ("qubit_T", 3, 3),
-         ("N", 1, 2), ("H3", 1, 2), ("S", 1, 2), ("T3", 1, 3), ("qubit_H", 1, 2), ("qubit_T", 1, 2)]
+         ("N", 1, 2), ("H3", 1, 2), ("S", 1, 2), ("T3", 1, 3), ("qubit_H", 1, 2), ("qubit_T", 1, 2),
+         ("qubit_H", 2, 2)]
 
 
-def export_small():
+def export_small(only=None):
     """Complete lists at the small cells, recomputed here (seconds each), used
-    as controls for the constructors."""
+    as controls for the constructors. `only` restricts to one (orbit, m, rank)."""
     from slice_lift import all_decompositions
     os.makedirs(DATA, exist_ok=True)
     for orbit, m, rank in SMALL:
+        if only is not None and (orbit, m, rank) != only:
+            continue
         p = ORBIT_P[orbit]
         D = dictionary(p, m)
         decs, _ = all_decompositions(orbit, m, rank, D, verbose=False)
@@ -62,9 +66,12 @@ def export_small():
         print(f"{path}: {len(out)} decompositions")
 
 
-def main(scratch):
+def main(scratch, only=None):
     if scratch == "--small":
-        return export_small()
+        if only is not None:
+            o, m, r = only.split(",")
+            only = (o, int(m), int(r))
+        return export_small(only)
     os.makedirs(DATA, exist_ok=True)
     dicts = {}
     for (orbit, m, rank), (name, kind) in SOURCES.items():
@@ -96,4 +103,4 @@ def main(scratch):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    main(sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else None)

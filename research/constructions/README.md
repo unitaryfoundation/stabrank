@@ -19,6 +19,7 @@ repository root with `uv run --extra challenge python research/constructions/<sc
 | `perm_symmetric.py` | exact search for decompositions whose term set is invariant under all copy permutations, from orbit vectors generated flat by flat without the full dictionary |
 | `kvv_cat.py` | the cat-state witnesses of `bounds/qubit_H-m7-upper-9.json`, `-m8-upper-12.json`, `-m10-upper-18.json` (Kissinger, van de Wetering, and Vilmart, arXiv:2202.09202): the three-term |cat_6>, the cat_{4k+2} gluing at k = 2, and the 4-to-3 partial decomposition of |T>^5, built numerically in the T basis and converted with `to_witness.py`; also regenerates the m = 6 control |
 | `two_qutrit_slice.py` | two-qutrit slicing at N m=4 and H3 m=4 (2026-09-21): every four-qutrit stabilizer state with a given slice at a base point enumerated as per-slice Pauli-class and phase codes (19683 nine-slice, 324 line, 1 point), then the exact search for rank <= 6 decompositions with a minimal two-qutrit slice, by per-slice residual-rank tables, a join from the two most constraining slices, and an exact completion of the invisible terms; `--control` runs its three controls |
+| `two_qubit_slice.py` | the qubit analogue at qubit_H m=6 (2026-09-21): every m-qubit stabilizer state with a given slice at a base point of F_2^{n_1} enumerated as per-slice Pauli-class and phase codes (8385 per base slice for two sliced qubits and four remaining), per-slice residual tables over 65^4 code combinations, the join and the exact completion as in the qutrit script, plus a dedicated path for two invisible terms on one line (the shape of the known rank-6 decomposition); `--control`, `--witness bounds/qubit_H-m6-upper-6.json --rank 6`, and `--m 4 --n1 2 --rank 4` are its controls, `--ratio-tables J` prints the per-ratio exact and stabilizer counts |
 
 ## What is validated
 
@@ -55,6 +56,16 @@ repository root with `uv run --extra challenge python research/constructions/<sc
   random full-support two-qutrit stabilizer state phi. The shape counts
   also match the dictionary: 360 x 19683 + 12 x 360 x 81 + 9 x 360 =
   7,439,040 four-qutrit states.
+- `two_qubit_slice.py` controls: 300 random six-qubit, 200 four-qubit,
+  100 (three sliced qubits) and 6 (four sliced qubits) random stabilizer
+  states all have their slice code pattern in the enumeration for their own
+  base slice, and the shape counts match the lemma's formula at every
+  (n_1, n_2) (315,057,600 six-qubit states for n_1 = 2); 30 random sums of
+  one or two invisible terms are recovered exactly by the completion at
+  m = 6 and m = 4; from the single rank-2 decomposition of |H>^2 the m = 4
+  run returns 66 exact rank-4 decompositions of |H>^4; the rank-6 witness of
+  |H>^6 is recovered from its minimal four-qubit slice (all 20 such slices
+  give the same base decomposition) through the shared-line path.
 - Every hit any script reports is checked numerically against the target and
   written as amplitude vectors under `results/` (not committed) for
   `verify_challenge/to_witness.py`, which is the exact step.
