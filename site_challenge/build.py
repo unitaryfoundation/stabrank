@@ -145,9 +145,15 @@ ORBIT_DEF = {
    "usually means by 'the T state'.",
    "The most studied cell in the field: &chi; &le; 7 at six copies underpins "
    "the standard 2<sup>0.47n</sup> figure, and the cat-state rank 6 there "
-   "(exponent 0.431) refuted the conjecture that 7 was optimal. The published exponent log&#8322;3/4 "
-   "comes from an asymptotic contracted-cat-state family rather than from any "
-   "single m, so every finite-m entry here sits above it."),
+   "(exponent 0.431, Qassim, Pashayan, and Gosset, arXiv:2106.07740) refuted "
+   "the conjecture that 7 was optimal. The published exponent log&#8322;3/4 "
+   "comes from their asymptotic contracted-cat-state family rather than from any "
+   "single m, so every finite-m entry here sits above it. The ZX restatement "
+   "of Kissinger, van de Wetering, and Vilmart (arXiv:2202.09202) adds a "
+   "partial decomposition of |T&rang;<sup>&otimes;5</sup> into three terms "
+   "that each keep one |T&rang;, so &chi;(T<sup>t</sup>) &le; "
+   "3&chi;(T<sup>t&minus;4</sup>); it gives 9 at m=7 and 12 at m=8, and the "
+   "glued |cat&#8321;&#8320;&rang; gives 18 at m=10 (exponent 0.417)."),
  "qubit_T": ("cos(&beta;)|0&rang; + e<sup>i&pi;/4</sup>sin(&beta;)|1&rang;, "
    "&nbsp;cos(2&beta;) = 1/&radic;3",
    "The qubit Bravyi-Kitaev T-type state, the face centre of the stabilizer "
@@ -272,7 +278,7 @@ def next_target(orbit, base, cells=None, lead="needs "):
     """
     p = ORBIT_P[orbit]
     best = None
-    for m in range(2, 9):
+    for m in range(2, 11):     # the schema's cap on m
         r = math.floor(p ** (base * m) - 1e-9)
         if abs(p ** (base * m) - r) < 1e-9:
             r -= 1

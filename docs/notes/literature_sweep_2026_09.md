@@ -48,7 +48,7 @@ a search summary, unless marked unconfirmed.
 | Kliuchnikov, Schönnenbeck 2024 | 2404.17677 | minimal vectors of Barnes-Wall lattices are stabilizer states; post-selected stabilizer circuits over dyadic cyclotomic fields | no | foundation for Kalra-Sinha; qubit only |
 | de Silva, Yin, Strelchuk 2024 | 2311.17384 | the space of linear dependencies of n-qubit stabilizer states has a basis of 3-term dependencies (Theorem 3, via a splitting lemma |s> = (t_1 + t_2)/2 on half supports); every decomposition of any state is reachable from the computational-basis one by adding dependent triples; extent computed for 6-qubit |C5Z> and Dicke states | no | a structured alternative to annealing: search over 3-term moves. Qubit only; the qutrit analogue (splitting along a hyperplane into three third-support states) is an easy lemma to write and is what a structured merge search on the qutrit board would rest on |
 | Kissinger, van de Wetering 2022 | 2109.01076 | ZX-driven decompositions in chunks of 2 to 6 T states using BBCCGH and QPG terms | no | consumes known decompositions |
-| Kissinger, van de Wetering, Vilmart 2022 | 2202.09202 | cat_4 has rank 2 (2^{0.25 t} when present); a 5-T-state decomposition into 3 terms leaving one T (finite-size 4-to-3, matching 0.396) | no | same decompositions as QPG in another dress |
+| Kissinger, van de Wetering, Vilmart 2022 | 2202.09202 | cat_4 has rank 2 (2^{0.25 t} when present); a 5-T-state decomposition into 3 terms leaving one T (4-to-3, chi(T^t) <= 3 chi(T^{t-4})); the cat_{4k+2} gluing of QPG in ZX form | yes, finite m | chi(H^7) <= 9 (beats QPG's table value 12), chi(H^8) <= 12, chi(H^10) <= 18 (0.4170); witnesses built and verified 2026-09-21 (`bounds/qubit_H-m7-upper-9.json`, `-m8-upper-12`, `-m10-upper-18`); the asymptotic exponent is unchanged |
 | Koch, Yeung, Wang 2023 | 2307.01803 | tensored ZX "star edges" (the triangle node, which has stabilizer rank 2) admit decompositions with 2^{0.774 t} terms instead of 2^t; benchmark on Clifford+T+CCZ circuits | no | the only sub-product bound for a CCZ-like resource found; whether it transfers to chi(|CCZ>^k) < 2^k is unconfirmed (candidate orbit C1) |
 | Codsi, Laakkonen 2026 | 2603.06377 | tree-width and rank-width simulation bounds with T^{tw} scaling; the CCZ transversal remark of BBCCGH restated | no | nothing for exact rank |
 | de Colnet, Geerts, Hai, Laarman, Lee, Pérez 2026 | 2605.29944 | quadratic sums-of-powers dynamic program; uses the QPG 0.3963 decomposition as a black box | no | nothing |
@@ -294,12 +294,15 @@ them:
   or above every board value; the qutrit symmetric-subspace analogue
   C(m + 2, 2) is far above.
 - QPG Table 1 at m = 7, 8 (chi(T^7) <= 12, chi(T^8) <= 12): equal to the
-  products 6 x 2 already implied by the board's m=6 cell.
+  products 6 x 2 already implied by the board's m=6 cell. Corrected after
+  the sweep: the partial decomposition of Kissinger, van de Wetering, and
+  Vilmart gives chi(T^7) <= 9, and the board now carries verified witnesses
+  at m = 7, 8, 10 (9, 12, 18) from that paper.
 - ZX-calculus simulation papers (Kissinger-van de Wetering 2022;
-  Kissinger-van de Wetering-Vilmart 2022; Sutcliffe-Kissinger 2024;
-  Wan-Zhong 2025, 2026): they consume the QPG and BBCCGH decompositions;
-  the only new object is the star-edge decomposition of Koch-Yeung-Wang
-  (kept for C1).
+  Sutcliffe-Kissinger 2024; Wan-Zhong 2025, 2026): they consume the QPG and
+  BBCCGH decompositions; the new objects are the star-edge decomposition of
+  Koch-Yeung-Wang (kept for C1) and the 4-to-3 partial decomposition of
+  Kissinger-van de Wetering-Vilmart 2022, now on the board at m = 7, 8.
 - Simulation frameworks of 2026 (Clifft, Codsi-Laakkonen, de Colnet et
   al., Tsim, SymFT, quEStab, Quokka#): use decompositions, do not produce
   them.
