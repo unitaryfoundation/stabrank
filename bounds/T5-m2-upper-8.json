@@ -1,0 +1,182 @@
+{
+  "schema_version": "0.1",
+  "orbit": "T5",
+  "m": 2,
+  "direction": "upper",
+  "rank": 8,
+  "witness": {
+    "terms": [
+      {
+        "k": 0,
+        "x0": [
+          4,
+          3
+        ],
+        "W": [],
+        "Q": [],
+        "l": []
+      },
+      {
+        "k": 1,
+        "x0": [
+          0,
+          3
+        ],
+        "W": [
+          [
+            1,
+            0
+          ]
+        ],
+        "Q": [
+          [
+            3
+          ]
+        ],
+        "l": [
+          3
+        ]
+      },
+      {
+        "k": 1,
+        "x0": [
+          0,
+          4
+        ],
+        "W": [
+          [
+            1,
+            0
+          ]
+        ],
+        "Q": [
+          [
+            0
+          ]
+        ],
+        "l": [
+          1
+        ]
+      },
+      {
+        "k": 0,
+        "x0": [
+          2,
+          4
+        ],
+        "W": [],
+        "Q": [],
+        "l": []
+      },
+      {
+        "k": 0,
+        "x0": [
+          3,
+          1
+        ],
+        "W": [],
+        "Q": [],
+        "l": []
+      },
+      {
+        "k": 1,
+        "x0": [
+          3,
+          0
+        ],
+        "W": [
+          [
+            0,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0
+          ]
+        ],
+        "l": [
+          4
+        ]
+      },
+      {
+        "k": 2,
+        "x0": [
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            3,
+            0
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "l": [
+          3,
+          3
+        ]
+      },
+      {
+        "k": 1,
+        "x0": [
+          4,
+          0
+        ],
+        "W": [
+          [
+            0,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            3
+          ]
+        ],
+        "l": [
+          3
+        ]
+      }
+    ],
+    "coeffs": [
+      "-1/4 + 3*sqrt(5)/20 + I*sqrt(1/8 - sqrt(5)/40)",
+      "-1/2 - I*sqrt(1/4 - sqrt(5)/10)",
+      "-sqrt(5)/4 + 1/4 - I*sqrt(sqrt(5)/40 + 1/8)",
+      "-sqrt(5)/10 + I*sqrt(1/4 - sqrt(5)/10)",
+      "-sqrt(5)/20 + 1/4 - I*sqrt(sqrt(5)/40 + 1/8)",
+      "-1/2 - I*sqrt(1/4 - sqrt(5)/10)",
+      "1",
+      "-sqrt(5)/4 + 1/4 - I*sqrt(sqrt(5)/40 + 1/8)"
+    ]
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank autoresearch/run.py",
+    "method": "simulated annealing at rank 8 (4 chains, 8000 iterations per temperature, cooling 0.995), then exact refit",
+    "date": "2026-09-21",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.1513,
+      "wall_clock_hours": 0.0479,
+      "runs": 2,
+      "hardware": "arm64 Darwin, 18 cores"
+    }
+  },
+  "notes": "Found by autoresearch/run.py on seed 7002 after 0 failed seed(s) at this rank (residuals none); the exact coefficients were recovered by fit_coeffs.fit and the identity is checked symbolically by the verifier. Implied gamma log_5(8)/2 = 0.6460, below the single-copy product bound log_5(3) = 0.6826 that is the orbit's baseline (no exponent has been published for any p = 5 state). Puts the cell at 5 <= chi(|T5>^2) <= 8 with the rank-4 exclusion of cert_t5_m2_rank4.py, against the product bound 9 from chi(|T5>) = 3. Short annealer probes at ranks 4 to 7 plateaued at residuals 0.385, 0.311, 0.31 to 0.32 and 0.227, so ranks 5 to 7 are open. Every run is logged in autoresearch/runs.jsonl."
+}

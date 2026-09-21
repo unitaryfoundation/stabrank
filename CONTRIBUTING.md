@@ -2,11 +2,11 @@
 
 You bring a decomposition or a certificate; the pipeline decides whether it holds, and the board shows only what it could check.
 
-A submission is one JSON file in `bounds/` claiming a bound on the exact stabilizer rank of a magic state. Write `chi(|M>^{ot m})` for the smallest number of stabilizer states whose complex span contains the m-fold tensor power of the orbit state `|M>`, and `gamma = log_p(r)/m` for the per-copy exponent a rank-`r` decomposition at `m` copies implies, where `p` is 2 for qubits and 3 for qutrits. Lower `gamma` is better, and `gamma` is what the board ranks.
+A submission is one JSON file in `bounds/` claiming a bound on the exact stabilizer rank of a magic state. Write `chi(|M>^{ot m})` for the smallest number of stabilizer states whose complex span contains the m-fold tensor power of the orbit state `|M>`, and `gamma = log_p(r)/m` for the per-copy exponent a rank-`r` decomposition at `m` copies implies, where `p` is 2 for qubits, 3 for qutrits and 5 for ququints. Lower `gamma` is better, and `gamma` is what the board ranks.
 
-Six orbits are open, with the published exponent each one is measured against:
+Seven orbits are open, with the exponent each one is measured against:
 
-| orbit | state | published `gamma` |
+| orbit | state | `gamma` measured against |
 |---|---|---|
 | `S` | Strange | `log_3(2)/2` = 0.3155 |
 | `N` | Norrell | `log_3(4)/3` = 0.4206 |
@@ -14,6 +14,9 @@ Six orbits are open, with the published exponent each one is measured against:
 | `T3` | qutrit T-type, the face centre | `1/2` = 0.5000 |
 | `qubit_H` | qubit H-type, the edge centre | `log_2(3)/4` = 0.3962 |
 | `qubit_T` | qubit Bravyi-Kitaev T-type | `log_2(3)/4` = 0.3962 |
+| `T5` | ququint T-type, cubic phase `x^3` over `F_5` | `log_5(3)` = 0.6826, single-copy product bound; no published exponent |
+
+Six of the seven are measured against a published exponent. No exponent has been published for any p = 5 state, so `T5` is measured against the product bound from its single-copy value, `chi(|T5>) = 3`, and every page that shows the baseline says so. The convention for any further orbit without a literature exponent is the same: the baseline is `log_p(chi(|M>))`, labelled as a product bound, and it is replaced by a published exponent when one appears.
 
 The qubit exponent is the asymptotic value of the contracted cat-state family of Qassim, Pashayan, and Gosset (arXiv:2106.07740), not the exponent of any single cell. Kissinger, van de Wetering, and Vilmart (arXiv:2202.09202) restate that family in the ZX-calculus and add a partial decomposition of `|T>^5` into three terms that each keep one `|T>`, so `chi(T^t) <= 3 chi(T^(t-4))`; on the board that gives `chi(H^7) <= 9`, `chi(H^8) <= 12`, and the glued `|cat_10>` gives `chi(H^10) <= 18` (0.4170), all as verified witnesses. The finite-`m` values approach `log_2(3)/4` from above and none of them beats it.
 
@@ -229,7 +232,7 @@ Bounds that match rather than beat the literature are still worth submitting, be
 
 ## Tips
 
-- Cap is `m <= 10`, set by the verification budget rather than by the mathematics; the qubit cells at `m = 10` verify in seconds, and a qutrit witness of that size would not.
+- Cap is `m <= 10`, set by the verification budget rather than by the mathematics; the qubit cells at `m = 10` verify in seconds, and a qutrit witness of that size would not. A ququint bound is capped at `m <= 5` by `validate_bounds.py` (5^6 amplitudes exceed the budget).
 - `make build` rebuilds `docs/`, and `serve` hosts it at `http://localhost:8765/` so links and rendered math behave as deployed.
 - Verification results are cached in `certs/` against the content hash of the whole submission file, so any edit re-verifies it, including one that only touches `notes`. Expect a rebuild to spend the budget again after a typo fix.
 - The verifier escalates from symbolic to 60-digit numeric with a tolerance of `1e-45` when sympy cannot decide that a cyclotomic expression vanishes. If your coefficients defeat both, say so in `notes` rather than loosening the check.

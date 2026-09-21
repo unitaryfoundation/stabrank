@@ -7,9 +7,10 @@ smallest change that makes the first new orbit verifiable. The code slice
 implemented alongside this note is the ququint T-type orbit `T5`:
 `orbit_state("T5")`, `ORBIT_P["T5"] = 5`, a prime-generic
 `rank_exclusion.dictionary(p, n)` and `clifford_group(p)`, and tests
-(`tests/test_ququint_dictionary.py`). No bound files are added; the
-schema enum and the site constants are untouched, and the changes needed
-there are listed in section 5.
+(`tests/test_ququint_dictionary.py`). As of 2026-09-21 the schema enum,
+the site constants, two certificates and four bound files are in place
+too, so T5 is a board orbit; section 5 records what was added and what
+remains (the three-ququint dictionary).
 
 Three facts computed while writing this, none of them in the literature
 as far as the search in section 1 found, drive the recommendation:
@@ -254,7 +255,7 @@ two, three ququints; four ququints is 7.7e9 and out of reach.
 | orbit | m | lower | upper | tool |
 |---|---|---|---|---|
 | T5 | 1 | 3 (rank 2 excluded, margin) | 3 (verified witness) | settled here |
-| T5 | 2 | 4 (`certify_rank3` in 0.5 s, group of order 100, margin 0.066) | 9 (product) | rank-4 exclusion over 3,900 states with `decompositions_with_pivot(rank=4)` and the 66 symmetry representatives is feasible in minutes; annealer for ranks 4 to 8. Short probes (4 chains, 3,000 iterations per temperature, two seeds, 6 to 22 s each) plateau at residuals 0.14 to 0.17 (rank 8), 0.227 (7), 0.31 to 0.32 (6), 0.311 (5) and 0.385 (4); that says nothing about the cell until a run with the loop's settings is done |
+| T5 | 2 | 5 (`certify_rank3` in 1 s, group of order 100, margin 0.066; then the rank-4 pivot-pair exclusion from the 98 unitary-symmetry representatives, 50 s) | 8 (annealer witness of 2026-09-21, verified) | annealer for ranks 5 to 7. Short probes (4 chains, 3,000 iterations per temperature, two seeds, 6 to 22 s each) plateau at residuals 0.14 to 0.17 (rank 8), 0.227 (7), 0.31 to 0.32 (6), 0.311 (5) and 0.385 (4); that says nothing about the cell until a run with the loop's settings is done |
 | T5 | 3 | 4 by monotonicity; 5 by slice-and-lift once chi(T5^2) is exact | 27 (product) | exclusions at three ququints need `qutrit_codes.all_codes` generalised to p = 5 (2.46 M states at 125 bytes each is 300 MB, the same size class as four qutrits); the phase-code enumeration is already written for general p except for its `p != 3` guard and the monomial basis, which is the same y_i, y_i^2, y_s y_t for every odd prime |
 | N5 | 1 | 2 | 2 | settled |
 | N5 | 2 | 4 (rank 3 excluded, margin 0.045) | 4 (product) | settled here |
@@ -303,30 +304,44 @@ exists, since it costs only an `orbit_state` entry.
 
 ## 5. Concrete code changes
 
-For T5 (this branch has the first three items):
+For T5, everything but item 7 is done as of 2026-09-21:
 
 1. `verify_challenge/stabrank_verify.py`: `orbit_state("T5")`,
    `ORBIT_P`, `ORBIT_LABEL`. Done.
 2. `verify_challenge/rank_exclusion.py`: `dictionary` and
    `clifford_group` for any odd prime, `_is_prime`,
    `_distinct_up_to_phase`. Done.
-3. `tests/test_ququint_dictionary.py`. Done.
-4. `schema/bound.schema.json`: add `"T5"` to the `orbit` enum and its
-   description.
-5. `site_challenge/build.py`: `ORBIT_ORDER`, `SYSTEM["T5"] = "ququint"`,
-   `BASELINE["T5"] = (math.log(3, 5), "log₅3")` with the orbit text
-   saying it is the single-copy value and not a published exponent,
-   `ORBIT_TEX`, `BASE_TEX`, `ORBIT_DEF`, `COLOR`.
-6. `verify_challenge/cert_t5_m1_rank3.py` (rank-2 exclusion over 30
-   states plus the exact non-stabilizer argument) and
-   `cert_t5_m2_rank3.py` (`run_certificate([("T5", 2)], controls=[("T5", 1)])`
-   with a positive control that the rank-3 decomposition of |T5> is
-   found). Both run in seconds.
+3. `tests/test_ququint_dictionary.py`. Done; it now also checks that the
+   four T5 bound files validate and that the certificates' printed claims
+   match their `expect` fields.
+4. `schema/bound.schema.json`: `"T5"` in the `orbit` enum. Done.
+   `validate_bounds.py` caps T5 at `m <= 5`, since the schema's global
+   cap of 8 is a 3^8-amplitude budget.
+5. `site_challenge/build.py`: `ORBIT_ORDER`, `SYSTEM`, `BASELINE["T5"] =
+   (log_5 3, "log₅3")`, `UNPUBLISHED = {"T5"}` with `base_word` and
+   `base_note` so every page that shows the baseline calls it a
+   single-copy product bound, `ORBIT_TEX`, `BASE_TEX`, `ORBIT_DEF`,
+   `COLOR`, `ORB_TEX_NAME`; `report.py` shows "none; single-copy product
+   bound" in the reference column. Done.
+6. Certificates. `cert_t5_m1_rank2.py` is exact: all 30 states have
+   amplitudes 0 or a power of w_5, so every 3 x 3 minor of [s | t | psi]
+   is decided in Z[w_5] by integer arithmetic, and the bound file declares
+   `exact: true`. `cert_t5_m2_rank4.py` runs `certify_rank3` (1 s) and then
+   the rank-4 pivot-pair search of `slice_lift.all_decompositions` from
+   the 98 unitary-symmetry representatives (50 s), with the rank-3
+   decompositions of |T5> and the product decomposition of |N5>^2 as
+   positive controls. Done.
 7. `verify_challenge/qutrit_codes.py`: lift the `p != 3` guard in
    `all_codes` (the monomial basis and the RREF enumeration are already
    written in p) so that three-ququint exclusions have a dictionary;
    `rank_exclusion_codes.py` follows. Needed only for T5 and N5 at m = 3.
-8. CONTRIBUTING.md orbit table.
+   Not done.
+8. CONTRIBUTING.md orbit table and the baseline convention for orbits
+   with no published exponent. Done.
+
+Bound files: `T5-m1-upper-3.json` (verified), `T5-m1-lower-3.json`
+(exact certificate, verified), `T5-m2-upper-8.json` (annealer witness,
+verified) and `T5-m2-lower-5.json` (reproduced).
 
 For CS (and then CCZ with width 3):
 
@@ -363,6 +378,8 @@ three-ququint code dictionary if the m = 3 cells are wanted.
 A rank-4 exclusion over the 3,900 two-ququint stabilizer states (pivot-pair
 search from the 98 orbit representatives of the unitary symmetry group of
 order 50, 82 s on a laptop core) finds no rank-4 decomposition of |T5>^2,
-so with the rank-3 exclusion above and the product bound the cell is
-5 <= chi(T5^2) <= 9. Not yet a board cell: the orbit enum, site constants
-and a certificate are still to be added (section 5).
+so with the rank-3 exclusion above the cell was 5 <= chi(T5^2) <= 9. The
+same day the annealer (4 chains, 8000 iterations per temperature, seed
+7002) found a rank-8 decomposition that refits exactly and verifies
+symbolically, so the cell is 5 <= chi(T5^2) <= 8 and T5 is a board orbit
+with four cells; section 5 lists what was added.

@@ -147,3 +147,76 @@ def test_t5_rank_three_witness_verifies():
     psi = np.array([complex(sp.N(z, 20)) for z in orbit_state("T5")])
     pairs, worst = rank2_search(psi, D)
     assert pairs == [] and worst < 0.99
+
+
+# ------------------------------------------------------------ the T5 cells ---
+
+T5_BOUNDS = ["T5-m1-upper-3", "T5-m1-lower-3", "T5-m2-upper-8", "T5-m2-lower-5"]
+
+
+@pytest.mark.parametrize("name", T5_BOUNDS)
+def test_t5_bound_files_validate(name):
+    """The four T5 cells pass the schema and the cross-field rules, and the
+    orbit is in the schema enum."""
+    import json
+    import jsonschema
+    from validate_bounds import SCHEMA, tier_requirements
+    schema = json.load(open(SCHEMA))
+    assert "T5" in schema["properties"]["orbit"]["enum"]
+    sub = json.load(open(os.path.join(ROOT, "bounds", name + ".json")))
+    assert sub["orbit"] == "T5"
+    assert not list(jsonschema.Draft202012Validator(schema).iter_errors(sub))
+    errors, _ = tier_requirements(sub)
+    assert errors == []
+
+
+def test_t5_m_cap():
+    from validate_bounds import tier_requirements
+    sub = {"schema_version": "0.1", "orbit": "T5", "m": 6, "direction": "upper",
+           "rank": 100, "provenance": {"author": "x", "date": "2026-09-21"}}
+    errors, _ = tier_requirements(sub)
+    assert any("m <= 5" in e for e in errors)
+    sub["m"] = 5
+    assert tier_requirements(sub)[0] == []
+
+
+@pytest.mark.parametrize("name, script", [
+    ("T5-m1-lower-3", "cert_t5_m1_rank2.py"),
+    ("T5-m2-lower-5", "cert_t5_m2_rank4.py"),
+])
+def test_t5_certificate_claims_match(name, script):
+    """The claim each certificate prints is the one its bound file expects,
+    and the script names it in its docstring."""
+    import json
+    sub = json.load(open(os.path.join(ROOT, "bounds", name + ".json")))
+    cert = sub["certificate"]
+    assert cert["script"] == "verify_challenge/" + script
+    src = open(os.path.join(ROOT, cert["script"])).read()
+    assert f'print("{cert["expect"]}")' in src
+    assert f"Printed claim: {cert['expect']}" in src
+
+
+def test_t5_m1_exact_exclusion():
+    """The exact Z[w_5] pair test behind cert_t5_m1_rank2.py: zero test,
+    controls, and the exclusion itself, all in integer arithmetic."""
+    import cert_t5_m1_rank2 as c
+    states = c.stabilizer_states()
+    assert len(states) == 30
+    assert all(not c.same_up_to_phase(a, b)
+               for a, b in itertools.combinations(states, 2))
+    assert c.minor_is_zero([(0, 0), (0, 1)], (0, 1)) is False        # w - 1
+    assert c.minor_is_zero([(0, None), (None, 0)], (0, 1)) is False  # 1
+    assert c.minor_is_zero([(0, 0), (0, 0)], (0, 1)) is True         # 0
+    pairs, rank1 = c.rank2_search_exact((0, 0, None, None, None), states)
+    assert rank1 == [] and pairs == [(0, 1)]
+    pairs, rank1 = c.rank2_search_exact((0, 0, 0, 0, 0), states)
+    assert len(rank1) == 1
+    pairs, rank1 = c.rank2_search_exact(c.t5(), states)
+    assert pairs == [] and rank1 == []
+    # the three terms of the board's rank-3 witness do span |T5>: every
+    # 4 x 4 minor of [|0>, |1>, third, psi] vanishes
+    third = tuple((4 * y * y + 4 * y) % 5 for y in range(5))
+    zero = tuple(0 if x == 0 else None for x in range(5))
+    one = tuple(0 if x == 1 else None for x in range(5))
+    assert all(c.minor_is_zero([zero, one, third, c.t5()], rows)
+               for rows in itertools.combinations(range(5), 4))

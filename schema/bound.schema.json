@@ -26,9 +26,10 @@
         "H3",
         "T3",
         "qubit_H",
-        "qubit_T"
+        "qubit_T",
+        "T5"
       ],
-      "description": "S Strange, N Norrell, H3 qutrit Hadamard eigenstate, T3 qutrit T-type (face centre), qubit_H qubit H-type (edge centre), qubit_T qubit Bravyi-Kitaev T-type"
+      "description": "S Strange, N Norrell, H3 qutrit Hadamard eigenstate, T3 qutrit T-type (face centre), qubit_H qubit H-type (edge centre), qubit_T qubit Bravyi-Kitaev T-type, T5 ququint T-type (cubic phase x^3 over F_5)"
     },
     "m": {
       "type": "integer",
