@@ -224,32 +224,54 @@ def degenerate(args):
     Mt = new_matcher()
     target = psi_target(orbit, N2, Mt.F1, Mt.F2)
     x0 = X0[orbit]
-    out = {"orbit": orbit, "x0": list(x0), "git": git_commit(), "patterns": {}, "hits": [],
-           "coord_solution_hist": {}}
+    out = {"orbit": orbit, "x0": list(x0), "git": git_commit(), "sample": args.sample, "cap_s": args.cap_s,
+           "patterns": {}, "hits": [], "coord_solution_hist": {}}
+    path = common.degenerate_sample_path(orbit)
+    os.makedirs(common.results_dir(orbit), exist_ok=True)
+
+    def flush():
+        # written after every cover, so that a run killed by an outer wall-clock
+        # cap (a single repeated dependent cover can run for hours) leaves the
+        # covers measured so far
+        with open(path + ".tmp", "w") as f:
+            json.dump(out, f)
+        os.replace(path + ".tmp", path)
+
+    # the sample is spread evenly over each pattern's sorted list, the same
+    # covers every time; --cap-s bounds the wall time per pattern, so a
+    # pattern with a heavy tail keeps the covers it finished
+    ts = time.time()
+    budget = args.cap_s / len(groups) if args.cap_s else None
     for pat, lst in sorted(groups.items()):
         picks = [lst[k] for k in np.linspace(0, len(lst) - 1, min(args.sample, len(lst))).astype(int)]
-        times, kappas, refused = [], [], 0
+        rec = {"covers": len(lst), "sampled": 0, "planned": len(picks), "seconds": [], "kappa": [],
+               "refused": 0, "capped": False, "projected_s": None}
+        out["patterns"][pat] = rec
+        t_pat = time.time()
         for cover in picks:
+            if budget is not None and rec["sampled"] and time.time() - t_pat > budget:
+                rec["capped"] = True
+                break
             t1 = time.time()
             hits, st = Mt.run(cover, x0, target)
-            times.append(time.time() - t1)
-            kappas.append(st["kappa"])
-            refused += st["refused"]
+            rec["seconds"].append(time.time() - t1)
+            rec["kappa"].append(st["kappa"])
+            rec["refused"] += st["refused"]
+            rec["sampled"] += 1
             k = ",".join(str(b) for b in st["coord_solutions"])
             out["coord_solution_hist"][k] = out["coord_solution_hist"].get(k, 0) + 1
             for h in hits:
                 out["hits"].append(hit_summary(orbit, h, cover, x0))
-        times = np.array(times)
-        print(f"pattern {pat}: {len(lst)} covers, sampled {len(picks)}: per cover mean {times.mean():.2f}s, "
-              f"median {np.median(times):.2f}s, max {times.max():.2f}s, kappa {sorted(set(kappas))}, "
-              f"{refused} refused; projected {len(lst) * times.mean() / 3600:.2f} CPU-h")
-        out["patterns"][pat] = {"covers": len(lst), "sampled": len(picks), "seconds": times.tolist(),
-                                "kappa": kappas, "refused": refused, "projected_s": float(len(lst) * times.mean())}
+            rec["projected_s"] = float(len(lst) * np.mean(rec["seconds"]))
+            flush()
+        times = np.array(rec["seconds"])
+        print(f"pattern {pat}: {len(lst)} covers, sampled {len(times)} of {len(picks)} planned"
+              f"{' (capped)' if rec['capped'] else ''}: per cover mean {times.mean():.2f}s, "
+              f"median {np.median(times):.2f}s, max {times.max():.2f}s, kappa {sorted(set(rec['kappa']))}, "
+              f"{rec['refused']} refused; projected {rec['projected_s'] / 3600:.2f} CPU-h", flush=True)
     print(f"{len(out['hits'])} hits; projected total "
-          f"{sum(v['projected_s'] for v in out['patterns'].values()) / 3600:.2f} CPU-h")
-    os.makedirs(common.results_dir(orbit), exist_ok=True)
-    with open(common.degenerate_sample_path(orbit), "w") as f:
-        json.dump(out, f)
+          f"{sum(v['projected_s'] for v in out['patterns'].values()) / 3600:.2f} CPU-h at the sampled means "
+          f"[{time.time() - ts:.0f}s]; wrote {os.path.relpath(path, ROOT)}")
     return 0
 
 
@@ -756,9 +778,10 @@ def control_witness(args):
                                 "repeated": repeated, "hits": len(good), "witness_recovered": same,
                                 "seconds": dt, "stats": st})
         passed += same
-    suffix = "" if args.base is None else f"_{args.base}"
-    report["pass"] = passed == len(report["bases"]) and bool(report["bases"])
-    write_control(orbit, f"control_witness{suffix}", report)
+        suffix = "" if args.base is None else f"_{args.base}"
+        report["pass"] = passed == len(report["bases"]) and bool(report["bases"])
+        report["complete"] = selected == len(bases) - 1 or args.base is not None
+        write_control(orbit, f"control_witness{suffix}", report)     # after every base: an outer cap may kill the run
     print(f"control-witness: {passed}/{len(report['bases'])} bases recover the rank-{rank} witness")
     return 0 if report["pass"] else 1
 
@@ -778,6 +801,8 @@ def main(argv):
     add("census", census)
     p = add("degenerate", degenerate)
     p.add_argument("--sample", type=int, default=0, help="time K covers of each multiplicity pattern")
+    p.add_argument("--cap-s", type=float, default=0.0, help="wall-clock cap for the sampling, split "
+                   "evenly over the patterns (0: none)")
     p.add_argument("--write", action="store_true", help="store the list with its hash")
     p = add("partition", partition)
     p.add_argument("--target-s", type=float, default=700.0, help="seconds per stage A batch")
