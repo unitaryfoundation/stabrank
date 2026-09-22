@@ -11,8 +11,11 @@ note) through the coefficient family and the block treatment of repeated
 copies; the enumeration of those covers is `degenerate`.
 
 Commands
+  census                    run the 5-cover kernel alone over every pivot pair and
+                            record the covers, candidates and seconds per pair
   partition [--target-s S]  write partition.json: pivot pairs grouped into
-                            batches of about S seconds at the measured rates
+                            batches of about S seconds (kernel seconds plus the
+                            matcher per cover, from the census when present)
   run BATCH                 run one batch, writing results/batch_BATCH.json
                             (skipped when the file exists: resume by rerunning)
   status                    coverage and totals over the result files
@@ -21,8 +24,11 @@ Commands
   control-m4                recover the rank-4 decompositions of |H>^4 from the
                             full 4-covers of |H>^3 (one sliced qubit)
   sample [--count N]        time the matcher on N full 5-covers from the first
-                            pivot at the four base points
-  degenerate                count the dependent and repeated 5-covers (stages B, C)
+                            pivot at the four base points (--reference: Python path)
+  fixture                   write the C++ test fixture from the reference matcher
+                            on the sample covers
+  degenerate [--sample N]   count the dependent and repeated 5-covers (stages B, C)
+                            and time N of each multiplicity pattern
 """
 
 from __future__ import annotations
@@ -86,14 +92,62 @@ def pairs_of(E):
     return out
 
 
+CENSUS = os.path.join(RESULTS, "kernel_census.json")
+
+
+def census(args):
+    """Run the 5-cover kernel alone over every pivot pair and record, per
+    unit, the covers found, the modular candidates and the seconds, so the
+    partition can balance batches by the matcher's work (proportional to the
+    covers) instead of by a kernel cost model."""
+    E = CoverEnumerator(N1)
+    units = pairs_of(E)
+    t0 = time.time()
+    rows, plans = [], {}
+    for n, (i, j, M) in enumerate(units):
+        if i not in plans:
+            Qi, _ = _reduce(E.F1, E.Q1, E.Q1[i])
+            members, _ = E.pivot_plan(i)
+            mask = np.zeros(E.N, dtype=bool)
+            mask[members] = True
+            plans[i] = (Qi, mask)
+        Qi, mask = plans[i]
+        tk = time.time()
+        covers, nc = E.pair_covers(5, i, j, Qi, mask)
+        rows.append([i, j, M, len(covers), nc, time.time() - tk])
+        if args.verbose and (n + 1) % 1000 == 0:
+            print(f"  {n + 1}/{len(units)} units, {sum(r[3] for r in rows)} covers [{time.time() - t0:.0f}s]",
+                  flush=True)
+    rec = {"orbit": "qubit_H", "m": 6, "rank": 5, "n1": N1, "N": E.N, "git": git_commit(),
+           "matcher": "native" if E.native_cover5 is not None else "reference",
+           "units": len(units), "covers": int(sum(r[3] for r in rows)),
+           "candidates": int(sum(r[4] for r in rows)), "seconds": time.time() - t0,
+           "columns": ["pivot", "partner", "members", "covers", "candidates", "seconds"], "rows": rows}
+    os.makedirs(RESULTS, exist_ok=True)
+    with open(CENSUS, "w") as f:
+        json.dump(rec, f)
+    print(f"{len(units)} pivot pairs: {rec['covers']} full 5-covers, {rec['candidates']} candidates, "
+          f"{rec['seconds']:.0f}s; wrote {CENSUS}")
+    return 0
+
+
 def partition(args):
     E = CoverEnumerator(N1)
     units = pairs_of(E)
-    # cost model: kernel time is quadratic in M (residue array M x M), plus a
-    # per-unit floor; the matcher cost is proportional to the covers found,
-    # which is unknown before the run, so the partition is by kernel cost only
-    # and the per-batch matcher time is recorded in the results.
-    costs = [args.floor_s + args.k_s * (M / 1000.0) ** 2 for _, _, M in units]
+    if os.path.exists(CENSUS) and not args.no_census:
+        # measured kernel seconds per unit plus the matcher at its sampled
+        # per-cover cost (the four base points)
+        with open(CENSUS) as f:
+            cen = json.load(f)
+        by = {(r[0], r[1]): r for r in cen["rows"]}
+        costs = [by[(i, j)][5] + args.match_ms * 1e-3 * by[(i, j)][3] for i, j, _ in units]
+        model = {"census": os.path.relpath(CENSUS, HERE), "match_ms_per_cover": args.match_ms,
+                 "census_covers": cen["covers"]}
+    else:
+        # kernel cost model: quadratic in M (the M x M residue array) plus a
+        # per-unit floor; the matcher cost is then unknown before the run
+        costs = [args.floor_s + args.k_s * (M / 1000.0) ** 2 for _, _, M in units]
+        model = {"floor_s": args.floor_s, "k_s_per_M2_over_1e6": args.k_s}
     batches, cur, acc = [], [], 0.0
     for u, c in zip(units, costs):
         cur.append(list(u))
@@ -105,13 +159,13 @@ def partition(args):
         batches.append(cur)
     rec = {"orbit": "qubit_H", "m": 6, "rank": 5, "n1": N1, "N": E.N, "group_order": E.info["order"],
            "pivot_orbits": int(E.info["orbits"]), "units": len(units), "batches": len(batches),
-           "cost_model": {"floor_s": args.floor_s, "k_s_per_M2_over_1e6": args.k_s},
-           "estimated_kernel_s": float(sum(costs)), "git": git_commit(),
+           "cost_model": model, "target_s": args.target_s,
+           "estimated_s": float(sum(costs)), "git": git_commit(),
            "batch_units": batches}
     with open(PARTITION, "w") as f:
         json.dump(rec, f)
-    print(f"{len(units)} pivot pairs, {len(batches)} batches, kernel estimate "
-          f"{sum(costs) / 3600:.1f} CPU-h at the stored rates; wrote {PARTITION}")
+    print(f"{len(units)} pivot pairs, {len(batches)} batches, estimate "
+          f"{sum(costs) / 3600:.2f} CPU-h at the stored rates; wrote {PARTITION}")
 
 
 # ------------------------------------------------------------------ run ----
@@ -223,10 +277,13 @@ def control_witness(args):
     M = SliceMatcher(E, n1, verbose=args.verbose)
     report = {"witness": args.path, "git": git_commit(), "bases": []}
     passed = 0
+    selected = -1
     for (cover, x0), Ss in sorted(bases.items()):
         repeated = len(set(cover)) < len(cover)
-        if args.distinct_only and repeated:
-            print(f"base {cover} x0 {x0:0{n1}b} ({len(Ss)} triples): repeated state, skipped")
+        if args.distinct_only and repeated or args.repeated_only and not repeated:
+            continue
+        selected += 1
+        if args.base is not None and selected != args.base:
             continue
         t0 = time.time()
         hits, st = M.run(cover, x0)
@@ -245,7 +302,10 @@ def control_witness(args):
                                 "stats": {k: v for k, v in st.items()}})
         passed += bool(good)
     os.makedirs(RESULTS, exist_ok=True)
-    with open(os.path.join(RESULTS, "control_witness.json"), "w") as f:
+    suffix = "_repeated" if args.repeated_only else ("_distinct" if args.distinct_only else "")
+    if args.base is not None:
+        suffix += f"_{args.base}"
+    with open(os.path.join(RESULTS, f"control_witness{suffix}.json"), "w") as f:
         json.dump(report, f, indent=1)
     print(f"control-witness: {passed}/{len(report['bases'])} bases recover a rank-{rank} decomposition")
     return 0 if passed == len(report["bases"]) else 1
@@ -396,7 +456,7 @@ def control_m4(args):
 
 def sample(args):
     E = CoverEnumerator(N1)
-    M = SliceMatcher(E, N1)
+    M = SliceMatcher(E, N1, native=not args.reference)
     i = int(E.reps[args.pivot])
     Qi, _ = _reduce(E.F1, E.Q1, E.Q1[i])
     members, partners = E.pivot_plan(i)
@@ -419,14 +479,40 @@ def sample(args):
         times.append(time.time() - t0)
         rec["covers"] += 1
     times = np.array(times)
-    print(f"per cover (four base points): mean {times.mean():.3f}s, median {np.median(times):.3f}s, "
-          f"max {times.max():.3f}s; {rec['matched']} matched, {rec['refused']} refused, "
-          f"{len(rec['hits'])} hits; coordinate-slice solution histogram {rec['coord_solution_hist']}")
+    which = "reference" if M.native is None else "native"
+    print(f"{which} matcher, per cover (four base points): mean {times.mean():.4f}s, "
+          f"median {np.median(times):.4f}s, max {times.max():.4f}s; {rec['matched']} matched, "
+          f"{rec['refused']} refused, {len(rec['hits'])} hits; coordinate-slice solution histogram "
+          f"{rec['coord_solution_hist']}")
     os.makedirs(RESULTS, exist_ok=True)
-    with open(os.path.join(RESULTS, "sample.json"), "w") as f:
-        json.dump({"git": git_commit(), "pivot": i, "covers": [list(c) for c in covers],
+    with open(os.path.join(RESULTS, args.out or f"sample_{which}.json"), "w") as f:
+        json.dump({"git": git_commit(), "pivot": i, "matcher": which, "covers": [list(c) for c in covers],
                    "seconds": times.tolist(), "matched": rec["matched"], "refused": rec["refused"],
                    "hits": rec["hits"], "coord_solution_hist": rec["coord_solution_hist"]}, f)
+    return 0
+
+
+def fixture(args):
+    """Write cpp/tests/data/h6_rank5_sample.txt: the sample covers as base
+    state codes with the reference matcher's per-run results, for the C++
+    test of the compiled kernel (cpp/tests/test_slice_match.cpp)."""
+    E = CoverEnumerator(N1)
+    M = SliceMatcher(E, N1, native=False)
+    with open(os.path.join(RESULTS, "sample.json")) as f:
+        covers = [tuple(c) for c in json.load(f)["covers"]]
+    out = os.path.join(ROOT, "cpp", "tests", "data", "h6_rank5_sample.txt")
+    lines = ["# x0, five base states as phase codes (0 zero, 1..4 = 1, i, -1, -i), kappa, "
+             "cumulative coordinate-slice solutions, hits; reference matcher on results/sample.json"]
+    t0 = time.time()
+    for cover in covers:
+        for x0 in x0_reps(N1):
+            hits, st = M.run(cover, x0)
+            codes = " ".join("".join(str(int(c)) for c in E.codes[u]) for u in cover)
+            sols = ",".join(str(v) for v in st["coord_solutions"]) or "-"
+            lines.append(f"{x0} {codes} {st['kappa']} {sols} {len(hits)}")
+    with open(out, "w") as f:
+        f.write("\n".join(lines) + "\n")
+    print(f"wrote {out}: {len(lines) - 1} runs in {time.time() - t0:.1f}s")
     return 0
 
 
@@ -436,13 +522,41 @@ def degenerate(args):
     covers3, _ = E.covers(3)
     covers4, _ = E.covers(4)
     deg = degenerate_covers(E, 5, covers3, covers4)
-    by = {}
+    by, groups = {}, {}
     for ms in deg:
-        d = len(set(ms))
         pat = tuple(sorted((ms.count(u) for u in set(ms)), reverse=True))
         by[str(pat)] = by.get(str(pat), 0) + 1
+        groups.setdefault(str(pat), []).append(ms)
     print(f"{len(deg)} dependent or repeated full 5-covers over the 3-cover and 4-cover classes "
           f"({time.time() - t0:.0f}s); by multiplicity pattern {by}")
+    if not args.sample:
+        return 0
+    # timing sample: --sample covers from each multiplicity pattern, evenly
+    # spaced, through the reference matcher (blocks and coefficient families)
+    M = SliceMatcher(E, N1)
+    rec = {"covers": 0, "matched": 0, "refused": 0, "hits": [], "coord_solution_hist": {}}
+    out = {"git": git_commit(), "patterns": {}}
+    for pat, lst in sorted(groups.items()):
+        picks = [lst[k] for k in np.linspace(0, len(lst) - 1, min(args.sample, len(lst))).astype(int)]
+        times, kappas = [], []
+        for cover in picks:
+            t1 = time.time()
+            match_cover(M, E, cover, rec, 5)
+            times.append(time.time() - t1)
+            kappas.append(M.run(cover, x0_reps(N1)[0])[1]["kappa"])
+        times = np.array(times)
+        print(f"pattern {pat}: {len(lst)} covers, sampled {len(picks)}: per cover (four base points) "
+              f"mean {times.mean():.2f}s, median {np.median(times):.2f}s, max {times.max():.2f}s, "
+              f"kappa {sorted(set(kappas))}; projected {len(lst) * times.mean() / 3600:.2f} CPU-h")
+        out["patterns"][pat] = {"covers": len(lst), "sampled": len(picks), "seconds": times.tolist(),
+                                "kappa": kappas, "projected_s": float(len(lst) * times.mean())}
+    out["hits"] = rec["hits"]
+    out["coord_solution_hist"] = rec["coord_solution_hist"]
+    print(f"{rec['matched']} matched, {rec['refused']} refused, {len(rec['hits'])} hits; "
+          f"projected total {sum(v['projected_s'] for v in out['patterns'].values()) / 3600:.2f} CPU-h")
+    os.makedirs(RESULTS, exist_ok=True)
+    with open(os.path.join(RESULTS, "degenerate_sample.json"), "w") as f:
+        json.dump(out, f)
     return 0
 
 
@@ -450,10 +564,15 @@ def main(argv):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("partition")
-    p.add_argument("--target-s", type=float, default=1800.0)
+    p.add_argument("--target-s", type=float, default=600.0)
     p.add_argument("--floor-s", type=float, default=0.05)
-    p.add_argument("--k-s", type=float, default=8.0, help="kernel seconds per pair at M = 1000")
+    p.add_argument("--k-s", type=float, default=8.0, help="kernel seconds per pair at M = 1000 (no census)")
+    p.add_argument("--match-ms", type=float, default=1.4, help="matcher milliseconds per cover (census)")
+    p.add_argument("--no-census", action="store_true", help="ignore results/kernel_census.json")
     p.set_defaults(fn=partition)
+    p = sub.add_parser("census")
+    p.add_argument("--verbose", action="store_true")
+    p.set_defaults(fn=census)
     p = sub.add_parser("run")
     p.add_argument("batch", type=int)
     p.add_argument("--force", action="store_true")
@@ -463,6 +582,8 @@ def main(argv):
     p = sub.add_parser("control-witness")
     p.add_argument("--path", default="bounds/qubit_H-m6-upper-6.json")
     p.add_argument("--distinct-only", action="store_true", help="skip bases with a repeated state")
+    p.add_argument("--repeated-only", action="store_true", help="run only the bases with a repeated state")
+    p.add_argument("--base", type=int, default=None, help="run only the k-th selected base (0-based)")
     p.add_argument("--verbose", action="store_true")
     p.set_defaults(fn=control_witness)
     p = sub.add_parser("control-m4")
@@ -471,8 +592,13 @@ def main(argv):
     p = sub.add_parser("sample")
     p.add_argument("--count", type=int, default=40)
     p.add_argument("--pivot", type=int, default=0)
+    p.add_argument("--reference", action="store_true", help="force the Python matcher")
+    p.add_argument("--out", default=None, help="result file name under results/")
     p.set_defaults(fn=sample)
+    p = sub.add_parser("fixture")
+    p.set_defaults(fn=fixture)
     p = sub.add_parser("degenerate")
+    p.add_argument("--sample", type=int, default=0, help="time N covers of each multiplicity pattern")
     p.set_defaults(fn=degenerate)
     args = ap.parse_args(argv[1:])
     os.nice(19)

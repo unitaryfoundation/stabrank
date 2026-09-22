@@ -182,12 +182,23 @@ def _groups_by_key(keys):
     return [order[s:e] for s, e in zip(starts, ends) if e - s >= 2]
 
 
+def _native_cover5():
+    """The compiled 5-cover pair kernel from stabrank_core, or None."""
+    if os.environ.get("STABRANK_NO_NATIVE"):
+        return None
+    try:
+        from stabrank.stabrank_core import cover5_pair
+    except ImportError:
+        return None
+    return cover5_pair
+
+
 class CoverEnumerator:
     """Full r-covers of psi^n (r = 3, 4, 5) over the n-qubit dictionary, one
     per orbit of the unitary symmetry group, modulo P1 with exact re-checks.
     """
 
-    def __init__(self, n, D=None, verbose=False, seed=17):
+    def __init__(self, n, D=None, verbose=False, seed=17, native=True):
         self.n = n
         self.D = dictionary(2, n) if D is None else D
         self.N = self.D.shape[1]
@@ -200,9 +211,11 @@ class CoverEnumerator:
         reps, info = symmetry_orbit_reps("qubit_H", n, self.D, antiunitary=False)
         self.reps, self.info = np.sort(reps), info
         self.rng = np.random.default_rng(seed)
+        self.rng_seed = seed
         self.verbose = verbose
         # quotient by psi (coordinate 0, where psi = cos^n is nonzero)
         self.Q1, _ = _reduce(self.F1, self.U1, self.psi1)      # (N, dim - 1)
+        self.native_cover5 = _native_cover5() if native else None
 
     def log(self, s):
         if self.verbose:
@@ -302,9 +315,14 @@ class CoverEnumerator:
     def pair_covers(self, r, i, j, Qi, member_mask, max_run=64):
         """Full r-covers (r = 4, 5) containing the pivot i and the partner j,
         with the other members above j inside member_mask; Qi is the
-        dictionary reduced modulo span(psi, u_i). Returns (set, candidates)."""
+        dictionary reduced modulo span(psi, u_i). Returns (set, candidates).
+        For r = 5 the compiled kernel (cpp/src/cover5.cpp) runs the same
+        search when stabrank_core provides it and STABRANK_NO_NATIVE is not
+        set; this method's own code is the reference."""
         F = self.F1
         found, ncand = set(), 0
+        if r == 5 and self.native_cover5 is not None:
+            return self._pair_covers_native(i, j, member_mask, max_run)
         if not np.any(Qi[j]):
             return found, 0                                    # u_j in span(psi, u_i)
         R, _ = _reduce(F, Qi, Qi[j])                   # mod span(psi, u_i, u_j)
@@ -367,6 +385,23 @@ class CoverEnumerator:
                 if self.is_cover(idx) and self.is_full(idx):
                     found.add(idx)
         return found, ncand
+
+    def _pair_covers_native(self, i, j, member_mask, max_run):
+        """pair_covers(5, ...) through cover5_pair: the kernel decides the span
+        condition mod P2 and the fullness mod both primes; a cover full modulo
+        exactly one prime (a modular accident) is decided here numerically."""
+        idx, flags, ncand, _ = self.native_cover5(
+            self.Q1, self.U1, self.psi1, self.U2, self.psi2, int(i), int(j),
+            np.ascontiguousarray(member_mask, dtype=np.uint8), int(max_run), int(self.rng_seed))
+        found = set()
+        for row, (f1, f2) in zip(np.asarray(idx), np.asarray(flags)):
+            t = tuple(int(x) for x in row)
+            if f1 and f2:
+                found.add(t)
+            elif f1 or f2:
+                if self.is_full(t):
+                    found.add(t)
+        return found, int(ncand)
 
     def in_span(self, idx):
         """Dictionary states in the span of the states `idx` (mod P1, then
@@ -1140,6 +1175,17 @@ def _refine_split(D, S, coords, splits, tol=1e-7):
 
 # ------------------------------------------------------------- matching ----
 
+def _native_kernel_class():
+    """The compiled stage A matcher from stabrank_core, or None."""
+    if os.environ.get("STABRANK_NO_NATIVE"):
+        return None
+    try:
+        from stabrank.stabrank_core import SliceMatchKernel
+    except ImportError:
+        return None
+    return SliceMatchKernel
+
+
 class SliceMatcher:
     """Every decomposition of psi^{n1 + n2} with a given base slice at a
     given base point. The multiset cover is split into its distinct states;
@@ -1152,13 +1198,51 @@ class SliceMatcher:
     reconstructed from the residuals; every hit is confirmed against
     psi^{n1 + n2}."""
 
-    def __init__(self, enum, n1, verbose=False, seed=29):
+    def __init__(self, enum, n1, verbose=False, seed=29, native=True):
         self.E = enum
         self.n1, self.n2 = n1, enum.n
         self.F1, self.F2 = enum.F1, enum.F2
         self.verbose = verbose
         self.rng = np.random.default_rng(seed)
         self.cache = {}
+        # the compiled stage A kernel (cpp/src/slice_match.cpp) for distinct,
+        # independent base states; STABRANK_NO_NATIVE=1 or native=False keeps
+        # everything in this module, which stays the reference
+        self.native = None
+        cls = _native_kernel_class() if native else None
+        if cls is not None:
+            self.native = cls(np.ascontiguousarray(enum.codes, dtype=np.int8), n1,
+                              self.target_slices(self.F1, enum.psi1), self.target_slices(self.F2, enum.psi2),
+                              seed)
+
+    def target_slices(self, F, psi_p):
+        """The slices psi^{n1 + n2} restricted to x on the sliced qubits, as
+        the (2^n1, 2^n2) array alpha_x psi^{n2} over F_p."""
+        n1 = self.n1
+        out = np.zeros((1 << n1, len(psi_p)), dtype=np.int64)
+        for x in range(1 << n1):
+            w = bin(x).count("1")
+            alpha = pow(F.cos, n1 - w, F.p) * pow(F.sin, w, F.p) % F.p
+            out[x] = [int(v) * alpha % F.p for v in psi_p]
+        return out
+
+    def _run_native(self, cover, x0, stats):
+        """Stage A through the compiled kernel; None when the kernel declines
+        (repeated or dependent base states, or a refused cover), in which case
+        the caller runs the reference path."""
+        res = self.native.run([int(c) for c in cover], int(x0))
+        if res["status"] != 0:
+            return None
+        hits = []
+        for h in np.asarray(res["hits"]):
+            terms = [np.where(c > 0, FOURTH[(c.astype(np.int64) - 1) % 4], 0) for c in h]
+            hits.append(self.confirm(terms, None, 0))
+        hits = self._dedupe(hits)
+        stats.update(kappa=0, kappa1=0, distinct=len(cover), blocks=[],
+                     coord_solutions=[int(v) for v in res["coord_solutions"]], joined=int(res["joined"]),
+                     types=int(res["types"]), composite_solutions=int(res["composite_solutions"]),
+                     candidates=int(res["candidates"]), hits=len(hits), native=True)
+        return hits, stats
 
     def log(self, msg):
         if self.verbose:
@@ -1184,7 +1268,11 @@ class SliceMatcher:
         stats = {"kappa": None, "kappa1": None, "distinct": 0, "blocks": [], "coord_solutions": [],
                  "joined": 0, "types": 0, "composite_solutions": 0, "candidates": 0,
                  "zero_coefficient": 0, "split_pruned": 0, "reconstructions": 0, "hits": 0,
-                 "refused": False}
+                 "refused": False, "native": False}
+        if self.native is not None and len(set(cover)) == len(cover):
+            out = self._run_native(cover, x0, stats)
+            if out is not None:
+                return out
         distinct = sorted(set(cover))
         mult = {u: cover.count(u) for u in distinct}
         fam = Family.from_cover(self.E, distinct)

@@ -2,13 +2,17 @@
 
 Status (2026-09-21). Not run to completion, and not certifiable in its
 present form. The enumeration and matching machinery exists
-(`verify_challenge/slice_cover.py`, `research/h6_rank5/driver.py`), both
-positive controls pass (section 5: the rank-4 decompositions of |H>^4 from
-the full 4-covers of |H>^3, and the rank-6 witness from its own base
-slices with distinct states; the repeated-state bases of the witness have
-not finished), the per-cover cost is measured (section 4) and the full
-5-cover run is projected at 100 to 400 CPU-hours in the present Python,
-far outside the local budget. The
+(`verify_challenge/slice_cover.py`, `research/h6_rank5/driver.py`, with
+the two hot paths compiled in `cpp/src/cover5.cpp` and
+`cpp/src/slice_match.cpp`), both positive controls pass on every base
+(section 5: the rank-4 decompositions of |H>^4 from the full 4-covers of
+|H>^3, and the rank-6 witness from all four of its all-visible bases,
+distinct and repeated), the 5-cover enumeration has been run to completion
+(5,939,465 full covers, section 3) and every stage's per-cover cost is
+measured (section 4): stage A is 2.4 CPU-hours, the degenerate stages B
+and C about 34 CPU-hours in the present Python, so the whole exclusion is
+about 36 CPU-hours, a few hours of wall time on a 16-vCPU pod. It has not
+been launched. The
 cell stays at 5 <= chi(H^6) <= 6, with the lower bound the projection of
 `bounds/qubit_H-m5-lower-5.json` and the upper bound the QPG cat witness
 `bounds/qubit_H-m6-upper-6.json`. Excluding rank 5 would also settle
@@ -148,7 +152,7 @@ Measured on one low-priority core (load average 40 to 50 on 18 cores):
 |---|----------------------|-------------|------------|-------|
 | 3 | 2                    | 2           | 3,850      | 0.3 s |
 | 4 | 3,460                | 2,406       | 1,617,832  | 93 s  |
-| 5 | >= 1,239,946 after pivots 0 to 3 of 48 | not computed | 36,597,459 | 3227 s (killed) |
+| 5 | >= 1,239,946 after pivots 0 to 3 of 48 | not computed | 36,597,459 | 3227 s (killed; the compiled count is below) |
 
 Cross-check at r = 3 and 4 against `slice_lift.all_decompositions`
 (numeric, independent code): identical classes at r = 3; at r = 4 the
@@ -165,12 +169,30 @@ and the reference is the superset. The check is
 `is_full` on each of the 271 and `is_cover` on their 3-subsets, both mod
 2013265921 and in floating point.
 
-The r = 5 count is the problem: at least 1.24 million full 5-covers after
-four of 48 pivots (the first pivots have the largest member sets, so the
-total is perhaps 3 to 10 million tuples), and 36.6 million modular
-candidates re-decided one by one in Python at about 90 microseconds each.
-Per pivot pair the residue array costs about 20 ms in numpy for M near
-1000; the exact re-checks dominate.
+In Python the r = 5 count was out of reach: 36.6 million modular
+candidates after four pivots, re-decided one by one at about 90
+microseconds each. The same search compiled (`cpp/src/cover5.cpp`, bound
+as `stabrank_core.cover5_pair` and dispatched from
+`CoverEnumerator.pair_covers` unless `STABRANK_NO_NATIVE` is set) decides
+a candidate by row reduction mod 2013265921 in about half a microsecond:
+the span condition by the consistency of the 8 x 6 system, the fullness by
+the dead-coordinate test on its reduced form, the latter mod both primes
+(a cover full modulo exactly one prime, a modular accident that never
+occurred, would be decided numerically in Python). At M near 1000 a pivot
+pair costs 0.2 s (0.21 s (M/1000)^2 fitted over 14 pairs), against 44 s in
+Python; the cover sets agree pair by pair (`tests/test_slice_cover.py`,
+and `cpp/tests/test_cover5.cpp` against a brute force on a planted
+instance). The complete census (`driver.py census`, 459 s on one core,
+`results/kernel_census.json`):
+
+| r | full covers (tuples) | candidates  | time  |
+|---|----------------------|-------------|-------|
+| 5 | 5,939,465            | 835,507,077 | 459 s |
+
+The count is one tuple per G_3 orbit as far as the pivot and partner
+reductions go (pivot one per orbit, partner minimal in its stabilizer
+orbit, members in orbits at or above the pivot's); the residual symmetry
+among the last three members is not quotiented.
 
 ## 4. Matching, and its cost
 
@@ -217,34 +239,65 @@ that is not a coordinate direction), and each hit is confirmed against
 psi_6 in floating point and mod 2013265921 (`confirm`: residual, rank,
 independence, nonzero coefficients).
 
-Measured cost (`driver.py sample --count 40`, one core at nice 19 on a
-machine with load average 18 on 18 cores): 40 full 5-covers from the first
-pivot, four base points each, 160 (cover, x_0) runs, no hit. Per cover
-(all four base points) mean 0.110 s, median 0.019 s, maximum 0.94 s. The
-first coordinate slice has no solution in 146 of the 160 runs; the rest
-have solution counts (1, 1, 1) on the three coordinate slices (6 runs),
-(2, 4, 8) (4 runs) and (9, 81, 729) (4 runs, the expensive ones). The
-kernel produced the 40 covers in 43 s.
+Measured cost in Python (`driver.py sample --count 40 --reference`, one
+core at nice 19 on a machine with load average 12 to 18 on 18 cores): 40
+full 5-covers from the first pivot, four base points each, 160 (cover,
+x_0) runs, no hit. Per cover (all four base points) mean 0.110 s, median
+0.019 s, maximum 0.94 s. The first coordinate slice has no solution in 146
+of the 160 runs; the rest have solution counts (1, 1, 1) on the three
+coordinate slices (6 runs), (2, 4, 8) (4 runs) and (9, 81, 729) (4 runs,
+the expensive ones).
 
-Degenerate covers (`driver.py degenerate`, 208 s): 26,242 full 5-covers
-whose base states are dependent or repeated, over the two 3-cover classes
-and the 3,460 4-cover classes without further symmetry reduction: 12,390
-with five distinct dependent states, 13,840 with one state repeated
-(3,460 x 4), 6 with a triple, 6 with two pairs. Their per-cover cost was
-not sampled; the dependent ones start with a 1-parameter dense solve
-(about a second for five terms) and the repeated ones with 37 projected
-meet-in-the-middle passes per slice, so a few seconds per cover is the
-expectation, and the whole degenerate list is of order 10 to 30 CPU-hours.
+The compiled matcher (`cpp/src/slice_match.cpp`, bound as
+`stabrank_core.SliceMatchKernel`, dispatched from `SliceMatcher.run` for a
+base of distinct states unless `STABRANK_NO_NATIVE` is set) covers stage
+A: the coefficient family is a
+point, so each coordinate slice is solved once by meet in the middle on a
+fixed random functional mod 65521 (two terms hashed, three probed, every
+collision decided on the whole 8-vector mod 65521 and then mod
+2013265921), the joined states are the product of the three solution
+lists, and the composite slices are solved point by point over the
+structure lemma's code sets with the row consistency of every term
+enforced depth first. It declines (status 2) when the base states are
+dependent modulo either prime, and Python runs the reference path; the
+hits come back as phase codes and are confirmed in floating point and mod
+2013265921 by the same `confirm` as the reference. On the same 160 runs
+(`driver.py sample --count 40`, `results/sample_native.json`): mean 1.4 ms
+per cover, median 0.8 ms, maximum 7 ms, the same solution counts run by
+run and the same (empty) hit set, a factor 79 on the mean and 130 on the
+maximum. The agreement is tested three ways: `tests/test_slice_cover.py`
+compares the two matchers on the 160 sample runs and on the rank-4 bases
+of |H>^4 (where there are hits), and `cpp/tests/test_slice_match.cpp`
+recovers planted five-term decompositions of a random target from their
+base slice, checks every hit exactly mod 2013265921, and replays the 160
+sample runs against the reference's per-run results
+(`cpp/tests/data/h6_rank5_sample.txt`, written by `driver.py fixture`).
 
-Projection for the full run. Stage A matching at the sampled mean of
-0.110 s per cover over the 3 to 10 million full 5-covers the kernel is
-expected to produce (section 3) is 90 to 300 CPU-hours; at the median it
-would be 15 to 50. The kernel itself is 15 to 50 CPU-hours at the measured
-rates (the partition's calibrated estimate is 8.1 CPU-hours over 14,280
-pivot pairs in 17 batches). Stages B and C add the degenerate list above.
-So the full exclusion is 100 to 400 CPU-hours in the present Python, all
-of it per-candidate work that a compiled kernel would cut by one to two
-orders of magnitude.
+Degenerate covers (`driver.py degenerate --sample 12`, 187 s to
+enumerate): 26,242 full 5-covers whose base states are dependent or
+repeated, over the two 3-cover classes and the 3,460 4-cover classes
+without further symmetry reduction: 12,390 with five distinct dependent
+states (kappa = 1), 13,840 with one state repeated (3,460 x 4, kappa = 0),
+6 with a triple, 6 with two pairs. Sampled per-cover cost in Python (the
+compiled matcher declines these), twelve covers per pattern evenly spaced
+through the list, four base points each, no hit
+(`results/degenerate_sample.json`): the dependent covers 8.9 s mean (9.6
+median, 12.5 maximum; every base point starts with a 1-parameter dense
+solve of 39 million pairs), the single-repeat covers 0.82 s mean (0.02
+median, 9.1 maximum), the two-pair covers 9.3 s mean over all six, the
+triple covers 1.0 s mean over all six. Projected: stage B (dependent)
+30.6 CPU-hours, stage C (repeated) 3.2 CPU-hours.
+
+Projection for the full run. The 5-cover enumeration is done (459 s,
+section 3). Stage A matching at 1.4 ms per cover over the 5,939,465 covers
+is 2.3 CPU-hours; `partition.json` now groups the 14,280 pivot pairs by the
+census's covers and seconds per pair (`driver.py partition`, cost per pair
+= kernel seconds + 1.4 ms x covers) into 15 batches of about 600 s, 2.44
+CPU-hours in all. Stages B and C add about 34 CPU-hours in the present
+Python, dominated by the 12,390 dependent covers; a compiled 1-parameter
+dense solve would cut that by roughly the same factor as stage A but has
+not been written. So the whole exclusion is about 36 CPU-hours, of which
+34 are the degenerate list, or about 2.5 hours of wall time on 16 vCPUs.
 
 ## 5. Controls
 
@@ -264,9 +317,10 @@ Control 2, the rank-6 witness `bounds/qubit_H-m6-upper-6.json`
 (`driver.py control-witness`): at every triple S and base point x_0 at
 which all six terms are nonzero, the base is one of four (cover, x_0)
 pairs, each shared by 10 triples: six distinct states of rank 4 at x_0 =
-000 and at 111 (the triples inside qubits 0 to 4), or five distinct states
-of rank 4 with one repeated (the triples containing qubit 5). Every base
-has kappa = 2. On the two distinct bases the control passes: from
+000 and at 111 (the triples inside qubits 0 to 4, kappa = 2), or five
+distinct states of rank 4 with one repeated (the triples containing qubit
+5, kappa = 1 on the distinct states plus the pair block). On the two
+distinct bases the control passes: from
 (1035, 0, 619, 908, 349, 1) at 000 and from (368, 242, 65, 180, 166, 460)
 at 111 the matcher returns exactly one genuine rank-6 decomposition (rank
 6, exact mod 2013265921, all coefficients nonzero, residual 4e-15), and it
@@ -277,32 +331,57 @@ dense solve (80 million hash candidates over the run), the coordinate
 slices then have 4,930, 3,650 and 120,544 solutions, all joined states have
 a pinned family, and the composite stage over 240,992 flat-type selections
 leaves the single hit.
-On the repeated bases the matcher is sound but has not finished: the
-projected (span-of-translates) treatment of the pair is weak on this
-witness because several ordinary base states are Pauli translates of the
-repeated state, so the residuals lie in the translate span for structural
-reasons; slice 0 gave 10,192 solutions and 403 states, slice 1 151,861
-solutions and 15,333 states, and the run was stopped at the 9-minute cap
-before slice 2. The split tracking of section 4 was added after that
-measurement and its effect on these bases has not been measured.
+
+On the two repeated bases, (368, 242, 65, 536, 479, 242) at 111 and
+(1035, 0, 619, 622, 20, 0) at 000, the control also passes
+(`--repeated-only`, `results/control_witness_repeated.json`): 1062 s and
+1067 s per base, each returning the witness itself and two further genuine
+rank-6 decompositions of psi_6 with the same base slice (51 and 24 raw
+hits, the rest of rank below 6 or with a zero coefficient, so no
+decomposition is reported twice). The projected (span-of-translates)
+treatment of the pair is weak on this witness because several ordinary
+base states are Pauli translates of the repeated state, so the residuals
+lie in the translate span for structural reasons; without the split
+tracking of section 4 the first two coordinate slices gave 403 and 15,333
+states and the run was stopped at 9 minutes. With it the same slices give
+131 and 2,678 states (10,192 and 138,744 solutions), the third 1,862,920
+solutions and 45,469 joined states, 315,696 states are dropped by the
+split tracking and 1,744,173 by a dead coefficient, and the composite
+stage over 49,689 flat-type selections runs 296 block reconstructions.
 
 Gap (a), repeated base states, and gap (b), dependent base states, of the
-earlier revision are implemented (blocks, coefficient family). What remains
-on the control side is the repeated-base run above.
+earlier revision are implemented (blocks, coefficient family) and both
+controls now pass on every base. Whether a rank-5 decomposition can have a
+repeated base state at an all-visible base point was not settled: minimal
+decompositions can in general (control 1 recovers rank-4 decompositions
+of |H>^4 from the repeated bases (3, 3, 352, 912) and (75, 353, 749, 749)
+along one qubit), so an argument would have to use property P, and none
+was found; the repeated covers stay in the exclusion as stage C.
 
 ## 6. What would close it
 
-1. Run `control-witness` without `--distinct-only` to completion on the two
-   repeated bases (or bound the state growth there, for instance by solving
-   two coordinate slices jointly for the ordinary terms).
-2. Move the 5-cover kernel's candidate decision into compiled code (rank
-   pairs mod 2013265921 as in `research/t3_rank7/batch.py`) and batch the
-   matcher's option tables per base state (they depend only on u_i).
-3. Add the degenerate covers (`degenerate_covers`) to the partition as
-   stages B and C, run the partition on idle cores, aggregate, and write the
-   certificate on the attested tier (`bounds/T3-m3-lower-8.json` pattern)
-   if the total exceeds the 3600 s budget, which at the measured rates it
-   will.
+1. Add the degenerate covers (`degenerate_covers`, 26,242 multisets) to
+   the partition as stages B and C, as batches of the reference matcher,
+   and record their results like the stage A batches (`results/batch_*.json`
+   with counts, the solution histogram and any hit).
+2. Run the 15 stage A batches and the stage B and C batches on a 16-vCPU
+   pod (`driver.py run B` is resumable, one process per batch, about 2.5
+   hours of wall time at the measured rates), aggregate with `status`, and
+   confirm any hit as a rank-5 decomposition of psi_6 (there should be
+   none if chi(H^6) = 6).
+3. Write the certificate on the attested tier (`bounds/T3-m3-lower-8.json`
+   pattern), since 36 CPU-hours exceeds the 3600 s budget, declaring the
+   dependency on PR #87's property P tables or re-running them (501 s).
+   The certificate must also state that the compiled kernels were used and
+   that their agreement with the Python reference was checked on the
+   sample, the controls and the planted instances of the C++ tests only;
+   a full-run cross-check of a random batch with `STABRANK_NO_NATIVE=1` is
+   cheap (a batch is 600 s native, so about 13 hours in Python for the
+   stage A part of one batch, or a few pairs of it) and should be part of
+   the record.
+4. Optional, if stage B's 30 CPU-hours matter: compile the 1-parameter
+   dense solve (the 2 x 2 Laplace features and the 39-million-pair product)
+   the way stage A was compiled.
 
 Everything above depends on PR #87's property P only through the lemma of
 section 2 (an all-visible slice exists); the matcher itself does not use
