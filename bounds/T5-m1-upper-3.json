@@ -65,5 +65,9 @@
       "hardware": "Apple silicon laptop, one core"
     }
   },
-  "notes": "|T5> = 5^(-1/2) sum_x w5^(x^3) |x> is a combination of |0>, |1> and the full-support state 5^(-1/2) sum_y w5^(4y^2 + 4y) |y>, with the coefficients above recovered exactly by fit_coeffs.fit from the normal equations and the identity checked symbolically by the verifier. The pivot search lists five rank-3 decompositions over the 30 single-ququint states in all. With the exact rank-2 exclusion of cert_t5_m1_rank2.py this settles chi(|T5>) = 3, which is below the local dimension, unlike T3 where chi(|T3>) = 3 = p. The implied gamma log_5(3) = 0.6826 is the single-copy product bound; no exponent has been published for any p = 5 state, so it is the baseline the orbit is measured against."
+  "notes": "|T5> = 5^(-1/2) sum_x w5^(x^3) |x> is a combination of |0>, |1> and the full-support state 5^(-1/2) sum_y w5^(4y^2 + 4y) |y>, with the coefficients above recovered exactly by fit_coeffs.fit from the normal equations and the identity checked symbolically by the verifier. The pivot search lists five rank-3 decompositions over the 30 single-ququint states in all. With the exact rank-2 exclusion of cert_t5_m1_rank2.py this settles chi(|T5>) = 3, which is below the local dimension, unlike T3 where chi(|T3>) = 3 = p. The implied gamma log_5(3) = 0.6826 is the single-copy product bound; no exponent has been published for any p = 5 state, so it is the baseline the orbit is measured against.",
+  "lean": {
+    "module": "LeanProofs.T5M1StabRank",
+    "theorem": "t5_m1_stabRankP_le_three"
+  }
 }
