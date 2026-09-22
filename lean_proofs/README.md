@@ -17,6 +17,7 @@ mapping is:
 | Lower bounds S m=1, H m=2, T m=2, N m=2, H_3 m=2 (bound files) | `Stabilizer/RankOne.lean`, `StrangeM1Lower.lean`, `QubitM2Lower.lean`, `M2Lower.lean` |
 | H_3 m=4, T_3 m=3,4, qubit H-type m=5,6,7,8, qubit T-type m=5,6 (bound-file witnesses, reflection route) | `Stabilizer/Reflect.lean`, `ReflectBases.lean`, `ReflectQubit.lean`, `ReflectQutrit.lean`, `H3M4StabRank.lean`, `T3M3StabRank.lean`, `T3M4StabRank.lean`, `QubitHM5StabRank.lean`, `QubitHM6StabRank.lean`, `QubitHM7StabRank.lean`, `QubitHM8StabRank.lean`, `QubitTM5StabRank.lean`, `QubitTM6StabRank.lean` |
 | H_3 m=4, T_3 m=3,4, qubit H-type m=5,6,7,8,10, qubit T-type m=5,6 (bound-file witnesses, reflection route) | `Stabilizer/Reflect.lean`, `Stabilizer/Chunks.lean`, `ReflectBases.lean`, `ReflectQubit.lean`, `ReflectQutrit.lean`, `H3M4StabRank.lean`, `T3M3StabRank.lean`, `T3M4StabRank.lean`, `QubitHM5StabRank.lean`, `QubitHM6StabRank.lean`, `QubitHM7StabRank.lean`, `QubitHM8StabRank.lean`, `QubitHM10Data.lean`, `QubitHM10Key0.lean` to `QubitHM10Key3.lean`, `QubitHM10StabRank.lean`, `QubitTM5StabRank.lean`, `QubitTM6StabRank.lean` |
+| H_3 m=4, T_3 m=3,4,5, qubit H-type m=5,6,7,8,10, qubit T-type m=5,6 (bound-file witnesses, reflection route) | `Stabilizer/Reflect.lean`, `Stabilizer/Chunks.lean`, `ReflectBases.lean`, `ReflectQubit.lean`, `ReflectQutrit.lean`, `H3M4StabRank.lean`, `T3M3StabRank.lean`, `T3M4StabRank.lean`, `T3M5StabRank.lean`, `QubitHM5StabRank.lean`, `QubitHM6StabRank.lean`, `QubitHM7StabRank.lean`, `QubitHM8StabRank.lean`, `QubitHM10Data.lean`, `QubitHM10Key0.lean` to `QubitHM10Key3.lean`, `QubitHM10StabRank.lean`, `QubitTM5StabRank.lean`, `QubitTM6StabRank.lean` |
 
 ## What's here
 
@@ -472,8 +473,9 @@ mapping is:
   algebra with variable exponents is in `h_alg`, `t_alg`, `h3_alg`.
 
 - `LeanProofs/H3M4StabRank.lean`, `T3M3StabRank.lean`, `T3M4StabRank.lean`,
-  `QubitHM5StabRank.lean`, `QubitHM6StabRank.lean`, `QubitHM7StabRank.lean`,
-  `QubitHM8StabRank.lean`, `QubitTM5StabRank.lean`, `QubitTM6StabRank.lean`
+  `T3M5StabRank.lean`, `QubitHM5StabRank.lean`, `QubitHM6StabRank.lean`,
+  `QubitHM7StabRank.lean`, `QubitHM8StabRank.lean`, `QubitTM5StabRank.lean`,
+  `QubitTM6StabRank.lean`
   — generated from the bound files by `tools/gen_witness_lean.py
   bounds/<cell>.json`; do not edit by hand. Each states the terms of the
   witness as `stabTerm`s with their pivot columns (`IsStabP` by
@@ -484,7 +486,8 @@ mapping is:
   `decide +kernel` at every index (`key`), and the assembly `target_eq` that
   feeds `stabRankP_le_of_terms`. The qutrit cells also restate the bound
   against `IsStab` through `stabRank_eq_stabRankP`. Build times on a laptop:
-  6 s to 16 s for `p^n ≤ 128` indices, 42 s at 256. The generator checks the
+  6 s to 16 s for `p^n ≤ 128` indices, 42 s at 256 (twelve terms), 46 s at
+  243 (eighteen terms). The generator checks the
   integer identity itself before writing, and the coefficient expressions of
   the bound files (nested radicals such as `√(1/2 - √2/4) = sin(π/8)`) are
   recognised in the ring by dividing the radicand by `sin²` and taking the

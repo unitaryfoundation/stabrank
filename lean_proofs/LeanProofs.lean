@@ -54,3 +54,4 @@ import LeanProofs.QubitHM7StabRank
 import LeanProofs.QubitHM8StabRank
 import LeanProofs.Stabilizer.Chunks
 import LeanProofs.QubitHM10StabRank
+import LeanProofs.T3M5StabRank
