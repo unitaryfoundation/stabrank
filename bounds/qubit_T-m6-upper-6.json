@@ -14,7 +14,11 @@
       "vprusso"
     ]
   },
-  "notes": "rank 5 plateaus at sqrt(5/6) sin(pi/12) Witness: the products of the three m=4 terms with the two m=2 terms, verified here in exact arithmetic on all 64 amplitudes.",
+  "notes": "rank 5 plateaus at sqrt(5/6) sin(pi/12) Witness: the products of the three m=4 terms with the two m=2 terms, verified here in exact arithmetic on all 64 amplitudes. Now at the lean tier: qubit_t_m6_stabRankP_le_six in LeanProofs.QubitTM6StabRank proves stabRankP 2 |qubit_T>^6 <= 6 against IsStabP 2 from this witness, the pointwise identity being decided by the kernel on integer coordinate vectors (see lean_proofs/LeanProofs/Stabilizer/Reflect.lean).",
+  "lean": {
+    "module": "LeanProofs.QubitTM6StabRank",
+    "theorem": "qubit_t_m6_stabRankP_le_six"
+  },
   "witness": {
     "terms": [
       {
