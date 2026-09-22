@@ -1676,6 +1676,38 @@
    "attested": null
   },
   {
+   "slug": "qubit_H-m10-lower-6",
+   "orbit": "qubit_H",
+   "m": 10,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "attested",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-22",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "projection monotonicity applied to the attested exact rank-5 exclusion at m=6",
+   "reference": "stabrank research/h6_rank5",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond the m=6 certificate, which this cell re-runs"
+   },
+   "budget_s": 3600,
+   "attested": {
+    "batches": "research/h6_rank5/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 73.4,
+    "hardware": "187 batches on a RunPod CPU pod (16 vCPU AMD EPYC 4564P, shared host at load 30 to 45, ten batches in parallel, nice 19), 2026-09-22 01:37 to 08:31 UTC; batches 14, 15, and 173 on an Apple silicon laptop (one core, nice 19) during the pipeline test on 2026-09-21; the aggregate's two seeded re-runs (batches 11 and 148) on the pod",
+    "note": "The exclusion of every rank-5 decomposition of |H>^6 lives in the 190 stored batch outputs under research/h6_rank5/results/ (15 stage A batches over the 5,939,465 full 5-covers of |H>^3 with distinct independent base states, 158 stage B batches over the 12,390 dependent covers, 17 stage C batches over the 13,852 covers with a repeated state), each matching its covers at the four base points and re-deciding every candidate mod 2013265921 and numerically. The certificate checks the partition against the enumerator, re-enumerates the degenerate covers, verifies the hashes and geometry of every output, re-decides every stored hit, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/h6_rank5/batch.py, which regenerates any batch (`batch.py K`, 73.4 CPU-hours for all 190 on the pod: stage A 2.8, stage B 69.6, stage C 1.0).",
+    "total": 190
+   }
+  },
+  {
    "slug": "qubit_H-m6-lower-6",
    "orbit": "qubit_H",
    "m": 6,
@@ -1696,6 +1728,70 @@
     "wall_clock_hours": 6.9,
     "runs": 1,
     "hardware": "187 batches on a RunPod CPU pod (16 vCPU AMD EPYC 4564P, shared host at load 30 to 45, ten batches in parallel, nice 19), 2026-09-22 01:37 to 08:31 UTC; batches 14, 15, and 173 on an Apple silicon laptop (one core, nice 19) during the pipeline test on 2026-09-21; the aggregate's two seeded re-runs (batches 11 and 148) on the pod"
+   },
+   "budget_s": 3600,
+   "attested": {
+    "batches": "research/h6_rank5/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 73.4,
+    "hardware": "187 batches on a RunPod CPU pod (16 vCPU AMD EPYC 4564P, shared host at load 30 to 45, ten batches in parallel, nice 19), 2026-09-22 01:37 to 08:31 UTC; batches 14, 15, and 173 on an Apple silicon laptop (one core, nice 19) during the pipeline test on 2026-09-21; the aggregate's two seeded re-runs (batches 11 and 148) on the pod",
+    "note": "The exclusion of every rank-5 decomposition of |H>^6 lives in the 190 stored batch outputs under research/h6_rank5/results/ (15 stage A batches over the 5,939,465 full 5-covers of |H>^3 with distinct independent base states, 158 stage B batches over the 12,390 dependent covers, 17 stage C batches over the 13,852 covers with a repeated state), each matching its covers at the four base points and re-deciding every candidate mod 2013265921 and numerically. The certificate checks the partition against the enumerator, re-enumerates the degenerate covers, verifies the hashes and geometry of every output, re-decides every stored hit, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/h6_rank5/batch.py, which regenerates any batch (`batch.py K`, 73.4 CPU-hours for all 190 on the pod: stage A 2.8, stage B 69.6, stage C 1.0).",
+    "total": 190
+   }
+  },
+  {
+   "slug": "qubit_H-m7-lower-6",
+   "orbit": "qubit_H",
+   "m": 7,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "attested",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-22",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "projection monotonicity applied to the attested exact rank-5 exclusion at m=6",
+   "reference": "stabrank research/h6_rank5",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond the m=6 certificate, which this cell re-runs"
+   },
+   "budget_s": 3600,
+   "attested": {
+    "batches": "research/h6_rank5/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 73.4,
+    "hardware": "187 batches on a RunPod CPU pod (16 vCPU AMD EPYC 4564P, shared host at load 30 to 45, ten batches in parallel, nice 19), 2026-09-22 01:37 to 08:31 UTC; batches 14, 15, and 173 on an Apple silicon laptop (one core, nice 19) during the pipeline test on 2026-09-21; the aggregate's two seeded re-runs (batches 11 and 148) on the pod",
+    "note": "The exclusion of every rank-5 decomposition of |H>^6 lives in the 190 stored batch outputs under research/h6_rank5/results/ (15 stage A batches over the 5,939,465 full 5-covers of |H>^3 with distinct independent base states, 158 stage B batches over the 12,390 dependent covers, 17 stage C batches over the 13,852 covers with a repeated state), each matching its covers at the four base points and re-deciding every candidate mod 2013265921 and numerically. The certificate checks the partition against the enumerator, re-enumerates the degenerate covers, verifies the hashes and geometry of every output, re-decides every stored hit, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/h6_rank5/batch.py, which regenerates any batch (`batch.py K`, 73.4 CPU-hours for all 190 on the pod: stage A 2.8, stage B 69.6, stage C 1.0).",
+    "total": 190
+   }
+  },
+  {
+   "slug": "qubit_H-m8-lower-6",
+   "orbit": "qubit_H",
+   "m": 8,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "attested",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-22",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "projection monotonicity applied to the attested exact rank-5 exclusion at m=6",
+   "reference": "stabrank research/h6_rank5",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond the m=6 certificate, which this cell re-runs"
    },
    "budget_s": 3600,
    "attested": {
