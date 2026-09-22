@@ -74,10 +74,12 @@ jobs:
 
       - name: Build Lean library
         uses: leanprover/lean-action@v1
+        # The kernel checks of the witness modules hold a few GB each; keep
+        # at most two of them in flight on the runner (lake has no --jobs
+        # flag in this version; it schedules on Lean's thread pool).
+        env:
+          LEAN_NUM_THREADS: "2"
         with:
           lake-package-directory: lean_proofs
           use-mathlib-cache: true
           test: false
-          # The kernel checks of the witness modules hold a few GB each; keep
-          # at most two of them in flight on the runner.
-          build-args: "--jobs=2"
