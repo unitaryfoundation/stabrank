@@ -16,7 +16,10 @@
 #include "stabrank/symmetric_engine.hpp"
 #include "stabrank/pivot_pair.hpp"
 #include "stabrank/t3_scan.hpp"
+#include "stabrank/slice_match.hpp"
+#include "stabrank/cover5.hpp"
 
+#include <algorithm>
 #include <complex>
 #include <cstdint>
 #include <cmath>
@@ -448,6 +451,91 @@ NB_MODULE(stabrank_core, m) {
           "spur_buf"_a, "spur_len"_a, "spur_meta"_a, "over_meta"_a, "counters"_a,
           "One three-pivot scan of research/t3_rank7/batch.py with the exact in-place decision; "
           "same arguments and output buffers as the numba kernel scan_pairs.");
+
+
+    // --- slice_match_kernel ---
+    nb::class_<stabrank::SliceMatchKernel>(m, "SliceMatchKernel",
+        "Compiled stage A of verify_challenge/slice_cover.SliceMatcher.run: every decomposition "
+        "of the target with a given base slice of distinct, independent states at a given base "
+        "point, decided mod 65521 and re-decided mod 2013265921 (cpp/src/slice_match.cpp).")
+        .def("__init__",
+             [](stabrank::SliceMatchKernel* self,
+                nb::ndarray<const int8_t, nb::ndim<2>, nb::c_contig> codes, int n1,
+                nb::ndarray<const int64_t, nb::ndim<2>, nb::c_contig> target1,
+                nb::ndarray<const int64_t, nb::ndim<2>, nb::c_contig> target2, uint64_t seed) {
+                 const size_t dim = codes.shape(1);
+                 int n2 = 0;
+                 while ((size_t{1} << n2) < dim) ++n2;
+                 if ((size_t{1} << n2) != dim) throw nb::value_error("codes: the row length must be a power of two");
+                 if (target1.shape(0) != (size_t{1} << n1) || target1.shape(1) != dim
+                     || target2.shape(0) != target1.shape(0) || target2.shape(1) != dim)
+                     throw nb::value_error("target arrays must be 2^n1 x dim");
+                 new (self) stabrank::SliceMatchKernel(codes.data(), static_cast<int64_t>(codes.shape(0)), n2, n1,
+                                                       target1.data(), target2.data(), seed);
+             },
+             "codes"_a, "n1"_a, "target1"_a, "target2"_a, "seed"_a = 11)
+        .def("run",
+             [](stabrank::SliceMatchKernel& self, const std::vector<int>& cover, int x0) {
+                 auto res = self.run(cover, x0);
+                 nb::dict out;
+                 out["status"] = res.status;
+                 out["coord_solutions"] = res.coord_solutions;
+                 out["joined"] = res.joined;
+                 out["types"] = res.types;
+                 out["composite_solutions"] = res.composite_solutions;
+                 out["candidates"] = res.candidates;
+                 out["coeffs2"] = res.coeffs2;
+                 const size_t r = cover.size();
+                 const size_t T = (size_t{1} << self.n1()) * (size_t{1} << self.n2());
+                 const size_t nh = static_cast<size_t>(res.nhits);
+                 auto* data = new int8_t[std::max<size_t>(1, nh * r * T)];
+                 std::copy(res.hits.begin(), res.hits.end(), data);
+                 nb::capsule owner(data, [](void* p) noexcept { delete[] static_cast<int8_t*>(p); });
+                 out["hits"] = nb::ndarray<nb::numpy, int8_t, nb::ndim<3>>(data, {nh, r, T}, owner);
+                 return out;
+             },
+             "cover"_a, "x0"_a,
+             "status (0 complete, 1 refused, 2 dependent base: use the Python matcher), the stats "
+             "and the hits as (nhits, r, 2^n1 dim) phase codes in the term layout x * dim + y.");
+
+
+    // --- cover5_pair ---
+    m.def("cover5_pair",
+          [](nb::ndarray<const int64_t, nb::ndim<2>, nb::c_contig> Q,
+             nb::ndarray<const int64_t, nb::ndim<2>, nb::c_contig> U1,
+             nb::ndarray<const int64_t, nb::ndim<1>, nb::c_contig> psi1,
+             nb::ndarray<const int64_t, nb::ndim<2>, nb::c_contig> U2,
+             nb::ndarray<const int64_t, nb::ndim<1>, nb::c_contig> psi2,
+             int64_t i, int64_t j,
+             nb::ndarray<const uint8_t, nb::ndim<1>, nb::c_contig> members,
+             int64_t max_run, uint64_t seed) {
+              const int64_t N = static_cast<int64_t>(Q.shape(0));
+              if (static_cast<int64_t>(U1.shape(0)) != N || static_cast<int64_t>(U2.shape(0)) != N
+                  || static_cast<int64_t>(members.shape(0)) != N || U1.shape(1) != U2.shape(1)
+                  || psi1.shape(0) != U1.shape(1) || psi2.shape(0) != U2.shape(1))
+                  throw nb::value_error("cover5_pair: array shapes disagree");
+              stabrank::Cover5Inputs in{Q.data(), N, static_cast<int64_t>(Q.shape(1)), U1.data(), psi1.data(),
+                                        U2.data(), psi2.data(), static_cast<int64_t>(U1.shape(1)), i, j,
+                                        members.data(), max_run, seed};
+              auto res = stabrank::cover5_pair(in);
+              const size_t n = res.covers.size();
+              auto* idx = new int64_t[std::max<size_t>(1, n * 5)];
+              auto* flags = new int8_t[std::max<size_t>(1, n * 2)];
+              for (size_t k = 0; k < n; ++k) {
+                  for (int t = 0; t < 5; ++t) idx[k * 5 + t] = res.covers[k].idx[t];
+                  flags[k * 2] = res.covers[k].full1;
+                  flags[k * 2 + 1] = res.covers[k].full2;
+              }
+              nb::capsule o1(idx, [](void* p) noexcept { delete[] static_cast<int64_t*>(p); });
+              nb::capsule o2(flags, [](void* p) noexcept { delete[] static_cast<int8_t*>(p); });
+              return nb::make_tuple(nb::ndarray<nb::numpy, int64_t, nb::ndim<2>>(idx, {n, 5}, o1),
+                                    nb::ndarray<nb::numpy, int8_t, nb::ndim<2>>(flags, {n, 2}, o2),
+                                    res.candidates, res.members);
+          },
+          "Q"_a, "U1"_a, "psi1"_a, "U2"_a, "psi2"_a, "i"_a, "j"_a, "members"_a, "max_run"_a = 64, "seed"_a = 17,
+          "slice_cover.CoverEnumerator.pair_covers for r = 5 (cpp/src/cover5.cpp): the sorted 5-sets "
+          "through the pivot i and partner j whose span contains the target mod 2013265921, their "
+          "fullness flags mod 65521 and mod 2013265921, the candidate count and the member count.");
 
     m.def("max_stabilizer_fidelity",
         [](nb::ndarray<std::complex<double>, nb::ndim<1>> target_arr,

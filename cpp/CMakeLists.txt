@@ -45,6 +45,8 @@ add_library(stabrank_core_lib STATIC
   src/symmetric_engine.cpp
   src/pivot_pair.cpp
   src/t3_scan.cpp
+  src/slice_match.cpp
+  src/cover5.cpp
 )
 
 target_include_directories(stabrank_core_lib PUBLIC
@@ -70,6 +72,12 @@ if(BUILD_TESTING)
     tests/test_kernel_properties.cpp
     tests/test_pivot_pair.cpp
     tests/test_t3_scan.cpp
+    tests/test_slice_match.cpp
+    tests/test_cover5.cpp
+  )
+
+  target_compile_definitions(stabrank_tests PRIVATE
+    STABRANK_TEST_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/tests/data"
   )
 
   target_link_libraries(stabrank_tests PRIVATE
