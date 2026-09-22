@@ -48,3 +48,4 @@ import LeanProofs.T3M3StabRank
 import LeanProofs.T3M4StabRank
 import LeanProofs.QubitHM5StabRank
 import LeanProofs.QubitHM6StabRank
+import LeanProofs.QubitTM5StabRank
