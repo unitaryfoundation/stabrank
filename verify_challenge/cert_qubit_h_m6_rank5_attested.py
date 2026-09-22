@@ -36,6 +36,9 @@ its own base slices, research/h6_rank5/results/control_*.json) are part of
 the record but are not re-run here.
 
 Printed claims: CERTIFIED chi(qubit_H^6) >= 6
+                CERTIFIED chi(qubit_H^7) >= 6 (projection monotonicity)
+                CERTIFIED chi(qubit_H^8) >= 6 (projection monotonicity)
+                CERTIFIED chi(qubit_H^10) >= 6 (projection monotonicity)
 """
 
 import os
@@ -61,6 +64,12 @@ def main():
     if proc.returncode != 0 or CLAIM not in lines:
         print("aggregation did not certify", file=sys.stderr)
         return 1
+    # Projection monotonicity (Lean: stabRankP_powVecP_mono in
+    # lean_proofs/LeanProofs/Stabilizer/SliceP.lean): both amplitudes of |H>
+    # are nonzero, so slicing carries a rank-r decomposition of H^(m+1) to one
+    # of H^m, and the m=6 exclusion bounds every cell with m >= 6.
+    for m in (7, 8, 10):
+        print(f"CERTIFIED chi(qubit_H^{m}) >= 6")
     return 0
 
 

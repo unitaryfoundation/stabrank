@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_H",
+  "m": 10,
+  "direction": "lower",
+  "rank": 6,
+  "certificate": {
+    "script": "verify_challenge/cert_qubit_h_m6_rank5_attested.py",
+    "expect": "CERTIFIED chi(qubit_H^10) >= 6",
+    "budget_s": 3600,
+    "attested": {
+      "batches": "research/h6_rank5/batch_manifest.json",
+      "recomputed": 2,
+      "compute_hours": 73.4,
+      "hardware": "187 batches on a RunPod CPU pod (16 vCPU AMD EPYC 4564P, shared host at load 30 to 45, ten batches in parallel, nice 19), 2026-09-22 01:37 to 08:31 UTC; batches 14, 15, and 173 on an Apple silicon laptop (one core, nice 19) during the pipeline test on 2026-09-21; the aggregate's two seeded re-runs (batches 11 and 148) on the pod",
+      "note": "The exclusion of every rank-5 decomposition of |H>^6 lives in the 190 stored batch outputs under research/h6_rank5/results/ (15 stage A batches over the 5,939,465 full 5-covers of |H>^3 with distinct independent base states, 158 stage B batches over the 12,390 dependent covers, 17 stage C batches over the 13,852 covers with a repeated state), each matching its covers at the four base points and re-deciding every candidate mod 2013265921 and numerically. The certificate checks the partition against the enumerator, re-enumerates the degenerate covers, verifies the hashes and geometry of every output, re-decides every stored hit, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/h6_rank5/batch.py, which regenerates any batch (`batch.py K`, 73.4 CPU-hours for all 190 on the pod: stage A 2.8, stage B 69.6, stage C 1.0)."
+    }
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank research/h6_rank5",
+    "method": "projection monotonicity applied to the attested exact rank-5 exclusion at m=6",
+    "date": "2026-09-22",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.0,
+      "wall_clock_hours": 0.0,
+      "runs": 0,
+      "hardware": "none beyond the m=6 certificate, which this cell re-runs"
+    }
+  },
+  "notes": "chi(psi (x) phi) >= chi(psi) when phi has a nonzero computational amplitude, applied 4 times to chi(H^6) = 6 (Lean: stabRankP_powVecP_mono in lean_proofs/LeanProofs/Stabilizer/SliceP.lean, specialised as qubit_h_stabRankP_mono in lean_proofs/LeanProofs/QubitProjection.lean). The certificate is the m=6 attested one, which prints this line after certifying the rank-5 exclusion; the cell inherits the attested tier. Puts the cell at 6 <= chi <= 18, replacing the trivial lower bound of 2."
+}
