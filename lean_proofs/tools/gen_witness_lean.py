@@ -9,8 +9,9 @@ LeanProofs/Stabilizer/Reflect.lean:
   so `isStabP_stabTerm` and `affinePtP_injective_of_pivots` give `IsStabP`;
 * every coefficient is written as an integer vector `Cj` in a fixed basis of
   the ring the identity lives in, with the `1/√(p^k)` normalisation of the
-  term, a common scalar (a power of `sin(π/8)`, `sin β` or `√(3-√3)`, and a
-  power of the target's rational normalisation) and a common denominator
+  term, a common scalar (a power of `sin(π/8)`, `sin β` or `√(3-√3)`, a
+  power of the target's rational normalisation, or `(1/√2)^m` for the Strange
+  cells) and a common denominator
   `Den` folded in;
 * the pointwise identity `Den · target = Σ_j Cj · ζ^(phase_j)` is decided by
   the kernel on the integer vectors over all `p^n` digit strings (`key`),
@@ -270,6 +271,32 @@ def make_orbit(orbit, m):
         return dict(R=R, p=3, zeta=R.pow(w, 3), sqrt_p=s3, basis=basis, lean=lean,
                     tgt=tgt, scalar_inv=R.pow(s3, m), th=None, th_pow=0, atoms=atoms,
                     quad=None, stat="digitSum", w9=w)
+    if orbit == "S":
+        # generators: w (omega_3), s2, s3. The coefficients of the Strange cells
+        # are read in ℚ(ω₃, √2, √3) and land in ℤ[ω₃] once the √3^k term
+        # normalisation and the √2^m of the target are folded in; the Lean
+        # basis is B3 of the H₃ cells with zero √3 coordinates.
+        names = ["w", "s2", "s3"]
+        R = Ring(names, [(2, {(0, 0, 0): Fraction(-1), (1, 0, 0): Fraction(-1)}),
+                         (2, {(0, 0, 0): Fraction(2)}),
+                         (2, {(0, 0, 0): Fraction(3)})])
+        w, s2, s3 = (R.gen(k) for k in range(3))
+        basis = [(0, 0, 0), (1, 0, 0), (0, 0, 1), (1, 0, 1)]
+        lean = dict(module_prefix="Strange", shared="ReflectQutrit", basis="B3",
+                    zeta_mat="Mw3", zeta_rep="Mw3_represents", target="strangeVec",
+                    target_ev="strangeVec_eq_ev", tgt="tgtS", dim=4, theorem_stem="strange")
+        # amplitude at a digit string: (1/sqrt2)^m times the product of the
+        # digit signs (0, 1, -1 at 0, 1, 2); the scalar's inverse is s2^m
+        def tgt(x):
+            sgn = 1
+            for d in x:
+                sgn *= {0: 0, 1: 1, 2: -1}[d]
+            return R.const(sgn)
+        i_elt = R.scale(R.mul(R.add(R.scale(w, 2), R.const(1)), s3), Fraction(1, 3))
+        atoms = {"sqrt2": s2, "sqrt3": s3, "I": i_elt}
+        return dict(R=R, p=3, zeta=w, sqrt_p=s3, basis=basis, lean=lean, tgt=tgt,
+                    scalar_inv=R.pow(s2, m), th=None, th_pow=0, atoms=atoms,
+                    quad=None, stat="digits")
     raise ValueError(f"unsupported orbit {orbit!r}")
 
 
@@ -603,8 +630,10 @@ def generate(path, check_only=False, chunks=1):
         x = digits(idx, p, n)
         if orb["stat"] == "count0":
             tgt = orb["tgt"](sum(1 for d in x if d == 0))
-        else:
+        elif orb["stat"] == "digitSum":
             tgt = orb["tgt"](sum(x))
+        else:
+            tgt = orb["tgt"](x)
         lhs = R.scale(tgt, den)
         rhs = R.zero()
         for t, C in zip(terms, raw):
@@ -629,9 +658,9 @@ def generate(path, check_only=False, chunks=1):
     fin_n = f"Fin ({p} ^ {n})"
 
     def tgt_of(idx_expr):
-        if orb["stat"] == "count0":
-            return f"{L['tgt']} {m} (digitsP {p} {n} {idx_expr})"
-        return f"{L['tgt']} {m} {idx_expr}"
+        if orb["stat"] == "digitSum":
+            return f"{L['tgt']} {m} {idx_expr}"
+        return f"{L['tgt']} {m} (digitsP {p} {n} {idx_expr})"
 
     def ident(idx_expr):
         return f"Den • {tgt_of(idx_expr)} = rhsZ (digitsP {p} {n} {idx_expr})"
@@ -650,7 +679,7 @@ def generate(path, check_only=False, chunks=1):
         f"terms are the file's, entered as `stabTerm {p} {n} k x0 W Q l` with the pivot",
         "columns of `W` (`Q` is read as an upper-triangular form, as the verifier reads",
         f"it). Each coefficient is the integer vector `Cj` in the basis `{basis}` of",
-        "`LeanProofs/Reflect" + ("Qubit" if p == 2 else "Qutrit") + ".lean`: the file's coefficient, divided by the",
+        f"`LeanProofs/{L['shared']}.lean`: the file's coefficient, divided by the",
         f"`√{p}^k` normalisation of its term and by the common scalar in front of the",
         f"target (`{L['target_ev']}`), times `Den = {den}`. The pointwise identity is",
         f"decided by the kernel on integer vectors at all {N} digit strings (`key`) and",
@@ -808,7 +837,7 @@ def update_bound(path, module, theorem):
     print(f"updated {os.path.relpath(path, ROOT)}")
 
 
-ORBIT_P_LOCAL = {"H3": 3, "T3": 3, "qubit_H": 2, "qubit_T": 2}
+ORBIT_P_LOCAL = {"H3": 3, "T3": 3, "S": 3, "qubit_H": 2, "qubit_T": 2}
 
 
 def orb_scalar_lean(orbit, m):
@@ -826,6 +855,8 @@ def orb_scalar_lean(orbit, m):
         body = f"{th} / 6 ^ {m}" if th else f"1 / 6 ^ {m}"
     elif orbit == "T3":
         body = f"((1 / Real.sqrt 3 : ℝ) : ℂ) ^ {m}"
+    elif orbit == "S":
+        body = f"(1 / (Real.sqrt 2 : ℂ)) ^ {m}"
     else:
         raise ValueError(orbit)
     return f"/-- The scalar in front of the target in `{orbit}` at `m = {m}`. -/\nnoncomputable def scalar : ℂ := {body}"
