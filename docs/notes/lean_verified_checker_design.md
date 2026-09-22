@@ -1,6 +1,9 @@
 # Bringing the scan-based lower bounds to the Lean tier: design note
 
-Status (2026-09-22). Design only; nothing here is built. The question is
+Status (2026-09-22). Design, plus the first step of section 3 (the
+throughput measurement, section 5) and the first pieces of the dictionary
+completeness lemma (`lean_proofs/LeanProofs/Stabilizer/Reparam.lean`,
+`QutritDict2.lean`; section 5). The question is
 what it would take to move the lower bounds that now sit on the
 `reproduced` and `attested` tiers (CONTRIBUTING, "Five tiers") to the
 `lean` tier, where a bound is a theorem about `stabRankP` in
@@ -24,8 +27,10 @@ of a listed normal form), a reduction lemma from complex-linear dependence
 to dependence over a prime field, the covering lemma behind the symmetry
 reduction, and the exactness of the candidate decisions. Once those exist,
 the m=3 rank-4 cells are a few times 1e7 to 4e8 field operations each,
-which the Lean kernel can run by `decide` in minutes to an hour, and their
-certificates are a few thousand exact witnesses. The m=5 lifts are within
+which the Lean kernel can run by `decide` only as hundreds to thousands
+of small theorems, since its memory grows with every operation (section
+5), or which `native_decide` runs in minutes; their certificates are a
+few thousand exact witnesses. The m=5 lifts are within
 reach for `qubit_T^5` and `S^5` and need compiled evaluation for
 `qubit_H^5`. The two attested scans are out of reach for the kernel at
 any cost and would need weeks of formalisation plus hundreds of CPU-hours
@@ -300,43 +305,49 @@ by exact Q(zeta_16) arithmetic.
 
 ## 2. Three routes for the finite part
 
-Throughput. No Lean toolchain is installed in this checkout (`lean`,
-`lake`, and `elan` are absent), so kernel throughput was not measured;
-the build receipts under `certs/lean-*.json` record only success, and
-the README's build times (7 s for the nine-case Strange m=2 identity,
-150 s for the 81-case Norrell m=4 identity) are elaboration-bound
-`linear_combination` proofs and say nothing about reflected
-computation. The estimates below assume 1e5 to 1e6 field operations per
-second for `decide +kernel` on a reflected checker over `ZMod ell` with
-`Array Nat` data (each operation is a GMP-accelerated `Nat` multiply and
-`mod` on literals, surrounded by a handful of whnf steps for indexing
-and recursion), a practical ceiling near 1e9 operations per theorem (an
-hour of kernel time, and kernel memory grows with the reduction cache),
-and about 1e8 operations per second for compiled evaluation. These are
-guesses; measuring them is the first step of section 3.
+Throughput. Measured in section 5 (this paragraph originally assumed 1e5
+to 1e6 field operations per second and a ceiling near 1e9 operations per
+theorem; both were wrong). `decide +kernel` on a reflected row reduction
+over `List Nat` runs at about 1.6e4 operations per second and, what
+matters more, allocates about 15 KB per operation that is not released
+until the declaration is checked, so a theorem's operation count is capped
+by memory: about 2.5e5 operations under a 4 GB limit in a module with no
+Mathlib import, and about 5e4 in a module that imports Mathlib, whose
+mapped `.olean` files alone occupy 3.3 GB. Compiled evaluation
+(`native_decide`, interpreted, no `precompileModules`) runs at about
+6.4e6 operations per second. The estimates in (a) and (b) below are
+restated with these figures.
 
 (a) Full kernel computation. Write the checker as a Lean function on
-`Array Nat`, prove it sound against `stabRankP`, and close the finite
-claim by `decide +kernel`. Family 1: 4e7 to 4e8 operations per qutrit
-cell, 1.6e8 to 5e8 per qubit cell at m=4: minutes to an hour, and the
-work splits naturally into one theorem per pivot (12 to 246 theorems of
-3e6 to 3e7 operations each, built in parallel by `lake`). This is
-feasible. Family 2: qubit_T^5 at 3e8 is feasible; S^5 at 2e10 is a day
-of kernel time even split per pivot (12 theorems of 2e9) and sits at the
-ceiling; qubit_H^5 at 3e12 is not feasible. Family 3: 1.3e14 and 3e12
-operations are not feasible by three to five orders of magnitude; even
-the two-pivot T3 scan at 6e10 is not.
+`List Nat`, prove it sound against `stabRankP`, and close the finite
+claim by `decide +kernel`. With the measured figures the unit of work is
+a theorem of at most about 2.5e5 operations (15 s, 4 GB), and it has to
+live in a module that imports nothing, with the soundness link to
+`stabRankP` in a separate Mathlib module that only restates the
+computed facts. Family 1 is then 4e7 to 4e8 operations per qutrit cell,
+that is 160 (S^3) to 1600 (H3^3) modules of 15 s each, 40 minutes to 7
+CPU-hours per cell, and 1.6e8 to 5e8 per qubit cell at m=4, 640 to 2000
+modules; `lake` builds them in parallel, and the raw-recursor style of
+`Bench/KernelBenchRec.lean` halves both figures. This is feasible for
+S^3 and N^3 and heavy for H3^3 and `qubit_H^4`. Family 2: qubit_T^5 at
+3e8 is 1200 modules, at the edge; S^5 at 2e10 is 8e4 modules and not
+sensible; qubit_H^5 at 3e12 is not feasible. Family 3: 1.3e14 and 3e12
+operations are not feasible by five to eight orders of magnitude, nor is
+the two-pivot T3 scan at 6e10.
 
 (b) Compiled evaluation. `native_decide` closes the same claims by
 running the compiled checker and adds the axiom `Lean.ofReduceBool`,
 which trusts the Lean compiler, the C compiler, and the runtime in
-addition to the kernel. At about 1e8 operations per second: family 1 in
-seconds, S^5 in minutes, qubit_H^5 in about an hour, the two-pivot T3
-scan in about ten minutes, H^6 in about ten hours, and the three-pivot
-T3 scan in 1.3e6 seconds, about 360 CPU-hours, if the compiled Lean
-matches numba's 21 ns per step, which it will not without effort
-(boxed `Nat`, persistent arrays); a factor of five to ten slower is
-likely, so 1800 to 3600 CPU-hours. The repository has no policy on
+addition to the kernel. Measured at 6.4e6 operations per second through
+the interpreter (section 5); `precompileModules` would run the compiled
+C and should gain a factor of five to twenty. At 6.4e6: family 1 in one
+to two minutes per cell, qubit_T^5 in a minute, S^5 in an hour,
+qubit_H^5 in five days, the two-pivot T3 scan in three hours, H^6 in
+five days, and the three-pivot T3 scan in 2e7 seconds, about 5700
+CPU-hours, against numba's 80; with precompilation these fall to the
+figures originally guessed here, family 1 in seconds, qubit_H^5 in hours
+and the three-pivot scan in a few hundred CPU-hours, if the compiled Lean
+gets within a factor of five to ten of numba's 21 ns per step. The repository has no policy on
 `native_decide`. The trade-off: the mathematics (dictionary
 completeness, the descent, the covering lemma, the soundness of the
 checker) is kernel-checked either way, and only the finite evaluation
@@ -392,12 +403,11 @@ Ordered by payoff per day. Days are cumulative estimates for one
 person; the shared library (steps 1 to 4) is about 30 days and every
 cell after the first is a few days.
 
-0. Measure kernel throughput (half a day). Time `decide +kernel` on a
-   reflected mod-65521 row reduction over `Array Nat` at 1e5, 1e6, and
-   1e7 operations in the existing build, and the same under
-   `native_decide`. Everything below is scaled by the result; if the
-   kernel is below 1e5 per second, family 1 needs per-pivot theorems
-   from the start, and if it is below 1e4, family 1 needs (b).
+0. Measure kernel throughput (half a day). Done, section 5: 1.6e4
+   operations per second and 15 KB per operation, so the binding
+   constraint is memory, not time, and family 1 needs theorems of at
+   most 2.5e5 operations in Mathlib-free modules from the start; the
+   kernel route stays open for S^3 and N^3 and is heavy for the rest.
 
 1. Shared library, part one (about 8 days): exponent tables and the
    evaluation lemma for `stabVecP` (1 day); the cyclotomic reduction
@@ -408,12 +418,19 @@ cell after the first is a few days.
 2. Dictionary completeness for p = 3 (10 to 15 days): executable
    elimination over ZMod 3 with the reparametrisation lemma, and the
    proof that the list generated the way `enumerate_terms` generates it
-   contains every normal form. This is the item to start early and the
-   one whose estimate is least certain.
+   contains every normal form. Started, section 5: the reparametrisation
+   lemma for every prime and every k, the full-support normal form for
+   k = n, and the complete dictionary at two qutrits (360 tables, checked
+   against the Python count) are in `lean_proofs/`. What remains is the
+   reduced row echelon form for 0 < k < n at general n, which the
+   three-qutrit dictionary needs; the phase bookkeeping for p = 2 is
+   already generic in `PhaseP.lean`, so the extra five days estimated
+   for qubits shrink to the carry-free relabelling of the tables.
 
 3. Symmetry (4 days): exact per-element verification of the generators
    (monomial ones by relabelling, the Fourier transform by a Gauss sum
-   in Z[zeta_12]), the orbit forest check, the covering lemma.
+   in Z[zeta_12]), the orbit forest check, the covering lemma. The pure
+   covering lemma is in `Stabilizer/Covering.lean` (section 5).
 
 4. The family-1 checker and the first cell, S^3 (about 7 days): the
    pivot sieve over ZMod ell with the rank-2 pass, its soundness through
@@ -499,6 +516,90 @@ Anything with a dictionary above 36720 states by direct pivot search:
 five qubits have 2,423,520 states, four qutrits 7,439,040, and a pair
 sieve is N^2 / |G|. Nothing on the board asks for it, and the slice
 arguments exist to avoid it.
+
+## 5. Measured, 2026-09-22
+
+Kernel throughput (`lean_proofs/LeanProofs/Bench/`, Lean 4.29.1, Apple
+silicon laptop, `nice -n 19`, one `lake build` per module,
+`/usr/bin/time -l` for peak RSS). The checker is a Gaussian elimination
+mod 65521 over `List (List Nat)` written with ordinary structural
+recursion, on pseudo-random `N x N` matrices; it returns its own
+operation count (one operation is one `(a + m * b) % 65521` or
+`x * m % 65521`), and the theorem asserts the returned triple.
+
+| module | operations | kernel time | peak RSS | route |
+|--------|------------|-------------|----------|-------|
+| `KernelBench4` | 30,360 (N = 45) | 1.83 s | 0.88 GB | `decide +kernel` |
+| `KernelBench` | 100,232 (N = 67) | 6.39 s | 1.94 GB | `decide +kernel` |
+| `KernelBenchRec` | 90,000 (300 row operations on 300 entries) | 2.87 s | 1.12 GB | `decide +kernel`, raw `List.rec` and `Nat.rec` |
+| `NativeBench` | 100,232 | below 0.1 s | | `native_decide` |
+| `NativeBench` | 995,280 (N = 144) | 0.16 s | | `native_decide` |
+| `NativeBench` | 10,026,640 (N = 311) | 1.56 s | 0.74 GB (whole module) | `native_decide` |
+
+The baseline RSS of a `lean` process with no imports is 0.4 GB, so the
+two kernel sizes give 15 KB of resident memory per operation and 1.6e4
+operations per second; the raw-recursor variant gives 8 KB and 3.1e4.
+The memory is the kernel's caches (whnf and defeq results and the
+instantiated `brecOn` bodies), which are not released until the
+declaration is checked, and it is why the 1e6 and 1e7 kernel sizes asked
+for in step 0 were not run: at 15 KB per operation they need about 15 GB
+and 150 GB, against a 4 GB limit per module here. Their extrapolated
+times are about one minute and ten minutes. `native_decide` through the
+interpreter (this project does not set `precompileModules`) runs at
+6.4e6 operations per second.
+
+Two further figures from the dictionary work: a module that imports
+Mathlib starts at 3.3 GB resident from the mapped `.olean` files, which
+leaves about 0.7 GB, or 5e4 operations, for kernel work under a 4 GB
+limit; and `List.Nodup` on 360 natural-number literals (64,620
+comparisons) takes 5.2 s and 1.1 GB in the kernel, so about 1 KB per
+elementary kernel step on top of the arithmetic.
+
+Consequences for section 2. The kernel route (a) is not limited by time
+but by memory: the unit is a theorem of at most about 2.5e5 operations in
+a module that imports nothing, with the soundness link to `stabRankP`
+proved once in a Mathlib module that only restates the computed facts
+(the pattern of `QutritDict2Keys.lean` and `QutritDict2.lean`). Family 1
+is 160 to 2000 such modules per cell; S^3 and N^3 are reasonable, H3^3
+and the qubit m=4 cells are heavy, and nothing in families 2 and 3
+except `qubit_T^5` is in reach of the kernel. `native_decide` covers
+family 1 and the smaller family-2 cells at once and the T3 two-pivot scan
+in hours; the three-pivot scan and H^6 need precompiled code and hundreds
+to thousands of CPU-hours either way.
+
+Dictionary completeness, first pieces (`Stabilizer/Reparam.lean`,
+`QutritDict2.lean`, `QutritDict2Keys.lean`). For every prime p, every n
+and k: `stabVecP_reparam`, an affine bijection `y = b + A z` of the flat
+coordinates turns `stabVecP x0 W Q l` into `zeta^C` times the `stabVecP`
+with base point `x0 + W^T b`, generators `A^T W`, and phase data from
+`zeta_pow_quadPhaseP_comp`, injectivity carried along; and
+`stabVecP_full_normal`, every full-support term (k = n) is `zeta^C
+zeta^(Q'(x) + l'.x)` with `x0 = 0`, `W = I`, by choosing the preimages
+of 0 and of the unit vectors. `tableOfP` is the exponent table of a
+term with pivot columns and `stabVecP_eq_tableVal` ties it to the
+amplitudes. At two qutrits, `isStabP_two_qutrits`: every `IsStabP 3`
+vector is a nonzero multiple of one of the 360 tables of `dict2` (9
+points, 108 lines with W in reduced row echelon form and x0 zero on the
+pivot column, 243 full-support states with Q upper triangular), by a
+case split on k <= 2 with the explicit 1 x 1 change of coordinates for
+lines and a symbolic folding of Q for full support; `dict2_nodup`, the
+360 tables are pairwise distinct, so the list is `dictionary(3, 2)` of
+`rank_exclusion.py` (`3^2 (3 + 1)(3^2 + 1) = 360`). The module builds in
+5 s with a 3.4 GB peak (3.3 GB of it the import baseline). Remaining
+gaps: the reduced row echelon form for 0 < k < n at general n (the three
+qutrit dictionary, 30240 states, needs k = 1 and k = 2 at n = 3), and
+the statement that two distinct tables are not scalar multiples of one
+another, which the normalisation of the exponent at the base point makes
+true but which is not proved.
+
+Covering lemma (`Stabilizer/Covering.lean`). `exists_decomp_mem_of_symm`:
+for a predicate closed under nonzero rescaling and a linear automorphism
+g preserving it with `g psi = c psi`, `c != 0`, a decomposition of size
+at most r containing s gives one of size at most r containing s'
+whenever `g s = a s'`, `a != 0`. The per-generator hypotheses (that the
+monomial Cliffords and copy permutations preserve `IsStabP`, by
+relabelling `x0`, `W` and reparametrising the phase as in `SliceP.lean`)
+and the semilinear form for the antiunitary generator are not proved.
 
 ## Numbers
 

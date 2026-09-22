@@ -56,3 +56,7 @@ import LeanProofs.Stabilizer.Chunks
 import LeanProofs.QubitHM10StabRank
 import LeanProofs.T3M5StabRank
 import LeanProofs.StrangeM5StabRank
+import LeanProofs.Stabilizer.Reparam
+import LeanProofs.QutritDict2Keys
+import LeanProofs.QutritDict2
+import LeanProofs.Stabilizer.Covering
