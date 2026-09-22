@@ -15,6 +15,7 @@ mapping is:
 | Qubit H-type m=2,3,4 and T-type m=2,3,4 (bound files) | `QubitShared.lean`, `QubitHStabRank.lean`, `QubitTStabRank.lean`, `QubitTM4StabRank.lean` |
 | Ququint T5 m=1 (both directions) and m=2 upper (bound files) | `Ququint.lean`, `T5Minors.lean`, `T5M1StabRank.lean`, `T5M2StabRank.lean` |
 | Lower bounds S m=1, H m=2, T m=2, N m=2, H_3 m=2 (bound files) | `Stabilizer/RankOne.lean`, `StrangeM1Lower.lean`, `QubitM2Lower.lean`, `M2Lower.lean` |
+| Dictionary completeness at two qutrits, reparametrisation, covering lemma (shared library for scan-based lower bounds; no bound yet) | `Stabilizer/Reparam.lean`, `QutritDict2.lean`, `QutritDict2Keys.lean`, `Stabilizer/Covering.lean`; `Bench/` (throughput, not imported) |
 | H_3 m=4, T_3 m=3,4,5, Strange m=5, qubit H-type m=5,6,7,8,10, qubit T-type m=5,6 (bound-file witnesses, reflection route) | `Stabilizer/Reflect.lean`, `Stabilizer/Chunks.lean`, `ReflectBases.lean`, `ReflectQubit.lean`, `ReflectQutrit.lean`, `H3M4StabRank.lean`, `T3M3StabRank.lean`, `T3M4StabRank.lean`, `T3M5Data.lean`, `T3M5Key0.lean` to `T3M5Key8.lean`, `T3M5StabRank.lean`, `StrangeM5Data.lean`, `StrangeM5Key0.lean` to `StrangeM5Key8.lean`, `StrangeM5StabRank.lean`, `QubitHM5StabRank.lean`, `QubitHM6StabRank.lean`, `QubitHM7StabRank.lean`, `QubitHM8Data.lean`, `QubitHM8Key0.lean` to `QubitHM8Key7.lean`, `QubitHM8StabRank.lean`, `QubitHM10Data.lean`, `QubitHM10Key0.lean` to `QubitHM10Key63.lean`, `QubitHM10StabRank.lean`, `QubitTM5StabRank.lean`, `QubitTM6StabRank.lean` |
 
 ## What's here
@@ -273,6 +274,62 @@ mapping is:
   coordinate `y_i(z)` is affine in `z`, then
   `ζ ^ quadPhaseP Q l (y(z)) = ζ ^ C * ζ ^ quadPhaseP Q' l' z` for some
   `C`, `Q'`, `l'`.
+
+- `LeanProofs/Stabilizer/Reparam.lean`: an affine change of the flat
+  coordinates `y = b + A z` of a `stabVecP` (`reparamY`, `reparamW`,
+  `stabVecP_reparam`: the state is `ζ^C` times the `stabVecP` with base
+  point `x₀ + Wᵀ b`, generators `Aᵀ W`, and the phase reparametrised through
+  `PhaseP.lean`; injectivity is carried along). `stabVecP_full_normal`:
+  every full-support term (`k = n`, injective parametrisation, any prime)
+  is `ζ^C ζ^(Q'(x) + l'·x)` with `x₀ = 0`, `W = I`. `tableOfP` is the
+  exponent table of a term with pivot columns (`none` off the flat, the
+  phase exponent on it) and `stabVecP_eq_tableVal` identifies the term with
+  its table. These are the first pieces of the dictionary completeness
+  lemma of `docs/notes/lean_verified_checker_design.md`.
+
+- `LeanProofs/QutritDict2.lean`: the dictionary of two-qutrit stabilizer
+  states as `360` exponent tables (`dict2`: `9` points, `108` lines with `W`
+  in reduced row echelon form and `x₀` zero on the pivot column, `243`
+  full-support states with `Q` upper triangular), with
+  `isStabP_two_qutrits`: every `IsStabP 3` vector on two qutrits is a
+  nonzero multiple of a listed table. The proof splits on `k ≤ 2` (from
+  injectivity): points directly, lines by `stabVecP_reparam` with the
+  explicit `1 × 1` change of coordinates at whichever column of `W` is
+  nonzero, full support by `stabVecP_full_normal` and a symbolic folding of
+  `Q` to upper triangular form (`quadPhaseP_upper2`). `dict2_nodup`: the
+  `360` tables are pairwise distinct, so the list is exactly
+  `dictionary(3, 2)` of `verify_challenge/rank_exclusion.py`
+  (`3^2 (3 + 1)(3^2 + 1) = 360`). Distinctness is decided on packed integer
+  keys: `dict2Fast_keys_eq` has the kernel evaluate the `360` tables through
+  coordinatewise evaluators (`pointFast`, `lineFast0`, `lineFast1`,
+  `fullFast`, each proved equal to its `tableOfP`) and compare with the
+  literals of `QutritDict2Keys.lean`. Not here: the general reduced row
+  echelon form for `0 < k < n` (needed at three qutrits), and the
+  statement that distinct tables are not scalar multiples of one another.
+
+- `LeanProofs/QutritDict2Keys.lean`: the `360` key literals and
+  `keyLits_nodup`, `64,620` literal comparisons by `decide +kernel`. It
+  imports nothing: a module that imports Mathlib starts at about `3.3 GB`
+  resident from the mapped `.olean` files, and this check adds `1.1 GB`,
+  so it is kept where the baseline is `0.4 GB` (peak `1.5 GB`, `5 s`).
+
+- `LeanProofs/Stabilizer/Covering.lean`: `exists_decomp_mem_of_symm`, the
+  covering lemma of the symmetry reduction: a linear automorphism that
+  preserves the stabilizer predicate and fixes the target up to a nonzero
+  scalar carries a decomposition of size at most `r` containing `s` to one
+  of size at most `r` containing `s'` whenever `g s = a • s'`, `a ≠ 0`. The
+  per-generator hypotheses for the monomial subgroup and the antiunitary
+  variant are described in the module comment and not proved.
+
+- `LeanProofs/Bench/`: kernel throughput measurements, not imported by the
+  root. `KernelBench.lean` is a reflected Gaussian elimination mod `65521`
+  over `List (List Nat)` that reports its own operation count;
+  `bench5_kernel` (`1.0e5` operations) and `KernelBench4.lean` (`3.0e4`)
+  are timed by `decide +kernel`, `KernelBenchRec.lean` is the same row
+  operation through raw `List.rec`/`Nat.rec`, and `NativeBench.lean` runs
+  `1e5`, `1e6`, `1e7` under `native_decide` for comparison only. The
+  numbers are in `docs/notes/lean_verified_checker_design.md`, section 5.
+  `native_decide` is never to be used in a proof that ends up in a bound.
 
 - `LeanProofs/Stabilizer/SliceP.lean` — slices and the projection bound.
   `sliceP p v a` fixes the last digit of `v` to `a`.
