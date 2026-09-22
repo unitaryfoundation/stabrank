@@ -19,7 +19,11 @@
       "hardware": "Apple silicon laptop, one core; direct construction, no search"
     }
   },
-  "notes": "chi(|H>^7) <= 9 from the partial decomposition of Kissinger, van de Wetering, and Vilmart (arXiv:2202.09202, Section 4.2): |T>^5 = sqrt 2 (I (x) <T|)|cat_6> has three terms, each a Clifford image of (stabilizer (x) |T>), so four T states are removed at a cost of three terms and chi(T^t) <= 3 chi(T^{t-4}). At t = 7 the leftover |T> of each term joins the remaining |T>^2, and |T>^3 has rank 3, giving 3 x 3 = 9. Improves the 12 that QPG's table lists at seven copies. Witness built here by research/constructions/kvv_cat.py from the three cat_6 terms and the board's m=3 witness, and verified in exact arithmetic; exponent log_2(9)/7 = 0.4528.",
+  "notes": "chi(|H>^7) <= 9 from the partial decomposition of Kissinger, van de Wetering, and Vilmart (arXiv:2202.09202, Section 4.2): |T>^5 = sqrt 2 (I (x) <T|)|cat_6> has three terms, each a Clifford image of (stabilizer (x) |T>), so four T states are removed at a cost of three terms and chi(T^t) <= 3 chi(T^{t-4}). At t = 7 the leftover |T> of each term joins the remaining |T>^2, and |T>^3 has rank 3, giving 3 x 3 = 9. Improves the 12 that QPG's table lists at seven copies. Witness built here by research/constructions/kvv_cat.py from the three cat_6 terms and the board's m=3 witness, and verified in exact arithmetic; exponent log_2(9)/7 = 0.4528. Now at the lean tier: qubit_h_m7_stabRankP_le_nine in LeanProofs.QubitHM7StabRank proves stabRankP 2 |qubit_H>^7 <= 9 against IsStabP 2 from this witness, the pointwise identity being decided by the kernel on integer coordinate vectors (see lean_proofs/LeanProofs/Stabilizer/Reflect.lean).",
+  "lean": {
+    "module": "LeanProofs.QubitHM7StabRank",
+    "theorem": "qubit_h_m7_stabRankP_le_nine"
+  },
   "witness": {
     "terms": [
       {
