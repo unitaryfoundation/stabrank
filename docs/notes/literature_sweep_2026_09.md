@@ -354,3 +354,53 @@ decomposition of a magic state, and there is still no machine-search paper
 on stabilizer decompositions. The dring-05 repository has one commit, dated
 by its own text to 2026-09-14, and does not claim chi(T3^4) >= 9. No BibTeX
 entry was added.
+
+## 6. Update of 2026-09-22
+
+Nothing moves a cell. What was checked, and the items that came back:
+
+- arXiv API, every quant-ph submission from 2026-09-16 to 2026-09-22 (345
+  entries), titles and abstracts filtered for stabilizer, stabiliser, magic,
+  nonstabilizerness, Clifford, cat state, qutrit, qudit, T-count, extent,
+  and decomposition; the phrase queries of the two earlier sweeps
+  ("stabilizer rank", "stabiliser rank", "stabilizer extent", "stabilizer
+  decomposition(s)", "magic state" with decomposition, qudit/qutrit with
+  magic and stabilizer, cat state or code state with stabilizer and magic,
+  nonstabilizerness with rank, "stabilizer fidelity") sorted by last update
+  and by submission date (165 distinct hits, none updated after
+  2026-09-17 beyond the four already listed in section 5).
+- The Semantic Scholar citation graphs of arXiv:2106.07740 (59 citing
+  papers) and arXiv:2202.09202 (52 citing papers), sorted by date. The
+  newest citing paper of either is 2607.28600 (SymFT, 2026-07-30), already
+  in section 4; nothing has cited either paper since. The version pages:
+  2106.07740 is at v2 (2021-12-15, Quantum 5, 606) and 2202.09202 at v1
+  (2022-02-18, TQC 2022), so neither has been revised.
+- Web searches for the same phrases and for "cat state", "code state" and
+  "finite-copy" decompositions of T, H, and qutrit magic states in 2026.
+- The arXiv quant-ph listings for 2026-09-21 and 2026-09-22 read by title.
+
+| source | arXiv | what it contributes | on the board | usable here |
+|---|---|---|---|---|
+| He, Xiong, Wang 2026 | 2607.08626 | magic needed for universal two-copy state purification: an exact linear mana law in odd dimensions and a two-sided robustness law for qubits; the only citing paper of 2106.07740 not screened in section 1 | no | no rank, extent, or decomposition; does not move a cell |
+| phase-space anatomy of dynamical quantum phase transitions 2026 | 2609.24636 | "stabilizer returns" of Loschmidt echoes decomposed into phase-space costs; qutrit examples | no | not a stabilizer rank; does not move a cell |
+| nonlocal magic spreading 2026 | 2609.20951 | nonlocal magic in many-body dynamics through the capacity of entanglement | no | no rank content; does not move a cell |
+| Mermin-Peres magic rectangles modulo odd primes 2026 | 2609.20746 | linear systems over Z/dZ with operator but no classical solutions, on two p-dimensional qudits | no | "magic" in the contextuality sense; does not move a cell |
+| Marton's conjecture in polynomial time 2026 | 2609.20771 | agnostic tomography of stabilizer states as an application (already a false positive in section 5) | no | does not move a cell |
+| flow-based lattice surgery with T-gate scheduling 2026 | 2609.23756 | compilation with magic-state availability | no | does not move a cell |
+| clifford_qc toolkit 2026 | 2609.23059 | a Python simulation toolkit; the word Clifford is the author's name | no | does not move a cell |
+| SyQMA 2026; low-rank-width ZX simulation 2026 | 2604.15043, 2603.06764 | simulators citing 2202.09202 for the partial decomposition they consume | no | consume, do not produce, decompositions; do not move a cell |
+| magic in high-energy scattering (hadron masses, gluon and graviton scattering, top quarks) 2024-2026 | 2603.00946, 2603.04148, 2508.14967, 2505.12522, 2406.07321 | stabilizer Renyi entropy and nonlocal magic of scattering states, citing 2106.07740 for the definition of stabilizer rank | no | no rank values; do not move a cell |
+
+Not rank-relevant after reading, so the next sweep can skip them:
+2609.24166, 2609.24139, 2609.23664, 2609.23334, 2609.23316, 2609.22669,
+2609.22572, 2609.21886, 2609.21757 (Schrodinger cats in the Ising model,
+not stabilizer cat states), 2609.21086, 2609.20644, 2609.20573, 2602.17775
+(decision diagrams for Clifford+T, cites 2106.07740 for the exponent).
+
+No explicit finite-copy decomposition of any board state appears in the
+citing papers of either source beyond the ones already filed: QPG's
+cat_6 (m=6), KvdWV's partial decomposition (m=7, 8) and the glued cat_10
+(m=10). The m=9 witness filed today (`bounds/qubit_H-m9-upper-18.json`) is
+a projection of the glued cat_10 and is not stated in either paper. There
+is still no machine-search paper on stabilizer decompositions. No BibTeX
+entry was added.

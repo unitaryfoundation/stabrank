@@ -480,3 +480,195 @@ terms.
   multisets of invisible flats) was not run.
 - Slices with more than r nonzero terms everywhere (all terms four-slice),
   as for the qutrits.
+
+## 2026-09-22: one structured attempt per record-capable family
+
+Scripts: `research/constructions/kvv_cat_m9.py`,
+`research/constructions/product_witness.py`,
+`research/constructions/t3_sector_contraction.py`. Everything ran as one
+process at nice 19; no run longer than ten minutes except the S m=8 anneal
+(below, one run under a 1200 s cap). Bound files written today are listed
+at the end; none moves an exponent. The literature update of the same day
+is section 6 of `literature_sweep_2026_09.md` (nothing new).
+
+### (a) qubit_H at m=9: rank 18, the cell was empty
+
+Every route through the cat-state machinery gives 18 terms at nine copies,
+and the routes are distinct as term sets:
+
+| route | terms | distinct rays |
+|---|---|---|
+| project the glued nine-term cat_10 onto \|0> and onto \|1> on qubit 10 (cat_9 and cat_9^- = (T^9 - T_perp^9)/sqrt 2, nine terms each) | 18 | 18 |
+| glue cat_6 with cat_5 = sqrt 2 (I (x) <0\|) cat_6 through <cat_2\| | 18 | 18 |
+| 4-to-3 partial decomposition times the board's m=5 witness (3 chi(T^5)) | 18 | 18 |
+| products T^6 x T^3 and T^7 x T^2 | 18, 18 | 18, 18 |
+
+Why nothing lower comes out of these pieces: chi(T^9) <= chi(T^10) by
+projection, and 18 is also 3 chi(T^5) = 6 chi(T^3) = 9 chi(T^2), so every
+factorisation of nine copies into the known pieces lands on the same
+number. The cat_5 partial route (|T>^4 = sqrt 2 (I (x) <T|) cat_5, whose
+three terms contract to |0^4>/sqrt 2 and two Clifford images of
+(stabilizer (x) |H>)) gives chi(T^{4+r}) <= chi(T^r) + 2 chi(T^{r+1}),
+which is 18 at r = 5 and 16 > 12 at r = 4, so it never beats the 4-to-3
+partial. The five routes use 81 distinct nine-qubit stabilizer states
+spanning a 66-dimensional space, and greedy and randomised pruning inside
+that pool found nothing shorter than 18 (a heuristic, not an exclusion).
+Filed as `bounds/qubit_H-m9-upper-18.json` (projected cat_10, method
+"structured construction", exponent log_2(18)/9 = 0.4633, verified
+symbolically in 162 s). The rank-11 target (0.3844) is not in reach of any
+combination of published pieces. A rank-17 anneal warm-started from the
+witness was not run (compute budget; the verification reruns below used
+it).
+
+### (b) qubit_T at m=7 to 10: the Clifford-transfer premise is false; two products filed
+
+The brief asked whether the KvdWV witnesses for |H>^m transfer term by term
+to the qubit_T orbit through "the single-qubit Clifford that maps H to T".
+No such Clifford exists: the H-type (edge-centre) and T-type (face-centre)
+states are distinct orbits of the single-qubit Clifford group, which acts
+on the Bloch sphere as the octahedral rotation group, and the board's own
+values already separate them (chi(F^4) = 3 against chi(H^4) = 4). The
+Clifford C = HSH in `kvv_cat.py` maps (|0> + e^{i pi/4}|1>)/sqrt 2 to the
+H-type state; both are edge states. So nothing transfers, and the QPG cat
+construction for the face state F (their explicit three-term cat_6(F))
+has to be redone in the F orbit. Doing so gains nothing at m <= 10:
+cat_2(F) = |00> + i|11> is a stabilizer state with F_perp = sin beta|0> -
+e^{i pi/4} cos beta|1>, so the gluing identity holds verbatim and
+cat_10(F) has at most nine terms, giving chi(F^10) <= 18, and the partial
+route gives chi(F^{5+r}) <= 3 chi(F^{r+1}); with chi(F^4) = 3 already on
+the board, the plain products are at least as good at every m: 3 x 3 = 9
+at m=7 (partial: 3 chi(F^3) = 9), 3 x 3 = 9 at m=8 (partial:
+3 chi(F^4) = 9; the brief's "12" is the H-type value), 3 x 6 = 18 at m=9,
+3 x 3 x 2 = 18 at m=10.
+
+`product_witness.py` builds product witnesses exactly (x0 and l
+concatenated, W and Q block diagonal, coefficients multiplied in sympy).
+Filed: `bounds/qubit_T-m8-upper-9.json` (m=4 x m=4, exponent 0.3962,
+exactly the baseline; verified symbolically in 44 s) and
+`bounds/qubit_T-m10-upper-18.json` (m=4 x m=4 x m=2, 0.4170; 88 s). Not
+filed: the m=7 (m=4 x m=3, rank 9) and m=9 (m=4 x m=5, rank 18) products.
+They are correct by construction, but the m=3 and m=5 factors have
+coefficients in the nested field Q(sqrt 2, sqrt 3, i, sqrt(3 + sqrt 3))
+(cos beta = sqrt((3 + sqrt 3)/6) is a degree-4 number, and at odd m the
+target amplitudes are odd in it), and the verifier's per-entry
+sympy.simplify fails slowly on products of several distinct nested atoms
+before the 60-digit fallback decides each entry: the m=7 file did not
+finish in 400 s in two runs, so it would not fit the 900 s budget, and the
+m=9 file has four times the entries and twice the terms. The board's own
+m=5 witness is "checked to 60 significant digits" for the same reason. A
+canonical rewrite of the coefficients as p + a q with a = sqrt(sqrt(3)/6 +
+1/2) and p, q in Q(sqrt 2, sqrt 3, i) was started and not finished; it is
+what would make the odd-m face-state cells verifiable, and is the one
+piece of tooling this session leaves open. The merge anneal from the m=8
+product minus one term was already run on 2026-09-20
+(`merge_recipes_2026_09.md`, section 2: plateaus 0.37 to 0.39) and was not
+repeated.
+
+### (c) T3 at m=5 through the sector contraction: rank 9 per sector, no five-term completion
+
+The qutrit analogue of the cat_{a+b-2} gluing. With |T3> = 3^{-1/2} sum_x
+w9^x |x>, the Z^{(x)m} eigensector s of |T3>^m is c_s^{(m)}(x) = 3^{-m/2}
+w9^s w3^{(|x| - s)/3} on |x| = s (mod 3), |x| the integer digit sum, and
+the SUM-gate permutation x -> (x_1, ..., x_{m-1}, |x| mod 3) carries it to
+|s> (x) psi_s^{(m)}, the carry state of `autoresearch/run.py`. The three
+states Z^i|T3> are orthonormal, so |Phi> = sum_i Z^i|T3> (x) Z^i|T3> =
+3 Pi_{ZZ = 1}|T3>^2 is the m=2 sector, a stabilizer state (carry state
+w3^{x^2}), and contracting one qutrit of c_j^{(m)} with one of c_k^{(m')}
+through <Phi| kills the mixed terms and leaves c_{j+k}^{(m+m'-2)} up to a
+scalar; a stabilizer term contracted with a stabilizer bra is a stabilizer
+state or zero, so r_{m+m'-2} <= r_m r_{m'}. This is "the Clifford-twisted
+maximally entangled state" of the earlier notes, made explicit; the script
+checks the identity for all nine (j, k) numerically to 1e-9.
+
+Inputs. psi_s^{(3)} (two qutrits) has 55 rank-3 decompositions per sector
+(full pivot search over the 360 states). psi_0^{(4)} (three qutrits) has
+exactly 3 rank-3 decompositions (pivot search over the 30,240 states with
+one pivot per S_3 orbit, 5784 pivots, closed under S_3; 94 s), one S_3
+orbit, and sectors 1 and 2 follow by the Clifford X^{-1} then
+diag(1, 1, w3) on the first carry qutrit, which maps terms of psi_s to
+terms of psi_{s-1} (the phase gate corrects the carry when the digit
+wraps). The board's `T3-m4-upper-9.json` is exactly the union of the three
+sector decompositions (each of its nine terms lies in one sector).
+
+Output at m=5. For each sector, 3 x 55 x 3 = 495 contractions; every one
+has nine nonzero terms, all stabilizer states, all linearly independent,
+so the ansatz gives r_5 <= 9 (chi(|T3>^5) <= 27), worse than the annealed
+r_5 = 6 already on the board and than the rank-15 target (r_5 = 5). The
+495 nine-term sets use 621 distinct four-qutrit carry states spanning 63
+of the 81 dimensions; closed under the S_4 permutations of the carry
+qutrits (a symmetry of psi_s^{(5)}) they are 1935 states in 203 orbits
+spanning all 81. The board's six-term sector decomposition shares no state
+with either pool.
+
+Exact tests on sector 0 (sectors 1 and 2 are its Galois conjugates, so
+the same statements hold there):
+
+| test | result |
+|---|---|
+| five-term decompositions of psi_0^{(5)} sharing four terms with some contraction (stabilizer states in span(psi, four kept), `mergelib.stabilizer_states_in_span` over the 2452 four-qutrit flats) | all 19,710 distinct four-subsets of the 495 nine-term sets tested (two chunks, 334 s and 47 s); 0 completions |
+| exact rank-5 pivot-pair search inside the closed pool (first pivot over the 203 orbit representatives, second over the 1935 states, `rank3_search` on the quotient with parallel quotient states merged and every hit re-solved in the full space) | about 1 s per pivot pair, 392,602 pairs, roughly 4.5 CPU-days: not run beyond a 60 s probe (68 pairs, no verified hit); the `--rank5` flag runs it |
+
+So the contraction ansatz is loose by three terms per sector, its terms are
+disjoint from the annealed rank-6 decomposition, and no rank-5 sector
+decomposition contains four contraction terms. Exact: the enumeration of
+the m=3 and m=4 sector decompositions (up to the 1e-9 residual of the
+pivot search), the stabilizer tests, the span lists (1e-8 eigenvalue
+tolerance). Nothing here is a lower bound.
+
+### (d) S at m=7 and m=8: products, one merge anneal
+
+Products of the board's exact witnesses: m=7 from m=4 x m=2 x m=1
+(4 x 2 x 2 = 16; the m=3 file carries a Lean proof and no witness, so the
+m=7 product goes through m=2 and m=1; exponent log_3(16)/7 = 0.3605) and
+m=8 from m=4 x m=4 (16, exponent log_3(16)/8 = 0.3155, exactly the
+baseline, since the m=4 witness is itself the square of the m=2 rank-2
+carry decomposition). Both cells were empty. Both witnesses are sixteen
+full-support terms (k = m) with quadratic phases, the tensor cubes and
+squares of the two m=2 terms, with coefficients in Q(sqrt 3, i).
+
+Both verify symbolically, in 1 s (m=7) and 4 s (m=8): the coefficients stay in
+Q(sqrt 3, i) and the entries reduce without the numeric fallback.
+
+Merge anneal (`run.py S 8 15 --warm-from bounds/S-m8-upper-16.json
+--seeds 1 --chains 2 --iters 4000`, 6561 amplitudes, logged in
+`autoresearch/runs.jsonl`): the warm start prunes the sixteen-term product to fifteen by dropping
+the least significant term, and the annealer's cost at the start is
+0.4444. At 6561 amplitudes and rank 15 the two chains had reached
+temperature 0.0997 of the schedule when the 1200 s cap killed the process,
+and the best cost never left 0.4444 (the current cost wandered near 1.0).
+Since run.py did not return, the run is logged by hand in
+`autoresearch/runs.jsonl` (seed 1, `killed_s` 1200, residual 0.4444, cpu_s
+estimated as the wall time). Same signature as the T3 sector product
+(`merge_recipes_2026_09.md`, section 1): the product minus one term is a
+strict local optimum of the exchange landscape, and a real attempt at S
+m=8 rank 15 is the exact one-state completion test on span(psi, fifteen
+kept) at eight qutrits (`research/merges/complete1.py`, which would have
+to enumerate the eight-qutrit flats; not run), not more annealing.
+
+### Bound files written today
+
+| file | rank | exponent | tier | method |
+|---|---|---|---|---|
+| `qubit_H-m9-upper-18.json` | 18 | 0.4633 | verified (symbolic, 162 s) | projected glued cat_10 |
+| `qubit_T-m8-upper-9.json` | 9 | 0.3962 | verified (symbolic, 44 s) | product m=4 x m=4 |
+| `qubit_T-m10-upper-18.json` | 18 | 0.4170 | verified (symbolic, 88 s) | product m=4 x m=4 x m=2 |
+| `S-m7-upper-16.json` | 16 | 0.3605 | verified (symbolic, 1 s) | product m=4 x m=2 x m=1 |
+| `S-m8-upper-16.json` | 16 | 0.3155 | verified (symbolic, 4 s) | product m=4 x m=4 |
+
+### Sharpest facts of the session
+
+1. qubit_H m=9: every combination of the published cat pieces gives 18;
+   the pool of 81 states they use spans 66 dimensions and prunes to nothing
+   shorter.
+2. qubit_T and qubit_H are not Clifford-equivalent orbits, so no H-type
+   witness transfers to the face state; the face-state cat machinery of QPG
+   reproduces the products and nothing better at m <= 10, and the odd-m
+   product witnesses are correct but too slow for the verifier as written.
+3. T3 m=5: the sector contraction of the exact m=3 and m=4 sector
+   decompositions gives 9 per sector, its 621 states are disjoint from the
+   annealed rank-6 decomposition, and no rank-5 sector decomposition shares
+   four terms with any of the 495 contractions.
+4. S m=8: the warm-started rank-15 anneal never left its start cost in 1200 s,
+   so the product minus one term is a strict local optimum of the
+   annealer, as at the T3 sector; the cell now holds the product at the
+   baseline exponent.
