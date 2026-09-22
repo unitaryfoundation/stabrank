@@ -362,3 +362,159 @@ Plan, in order.
 Everything above depends on PR #86 and on the one-qutrit result only
 through the base-point argument of section 2; the matcher does not use
 them.
+
+## 7. Run plan (2026-09-22, pipeline built)
+
+Code: `research/qutrit_m4_rank5/` (`matcher.py`, `common.py`, `driver.py`,
+`batch.py`, `aggregate.py`, README), the certificates
+`verify_challenge/cert_n_m4_rank5_attested.py` and
+`cert_h3_m4_rank5_attested.py` (`CERTIFIED chi(N^4) >= 6`,
+`CERTIFIED chi(H3^4) >= 6`, seed 20260922, two re-runs), and the draft
+bound files `N-m4-lower-6.json.draft`, `H3-m4-lower-6.json.draft` next to
+the code (attested tier, placeholders for compute hours, hardware and
+date; they move to `bounds/` once the manifests exist). Everything is the
+Python reference; there is no compiled kernel. All times below are one
+core at nice 19 on an 18-core laptop at load average about 20 (other
+sessions), so they overstate an unloaded pod.
+
+Matcher. The port of `slice_cover.SliceMatcher` to p = 3 and a two-qutrit
+base with the coefficient family (kappa >= 1) and the block treatment of
+repeated states, the composite points solved one at a time over the
+shapes still alive, generic in the number of terms and the base dimension.
+Two defects found by the controls and fixed: the block reconstruction
+inherited `slice_cover._affine_solve_C`, which solves with numpy's
+relative singular-value cutoff, so the sum-zero direction of two copies
+hit by equal phases (an A K of order 1e-16 rather than 0) was inverted
+into a garbage pin instead of a consistency condition, producing
+reconstructions that violated their own per-slice constraints (planted
+repeated bases: 26 such candidates in 8 runs for H3 before the fix, 0
+after; the planted decomposition was recovered in every run either way);
+the matcher now uses a truncated-SVD solve with the scale max(1, s_0),
+patched into `slice_cover` for `Family.restrict` as well. And a slice
+equation with no ordinary term (every distinct state repeated, which the
+m = 3 control produces since chi(|M>) = 2) is decided directly.
+
+Census (`driver.py census`, the reference kernel with every candidate
+re-decided; hashed lists of the full 3-, 4- and 5-covers in
+`results/ORBIT/kernel_census.json`): N 1,209 pivot pairs, 197,440 full
+5-covers, 5,101,468 candidates, 629 s; H3 2,390 pairs, 188,451 covers,
+8,654,981 candidates, 1,128 s. Both equal the section 4 counts.
+
+Degenerate covers (`driver.py degenerate --write`, the H^6 criterion: a
+multiset over a 3-cover or 4-cover with a coefficient family in which no
+unrepeated state is dead): N 12,175 dependent (all kappa = 1) and 5,910
+repeated (5,736 of pattern (2, 1, 1, 1), 87 of (2, 2, 1), 87 of (3, 1, 1));
+H3 6,112 dependent and 4,888 repeated (4,852 / 18 / 18). The dependent
+counts equal section 4's; the repeated counts exceed the prototype's
+(5,786 and 4,880) because the prototype listed multisets without the
+fullness test of the family.
+
+Controls (`results/ORBIT/control_*.json`; items 1 and 2 pass for both
+cells, item 3 passes for N and is unfinished for H3, item 4 was not run).
+
+1. `control-covers`: the 29 (N) and 6 (H3) full 3-covers fall into 8 and
+   3 G_2 classes, exactly the classes of the stored rank-3 lists (30 and 9
+   decompositions, every one full); the 1,403 and 1,211 full 4-covers fall
+   into 478 and 554 classes, exactly the classes of the full members of
+   `slice_lift.all_decompositions(orbit, 2, 4)` (1,403 of 1,909 and 1,211
+   of 1,306 decompositions full). Nothing missing, nothing extra.
+2. `control-planted`, 8 instances per case, both cells: generic bases with
+   random flats, bases with two diagonal line terms, dependent bases from
+   the stage B list, repeated bases from the stage C list; every planted
+   decomposition recovered from its base slice, 0 candidates rejected by
+   the final check (further genuine decompositions with the same base: N
+   0, 0, 1, 9; H3 0, 0, 0, 15). `control-product`: the 30 (N) and 9 (H3)
+   stored rank-3 decompositions of |M>^2, tensored with a random
+   full-support two-qutrit stabilizer state, recovered at all 9 base
+   points (270 and 81 runs).
+3. `control-m3` (2 + 1 slicing of |M>^3 against the full 4-multisets of
+   the 12 single-qutrit states, every base dependent): for N, 924
+   multisets; the stored rank-4 decomposition is recovered from its own
+   all-visible base, and 200 further sampled (multiset, base point) pairs
+   produce genuine rank-4 decompositions only in the stored G_3 class (9
+   genuine hits in 201 runs, 0 refused, 287 s): PASS. For H3 the same
+   command (`control-m3 H3 --sample 200`) ran for 60 minutes without
+   finishing and was killed; it logged no partial counts (the multiset
+   enumeration and the first runs print nothing until the end), so the H3
+   case is UNFINISHED. The H3 bases are more expensive because many of
+   them have every distinct state repeated or kappa = 2, and the block
+   translate sets multiply; the control should be rerun with a smaller
+   `--sample` and its per-run timing printed.
+4. `control-witness`: NOT RUN (status paragraph below).
+
+Rates (per cover, one base point). Stage A (`driver.py sample`, 300
+census covers): N 126 ms mean, 100 ms median, 1.13 s max; H3 100 ms, 82
+ms, 0.98 s; the coordinate-slice solution histograms have the modes of
+section 4 exactly ((2, 4) 70, (3, 9) 48, (1, 1) 46, (9, 81) 31 of 300
+for N). Stages B and C (`driver.py degenerate --sample 8 --cap-s 440`,
+evenly spaced over each pattern's list, measured before the
+reconstruction fix, which does not touch the pinned-family solves that
+dominate): N (1, 1, 1, 1, 1) 5.66 s mean, 3.85 s median, 11.2 s max;
+(2, 1, 1, 1) 2.48 s; (2, 2, 1) 66.9 s (2 covers, capped); (3, 1, 1) 6.93 s.
+H3 5.00 s, 0.61 s, 58.3 s (2, capped), 0.13 s. The stage B rate is the
+number section 6 could not measure: 5 to 6 s per cover against the 4 s
+scaled from H^6. Stage C has a heavy tail: a separate 12-cover sample of
+the N stage C list had median 1.7 s but one kappa = 1 cover with a
+repeated state at 234 s (32,092 second-slice solutions), and the first
+sampling attempt spent two hours on one cover before it was killed; the
+(2, 2, 1) covers (two blocks, 46^2 translate-set combinations per slice)
+are a minute each. A stage C batch can therefore run much longer than
+its estimate.
+
+Partition (`partition_N.json`, `partition_H3.json`, `driver.py partition
+--target-s 540 --target-bc-s 540 --match-ms 126|100`). N: 37 stage A
+batches (batches 0 to 36, 1 to 243 pivot pairs each, 7.1 CPU-h at the
+census seconds plus the sampled matcher rate), 128 stage B batches (37 to
+164, 95 or 96 covers, 19.2 CPU-h), 39 stage C batches (165 to 203, 151 or
+152 covers, 5.7 CPU-h): 204 batches, 32.0 CPU-h. H3: 28 stage A batches
+(0 to 27, 1 to 1,407 pairs, 5.6 CPU-h), 57 stage B batches (28 to 84, 107
+or 108 covers, 8.5 CPU-h), 8 stage C batches (85 to 92, 611 covers, 1.1
+CPU-h): 93 batches, 15.2 CPU-h. About 47 CPU-hours for both cells at the
+loaded-laptop rates, against the 30 of section 6 (the stage B rate and
+the stage A load account for the difference); on 15 cores of an unloaded
+pod, three to four hours of wall time.
+
+Pod commands (16-vCPU Linux, the H^6 shape; from the repository root
+after `uv sync --extra challenge`; rerunning resumes, finished batches
+are skipped):
+
+```
+mkdir -p research/qutrit_m4_rank5/results/N research/qutrit_m4_rank5/results/H3
+seq 0 203 | xargs -P 15 -n 1 sh -c \
+  'nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/batch.py N "$0" \
+   > research/qutrit_m4_rank5/results/N/batch_"$0".log 2>&1'
+seq 0 92 | xargs -P 15 -n 1 sh -c \
+  'nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/batch.py H3 "$0" \
+   > research/qutrit_m4_rank5/results/H3/batch_"$0".log 2>&1'
+nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/aggregate.py N --dry-run --partial
+nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/aggregate.py H3 --dry-run --partial
+nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/aggregate.py N --recheck 2 --recheck-seed 20260922
+nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/aggregate.py H3 --recheck 2 --recheck-seed 20260922
+```
+
+The last two write `batch_manifest_N.json` and `batch_manifest_H3.json`
+and print the claim lines; then fill the placeholders of the two draft
+bound files and move them to `bounds/`.
+
+Status of what the plan asked for and this session did not finish (the
+session ran under a 10-minute cap per job after the first degenerate
+sampling attempt hung for two hours on one stage C cover):
+
+- `control-witness` (the rank-7 N witness exported from the Lean file by
+  `driver.py export-witness`, the rank-8 H3 witness of
+  `bounds/H3-m4-upper-8.json`, each recovered from its all-visible base
+  points with the matcher at rank 7 or 8): NOT RUN. It needs the dense
+  1-parameter solve at 7 or 8 terms (28^3 x 28^4 and 28^4 x 28^4 feature
+  products per slice), which the 10-minute cap does not fit for every
+  base; `--base K` runs one (base, x0) pair at a time and the report is
+  written after every base.
+- Measured batches: NOT RUN. The rates above come from the samples; the
+  first stage A, B and C batch of each cell should be run on the pod
+  before the rest (`batch.py N 0`, `batch.py N 37`, `batch.py N 165`,
+  `batch.py H3 0`, `batch.py H3 28`, `batch.py H3 85`) and the partition
+  regenerated with `--match-ms` and the sample rates corrected if they are
+  far off; the partition and degenerate-list hashes then change, so no
+  batch may be kept across a repartition.
+- The aggregate has not been exercised on stored batches of these cells;
+  it is the H^6 aggregate with the cell, base point and per-cell paths
+  added.

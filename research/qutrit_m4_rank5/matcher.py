@@ -300,6 +300,8 @@ def restrict(fam, Ws, rhss):
     d1, d2, dC = fam.parts[0][0], fam.parts[1][0], fam.parts[2][0]
     W1, W2, WC = Ws
     r1, r2, rC = rhss
+    if len(rC) == 0:
+        return fam                    # the blocks' translates span the slice: nothing to check
     if np.any(((W1 % P1) @ (d1 % P1)) % P1 != r1 % P1):
         return None
     if np.abs(WC @ dC - rC).max() > 1e-7 * max(1.0, float(np.abs(rC).max())):
@@ -310,6 +312,38 @@ def restrict(fam, Ws, rhss):
     if np.any(acc != r2 % P2):
         return None
     return fam
+
+
+def solve_slice3(opts, blocks, fam, rhs, rng, stats=None, log=None):
+    """slice_cover.solve_slice, plus the case of no ordinary term (every
+    distinct state repeated, which happens in the m = 3 control where
+    chi(|M>) = 2): the equation is then that the slice lies in the span of
+    the chosen translates, i.e. its projection onto their annihilator
+    vanishes over the three fields."""
+    if opts:
+        return solve_slice(opts, blocks, fam, rhs, rng, stats=stats, log=log)
+    out = []
+    for Ssel in itertools.product(*[b.subsets for b in blocks]):
+        Ps, _ = _projectors(blocks, Ssel)
+        ok = True
+        for fld, p in ((0, P1), (1, P2), (2, None)):
+            P = Ps[fld]
+            if P.shape[0] == 0:
+                continue
+            if p is None:
+                ok &= bool(np.abs(P @ rhs[2]).max() < 1e-7 * max(1.0, float(np.abs(rhs[2]).max())))
+            else:
+                acc = np.zeros(P.shape[0], dtype=np.int64)
+                for j in range(P.shape[1]):
+                    acc = (acc + (P[:, j] % p) * (int(rhs[fld][j]) % p) % p) % p
+                ok &= not np.any(acc)
+            if not ok:
+                break
+        if ok:
+            out.append(((), Ssel))
+    if stats is not None:
+        stats["candidates"] = stats.get("candidates", 0) + len(out)
+    return out
 
 
 def _refine_split(D, S, coords, splits, tol=1e-7):
@@ -528,7 +562,7 @@ class Matcher:
             rhs = target.rhs(add(x0, e))
             new, count = [], 0
             for cl, bl, f, sp in states:
-                sols = solve_slice(arrays, blocks, f, rhs, self.rng, stats=stats, log=self.log)
+                sols = solve_slice3(arrays, blocks, f, rhs, self.rng, stats=stats, log=self.log)
                 count += len(sols)
                 for combo, Ssel in sols:
                     f2 = restrict(f, *slice_system(arrays, blocks, combo, Ssel, rhs))
@@ -612,7 +646,7 @@ class Matcher:
             for cl2, bl2, f, sp1, alive in states:
                 codes = [np.unique(rows[i][alive[i], c]) for i in range(r)]
                 arrays = [(o.m1[cd], o.m2[cd], o.vecs[cd]) for o, cd in zip(opts, codes)]
-                sols = solve_slice(arrays, blocks, f, rhs, self.rng, stats=stats, log=self.log)
+                sols = solve_slice3(arrays, blocks, f, rhs, self.rng, stats=stats, log=self.log)
                 stats["composite_solutions"] += len(sols)
                 for combo, Ssel in sols:
                     f2 = restrict(f, *slice_system(arrays, blocks, combo, Ssel, rhs))
