@@ -14,7 +14,11 @@
       "vprusso"
     ]
   },
-  "notes": "rank 6 plateaus at sqrt(70-37 sqrt 3)/12 Witness: the four m=3 terms of H3M3Pointwise tensored with the rank-2 single-copy decomposition |H3> in span{|0>, |+>}, verified here in exact arithmetic.",
+  "notes": "rank 6 plateaus at sqrt(70-37 sqrt 3)/12 Witness: the four m=3 terms of H3M3Pointwise tensored with the rank-2 single-copy decomposition |H3> in span{|0>, |+>}, verified here in exact arithmetic. Now at the lean tier: h3_m4_stabRankP_le_eight in LeanProofs.H3M4StabRank proves stabRankP 3 |H3>^4 <= 8 against IsStabP 3 from this witness, the pointwise identity being decided by the kernel on integer coordinate vectors (see lean_proofs/LeanProofs/Stabilizer/Reflect.lean).",
+  "lean": {
+    "module": "LeanProofs.H3M4StabRank",
+    "theorem": "h3_m4_stabRankP_le_eight"
+  },
   "witness": {
     "terms": [
       {

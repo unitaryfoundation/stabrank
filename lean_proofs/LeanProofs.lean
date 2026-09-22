@@ -39,3 +39,8 @@ import LeanProofs.Stabilizer.RankOne
 import LeanProofs.StrangeM1Lower
 import LeanProofs.QubitM2Lower
 import LeanProofs.M2Lower
+import LeanProofs.Stabilizer.Reflect
+import LeanProofs.ReflectBases
+import LeanProofs.ReflectQubit
+import LeanProofs.ReflectQutrit
+import LeanProofs.H3M4StabRank
