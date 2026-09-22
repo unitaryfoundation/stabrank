@@ -16,10 +16,13 @@ import LeanProofs.Stabilizer.Rank
 import LeanProofs.Stabilizer.IsStab
 import LeanProofs.Stabilizer.IsStabP
 import LeanProofs.Stabilizer.TensorP
+import LeanProofs.Stabilizer.PhaseP
+import LeanProofs.Stabilizer.SliceP
 import LeanProofs.QubitShared
 import LeanProofs.QubitHStabRank
 import LeanProofs.QubitTStabRank
 import LeanProofs.QubitTM4StabRank
+import LeanProofs.QubitProjection
 import LeanProofs.T3GaloisDescent
 import LeanProofs.T3M1StabRank
 import LeanProofs.T3GaloisM

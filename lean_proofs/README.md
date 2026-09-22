@@ -256,6 +256,56 @@ mapping is:
   `IsStabP p`: `tensorP`, `IsStabP.tensor`, and
   `stabRankP_tensor_le : stabRankP p (ψ ⊗ φ) ≤ stabRankP p ψ * stabRankP p φ`.
 
+- `LeanProofs/Stabilizer/PhaseP.lean` — the phase exponent of a `stabVecP`
+  under an affine substitution of its parameters, for any prime `p`. The
+  computation is done in `ZMod D` (`D = stabPeriod p`) through two maps
+  `ZMod p → ZMod D`: `qcast p u = (D / p) · u.val`, which is additive because
+  `(D / p) · n` mod `D` depends only on `n` mod `p` (`natCast_div_mul_mod`),
+  and `liftD p u = u.val`, which equals `qcast` for odd `p` and for `p = 2`
+  satisfies `liftD (u + v) = liftD u + liftD v + 2 · liftD u · liftD v` in
+  `ZMod 4`. `phaseZ` is `quadPhaseP` read in `ZMod D` (`natCast_quadPhaseP`),
+  `IsPhaseExp p g` says `g` is a constant plus some `phaseZ p Q' l'`, and the
+  class is closed under sums (`IsPhaseExp.sum`), `qcast` of a product of two
+  affine functions (`IsPhaseExp.qcast_mul_affine_affine`) and `l · liftD` of
+  an affine function (`IsPhaseExp.mul_liftD_affine`, by induction on the set
+  of summands in the `p = 2` case). `zeta_pow_quadPhaseP_comp`: if every
+  coordinate `y_i(z)` is affine in `z`, then
+  `ζ ^ quadPhaseP Q l (y(z)) = ζ ^ C * ζ ^ quadPhaseP Q' l' z` for some
+  `C`, `Q'`, `l'`.
+
+- `LeanProofs/Stabilizer/SliceP.lean` — slices and the projection bound.
+  `sliceP p v a` fixes the last digit of `v` to `a`.
+  `IsStabP.slice : IsStabP p v → sliceP p v a = 0 ∨ IsStabP p (sliceP p v a)`:
+  the hyperplane `x₀_n + Σ_j y_j W_j n = a` is either independent of `y`
+  (`stabVecP_snoc_of_last_zero`: the slice is zero or the same state with
+  the last column dropped) or solved for a pivot coordinate `y_{j₀}` and
+  parametrised by the remaining `k - 1` (`subP`, `sliceX0`, `sliceW`,
+  `stabVecP_snoc_pivot`), with the phase handled by `PhaseP.lean`.
+  Slicing is linear (`sliceLinP`), so
+  `stabRankP_sliceP_le : stabRankP p (sliceP p v a) ≤ stabRankP p v`
+  (the zero slices of a minimal decomposition are dropped). For products
+  `sliceP_tensorP : sliceP (ψ ⊗ φ) a = ψ ⊗ sliceP φ a`, and slicing `m`
+  times along the digits of a point where `φ` is nonzero gives the
+  **projection bound**
+  `stabRankP_le_tensorP : φ ≠ 0 → stabRankP p ψ ≤ stabRankP p (tensorP p ψ φ)`
+  (with `stabRankP_smul` for the final scalar). `powVecP p f m` is the
+  `m`-fold tensor power of a one-qudit amplitude `f : ZMod p → ℂ` on digit
+  strings (`tensorP_powVecP : ψ^a ⊗ ψ^b = ψ^(a+b)`), and against it
+  `stabRankP_powVecP_le_succ : f ≠ 0 → χ(ψ^m) ≤ χ(ψ^(m+1))`,
+  `stabRankP_powVecP_mono : f ≠ 0 → a ≤ b → χ(ψ^a) ≤ χ(ψ^b)`, and
+  `stabRankP_powVecP_add_le : χ(ψ^(a+b)) ≤ χ(ψ^a) · χ(ψ^b)` (from
+  `stabRankP_tensor_le`).
+
+  Board status. The Lean lower bounds are `T3` at `m = 1, 2` (`≥ 3`, and
+  `t3M_stabRank_gt_two` already gives `≥ 3` at every `m`) and `S` at `m = 2`
+  (`≥ 2`); every cell one or more copies up already holds a stronger
+  computational bound (`T3`: `≥ 8` at `m = 3, 4, 5`; `S`: `≥ 4` at `m = 3, 4`,
+  `≥ 5` at `m = 5, 6`), so the projection lemma changes no tier on the board.
+  The bound files whose notes cite projection monotonicity
+  (`S-m4/m5/m6`, `T3-m4/m5`, `qubit_H-m5/m6`, `qubit_T-m5/m6` lower) project
+  from computational exclusions, so the projection step is now formal but
+  their sources are not, and they keep their tier.
+
 - `LeanProofs/QubitShared.lean` — the qubit magic states on digit strings,
   `hVec m` (`|H⟩ = cos(π/8)|0⟩ + sin(π/8)|1⟩`) and `tVec m`
   (`|T⟩ = cos β|0⟩ + e^{iπ/4} sin β|1⟩`, `β = arccos(1/√3)/2`), with the
@@ -375,6 +425,13 @@ mapping is:
   the classes are the digit strings with zero, one, or two occurrences of the
   distinguished digit. `norrell_m2_stabRank_eq_three` and
   `h3_m2_stabRank_eq_three` with `M2StabRank`. Build ≈ 5 s.
+- `LeanProofs/QubitProjection.lean` — `SliceP.lean` at the qubit states:
+  `hVec m = powVecP 2 hAmp1 m` and `tVec m = powVecP 2 tAmp1 m` by `rfl`,
+  `hAmp1_ne_zero`, `tAmp1_ne_zero` (from `cH_sq`, `cT_sq`), and
+  `qubit_h_stabRankP_le_succ`, `qubit_h_stabRankP_mono`,
+  `qubit_h_stabRankP_add_le` with the `qubit_t_` versions: a Lean lower bound
+  on `|H⟩^⊗m` or `|T⟩^⊗m` at one `m` becomes one at every larger `m` by
+  `qubit_h_stabRankP_mono`.
 
 ## Pitfalls
 
