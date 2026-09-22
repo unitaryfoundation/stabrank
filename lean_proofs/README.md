@@ -16,6 +16,7 @@ mapping is:
 | Ququint T5 m=1 (both directions) and m=2 upper (bound files) | `Ququint.lean`, `T5Minors.lean`, `T5M1StabRank.lean`, `T5M2StabRank.lean` |
 | Lower bounds S m=1, H m=2, T m=2, N m=2, H_3 m=2 (bound files) | `Stabilizer/RankOne.lean`, `StrangeM1Lower.lean`, `QubitM2Lower.lean`, `M2Lower.lean` |
 | H_3 m=4, T_3 m=3,4, qubit H-type m=5,6,7,8, qubit T-type m=5,6 (bound-file witnesses, reflection route) | `Stabilizer/Reflect.lean`, `ReflectBases.lean`, `ReflectQubit.lean`, `ReflectQutrit.lean`, `H3M4StabRank.lean`, `T3M3StabRank.lean`, `T3M4StabRank.lean`, `QubitHM5StabRank.lean`, `QubitHM6StabRank.lean`, `QubitHM7StabRank.lean`, `QubitHM8StabRank.lean`, `QubitTM5StabRank.lean`, `QubitTM6StabRank.lean` |
+| H_3 m=4, T_3 m=3,4, qubit H-type m=5,6,7,8,10, qubit T-type m=5,6 (bound-file witnesses, reflection route) | `Stabilizer/Reflect.lean`, `Stabilizer/Chunks.lean`, `ReflectBases.lean`, `ReflectQubit.lean`, `ReflectQutrit.lean`, `H3M4StabRank.lean`, `T3M3StabRank.lean`, `T3M4StabRank.lean`, `QubitHM5StabRank.lean`, `QubitHM6StabRank.lean`, `QubitHM7StabRank.lean`, `QubitHM8StabRank.lean`, `QubitHM10Data.lean`, `QubitHM10Key0.lean` to `QubitHM10Key3.lean`, `QubitHM10StabRank.lean`, `QubitTM5StabRank.lean`, `QubitTM6StabRank.lean` |
 
 ## What's here
 
@@ -488,6 +489,20 @@ mapping is:
   the bound files (nested radicals such as `√(1/2 - √2/4) = sin(π/8)`) are
   recognised in the ring by dividing the radicand by `sin²` and taking the
   square root in the quadratic or biquadratic field.
+
+- `LeanProofs/Stabilizer/Chunks.lean`, `QubitHM10Data.lean`,
+  `QubitHM10Key0.lean` to `QubitHM10Key3.lean`, `QubitHM10StabRank.lean` —
+  the `m = 10` H-type cell (`qubit_h_m10_stabRankP_le_eighteen`, from the
+  eighteen terms of `bounds/qubit_H-m10-upper-18.json`). One kernel check over
+  the `1024` indices runs for longer than a build step is allowed here, so
+  `gen_witness_lean.py --chunks 4` writes the data (terms, coefficient
+  vectors, `rhsZ`) to `QubitHM10Data`, one slice theorem `key<q>` over the
+  indices `q * 256 + i` to each `QubitHM10Key<q>` (130 s to 164 s each), and
+  the assembly to `QubitHM10StabRank`, where `forall_fin_of_chunks` of
+  `Chunks.lean` (`chunkIdx q i = ⟨q * N + i, _⟩`, and every index is
+  `chunkIdx (idx / N) (idx % N)`) recovers the statement over `Fin (2 ^ 10)`.
+  `cidx` fixes the implicit `c` and `N` of `chunkIdx`; without them
+  unification reads `2 ^ 10` as `2 * 2 ^ 9`.
 
 ## Pitfalls
 
