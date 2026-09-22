@@ -1,24 +1,32 @@
-"""Resumable driver for the rank-5 exclusion of |H>^6 by an all-visible base
-slice (docs/notes/h6_rank5_exclusion.md), and its controls.
+"""Setup, partition and controls for the rank-5 exclusion of |H>^6 by an
+all-visible base slice (docs/notes/h6_rank5_exclusion.md). The batches
+themselves run through batch.py and are checked by aggregate.py.
 
 Stage A: every full 5-cover of |H>^3 with five distinct, linearly
 independent base states, one per orbit of the unitary symmetry group of
 |H>^3, enumerated per pivot pair (i, j) by
 verify_challenge/slice_cover.CoverEnumerator.pair_covers, and matched at
-the four base points x_0 (one per Hamming weight) by SliceMatcher.run. The
-matcher handles dependent and repeated base states (stages B and C of the
-note) through the coefficient family and the block treatment of repeated
-copies; the enumeration of those covers is `degenerate`.
+the four base points x_0 (one per Hamming weight) by SliceMatcher.run.
+Stage B: the full 5-covers of five distinct but dependent states; stage C:
+the covers with a repeated state. Both are listed once by `degenerate
+--write` (26,242 multisets over the 3-cover and 4-cover classes) and
+matched by the reference matcher through the coefficient family and the
+block treatment of repeated copies.
 
 Commands
   census                    run the 5-cover kernel alone over every pivot pair and
                             record the covers, candidates and seconds per pair
-  partition [--target-s S]  write partition.json: pivot pairs grouped into
+  degenerate [--sample N] [--write]
+                            count the dependent and repeated 5-covers (stages B, C),
+                            time N of each multiplicity pattern, and with --write
+                            store the list as degenerate_covers.json with its hash
+  partition [--target-s S] [--target-bc-s S]
+                            write partition.json: stage A pivot pairs grouped into
                             batches of about S seconds (kernel seconds plus the
-                            matcher per cover, from the census when present)
-  run BATCH                 run one batch, writing results/batch_BATCH.json
-                            (skipped when the file exists: resume by rerunning)
-  status                    coverage and totals over the result files
+                            matcher per cover, from the census), then stage B and C
+                            covers assigned round-robin to batches of about
+                            --target-bc-s seconds at the rates of
+                            results/degenerate_sample.json
   control-witness           recover the rank-6 witness bounds/qubit_H-m6-upper-6.json
                             from its own all-visible (triple, base point) slices
   control-m4                recover the rank-4 decompositions of |H>^4 from the
@@ -27,49 +35,35 @@ Commands
                             pivot at the four base points (--reference: Python path)
   fixture                   write the C++ test fixture from the reference matcher
                             on the sample covers
-  degenerate [--sample N]   count the dependent and repeated 5-covers (stages B, C)
-                            and time N of each multiplicity pattern
+
+Running a batch: `batch.py K`; checking the results: `aggregate.py`.
 """
 
 from __future__ import annotations
 
 import argparse
-import hashlib
+import datetime
 import itertools
 import json
+import math
 import os
-import subprocess
 import sys
 import time
 
 import numpy as np
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(os.path.dirname(HERE))
-sys.path.insert(0, os.path.join(ROOT, "verify_challenge"))
-sys.path.insert(0, os.path.join(ROOT, "research", "constructions"))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import common  # noqa: E402
+from common import (CENSUS, DEGENERATE, DEGENERATE_SAMPLE, HERE, N1, PARTITION, RESULTS,  # noqa: E402
+                    ROOT, git_commit, pairs_of, stage_of)
 from slice_cover import (CoverEnumerator, Family, SliceMatcher, x0_reps, _reduce,  # noqa: E402
                          exact_codes, patterns)
 from rank_exclusion import dictionary, symmetry_orbit_reps  # noqa: E402
 
-PARTITION = os.path.join(HERE, "partition.json")
-RESULTS = os.path.join(HERE, "results")
-N1 = 3
-
-
-def git_commit():
-    try:
-        return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
-    except Exception:
-        return None
-
 
 def hit_record(h, cover, x0):
-    return {"cover": list(cover), "x0": x0, "residual": h["residual"], "rank": h["rank"],
-            "exact": h["exact"], "independent": h["independent"], "nonzero": h["nonzero"],
-            "free_parameters": h["free_parameters"],
-            "coeffs": [[z.real, z.imag] for z in h["coeffs"]],
-            "terms": [[[z.real, z.imag] for z in t] for t in h["terms"]]}
+    det, num = common.hit_record(h, cover, x0)
+    return {**det, **num}
 
 
 def genuine(h, rank):
@@ -77,23 +71,6 @@ def genuine(h, rank):
 
 
 # ------------------------------------------------------------ partition ----
-
-def pairs_of(E):
-    """Every (pivot, partner, member count) unit in the pivot order of the
-    enumerator."""
-    out = []
-    for i in E.reps:
-        i = int(i)
-        members, partners = E.pivot_plan(i)
-        for j in partners:
-            j = int(j)
-            M = int(np.count_nonzero(members > j)) - (1 if i > j else 0)
-            out.append((i, j, M))
-    return out
-
-
-CENSUS = os.path.join(RESULTS, "kernel_census.json")
-
 
 def census(args):
     """Run the 5-cover kernel alone over every pivot pair and record, per
@@ -131,12 +108,10 @@ def census(args):
     return 0
 
 
-def partition(args):
-    E = CoverEnumerator(N1)
-    units = pairs_of(E)
+def stage_a_batches(units, args):
+    """Stage A units grouped greedily into batches of about --target-s
+    seconds at the census's kernel seconds and the sampled matcher cost."""
     if os.path.exists(CENSUS) and not args.no_census:
-        # measured kernel seconds per unit plus the matcher at its sampled
-        # per-cover cost (the four base points)
         with open(CENSUS) as f:
             cen = json.load(f)
         by = {(r[0], r[1]): r for r in cen["rows"]}
@@ -157,18 +132,68 @@ def partition(args):
             cur, acc = [], 0.0
     if cur:
         batches.append(cur)
+    return batches, model, float(sum(costs))
+
+
+def degenerate_rates():
+    """Mean seconds per cover (four base points) by multiplicity pattern,
+    from results/degenerate_sample.json."""
+    with open(DEGENERATE_SAMPLE) as f:
+        smp = json.load(f)
+    return {pat: float(np.mean(v["seconds"])) for pat, v in smp["patterns"].items()}
+
+
+def partition(args):
+    E = CoverEnumerator(N1)
+    units = pairs_of(E)
+    batches_a, model, est_a = stage_a_batches(units, args)
+    geometry = [{"index": k, "stage": "A", "units": b} for k, b in enumerate(batches_a)]
     rec = {"orbit": "qubit_H", "m": 6, "rank": 5, "n1": N1, "N": E.N, "group_order": E.info["order"],
-           "pivot_orbits": int(E.info["orbits"]), "units": len(units), "batches": len(batches),
-           "cost_model": model, "target_s": args.target_s,
-           "estimated_s": float(sum(costs)), "git": git_commit(),
-           "batch_units": batches}
-    with open(PARTITION, "w") as f:
-        json.dump(rec, f)
-    print(f"{len(units)} pivot pairs, {len(batches)} batches, estimate "
-          f"{sum(costs) / 3600:.2f} CPU-h at the stored rates; wrote {PARTITION}")
+           "pivot_orbits": int(E.info["orbits"]), "units": len(units),
+           "stage_a_batches": len(batches_a), "stage_b_batches": 0, "stage_c_batches": 0,
+           "cost_model": model, "target_s": args.target_s, "target_bc_s": args.target_bc_s,
+           "estimated_s": {"A": est_a, "B": 0.0, "C": 0.0}}
+    if os.path.exists(DEGENERATE):
+        covers, deg = common.load_degenerate(DEGENERATE)
+        rates = degenerate_rates()
+        rec["cost_model"]["degenerate_sample"] = os.path.relpath(DEGENERATE_SAMPLE, HERE)
+        rec["cost_model"]["s_per_cover_by_pattern"] = rates
+        ids = {"B": [], "C": []}
+        cost = {"B": 0.0, "C": 0.0}
+        for k, c in enumerate(covers):
+            st = stage_of(c)
+            ids[st].append(k)
+            cost[st] += rates[str(common.multiplicity_pattern(c))]
+        for st in ("B", "C"):
+            n = max(1, math.ceil(cost[st] / args.target_bc_s))
+            # round robin over the sorted cover list: the cost of a cover
+            # correlates with its 3-cover or 4-cover, so contiguous chunks
+            # would not balance
+            for b in range(n):
+                geometry.append({"index": len(geometry), "stage": st, "cover_ids": ids[st][b::n]})
+            rec[f"stage_{st.lower()}_batches"] = n
+            rec["estimated_s"][st] = cost[st]
+        rec["degenerate"] = {"file": os.path.relpath(DEGENERATE, HERE), "sha256": deg["sha256"],
+                             "count": len(covers), "stage_b_covers": len(ids["B"]),
+                             "stage_c_covers": len(ids["C"])}
+    else:
+        print(f"{DEGENERATE} not found: stages B and C left out; run `degenerate --write` first",
+              file=sys.stderr)
+    rec["estimated_s"]["total"] = sum(rec["estimated_s"].values())
+    rec["batches"] = len(geometry)
+    rec["git"] = git_commit()
+    rec["generated"] = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+    rec["batch_geometry"] = geometry
+    sha = common.write_hashed(PARTITION, rec)
+    e = rec["estimated_s"]
+    print(f"{len(units)} pivot pairs in {rec['stage_a_batches']} stage A batches "
+          f"({e['A'] / 3600:.2f} CPU-h), {rec['stage_b_batches']} stage B batches "
+          f"({e['B'] / 3600:.2f} CPU-h), {rec['stage_c_batches']} stage C batches "
+          f"({e['C'] / 3600:.2f} CPU-h); {rec['batches']} batches, {e['total'] / 3600:.1f} CPU-h "
+          f"at the stored rates; wrote {PARTITION} (sha256 {sha[:16]})")
 
 
-# ------------------------------------------------------------------ run ----
+# ---------------------------------------------------------------- match ----
 
 def match_cover(M, E, cover, rec, rank):
     """Run one cover at the four base points, accumulating into rec."""
@@ -182,64 +207,6 @@ def match_cover(M, E, cover, rec, rank):
         rec["coord_solution_hist"][k] = rec["coord_solution_hist"].get(k, 0) + 1
         for h in hits:
             rec["hits"].append(hit_record(h, cover, x0))
-
-
-def run(args):
-    with open(PARTITION) as f:
-        part = json.load(f)
-    os.makedirs(RESULTS, exist_ok=True)
-    out = os.path.join(RESULTS, f"batch_{args.batch}.json")
-    if os.path.exists(out) and not args.force:
-        print(f"{out} exists; skipping")
-        return 0
-    units = part["batch_units"][args.batch]
-    E = CoverEnumerator(N1)
-    assert E.N == part["N"] and E.info["order"] == part["group_order"]
-    M = SliceMatcher(E, N1)
-    t0 = time.time()
-    rec = {"batch": args.batch, "units": units, "git": git_commit(), "covers": 0, "candidates": 0,
-           "refused": 0, "matched": 0, "hits": [], "coord_solution_hist": {}, "kernel_s": 0.0,
-           "match_s": 0.0}
-    for i, j, _ in units:
-        tk = time.time()
-        Qi, _ = _reduce(E.F1, E.Q1, E.Q1[i])
-        members, _ = E.pivot_plan(i)
-        mask = np.zeros(E.N, dtype=bool)
-        mask[members] = True
-        covers, nc = E.pair_covers(5, i, j, Qi, mask)
-        rec["kernel_s"] += time.time() - tk
-        rec["covers"] += len(covers)
-        rec["candidates"] += nc
-        tm = time.time()
-        for cover in sorted(covers):
-            match_cover(M, E, cover, rec, 5)
-        rec["match_s"] += time.time() - tm
-    rec["wall_s"] = time.time() - t0
-    rec["sha256"] = hashlib.sha256(json.dumps(rec, sort_keys=True).encode()).hexdigest()
-    with open(out, "w") as f:
-        json.dump(rec, f)
-    print(f"batch {args.batch}: {len(units)} units, {rec['covers']} covers, {rec['matched']} matched, "
-          f"{rec['refused']} refused, {len(rec['hits'])} hits, "
-          f"kernel {rec['kernel_s']:.0f}s, match {rec['match_s']:.0f}s")
-    return 2 if rec["hits"] else 0
-
-
-def status(args):
-    with open(PARTITION) as f:
-        part = json.load(f)
-    done, tot = 0, {"covers": 0, "matched": 0, "refused": 0, "hits": 0, "kernel_s": 0.0, "match_s": 0.0}
-    for b in range(part["batches"]):
-        p = os.path.join(RESULTS, f"batch_{b}.json")
-        if not os.path.exists(p):
-            continue
-        with open(p) as f:
-            rec = json.load(f)
-        done += 1
-        for k in tot:
-            tot[k] += len(rec[k]) if k == "hits" else rec[k]
-    print(f"{done}/{part['batches']} batches done; {tot}")
-    if done:
-        print(f"mean kernel {tot['kernel_s'] / done:.0f}s and match {tot['match_s'] / done:.0f}s per batch")
 
 
 # ------------------------------------------------------------- controls ----
@@ -527,8 +494,16 @@ def degenerate(args):
         pat = tuple(sorted((ms.count(u) for u in set(ms)), reverse=True))
         by[str(pat)] = by.get(str(pat), 0) + 1
         groups.setdefault(str(pat), []).append(ms)
+    dt = time.time() - t0
     print(f"{len(deg)} dependent or repeated full 5-covers over the 3-cover and 4-cover classes "
-          f"({time.time() - t0:.0f}s); by multiplicity pattern {by}")
+          f"({dt:.0f}s); by multiplicity pattern {by}")
+    if args.write:
+        rec = {"orbit": "qubit_H", "m": 6, "rank": 5, "n1": N1, "N": E.N, "group_order": E.info["order"],
+               "covers3": len(covers3), "covers4": len(covers4), "count": len(deg),
+               "by_pattern": by, "seconds": dt, "git": git_commit(),
+               "covers": [list(c) for c in deg]}
+        sha = common.write_hashed(DEGENERATE, rec)
+        print(f"wrote {DEGENERATE} (sha256 {sha[:16]})")
     if not args.sample:
         return 0
     # timing sample: --sample covers from each multiplicity pattern, evenly
@@ -564,7 +539,8 @@ def main(argv):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("partition")
-    p.add_argument("--target-s", type=float, default=600.0)
+    p.add_argument("--target-s", type=float, default=600.0, help="seconds per stage A batch")
+    p.add_argument("--target-bc-s", type=float, default=700.0, help="seconds per stage B or C batch")
     p.add_argument("--floor-s", type=float, default=0.05)
     p.add_argument("--k-s", type=float, default=8.0, help="kernel seconds per pair at M = 1000 (no census)")
     p.add_argument("--match-ms", type=float, default=1.4, help="matcher milliseconds per cover (census)")
@@ -573,12 +549,6 @@ def main(argv):
     p = sub.add_parser("census")
     p.add_argument("--verbose", action="store_true")
     p.set_defaults(fn=census)
-    p = sub.add_parser("run")
-    p.add_argument("batch", type=int)
-    p.add_argument("--force", action="store_true")
-    p.set_defaults(fn=run)
-    p = sub.add_parser("status")
-    p.set_defaults(fn=status)
     p = sub.add_parser("control-witness")
     p.add_argument("--path", default="bounds/qubit_H-m6-upper-6.json")
     p.add_argument("--distinct-only", action="store_true", help="skip bases with a repeated state")
@@ -599,9 +569,10 @@ def main(argv):
     p.set_defaults(fn=fixture)
     p = sub.add_parser("degenerate")
     p.add_argument("--sample", type=int, default=0, help="time N covers of each multiplicity pattern")
+    p.add_argument("--write", action="store_true", help="store the list as degenerate_covers.json")
     p.set_defaults(fn=degenerate)
     args = ap.parse_args(argv[1:])
-    os.nice(19)
+    common.lower_priority()
     return args.fn(args) or 0
 
 

@@ -1,18 +1,21 @@
 # Excluding rank 5 for |H>^6: design note
 
-Status (2026-09-21). Not run to completion, and not certifiable in its
-present form. The enumeration and matching machinery exists
+Status (2026-09-21). Not run to completion, and not certifiable until it
+is. The enumeration and matching machinery exists
 (`verify_challenge/slice_cover.py`, `research/h6_rank5/driver.py`, with
 the two hot paths compiled in `cpp/src/cover5.cpp` and
 `cpp/src/slice_match.cpp`), both positive controls pass on every base
 (section 5: the rank-4 decompositions of |H>^4 from the full 4-covers of
 |H>^3, and the rank-6 witness from all four of its all-visible bases,
 distinct and repeated), the 5-cover enumeration has been run to completion
-(5,939,465 full covers, section 3) and every stage's per-cover cost is
-measured (section 4): stage A is 2.4 CPU-hours, the degenerate stages B
-and C about 34 CPU-hours in the present Python, so the whole exclusion is
-about 36 CPU-hours, a few hours of wall time on a 16-vCPU pod. It has not
-been launched. The
+(5,939,465 full covers of distinct independent states, section 3, and
+26,242 dependent or repeated covers, section 4), and the whole exclusion is
+partitioned into 190 batches with a runner, an aggregator and a
+certificate on the attested tier (section 6): stage A is 2.4 CPU-hours
+with the compiled kernels, the degenerate stages B and C about 30
+CPU-hours in Python, about 36 CPU-hours in all, about 2.5 hours of wall
+time on a 16-vCPU pod. One batch of each stage has been run as a test; the
+full run has not been launched. The
 cell stays at 5 <= chi(H^6) <= 6, with the lower bound the projection of
 `bounds/qubit_H-m5-lower-5.json` and the upper bound the QPG cat witness
 `bounds/qubit_H-m6-upper-6.json`. Excluding rank 5 would also settle
@@ -358,32 +361,107 @@ of |H>^4 from the repeated bases (3, 3, 352, 912) and (75, 353, 749, 749)
 along one qubit), so an argument would have to use property P, and none
 was found; the repeated covers stay in the exclusion as stage C.
 
-## 6. What would close it
+## 6. Run plan and certificate
 
-1. Add the degenerate covers (`degenerate_covers`, 26,242 multisets) to
-   the partition as stages B and C, as batches of the reference matcher,
-   and record their results like the stage A batches (`results/batch_*.json`
-   with counts, the solution histogram and any hit).
-2. Run the 15 stage A batches and the stage B and C batches on a 16-vCPU
-   pod (`driver.py run B` is resumable, one process per batch, about 2.5
-   hours of wall time at the measured rates), aggregate with `status`, and
-   confirm any hit as a rank-5 decomposition of psi_6 (there should be
-   none if chi(H^6) = 6).
-3. Write the certificate on the attested tier (`bounds/T3-m3-lower-8.json`
-   pattern), since 36 CPU-hours exceeds the 3600 s budget, declaring the
-   dependency on PR #87's property P tables or re-running them (501 s).
-   The certificate must also state that the compiled kernels were used and
-   that their agreement with the Python reference was checked on the
-   sample, the controls and the planted instances of the C++ tests only;
-   a full-run cross-check of a random batch with `STABRANK_NO_NATIVE=1` is
-   cheap (a batch is 600 s native, so about 13 hours in Python for the
-   stage A part of one batch, or a few pairs of it) and should be part of
-   the record.
+Partition (`research/h6_rank5/partition.json`, written by `driver.py
+partition`, hashed, 190 batches). Stage A: the 14,280 pivot pairs of the
+5-cover enumeration grouped greedily into 15 batches of about 600 s (the
+census's kernel seconds plus 1.4 ms per cover for the compiled matcher;
+batches 0 to 14, the last one 301 s). Stage B: the 12,390 full 5-covers of
+five distinct but dependent states (multiplicity pattern (1, 1, 1, 1, 1),
+kappa = 1), assigned round-robin over the sorted list to 158 batches of 78
+or 79 covers, about 700 s each at the sampled 8.9 s per cover (batches 15
+to 172). Stage C: the 13,852 covers with a repeated state (13,840 of
+pattern (2, 1, 1, 1), 6 of (2, 2, 1), 6 of (3, 1, 1)), round-robin over 17
+batches of 814 or 815 covers (batches 173 to 189); the partition sizes
+them at the sample mean of 0.82 s per cover, but that mean is carried by
+rare 9 s covers (median 0.02 s) and the test batch ran at 0.17 s per cover,
+so these batches take 2 to 4 minutes and stage C about 0.6 CPU-hours
+rather than 3.2. The degenerate covers are enumerated once (`driver.py
+degenerate --write`, 189 s, `degenerate_covers.json` with its hash) and
+every stage B or C batch loads them by hash; the aggregate re-enumerates
+them. Round robin rather than contiguous chunks because the cost of a
+cover correlates with its 3-cover or 4-cover, which the sorted order
+groups.
+
+Batch (`batch.py K`, resumable, `--native`/`--no-native` with
+`STABRANK_NO_NATIVE=1` honoured). A stage A batch runs the compiled 5-cover
+kernel on its pivot pairs and the matcher on each cover at the four base
+points; a stage B or C batch runs the reference matcher on its covers.
+Every hit is re-decided exactly from the phase codes of its five terms
+(psi_6 against their span mod 2013265921 and numerically,
+`common.decide_terms`); a hit with psi_6 in the span is a decomposition
+with at most five terms and the batch exits 2 with `DECOMPOSITION FOUND`;
+a run that raises, or a hit on which the two decisions disagree, is
+recorded under `undecided` and fails the batch. The record's deterministic
+part (geometry, partition and degenerate-list hashes, counts, the
+coordinate-slice solution histogram, the hits as phase codes with their
+decisions, `undecided`) is hashed as `deterministic_sha256`, so a re-run on
+another machine or with `--no-native` is compared bit for bit; timing,
+host, git commit, matcher and version fields follow, then `sha256` over
+the whole record.
+
+Aggregate (`aggregate.py`). Checks the partition's hash, that its stage A
+units are the enumerator's pivot pairs, the degenerate list against its
+hash and a fresh enumeration, that the stage B and C cover ids tile the
+list exactly once, every batch file with both hashes and its geometry,
+counts and `undecided` list, every stored hit re-decided, and the stage A
+cover total against the census; writes `batch_manifest.json` (one entry
+per batch with parameters, output path and SHA-256); then re-runs
+`--recheck N` batches from scratch chosen from `--recheck-seed` and
+compares deterministic hashes. `--partial` reports over the batches
+present; `--dry-run` skips the re-runs. It prints `CERTIFIED chi(qubit_H^6)
+>= 6` only when every batch is present and clean and the re-runs match.
+
+Certificate. `verify_challenge/cert_qubit_h_m6_rank5_attested.py` prints
+`seed: 20260921`, runs the aggregate with two re-runs into a scratch
+directory and requires its claim line; the draft bound
+`bounds/qubit_H-m6-lower-6.json.draft` declares `certificate.attested` on
+`research/h6_rank5/batch_manifest.json` with `recomputed: 2` and a 3600 s
+budget (the re-enumeration is about 190 s and two batches at most about
+1400 s, so the certificate fits with margin on one core), and states the
+argument's dependencies: PR #87's property P tables
+(`research/constructions/two_qubit_slice.py`, 501 s, not re-run), the
+all-visible slice lemma of section 2, the slice structure lemma, the
+mod-65521 supersets with exact re-decision of every cover and hit, and the
+two positive controls of section 5. Compute hours, hardware, date and the
+`--no-native` cross-check are placeholders until the run; the file keeps
+its `.draft` suffix until the manifest exists, because the submissions
+workflow verifies every touched `bounds/*.json` and `check_attested` fails
+on a missing manifest.
+
+Test (2026-09-21, one core at nice 19 on an 18-core laptop at load
+average about 10). Stage A batch 14 (7,795 pivot pairs, 134,822 covers,
+539,288 matched runs): 220 s, kernel 120 s and match 99 s, 0 hits. Stage B
+batch 15 (79 covers, 316 matched runs): 663 s, 8.4 s per cover, 0 hits.
+Stage C batch 173 (815 covers, 3,260 matched runs): 135 s, 0.17 s per
+cover, 0 hits. Nothing refused, nothing undecided. The aggregate under
+`--partial` re-enumerated the degenerate covers in 185 s, found them equal
+to the stored list, passed every stored check on the three batches, wrote
+the partial manifest, and re-ran batch 14 from scratch in 213 s with the
+same deterministic hash. Projected totals at the test rates: stage A 2.7
+CPU-hours, stage B 28.9, stage C 0.6, about 32 CPU-hours in all (the
+partition's estimate is 36.1).
+
+What remains.
+
+1. Run the 190 batches on a 16-vCPU pod (`research/h6_rank5/README.md`
+   has the commands: `batch.py K` per batch, 15 at a time through xargs,
+   about 2.5 hours of wall time), aggregate, and confirm that no hit is a
+   decomposition.
+2. Cross-check one stage A batch with `--no-native` (about 80 times slower
+   than the 600 s native batch, so batch 14 at about 5 hours) and record
+   that its deterministic hash matched; the compiled kernels' agreement
+   with the Python reference is otherwise checked only on the sample, the
+   controls and the planted instances of the C++ tests.
+3. Fill the placeholders of the draft bound (compute hours, hardware,
+   date, the cross-check), rename it to `bounds/qubit_H-m6-lower-6.json`,
+   and run `verify_challenge/stabrank_verify.py` on it.
 4. Optional, if stage B's 30 CPU-hours matter: compile the 1-parameter
    dense solve (the 2 x 2 Laplace features and the 39-million-pair product)
    the way stage A was compiled.
 
 Everything above depends on PR #87's property P only through the lemma of
 section 2 (an all-visible slice exists); the matcher itself does not use
-P. A certificate should either re-run those tables (501 s) or declare the
-dependency.
+P. The certificate declares the dependency rather than re-running the
+tables.
