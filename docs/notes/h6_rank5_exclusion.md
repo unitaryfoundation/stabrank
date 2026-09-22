@@ -484,3 +484,20 @@ batches 11 and 148 from scratch (439 s and 918 s) with matching
 deterministic hashes, in 1,569 s total. Together with the QPG cat witness
 this gives chi(H^6) = 6, filed as `bounds/qubit_H-m6-lower-6.json` at the
 attested tier.
+
+## 8. The no-native cross-check (2026-09-22)
+
+Stage A batch 14 (7,795 pivot pairs, the smallest stage A batch) was
+re-run on the pod with `STABRANK_NO_NATIVE=1`, so both the 5-cover kernel
+and the matcher were the Python reference implementations. It took
+24,292 s (kernel 21,588 s, matching 2,704 s) against 220 s compiled on
+the laptop. `results/nonative_14.json` agrees with the stored
+`results/batch_14.json` on every exact quantity: 134,822 covers, 539,288
+matched runs, the same coordinate-slice solution histogram, 0 hits, 0
+undecided. The one field that differs is the modular candidate count,
+218,491,553 against 218,322,815: it counts the superset that each kernel's
+random hash functional lets through before exact re-decision, so it
+depends on the implementation, and because the deterministic hash covers
+it, the two hashes differ (8b3884ee against 4dd56468) while the exact
+content agrees. A future revision of the record format should leave the
+candidate count out of the deterministic part.
