@@ -18,5 +18,9 @@
       "vprusso"
     ]
   },
-  "notes": "Settles chi(S) = 2 with the Lean upper bound strange_m1_stabRank_le_two. Exact throughout: a stabilizer state is supported on an affine flat, of size 1 or 3 for one qutrit, and |S> has support 2."
+  "notes": "Settles chi(S) = 2 with the Lean upper bound strange_m1_stabRank_le_two. Exact throughout: a stabilizer state is supported on an affine flat, of size 1 or 3 for one qutrit, and |S> has support 2. Also proved in Lean against stabRank: StrangeM1Lower.strange_m1_stabRank_gt_one (the support {1, 2} is not closed under a - b + d).",
+  "lean": {
+    "module": "LeanProofs.StrangeM1Lower",
+    "theorem": "strange_m1_stabRank_gt_one"
+  }
 }

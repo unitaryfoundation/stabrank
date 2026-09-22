@@ -17,5 +17,9 @@
       "vprusso"
     ]
   },
-  "notes": "Pairs with the lean-certified rank-3 decomposition to settle this cell at chi = 3 exactly, and closes it as a route to the published exponent, which would need rank 2 here. The exclusion rests on a margin rather than exact arithmetic: the closest any two candidate directions come to parallel is 0.71 (N) or 0.73 (H3) against a threshold of 1 - 1e-6, so no rounding at the 1e-15 level of these inputs can close the gap. The same search finds the known rank-2 decomposition of the Strange state at m=2, which the certificate runs as a positive control and fails without."
+  "notes": "Pairs with the lean-certified rank-3 decomposition to settle this cell at chi = 3 exactly, and closes it as a route to the published exponent, which would need rank 2 here. The exclusion rests on a margin rather than exact arithmetic: the closest any two candidate directions come to parallel is 0.71 (N) or 0.73 (H3) against a threshold of 1 - 1e-6, so no rounding at the 1e-15 level of these inputs can close the gap. The same search finds the known rank-2 decomposition of the Strange state at m=2, which the certificate runs as a positive control and fails without. Also proved in Lean against stabRank, with no enumeration: M2Lower.h3_m2_stabRank_gt_two, by the same three-modulus-class argument as the Norrell cell.",
+  "lean": {
+    "module": "LeanProofs.M2Lower",
+    "theorem": "h3_m2_stabRank_gt_two"
+  }
 }

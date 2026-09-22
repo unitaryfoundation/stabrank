@@ -14,6 +14,7 @@ mapping is:
 | Appendix A.3, Norrell m=2,3,4 | `NorrellM2Pointwise.lean`, `NorrellM3.lean`, `NorrellM3Pointwise.lean`, `NorrellM4Pointwise.lean` |
 | Qubit H-type m=2,3,4 and T-type m=2,3,4 (bound files) | `QubitShared.lean`, `QubitHStabRank.lean`, `QubitTStabRank.lean`, `QubitTM4StabRank.lean` |
 | Ququint T5 m=1 (both directions) and m=2 upper (bound files) | `Ququint.lean`, `T5Minors.lean`, `T5M1StabRank.lean`, `T5M2StabRank.lean` |
+| Lower bounds S m=1, H m=2, T m=2, N m=2, H_3 m=2 (bound files) | `Stabilizer/RankOne.lean`, `StrangeM1Lower.lean`, `QubitM2Lower.lean`, `M2Lower.lean` |
 
 ## What's here
 
@@ -330,6 +331,50 @@ mapping is:
   full-support state) with coefficients `β_j / 5`, `β_j ∈ ℤ[ω₅]` (the file's
   `c_j` times `√5^(k_j - 2)`), decided at the 25 digit strings by the same
   tactic sequence as the one-copy identity.
+- `LeanProofs/Stabilizer/RankOne.lean`: `stabRank ψ > 1` from
+  non-membership. `stabRank_gt_one_of_not_stab`: for a predicate closed under
+  nonzero rescaling (`IsStabP.smul`, `IsStab.smul`), a nonzero `ψ` outside it
+  has rank at least two, since a decomposition of size at most one is empty
+  or a single rescaled state. `IsStabP.pow_period_eq`: every nonzero entry of
+  an `IsStabP p` vector is `c ζ_D^e`, so its `D`-th power is `c^D` at every
+  point of the support; this is the one-modulus argument of
+  `cert_rank1_moduli.py` without norms. Also the generic support lemmas
+  `stabVecP_ne_zero_imp` and `stabVecP_apply_affinePtP`.
+
+- `LeanProofs/StrangeM1Lower.lean`: `strange_m1_stabRank_gt_one`:
+  `stabRank IsStab |S⟩ > 1`, from `IsStab.affine_support` at `a = d = 1`,
+  `b = 2` (the support `{1, 2}` would have to contain `0`), and
+  `strange_m1_stabRank_eq_two` with `M1StabRank`. Build ≈ 3 s.
+
+- `LeanProofs/QubitM2Lower.lean`: `qubit_h_m2_stabRankP_gt_one` and
+  `qubit_t_m2_stabRankP_gt_one`: `stabRankP 2 |H⟩^⊗2 > 1` and
+  `stabRankP 2 |T⟩^⊗2 > 1`. The amplitudes at `00` and `01` are
+  `cos²(π/8)`, `cos(π/8) sin(π/8)` and `cos² β`, `e^{iπ/4} cos β sin β`;
+  equal fourth powers would force `√2 = -4/3` and `√3 = -2` respectively,
+  through `linear_combination` with cofactors from polynomial division
+  against the relations of `QubitShared`. With the upper bounds,
+  `qubit_h_m2_stabRankP_eq_two` and `qubit_t_m2_stabRankP_eq_two`.
+  Build ≈ 4 s.
+
+- `LeanProofs/M2Lower.lean`: `norrell_m2_stabRank_gt_two` and
+  `h3_m2_stabRank_gt_two`: `stabRank IsStab |N⟩^⊗2 > 2` and
+  `stabRank IsStab |H₃⟩^⊗2 > 2`, with no enumeration of the 360 two-qutrit
+  stabilizer states. `IsStab.norm_eq`: the nonzero entries of an `IsStab`
+  vector share one modulus. `IsStab.full_or_small`: on two qutrits an
+  `IsStab` vector has full support with entries `c ω^e` (`k = 2`, injective
+  hence surjective) or a support of at most three points (`k ≤ 1`).
+  `stabRank_gt_two_of_three_moduli`: a vector with modulus `r₁` on four
+  points, `r₂` on four points and `r₃` at one point, `0 < r₁ < r₂ < r₃`,
+  `r₁ + r₂ < r₃`, has rank at least three. A small-support term leaves a
+  point of each four-point class to the other term alone, which then carries
+  two moduli; two full-support terms put `ψ(x) ω^(2e₁(x))` on the triangle
+  `a' + b' ω^j`, and with distinct moduli at the probe points `g` takes all
+  three values, so `Σ ω^(gᵢ) uᵢ = 0` and the triangle inequality gives
+  `r₃ ≤ r₁ + r₂` (`pompeiu`, 27 cases by `interval_cases`). Both targets are
+  `h ⊗ h` with `h` of two moduli in ratio `2` (Norrell) or `√3 + 1` (H₃), so
+  the classes are the digit strings with zero, one, or two occurrences of the
+  distinguished digit. `norrell_m2_stabRank_eq_three` and
+  `h3_m2_stabRank_eq_three` with `M2StabRank`. Build ≈ 5 s.
 
 ## Pitfalls
 
