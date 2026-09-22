@@ -4,6 +4,10 @@
   "m": 6,
   "direction": "upper",
   "rank": 6,
+  "lean": {
+    "module": "LeanProofs.QubitHM6StabRank",
+    "theorem": "qubit_h_m6_stabRankP_le_six"
+  },
   "witness": {
     "terms": [
       {
@@ -527,5 +531,5 @@
     "date": "2021-06-14",
     "github": []
   },
-  "notes": "chi(|H>^6) <= 6 from the cat-state construction: |T>^6 = (|cat_6> + |cat_6^->)/sqrt 2 with |cat_6^+-> = (|T>^6 +- |T_perp>^6)/sqrt 2, and |cat_6> = 2^{-3/2}(|0^6> - i|1^6>) + 2^{-1/2} e^{3 i pi/4}(|E_6> + i|K_6>) has rank 3 (their Eq. 7), which refuted the conjecture of Bravyi, Smith, and Smolin that chi(|H>^6) = 7 and gives exponent log_2(6)/6 = 0.431. Witness built here: a single-qubit Clifford C with C|T> proportional to |H> is applied to the three QPG terms, giving a cat-like state a|H>^6 + b|H_perp>^6, and Hadamard on five of the six qubits, which fixes |H> and negates |H_perp>, gives a second one with a different relative phase; |H>^6 is a combination of the two, so the six Clifford images span it. Verified here in exact arithmetic. This entry restores the value an earlier revision had listed under Bravyi and Gosset (arXiv:1601.07601, which bounds the approximate rank only) and then, in a faulty correction, replaced by 7."
+  "notes": "chi(|H>^6) <= 6 from the cat-state construction: |T>^6 = (|cat_6> + |cat_6^->)/sqrt 2 with |cat_6^+-> = (|T>^6 +- |T_perp>^6)/sqrt 2, and |cat_6> = 2^{-3/2}(|0^6> - i|1^6>) + 2^{-1/2} e^{3 i pi/4}(|E_6> + i|K_6>) has rank 3 (their Eq. 7), which refuted the conjecture of Bravyi, Smith, and Smolin that chi(|H>^6) = 7 and gives exponent log_2(6)/6 = 0.431. Witness built here: a single-qubit Clifford C with C|T> proportional to |H> is applied to the three QPG terms, giving a cat-like state a|H>^6 + b|H_perp>^6, and Hadamard on five of the six qubits, which fixes |H> and negates |H_perp>, gives a second one with a different relative phase; |H>^6 is a combination of the two, so the six Clifford images span it. Verified here in exact arithmetic. This entry restores the value an earlier revision had listed under Bravyi and Gosset (arXiv:1601.07601, which bounds the approximate rank only) and then, in a faulty correction, replaced by 7. Now at the lean tier: qubit_h_m6_stabRankP_le_six in LeanProofs.QubitHM6StabRank proves stabRankP 2 |qubit_H>^6 <= 6 against IsStabP 2 from this witness, the pointwise identity being decided by the kernel on integer coordinate vectors (see lean_proofs/LeanProofs/Stabilizer/Reflect.lean)."
 }
