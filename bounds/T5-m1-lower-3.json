@@ -18,5 +18,9 @@
       "vprusso"
     ]
   },
-  "notes": "Settles chi(|T5>) = 3 with the verified rank-3 witness. Exact throughout: every amplitude of |T5> and of the 30 single-ququint stabilizer states is 0 or a power of w_5, so the states are enumerated from the parametrisation (five basis states and 25 full-support states with phase w_5^(q y^2 + l y)), checked against 5(5 + 1) = 30 and for pairwise distinctness up to phase, and |T5> lies in the span of a pair exactly when all ten 3 x 3 minors of the 5 x 3 matrix vanish. Minors are accumulated as integer coefficient vectors in Z[w_5], where an element is zero if and only if its five coefficients on 1, w, ..., w^4 are equal. No floating-point margin stands anywhere under the bound; a match against the numerical dictionary is printed as a consistency check but nothing rests on it. Controls: |0> + |1> must be spanned by exactly the pair {|0>, |1>}, and |+> must be reported as a stabilizer state."
+  "notes": "Settles chi(|T5>) = 3 with the verified rank-3 witness. Exact throughout: every amplitude of |T5> and of the 30 single-ququint stabilizer states is 0 or a power of w_5, so the states are enumerated from the parametrisation (five basis states and 25 full-support states with phase w_5^(q y^2 + l y)), checked against 5(5 + 1) = 30 and for pairwise distinctness up to phase, and |T5> lies in the span of a pair exactly when all ten 3 x 3 minors of the 5 x 3 matrix vanish. Minors are accumulated as integer coefficient vectors in Z[w_5], where an element is zero if and only if its five coefficients on 1, w, ..., w^4 are equal. No floating-point margin stands anywhere under the bound; a match against the numerical dictionary is printed as a consistency check but nothing rests on it. Controls: |0> + |1> must be spanned by exactly the pair {|0>, |1>}, and |+> must be reported as a stabilizer state.",
+  "lean": {
+    "module": "LeanProofs.T5M1StabRank",
+    "theorem": "t5_m1_stabRankP_gt_two"
+  }
 }

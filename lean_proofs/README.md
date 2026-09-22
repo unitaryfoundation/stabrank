@@ -13,6 +13,7 @@ mapping is:
 | Appendix A.2, H_3 m=2,3 | `H3M2Pointwise.lean`, `H3M3.lean`, `H3M3Pointwise.lean` |
 | Appendix A.3, Norrell m=2,3,4 | `NorrellM2Pointwise.lean`, `NorrellM3.lean`, `NorrellM3Pointwise.lean`, `NorrellM4Pointwise.lean` |
 | Qubit H-type m=2,3,4 and T-type m=2,3,4 (bound files) | `QubitShared.lean`, `QubitHStabRank.lean`, `QubitTStabRank.lean`, `QubitTM4StabRank.lean` |
+| Ququint T5 m=1 (both directions) and m=2 upper (bound files) | `Ququint.lean`, `T5Minors.lean`, `T5M1StabRank.lean`, `T5M2StabRank.lean` |
 
 ## What's here
 
@@ -277,6 +278,59 @@ mapping is:
   witness of `bounds/qubit_T-m4-upper-3.json`. `QubitTM4.lean` and its
   `stabilizer_rank_le_three` are kept as they were.
 
+- `LeanProofs/Ququint.lean`: the ququint foundation. `omega5 = exp(2πi/5)`
+  with `omega5_pow_five`, the cyclotomic relation `omega5_geom_sum`
+  (`1 + ω + ω² + ω³ + ω⁴ = 0`) and its rewriting form `omega5_pow_four`,
+  the exponent reductions `omega5_pow_reduce` (`ω^n = ω^(n-5)` for `n ≥ 5`,
+  the non-looping form) and `zeta_five_pow` (`ζ₅^n = ω₅^((n : ZMod 5).val)`),
+  and the linear independence of `1, ω, ω², ω³` over `ℚ`
+  (`omega5_linearIndependent`, from `linearIndependent_pow` and the fifth
+  cyclotomic polynomial being the minimal polynomial). From it the
+  equal-coefficient zero test of `cert_t5_m1_rank2.py`:
+  `omega5_int_comb_eq_zero_iff`, an integer combination of `1, …, ω⁴` is zero
+  iff its five coefficients agree, and the `ZMod 5 → ℤ` form
+  `omega5_sum_val_eq_zero_iff`. Also the T5 state `t5Amp x = ω^(x³)/√5`,
+  `t5Vec m = |T5⟩^⊗m` on digit strings, `t5Amp_mul`, the `ZMod 5` case split
+  `zmod5_cases`, the `val` lemmas for numerals in `ZMod 5` and
+  `ZMod (stabPeriod 5)`, and `stabVecP_five_k1` (a line on ququints as a
+  five-term sum).
+
+- `LeanProofs/T5Minors.lean`: the rank-2 exclusion of `|T5⟩` over the 30
+  single-ququint stabilizer states, as the certificate argues it. `Shape` is
+  the exponent data of a state up to a scalar (a point `pt x₀`, or the
+  full-support `full q l` with phase `ω^(q y² + l y)`), `Shape.vec` its
+  complex vector, `t5v = √5 |T5⟩`. A `3 × 3` minor of `[s | s' | T5]` is a
+  signed sum of six monomials `ω^e`, accumulated computably as five integer
+  coefficients (`minorTerms`, `coeffOf`); `minorNonzero` is the
+  equal-coefficient test, and `det_minorMat`, `evalL_eq`,
+  `det_ne_zero_of_minorNonzero` identify it with the complex determinant, so
+  `minorNonzero = true` proves the minor nonzero. `pairs_ok` is the search
+  (every pair of distinct shapes has a nonzero minor among the ten row
+  triples), closed by `decide +kernel` in a few seconds.
+  `t5v_not_mem_span_smul`: no two scalar multiples of shape vectors span
+  `t5v`, with a repeated shape padded by a different one.
+
+- `LeanProofs/T5M1StabRank.lean`: `χ(|T5⟩) = 3` against `stabRankP 5`.
+  `t5_m1_stabRankP_le_three`: the witness of `bounds/T5-m1-upper-3.json`
+  (`|0⟩`, `|1⟩`, `Σ_y ω^(4y² + 4y)|y⟩`) as `stabTerm`s with coefficients
+  `(2 + ω + ω² + ω³)/√5`, `(ω - ω²)/√5`, `-(1 + ω + ω² + ω³)/√5`, the file's
+  nested radicals evaluated exactly in `ℚ(ω₅)`; the identity is decided at
+  the five digits by `simp`, then `ring_nf`, exponent reduction, `ω⁴`
+  rewriting and `ring`. `isStabP_one_ququint`: every `IsStabP 5` vector on
+  one ququint is a scalar multiple of a `Shape` vector (injectivity of the
+  flat bounds the number of generators by one; with one generator `w ≠ 0`
+  and the substitution `y = (x - x₀)/w` turns `ω^(Q y² + l y)` into
+  `ω^(q' x² + l' x)` up to a constant). `t5_m1_stabRankP_gt_two`: with
+  `reindex5` carrying spans from `Fin (5 ^ 1) → ℂ` to `ZMod 5 → ℂ`, a set of
+  at most two `IsStabP 5` vectors is two scalar multiples of shapes, and
+  `t5v_not_mem_span_smul` applies. `t5_m1_stabRankP_eq_three` combines them.
+
+- `LeanProofs/T5M2StabRank.lean`: `t5_m2_stabRankP_le_eight`: the eight
+  terms of `bounds/T5-m2-upper-8.json` (three points, four lines, one
+  full-support state) with coefficients `β_j / 5`, `β_j ∈ ℤ[ω₅]` (the file's
+  `c_j` times `√5^(k_j - 2)`), decided at the 25 digit strings by the same
+  tactic sequence as the one-copy identity.
+
 ## Pitfalls
 
 Things that cost time in this development and are not obvious from the
@@ -326,6 +380,24 @@ error messages.
 - `rw` closes goals only with reducible `rfl`. After rewriting the qutrit
   data into the `ZMod 3` form (`stabVecP_three`) the two `if`s differ only
   in their `Decidable` instances and need an explicit `rfl`.
+- Identities in `ℚ(ω₅)`: `ring` alone cannot use `ω⁵ = 1` or `Φ₅(ω) = 0`.
+  The sequence that works is `ring_nf` (a sum of monomials `ω^n` with numeral
+  exponents), then `simp only [omega5_pow_reduce, omega5_pow_four,
+  Nat.reduceSub, Nat.reduceLeDiff, pow_zero]` (every exponent below 4; the
+  two `Nat` simprocs must be listed, since `simp only` does not evaluate
+  `6 - 5` or decide `5 ≤ 6` on its own), then `ring`. Both sides are then
+  polynomials of degree at most 3 in `ω`, and linear independence of
+  `1, ω, ω², ω³` says equal values have equal reduced forms. `ω^n = ω^(n % 5)`
+  as a simp lemma loops on `ω^4`.
+- `ring_nf` can close a goal outright, and then the next tactic in a `;`
+  chain fails with "no goals". Run the stages as `all_goals (try ring_nf)`,
+  `all_goals (try simp only [...])`, `all_goals ring`.
+- `rw [mul_assoc]` on a goal whose exponent is a `Nat` product rewrites the
+  exponent first. Use `conv_rhs => rw [mul_assoc, ...]` to aim it.
+- `decide +kernel` handles the full `T5Minors.pairs_ok` search (870 ordered
+  shape pairs, up to ten `3 × 3` minors each, `ZMod 5` arithmetic on
+  `Option` values) in a few seconds when the data are `List`s and `Shape` is
+  an inductive with `deriving DecidableEq`.
 
 ## Build
 
