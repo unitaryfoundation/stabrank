@@ -54,9 +54,36 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(ROOT, "verify_challenge"))
+import slice_cover  # noqa: E402
 from cover_census import P1, P2, Field3, patterns, rank_mod  # noqa: E402
-from slice_cover import (Family, _affine_solve_C, _affine_solve_mod, _projectors,  # noqa: E402
-                         slice_system, solve_slice)
+from slice_cover import Family, _affine_solve_mod, _projectors, slice_system, solve_slice  # noqa: E402
+
+
+def _affine_solve_C(A, b, tol=1e-7):
+    """All solutions of A x = b over C as (x0, N), or None: the truncated-SVD
+    solve, singular values below 1e-9 max(1, s_0) treated as zero. The
+    slice_cover version solves with numpy's relative cutoff, so a matrix that
+    is zero up to rounding (the sum-zero directions of a block's copies hit
+    by two equal phases give A K of order 1e-16) is inverted into a garbage
+    pin instead of being reported as a consistency condition; this version
+    replaces it for every caller in this module and in slice_cover.Family."""
+    A = np.asarray(A, dtype=complex)
+    b = np.asarray(b, dtype=complex)
+    if A.shape[1] == 0:
+        return (np.zeros(0, dtype=complex), np.zeros((0, 0), dtype=complex)) if np.linalg.norm(b) < tol else None
+    if A.shape[0] == 0:
+        return np.zeros(A.shape[1], dtype=complex), np.eye(A.shape[1], dtype=complex)
+    U, s, vh = np.linalg.svd(A, full_matrices=True)
+    rank = int(np.sum(s > 1e-9 * max(1.0, s[0] if len(s) else 1.0)))
+    x0 = np.zeros(A.shape[1], dtype=complex)
+    if rank:
+        x0 = vh[:rank].conj().T @ ((U[:, :rank].conj().T @ b) / s[:rank])
+    if np.linalg.norm(A @ x0 - b) > tol * max(1.0, np.linalg.norm(b)):
+        return None
+    return x0, vh[rank:].conj().T
+
+
+slice_cover._affine_solve_C = _affine_solve_C
 
 W3 = np.exp(2j * np.pi / 3)
 W3P = np.array([1, W3, W3 ** 2])
