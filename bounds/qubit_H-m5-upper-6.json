@@ -17,7 +17,11 @@
       "hardware": "Apple silicon laptop, 8 annealing chains"
     }
   },
-  "notes": "The five-copy value of Bravyi, Smith, and Smolin, found there by Monte Carlo and conjectured optimal. Witness found here by the package's annealer (search_decomposition.py, target qubit_real, seed 1, starting rank 6, one run of 8 chains) and verified in exact arithmetic. Whether rank 5 is possible at m=5 is open; the rank-3 exclusion at m=4 and projection monotonicity give chi >= 4 here.",
+  "notes": "The five-copy value of Bravyi, Smith, and Smolin, found there by Monte Carlo and conjectured optimal. Witness found here by the package's annealer (search_decomposition.py, target qubit_real, seed 1, starting rank 6, one run of 8 chains) and verified in exact arithmetic. Whether rank 5 is possible at m=5 is open; the rank-3 exclusion at m=4 and projection monotonicity give chi >= 4 here. Now at the lean tier: qubit_h_m5_stabRankP_le_six in LeanProofs.QubitHM5StabRank proves stabRankP 2 |qubit_H>^5 <= 6 against IsStabP 2 from this witness, the pointwise identity being decided by the kernel on integer coordinate vectors (see lean_proofs/LeanProofs/Stabilizer/Reflect.lean).",
+  "lean": {
+    "module": "LeanProofs.QubitHM5StabRank",
+    "theorem": "qubit_h_m5_stabRankP_le_six"
+  },
   "witness": {
     "terms": [
       {

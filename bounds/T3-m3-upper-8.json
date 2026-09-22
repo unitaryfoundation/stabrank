@@ -14,7 +14,11 @@
       "vprusso"
     ]
   },
-  "notes": "explicit eight-term witness; Kocia-Sarovar recorded this as 8? The eight terms are those of stabrank/examples/t3m3_rank8_certificate.py, found by annealing; here each is given in the flat-and-phase-form parametrisation and the identity is re-verified in exact arithmetic.",
+  "notes": "explicit eight-term witness; Kocia-Sarovar recorded this as 8? The eight terms are those of stabrank/examples/t3m3_rank8_certificate.py, found by annealing; here each is given in the flat-and-phase-form parametrisation and the identity is re-verified in exact arithmetic. Now at the lean tier: t3_m3_stabRankP_le_eight in LeanProofs.T3M3StabRank proves stabRankP 3 |T3>^3 <= 8 against IsStabP 3 from this witness, the pointwise identity being decided by the kernel on integer coordinate vectors (see lean_proofs/LeanProofs/Stabilizer/Reflect.lean).",
+  "lean": {
+    "module": "LeanProofs.T3M3StabRank",
+    "theorem": "t3_m3_stabRankP_le_eight"
+  },
   "witness": {
     "terms": [
       {

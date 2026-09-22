@@ -19,7 +19,11 @@
       "hardware": "Apple silicon laptop, one core; direct construction, no search"
     }
   },
-  "notes": "chi(|H>^10) <= 18 from the cat_{4k+2} gluing of Qassim, Pashayan, and Gosset as restated by Kissinger, van de Wetering, and Vilmart (arXiv:2202.09202, Section 4.2) at k = 2: |cat_10> is proportional to (I (x) <cat_2| (x) I)(|cat_6> (x) |cat_6>), so it has at most 3 x 3 = 9 stabilizer terms and |T>^10 = (|cat_10> + |cat_10^->)/sqrt 2 has 18. Exponent log_2(18)/10 = 0.4170, the best finite-m value on the board for this orbit. QPG's own nine-term |cat_10> gives the same rank. Witness built here by research/constructions/kvv_cat.py and verified in exact arithmetic.",
+  "notes": "chi(|H>^10) <= 18 from the cat_{4k+2} gluing of Qassim, Pashayan, and Gosset as restated by Kissinger, van de Wetering, and Vilmart (arXiv:2202.09202, Section 4.2) at k = 2: |cat_10> is proportional to (I (x) <cat_2| (x) I)(|cat_6> (x) |cat_6>), so it has at most 3 x 3 = 9 stabilizer terms and |T>^10 = (|cat_10> + |cat_10^->)/sqrt 2 has 18. Exponent log_2(18)/10 = 0.4170, the best finite-m value on the board for this orbit. QPG's own nine-term |cat_10> gives the same rank. Witness built here by research/constructions/kvv_cat.py and verified in exact arithmetic. Now at the lean tier: qubit_h_m10_stabRankP_le_eighteen in LeanProofs.QubitHM10StabRank proves stabRankP 2 |qubit_H>^10 <= 18 against IsStabP 2 from this witness, the pointwise identity being decided by the kernel on integer coordinate vectors (see lean_proofs/LeanProofs/Stabilizer/Reflect.lean).",
+  "lean": {
+    "module": "LeanProofs.QubitHM10StabRank",
+    "theorem": "qubit_h_m10_stabRankP_le_eighteen"
+  },
   "witness": {
     "terms": [
       {

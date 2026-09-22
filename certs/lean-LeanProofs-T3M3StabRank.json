@@ -1,0 +1,9 @@
+{
+  "module": "LeanProofs.T3M3StabRank",
+  "ok": true,
+  "log": [
+    "",
+    "Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`",
+    "Build completed successfully (3317 jobs)."
+  ]
+}

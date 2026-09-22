@@ -19,7 +19,11 @@
       "hardware": "Apple silicon laptop, one core; direct construction, no search"
     }
   },
-  "notes": "chi(|H>^8) <= 12 from the partial decomposition of Kissinger, van de Wetering, and Vilmart (arXiv:2202.09202, Section 4.2), chi(T^t) <= 3 chi(T^{t-4}), with chi(T^4) = 4: the leftover |T> of each of the three terms joins the remaining |T>^3, and |T>^4 has rank 4. Same value as the product 6 x 2 of the m=6 and m=2 cells and as QPG's table. Witness built here by research/constructions/kvv_cat.py from the three cat_6 terms and the board's m=4 witness, and verified in exact arithmetic; exponent log_2(12)/8 = 0.4481.",
+  "notes": "chi(|H>^8) <= 12 from the partial decomposition of Kissinger, van de Wetering, and Vilmart (arXiv:2202.09202, Section 4.2), chi(T^t) <= 3 chi(T^{t-4}), with chi(T^4) = 4: the leftover |T> of each of the three terms joins the remaining |T>^3, and |T>^4 has rank 4. Same value as the product 6 x 2 of the m=6 and m=2 cells and as QPG's table. Witness built here by research/constructions/kvv_cat.py from the three cat_6 terms and the board's m=4 witness, and verified in exact arithmetic; exponent log_2(12)/8 = 0.4481. Now at the lean tier: qubit_h_m8_stabRankP_le_twelve in LeanProofs.QubitHM8StabRank proves stabRankP 2 |qubit_H>^8 <= 12 against IsStabP 2 from this witness, the pointwise identity being decided by the kernel on integer coordinate vectors (see lean_proofs/LeanProofs/Stabilizer/Reflect.lean).",
+  "lean": {
+    "module": "LeanProofs.QubitHM8StabRank",
+    "theorem": "qubit_h_m8_stabRankP_le_twelve"
+  },
   "witness": {
     "terms": [
       {

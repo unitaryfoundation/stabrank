@@ -4,6 +4,10 @@
   "m": 5,
   "direction": "upper",
   "rank": 6,
+  "lean": {
+    "module": "LeanProofs.QubitTM5StabRank",
+    "theorem": "qubit_t_m5_stabRankP_le_six"
+  },
   "witness": {
     "terms": [
       {
@@ -395,5 +399,5 @@
       "hardware": "Apple silicon laptop"
     }
   },
-  "notes": "First entry for this cell. Witness: the products of the three m=4 terms with |0> and |1>; gamma = log_2(6)/5 = 0.517, above the published 0.3963, so this fills the cell. Beating the exponent at m=5 would need rank 3, and rank 5 (gamma 0.464) would be the first non-product entry; the annealer is being run at rank 5 through autoresearch/run.py."
+  "notes": "First entry for this cell. Witness: the products of the three m=4 terms with |0> and |1>; gamma = log_2(6)/5 = 0.517, above the published 0.3963, so this fills the cell. Beating the exponent at m=5 would need rank 3, and rank 5 (gamma 0.464) would be the first non-product entry; the annealer is being run at rank 5 through autoresearch/run.py. Now at the lean tier: qubit_t_m5_stabRankP_le_six in LeanProofs.QubitTM5StabRank proves stabRankP 2 |qubit_T>^5 <= 6 against IsStabP 2 from this witness, the pointwise identity being decided by the kernel on integer coordinate vectors (see lean_proofs/LeanProofs/Stabilizer/Reflect.lean)."
 }
