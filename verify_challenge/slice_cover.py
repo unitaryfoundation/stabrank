@@ -37,14 +37,33 @@ representative, partner minimal in its stabilizer orbit, as in
 slice_lift.all_decompositions).
 
 Matching. For each cover and each base point x_0 (one per Hamming weight,
-by the permutation symmetry of the sliced qubits), the slices x_0 + e_k
-are matched first: sum_i d_i w_i = tan(pi/8)^{|x_0 + e_k| - |x_0|} psi^{n_2}
-over the 4 2^{n_2} + 1 options per term (absent included), by meet in the
-middle on a random linear functional mod 65521, with every collision
-checked in full. Survivors of the three basis slices are combined with
-the flat types they imply and the remaining slices are checked with the
-sign freedom of (ii). Every hit is confirmed as a decomposition of psi^m
-in floating point.
+by the permutation symmetry of the sliced qubits) the multiset cover is
+split into its distinct states, whose coefficients form an affine family
+d = d_0 + K lambda (a point when the states are independent), and into
+blocks of repeated copies of one state. The slices x_0 + e_k are solved one
+at a time against the current family: sum_i d_i w_i = tan(pi/8)^{|x_0 +
+e_k| - |x_0|} psi^{n_2} over the 4 2^{n_2} + 1 options per term (absent
+included), by meet in the middle on a random functional mod 65521 when the
+family is a point, and, when parameters remain, by the condition that
+(u, v_1, ..., v_kappa) = (sum d_0i w_i - rhs, sum K_i1 w_i, ...) be
+dependent, tested as the vanishing mod 65521 of the determinant of kappa + 1
+random functionals applied to them, Laplace-expanded into features of two
+halves of the terms and joined by a dense product. A block of g copies
+contributes any vector of the span of at most g Pauli translates of its
+base state (the 2^{n_2} translates are a basis), so the equation is
+projected onto the annihilator of the chosen translates; the copies'
+coefficients, classes and phases are reconstructed at the end from the
+residuals, and for a pair the admissible coefficient splits are tracked
+from slice to slice. Every hash collision is decided mod 65521 on the whole
+equation, then over C and mod 2013265921, and each solution restricts the
+family. The absence pattern on the coordinate slices fixes the flat of every
+ordinary term (all 2^{n_1}-point subspaces are allowed; property P is not
+assumed by the matcher), the composite slices are solved point by point
+over the option codes of the structure lemma (class products with one free
+sign per basis pair, the product of the pair signs on a triple, free codes
+on basis points that are not coordinate directions), and every hit is
+confirmed as a decomposition of psi^m in floating point and mod
+2013265921.
 """
 
 from __future__ import annotations
@@ -482,9 +501,9 @@ FOURTH = np.array([1, 1j, -1, -1j])
 
 
 class TermOptions:
-    """The slice options of one term with base slice u: 4 2^n vectors
-    i^l Q u (class k, phase l -> option 4 k + l) plus 'absent' (option
-    4 2^n), over F_P1, F_P2 and C."""
+    """The slice options of one term with base slice u: the 4 2^n vectors
+    i^l Q u (Pauli class k, phase l, option code 4 k + l) plus 'absent'
+    (code 4 2^n), over F_P1, F_P2 and C, and the class products Q_b Q_a u."""
 
     def __init__(self, u, n, F1, F2):
         self.n = n
@@ -496,284 +515,58 @@ class TermOptions:
         codes = [exact_codes(v)[0] for v in vecs]
         self.m1 = np.array([F1.codes_to_field(c) for c in codes] + [np.zeros(1 << n, dtype=np.int64)])
         self.m2 = np.array([F2.codes_to_field(c) for c in codes] + [np.zeros(1 << n, dtype=np.int64)])
-        # the unit pattern: exact_codes normalises the first nonzero entry to 1,
-        # so fix the global scalar of every option relative to the complex vector
+        # exact_codes normalises the first nonzero entry to 1, so fix the
+        # global scalar of every option relative to the complex vector
         scal = np.array([exact_codes(v)[1] for v in vecs])
-        # every scalar is a fourth root of unity times a common modulus
         mod = np.abs(scal)
         assert np.allclose(mod, mod[0])
         ph = np.round(np.angle(scal / mod) / (np.pi / 2)).astype(int) % 4
         assert np.allclose(scal / mod, FOURTH[ph])
         self.m1 = (self.m1 * F1.ipow[np.append(ph, 0)][:, None]) % F1.p
         self.m2 = (self.m2 * F2.ipow[np.append(ph, 0)][:, None]) % F2.p
-        self.mod = float(mod[0])          # |u| entries: the common modulus (1 for pattern-normalised u)
+        self.mod = float(mod[0])
+        # class products: Q_kb Q_ka u = i^l imgs[kc], stored as (kc, l)
+        K = 1 << n
+        self.prod = np.zeros((K, K, 2), dtype=np.int64)
+        for ka in range(K):
+            for kb in range(K):
+                (aa, ca), (ab, cb) = self.reps[ka], self.reps[kb]
+                v = apply_pauli(apply_pauli(u, aa, ca, n), ab, cb, n)
+                self.prod[ka, kb] = self.code_of(v)
 
-    def product(self, opt_a, opt_b):
-        """The two candidate vectors at x_0 + v_a + v_b given the options at
-        x_0 + v_a and x_0 + v_b: +- i^(l_a + l_b) Q_b Q_a u, as option-free
-        complex vectors (pair of arrays)."""
-        ka, la = divmod(opt_a, 4)
-        kb, lb = divmod(opt_b, 4)
-        (aa, ca), (ab, cb) = self.reps[ka], self.reps[kb]
-        v = apply_pauli(apply_pauli(self.u, aa, ca, self.n), ab, cb, self.n) * FOURTH[(la + lb) % 4]
-        return v, -v
+    def code_of(self, v):
+        """(class, phase) with v = i^phase imgs[class]."""
+        for k in range(1 << self.n):
+            w = self.vecs[4 * k]
+            nz = np.flatnonzero(np.abs(w) > 1e-9)
+            ratio = v[nz[0]] / w[nz[0]]
+            for l in range(4):
+                if abs(ratio - FOURTH[l]) < 1e-6 and np.allclose(v, FOURTH[l] * w, atol=1e-9):
+                    return k, l
+        raise AssertionError("vector is not a phased Pauli translate of the base slice")
 
+    def compose(self, code_a, code_b, sign=0):
+        """Code of (-1)^sign i^(l_a + l_b) Q_b Q_a u from the codes of
+        i^l_a Q_a u and i^l_b Q_b u."""
+        ka, la = divmod(int(code_a), 4)
+        kb, lb = divmod(int(code_b), 4)
+        kc, l = self.prod[ka, kb]
+        return 4 * int(kc) + (la + lb + int(l) + 2 * sign) % 4
 
-def match_slice(opts, d1, rhs1, F1, opts2, d2, rhs2, F2, optsC, dC, rhsC, rng, ntop=2):
-    """Solutions (option tuples) of sum_i d_i vec_i(opt_i) = rhs, by meet in
-    the middle on a random functional mod P1 with full checks mod P1, mod
-    P2 and in floating point. opts: list of (n_opt, dim) int64 arrays."""
-    r = len(opts)
-    dim = opts[0].shape[1]
-    f = rng.integers(1, F1.p, size=dim)
-    hs = [((d1[i] * o) % F1.p @ f) % F1.p for i, o in enumerate(opts)]      # per-term hashed options
-    target = int(rhs1 @ f % F1.p)
-    left, right = list(range(ntop)), list(range(ntop, r))
-    L = np.zeros(1, dtype=np.int64)
-    for i in left:
-        L = (L[:, None] + hs[i][None, :]).ravel() % F1.p
-    R = np.zeros(1, dtype=np.int64)
-    for i in right:
-        R = (R[:, None] + hs[i][None, :]).ravel() % F1.p
-    need = (target - L) % F1.p
-    order = np.argsort(R, kind="stable")
-    Rs = R[order]
-    lo = np.searchsorted(Rs, need, side="left")
-    hi = np.searchsorted(Rs, need, side="right")
-    sizes = [len(o) for o in opts]
-    sols = []
-    for a in np.flatnonzero(hi > lo):
-        for pos in range(lo[a], hi[a]):
-            b = order[pos]
-            combo = _decode(int(a), [sizes[i] for i in left]) + _decode(int(b), [sizes[i] for i in right])
-            v1 = sum(d1[i] * opts[i][combo[i]] for i in range(r)) % F1.p
-            if not np.array_equal(v1, rhs1 % F1.p):
-                continue
-            v2 = sum(d2[i] * opts2[i][combo[i]] for i in range(r)) % F2.p
-            if not np.array_equal(v2, rhs2 % F2.p):
-                continue
-            vC = sum(dC[i] * optsC[i][combo[i]] for i in range(r))
-            if np.linalg.norm(vC - rhsC) > 1e-7 * max(1.0, np.linalg.norm(rhsC)):
-                continue
-            sols.append(tuple(combo))
-    return sols
+    def arrays(self):
+        return self.m1, self.m2, self.vecs
 
 
-def _decode(idx, sizes):
-    out = []
-    for s in reversed(sizes):
-        out.append(idx % s)
-        idx //= s
-    return out[::-1]
+# ------------------------------------------------------ affine families ----
 
-
-# --------------------------------------------------------------- flats -----
-
-def flat_types(n1):
-    """Subspaces of F_2^{n1} of dimension >= n1 - 1 (the flat directions a
-    term can have along the sliced qubits when it has property P), each as
-    the set of its nonzero points."""
-    pts = range(1, 1 << n1)
-    out = [frozenset(pts)]
-    if n1 >= 2:
-        for z in pts:                         # hyperplane z . x = 0
-            out.append(frozenset(x for x in pts if bin(x & z).count("1") % 2 == 0))
-    return out
-
-
-def presence_from_basis(absent_basis, n1):
-    """Flat types (as point sets) consistent with the given set of absent
-    basis directions e_k (bit k)."""
-    out = []
-    for W in flat_types(n1):
-        ab = {k for k in range(n1) if (1 << k) not in W}
-        if ab == set(absent_basis):
-            out.append(W)
-    return out
-
-
-# ------------------------------------------------------------- matching ----
-
-class SliceMatcher:
-    """Match the seven non-base slices for one full cover at one base point."""
-
-    def __init__(self, enum, n1, verbose=False):
-        self.E = enum
-        self.n1, self.n2 = n1, enum.n
-        self.F1, self.F2 = enum.F1, enum.F2
-        self.verbose = verbose
-        self.rng = np.random.default_rng(29)
-        self.cache = {}
-
-    def options(self, idx):
-        if idx not in self.cache:
-            self.cache[idx] = TermOptions(self.E.C[:, idx], self.n2, self.F1, self.F2)
-        return self.cache[idx]
-
-    def coeffs(self, cover):
-        """d mod P1, mod P2 and complex, with sum d_k u_k = psi; requires the
-        cover independent and the system nonsingular mod both primes."""
-        A1 = self.E.U1[list(cover)].T % P1                      # (dim, r)
-        A2 = self.E.U2[list(cover)].T % P2
-        d1 = _solve_mod(A1, self.E.psi1, P1)
-        d2 = _solve_mod(A2, self.E.psi2, P2)
-        dC, res, nul = self.E.solve(cover)
-        if d1 is None or d2 is None or nul or res > NUM_TOL:
-            return None
-        return d1, d2, dC
-
-    def run(self, cover, x0, rank_target=None):
-        """Every decomposition of psi^{n1 + n2} with base slice `cover` at
-        x0 (all terms present), as lists of term vectors; also the stage
-        statistics."""
-        n1 = self.n1
-        r = len(cover)
-        co = self.coeffs(cover)
-        if co is None:
-            raise ValueError("dependent cover")
-        d1, d2, dC = co
-        opts = [self.options(k) for k in cover]
-        w0 = bin(x0).count("1")
-        stats = {"basis_solutions": [], "combos": 0, "hits": 0}
-
-        def rhs(x):
-            e = bin(x).count("1") - w0
-            r1 = (self.E.psi1 * pow(self.F1.tan, e % (P1 - 1), P1)) % P1
-            r2 = (self.E.psi2 * pow(self.F2.tan, e % (P2 - 1), P2)) % P2
-            rC = self.E.psi * (np.tan(np.pi / 8) ** e)
-            return r1, r2, rC
-
-        basis_sols = []
-        for k in range(n1):
-            r1, r2, rC = rhs(x0 ^ (1 << k))
-            sols = match_slice([o.m1 for o in opts], d1, r1, self.F1,
-                               [o.m2 for o in opts], d2, r2, self.F2,
-                               [o.vecs for o in opts], dC, rC, self.rng)
-            basis_sols.append(sols)
-            stats["basis_solutions"].append(len(sols))
-            if not sols:
-                return [], stats
-        hits = []
-        composite = [x for x in range(1, 1 << n1) if bin(x).count("1") >= 2]
-        for combo in itertools.product(*basis_sols):
-            # combo[k][i] is the option of term i at slice x0 + e_k
-            types = []
-            ok = True
-            for i in range(r):
-                absent = [k for k in range(n1) if combo[k][i] == opts[i].absent]
-                Ws = presence_from_basis(absent, n1)
-                if not Ws:
-                    ok = False
-                    break
-                types.append(Ws)
-            if not ok:
-                continue
-            for Wsel in itertools.product(*types):
-                stats["combos"] += 1
-                hits.extend(self._complete(cover, x0, opts, combo, Wsel, dC, composite, rhs))
-        stats["hits"] = len(hits)
-        return hits, stats
-
-    def _complete(self, cover, x0, opts, combo, Wsel, dC, composite, rhs):
-        """Given basis options and flat types, enumerate the composite-slice
-        vectors of every term (sign choices, free codes on planes not spanned
-        by basis directions) and keep the assignments solving every slice."""
-        n1, r = self.n1, len(cover)
-        # per term: list of candidate dicts {slice point: complex vector}
-        per_term = []
-        for i in range(r):
-            W = Wsel[i]
-            o = opts[i]
-            basis_in = [k for k in range(n1) if (1 << k) in W]
-            fixed = {1 << k: o.vecs[combo[k][i]] for k in basis_in}
-            # points of W not spanned as a pair sum of basis directions in W
-            cands = [dict(fixed)]
-            pts = sorted(W)
-            # choose a basis of W: basis directions in W first, then further points
-            Wbasis = [1 << k for k in basis_in]
-            span = {0}
-            for b in Wbasis:
-                span |= {s ^ b for s in span}
-            free_pts = []
-            for pnt in pts:
-                if pnt not in span:
-                    Wbasis.append(pnt)
-                    free_pts.append(pnt)
-                    span |= {s ^ pnt for s in span}
-            # free points get any of the 4 2^n options (not absent)
-            for pnt in free_pts:
-                cands = [{**c, pnt: o.vecs[t]} for c in cands for t in range(o.absent)]
-            # remaining points of W: sums of two or three basis points, with signs
-            out = []
-            for c in cands:
-                out.extend(self._fill_products(c, Wbasis, o, W))
-            per_term.append(out)
-        # now match composite slices: for each composite point, sum_i d_i vec = rhs
-        hits = []
-        for choice in itertools.product(*per_term):
-            good = True
-            for x in composite:
-                _, _, rC = rhs(x0 ^ x)
-                s = sum(dC[i] * choice[i].get(x, 0) for i in range(r))
-                if np.linalg.norm(s - rC) > 1e-7:
-                    good = False
-                    break
-            if good:
-                terms = []
-                for i in range(r):
-                    t = np.zeros((1 << n1, len(opts[i].u)), dtype=complex)
-                    t[x0] = opts[i].u
-                    for x, v in choice[i].items():
-                        t[x0 ^ x] = v
-                    terms.append(t.ravel())
-                hits.append(terms)
-        return hits
-
-    def _fill_products(self, c, Wbasis, o, W):
-        """Extend the assignment c (basis points of W -> vector) to all of W
-        with the sign freedom of pair products; the triple sum, when W has
-        three basis points, takes the product of the three pair signs."""
-        # Represent vectors by (Pauli rep, phase) to compute products: recover
-        # the option index for basis points by matching against o.vecs.
-        def opt_of(v):
-            for t in range(o.absent):
-                if np.allclose(o.vecs[t], v):
-                    return t
-            raise AssertionError("basis vector is not an option")
-        opt = {pnt: opt_of(c[pnt]) for pnt in Wbasis}
-        pairs = list(itertools.combinations(range(len(Wbasis)), 2))
-        outs = []
-        for signs in itertools.product((0, 1), repeat=len(pairs)):
-            assign = dict(c)
-            for (a, b), s in zip(pairs, signs):
-                pv = o.product(opt[Wbasis[a]], opt[Wbasis[b]])[s]
-                assign[Wbasis[a] ^ Wbasis[b]] = pv
-            if len(Wbasis) == 3:
-                # triple: sign = product of the pair signs, vector from the class product
-                tot = sum(signs) % 2
-                ka, la = divmod(opt[Wbasis[0]], 4)
-                kb, lb = divmod(opt[Wbasis[1]], 4)
-                kc, lc = divmod(opt[Wbasis[2]], 4)
-                v = o.u
-                for k in (ka, kb, kc):
-                    a_, c_ = o.reps[k]
-                    v = apply_pauli(v, a_, c_, o.n)
-                v = v * FOURTH[(la + lb + lc) % 4] * (-1) ** tot
-                assign[Wbasis[0] ^ Wbasis[1] ^ Wbasis[2]] = v
-            assert set(assign) == set(W), (set(assign), set(W))
-            outs.append(assign)
-        return outs
-
-
-def _solve_mod(A, b, p):
-    """Unique solution of A x = b over F_p (A of full column rank, consistent),
-    or None when the columns are dependent mod p or the system inconsistent."""
-    A = [[int(v) % p for v in row] for row in A]
-    b = [int(v) % p for v in b]
-    rows, cols = len(A), len(A[0])
-    M = [A[r] + [b[r]] for r in range(rows)]
-    rank = 0
-    pivcols = []
+def _affine_solve_mod(A, b, p):
+    """All solutions of A x = b over F_p as (x0, N) with N a basis of the
+    kernel (columns), or None when the system is inconsistent."""
+    A = np.asarray(A, dtype=np.int64) % p
+    b = np.asarray(b, dtype=np.int64) % p
+    rows, cols = A.shape
+    M = [[int(v) for v in A[r]] + [int(b[r])] for r in range(rows)]
+    rank, pivcols = 0, []
     for c in range(cols):
         piv = None
         for r in range(rank, rows):
@@ -781,7 +574,7 @@ def _solve_mod(A, b, p):
                 piv = r
                 break
         if piv is None:
-            return None
+            continue
         M[rank], M[piv] = M[piv], M[rank]
         inv = pow(M[rank][c], p - 2, p)
         M[rank] = [(x * inv) % p for x in M[rank]]
@@ -794,10 +587,828 @@ def _solve_mod(A, b, p):
     for r in range(rank, rows):
         if M[r][cols]:
             return None
-    x = np.zeros(cols, dtype=np.int64)
+    x0 = np.zeros(cols, dtype=np.int64)
     for r, c in enumerate(pivcols):
-        x[c] = M[r][cols]
-    return x
+        x0[c] = M[r][cols]
+    free = [c for c in range(cols) if c not in pivcols]
+    N = np.zeros((cols, len(free)), dtype=np.int64)
+    for j, fc in enumerate(free):
+        N[fc, j] = 1
+        for r, c in enumerate(pivcols):
+            N[c, j] = (-M[r][fc]) % p
+    return x0, N
+
+
+def _affine_solve_C(A, b, tol=1e-7):
+    """All solutions of A x = b over C as (x0, N), or None."""
+    A = np.asarray(A, dtype=complex)
+    b = np.asarray(b, dtype=complex)
+    if A.shape[1] == 0:
+        return (np.zeros(0, dtype=complex), np.zeros((0, 0), dtype=complex)) if np.linalg.norm(b) < tol else None
+    x0, *_ = np.linalg.lstsq(A, b, rcond=None)
+    if np.linalg.norm(A @ x0 - b) > tol * max(1.0, np.linalg.norm(b)):
+        return None
+    _, s, vh = np.linalg.svd(A)
+    rank = int(np.sum(s > 1e-8 * max(1.0, s[0] if len(s) else 1.0)))
+    return x0, vh[rank:].conj().T
+
+
+def _mm(A, B, p):
+    """A @ B mod p without overflow (object arithmetic for large p)."""
+    A, B = np.asarray(A), np.asarray(B)
+    if A.shape[-1] == 0:
+        return np.zeros(A.shape[:-1] + B.shape[1:], dtype=np.int64)
+    if p < (1 << 26):
+        return (np.asarray(A, dtype=np.int64) @ np.asarray(B, dtype=np.int64)) % p
+    R = np.asarray(A).astype(object) @ np.asarray(B).astype(object)
+    return np.array([[int(x) % p for x in row] for row in np.atleast_2d(R)], dtype=np.int64).reshape(R.shape)
+
+
+class Family:
+    """The affine family d = d0 + K lambda of base coefficients, over F_P1,
+    F_P2 and C. kappa is the exact dimension (from C, checked against P2);
+    kappa1 is the dimension mod P1, which can exceed kappa by a modular rank
+    accident, in which case the P1 family is a superset and only weakens
+    the hashing filters."""
+
+    def __init__(self, parts):
+        self.parts = parts
+        self.kappa = parts[2][1].shape[1]
+        if parts[1][1].shape[1] != self.kappa:
+            raise AssertionError("coefficient family dimension differs mod P2 and over C")
+        self.kappa1 = parts[0][1].shape[1]
+        if self.kappa1 < self.kappa:
+            raise AssertionError("coefficient family smaller mod P1 than over C")
+
+    @classmethod
+    def from_cover(cls, E, cover):
+        """The coefficients of sum d_i u_i = psi over the (multi)set cover, or
+        None when psi is not in the span."""
+        idx = list(cover)
+        s1 = _affine_solve_mod(E.U1[idx].T, E.psi1, P1)
+        s2 = _affine_solve_mod(E.U2[idx].T, E.psi2, P2)
+        sC = _affine_solve_C(E.C[:, idx], E.psi)
+        if s1 is None or s2 is None or sC is None:
+            return None
+        return cls([s1, s2, sC])
+
+    def restrict(self, Ws, rhss):
+        """The subfamily with W d = rhs (W: columns are the terms' slice
+        vectors), or None when empty. Decided mod P1 first (cheap), then
+        over C, then mod P2."""
+        new = [None, None, None]
+        for fld, p in ((0, P1), (2, None), (1, P2)):
+            (d0, K), W, rhs = self.parts[fld], Ws[fld], rhss[fld]
+            if p is None:
+                sol = _affine_solve_C(W @ K, rhs - W @ d0)
+            else:
+                sol = _affine_solve_mod(_mm(W, K, p), (rhs - _mm(W, d0[:, None], p)[:, 0]) % p, p)
+            if sol is None:
+                return None
+            l0, N = sol
+            if p is None:
+                new[fld] = (d0 + K @ l0, K @ N)
+            else:
+                new[fld] = ((d0 + _mm(K, l0[:, None], p)[:, 0]) % p, _mm(K, N, p))
+        return Family(new)
+
+    def coefficients(self, rng):
+        """A member of the complex family (a generic one when parameters remain)."""
+        d0, K = self.parts[2]
+        if K.shape[1] == 0:
+            return d0
+        lam = rng.normal(size=K.shape[1]) + 1j * rng.normal(size=K.shape[1])
+        return d0 + K @ lam
+
+    def has_zero_coefficient(self, exempt=()):
+        """True when some coefficient outside `exempt` vanishes on the whole
+        family (a term no member of the family uses). Block positions are
+        exempt: the merged coefficient of repeated copies may cancel."""
+        d0, K = self.parts[2]
+        dead = np.abs(d0) < 1e-9
+        if K.shape[1]:
+            dead &= np.abs(K).sum(axis=1) < 1e-9
+        if len(exempt):
+            dead[list(exempt)] = False
+        return bool(np.any(dead))
+
+
+# -------------------------------------------------------- slice solving ----
+
+def _annihilator_mod(V, p):
+    """Rows P with P V = 0 over F_p (a basis of the left kernel)."""
+    dim = V.shape[0]
+    if V.shape[1] == 0:
+        return np.eye(dim, dtype=np.int64)
+    _, N = _affine_solve_mod(V.T % p, np.zeros(V.shape[1], dtype=np.int64), p)
+    return np.ascontiguousarray(N.T)
+
+
+def _annihilator_C(V):
+    dim = V.shape[0]
+    if V.shape[1] == 0:
+        return np.eye(dim, dtype=complex)
+    _, N = _affine_solve_C(V.T, np.zeros(V.shape[1], dtype=complex))
+    return np.ascontiguousarray(N.T)
+
+
+def _independent_columns_mod(K, p):
+    """A maximal set of independent columns of K over F_p."""
+    keep = []
+    for c in range(K.shape[1]):
+        if _rank_mod(K[:, keep + [c]].T, p) > len(keep):
+            keep.append(c)
+    return K[:, keep]
+
+
+class Block:
+    """g copies of one base state u (a repeated state of the multiset
+    cover). At every slice the copies together contribute an arbitrary
+    vector of the span of at most g Pauli translates Q_k u, so the block
+    enters a slice equation only through the choice of the translate set S
+    (|S| <= g), and the equation is projected onto the annihilator of S.
+    The copies' coefficients, classes and phases are reconstructed at the
+    end from the residuals (`reconstruct`)."""
+
+    def __init__(self, o, g, pos):
+        self.o, self.g, self.pos = o, g, pos
+        K = 1 << o.n
+        self.subsets = [S for j in range(g + 1) for S in itertools.combinations(range(K), j)]
+        cols = [4 * k for k in range(K)]
+        self.V1 = np.ascontiguousarray(o.m1[cols].T)        # (dim, K): translate k in column k
+        self.V2 = np.ascontiguousarray(o.m2[cols].T)
+        self.VC = np.ascontiguousarray(o.vecs[cols].T)
+
+
+def _projectors(blocks, Ssel):
+    """Annihilator rows (P1, P2, PC) of the chosen translates of all blocks,
+    and the translate matrices (V1, V2, VC) for the coordinate solve."""
+    if not blocks:
+        return None, None
+    V1 = np.column_stack([b.V1[:, list(S)] for b, S in zip(blocks, Ssel)]) if any(Ssel) else np.zeros((blocks[0].V1.shape[0], 0), dtype=np.int64)
+    V2 = np.column_stack([b.V2[:, list(S)] for b, S in zip(blocks, Ssel)]) if any(Ssel) else np.zeros((blocks[0].V2.shape[0], 0), dtype=np.int64)
+    VC = np.column_stack([b.VC[:, list(S)] for b, S in zip(blocks, Ssel)]) if any(Ssel) else np.zeros((blocks[0].VC.shape[0], 0), dtype=complex)
+    return (_annihilator_mod(V1, P1), _annihilator_mod(V2, P2), _annihilator_C(VC)), (V1, V2, VC)
+
+
+def _split_sides(sizes):
+    """Terms split into two sides of balanced product size."""
+    order = sorted(range(len(sizes)), key=lambda i: -sizes[i])
+    sides, prods = ([], []), [1, 1]
+    for i in order:
+        s = 0 if prods[0] <= prods[1] else 1
+        sides[s].append(i)
+        prods[s] *= sizes[i]
+    return sides
+
+
+def _combos(sizes):
+    """All index tuples over the given sizes, as a (prod, len) array."""
+    if not sizes:
+        return np.zeros((1, 0), dtype=np.int64)
+    grids = np.indices(sizes).reshape(len(sizes), -1).T
+    return np.ascontiguousarray(grids, dtype=np.int64)
+
+
+def _det_mod(M, p):
+    """Determinants mod p of a stack (N, k, k) of small matrices."""
+    k = M.shape[1]
+    if k == 0:
+        return np.ones(M.shape[0], dtype=np.int64)
+    if k == 1:
+        return M[:, 0, 0] % p
+    out = np.zeros(M.shape[0], dtype=np.int64)
+    for j in range(k):
+        minor = np.delete(M[:, 1:, :], j, axis=2)
+        term = (M[:, 0, j] * _det_mod(minor, p)) % p
+        out = (out + (term if j % 2 == 0 else -term)) % p
+    return out
+
+
+def _assemble(sides, idxL, idxR, a, b, r):
+    combo = [0] * r
+    for i, o in zip(sides[0], idxL[a]):
+        combo[i] = int(o)
+    for i, o in zip(sides[1], idxR[b]):
+        combo[i] = int(o)
+    return tuple(combo)
+
+
+def _mitm(popts, dv, prhs, sides, rng, p=P1):
+    """Combinations with sum_i dv_i w_i = rhs (mod p) by meet in the middle
+    on a random functional; a superset of the exact solutions. popts: per
+    term the (projected) option vectors mod p."""
+    dim = prhs.shape[0]
+    f = rng.integers(1, p, size=dim)
+    hs = [((dv[i] * o) % p @ f) % p for i, o in enumerate(popts)]
+    target = int(prhs @ f % p)
+    sizes = [len(h) for h in hs]
+
+    def side(bl):
+        S = np.zeros(1, dtype=np.int64)
+        for i in bl:
+            S = (S[:, None] + hs[i][None, :]).ravel() % p
+        return S, _combos([sizes[i] for i in bl])
+
+    L, idxL = side(sides[0])
+    R, idxR = side(sides[1])
+    need = (target - L) % p
+    order = np.argsort(R, kind="stable")
+    Rs = R[order]
+    lo = np.searchsorted(Rs, need, side="left")
+    hi = np.searchsorted(Rs, need, side="right")
+    out = []
+    for a in np.flatnonzero(hi > lo):
+        for pos in range(lo[a], hi[a]):
+            out.append(_assemble(sides, idxL, idxR, a, order[pos], len(popts)))
+    return out
+
+
+def _dense(popts, d0v, Kv, prhs, sides, rng, max_cand, p=P1):
+    """Combinations for which u = sum d0v_i w_i - rhs lies in the span of
+    v_j = sum Kv_ij w_i (necessary condition: the (k + 1) x (k + 1) matrix of
+    k + 1 random functionals applied to (u, v_1, ..., v_k) is singular mod
+    p), by a Laplace expansion of the determinant into features of the two
+    sides and a dense product. A superset of the exact solutions."""
+    k = Kv.shape[1]
+    n = k + 1
+    dim = prhs.shape[0]
+    f = rng.integers(1, p, size=(n, dim))
+    coef = np.column_stack([d0v, Kv]) % p                                    # (r, n)
+    T = [(((o % p) @ f.T % p)[:, :, None] * coef[i][None, None, :]) % p for i, o in enumerate(popts)]
+    frhs = (f @ (prhs % p)) % p
+
+    def side(bl, left):
+        M = np.zeros((1, n, n), dtype=np.int64)
+        for i in bl:
+            M = (M[:, None, :, :] + T[i][None, :, :, :]).reshape(-1, n, n) % p
+        if left:
+            M[:, :, 0] = (M[:, :, 0] - frhs[None, :]) % p
+        return M, _combos([T[i].shape[0] for i in bl])
+
+    ML, idxL = side(sides[0], True)
+    MR, idxR = side(sides[1], False)
+    rows = list(range(n))
+    feats = [(S, C) for kk in range(n + 1) for S in itertools.combinations(rows, kk)
+             for C in itertools.combinations(rows, kk)]
+
+    def features(M, left):
+        F = np.empty((len(M), len(feats)), dtype=np.float64)
+        for t, (S, C) in enumerate(feats):
+            if left:
+                F[:, t] = _det_mod(M[:, list(S), :][:, :, list(C)], p)
+            else:
+                Sc = [a for a in rows if a not in S]
+                Cc = [a for a in rows if a not in C]
+                sg = -1 if (sum(S) + sum(C)) % 2 else 1
+                F[:, t] = (sg * _det_mod(M[:, Sc, :][:, :, Cc], p)) % p
+        return F
+
+    FL, FR = features(ML, True), features(MR, False)
+    out = []
+    chunk = max(1, 20_000_000 // len(FR))
+    for s in range(0, len(FL), chunk):
+        Z = FL[s:s + chunk] @ FR.T
+        ia, ib = np.nonzero(np.fmod(Z, p) == 0)
+        for a, b in zip(ia, ib):
+            out.append(_assemble(sides, idxL, idxR, s + a, b, len(popts)))
+        if len(out) > max_cand:
+            raise AssertionError(f"{len(out)} slice candidates: structural degeneracy of the family")
+    return out
+
+
+def solve_slice(opts, blocks, fam, rhs, rng, max_cand=2_000_000, stats=None, log=None):
+    """Solutions of sum_i d_i w_i + (block contributions) = rhs for some d
+    in the family: a list of (combo, Ssel) with combo the option index per
+    ordinary term and Ssel the translate set per block. opts: per ordinary
+    term (o1, o2, oC) option arrays; rhs: (r1, r2, rC). Hashing mod P1, every
+    candidate decided exactly (F_P1, C, F_P2)."""
+    r = len(opts)
+    d1, K1 = fam.parts[0]
+    ords = [i for i in range(len(d1)) if i not in {b.pos for b in blocks}]
+    assert len(ords) == r
+    d0v = d1[ords]
+    Kv = _independent_columns_mod(K1[ords].reshape(r, -1), P1)
+    out = []
+    for Ssel in itertools.product(*[b.subsets for b in blocks]):
+        Ps, Vs = _projectors(blocks, Ssel)
+        if Ps is None:
+            popts = [o[0] for o in opts]
+            prhs = rhs[0]
+        else:
+            popts = [(o[0] @ Ps[0].T) % P1 for o in opts]
+            prhs = (Ps[0] @ rhs[0]) % P1
+        sizes = [len(o) for o in popts]
+        sides = _split_sides(sizes)
+        t0 = time.time()
+        if Kv.shape[1] == 0:
+            cands = _mitm(popts, d0v, prhs, sides, rng)
+        else:
+            cands = _dense(popts, d0v, Kv, prhs, sides, rng, max_cand)
+        if stats is not None:
+            stats["candidates"] = stats.get("candidates", 0) + len(cands)
+        if log is not None and (Kv.shape[1] or len(cands) > 100_000):
+            log(f"    translate sets {Ssel}: {Kv.shape[1]} parameters, sizes {sizes}, "
+                f"{len(cands)} candidates [{time.time() - t0:.1f}s]")
+        if cands and Kv.shape[1] == 0:
+            # the whole projected equation mod P1 at once; survivors go to the exact check
+            Cm = np.array(cands, dtype=np.int64)
+            acc = np.zeros((len(Cm), prhs.shape[0]), dtype=np.int64)
+            for i in range(r):
+                acc = (acc + (int(d0v[i]) * popts[i][Cm[:, i]]) % P1) % P1
+            keep = np.all(acc == (prhs % P1)[None, :], axis=1)
+            cands = [c for c, k in zip(cands, keep) if k]
+        for combo in cands:
+            if fam.restrict(*slice_system(opts, blocks, combo, Ssel, rhs, Ps)) is not None:
+                out.append((combo, Ssel))
+    return out
+
+
+def slice_system(opts, blocks, combo, Ssel, rhs, Ps=None):
+    """(Ws, rhss) of the slice equation for one solution, projected onto
+    the annihilator of the blocks' translates; W has a zero column at every
+    block position."""
+    if Ps is None and blocks:
+        Ps, _ = _projectors(blocks, Ssel)
+    r_all = len(opts) + len(blocks)
+    bpos = {b.pos for b in blocks}
+    ords = [i for i in range(r_all) if i not in bpos]
+    Ws, rhss = [], []
+    for fld, p in ((0, P1), (1, P2), (2, None)):
+        W = np.zeros((rhs[fld].shape[0], r_all), dtype=complex if p is None else np.int64)
+        for i, c in zip(ords, combo):
+            W[:, i] = opts[ords.index(i)][fld][c]
+        if Ps is not None:
+            W = _mm(Ps[fld], W, p) if p is not None else Ps[fld] @ W
+            rh = (_mm(Ps[fld], rhs[fld][:, None], p)[:, 0] if p is not None else Ps[fld] @ rhs[fld])
+        else:
+            rh = rhs[fld]
+        Ws.append(W)
+        rhss.append(rh)
+    return tuple(Ws), tuple(rhss)
+
+
+# --------------------------------------------------------------- flats -----
+
+def subspaces(n1):
+    """All subspaces of F_2^{n1}, each as the frozenset of its nonzero points."""
+    pts = range(1, 1 << n1)
+    out = set()
+    for k in range(n1 + 1):
+        for gens in itertools.combinations(pts, k):
+            span = {0}
+            for g in gens:
+                span |= {s ^ g for s in span}
+            out.add(frozenset(span - {0}))
+    return sorted(out, key=lambda W: (len(W), sorted(W)))
+
+
+def is_subspace(W):
+    W = set(W) | {0}
+    return all((a ^ b) in W for a in W for b in W)
+
+
+def flats_with_presence(n1, present):
+    """Subspaces containing exactly the coordinate directions e_k, k in present."""
+    present = set(present)
+    return [W for W in subspaces(n1) if {k for k in range(n1) if (1 << k) in W} == present]
+
+
+def composite_codes(o, W, ccode, composite):
+    """Every assignment of option codes at the composite points of a term
+    with flat W and coordinate codes ccode (k -> code), as rows over the
+    points `composite` (o.absent outside W). The basis of W is the present
+    coordinate directions and then further points, which are free (any of
+    the 4 2^n codes); the other points are class products with one free
+    sign per basis pair and the product of the pair signs on a triple (the
+    quadratic form of the structure lemma)."""
+    basis = [1 << k for k in sorted(ccode)]
+    assert all(b in W for b in basis)
+    span = {0}
+    for b in basis:
+        span |= {s ^ b for s in span}
+    free = []
+    for pnt in sorted(W):
+        if pnt not in span:
+            basis.append(pnt)
+            free.append(pnt)
+            span |= {s ^ pnt for s in span}
+    j = len(basis)
+    pairs = list(itertools.combinations(range(j), 2))
+    rows = []
+    for fcodes in itertools.product(range(o.absent), repeat=len(free)):
+        bcode = {1 << k: c for k, c in ccode.items()}
+        bcode.update(zip(free, fcodes))
+        for signs in itertools.product((0, 1), repeat=len(pairs)):
+            q = dict(zip(pairs, signs))
+            code = {}
+            for t in range(1, 1 << j):
+                bits = [a for a in range(j) if t >> a & 1]
+                pnt = 0
+                for a in bits:
+                    pnt ^= basis[a]
+                c = bcode[basis[bits[0]]]
+                for a in bits[1:]:
+                    c = o.compose(c, bcode[basis[a]])
+                s = sum(q[(a, b)] for a, b in itertools.combinations(bits, 2)) % 2
+                if s:
+                    c = 4 * (c // 4) + (c % 4 + 2) % 4
+                code[pnt] = c
+            rows.append([code.get(x, o.absent) for x in composite])
+    if not composite:
+        return np.zeros((1, 0), dtype=np.int64)
+    return np.unique(np.array(rows, dtype=np.int64).reshape(-1, len(composite)), axis=0)
+
+
+def valid_term_codes(o, n1, codes):
+    """True when the codes (offset -> code, all nonzero offsets) are those of
+    a stabilizer state with base slice u: the present offsets form a
+    subspace and the composite codes are among the structure lemma's."""
+    present = [x for x, c in codes.items() if c != o.absent]
+    if not is_subspace(present):
+        return False
+    W = frozenset(present)
+    ccode = {k: codes[1 << k] for k in range(n1) if (1 << k) in W}
+    composite = [x for x in range(1, 1 << n1) if bin(x).count("1") >= 2]
+    rows = composite_codes(o, W, ccode, composite)
+    want = np.array([codes[x] for x in composite], dtype=np.int64)
+    return bool((rows == want[None, :]).all(axis=1).any()) if composite else True
+
+
+def reconstruct_block(o, g, D, data, n1, rng):
+    """Copies of a block from its per-slice residual coordinates. data: list
+    of (offset, {class: coordinate}) over the seven non-base offsets, with
+    the block's contribution at that offset sum_k a_k Q_k u. Returns every
+    assignment (as a list of (coefficient, codes) per copy, copies distinct
+    and unordered) with coefficients summing to D, all nonzero, and each copy
+    a valid stabilizer state; the flag says whether a coefficient family
+    remained (degenerate)."""
+    K = 1 << o.n
+    ones = np.ones((g, 1), dtype=complex)
+    c0 = np.full(g, D / g, dtype=complex)
+    Kc = _affine_solve_C(ones.T, np.zeros(1, dtype=complex))[1]     # sum-zero directions
+    results = []
+
+    def dfs(idx, c0, Kc, codes):
+        if idx == len(data):
+            degenerate = Kc.shape[1] > 0
+            c = c0 + Kc @ (rng.normal(size=Kc.shape[1]) + 1j * rng.normal(size=Kc.shape[1])) if degenerate else c0
+            if np.any(np.abs(c) < 1e-9):
+                return
+            full = [dict(cd) for cd in codes]
+            for cd in full:
+                if not valid_term_codes(o, n1, cd):
+                    return
+            keyset = [tuple(sorted(cd.items())) for cd in full]
+            if len(set(keyset)) < g:
+                return
+            results.append((list(zip(c, full)), degenerate))
+            return
+        x, a = data[idx]
+        classes = sorted(a)
+        for assign in itertools.product(classes + [None], repeat=g):
+            if {k for k in assign if k is not None} != set(classes):
+                continue
+            present = [j for j in range(g) if assign[j] is not None]
+            for phases in itertools.product(range(4), repeat=len(present)):
+                A = np.zeros((len(classes), g), dtype=complex)
+                b = np.array([a[k] for k in classes], dtype=complex)
+                for j, l in zip(present, phases):
+                    A[classes.index(assign[j]), j] = FOURTH[l]
+                sol = _affine_solve_C(A @ Kc, b - A @ c0)
+                if sol is None:
+                    continue
+                mu0, N = sol
+                new = [dict(cd) for cd in codes]
+                for j in range(g):
+                    new[j][x] = o.absent
+                for j, l in zip(present, phases):
+                    new[j][x] = 4 * assign[j] + l
+                dfs(idx + 1, c0 + Kc @ mu0, Kc @ N, new)
+
+    dfs(0, c0, Kc, [dict() for _ in range(g)])
+    # copies are unordered: keep one representative per set of copies
+    seen, out = set(), []
+    for copies, degenerate in results:
+        key = tuple(sorted((tuple(sorted(cd.items())), complex(np.round(c, 8))) for c, cd in copies))
+        if key not in seen:
+            seen.add(key)
+            out.append((copies, degenerate))
+    return out
+
+
+def _refine_split(D, S, coords, splits, tol=1e-7):
+    """Admissible (c_1, c_2), c_1 + c_2 = D, for a pair of copies whose slice
+    contribution has coordinates `coords` on the translates S; None means
+    unconstrained. Two translates: c_1 i^l_1 = a_1, c_2 i^l_2 = a_2 (either
+    order). One translate: both copies in the class (c_1 i^l_1 + c_2 i^l_2 =
+    a, pinned when l_1 != l_2, free when l_1 = l_2 and a = D i^l) or one copy
+    absent (c_j i^l = a). No translate: no constraint. The result is
+    intersected with the previous candidates."""
+    def close(x, y):
+        return abs(x - y) < tol * max(1.0, abs(D))
+    if len(S) == 0:
+        return splits
+    cands, free = [], False
+    if len(S) == 2:
+        a1, a2 = coords
+        for l1 in range(4):
+            for l2 in range(4):
+                c1, c2 = a1 / FOURTH[l1], a2 / FOURTH[l2]
+                if close(c1 + c2, D):
+                    cands += [(c1, c2), (c2, c1)]
+    else:
+        a = coords[0]
+        for l1 in range(4):
+            for l2 in range(4):
+                if l1 == l2:
+                    if close(a, D * FOURTH[l1]):
+                        free = True
+                else:
+                    c1 = (a - D * FOURTH[l2]) / (FOURTH[l1] - FOURTH[l2])
+                    cands.append((c1, D - c1))
+        for l in range(4):
+            cj = a / FOURTH[l]
+            cands += [(cj, D - cj), (D - cj, cj)]
+    cands = [(c1, c2) for c1, c2 in cands if abs(c1) > tol and abs(c2) > tol]
+    if free:
+        return splits                                    # this slice adds no constraint
+    if splits is None:
+        return cands
+    return [(c1, c2) for c1, c2 in splits if any(close(c1, e1) and close(c2, e2) for e1, e2 in cands)]
+
+
+# ------------------------------------------------------------- matching ----
+
+class SliceMatcher:
+    """Every decomposition of psi^{n1 + n2} with a given base slice at a
+    given base point. The multiset cover is split into its distinct states;
+    their coefficients form an affine family (a point when the states are
+    independent), repeated states become blocks (span of at most g
+    translates at every slice). The n1 coordinate slices are solved and
+    joined, each join restricting the family; the absence pattern fixes the
+    flat of every ordinary term; the composite slices are solved point by
+    point over the composite code assignments; the blocks' copies are
+    reconstructed from the residuals; every hit is confirmed against
+    psi^{n1 + n2}."""
+
+    def __init__(self, enum, n1, verbose=False, seed=29):
+        self.E = enum
+        self.n1, self.n2 = n1, enum.n
+        self.F1, self.F2 = enum.F1, enum.F2
+        self.verbose = verbose
+        self.rng = np.random.default_rng(seed)
+        self.cache = {}
+
+    def log(self, msg):
+        if self.verbose:
+            print(msg, flush=True)
+
+    def options(self, idx):
+        if idx not in self.cache:
+            self.cache[idx] = TermOptions(self.E.C[:, idx], self.n2, self.F1, self.F2)
+        return self.cache[idx]
+
+    def rhs(self, x0, x):
+        e = bin(x).count("1") - bin(x0).count("1")
+        r1 = (self.E.psi1 * pow(self.F1.tan, e % (P1 - 1), P1)) % P1
+        r2 = (self.E.psi2 * pow(self.F2.tan, e % (P2 - 1), P2)) % P2
+        rC = self.E.psi * (np.tan(np.pi / 8) ** e)
+        return r1, r2, rC
+
+    def run(self, cover, x0):
+        """(hits, stats) for the base slice `cover` (a tuple of dictionary
+        indices, repeats allowed) at x0; each hit is a dict with the term
+        vectors, coefficients, residual and rank."""
+        n1 = self.n1
+        stats = {"kappa": None, "kappa1": None, "distinct": 0, "blocks": [], "coord_solutions": [],
+                 "joined": 0, "types": 0, "composite_solutions": 0, "candidates": 0,
+                 "zero_coefficient": 0, "split_pruned": 0, "reconstructions": 0, "hits": 0,
+                 "refused": False}
+        distinct = sorted(set(cover))
+        mult = {u: cover.count(u) for u in distinct}
+        fam = Family.from_cover(self.E, distinct)
+        if fam is None:
+            stats["refused"] = True
+            return [], stats
+        blocks = [Block(self.options(u), mult[u], i) for i, u in enumerate(distinct) if mult[u] > 1]
+        bpos = {b.pos for b in blocks}
+        exempt = tuple(sorted(bpos))
+        if fam.has_zero_coefficient(exempt):
+            stats["refused"] = True                   # a distinct state no member of the family uses
+            return [], stats
+        ords = [i for i in range(len(distinct)) if i not in bpos]
+        opts = [self.options(distinct[i]) for i in ords]
+        arrays = [o.arrays() for o in opts]
+        stats.update(kappa=fam.kappa, kappa1=fam.kappa1, distinct=len(distinct), blocks=[b.g for b in blocks])
+        coord = [x0 ^ (1 << k) for k in range(n1)]
+        composite = [x for x in range(1, 1 << n1) if bin(x).count("1") >= 2]
+        # a state: ordinary combos, block translate sets, family, split candidates per block
+        states = [([], [], fam, [None] * len(blocks))]
+        for k in range(n1):
+            rhs = self.rhs(x0, coord[k])
+            new, count = [], 0
+            for cl, bl, f, sp in states:
+                sols = solve_slice(arrays, blocks, f, rhs, self.rng, stats=stats, log=self.log)
+                count += len(sols)
+                for combo, Ssel in sols:
+                    f2 = f.restrict(*slice_system(arrays, blocks, combo, Ssel, rhs))
+                    if f2 is None or f2.has_zero_coefficient(exempt):
+                        stats["zero_coefficient"] += f2 is not None
+                        continue
+                    sp2 = self._join_blocks(f2, arrays, blocks, combo, Ssel, rhs, sp)
+                    if sp2 is None:
+                        stats["split_pruned"] += 1
+                        continue
+                    new.append((cl + [combo], bl + [Ssel], f2, sp2))
+            stats["coord_solutions"].append(count)
+            states = new
+            self.log(f"  slice {k}: {count} solutions, {len(states)} states, "
+                     f"parameters {sorted(set(f.kappa for _, _, f, _ in states))}")
+            if not states:
+                return [], stats
+        stats["joined"] = len(states)
+        hits = []
+        for cl, bl, f, sp in states:
+            types = []
+            for i, o in enumerate(opts):
+                present = [k for k in range(n1) if cl[k][i] != o.absent]
+                types.append(flats_with_presence(n1, present))
+            for Wsel in itertools.product(*types):
+                stats["types"] += 1
+                hits.extend(self._complete(distinct, x0, opts, blocks, cl, bl, Wsel, f, sp, coord, composite, stats))
+        hits = self._dedupe(hits)
+        stats["hits"] = len(hits)
+        return hits, stats
+
+    def _join_blocks(self, fam, arrays, blocks, combo, Ssel, rhs, splits):
+        """The blocks' part of a join: with a pinned family the residual must
+        use every chosen translate (else the solution duplicates a smaller
+        set), and for a pair the admissible coefficient splits (c_1, c_2) with
+        c_1 + c_2 = D are refined: a two-translate slice pins them up to the
+        phases, a one-translate slice constrains them once pinned. Returns the
+        new split lists, or None to drop the state."""
+        if not blocks or fam.kappa:
+            return splits
+        a = self._block_coordinates(fam, arrays, blocks, combo, Ssel, rhs)
+        if a is None:
+            return splits                                # ambiguous split between blocks: kept
+        if not np.all(np.abs(a) > 1e-9):
+            return None
+        d = fam.coefficients(self.rng)
+        new, pos = [], 0
+        for b, S, sp in zip(blocks, Ssel, splits):
+            coords = a[pos:pos + len(S)]
+            pos += len(S)
+            if b.g != 2:
+                new.append(sp)
+                continue
+            sp2 = _refine_split(d[b.pos], S, coords, sp)
+            if sp2 is not None and len(sp2) == 0:
+                return None
+            new.append(sp2)
+        return new
+
+    def _block_coordinates(self, fam, arrays, blocks, combo, Ssel, rhs):
+        """Coordinates of the residual rhs - W d on the chosen translates
+        (complex), or None when it does not lie in their span or the split
+        between blocks is ambiguous."""
+        d = fam.coefficients(self.rng)
+        r_all = len(arrays) + len(blocks)
+        bpos = {b.pos for b in blocks}
+        ords = [i for i in range(r_all) if i not in bpos]
+        W = np.zeros((rhs[2].shape[0], r_all), dtype=complex)
+        for i, c in zip(ords, combo):
+            W[:, i] = arrays[ords.index(i)][2][c]
+        res = rhs[2] - W @ d
+        _, Vs = _projectors(blocks, Ssel)
+        V = Vs[2]
+        if V.shape[1] == 0:
+            return np.zeros(0) if np.linalg.norm(res) < 1e-7 else None
+        sol = _affine_solve_C(V, res)
+        if sol is None or sol[1].shape[1]:
+            return None
+        return sol[0]
+
+    def _complete(self, distinct, x0, opts, blocks, cl, bl, Wsel, fam, sp, coord, composite, stats):
+        n1 = self.n1
+        r = len(opts)
+        rows = []
+        for i in range(r):
+            ccode = {k: cl[k][i] for k in range(n1) if cl[k][i] != opts[i].absent}
+            rows.append(composite_codes(opts[i], Wsel[i], ccode, composite))
+        exempt = tuple(sorted(b.pos for b in blocks))
+        states = [([], [], fam, sp)]
+        for c, x in enumerate(composite):
+            rhs = self.rhs(x0, x0 ^ x)
+            codes = [np.unique(rw[:, c]) for rw in rows]
+            arrays = [(o.m1[cd], o.m2[cd], o.vecs[cd]) for o, cd in zip(opts, codes)]
+            new = []
+            for cl2, bl2, f, sp1 in states:
+                sols = solve_slice(arrays, blocks, f, rhs, self.rng, stats=stats, log=self.log)
+                stats["composite_solutions"] += len(sols)
+                for combo, Ssel in sols:
+                    f2 = f.restrict(*slice_system(arrays, blocks, combo, Ssel, rhs))
+                    if f2 is None or f2.has_zero_coefficient(exempt):
+                        stats["zero_coefficient"] += f2 is not None
+                        continue
+                    sp2 = self._join_blocks(f2, arrays, blocks, combo, Ssel, rhs, sp1)
+                    if sp2 is None:
+                        stats["split_pruned"] += 1
+                        continue
+                    new.append((cl2 + [tuple(int(codes[i][combo[i]]) for i in range(r))], bl2 + [Ssel], f2, sp2))
+            states = new
+            if not states:
+                return []
+        hits = []
+        offsets = [1 << k for k in range(n1)] + composite
+        for cl2, bl2, f, _ in states:
+            ord_terms = []
+            for i in range(r):
+                o = opts[i]
+                match = np.ones(len(rows[i]), dtype=bool)
+                for c in range(len(composite)):
+                    match &= rows[i][:, c] == cl2[c][i]
+                if not np.any(match):
+                    break
+                t = np.zeros((1 << n1, 1 << self.n2), dtype=complex)
+                t[x0] = o.u
+                for k in range(n1):
+                    t[coord[k]] = o.vecs[cl[k][i]]
+                for c, x in enumerate(composite):
+                    t[x0 ^ x] = o.vecs[cl2[c][i]]
+                ord_terms.append(t.ravel())
+            else:
+                d = f.coefficients(self.rng)
+                bpos = {b.pos for b in blocks}
+                ords = [i for i in range(len(distinct)) if i not in bpos]
+                coeffs = [d[i] for i in ords]
+                if not blocks:
+                    hits.append(self.confirm(ord_terms, coeffs, f.kappa))
+                    continue
+                # residual coordinates per slice, split over the blocks
+                per_block = [[] for _ in blocks]
+                ok = True
+                for s, x in enumerate(offsets):
+                    if s < n1:
+                        arrays_s, combo, Ssel = [o.arrays() for o in opts], cl[s], bl[s]
+                    else:
+                        c = s - n1
+                        combo = tuple(cl2[c][i] for i in range(r))
+                        arrays_s, Ssel = [o.arrays() for o in opts], bl2[c]
+                    rhs = self.rhs(x0, x0 ^ x)
+                    a = self._block_coordinates(f, arrays_s, blocks, combo, Ssel, rhs)
+                    if a is None:
+                        ok = False
+                        break
+                    pos = 0
+                    for bi, (b, S) in enumerate(zip(blocks, Ssel)):
+                        per_block[bi].append((x, {k: a[pos + j] for j, k in enumerate(S)}))
+                        pos += len(S)
+                if not ok:
+                    continue
+                recon = [reconstruct_block(b.o, b.g, d[b.pos], per_block[bi], n1, self.rng)
+                         for bi, b in enumerate(blocks)]
+                stats["reconstructions"] += 1
+                for choice in itertools.product(*recon):
+                    terms, cs = list(ord_terms), list(coeffs)
+                    degenerate = f.kappa > 0
+                    for b, (copies, deg) in zip(blocks, choice):
+                        degenerate |= deg
+                        for cval, cd in copies:
+                            t = np.zeros((1 << n1, 1 << self.n2), dtype=complex)
+                            t[x0] = b.o.u
+                            for x, code in cd.items():
+                                t[x0 ^ x] = b.o.vecs[code]
+                            terms.append(t.ravel())
+                            cs.append(cval)
+                    hits.append(self.confirm(terms, cs, int(degenerate)))
+        return hits
+
+    def confirm(self, terms, coeffs, free):
+        """Residual, coefficients and rank of the terms against psi^m, in
+        floating point and (the span condition) mod P2."""
+        m = self.n1 + self.n2
+        res, c = confirm_decomposition(terms, m)
+        A = np.column_stack(terms)
+        rank = int(np.linalg.matrix_rank(A, tol=1e-8))
+        codes = np.array([exact_codes(t)[0] for t in terms])
+        U2 = self.F2.codes_to_field(codes)
+        r0 = _rank_mod(U2, P2)
+        r1 = _rank_mod(np.vstack([U2, self.F2.target(m)]), P2)
+        return {"terms": terms, "coeffs": c, "residual": res, "rank": rank, "exact": r0 == r1,
+                "independent": rank == len(terms), "nonzero": bool(np.all(np.abs(c) > 1e-9)),
+                "free_parameters": free}
+
+    @staticmethod
+    def _dedupe(hits):
+        seen, out = set(), []
+        for h in hits:
+            key = tuple(sorted(exact_codes(t)[0].tobytes() for t in h["terms"]))
+            if key not in seen:
+                seen.add(key)
+                out.append(h)
+        return out
 
 
 def x0_reps(n1):
