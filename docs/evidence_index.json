@@ -1,6 +1,6 @@
 {
  "generated_from": "bounds/",
- "head": "d88030fce9e5ae91a32feab4a046842f05502031",
+ "head": "d84cbe4b1a70d8e6d396ff185ae812a4be23bfc4",
  "generated": "2026-09-22",
  "since": "2026-09-15",
  "exponents": [
@@ -605,7 +605,14 @@
   {
    "orbit": "qubit_H",
    "m": 7,
-   "lower": null,
+   "lower": {
+    "rank": 6,
+    "tier": "attested",
+    "slug": "qubit_H-m7-lower-6",
+    "date": "2026-09-22",
+    "board_date": "2026-09-22",
+    "moved_since": true
+   },
    "upper": {
     "rank": 9,
     "tier": "lean",
@@ -620,7 +627,14 @@
   {
    "orbit": "qubit_H",
    "m": 8,
-   "lower": null,
+   "lower": {
+    "rank": 6,
+    "tier": "attested",
+    "slug": "qubit_H-m8-lower-6",
+    "date": "2026-09-22",
+    "board_date": "2026-09-22",
+    "moved_since": true
+   },
    "upper": {
     "rank": 12,
     "tier": "lean",
@@ -635,7 +649,14 @@
   {
    "orbit": "qubit_H",
    "m": 10,
-   "lower": null,
+   "lower": {
+    "rank": 6,
+    "tier": "attested",
+    "slug": "qubit_H-m10-lower-6",
+    "date": "2026-09-22",
+    "board_date": "2026-09-22",
+    "moved_since": true
+   },
    "upper": {
     "rank": 18,
     "tier": "lean",
@@ -1330,6 +1351,22 @@
   {
    "orbit": "qubit_H",
    "m": 7,
+   "rank": 6,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "qubit_H-m7-lower-6"
+   ],
+   "board": [
+    "attested"
+   ]
+  },
+  {
+   "orbit": "qubit_H",
+   "m": 7,
    "rank": 9,
    "runs": 1,
    "log_runs": 0,
@@ -1346,6 +1383,22 @@
   {
    "orbit": "qubit_H",
    "m": 8,
+   "rank": 6,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "qubit_H-m8-lower-6"
+   ],
+   "board": [
+    "attested"
+   ]
+  },
+  {
+   "orbit": "qubit_H",
+   "m": 8,
    "rank": 12,
    "runs": 1,
    "log_runs": 0,
@@ -1357,6 +1410,22 @@
    ],
    "board": [
     "lean"
+   ]
+  },
+  {
+   "orbit": "qubit_H",
+   "m": 10,
+   "rank": 6,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "qubit_H-m10-lower-6"
+   ],
+   "board": [
+    "attested"
    ]
   },
   {
@@ -1699,10 +1768,10 @@
    "date": "2026-09-22",
    "seeded": false,
    "cpu_hours": 73.4,
-   "discoveries": 1,
-   "median_declared": 73.4,
+   "discoveries": 4,
+   "median_declared": 0.0,
    "cum_cpu_hours": 194.85327777777775,
-   "cum_discoveries": 73
+   "cum_discoveries": 76
   }
  ],
  "bounds": [
@@ -3189,6 +3258,48 @@
    }
   },
   {
+   "slug": "qubit_H-m10-lower-6",
+   "file": "bounds/qubit_H-m10-lower-6.json",
+   "orbit": "qubit_H",
+   "m": 10,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "attested",
+   "ok": true,
+   "date": "2026-09-22",
+   "author": "this repository",
+   "reference": "stabrank research/h6_rank5",
+   "method": "projection monotonicity applied to the attested exact rank-5 exclusion at m=6",
+   "pull_request": 102,
+   "merge_commit": "940bbc3f5061af0b0c86aad7f5debc49e77ae683",
+   "merge_date": "2026-09-22",
+   "added_commit": "c7155b380cbd0232d30d52f8eeeb2c131536964c",
+   "added_date": "2026-09-22",
+   "added_subject": "Project chi(H^6) >= 6 to the m = 7, 8, and 10 cells at the attested tier",
+   "receipt": "certs/qubit_H-m10-lower-6.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_h_m6_rank5_attested.py",
+   "certificate_budget_s": 3600,
+   "certificate_attested": {
+    "batches": "research/h6_rank5/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 73.4,
+    "hardware": "187 batches on a RunPod CPU pod (16 vCPU AMD EPYC 4564P, shared host at load 30 to 45, ten batches in parallel, nice 19), 2026-09-22 01:37 to 08:31 UTC; batches 14, 15, and 173 on an Apple silicon laptop (one core, nice 19) during the pipeline test on 2026-09-21; the aggregate's two seeded re-runs (batches 11 and 148) on the pod",
+    "note": "The exclusion of every rank-5 decomposition of |H>^6 lives in the 190 stored batch outputs under research/h6_rank5/results/ (15 stage A batches over the 5,939,465 full 5-covers of |H>^3 with distinct independent base states, 158 stage B batches over the 12,390 dependent covers, 17 stage C batches over the 13,852 covers with a repeated state), each matching its covers at the four base points and re-deciding every candidate mod 2013265921 and numerically. The certificate checks the partition against the enumerator, re-enumerates the degenerate covers, verifies the hashes and geometry of every output, re-decides every stored hit, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/h6_rank5/batch.py, which regenerates any batch (`batch.py K`, 73.4 CPU-hours for all 190 on the pod: stage A 2.8, stage B 69.6, stage C 1.0).",
+    "total": 190
+   },
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond the m=6 certificate, which this cell re-runs"
+   }
+  },
+  {
    "slug": "qubit_H-m10-upper-18",
    "file": "bounds/qubit_H-m10-upper-18.json",
    "orbit": "qubit_H",
@@ -3701,6 +3812,48 @@
    }
   },
   {
+   "slug": "qubit_H-m7-lower-6",
+   "file": "bounds/qubit_H-m7-lower-6.json",
+   "orbit": "qubit_H",
+   "m": 7,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "attested",
+   "ok": true,
+   "date": "2026-09-22",
+   "author": "this repository",
+   "reference": "stabrank research/h6_rank5",
+   "method": "projection monotonicity applied to the attested exact rank-5 exclusion at m=6",
+   "pull_request": 102,
+   "merge_commit": "940bbc3f5061af0b0c86aad7f5debc49e77ae683",
+   "merge_date": "2026-09-22",
+   "added_commit": "c7155b380cbd0232d30d52f8eeeb2c131536964c",
+   "added_date": "2026-09-22",
+   "added_subject": "Project chi(H^6) >= 6 to the m = 7, 8, and 10 cells at the attested tier",
+   "receipt": "certs/qubit_H-m7-lower-6.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_h_m6_rank5_attested.py",
+   "certificate_budget_s": 3600,
+   "certificate_attested": {
+    "batches": "research/h6_rank5/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 73.4,
+    "hardware": "187 batches on a RunPod CPU pod (16 vCPU AMD EPYC 4564P, shared host at load 30 to 45, ten batches in parallel, nice 19), 2026-09-22 01:37 to 08:31 UTC; batches 14, 15, and 173 on an Apple silicon laptop (one core, nice 19) during the pipeline test on 2026-09-21; the aggregate's two seeded re-runs (batches 11 and 148) on the pod",
+    "note": "The exclusion of every rank-5 decomposition of |H>^6 lives in the 190 stored batch outputs under research/h6_rank5/results/ (15 stage A batches over the 5,939,465 full 5-covers of |H>^3 with distinct independent base states, 158 stage B batches over the 12,390 dependent covers, 17 stage C batches over the 13,852 covers with a repeated state), each matching its covers at the four base points and re-deciding every candidate mod 2013265921 and numerically. The certificate checks the partition against the enumerator, re-enumerates the degenerate covers, verifies the hashes and geometry of every output, re-decides every stored hit, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/h6_rank5/batch.py, which regenerates any batch (`batch.py K`, 73.4 CPU-hours for all 190 on the pod: stage A 2.8, stage B 69.6, stage C 1.0).",
+    "total": 190
+   },
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond the m=6 certificate, which this cell re-runs"
+   }
+  },
+  {
    "slug": "qubit_H-m7-upper-9",
    "file": "bounds/qubit_H-m7-upper-9.json",
    "orbit": "qubit_H",
@@ -3733,6 +3886,48 @@
     "wall_clock_hours": 0.01,
     "runs": 1,
     "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "qubit_H-m8-lower-6",
+   "file": "bounds/qubit_H-m8-lower-6.json",
+   "orbit": "qubit_H",
+   "m": 8,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "attested",
+   "ok": true,
+   "date": "2026-09-22",
+   "author": "this repository",
+   "reference": "stabrank research/h6_rank5",
+   "method": "projection monotonicity applied to the attested exact rank-5 exclusion at m=6",
+   "pull_request": 102,
+   "merge_commit": "940bbc3f5061af0b0c86aad7f5debc49e77ae683",
+   "merge_date": "2026-09-22",
+   "added_commit": "c7155b380cbd0232d30d52f8eeeb2c131536964c",
+   "added_date": "2026-09-22",
+   "added_subject": "Project chi(H^6) >= 6 to the m = 7, 8, and 10 cells at the attested tier",
+   "receipt": "certs/qubit_H-m8-lower-6.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_h_m6_rank5_attested.py",
+   "certificate_budget_s": 3600,
+   "certificate_attested": {
+    "batches": "research/h6_rank5/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 73.4,
+    "hardware": "187 batches on a RunPod CPU pod (16 vCPU AMD EPYC 4564P, shared host at load 30 to 45, ten batches in parallel, nice 19), 2026-09-22 01:37 to 08:31 UTC; batches 14, 15, and 173 on an Apple silicon laptop (one core, nice 19) during the pipeline test on 2026-09-21; the aggregate's two seeded re-runs (batches 11 and 148) on the pod",
+    "note": "The exclusion of every rank-5 decomposition of |H>^6 lives in the 190 stored batch outputs under research/h6_rank5/results/ (15 stage A batches over the 5,939,465 full 5-covers of |H>^3 with distinct independent base states, 158 stage B batches over the 12,390 dependent covers, 17 stage C batches over the 13,852 covers with a repeated state), each matching its covers at the four base points and re-deciding every candidate mod 2013265921 and numerically. The certificate checks the partition against the enumerator, re-enumerates the degenerate covers, verifies the hashes and geometry of every output, re-decides every stored hit, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/h6_rank5/batch.py, which regenerates any batch (`batch.py K`, 73.4 CPU-hours for all 190 on the pod: stage A 2.8, stage B 69.6, stage C 1.0).",
+    "total": 190
+   },
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond the m=6 certificate, which this cell re-runs"
    }
   },
   {
