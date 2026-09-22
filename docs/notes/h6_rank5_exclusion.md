@@ -465,3 +465,22 @@ Everything above depends on PR #87's property P only through the lemma of
 section 2 (an all-visible slice exists); the matcher itself does not use
 P. The certificate declares the dependency rather than re-running the
 tables.
+
+## 7. The run (2026-09-22)
+
+All 190 batches ran on the RunPod CPU pod between 01:37 and 08:31 UTC,
+ten at a time at nice 19 on a shared 16-vCPU host (load 30 to 45), except
+batches 14, 15, and 173, which were the pipeline test on the laptop the
+day before and were kept by the resumable runner. Totals from the
+aggregate: stage A 15 batches, 5,939,465 covers, 23,757,860 matched runs,
+2.77 CPU-hours (1.7 ms per cover); stage B 158 batches, 12,390 covers,
+49,560 matched runs, 69.64 CPU-hours (20.2 s per cover, about 2.3 times
+the laptop sample rate under the shared host); stage C 17 batches, 13,852
+covers, 55,408 matched runs, 1.00 CPU-hours. No refusal, no undecided
+run, no hit. `aggregate.py --recheck 2 --recheck-seed 20260921` verified
+every stored batch, re-enumerated the 26,242 degenerate covers (211 s,
+equal to the stored list), wrote `batch_manifest.json`, and re-ran
+batches 11 and 148 from scratch (439 s and 918 s) with matching
+deterministic hashes, in 1,569 s total. Together with the QPG cat witness
+this gives chi(H^6) = 6, filed as `bounds/qubit_H-m6-lower-6.json` at the
+attested tier.
