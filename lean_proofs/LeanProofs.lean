@@ -45,3 +45,4 @@ import LeanProofs.ReflectQubit
 import LeanProofs.ReflectQutrit
 import LeanProofs.H3M4StabRank
 import LeanProofs.T3M3StabRank
+import LeanProofs.T3M4StabRank

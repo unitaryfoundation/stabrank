@@ -14,7 +14,11 @@
       "vprusso"
     ]
   },
-  "notes": "nine-term product witness from the m=2 carry decomposition Witness: the nine products v_s (x) v_t of the m=2 carry blocks, verified here in exact arithmetic.",
+  "notes": "nine-term product witness from the m=2 carry decomposition Witness: the nine products v_s (x) v_t of the m=2 carry blocks, verified here in exact arithmetic. Now at the lean tier: t3_m4_stabRankP_le_nine in LeanProofs.T3M4StabRank proves stabRankP 3 |T3>^4 <= 9 against IsStabP 3 from this witness, the pointwise identity being decided by the kernel on integer coordinate vectors (see lean_proofs/LeanProofs/Stabilizer/Reflect.lean).",
+  "lean": {
+    "module": "LeanProofs.T3M4StabRank",
+    "theorem": "t3_m4_stabRankP_le_nine"
+  },
   "witness": {
     "terms": [
       {
