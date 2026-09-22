@@ -1,6 +1,6 @@
 {
  "generated_from": "bounds/",
- "head": "7495b3ae75de7a196d251990f0141940955fd576",
+ "head": "822b19668d2dd4a98b7a6b1880522c80ae5c9e66",
  "generated": "2026-09-22",
  "since": "2026-09-15",
  "exponents": [
@@ -75,7 +75,7 @@
    "reference": "qassim2021improved",
    "best": {
     "gamma": 0.4169925001442312,
-    "tier": "verified",
+    "tier": "lean",
     "m": 10,
     "rank": 18,
     "slug": "qubit_H-m10-upper-18",
@@ -373,7 +373,7 @@
    },
    "upper": {
     "rank": 8,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "H3-m4-upper-8",
     "date": "2026-05-27",
     "board_date": "2026-09-12",
@@ -439,7 +439,7 @@
    },
    "upper": {
     "rank": 8,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "T3-m3-upper-8",
     "date": "2026-05-27",
     "board_date": "2026-09-12",
@@ -461,7 +461,7 @@
    },
    "upper": {
     "rank": 9,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "T3-m4-upper-9",
     "date": "2026-05-27",
     "board_date": "2026-09-12",
@@ -483,7 +483,7 @@
    },
    "upper": {
     "rank": 18,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "T3-m5-upper-18",
     "date": "2026-09-17",
     "board_date": "2026-09-17",
@@ -571,7 +571,7 @@
    },
    "upper": {
     "rank": 6,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "qubit_H-m5-upper-6",
     "date": "2015-06-03",
     "board_date": "2026-09-17",
@@ -593,7 +593,7 @@
    },
    "upper": {
     "rank": 6,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "qubit_H-m6-upper-6",
     "date": "2021-06-14",
     "board_date": "2026-09-12",
@@ -608,7 +608,7 @@
    "lower": null,
    "upper": {
     "rank": 9,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "qubit_H-m7-upper-9",
     "date": "2022-02-18",
     "board_date": "2026-09-21",
@@ -623,7 +623,7 @@
    "lower": null,
    "upper": {
     "rank": 12,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "qubit_H-m8-upper-12",
     "date": "2022-02-18",
     "board_date": "2026-09-21",
@@ -638,7 +638,7 @@
    "lower": null,
    "upper": {
     "rank": 18,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "qubit_H-m10-upper-18",
     "date": "2022-02-18",
     "board_date": "2026-09-21",
@@ -726,7 +726,7 @@
    },
    "upper": {
     "rank": 6,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "qubit_T-m5-upper-6",
     "date": "2026-09-18",
     "board_date": "2026-09-18",
@@ -748,7 +748,7 @@
    },
    "upper": {
     "rank": 6,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "qubit_T-m6-upper-6",
     "date": "2026-05-27",
     "board_date": "2026-09-12",
@@ -1071,7 +1071,7 @@
     "T3-m3-lower-8"
    ],
    "board": [
-    "verified",
+    "lean",
     "attested"
    ]
   },
@@ -1152,7 +1152,7 @@
     "T3-m5-upper-18"
    ],
    "board": [
-    "verified"
+    "lean"
    ]
   },
   {
@@ -1263,7 +1263,7 @@
     "qubit_H-m5-upper-6"
    ],
    "board": [
-    "verified"
+    "lean"
    ]
   },
   {
@@ -1307,7 +1307,7 @@
     "qubit_H-m6-lower-6"
    ],
    "board": [
-    "verified",
+    "lean",
     "attested"
    ]
   },
@@ -1340,7 +1340,7 @@
     "qubit_H-m7-upper-9"
    ],
    "board": [
-    "verified"
+    "lean"
    ]
   },
   {
@@ -1356,7 +1356,7 @@
     "qubit_H-m8-upper-12"
    ],
    "board": [
-    "verified"
+    "lean"
    ]
   },
   {
@@ -1372,7 +1372,7 @@
     "qubit_H-m10-upper-18"
    ],
    "board": [
-    "verified"
+    "lean"
    ]
   },
   {
@@ -1466,7 +1466,7 @@
     "qubit_T-m5-upper-6"
    ],
    "board": [
-    "verified"
+    "lean"
    ]
   },
   {
@@ -1508,7 +1508,7 @@
    "cpu_hours_per_solution": 0.0,
    "bounds": [],
    "board": [
-    "verified"
+    "lean"
    ]
   },
   {
@@ -1908,7 +1908,7 @@
    "m": 4,
    "direction": "upper",
    "rank": 8,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-05-27",
    "author": "Labib and Russo",
@@ -1921,14 +1921,14 @@
    "added_date": "2026-09-12",
    "added_subject": "Add a verified-submission leaderboard for stabilizer-rank bounds",
    "receipt": "certs/H3-m4-upper-8.json",
-   "receipt_matches": true,
+   "receipt_matches": false,
    "certificate_script": null,
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.H3M4StabRank",
+   "lean_theorem": "h3_m4_stabRankP_le_eight",
+   "lean_receipt": "certs/lean-LeanProofs-H3M4StabRank.json",
+   "lean_receipt_ok": true,
    "compute": null
   },
   {
@@ -2805,7 +2805,7 @@
    "m": 3,
    "direction": "upper",
    "rank": 8,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-05-27",
    "author": "Labib and Russo",
@@ -2818,14 +2818,14 @@
    "added_date": "2026-09-12",
    "added_subject": "Add a verified-submission leaderboard for stabilizer-rank bounds",
    "receipt": "certs/T3-m3-upper-8.json",
-   "receipt_matches": true,
+   "receipt_matches": false,
    "certificate_script": null,
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.T3M3StabRank",
+   "lean_theorem": "t3_m3_stabRankP_le_eight",
+   "lean_receipt": "certs/lean-LeanProofs-T3M3StabRank.json",
+   "lean_receipt_ok": true,
    "compute": null
   },
   {
@@ -2912,7 +2912,7 @@
    "m": 4,
    "direction": "upper",
    "rank": 9,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-05-27",
    "author": "Labib and Russo",
@@ -2925,14 +2925,14 @@
    "added_date": "2026-09-12",
    "added_subject": "Add a verified-submission leaderboard for stabilizer-rank bounds",
    "receipt": "certs/T3-m4-upper-9.json",
-   "receipt_matches": true,
+   "receipt_matches": false,
    "certificate_script": null,
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.T3M4StabRank",
+   "lean_theorem": "t3_m4_stabRankP_le_nine",
+   "lean_receipt": "certs/lean-LeanProofs-T3M4StabRank.json",
+   "lean_receipt_ok": true,
    "compute": null
   },
   {
@@ -3019,7 +3019,7 @@
    "m": 5,
    "direction": "upper",
    "rank": 18,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-09-17",
    "author": "this repository",
@@ -3032,14 +3032,14 @@
    "added_date": "2026-09-17",
    "added_subject": "chi(|T3>^5) <= 18 by a qutrit cat-state decomposition",
    "receipt": "certs/T3-m5-upper-18.json",
-   "receipt_matches": true,
+   "receipt_matches": false,
    "certificate_script": null,
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.T3M5StabRank",
+   "lean_theorem": "t3_m5_stabRankP_le_eighteen",
+   "lean_receipt": "certs/lean-LeanProofs-T3M5StabRank.json",
+   "lean_receipt_ok": true,
    "compute": {
     "cpu_hours": 0.6,
     "wall_clock_hours": 0.5,
@@ -3195,7 +3195,7 @@
    "m": 10,
    "direction": "upper",
    "rank": 18,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2022-02-18",
    "author": "Kissinger, van de Wetering, and Vilmart",
@@ -3208,14 +3208,14 @@
    "added_date": "2026-09-21",
    "added_subject": "Add the Kissinger, van de Wetering, and Vilmart cells for qubit_H at m = 7, 8, 10",
    "receipt": "certs/qubit_H-m10-upper-18.json",
-   "receipt_matches": true,
+   "receipt_matches": false,
    "certificate_script": null,
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.QubitHM10StabRank",
+   "lean_theorem": "qubit_h_m10_stabRankP_le_eighteen",
+   "lean_receipt": "certs/lean-LeanProofs-QubitHM10StabRank.json",
+   "lean_receipt_ok": true,
    "compute": {
     "cpu_hours": 0.01,
     "wall_clock_hours": 0.01,
@@ -3530,7 +3530,7 @@
    "m": 5,
    "direction": "upper",
    "rank": 6,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2015-06-03",
    "author": "Bravyi, Smith, and Smolin",
@@ -3543,14 +3543,14 @@
    "added_date": "2026-09-16",
    "added_subject": "Restore chi(H^6) <= 6, attributed to Qassim, Pashayan and Gosset, with a witness",
    "receipt": "certs/qubit_H-m5-upper-6.json",
-   "receipt_matches": true,
+   "receipt_matches": false,
    "certificate_script": null,
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.QubitHM5StabRank",
+   "lean_theorem": "qubit_h_m5_stabRankP_le_six",
+   "lean_receipt": "certs/lean-LeanProofs-QubitHM5StabRank.json",
+   "lean_receipt_ok": true,
    "compute": {
     "cpu_hours": 0.02,
     "wall_clock_hours": 0.02,
@@ -3642,7 +3642,7 @@
    "m": 6,
    "direction": "upper",
    "rank": 6,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2021-06-14",
    "author": "Qassim, Pashayan, and Gosset",
@@ -3655,14 +3655,14 @@
    "added_date": "2026-09-12",
    "added_subject": "Add a verified-submission leaderboard for stabilizer-rank bounds",
    "receipt": "certs/qubit_H-m6-upper-6.json",
-   "receipt_matches": true,
+   "receipt_matches": false,
    "certificate_script": null,
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.QubitHM6StabRank",
+   "lean_theorem": "qubit_h_m6_stabRankP_le_six",
+   "lean_receipt": "certs/lean-LeanProofs-QubitHM6StabRank.json",
+   "lean_receipt_ok": true,
    "compute": null
   },
   {
@@ -3707,7 +3707,7 @@
    "m": 7,
    "direction": "upper",
    "rank": 9,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2022-02-18",
    "author": "Kissinger, van de Wetering, and Vilmart",
@@ -3720,14 +3720,14 @@
    "added_date": "2026-09-21",
    "added_subject": "Add the Kissinger, van de Wetering, and Vilmart cells for qubit_H at m = 7, 8, 10",
    "receipt": "certs/qubit_H-m7-upper-9.json",
-   "receipt_matches": true,
+   "receipt_matches": false,
    "certificate_script": null,
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.QubitHM7StabRank",
+   "lean_theorem": "qubit_h_m7_stabRankP_le_nine",
+   "lean_receipt": "certs/lean-LeanProofs-QubitHM7StabRank.json",
+   "lean_receipt_ok": true,
    "compute": {
     "cpu_hours": 0.01,
     "wall_clock_hours": 0.01,
@@ -3742,7 +3742,7 @@
    "m": 8,
    "direction": "upper",
    "rank": 12,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2022-02-18",
    "author": "Kissinger, van de Wetering, and Vilmart",
@@ -3755,14 +3755,14 @@
    "added_date": "2026-09-21",
    "added_subject": "Add the Kissinger, van de Wetering, and Vilmart cells for qubit_H at m = 7, 8, 10",
    "receipt": "certs/qubit_H-m8-upper-12.json",
-   "receipt_matches": true,
+   "receipt_matches": false,
    "certificate_script": null,
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.QubitHM8StabRank",
+   "lean_theorem": "qubit_h_m8_stabRankP_le_twelve",
+   "lean_receipt": "certs/lean-LeanProofs-QubitHM8StabRank.json",
+   "lean_receipt_ok": true,
    "compute": {
     "cpu_hours": 0.01,
     "wall_clock_hours": 0.01,
@@ -4042,7 +4042,7 @@
    "m": 5,
    "direction": "upper",
    "rank": 6,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-09-18",
    "author": "this repository",
@@ -4055,14 +4055,14 @@
    "added_date": "2026-09-18",
    "added_subject": "Fill the S and BK T-type cells at m=5, both directions",
    "receipt": "certs/qubit_T-m5-upper-6.json",
-   "receipt_matches": true,
+   "receipt_matches": false,
    "certificate_script": null,
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.QubitTM5StabRank",
+   "lean_theorem": "qubit_t_m5_stabRankP_le_six",
+   "lean_receipt": "certs/lean-LeanProofs-QubitTM5StabRank.json",
+   "lean_receipt_ok": true,
    "compute": {
     "cpu_hours": 0.001,
     "wall_clock_hours": 0.001,
@@ -4112,7 +4112,7 @@
    "m": 6,
    "direction": "upper",
    "rank": 6,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-05-27",
    "author": "Labib and Russo",
@@ -4125,14 +4125,14 @@
    "added_date": "2026-09-12",
    "added_subject": "Add a verified-submission leaderboard for stabilizer-rank bounds",
    "receipt": "certs/qubit_T-m6-upper-6.json",
-   "receipt_matches": true,
+   "receipt_matches": false,
    "certificate_script": null,
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.QubitTM6StabRank",
+   "lean_theorem": "qubit_t_m6_stabRankP_le_six",
+   "lean_receipt": "certs/lean-LeanProofs-QubitTM6StabRank.json",
+   "lean_receipt_ok": true,
    "compute": null
   }
  ]

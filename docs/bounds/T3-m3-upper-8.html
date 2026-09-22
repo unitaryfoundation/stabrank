@@ -21,7 +21,7 @@ the identity in exact arithmetic. If it passes, open a pull request adding the
 file and the leaderboard picks it up on the next build.</p>
 <p>A bound the pipeline cannot check is recorded as <span class='pill t-cited'>cited</span>
 and never takes a record.</p>
-</dialog><div class=wrap><p><a href='../index.html'>&larr; back to the board</a></p><h2>Verification</h2><p><span class='pill t-verified'>verified</span> &nbsp; 8 stabilizer terms reproduce |T3&gt;^{ot 3}, checked to 60 significant digits</p><p>Implied per-copy exponent &gamma; &le; <b>0.6309</b> against a published 0.5000, no improvement.</p><h2>Notes</h2><p class=prose>explicit eight-term witness; Kocia-Sarovar recorded this as 8? The eight terms are those of <code>stabrank/examples/t3m3_rank8_certificate.py</code>, found by annealing; here each is given in the flat-and-phase-form parametrisation and the identity is re-verified in exact arithmetic.</p><h2>Attribution</h2><p>Labib and Russo &middot; <span class=mono><a href='https://arxiv.org/abs/2605.28586'>arXiv:2605.28586</a></span> &middot; literature</p><h2>Submission</h2><details><summary>JSON</summary><pre>{
+</dialog><div class=wrap><p><a href='../index.html'>&larr; back to the board</a></p><h2>Verification</h2><p><a class='pill t-lean' href='https://github.com/unitaryfoundation/stabrank/blob/main/lean_proofs/LeanProofs/T3M3StabRank.lean' title='t3_m3_stabRankP_le_eight in LeanProofs.T3M3StabRank: machine-checked'>lean</a> &nbsp; t3_m3_stabRankP_le_eight in LeanProofs.T3M3StabRank, machine-checked by Lean</p><p>Implied per-copy exponent &gamma; &le; <b>0.6309</b> against a published 0.5000, no improvement.</p><h2>Lean proof</h2><p>This bound is backed by a machine-checked theorem: <a class=mono href='https://github.com/unitaryfoundation/stabrank/blob/main/lean_proofs/LeanProofs/T3M3StabRank.lean'>t3_m3_stabRankP_le_eight</a> in <span class=mono>LeanProofs.T3M3StabRank</span>. The recorded <code>lake build</code> confirms it compiles.</p><h2>Notes</h2><p class=prose>explicit eight-term witness; Kocia-Sarovar recorded this as 8? The eight terms are those of <code>stabrank/examples/t3m3_rank8_certificate.py</code>, found by annealing; here each is given in the flat-and-phase-form parametrisation and the identity is re-verified in exact arithmetic. Now at the lean tier: <code>t3_m3_stabRankP_le_eight</code> in <code>LeanProofs.T3M3StabRank</code> proves stabRankP 3 |T3&rang;<sup>&otimes;3</sup> &le; 8 against <code>IsStabP</code> 3 from this witness, the pointwise identity being decided by the kernel on integer coordinate vectors (see <code>lean_proofs/LeanProofs/Stabilizer/Reflect.lean</code>).</p><h2>Attribution</h2><p>Labib and Russo &middot; <span class=mono><a href='https://arxiv.org/abs/2605.28586'>arXiv:2605.28586</a></span> &middot; literature</p><h2>Submission</h2><details><summary>JSON</summary><pre>{
   &quot;schema_version&quot;: &quot;0.1&quot;,
   &quot;orbit&quot;: &quot;T3&quot;,
   &quot;m&quot;: 3,
@@ -37,7 +37,11 @@ and never takes a record.</p>
       &quot;vprusso&quot;
     ]
   },
-  &quot;notes&quot;: &quot;explicit eight-term witness; Kocia-Sarovar recorded this as 8? The eight terms are those of stabrank/examples/t3m3_rank8_certificate.py, found by annealing; here each is given in the flat-and-phase-form parametrisation and the identity is re-verified in exact arithmetic.&quot;,
+  &quot;notes&quot;: &quot;explicit eight-term witness; Kocia-Sarovar recorded this as 8? The eight terms are those of stabrank/examples/t3m3_rank8_certificate.py, found by annealing; here each is given in the flat-and-phase-form parametrisation and the identity is re-verified in exact arithmetic. Now at the lean tier: t3_m3_stabRankP_le_eight in LeanProofs.T3M3StabRank proves stabRankP 3 |T3&gt;^3 &lt;= 8 against IsStabP 3 from this witness, the pointwise identity being decided by the kernel on integer coordinate vectors (see lean_proofs/LeanProofs/Stabilizer/Reflect.lean).&quot;,
+  &quot;lean&quot;: {
+    &quot;module&quot;: &quot;LeanProofs.T3M3StabRank&quot;,
+    &quot;theorem&quot;: &quot;t3_m3_stabRankP_le_eight&quot;
+  },
   &quot;witness&quot;: {
     &quot;terms&quot;: [
       {
