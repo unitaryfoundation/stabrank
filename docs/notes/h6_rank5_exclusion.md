@@ -416,7 +416,7 @@ present; `--dry-run` skips the re-runs. It prints `CERTIFIED chi(qubit_H^6)
 Certificate. `verify_challenge/cert_qubit_h_m6_rank5_attested.py` prints
 `seed: 20260921`, runs the aggregate with two re-runs into a scratch
 directory and requires its claim line; the draft bound
-`bounds/qubit_H-m6-lower-6.json.draft` declares `certificate.attested` on
+`research/h6_rank5/qubit_H-m6-lower-6.json.draft` declares `certificate.attested` on
 `research/h6_rank5/batch_manifest.json` with `recomputed: 2` and a 3600 s
 budget (the re-enumeration is about 190 s and two batches at most about
 1400 s, so the certificate fits with margin on one core), and states the

@@ -8,7 +8,7 @@ dependent or repeated covers, `degenerate_covers.json`); the whole
 exclusion is partitioned into 190 batches (`partition.json`) that
 `batch.py` runs one at a time and `aggregate.py` checks, and the
 certificate `verify_challenge/cert_qubit_h_m6_rank5_attested.py` behind the
-draft bound `bounds/qubit_H-m6-lower-6.json.draft` (attested tier) prints
+draft bound `research/h6_rank5/qubit_H-m6-lower-6.json.draft` (attested tier) prints
 `CERTIFIED chi(qubit_H^6) >= 6` once every batch is stored and clean. The
 full run, about 36 CPU-hours, has not been launched; three test batches
 (one per stage) are stored under `results/`.
@@ -148,7 +148,7 @@ The second command is what the certificate runs (through
 directory for the re-runs and `--no-manifest`); it writes
 `batch_manifest.json`, whose per-file hashes the bound's `attested` block
 points at. After the run, fill the placeholders in
-`bounds/qubit_H-m6-lower-6.json.draft` (compute hours, hardware, date, the
+`research/h6_rank5/qubit_H-m6-lower-6.json.draft` (compute hours, hardware, date, the
 `--no-native` cross-check) and rename it to `bounds/qubit_H-m6-lower-6.json`;
 the submissions workflow verifies every touched bound, so the draft keeps
 its suffix until the manifest exists.
