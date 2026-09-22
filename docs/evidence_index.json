@@ -1,6 +1,6 @@
 {
  "generated_from": "bounds/",
- "head": "24d020a3b430892a00411065b01e3f33757d8fa0",
+ "head": "7495b3ae75de7a196d251990f0141940955fd576",
  "generated": "2026-09-22",
  "since": "2026-09-15",
  "exponents": [
@@ -107,7 +107,7 @@
    "reference": null,
    "best": {
     "gamma": 0.6460148371100896,
-    "tier": "verified",
+    "tier": "lean",
     "m": 2,
     "rank": 8,
     "slug": "T5-m2-upper-8",
@@ -123,7 +123,7 @@
    "m": 1,
    "lower": {
     "rank": 2,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "S-m1-lower-2",
     "date": "2026-09-20",
     "board_date": "2026-09-20",
@@ -255,7 +255,7 @@
    "m": 2,
    "lower": {
     "rank": 3,
-    "tier": "reproduced",
+    "tier": "lean",
     "slug": "N-m2-lower-3",
     "date": "2026-09-12",
     "board_date": "2026-09-16",
@@ -321,7 +321,7 @@
    "m": 2,
    "lower": {
     "rank": 3,
-    "tier": "reproduced",
+    "tier": "lean",
     "slug": "H3-m2-lower-3",
     "date": "2026-09-12",
     "board_date": "2026-09-16",
@@ -497,7 +497,7 @@
    "m": 2,
    "lower": {
     "rank": 2,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "qubit_H-m2-lower-2",
     "date": "2026-09-20",
     "board_date": "2026-09-20",
@@ -652,7 +652,7 @@
    "m": 2,
    "lower": {
     "rank": 2,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "qubit_T-m2-lower-2",
     "date": "2026-09-20",
     "board_date": "2026-09-20",
@@ -762,7 +762,7 @@
    "m": 1,
    "lower": {
     "rank": 3,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "T5-m1-lower-3",
     "date": "2026-09-21",
     "board_date": "2026-09-21",
@@ -770,7 +770,7 @@
    },
    "upper": {
     "rank": 3,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "T5-m1-upper-3",
     "date": "2026-09-20",
     "board_date": "2026-09-21",
@@ -792,7 +792,7 @@
    },
    "upper": {
     "rank": 8,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "T5-m2-upper-8",
     "date": "2026-09-21",
     "board_date": "2026-09-21",
@@ -1180,8 +1180,7 @@
     "qubit_H-m2-upper-2"
    ],
    "board": [
-    "lean",
-    "verified"
+    "lean"
    ]
   },
   {
@@ -1389,8 +1388,7 @@
     "qubit_T-m2-upper-2"
    ],
    "board": [
-    "lean",
-    "verified"
+    "lean"
    ]
   },
   {
@@ -1538,7 +1536,7 @@
     "T5-m1-upper-3"
    ],
    "board": [
-    "verified"
+    "lean"
    ]
   },
   {
@@ -1715,7 +1713,7 @@
    "m": 2,
    "direction": "lower",
    "rank": 3,
-   "tier": "reproduced",
+   "tier": "lean",
    "ok": true,
    "date": "2026-09-12",
    "author": "this repository",
@@ -1728,14 +1726,14 @@
    "added_date": "2026-09-12",
    "added_subject": "Certify chi(N^2) >= 3 and chi(H3^2) >= 3",
    "receipt": "certs/H3-m2-lower-3.json",
-   "receipt_matches": true,
+   "receipt_matches": false,
    "certificate_script": "verify_challenge/cert_m2_rank2.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.M2Lower",
+   "lean_theorem": "h3_m2_stabRank_gt_two",
+   "lean_receipt": "certs/lean-LeanProofs-M2Lower.json",
+   "lean_receipt_ok": true,
    "compute": null
   },
   {
@@ -1940,7 +1938,7 @@
    "m": 2,
    "direction": "lower",
    "rank": 3,
-   "tier": "reproduced",
+   "tier": "lean",
    "ok": true,
    "date": "2026-09-12",
    "author": "this repository",
@@ -1953,14 +1951,14 @@
    "added_date": "2026-09-12",
    "added_subject": "Certify chi(N^2) >= 3 and chi(H3^2) >= 3",
    "receipt": "certs/N-m2-lower-3.json",
-   "receipt_matches": true,
+   "receipt_matches": false,
    "certificate_script": "verify_challenge/cert_m2_rank2.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.M2Lower",
+   "lean_theorem": "norrell_m2_stabRank_gt_two",
+   "lean_receipt": "certs/lean-LeanProofs-M2Lower.json",
+   "lean_receipt_ok": true,
    "compute": null
   },
   {
@@ -2165,7 +2163,7 @@
    "m": 1,
    "direction": "lower",
    "rank": 2,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-09-20",
    "author": "this repository",
@@ -2178,14 +2176,14 @@
    "added_date": "2026-09-20",
    "added_subject": "Lower bounds for the five cells that had none",
    "receipt": "certs/S-m1-lower-2.json",
-   "receipt_matches": true,
+   "receipt_matches": false,
    "certificate_script": "verify_challenge/cert_rank1_moduli.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.StrangeM1Lower",
+   "lean_theorem": "strange_m1_stabRank_gt_one",
+   "lean_receipt": "certs/lean-LeanProofs-StrangeM1Lower.json",
+   "lean_receipt_ok": true,
    "compute": null
   },
   {
@@ -3062,7 +3060,7 @@
    "m": 1,
    "direction": "lower",
    "rank": 3,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-09-21",
    "author": "this repository",
@@ -3075,14 +3073,14 @@
    "added_date": "2026-09-21",
    "added_subject": "Make the ququint T-type state T5 a board orbit with its first four cells",
    "receipt": "certs/T5-m1-lower-3.json",
-   "receipt_matches": true,
+   "receipt_matches": false,
    "certificate_script": "verify_challenge/cert_t5_m1_rank2.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.T5M1StabRank",
+   "lean_theorem": "t5_m1_stabRankP_gt_two",
+   "lean_receipt": "certs/lean-LeanProofs-T5M1StabRank.json",
+   "lean_receipt_ok": true,
    "compute": null
   },
   {
@@ -3092,7 +3090,7 @@
    "m": 1,
    "direction": "upper",
    "rank": 3,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-09-20",
    "author": "this repository",
@@ -3105,14 +3103,14 @@
    "added_date": "2026-09-21",
    "added_subject": "Make the ququint T-type state T5 a board orbit with its first four cells",
    "receipt": "certs/T5-m1-upper-3.json",
-   "receipt_matches": true,
+   "receipt_matches": false,
    "certificate_script": null,
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.T5M1StabRank",
+   "lean_theorem": "t5_m1_stabRankP_le_three",
+   "lean_receipt": "certs/lean-LeanProofs-T5M1StabRank.json",
+   "lean_receipt_ok": true,
    "compute": {
     "cpu_hours": 0.001,
     "wall_clock_hours": 0.001,
@@ -3162,7 +3160,7 @@
    "m": 2,
    "direction": "upper",
    "rank": 8,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-09-21",
    "author": "this repository",
@@ -3175,14 +3173,14 @@
    "added_date": "2026-09-21",
    "added_subject": "Make the ququint T-type state T5 a board orbit with its first four cells",
    "receipt": "certs/T5-m2-upper-8.json",
-   "receipt_matches": true,
+   "receipt_matches": false,
    "certificate_script": null,
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.T5M2StabRank",
+   "lean_theorem": "t5_m2_stabRankP_le_eight",
+   "lean_receipt": "certs/lean-LeanProofs-T5M2StabRank.json",
+   "lean_receipt_ok": true,
    "compute": {
     "cpu_hours": 0.1513,
     "wall_clock_hours": 0.0479,
@@ -3232,7 +3230,7 @@
    "m": 2,
    "direction": "lower",
    "rank": 2,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-09-20",
    "author": "this repository",
@@ -3245,14 +3243,14 @@
    "added_date": "2026-09-20",
    "added_subject": "Lower bounds for the five cells that had none",
    "receipt": "certs/qubit_H-m2-lower-2.json",
-   "receipt_matches": true,
+   "receipt_matches": false,
    "certificate_script": "verify_challenge/cert_rank1_moduli.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.QubitM2Lower",
+   "lean_theorem": "qubit_h_m2_stabRankP_gt_one",
+   "lean_receipt": "certs/lean-LeanProofs-QubitM2Lower.json",
+   "lean_receipt_ok": true,
    "compute": null
   },
   {
@@ -3779,7 +3777,7 @@
    "m": 2,
    "direction": "lower",
    "rank": 2,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-09-20",
    "author": "this repository",
@@ -3792,14 +3790,14 @@
    "added_date": "2026-09-20",
    "added_subject": "Lower bounds for the five cells that had none",
    "receipt": "certs/qubit_T-m2-lower-2.json",
-   "receipt_matches": true,
+   "receipt_matches": false,
    "certificate_script": "verify_challenge/cert_rank1_moduli.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.QubitM2Lower",
+   "lean_theorem": "qubit_t_m2_stabRankP_gt_one",
+   "lean_receipt": "certs/lean-LeanProofs-QubitM2Lower.json",
+   "lean_receipt_ok": true,
    "compute": null
   },
   {
