@@ -543,14 +543,15 @@ def control_planted(args):
                 print(f"  {case}: NOT recovered: base {base}, kinds {kinds}, stats {st}")
                 ok_all = False
             for h in hits:
-                if not (h["exact"] and h["residual"] < 1e-7):
-                    spurious += 1
-                    ok_all = False
+                if h["exact"] != (h["residual"] < 1e-7):
+                    ok_all = False                        # modular and numeric decisions disagree
+                if not h["exact"]:
+                    spurious += 1                         # a candidate the final check rejects
             extra += len(hits) - len(same)
             done += 1
-        print(f"{case}: {done} planted decompositions, {extra} further decompositions with the same base, "
-              f"{spurious} spurious hits, {tsum / done:.3f}s per run")
-        report["cases"][case] = {"planted": done, "extra": extra, "spurious": spurious, "seconds": tsum}
+        print(f"{case}: {done} planted decompositions recovered, {extra} further decompositions with the same "
+              f"base, {spurious} candidates rejected by the final check, {tsum / done:.3f}s per run")
+        report["cases"][case] = {"planted": done, "extra": extra, "rejected": spurious, "seconds": tsum}
     report["pass"] = ok_all
     write_control(orbit, "control_planted", report)
     print("control-planted:", "PASS" if ok_all else "FAIL")

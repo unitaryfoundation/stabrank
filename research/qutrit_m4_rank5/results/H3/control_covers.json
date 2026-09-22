@@ -1,0 +1,19 @@
+{
+ "orbit": "H3",
+ "git": "2743d2e45e3eca5fe0a2b704f9b79c30e8f14ec3",
+ "covers3": 6,
+ "classes3": 3,
+ "stored3": 9,
+ "stored3_classes": 3,
+ "stored3_not_full": 0,
+ "missing3": 0,
+ "unknown3": 0,
+ "covers4": 1211,
+ "classes4": 554,
+ "reference4": 1306,
+ "reference4_full": 1211,
+ "reference4_classes": 554,
+ "missing4": 0,
+ "unknown4": 0,
+ "pass": true
+}
