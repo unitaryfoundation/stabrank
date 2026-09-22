@@ -625,20 +625,40 @@ def control_m3(args):
     cc = constructions_common()
     stored, _ = cc.load_decompositions(orbit, m, rank)
     stored_keys = {canonical([M3.index_of(t) for t in terms], group): terms for terms, _ in stored}
-    # which stored classes have an all-visible base among the enumerated ones
+    # the stored decompositions' own all-visible (base, x0) pairs, which
+    # must all recover their class; then a sample of the enumerated
+    # multisets at every base point, which must produce nothing outside
+    # the stored classes (--sample 0 runs them all, about an hour)
+    own = {}
     expected = set()
     for terms, _ in stored:
+        key = canonical([M3.index_of(t) for t in terms], group)
         for S in itertools.combinations(range(m), 2):
             moved = np.column_stack([move_front(t, S, m) for t in terms])
             for x0 in PTS:
                 b = slice_base(Mt, moved, x0)
-                if b is not None and tuple(sorted(b)) in set(bases):
-                    expected.add(canonical([M3.index_of(t) for t in terms], group))
+                if b is not None:
+                    assert tuple(sorted(b)) in set(bases), "a stored decomposition's base is not enumerated"
+                    own.setdefault((tuple(sorted(b)), x0), set()).add(key)
+                    expected.add(key)
+    runs = sorted(own)
+    rng = np.random.default_rng(7)
+    pool = [(c, x0) for c in bases for x0 in PTS if (c, x0) not in own]
+    if args.sample and args.sample < len(pool):
+        pool = [pool[k] for k in sorted(rng.choice(len(pool), size=args.sample, replace=False))]
+    runs += pool
+    print(f"{len(own)} (base, x0) pairs of the stored decompositions, {len(pool)} further pairs sampled "
+          f"from the {len(bases) * len(PTS)} enumerated (multiset, base point) pairs")
     recovered, stats = {}, {"matched": 0, "refused": 0, "hits": 0, "non_genuine": 0}
+    own_missed = []
     t1 = time.time()
-    for cover in bases:
-        for x0 in PTS:
+    for cover, x0 in runs:
+        if True:
             hits, st = Mt.run(cover, x0, target)
+            if (cover, x0) in own:
+                got = {canonical([M3.index_of(t) for t in h["terms"]], group) for h in hits if genuine(h, rank)}
+                if not own[(cover, x0)] <= got:
+                    own_missed.append([list(cover), list(x0)])
             if st["refused"]:
                 stats["refused"] += 1
                 continue
@@ -657,10 +677,13 @@ def control_m3(args):
           f"{len(recovered)} G_3 classes of rank-{rank} decompositions of |{orbit}>^{m}; stored "
           f"{len(stored_keys)}, expected recoverable {len(expected)}; not stored {len(unknown)}, "
           f"missing {len(missing)}; stats {stats}")
-    ok = not unknown and not missing and len(expected) == len(stored_keys)
-    write_control(orbit, "control_m3", {"bases": len(bases), "stored": len(stored_keys), "expected": len(expected),
-                                        "recovered": len(recovered), "unknown": len(unknown),
-                                        "missing": len(missing), "seconds": dt, "stats": stats,
+    ok = not unknown and not missing and not own_missed and len(expected) == len(stored_keys)
+    print(f"stored decompositions' own bases: {len(own)} pairs, {len(own_missed)} did not recover their class")
+    write_control(orbit, "control_m3", {"bases": len(bases), "runs": len(runs), "own_pairs": len(own),
+                                        "sampled_pairs": len(pool), "stored": len(stored_keys),
+                                        "expected": len(expected), "recovered": len(recovered),
+                                        "unknown": len(unknown), "missing": len(missing),
+                                        "own_missed": own_missed, "seconds": dt, "stats": stats,
                                         "recovered_from": {str(k): v for k, v in recovered.items()},
                                         "pass": ok})
     print("control-m3:", "PASS" if ok else "FAIL")
@@ -815,7 +838,10 @@ def main(argv):
     p = add("control-planted", control_planted)
     p.add_argument("--count", type=int, default=8, help="planted instances per case")
     add("control-product", control_product)
-    add("control-m3", control_m3)
+    p = add("control-m3", control_m3)
+    p.add_argument("--sample", type=int, default=300,
+                   help="further (multiset, base point) pairs to run beyond the stored decompositions' own "
+                        "(0: all, about an hour)")
     p = add("control-witness", control_witness)
     p.add_argument("--base", type=int, default=None, help="run only the k-th (base, x0) pair (0-based)")
     add("export-witness", export_witness, orbit=False)
