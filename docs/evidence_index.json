@@ -1,6 +1,6 @@
 {
  "generated_from": "bounds/",
- "head": "d84cbe4b1a70d8e6d396ff185ae812a4be23bfc4",
+ "head": "fbb56fc6f1c1218b37c7e3bdf18e531e4e150fef",
  "generated": "2026-09-22",
  "since": "2026-09-15",
  "exponents": [
@@ -246,6 +246,36 @@
     "date": "2026-05-27",
     "board_date": "2026-09-12",
     "moved_since": false
+   },
+   "settled": false,
+   "moved_since": true
+  },
+  {
+   "orbit": "S",
+   "m": 7,
+   "lower": null,
+   "upper": {
+    "rank": 16,
+    "tier": "verified",
+    "slug": "S-m7-upper-16",
+    "date": "2026-09-22",
+    "board_date": "2026-09-22",
+    "moved_since": true
+   },
+   "settled": false,
+   "moved_since": true
+  },
+  {
+   "orbit": "S",
+   "m": 8,
+   "lower": null,
+   "upper": {
+    "rank": 16,
+    "tier": "verified",
+    "slug": "S-m8-upper-16",
+    "date": "2026-09-22",
+    "board_date": "2026-09-22",
+    "moved_since": true
    },
    "settled": false,
    "moved_since": true
@@ -648,6 +678,21 @@
   },
   {
    "orbit": "qubit_H",
+   "m": 9,
+   "lower": null,
+   "upper": {
+    "rank": 18,
+    "tier": "verified",
+    "slug": "qubit_H-m9-upper-18",
+    "date": "2026-09-22",
+    "board_date": "2026-09-22",
+    "moved_since": true
+   },
+   "settled": false,
+   "moved_since": true
+  },
+  {
+   "orbit": "qubit_H",
    "m": 10,
    "lower": {
     "rank": 6,
@@ -779,6 +824,36 @@
    "moved_since": true
   },
   {
+   "orbit": "qubit_T",
+   "m": 8,
+   "lower": null,
+   "upper": {
+    "rank": 9,
+    "tier": "verified",
+    "slug": "qubit_T-m8-upper-9",
+    "date": "2026-09-22",
+    "board_date": "2026-09-22",
+    "moved_since": true
+   },
+   "settled": false,
+   "moved_since": true
+  },
+  {
+   "orbit": "qubit_T",
+   "m": 10,
+   "lower": null,
+   "upper": {
+    "rank": 18,
+    "tier": "verified",
+    "slug": "qubit_T-m10-upper-18",
+    "date": "2026-09-22",
+    "board_date": "2026-09-22",
+    "moved_since": true
+   },
+   "settled": false,
+   "moved_since": true
+  },
+  {
    "orbit": "T5",
    "m": 1,
    "lower": {
@@ -903,6 +978,50 @@
    ],
    "board": [
     "reproduced"
+   ]
+  },
+  {
+   "orbit": "S",
+   "m": 7,
+   "rank": 16,
+   "runs": 1,
+   "log_runs": 0,
+   "cpu_hours": 0.001,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.001,
+   "bounds": [
+    "S-m7-upper-16"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "S",
+   "m": 8,
+   "rank": 15,
+   "runs": 1,
+   "log_runs": 1,
+   "cpu_hours": 0.3333333333333333,
+   "solutions": 0,
+   "cpu_hours_per_solution": null,
+   "bounds": [],
+   "board": []
+  },
+  {
+   "orbit": "S",
+   "m": 8,
+   "rank": 16,
+   "runs": 1,
+   "log_runs": 0,
+   "cpu_hours": 0.001,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.001,
+   "bounds": [
+    "S-m8-upper-16"
+   ],
+   "board": [
+    "verified"
    ]
   },
   {
@@ -1414,6 +1533,22 @@
   },
   {
    "orbit": "qubit_H",
+   "m": 9,
+   "rank": 18,
+   "runs": 1,
+   "log_runs": 0,
+   "cpu_hours": 0.01,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.01,
+   "bounds": [
+    "qubit_H-m9-upper-18"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "qubit_H",
    "m": 10,
    "rank": 6,
    "runs": 0,
@@ -1593,6 +1728,38 @@
    "board": []
   },
   {
+   "orbit": "qubit_T",
+   "m": 8,
+   "rank": 9,
+   "runs": 1,
+   "log_runs": 0,
+   "cpu_hours": 0.001,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.001,
+   "bounds": [
+    "qubit_T-m8-upper-9"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "qubit_T",
+   "m": 10,
+   "rank": 18,
+   "runs": 1,
+   "log_runs": 0,
+   "cpu_hours": 0.001,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.001,
+   "bounds": [
+    "qubit_T-m10-upper-18"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
    "orbit": "T5",
    "m": 1,
    "rank": 3,
@@ -1767,11 +1934,11 @@
   {
    "date": "2026-09-22",
    "seeded": false,
-   "cpu_hours": 73.4,
-   "discoveries": 4,
-   "median_declared": 0.0,
-   "cum_cpu_hours": 194.85327777777775,
-   "cum_discoveries": 76
+   "cpu_hours": 73.74733333333334,
+   "discoveries": 9,
+   "median_declared": 0.001,
+   "cum_cpu_hours": 195.20061111111107,
+   "cum_discoveries": 81
   }
  ],
  "bounds": [
@@ -2639,6 +2806,76 @@
    "lean_receipt": "certs/lean-LeanProofs-TensorStabRank.json",
    "lean_receipt_ok": true,
    "compute": null
+  },
+  {
+   "slug": "S-m7-upper-16",
+   "file": "bounds/S-m7-upper-16.json",
+   "orbit": "S",
+   "m": 7,
+   "direction": "upper",
+   "rank": 16,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-09-22",
+   "author": "this repository",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "method": "structured construction",
+   "pull_request": 104,
+   "merge_commit": "9ce1755563ec6c7baf82903aae865f48b7668a45",
+   "merge_date": "2026-09-22",
+   "added_commit": "d47094a8e5a3ceb61d5905589705a08f4a9d48c8",
+   "added_date": "2026-09-22",
+   "added_subject": "Sweep of 2026-09-22: five product and cat witnesses, T3 sector contraction, literature update",
+   "receipt": "certs/S-m7-upper-16.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "S-m8-upper-16",
+   "file": "bounds/S-m8-upper-16.json",
+   "orbit": "S",
+   "m": 8,
+   "direction": "upper",
+   "rank": 16,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-09-22",
+   "author": "this repository",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "method": "structured construction",
+   "pull_request": 104,
+   "merge_commit": "9ce1755563ec6c7baf82903aae865f48b7668a45",
+   "merge_date": "2026-09-22",
+   "added_commit": "d47094a8e5a3ceb61d5905589705a08f4a9d48c8",
+   "added_date": "2026-09-22",
+   "added_subject": "Sweep of 2026-09-22: five product and cat witnesses, T3 sector contraction, literature update",
+   "receipt": "certs/S-m8-upper-16.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
   },
   {
    "slug": "T3-m1-lower-3",
@@ -3966,6 +4203,76 @@
    }
   },
   {
+   "slug": "qubit_H-m9-upper-18",
+   "file": "bounds/qubit_H-m9-upper-18.json",
+   "orbit": "qubit_H",
+   "m": 9,
+   "direction": "upper",
+   "rank": 18,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-09-22",
+   "author": "this repository",
+   "reference": "arXiv:2106.07740, arXiv:2202.09202",
+   "method": "structured construction",
+   "pull_request": 104,
+   "merge_commit": "9ce1755563ec6c7baf82903aae865f48b7668a45",
+   "merge_date": "2026-09-22",
+   "added_commit": "d47094a8e5a3ceb61d5905589705a08f4a9d48c8",
+   "added_date": "2026-09-22",
+   "added_subject": "Sweep of 2026-09-22: five product and cat witnesses, T3 sector contraction, literature update",
+   "receipt": "certs/qubit_H-m9-upper-18.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.01,
+    "wall_clock_hours": 0.01,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "qubit_T-m10-upper-18",
+   "file": "bounds/qubit_T-m10-upper-18.json",
+   "orbit": "qubit_T",
+   "m": 10,
+   "direction": "upper",
+   "rank": 18,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-09-22",
+   "author": "this repository",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "method": "structured construction",
+   "pull_request": 104,
+   "merge_commit": "9ce1755563ec6c7baf82903aae865f48b7668a45",
+   "merge_date": "2026-09-22",
+   "added_commit": "d47094a8e5a3ceb61d5905589705a08f4a9d48c8",
+   "added_date": "2026-09-22",
+   "added_subject": "Sweep of 2026-09-22: five product and cat witnesses, T3 sector contraction, literature update",
+   "receipt": "certs/qubit_T-m10-upper-18.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
    "slug": "qubit_T-m2-lower-2",
    "file": "bounds/qubit_T-m2-lower-2.json",
    "orbit": "qubit_T",
@@ -4329,6 +4636,41 @@
    "lean_receipt": "certs/lean-LeanProofs-QubitTM6StabRank.json",
    "lean_receipt_ok": true,
    "compute": null
+  },
+  {
+   "slug": "qubit_T-m8-upper-9",
+   "file": "bounds/qubit_T-m8-upper-9.json",
+   "orbit": "qubit_T",
+   "m": 8,
+   "direction": "upper",
+   "rank": 9,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-09-22",
+   "author": "this repository",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "method": "structured construction",
+   "pull_request": 104,
+   "merge_commit": "9ce1755563ec6c7baf82903aae865f48b7668a45",
+   "merge_date": "2026-09-22",
+   "added_commit": "d47094a8e5a3ceb61d5905589705a08f4a9d48c8",
+   "added_date": "2026-09-22",
+   "added_subject": "Sweep of 2026-09-22: five product and cat witnesses, T3 sector contraction, literature update",
+   "receipt": "certs/qubit_T-m8-upper-9.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
   }
  ]
 }
