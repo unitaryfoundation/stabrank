@@ -13,7 +13,7 @@ mapping is:
 | Appendix A.2, H_3 m=2,3 | `H3M2Pointwise.lean`, `H3M3.lean`, `H3M3Pointwise.lean` |
 | Appendix A.3, Norrell m=2,3,4 | `NorrellM2Pointwise.lean`, `NorrellM3.lean`, `NorrellM3Pointwise.lean`, `NorrellM4Pointwise.lean` |
 | Qubit H-type m=2,3,4 and T-type m=2,3,4 (bound files) | `QubitShared.lean`, `QubitHStabRank.lean`, `QubitTStabRank.lean`, `QubitTM4StabRank.lean` |
-| Ququint T5 m=1 (both directions) (bound files) | `Ququint.lean`, `T5Minors.lean`, `T5M1StabRank.lean` |
+| Ququint T5 m=1 (both directions) and m=2 upper (bound files) | `Ququint.lean`, `T5Minors.lean`, `T5M1StabRank.lean`, `T5M2StabRank.lean` |
 
 ## What's here
 
@@ -324,6 +324,12 @@ mapping is:
   `reindex5` carrying spans from `Fin (5 ^ 1) → ℂ` to `ZMod 5 → ℂ`, a set of
   at most two `IsStabP 5` vectors is two scalar multiples of shapes, and
   `t5v_not_mem_span_smul` applies. `t5_m1_stabRankP_eq_three` combines them.
+
+- `LeanProofs/T5M2StabRank.lean`: `t5_m2_stabRankP_le_eight`: the eight
+  terms of `bounds/T5-m2-upper-8.json` (three points, four lines, one
+  full-support state) with coefficients `β_j / 5`, `β_j ∈ ℤ[ω₅]` (the file's
+  `c_j` times `√5^(k_j - 2)`), decided at the 25 digit strings by the same
+  tactic sequence as the one-copy identity.
 
 ## Pitfalls
 

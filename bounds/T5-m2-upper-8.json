@@ -178,5 +178,9 @@
       "hardware": "arm64 Darwin, 18 cores"
     }
   },
-  "notes": "Found by autoresearch/run.py on seed 7002 after 0 failed seed(s) at this rank (residuals none); the exact coefficients were recovered by fit_coeffs.fit and the identity is checked symbolically by the verifier. Implied gamma log_5(8)/2 = 0.6460, below the single-copy product bound log_5(3) = 0.6826 that is the orbit's baseline (no exponent has been published for any p = 5 state). Puts the cell at 5 <= chi(|T5>^2) <= 8 with the rank-4 exclusion of cert_t5_m2_rank4.py, against the product bound 9 from chi(|T5>) = 3. Short annealer probes at ranks 4 to 7 plateaued at residuals 0.385, 0.311, 0.31 to 0.32 and 0.227, so ranks 5 to 7 are open. Every run is logged in autoresearch/runs.jsonl."
+  "notes": "Found by autoresearch/run.py on seed 7002 after 0 failed seed(s) at this rank (residuals none); the exact coefficients were recovered by fit_coeffs.fit and the identity is checked symbolically by the verifier. Implied gamma log_5(8)/2 = 0.6460, below the single-copy product bound log_5(3) = 0.6826 that is the orbit's baseline (no exponent has been published for any p = 5 state). Puts the cell at 5 <= chi(|T5>^2) <= 8 with the rank-4 exclusion of cert_t5_m2_rank4.py, against the product bound 9 from chi(|T5>) = 3. Short annealer probes at ranks 4 to 7 plateaued at residuals 0.385, 0.311, 0.31 to 0.32 and 0.227, so ranks 5 to 7 are open. Every run is logged in autoresearch/runs.jsonl.",
+  "lean": {
+    "module": "LeanProofs.T5M2StabRank",
+    "theorem": "t5_m2_stabRankP_le_eight"
+  }
 }

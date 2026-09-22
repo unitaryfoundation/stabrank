@@ -31,3 +31,4 @@ import LeanProofs.M1StabRank
 import LeanProofs.Ququint
 import LeanProofs.T5Minors
 import LeanProofs.T5M1StabRank
+import LeanProofs.T5M2StabRank
