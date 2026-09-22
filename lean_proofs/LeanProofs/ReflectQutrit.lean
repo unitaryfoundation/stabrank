@@ -1,6 +1,6 @@
 /-
-The qutrit targets of the reflection proofs: `|H₃⟩^⊗m` and `|T₃⟩^⊗m` as
-`ev` of an integer vector times a scalar.
+The qutrit targets of the reflection proofs: `|H₃⟩^⊗m`, `|T₃⟩^⊗m` and
+`|S⟩^⊗m` as `ev` of an integer vector times a scalar.
 
 `h3Vec m` is the `m`-fold product of the one-qutrit `H₃` amplitude `h3Amp1` of
 `H3Shared` on digit strings. Its value at a string with `a` zero digits is
@@ -14,12 +14,20 @@ bounds of that file are about; its amplitude at a string with digit sum `d`
 is `(1/√3)^m ω₉^d`, and `tgtT3` is `ω₉^d` in `ℤ[ω₉, √3]`
 (`t3TargetM_eq_ev`).
 
-The generated cell modules (`H3M4StabRank`, `T3M3StabRank`, `T3M4StabRank`)
-import this file.
+For the Strange state `strangeVec m` is the `m`-fold product of the
+one-qutrit amplitude `strangeAmp1'` of `StrangeM2Pointwise` (`0`, `1/√2`,
+`-1/√2` at the digits `0`, `1`, `2`). Its value at a digit string is `(1/√2)^m`
+times the product of the digit signs `sgnZ` (`0`, `1`, `-1`), an integer, and
+`tgtS` puts that integer in the first coordinate of `ℤ[ω₃, √3]`
+(`strangeVec_eq_ev`).
+
+The generated cell modules (`H3M4StabRank`, `T3M3StabRank`, `T3M4StabRank`,
+`T3M5Data`, `StrangeM5StabRank`) import this file.
 -/
 import LeanProofs.ReflectBases
 import LeanProofs.H3Shared
 import LeanProofs.T3GaloisM
+import LeanProofs.StrangeM2Pointwise
 
 namespace StabRank
 
@@ -114,5 +122,48 @@ theorem t3TargetM_eq_ev (m : ℕ) (idx : Fin (3 ^ m)) :
   rw [ev_mulM_iterate B9 Mw9_represents', ev_unitZ B9 (by norm_num) B9_zero]
   push_cast
   ring
+
+/-! ### `S` -/
+
+/-- `|S⟩^⊗m` on digit strings, from the one-qutrit amplitude of
+    `StrangeM2Pointwise`. -/
+noncomputable def strangeVec (m : ℕ) : Fin (3 ^ m) → ℂ :=
+  fun idx => ∏ i, strangeAmp1' (digitsP 3 m idx i)
+
+theorem strangeAmp1'_zero : strangeAmp1' (0 : ZMod 3) = 0 := rfl
+theorem strangeAmp1'_one : strangeAmp1' (1 : ZMod 3) = 1 / (Real.sqrt 2 : ℂ) := rfl
+theorem strangeAmp1'_two : strangeAmp1' (2 : ZMod 3) = -1 / (Real.sqrt 2 : ℂ) := rfl
+
+/-- The sign of a digit in the Strange state: `0`, `1`, `-1` at `0`, `1`, `2`. -/
+def sgnZ (v : ZMod 3) : ℤ := if v = 0 then 0 else if v = 2 then -1 else 1
+
+theorem sgnZ_zero : sgnZ (0 : ZMod 3) = 0 := by decide
+theorem sgnZ_one : sgnZ (1 : ZMod 3) = 1 := by decide
+theorem sgnZ_two : sgnZ (2 : ZMod 3) = -1 := by decide
+
+/-- The one-qutrit amplitude as `1/√2` times the digit sign. -/
+theorem strangeAmp1'_eq (v : ZMod 3) :
+    strangeAmp1' v = 1 / (Real.sqrt 2 : ℂ) * ((sgnZ v : ℤ) : ℂ) := by
+  rcases zmod3_cases v with rfl | rfl | rfl
+  · rw [strangeAmp1'_zero, sgnZ_zero]
+    simp
+  · rw [strangeAmp1'_one, sgnZ_one]
+    simp
+  · rw [strangeAmp1'_two, sgnZ_two]
+    push_cast
+    ring
+
+/-- The product of the digit signs as an integer vector in `ℤ[ω₃, √3]`. -/
+def tgtS (m : ℕ) (x : Fin m → ZMod 3) : Fin 4 → ℤ := unitZ (∏ i, sgnZ (x i))
+
+/-- **`|S⟩^⊗m` reflected**: the amplitude is `(1/√2)^m` times the evaluation
+    of `tgtS`. -/
+theorem strangeVec_eq_ev (m : ℕ) (idx : Fin (3 ^ m)) :
+    strangeVec m idx = (1 / (Real.sqrt 2 : ℂ)) ^ m * ev B3 (tgtS m (digitsP 3 m idx)) := by
+  unfold strangeVec tgtS
+  rw [ev_unitZ B3 (by norm_num) B3_zero]
+  push_cast
+  simp only [strangeAmp1'_eq, Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ,
+    Fintype.card_fin]
 
 end StabRank

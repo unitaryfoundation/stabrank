@@ -15,7 +15,7 @@ mapping is:
 | Qubit H-type m=2,3,4 and T-type m=2,3,4 (bound files) | `QubitShared.lean`, `QubitHStabRank.lean`, `QubitTStabRank.lean`, `QubitTM4StabRank.lean` |
 | Ququint T5 m=1 (both directions) and m=2 upper (bound files) | `Ququint.lean`, `T5Minors.lean`, `T5M1StabRank.lean`, `T5M2StabRank.lean` |
 | Lower bounds S m=1, H m=2, T m=2, N m=2, H_3 m=2 (bound files) | `Stabilizer/RankOne.lean`, `StrangeM1Lower.lean`, `QubitM2Lower.lean`, `M2Lower.lean` |
-| H_3 m=4, T_3 m=3,4,5, qubit H-type m=5,6,7,8,10, qubit T-type m=5,6 (bound-file witnesses, reflection route) | `Stabilizer/Reflect.lean`, `Stabilizer/Chunks.lean`, `ReflectBases.lean`, `ReflectQubit.lean`, `ReflectQutrit.lean`, `H3M4StabRank.lean`, `T3M3StabRank.lean`, `T3M4StabRank.lean`, `T3M5Data.lean`, `T3M5Key0.lean` to `T3M5Key8.lean`, `T3M5StabRank.lean`, `QubitHM5StabRank.lean`, `QubitHM6StabRank.lean`, `QubitHM7StabRank.lean`, `QubitHM8Data.lean`, `QubitHM8Key0.lean` to `QubitHM8Key7.lean`, `QubitHM8StabRank.lean`, `QubitHM10Data.lean`, `QubitHM10Key0.lean` to `QubitHM10Key63.lean`, `QubitHM10StabRank.lean`, `QubitTM5StabRank.lean`, `QubitTM6StabRank.lean` |
+| H_3 m=4, T_3 m=3,4,5, Strange m=5, qubit H-type m=5,6,7,8,10, qubit T-type m=5,6 (bound-file witnesses, reflection route) | `Stabilizer/Reflect.lean`, `Stabilizer/Chunks.lean`, `ReflectBases.lean`, `ReflectQubit.lean`, `ReflectQutrit.lean`, `H3M4StabRank.lean`, `T3M3StabRank.lean`, `T3M4StabRank.lean`, `T3M5Data.lean`, `T3M5Key0.lean` to `T3M5Key8.lean`, `T3M5StabRank.lean`, `StrangeM5Data.lean`, `StrangeM5Key0.lean` to `StrangeM5Key8.lean`, `StrangeM5StabRank.lean`, `QubitHM5StabRank.lean`, `QubitHM6StabRank.lean`, `QubitHM7StabRank.lean`, `QubitHM8Data.lean`, `QubitHM8Key0.lean` to `QubitHM8Key7.lean`, `QubitHM8StabRank.lean`, `QubitHM10Data.lean`, `QubitHM10Key0.lean` to `QubitHM10Key63.lean`, `QubitHM10StabRank.lean`, `QubitTM5StabRank.lean`, `QubitTM6StabRank.lean` |
 
 ## What's here
 
@@ -465,15 +465,19 @@ mapping is:
   (`hVec_eq_ev`), `tVec m` is `sin β^(m%2)/(2^m 6^(m/2))` times
   `(√2√3+√2)^a (√2+i√2)^(m-a) (3-√3)^(m/2)` (`tVec_eq_ev`), `h3Vec m` (the
   product of `h3Amp1` of `H3Shared`) is `N^(m%2)/6^m` times
-  `(3+√3)^a √3^(m-a) (3-√3)^(m/2)` (`h3Vec_eq_ev`), and `t3TargetM m` of
-  `T3GaloisM` is `(1/√3)^m` times `ω₉^(digit sum)` (`t3TargetM_eq_ev`). The
-  integer vectors are iterates of the matrices of `ReflectBases`; the
-  algebra with variable exponents is in `h_alg`, `t_alg`, `h3_alg`.
+  `(3+√3)^a √3^(m-a) (3-√3)^(m/2)` (`h3Vec_eq_ev`), `t3TargetM m` of
+  `T3GaloisM` is `(1/√3)^m` times `ω₉^(digit sum)` (`t3TargetM_eq_ev`), and
+  `strangeVec m` (the product of `strangeAmp1'` of `StrangeM2Pointwise`) is
+  `(1/√2)^m` times the product of the digit signs `sgnZ` (`0`, `1`, `-1` at
+  the digits `0`, `1`, `2`), an integer placed in the first coordinate of
+  `B3` by `tgtS` (`strangeVec_eq_ev`). The integer vectors are iterates of
+  the matrices of `ReflectBases`; the algebra with variable exponents is in
+  `h_alg`, `t_alg`, `h3_alg`.
 
 - `LeanProofs/H3M4StabRank.lean`, `T3M3StabRank.lean`, `T3M4StabRank.lean`,
-  `T3M5StabRank.lean`, `QubitHM5StabRank.lean`, `QubitHM6StabRank.lean`,
-  `QubitHM7StabRank.lean`, `QubitHM8StabRank.lean`, `QubitTM5StabRank.lean`,
-  `QubitTM6StabRank.lean`
+  `T3M5StabRank.lean`, `StrangeM5StabRank.lean`, `QubitHM5StabRank.lean`,
+  `QubitHM6StabRank.lean`, `QubitHM7StabRank.lean`, `QubitHM8StabRank.lean`,
+  `QubitTM5StabRank.lean`, `QubitTM6StabRank.lean`
   — generated from the bound files by `tools/gen_witness_lean.py
   bounds/<cell>.json`; do not edit by hand. Each states the terms of the
   witness as `stabTerm`s with their pivot columns (`IsStabP` by
@@ -493,8 +497,9 @@ mapping is:
 
 - `LeanProofs/Stabilizer/Chunks.lean`, `QubitHM10Data.lean`,
   `QubitHM10Key0.lean` to `QubitHM10Key63.lean`, `QubitHM10StabRank.lean`,
-  and likewise `QubitHM8Data`/`QubitHM8Key0..7`, `T3M5Data`/`T3M5Key0..8` —
-  the cells whose kernel check is split into slices. The memory of one
+  and likewise `QubitHM8Data`/`QubitHM8Key0..7`, `T3M5Data`/`T3M5Key0..8`,
+  `StrangeM5Data`/`StrangeM5Key0..8` — the cells whose kernel check is split
+  into slices. The memory of one
   `decide +kernel` grows with the number of indices (about 12 GB of anonymous
   memory above the 3.2 GB Mathlib import at 256 indices of the `m = 10`
   cell, 6.5 GB for the `m = 8` cell, 5.5 GB for `T3` at `m = 5`), which is
@@ -507,8 +512,10 @@ mapping is:
   With 16 indices per slice (`m = 10`, 64 slices), 32 (`m = 8`, 8 slices) and
   27 (`T3` `m = 5`, 9 slices) a slice builds in about 10 s with a peak RSS of
   4.0 to 4.3 GB, of which 3.2 to 3.4 GB is the import alone; the CI job runs
-  `lake build --jobs=2`. `cidx` fixes the implicit `c` and `N` of `chunkIdx`;
-  without them unification reads `2 ^ 10` as `2 * 2 ^ 9`.
+  `lake build --jobs=2`. The Strange `m = 5` cell (eight terms, four
+  coordinates) is lighter: 5.7 GB in one module, 4.1 GB at 81 indices per
+  slice, 3.3 GB at 27 (9 slices, 8 s each). `cidx` fixes the implicit `c` and
+  `N` of `chunkIdx`; without them unification reads `2 ^ 10` as `2 * 2 ^ 9`.
 
 ## Pitfalls
 
