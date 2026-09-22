@@ -18,5 +18,9 @@
       "vprusso"
     ]
   },
-  "notes": "Settles chi(T^2) = 2 with the Lean upper bound qubit_t_m2_stabRankP_le_two. |T>^2 has moduli cos^2(beta) and cos(beta) sin(beta) with beta = arccos(1/sqrt3)/2, which differ."
+  "notes": "Settles chi(T^2) = 2 with the Lean upper bound qubit_t_m2_stabRankP_le_two. |T>^2 has moduli cos^2(beta) and cos(beta) sin(beta) with beta = arccos(1/sqrt3)/2, which differ. Also proved in Lean against stabRankP 2: QubitM2Lower.qubit_t_m2_stabRankP_gt_one (equal fourth powers at 00 and 01 would force sqrt3 = -2).",
+  "lean": {
+    "module": "LeanProofs.QubitM2Lower",
+    "theorem": "qubit_t_m2_stabRankP_gt_one"
+  }
 }

@@ -1,0 +1,9 @@
+{
+  "module": "LeanProofs.StrangeM1Lower",
+  "ok": true,
+  "log": [
+    "info: LeanProofs/StabDef.lean:100:12: 'rw [show (4 : \u2115) = 3 + 1 from rfl, pow_add, pow_one, omega3_pow_three, one_mul]' uses '\u22a2'!",
+    "\u2714 [3312/3312] Built LeanProofs.StrangeM1Lower (3.2s)",
+    "Build completed successfully (3312 jobs)."
+  ]
+}

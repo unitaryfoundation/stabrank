@@ -18,5 +18,9 @@
       "vprusso"
     ]
   },
-  "notes": "Settles chi(H^2) = 2 with the Lean upper bound qubit_h_m2_stabRankP_le_two. A stabilizer state has one modulus on its support; |H>^2 has moduli cos^2(pi/8) and cos(pi/8) sin(pi/8), which differ."
+  "notes": "Settles chi(H^2) = 2 with the Lean upper bound qubit_h_m2_stabRankP_le_two. A stabilizer state has one modulus on its support; |H>^2 has moduli cos^2(pi/8) and cos(pi/8) sin(pi/8), which differ. Also proved in Lean against stabRankP 2: QubitM2Lower.qubit_h_m2_stabRankP_gt_one (every nonzero entry of a stabilizer state has the same fourth power, and equal fourth powers at 00 and 01 would force sqrt2 = -4/3).",
+  "lean": {
+    "module": "LeanProofs.QubitM2Lower",
+    "theorem": "qubit_h_m2_stabRankP_gt_one"
+  }
 }
