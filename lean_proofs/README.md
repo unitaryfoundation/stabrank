@@ -15,9 +15,7 @@ mapping is:
 | Qubit H-type m=2,3,4 and T-type m=2,3,4 (bound files) | `QubitShared.lean`, `QubitHStabRank.lean`, `QubitTStabRank.lean`, `QubitTM4StabRank.lean` |
 | Ququint T5 m=1 (both directions) and m=2 upper (bound files) | `Ququint.lean`, `T5Minors.lean`, `T5M1StabRank.lean`, `T5M2StabRank.lean` |
 | Lower bounds S m=1, H m=2, T m=2, N m=2, H_3 m=2 (bound files) | `Stabilizer/RankOne.lean`, `StrangeM1Lower.lean`, `QubitM2Lower.lean`, `M2Lower.lean` |
-| H_3 m=4, T_3 m=3,4, qubit H-type m=5,6,7,8, qubit T-type m=5,6 (bound-file witnesses, reflection route) | `Stabilizer/Reflect.lean`, `ReflectBases.lean`, `ReflectQubit.lean`, `ReflectQutrit.lean`, `H3M4StabRank.lean`, `T3M3StabRank.lean`, `T3M4StabRank.lean`, `QubitHM5StabRank.lean`, `QubitHM6StabRank.lean`, `QubitHM7StabRank.lean`, `QubitHM8StabRank.lean`, `QubitTM5StabRank.lean`, `QubitTM6StabRank.lean` |
-| H_3 m=4, T_3 m=3,4, qubit H-type m=5,6,7,8,10, qubit T-type m=5,6 (bound-file witnesses, reflection route) | `Stabilizer/Reflect.lean`, `Stabilizer/Chunks.lean`, `ReflectBases.lean`, `ReflectQubit.lean`, `ReflectQutrit.lean`, `H3M4StabRank.lean`, `T3M3StabRank.lean`, `T3M4StabRank.lean`, `QubitHM5StabRank.lean`, `QubitHM6StabRank.lean`, `QubitHM7StabRank.lean`, `QubitHM8StabRank.lean`, `QubitHM10Data.lean`, `QubitHM10Key0.lean` to `QubitHM10Key3.lean`, `QubitHM10StabRank.lean`, `QubitTM5StabRank.lean`, `QubitTM6StabRank.lean` |
-| H_3 m=4, T_3 m=3,4,5, qubit H-type m=5,6,7,8,10, qubit T-type m=5,6 (bound-file witnesses, reflection route) | `Stabilizer/Reflect.lean`, `Stabilizer/Chunks.lean`, `ReflectBases.lean`, `ReflectQubit.lean`, `ReflectQutrit.lean`, `H3M4StabRank.lean`, `T3M3StabRank.lean`, `T3M4StabRank.lean`, `T3M5StabRank.lean`, `QubitHM5StabRank.lean`, `QubitHM6StabRank.lean`, `QubitHM7StabRank.lean`, `QubitHM8StabRank.lean`, `QubitHM10Data.lean`, `QubitHM10Key0.lean` to `QubitHM10Key3.lean`, `QubitHM10StabRank.lean`, `QubitTM5StabRank.lean`, `QubitTM6StabRank.lean` |
+| H_3 m=4, T_3 m=3,4,5, qubit H-type m=5,6,7,8,10, qubit T-type m=5,6 (bound-file witnesses, reflection route) | `Stabilizer/Reflect.lean`, `Stabilizer/Chunks.lean`, `ReflectBases.lean`, `ReflectQubit.lean`, `ReflectQutrit.lean`, `H3M4StabRank.lean`, `T3M3StabRank.lean`, `T3M4StabRank.lean`, `T3M5Data.lean`, `T3M5Key0.lean` to `T3M5Key8.lean`, `T3M5StabRank.lean`, `QubitHM5StabRank.lean`, `QubitHM6StabRank.lean`, `QubitHM7StabRank.lean`, `QubitHM8Data.lean`, `QubitHM8Key0.lean` to `QubitHM8Key7.lean`, `QubitHM8StabRank.lean`, `QubitHM10Data.lean`, `QubitHM10Key0.lean` to `QubitHM10Key63.lean`, `QubitHM10StabRank.lean`, `QubitTM5StabRank.lean`, `QubitTM6StabRank.lean` |
 
 ## What's here
 
@@ -486,26 +484,31 @@ mapping is:
   `decide +kernel` at every index (`key`), and the assembly `target_eq` that
   feeds `stabRankP_le_of_terms`. The qutrit cells also restate the bound
   against `IsStab` through `stabRank_eq_stabRankP`. Build times on a laptop:
-  6 s to 16 s for `p^n ≤ 128` indices, 42 s at 256 (twelve terms), 46 s at
-  243 (eighteen terms). The generator checks the
+  6 s to 16 s for `p^n ≤ 128` indices in one module; the cells with 243 or
+  more indices are sliced (next entry). The generator checks the
   integer identity itself before writing, and the coefficient expressions of
   the bound files (nested radicals such as `√(1/2 - √2/4) = sin(π/8)`) are
   recognised in the ring by dividing the radicand by `sin²` and taking the
   square root in the quadratic or biquadratic field.
 
 - `LeanProofs/Stabilizer/Chunks.lean`, `QubitHM10Data.lean`,
-  `QubitHM10Key0.lean` to `QubitHM10Key3.lean`, `QubitHM10StabRank.lean` —
-  the `m = 10` H-type cell (`qubit_h_m10_stabRankP_le_eighteen`, from the
-  eighteen terms of `bounds/qubit_H-m10-upper-18.json`). One kernel check over
-  the `1024` indices runs for longer than a build step is allowed here, so
-  `gen_witness_lean.py --chunks 4` writes the data (terms, coefficient
-  vectors, `rhsZ`) to `QubitHM10Data`, one slice theorem `key<q>` over the
-  indices `q * 256 + i` to each `QubitHM10Key<q>` (130 s to 164 s each), and
-  the assembly to `QubitHM10StabRank`, where `forall_fin_of_chunks` of
-  `Chunks.lean` (`chunkIdx q i = ⟨q * N + i, _⟩`, and every index is
-  `chunkIdx (idx / N) (idx % N)`) recovers the statement over `Fin (2 ^ 10)`.
-  `cidx` fixes the implicit `c` and `N` of `chunkIdx`; without them
-  unification reads `2 ^ 10` as `2 * 2 ^ 9`.
+  `QubitHM10Key0.lean` to `QubitHM10Key63.lean`, `QubitHM10StabRank.lean`,
+  and likewise `QubitHM8Data`/`QubitHM8Key0..7`, `T3M5Data`/`T3M5Key0..8` —
+  the cells whose kernel check is split into slices. The memory of one
+  `decide +kernel` grows with the number of indices (about 12 GB of anonymous
+  memory above the 3.2 GB Mathlib import at 256 indices of the `m = 10`
+  cell, 6.5 GB for the `m = 8` cell, 5.5 GB for `T3` at `m = 5`), which is
+  more than a CI runner has. `gen_witness_lean.py --chunks c` writes the data
+  (terms, coefficient vectors, `rhsZ`) to `<Cell>Data`, one slice theorem
+  `key<q>` over the indices `q * N + i` to each `<Cell>Key<q>`, and the
+  assembly to `<Cell>StabRank`, where `forall_fin_of_chunks` of `Chunks.lean`
+  (`chunkIdx q i = ⟨q * N + i, _⟩`, and every index is
+  `chunkIdx (idx / N) (idx % N)`) recovers the statement over `Fin (p ^ n)`.
+  With 16 indices per slice (`m = 10`, 64 slices), 32 (`m = 8`, 8 slices) and
+  27 (`T3` `m = 5`, 9 slices) a slice builds in about 10 s with a peak RSS of
+  4.0 to 4.3 GB, of which 3.2 to 3.4 GB is the import alone; the CI job runs
+  `lake build --jobs=2`. `cidx` fixes the implicit `c` and `N` of `chunkIdx`;
+  without them unification reads `2 ^ 10` as `2 * 2 ^ 9`.
 
 ## Pitfalls
 

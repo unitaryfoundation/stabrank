@@ -78,3 +78,6 @@ jobs:
           lake-package-directory: lean_proofs
           use-mathlib-cache: true
           test: false
+          # The kernel checks of the witness modules hold a few GB each; keep
+          # at most two of them in flight on the runner.
+          build-args: "--jobs=2"

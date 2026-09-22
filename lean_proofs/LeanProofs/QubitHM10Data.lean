@@ -256,8 +256,8 @@ def rhsZ (x : Fin 10 → ZMod 2) : Fin 4 → ℤ :=
     + termZ MI4 C16 x0_16 W16 Q16 l16 piv16 x
     + termZ MI4 C17 x0_17 W17 Q17 l17 piv17 x
 
-/-- The index `q * 256 + i` of slice `q`. -/
-def cidx (q : Fin 4) (i : Fin 256) : Fin (2 ^ 10) := chunkIdx (c := 4) (N := 256) q i
+/-- The index `q * 16 + i` of slice `q`. -/
+def cidx (q : Fin 64) (i : Fin 16) : Fin (2 ^ 10) := chunkIdx (c := 64) (N := 16) q i
 
 end QubitHM10
 

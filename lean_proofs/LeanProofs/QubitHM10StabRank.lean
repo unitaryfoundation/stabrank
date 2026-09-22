@@ -12,7 +12,7 @@ target (`hVec_eq_ev`), times `Den = 1`. The pointwise identity is
 decided by the kernel on integer vectors at all 1024 digit strings (`key`) and
 carried to `ℂ` by `ev_termZ`.
 
-The kernel check is split into 4 slices of 256 indices, one
+The kernel check is split into 64 slices of 16 indices, one
 module `QubitHM10Key<q>` each, on the data of `QubitHM10Data`; `forall_fin_of_chunks`
 of `Stabilizer/Chunks.lean` puts them together here.
 -/
@@ -20,6 +20,66 @@ import LeanProofs.QubitHM10Key0
 import LeanProofs.QubitHM10Key1
 import LeanProofs.QubitHM10Key2
 import LeanProofs.QubitHM10Key3
+import LeanProofs.QubitHM10Key4
+import LeanProofs.QubitHM10Key5
+import LeanProofs.QubitHM10Key6
+import LeanProofs.QubitHM10Key7
+import LeanProofs.QubitHM10Key8
+import LeanProofs.QubitHM10Key9
+import LeanProofs.QubitHM10Key10
+import LeanProofs.QubitHM10Key11
+import LeanProofs.QubitHM10Key12
+import LeanProofs.QubitHM10Key13
+import LeanProofs.QubitHM10Key14
+import LeanProofs.QubitHM10Key15
+import LeanProofs.QubitHM10Key16
+import LeanProofs.QubitHM10Key17
+import LeanProofs.QubitHM10Key18
+import LeanProofs.QubitHM10Key19
+import LeanProofs.QubitHM10Key20
+import LeanProofs.QubitHM10Key21
+import LeanProofs.QubitHM10Key22
+import LeanProofs.QubitHM10Key23
+import LeanProofs.QubitHM10Key24
+import LeanProofs.QubitHM10Key25
+import LeanProofs.QubitHM10Key26
+import LeanProofs.QubitHM10Key27
+import LeanProofs.QubitHM10Key28
+import LeanProofs.QubitHM10Key29
+import LeanProofs.QubitHM10Key30
+import LeanProofs.QubitHM10Key31
+import LeanProofs.QubitHM10Key32
+import LeanProofs.QubitHM10Key33
+import LeanProofs.QubitHM10Key34
+import LeanProofs.QubitHM10Key35
+import LeanProofs.QubitHM10Key36
+import LeanProofs.QubitHM10Key37
+import LeanProofs.QubitHM10Key38
+import LeanProofs.QubitHM10Key39
+import LeanProofs.QubitHM10Key40
+import LeanProofs.QubitHM10Key41
+import LeanProofs.QubitHM10Key42
+import LeanProofs.QubitHM10Key43
+import LeanProofs.QubitHM10Key44
+import LeanProofs.QubitHM10Key45
+import LeanProofs.QubitHM10Key46
+import LeanProofs.QubitHM10Key47
+import LeanProofs.QubitHM10Key48
+import LeanProofs.QubitHM10Key49
+import LeanProofs.QubitHM10Key50
+import LeanProofs.QubitHM10Key51
+import LeanProofs.QubitHM10Key52
+import LeanProofs.QubitHM10Key53
+import LeanProofs.QubitHM10Key54
+import LeanProofs.QubitHM10Key55
+import LeanProofs.QubitHM10Key56
+import LeanProofs.QubitHM10Key57
+import LeanProofs.QubitHM10Key58
+import LeanProofs.QubitHM10Key59
+import LeanProofs.QubitHM10Key60
+import LeanProofs.QubitHM10Key61
+import LeanProofs.QubitHM10Key62
+import LeanProofs.QubitHM10Key63
 
 set_option linter.style.longLine false
 
@@ -31,9 +91,9 @@ namespace QubitHM10
 
 /-- The identity on integer vectors at every index, from the slices. -/
 theorem key : ∀ idx : Fin (2 ^ 10), Den • tgtH 10 (digitsP 2 10 idx) = rhsZ (digitsP 2 10 idx) :=
-  forall_fin_of_chunks (c := 4) (N := 256) _ (fun q => by
+  forall_fin_of_chunks (c := 64) (N := 16) _ (fun q => by
     fin_cases q
-    exacts [key0, key1, key2, key3])
+    exacts [key0, key1, key2, key3, key4, key5, key6, key7, key8, key9, key10, key11, key12, key13, key14, key15, key16, key17, key18, key19, key20, key21, key22, key23, key24, key25, key26, key27, key28, key29, key30, key31, key32, key33, key34, key35, key36, key37, key38, key39, key40, key41, key42, key43, key44, key45, key46, key47, key48, key49, key50, key51, key52, key53, key54, key55, key56, key57, key58, key59, key60, key61, key62, key63])
 
 noncomputable def terms : Fin 18 → (Fin (2 ^ 10) → ℂ) :=
   ![t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17]
