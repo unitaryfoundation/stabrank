@@ -1,6 +1,6 @@
 {
  "orbit": "H3",
- "git": "2743d2e45e3eca5fe0a2b704f9b79c30e8f14ec3",
+ "git": "b13bdb514291ae0c9ae0d1f28e34e292994f8b92",
  "x0": [
   1,
   1
@@ -10,25 +10,25 @@
    "planted": 8,
    "extra": 0,
    "rejected": 0,
-   "seconds": 0.12856578826904297
+   "seconds": 0.04410696029663086
   },
   "diagonal": {
    "planted": 8,
    "extra": 0,
    "rejected": 0,
-   "seconds": 0.10148406028747559
+   "seconds": 0.04423260688781738
   },
   "dependent": {
    "planted": 8,
    "extra": 0,
    "rejected": 0,
-   "seconds": 13.776981353759766
+   "seconds": 12.91802191734314
   },
   "repeated": {
    "planted": 8,
    "extra": 15,
    "rejected": 0,
-   "seconds": 1.1944141387939453
+   "seconds": 2.0097033977508545
   }
  },
  "pass": true
