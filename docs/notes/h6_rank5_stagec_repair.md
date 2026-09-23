@@ -284,10 +284,41 @@ passed every stored check over the 180 batches, and `aggregate.py
 (949 s) with matching deterministic hashes and printed `CERTIFIED
 chi(qubit_H^6) >= 6` in 1,793 s; the 180-entry `batch_manifest.json` and
 the records `results/batch_190.json` to `batch_196.json` are committed.
-The witness control on its repeated bases has not been re-run. Before the
-records existed the certificate did not pass (with the repair partition
-present the aggregate reported the seven batches missing; without it,
-`--no-repair`, the fresh enumeration differed from the stored list).
+Before the records existed the certificate did not pass (with the repair
+partition present the aggregate reported the seven batches missing;
+without it, `--no-repair`, the fresh enumeration differed from the stored
+list).
+
+Witness control. `driver.py control-witness` had been unrunnable since
+`research/h6_rank5/common.py` was written for the pipeline: it shadows
+`research/constructions/common.py` on the driver's path, and the control
+imported `term_vector`, `target`, and `load_decompositions` from it.
+`common.py` now loads the constructions module by file and re-exports the
+three. Under the repaired matcher the two distinct-state bases of the
+rank-6 witness each return exactly one rank-6 decomposition, the witness
+itself, with the stored statistics (coordinate slices 4,930, 3,650, and
+120,544 solutions; 120,544 joined states; 240,992 flat types; 0
+reconstructions; 0 unpinned): base (368, 242, 65, 180, 166, 460) at 111
+in 338 s and base (1035, 0, 619, 908, 349, 1) at 000 in 336 s on one
+laptop core at nice 19 (`results/control_witness_distinct_0.json` and
+`control_witness_distinct_1.json`; `control_witness.json` is the earlier
+combined record at commit a884ca5). The two repeated bases take about
+1,060 s each and are run on the pod:
+
+```
+cd /root/stabrank-h6 && git fetch origin && git checkout h6-stagec-repair \
+  && git pull --ff-only
+setsid nohup nice -n 19 uv run --extra challenge python \
+  research/h6_rank5/driver.py control-witness --repeated-only \
+  > /root/logs/control_witness_repeated.log 2>&1 < /dev/null & disown
+```
+
+It writes `results/control_witness_repeated.json` (both bases) and exits
+0 when each base recovers a rank-6 decomposition; the stored record has 3
+genuine decompositions per base with the witness among them. A strict
+reconstruction that cannot place a residual raises `UnpinnedFamily` out
+of `SliceMatcher.run`, which the control does not catch, so a traceback
+in the log is the signal for the case section 5 describes.
 
 The edits that followed the run:
 

@@ -19,6 +19,24 @@ sys.path.insert(0, os.path.join(ROOT, "research", "constructions"))
 from slice_cover import (FOURTH, P2, Field, _rank_mod, confirm_decomposition,  # noqa: E402
                          exact_codes)
 
+
+def _constructions_common():
+    """research/constructions/common.py, which this module shadows under the
+    name `common` on the driver's path; loaded by file so the controls can
+    use its witness helpers."""
+    import importlib.util
+    path = os.path.join(ROOT, "research", "constructions", "common.py")
+    spec = importlib.util.spec_from_file_location("stabrank_constructions_common", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+_cc = _constructions_common()
+target = _cc.target                            # |M>^m as a vector
+term_vector = _cc.term_vector                  # a witness term (k, x0, W, Q, l) as a vector
+load_decompositions = _cc.load_decompositions  # the stored rank-r decompositions of |M>^m
+
 N1 = 3                      # sliced qubits
 M = 6                       # copies of |H>
 RANK = 5
