@@ -1,0 +1,85 @@
+{
+ "orbit": "H3",
+ "git": "597f7e42987bd7750388acfabd3051e7fd1bb3f8",
+ "witness": "bounds/H3-m4-upper-8.json",
+ "rank": 8,
+ "base": 1,
+ "cover": [
+  0,
+  9,
+  10,
+  11,
+  90,
+  117,
+  126,
+  135
+ ],
+ "x0": [
+  0,
+  0
+ ],
+ "pairs": [
+  [
+   0,
+   1
+  ],
+  [
+   0,
+   2
+  ],
+  [
+   1,
+   2
+  ]
+ ],
+ "distinct": 8,
+ "multiplicities": [
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1
+ ],
+ "repeated": false,
+ "kappa": 4,
+ "kappa1": 4,
+ "caps": {
+  "max_rss_gb": 12.0,
+  "max_states": 20000000,
+  "max_solutions": 20000000,
+  "max_seconds": null
+ },
+ "host": "b429c21234f4",
+ "started": "2026-09-23T00:40:53",
+ "outcome": "aborted",
+ "reason": "coordinate slice (1, 0): 3587485 slice candidates: structural degeneracy of the family",
+ "seconds": 106.5,
+ "peak_rss_gb": 3.345,
+ "stats": {
+  "kappa": 4,
+  "kappa1": 4,
+  "distinct": 8,
+  "blocks": [],
+  "coord_solutions": [],
+  "coord_states": [],
+  "joined": 0,
+  "composite_solutions": 0,
+  "composite_states": [],
+  "candidates": 0,
+  "zero_coefficient": 0,
+  "split_pruned": 0,
+  "reconstructions": 0,
+  "hits": 0,
+  "refused": false,
+  "seconds": {},
+  "peak_rss_gb": null
+ },
+ "raw_hits": 0,
+ "genuine": 0,
+ "witness_hits": 0,
+ "other_decompositions": 0,
+ "other_terms": []
+}
