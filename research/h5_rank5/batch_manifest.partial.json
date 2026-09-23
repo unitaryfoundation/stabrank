@@ -1,0 +1,54 @@
+{
+ "partition": "research/h5_rank5/partition.json",
+ "partition_sha256": "f6afa1c778771af51061bf2fd686038fba7cfa14ddee91cbcd9db9e4ee0a0cd0",
+ "census_sha256": "dfa2c79623ad94d38a491d3ef0d4a56843580313f462842865a9e3295cce4acd",
+ "degenerate_sha256": "8d4fc6934d72398ce6dfcf4b37616e702f52c8ac9bcb171f1f46c98c400e0b03",
+ "beta_sha256": "51b531daec2d68044ae580da1f4fba0635fa25413cb652a197a962ed294a2062",
+ "complete": false,
+ "batches": [
+  {
+   "id": "batch_15",
+   "params": {
+    "stage": "A",
+    "pivot_pairs": 5100,
+    "matched": 52672,
+    "hits": 0
+   },
+   "output": "research/h5_rank5/results/batch_15.json",
+   "sha256": "81f06fdef769c53cc53165dbab219177ee826a4898e595917e6c954fe063f1aa"
+  },
+  {
+   "id": "batch_16",
+   "params": {
+    "stage": "B",
+    "covers": 43,
+    "matched": 86,
+    "hits": 0
+   },
+   "output": "research/h5_rank5/results/batch_16.json",
+   "sha256": "31ba3ef24e4c03fb2406aa88b2ed17152584efee80045ecc803006b6c9d7ed1c"
+  },
+  {
+   "id": "batch_309",
+   "params": {
+    "stage": "C",
+    "covers": 1779,
+    "matched": 3558,
+    "hits": 0
+   },
+   "output": "research/h5_rank5/results/batch_309.json",
+   "sha256": "ade467a91addf54b174be1607969dca9ad9d85771e6ee6aeea5255c952a52d16"
+  },
+  {
+   "id": "batch_322",
+   "params": {
+    "stage": "beta",
+    "covers": 693,
+    "matched": 1386,
+    "hits": 0
+   },
+   "output": "research/h5_rank5/results/batch_322.json",
+   "sha256": "e19ff66e9807b7ebb7619cf937487939d1de805669bdaf1fd569d07ed6ec3c57"
+  }
+ ]
+}
