@@ -994,3 +994,20 @@ span(T) and the two copies cancelling at x_0, which Fact B does not
 exclude and which the stage C list now holds), and, for N, the 27
 dependent (2, 2, 1) covers decided by the matcher with the strict
 reconstruction rather than a separate argument.
+
+## 9. The H3 run (2026-09-23)
+
+All 57 H3 batches ran on the RunPod pod between 14:25 and 15:31 UTC (three
+as the sample batches, the rest fifteen at a time at nice 19 on a shared
+host at load 20 to 30). Totals from the aggregate: stage A 9 batches over
+188,451 full 5-covers, stage B 44 batches over 6,112 dependent covers,
+stage C 4 batches over 7,024 covers with a repeated state, 201,587 covers
+matched, 0 hits, 0 refused, 0 undecided, 10.65 CPU-hours. The aggregate
+with `--recheck 2 --recheck-seed 20260922` verified every stored batch,
+re-enumerated the degenerate covers, re-ran batches 39 (773 s) and 56
+(1,281 s) from scratch with matching deterministic hashes, wrote
+`batch_manifest_H3.json`, and printed `CERTIFIED chi(H3^4) >= 6` in
+2,070 s. With the rank-8 witness the cell is 6 <= chi(H3^4) <= 8, filed
+as `bounds/H3-m4-lower-6.json` at the attested tier. The N run (171
+batches) is in progress; its 27 dependent-translate covers are the open
+item for that state.
