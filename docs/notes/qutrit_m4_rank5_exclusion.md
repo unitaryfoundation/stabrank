@@ -661,3 +661,108 @@ The kappa-3 and kappa-4 bases (N 0, 1, 2, 5 and H3 1) will abort at the
 slice then has millions of states; a pass on those bases needs a
 different order of solving (two slices jointly, or the family pinned by
 the composite points first), not more memory.
+
+Pod outcome (2026-09-22 night, one base per process, `--max-rss-gb 12`):
+N base 4 PASSED (the rank-7 witness recovered exactly once, 67 other
+genuine rank-7 decompositions, 4,489 s, 1.1 GB); the five kappa >= 3
+bases aborted at the candidate cap; H3 base 2 logged "slice (1, 0):
+458,564 solutions, 5,420 states after the join, 31 s, 5.6 GB", then
+"slice (0, 1): 11,565,760 solutions, 1,958,256 states after the join,
+1,346 s, 8.8 GB", and died in the composite stage with no further output
+(the resident-set guard only ran at stage boundaries); H3 base 0 has the
+same shape.
+
+The block-only matcher (2026-09-23). Two facts about the H3 witness at
+bases 0 and 2, checked directly, show that the family path could not
+have recovered it however much memory it had. (i) The witness's own
+translate selection at x0 + e_2 and x0 + 2 e_2 is the four base states
+themselves: at x_3 = 1, 2 the |0> copy of every block vanishes and the
+|+> copy is the base slice up to a scalar. The four base states have
+rank 3 (that is the kappa = 1), so `_block_only_solutions` rejected the
+selection as dependent, and no other selection produces the witness's
+codes. (ii) The two copies t_i (x) |0> and t_i (x) |+> of a block never
+occupy two classes at any slice (the single-qutrit factor only
+contributes a scalar or zero), so `_pin_by_blocks` never pinned the
+family, `_join_blocks` skipped every state with kappa = 1, and the
+reconstruction used a random point of the family line, at which the
+equal-phase condition of slice (1, 0) fails. The 2-million-state join
+was therefore going to finish with the witness absent.
+
+A base with no ordinary term now takes a separate route
+(`matcher.BlockOnlyMatcher`; the rank-5 batches never reach it, since a
+full 5-multiset with every state repeated does not exist, but the m = 3
+control does through its (2, 2) multisets). Every one of the eight
+slices is solved on its own for the translate selections whose span
+contains it (`block_only_slice`: the meet-in-the-middle Laplace hash of
+the old path, whose candidates are decided in batches by the singular
+values of the stacked column matrices; dependent selections are kept
+with their coordinate family a = a0 + N mu; a slice proportional to an
+earlier one reuses its selections with scaled coordinates, which for
+|H3>^4 along any qutrit pair is all eight, since every slice is a
+multiple of |H3>^2). The two points x, 2x of each of the four lines
+through x0 are paired: a copy in class k at x is in class 2k at 2x
+whatever its shape, so the pairing is exact and by a dictionary lookup.
+On a line an independent paired selection gives every block a small
+set of configurations of its two copies (both present in one class with
+two phase pairs, one present, or one in each of two classes) with the
+constraint on (c_1, c_2, lambda) in closed form: a copy alone in its
+class keeps its modulus along the line, so its phase at 2x is its phase
+at x plus the cube-root shift of the coordinate ratio, and two copies in
+one class with distinct phase differences are a 2 x 2 solve; the
+configurations pin lambda to a value or leave it free, and a selection
+survives its line only if the blocks agree on some lambda (hashing on
+the pinned values). Three lines are joined at a time: the two with the
+fewest survivors drive (the 4,100 x 4,100 product of the coordinate
+lines never runs; the diagonal lines have 100 survivors each here), a
+pair passes only if the blocks' lambda sets meet, the third line is
+looked up through the per-block class relation of the structure lemma
+(`block_relation`, a table over the 118 one-copy class patterns), and the
+fourth line is completed: a copy present on two or more of the three
+lines is a plane whose codes there follow from a table
+(`line_completion`), a copy present on one line is a line term absent
+there, and a copy absent on all three is a point or a line along the
+fourth direction, read off the residual of the fourth line's two slices
+once every other coefficient is pinned (a small direct selection search
+over the blocks involved, then phases from the coordinates). Each
+distinct completed code set is confirmed exactly once. What this finds:
+every decomposition whose selection is independent on at least three of
+the four lines. A dependent selection is never searched, since on its
+own line it constrains almost nothing (with the slice's parameter free
+every configuration of every block is consistent, and 36 percent of the
+6,681 dependent selections of an H3 slice survive the line with up to
+1e5 combinations each), so a decomposition dependent on two or more
+lines is outside the matcher; the record carries
+`dependent_lines_limit` and the per-slice dependent counts. The resident
+set and the deadline are now checked inside the line, join and
+completion loops, and inside the family path's join and composite loops.
+
+H3 base 2 on the laptop under the 10-minute, 8 GB cap: one slice solve
+of 17 to 19 s (60,941 selections, 6,681 dependent, 991,762 hash
+candidates), seven reuses; per line 54,260 independent paired selections
+of which 4,100 (e_1), 4,100 (e_2), 100 ((1, 1)) and 100 ((1, 2)) survive,
+36 to 42 s per line; passes [e_2, (1, 1), (1, 2)] and
+[e_1, (1, 1), (1, 2)] (driven by the diagonals): 10,000 pairs, 2,736
+lambda-feasible, 1,392 triples, 156 s each; [e_1, e_2, (1, 2)] (driven
+by e_1 and (1, 2)): 410,000 pairs, 19,664 feasible, 7,256 triples, 56 s;
+the fourth pass [e_1, e_2, (1, 1)] started at 369 s and was still running
+at the 560 s deadline (record `aborted`, peak RSS 0.60 GB; 597,024 block
+leaves, 114,338 combinations, 10,368 completions, 5,184 distinct genuine
+rank-8 decompositions confirmed by then). The witness's own triple
+(lines e_1, (1, 1), (1, 2) with the dependent e_2 line completed; the
+witness has three independent lines) gives 433 block leaves, 338
+combinations, 2,592 completions and 1,296 distinct genuine rank-8
+decompositions with the witness exactly once, in 61 s: the base admits a
+rank-2 stabilizer decomposition of |H3> per block independently, hence
+thousands of genuine decompositions, most of the run's time being their
+enumeration. The full run needs about 750 s here, so the base does not
+pass under the local cap; on the pod (`--max-seconds 0`, the command in
+the README) it should complete in well under an hour per base. H3 base
+0 has the identical shape. H3 base 1 (kappa 4, eight ordinary states)
+is unchanged and refused at the dense-solve cap.
+
+Regression after the change (both under the cap): `control-m3 N
+--sample 200` gives the same counts as before (924 multisets, 9 genuine
+hits in 201 runs, 0 refused, the stored class recovered from its own
+base; 99 s against 144 s), and `control-planted N` recovers all 32
+planted decompositions with the same further-decomposition counts
+(0, 0, 1, 9) and 0 candidates rejected by the final check.

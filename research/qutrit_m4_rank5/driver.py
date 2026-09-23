@@ -922,6 +922,7 @@ def control_witness(args):
         reason = f"{type(e).__name__}: {e}"
     if st is None:
         st = Mt.last_stats                      # the partial counts up to the abort
+        hits = Mt._dedupe(Mt.last_hits)         # and the raw hits found before it
     dt = time.time() - t0
     good = [h for h in hits if genuine(h, rank)]
     witness_hits = sum(sorted(exact_codes(t)[0].tobytes() for t in h["terms"]) == wkey for h in good)
