@@ -19,11 +19,30 @@ sys.path.insert(0, os.path.join(ROOT, "research", "constructions"))
 from slice_cover import (FOURTH, P2, Field, _rank_mod, confirm_decomposition,  # noqa: E402
                          exact_codes)
 
+
+def _constructions_common():
+    """research/constructions/common.py, which this module shadows under the
+    name `common` on the driver's path; loaded by file so the controls can
+    use its witness helpers."""
+    import importlib.util
+    path = os.path.join(ROOT, "research", "constructions", "common.py")
+    spec = importlib.util.spec_from_file_location("stabrank_constructions_common", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+_cc = _constructions_common()
+target = _cc.target                            # |M>^m as a vector
+term_vector = _cc.term_vector                  # a witness term (k, x0, W, Q, l) as a vector
+load_decompositions = _cc.load_decompositions  # the stored rank-r decompositions of |M>^m
+
 N1 = 3                      # sliced qubits
 M = 6                       # copies of |H>
 RANK = 5
 ORBIT = "qubit_H"
 PARTITION = os.path.join(HERE, "partition.json")
+REPAIR = os.path.join(HERE, "partition_stage_c_v2.json")      # the stage C repair partition, when present
 DEGENERATE = os.path.join(HERE, "degenerate_covers.json")
 RESULTS = os.path.join(HERE, "results")
 CENSUS = os.path.join(RESULTS, "kernel_census.json")
@@ -106,11 +125,18 @@ def load_degenerate(path=DEGENERATE, expect_sha256=None):
 
 
 def batch_geometry(part, index):
-    if not 0 <= index < len(part["batch_geometry"]):
-        raise IndexError(f"batch index {index} outside 0..{len(part['batch_geometry']) - 1}")
-    geo = part["batch_geometry"][index]
-    assert geo["index"] == index
-    return geo
+    """The geometry entry with the given batch index (a repair partition's
+    indices continue after the original partition's, so the position in
+    the list and the index differ)."""
+    geos = part["batch_geometry"]
+    first = geos[0]["index"] if geos else 0
+    if 0 <= index - first < len(geos) and geos[index - first]["index"] == index:
+        return geos[index - first]
+    for geo in geos:
+        if geo["index"] == index:
+            return geo
+    raise IndexError(f"batch index {index} not in the partition "
+                     f"({first}..{geos[-1]['index'] if geos else first - 1})")
 
 
 def pairs_of(E):

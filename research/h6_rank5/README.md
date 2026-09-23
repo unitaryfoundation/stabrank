@@ -1,17 +1,19 @@
 # Rank-5 exclusion of |H>^6 by an all-visible base slice
 
-Design and status: `docs/notes/h6_rank5_exclusion.md`. The argument is
-complete and both positive controls pass on every base (section 5 of the
-note); the 5-cover enumeration is complete (5,939,465 full covers of
-distinct independent states, `results/kernel_census.json`, plus 26,242
-dependent or repeated covers, `degenerate_covers.json`); the whole
-exclusion is partitioned into 190 batches (`partition.json`) that
-`batch.py` runs one at a time and `aggregate.py` checks, and the
-certificate `verify_challenge/cert_qubit_h_m6_rank5_attested.py` behind the
-draft bound `research/h6_rank5/qubit_H-m6-lower-6.json.draft` (attested tier) prints
-`CERTIFIED chi(qubit_H^6) >= 6` once every batch is stored and clean. The
-full run, about 36 CPU-hours, has not been launched; three test batches
-(one per stage) are stored under `results/`.
+Design and status: `docs/notes/h6_rank5_exclusion.md` (the run in its
+section 7, the stage C repair in section 9 and in
+`docs/notes/h6_rank5_stagec_repair.md`). The argument is complete and
+both positive controls pass on every base (section 5 of the note); the
+5-cover enumeration is complete (5,939,465 full covers of distinct
+independent states, `results/kernel_census.json`, plus 28,396 dependent
+or repeated covers, `degenerate_covers_v2.json`, which supersedes the
+26,242 of `degenerate_covers.json`); the exclusion is 180 batches
+(`partition.json` batches 0 to 172 and `partition_stage_c_v2.json`
+batches 190 to 196) that `batch.py` runs one at a time and `aggregate.py`
+checks, all stored under `results/`, and the certificate
+`verify_challenge/cert_qubit_h_m6_rank5_attested.py` behind
+`bounds/qubit_H-m6-lower-6.json` (attested tier) prints `CERTIFIED
+chi(qubit_H^6) >= 6`.
 
 ## Files
 
@@ -40,6 +42,15 @@ full run, about 36 CPU-hours, has not been launched; three test batches
   tuples into `dictionary(2, 3)`, with the count by multiplicity pattern
   and the file's hash, which the partition and every stage B or C batch
   record.
+- `degenerate_covers_v2.json`, `degenerate_covers_v2_delta.json`,
+  `partition_stage_c_v2.json`: the stage C repair
+  (`docs/notes/h6_rank5_stagec_repair.md`): the list regenerated with the
+  cancel-at-base route of `degenerate_covers` (28,396 covers, the 2,154
+  added ones in the delta file, stage B unchanged) and the partition of
+  its 16,006 stage C covers into batches 190 to 196, which supersede
+  batches 173 to 189. `batch.py K --partition
+  research/h6_rank5/partition_stage_c_v2.json` runs one; `aggregate.py`
+  picks the repair partition up when the file exists.
 - `batch.py`: one batch by index (below).
 - `aggregate.py`: the certificate-side check (below).
 - `results/`: `batch_<K>.json` for every batch run so far; the controls
@@ -124,7 +135,8 @@ confirms they are present). One batch:
 nice -n 19 uv run --extra challenge python research/h6_rank5/batch.py K
 ```
 
-All 190 batches on a 16-vCPU pod, 15 at a time, one log per batch:
+All 190 batches of the original partition on a 16-vCPU pod, 15 at a
+time, one log per batch:
 
 ```
 mkdir -p research/h6_rank5/results
@@ -135,8 +147,13 @@ seq 0 189 | xargs -P 15 -n 1 sh -c \
 
 Rerunning the same command resumes (finished batches are skipped). The
 stage B batches (about 700 s each, 158 of them) dominate: about 36
-CPU-hours in all, about 2.5 hours of wall time on 15 cores. Progress and
-the final check:
+CPU-hours in all, about 2.5 hours of wall time on 15 cores. Since the
+stage C repair (2026-09-23) the exclusion consists of batches 0 to 172 of
+`partition.json` and the seven repair batches 190 to 196 of
+`partition_stage_c_v2.json` (`batch.py K --partition
+research/h6_rank5/partition_stage_c_v2.json`, about 600 s each); batches
+173 to 189 are superseded and stay in `results/` only as history. Progress
+and the final check:
 
 ```
 nice -n 19 uv run --extra challenge python research/h6_rank5/aggregate.py --dry-run --partial

@@ -1908,191 +1908,103 @@
    "sha256": "afa16dea696f2b382221161e535b72a8a27a9e6b5282a24649adbaa0dae77f85"
   },
   {
-   "id": "batch_173",
+   "id": "batch_190",
    "params": {
     "stage": "C",
-    "covers": 815,
-    "matched": 3260,
+    "covers": 2287,
+    "matched": 9148,
     "hits": 0
    },
-   "output": "research/h6_rank5/results/batch_173.json",
-   "sha256": "afa689fceb7db2c3f5fd6fe4a058940fee5b6e1f3ab5088d042e63db81bd4af4"
+   "output": "research/h6_rank5/results/batch_190.json",
+   "sha256": "711032be9641b4ac44fc199b17d783bafe6543600e7ca45b54e51b375d464516"
   },
   {
-   "id": "batch_174",
+   "id": "batch_191",
    "params": {
     "stage": "C",
-    "covers": 815,
-    "matched": 3260,
+    "covers": 2287,
+    "matched": 9148,
     "hits": 0
    },
-   "output": "research/h6_rank5/results/batch_174.json",
-   "sha256": "4614bfe16fa34265678da656b23b3e0bb1ec2c6be2c76c47813f806b65c3c191"
+   "output": "research/h6_rank5/results/batch_191.json",
+   "sha256": "421b5e4a81e33cd10be4c41a9dc2069017b992972dca28c029b1f7fe1f91bcfb"
   },
   {
-   "id": "batch_175",
+   "id": "batch_192",
    "params": {
     "stage": "C",
-    "covers": 815,
-    "matched": 3260,
+    "covers": 2287,
+    "matched": 9148,
     "hits": 0
    },
-   "output": "research/h6_rank5/results/batch_175.json",
-   "sha256": "8f916543dbc04a148262a5d064dd905c53e927ee18e5e85e8dbccc7d1dbbc53c"
+   "output": "research/h6_rank5/results/batch_192.json",
+   "sha256": "7bd7cc8ba35002897091136b0b0d255cc280c2184bd304aae31683290f7e595d"
   },
   {
-   "id": "batch_176",
+   "id": "batch_193",
    "params": {
     "stage": "C",
-    "covers": 815,
-    "matched": 3260,
+    "covers": 2287,
+    "matched": 9148,
     "hits": 0
    },
-   "output": "research/h6_rank5/results/batch_176.json",
-   "sha256": "668c2b6383d94187348c38e8a25b654f5a35d81b283bfbf0d469cfc032dcba57"
+   "output": "research/h6_rank5/results/batch_193.json",
+   "sha256": "79dfaad1ea2b337a3498c9d144b595547302e69e46d14ee7d0e83c76754d0155"
   },
   {
-   "id": "batch_177",
+   "id": "batch_194",
    "params": {
     "stage": "C",
-    "covers": 815,
-    "matched": 3260,
+    "covers": 2286,
+    "matched": 9144,
     "hits": 0
    },
-   "output": "research/h6_rank5/results/batch_177.json",
-   "sha256": "cf4dec8047bb271ba8572ca0989e6e6a43f51df96250f60d413bc402c8bfaa46"
+   "output": "research/h6_rank5/results/batch_194.json",
+   "sha256": "45e97429c28bbd0a5f6ef5a555043bebcfa96d8a7cfc2520042534cb00e48b3e"
   },
   {
-   "id": "batch_178",
+   "id": "batch_195",
    "params": {
     "stage": "C",
-    "covers": 815,
-    "matched": 3260,
+    "covers": 2286,
+    "matched": 9144,
     "hits": 0
    },
-   "output": "research/h6_rank5/results/batch_178.json",
-   "sha256": "739d05b4415c94e74b6eaa0d16aa0036fdba03a46145b56b96e01feac860d3c4"
+   "output": "research/h6_rank5/results/batch_195.json",
+   "sha256": "b5306938b5404e4b8048b28f3506e130f365803f62044b5ebb88786445c11326"
   },
   {
-   "id": "batch_179",
+   "id": "batch_196",
    "params": {
     "stage": "C",
-    "covers": 815,
-    "matched": 3260,
+    "covers": 2286,
+    "matched": 9144,
     "hits": 0
    },
-   "output": "research/h6_rank5/results/batch_179.json",
-   "sha256": "bd79c8fe6fc9a49a18f58502776c20a034dc12c07e7f76e37c0caa6e466a07cc"
-  },
-  {
-   "id": "batch_180",
-   "params": {
-    "stage": "C",
-    "covers": 815,
-    "matched": 3260,
-    "hits": 0
-   },
-   "output": "research/h6_rank5/results/batch_180.json",
-   "sha256": "23377d03b722389cbe05d9f4c490e3fbbe0126229505cb8d7870d0aeb1fcee0f"
-  },
-  {
-   "id": "batch_181",
-   "params": {
-    "stage": "C",
-    "covers": 815,
-    "matched": 3260,
-    "hits": 0
-   },
-   "output": "research/h6_rank5/results/batch_181.json",
-   "sha256": "fc7c79727dd68a4e2e12e3fb4631486f21e1404ff93d9f753be4ccfa0797767f"
-  },
-  {
-   "id": "batch_182",
-   "params": {
-    "stage": "C",
-    "covers": 815,
-    "matched": 3260,
-    "hits": 0
-   },
-   "output": "research/h6_rank5/results/batch_182.json",
-   "sha256": "f156abdc581b3125a57fe90036bd7d297fcca2016b9785c1eba09840f7f4cac8"
-  },
-  {
-   "id": "batch_183",
-   "params": {
-    "stage": "C",
-    "covers": 815,
-    "matched": 3260,
-    "hits": 0
-   },
-   "output": "research/h6_rank5/results/batch_183.json",
-   "sha256": "25fb8762dc2e208e4f8771c0096a48261b4e9fcc1686ef04bfaad71c21e9bd36"
-  },
-  {
-   "id": "batch_184",
-   "params": {
-    "stage": "C",
-    "covers": 815,
-    "matched": 3260,
-    "hits": 0
-   },
-   "output": "research/h6_rank5/results/batch_184.json",
-   "sha256": "5550205f875fe714cca0a8ed603c359c5ba220fef1a148e1282243839a75a025"
-  },
-  {
-   "id": "batch_185",
-   "params": {
-    "stage": "C",
-    "covers": 815,
-    "matched": 3260,
-    "hits": 0
-   },
-   "output": "research/h6_rank5/results/batch_185.json",
-   "sha256": "e3bcf2fdba285d60caa0ee734faacf2ba6e950099c16b6691d155777667cfbfa"
-  },
-  {
-   "id": "batch_186",
-   "params": {
-    "stage": "C",
-    "covers": 815,
-    "matched": 3260,
-    "hits": 0
-   },
-   "output": "research/h6_rank5/results/batch_186.json",
-   "sha256": "addcaba02852aa721255de1315b569f67979f83f8f19d279d847c4b4ee00132c"
-  },
-  {
-   "id": "batch_187",
-   "params": {
-    "stage": "C",
-    "covers": 814,
-    "matched": 3256,
-    "hits": 0
-   },
-   "output": "research/h6_rank5/results/batch_187.json",
-   "sha256": "d9004e2d3e4d843ee044a90d45c137815b93d5f6c6525ed58acf74e7d4dfcccf"
-  },
-  {
-   "id": "batch_188",
-   "params": {
-    "stage": "C",
-    "covers": 814,
-    "matched": 3256,
-    "hits": 0
-   },
-   "output": "research/h6_rank5/results/batch_188.json",
-   "sha256": "df76b789e552117307113a94fed712db7959605f49d6fe8dcd303814edeeeb5d"
-  },
-  {
-   "id": "batch_189",
-   "params": {
-    "stage": "C",
-    "covers": 814,
-    "matched": 3256,
-    "hits": 0
-   },
-   "output": "research/h6_rank5/results/batch_189.json",
-   "sha256": "0733e48a941a20c993ec0e59bab26b23d76eb636013e6460016a1d0467769ffc"
+   "output": "research/h6_rank5/results/batch_196.json",
+   "sha256": "2d0e59a3a147dcb9184b015b1fc4273800eee82dcb45a03348449420eff339c6"
   }
+ ],
+ "repair_partition": "research/h6_rank5/partition_stage_c_v2.json",
+ "repair_partition_sha256": "be4ff271d428172166eb2a83bc7e247f0673a220ac769669683c216fd57a6c7f",
+ "repair_degenerate_sha256": "8d4fc6934d72398ce6dfcf4b37616e702f52c8ac9bcb171f1f46c98c400e0b03",
+ "superseded_batches": [
+  173,
+  174,
+  175,
+  176,
+  177,
+  178,
+  179,
+  180,
+  181,
+  182,
+  183,
+  184,
+  185,
+  186,
+  187,
+  188,
+  189
  ]
 }

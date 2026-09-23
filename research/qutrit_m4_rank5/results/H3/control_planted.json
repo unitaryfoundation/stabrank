@@ -1,0 +1,35 @@
+{
+ "orbit": "H3",
+ "git": "2743d2e45e3eca5fe0a2b704f9b79c30e8f14ec3",
+ "x0": [
+  1,
+  1
+ ],
+ "cases": {
+  "generic": {
+   "planted": 8,
+   "extra": 0,
+   "rejected": 0,
+   "seconds": 0.12856578826904297
+  },
+  "diagonal": {
+   "planted": 8,
+   "extra": 0,
+   "rejected": 0,
+   "seconds": 0.10148406028747559
+  },
+  "dependent": {
+   "planted": 8,
+   "extra": 0,
+   "rejected": 0,
+   "seconds": 13.776981353759766
+  },
+  "repeated": {
+   "planted": 8,
+   "extra": 15,
+   "rejected": 0,
+   "seconds": 1.1944141387939453
+  }
+ },
+ "pass": true
+}

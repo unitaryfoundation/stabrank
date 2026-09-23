@@ -128,6 +128,8 @@ def rank_mod(M, p):
     rows, cols = A.shape
     rank = 0
     for c in range(cols):
+        if rank == rows:
+            break
         piv = None
         for r in range(rank, rows):
             if A[r, c]:
