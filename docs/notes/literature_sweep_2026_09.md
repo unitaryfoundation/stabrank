@@ -404,3 +404,54 @@ cat_6 (m=6), KvdWV's partial decomposition (m=7, 8) and the glued cat_10
 a projection of the glued cat_10 and is not stated in either paper. There
 is still no machine-search paper on stabilizer decompositions. No BibTeX
 entry was added.
+
+## 7. Update of 2026-09-23
+
+Nothing moves a cell. What was checked:
+
+- arXiv API, quant-ph submissions dated 2026-09-22 to 2026-09-24 (56
+  entries in the API's submission index, which lags the listings), and the
+  arXiv `quant-ph/new` and `quant-ph/recent` listings for 2026-09-22 and
+  2026-09-23 (142 and 89 new entries plus replacements), titles and
+  abstracts filtered for stabilizer, stabiliser, magic, nonstabilizerness,
+  Clifford, cat state, qutrit, qudit, T-count, extent, decomposition, and
+  rank.
+- The phrase queries of sections 5 and 6 ("stabilizer rank", "stabiliser
+  rank", "stabilizer extent", "stabilizer decomposition(s)", "magic state
+  decomposition"; "magic state(s)" or nonstabilizerness crossed with qudit,
+  qutrit, decomposition, rank, extent, or cat state) sorted by last update:
+  no entry updated after 2026-09-17 beyond those already in sections 5 and
+  6, except 2609.13106v2 below.
+- Citing papers. Semantic Scholar for arXiv:2202.09202: 53 citing papers,
+  one new since section 6, 2609.25947 (below). Semantic Scholar for
+  arXiv:2106.07740 was rate-limited; OpenAlex lists 48 citing works for
+  its journal version (Quantum 5, 606), the newest being the Zenodo
+  deposits below (2026-08) and journal versions of papers already
+  screened (2508.05745, PRX 2026-07-09; 2505.12522, 2026-06-04;
+  2510.18977, 2026-04-23). Version pages unchanged: 2106.07740 at v2
+  (2021-12-15), 2202.09202 at v1 (2022-02-18).
+- Web searches for the same phrases, for cat and code state
+  decompositions of T and qutrit magic states in 2026, and for citations
+  of Qassim, Pashayan, and Gosset.
+
+| source | arXiv | what it contributes | on the board | usable here |
+|---|---|---|---|---|
+| Hofstetter, Yeh, Murali 2026 (BOPS) | 2609.25947 | generative circuit optimisation with Schrodinger bridges on Clifford+T circuits; the only new citing paper of 2202.09202 | no | no rank, extent, or decomposition; does not move a cell |
+| Li, Li, Liu 2026 | 2609.26691 | transversal multi-controlled-Z gates on good quantum LDPC and locally testable codes | no | no rank content; does not move a cell |
+| Sierant 2026 | 2609.13106v2 (v2 2026-09-14) | nonlocal stabilizer Renyi entropy is attained by the computational-basis Schmidt representative for Schmidt rank at most six and dyadic spectra; logarithmic growth bounds | no | stabilizer entropy, not rank; does not move a cell |
+| stabilizer-public-key authentication 2026 | 2609.20877v2 (v2 2026-09-22) | authentication from copies of long quadratic-stabilizer states over odd-prime fields | no | cryptographic use of stabilizer states; does not move a cell |
+| Jardine 2026, Zenodo deposits "Magic Cat States I to VII", "Stabilizer rank of the 8-qubit magic cat state", "A tight ceiling for coset-split magic-cat-state decompositions" | none (Zenodo, 2026-08-05 to 2026-08-30) | by their metadata: chi(cat_8) <= 6 with "calibrated evidence against rank 5", chi(cat_m) <= 2^{m/2 - 1} for even m by a coset split of the even-weight code, and chi(T_BK^6) >= 4 for the face-centre orbit | no | outside the board's source policy (not arXiv or a journal), so not read beyond the metadata and not cited as a source of any bound; the claimed values would not move a cell in any case: chi(cat_8) <= 6 is QPG's value, 2^{m/2 - 1} is 4 at m=6 against QPG's exact 3 and is worse than QPG at every m >= 6, and chi(F^6) >= 4 is already on the board (`bounds/qubit_T-m6-lower-4.json`) |
+| Classical simulation of noisy circuits via locally entanglement-optimal unravelings 2025 | 2508.05745 (PRX, 2026-07-09) | tensor-network sampler for single-qubit noise; cites 2106.07740 for context | no | no rank content; does not move a cell |
+
+Not rank-relevant after reading the title and abstract, so the next sweep
+can skip them: 2609.26784, 2609.26743, 2609.26736, 2609.26544, 2609.26362,
+2609.26273, 2609.26258, 2609.25368, 2609.25262, 2609.25251, 2609.25201,
+2609.25135, 2609.25043, 2609.23752, 2609.23243, 2609.22181, 2609.21875,
+2609.18721, 2609.18558, 2410.17992 (iteratively decoded magic-state
+distillation, replaced 2026-09-22), 2603.29896 (qudit stabilizers beyond
+the free case, replaced 2026-09-22).
+
+No explicit finite-copy decomposition of any board state, no exact or
+approximate rank value, and no machine-search paper on stabilizer
+decompositions appeared between 2026-09-22 and 2026-09-23. No BibTeX
+entry was added.

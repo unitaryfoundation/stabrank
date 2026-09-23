@@ -12,16 +12,27 @@ value the board already implies, and it never moves an exponent; it fills a
 cell the board holds no witness for, and it is the warm start the merge
 anneals of docs/notes/merge_recipes_2026_09.md begin from.
 
+For an orbit with no published exponent (T5, measured against the
+single-copy product bound log_p chi(|M>)) a product of cells that are
+themselves below that bound lands below it too, and the notes say so; the
+site does not count that as a beaten exponent.
+
 Usage (from the repository root):
-    uv run --extra challenge python research/constructions/product_witness.py ORBIT M1 M2 [M3 ...]
-reads bounds/ORBIT-m{Mi}-upper-*.json (the smallest rank at each Mi) and
-writes bounds/ORBIT-m{sum Mi}-upper-{prod ranks}.json.
+    uv run --extra challenge python research/constructions/product_witness.py ORBIT M1 M2 [M3 ...] [--date YYYY-MM-DD]
+reads, for each Mi, the smallest-rank witness-bearing bounds/ORBIT-m{Mi}-upper-*.json
+or, when the stored decomposition lists under data/ hold a smaller rank (the
+m <= 3 cells of N, H3, and T3 are Lean or literature entries without a
+witness), data/ORBIT_m{Mi}_rank*.json with coefficients fitted exactly, and
+writes bounds/ORBIT-m{sum Mi}-upper-{prod ranks}.json. The date defaults to
+today.
 """
 
 from __future__ import annotations
 
+import datetime
 import glob
 import json
+import math
 import os
 import re
 import sys
@@ -35,13 +46,53 @@ sys.path.insert(0, os.path.join(ROOT, "verify_challenge"))
 
 from stabrank_verify import ORBIT_P, implied_gamma  # noqa: E402
 
+# Orbits measured against a single-copy product bound rather than a published
+# exponent (CONTRIBUTING.md); the baseline is log_p of the m=1 rank.
+UNPUBLISHED_BASELINE = {"T5": 3}
+
 
 def best_upper(orbit, m):
+    """The smallest-rank bound file at (orbit, m) that carries a witness, or
+    None (the m <= 3 qutrit cells of N, H3, and T3 are literature or Lean
+    entries without one)."""
     paths = glob.glob(os.path.join(ROOT, "bounds", f"{orbit}-m{m}-upper-*.json"))
     ranked = sorted((int(re.search(r"-upper-(\d+)\.json$", p).group(1)), p) for p in paths)
-    if not ranked:
-        raise FileNotFoundError(f"no upper bound file for {orbit} m={m}")
-    return ranked[0][1]
+    for rank, path in ranked:
+        if "witness" in json.load(open(path)):
+            return rank, path
+    return None
+
+
+def best_data(orbit, m):
+    """The smallest-rank stored decomposition list under data/, or None."""
+    paths = glob.glob(os.path.join(HERE, "data", f"{orbit}_m{m}_rank*.json"))
+    ranked = sorted((int(re.search(r"_rank(\d+)\.json$", p).group(1)), p) for p in paths)
+    return ranked[0] if ranked else None
+
+
+def factor(orbit, m):
+    """An exact witness for |M>^m: the best witness-bearing bound file, or, if
+    the stored decomposition lists of `data/` hold a smaller rank (or the only
+    one), their first decomposition with coefficients fitted exactly by
+    fit_coeffs.fit. Returns (witness, rank, description)."""
+    from fit_coeffs import fit
+    bound = best_upper(orbit, m)
+    data = best_data(orbit, m)
+    if data is not None and (bound is None or data[0] < bound[0]):
+        rank, path = data
+        rec = json.load(open(path))
+        terms = rec["decompositions"][0]
+        coeffs = fit(orbit, m, terms)
+        if coeffs is None:
+            raise ValueError(f"no exact coefficients for {path}")
+        rel = os.path.relpath(path, ROOT)
+        return ({"terms": terms, "coeffs": [str(c) for c in coeffs]}, rank,
+                f"{rel} (decomposition 0 of {rec['count']}, coefficients fitted exactly by "
+                f"fit_coeffs.fit)")
+    if bound is None:
+        raise FileNotFoundError(f"no witness for {orbit} m={m} in bounds/ or data/")
+    rank, path = bound
+    return json.load(open(path))["witness"], rank, os.path.basename(path)
 
 
 def product_term(s, t, n_s, n_t):
@@ -67,34 +118,53 @@ def product_witness(wa, wb, n_a, n_b):
 
 
 def main(argv):
+    date = datetime.date.today().isoformat()
+    if "--date" in argv:
+        i = argv.index("--date")
+        date = argv[i + 1]
+        argv = argv[:i] + argv[i + 2:]
     orbit = argv[1]
     ms = [int(a) for a in argv[2:]]
     p = ORBIT_P[orbit]
-    files = [best_upper(orbit, m) for m in ms]
-    subs = [json.load(open(f)) for f in files]
-    w, n = subs[0]["witness"], ms[0]
-    for sub, m in zip(subs[1:], ms[1:]):
-        w = product_witness(w, sub["witness"], n, m)
+    facs = [factor(orbit, m) for m in ms]
+    w, n = facs[0][0], ms[0]
+    for (wf, _, _), m in zip(facs[1:], ms[1:]):
+        w = product_witness(w, wf, n, m)
         n += m
     rank = len(w["terms"])
-    factors = " x ".join(f"chi(|{orbit}>^{m}) <= {s['rank']}" for s, m in zip(subs, ms))
+    factors = " x ".join(f"chi(|{orbit}>^{m}) <= {r}" for (_, r, _), m in zip(facs, ms))
+    seen = {}
+    for _, _, d in facs:
+        seen[d] = seen.get(d, 0) + 1
+    sources = ", ".join(d if c == 1 else f"{d} (taken {c} times)" for d, c in seen.items())
     gamma = implied_gamma(p, rank, n)
+    if orbit in UNPUBLISHED_BASELINE:
+        base = math.log(UNPUBLISHED_BASELINE[orbit], p)
+        standing = (
+            f"First witness for this cell. The orbit has no published exponent and is measured "
+            f"against the single-copy product bound log_{p}({UNPUBLISHED_BASELINE[orbit]}) = "
+            f"{base:.4f}; this exponent is {'below' if gamma < base else 'not below'} that "
+            f"baseline because the m=2 factor already is, so it beats no published exponent "
+            f"and the site does not count it as one. It is the sub-multiplicative value the "
+            f"board already implied.")
+    else:
+        standing = ("First witness for this cell; it is the sub-multiplicative value the board "
+                    "already implied and does not move the exponent.")
     out = {
         "schema_version": "0.1", "orbit": orbit, "m": n, "direction": "upper", "rank": rank,
         "provenance": {
             "author": "this repository",
             "reference": "stabrank research/constructions/product_witness.py",
             "method": "structured construction",
-            "date": "2026-09-22",
+            "date": date,
             "github": ["vprusso"],
             "compute": {"cpu_hours": 0.001, "wall_clock_hours": 0.001, "runs": 1,
                         "hardware": "Apple silicon laptop, one core; direct construction, no search"},
         },
         "notes": (
-            f"Tensor product of the board's witnesses {', '.join(os.path.basename(f) for f in files)}: "
-            f"{factors} gives chi(|{orbit}>^{n}) <= {rank}, exponent {gamma:.4f}. First witness "
-            "for this cell; it is the sub-multiplicative value the board already implied and does "
-            "not move the exponent. Terms are the exact products (x0 and l concatenated, W and Q "
+            f"Tensor product of the exact decompositions {sources}: "
+            f"{factors} gives chi(|{orbit}>^{n}) <= {rank}, exponent {gamma:.4f}. {standing} "
+            "Terms are the exact products (x0 and l concatenated, W and Q "
             "block diagonal) and coefficients the exact products, built by "
             "research/constructions/product_witness.py."),
         "witness": w,
