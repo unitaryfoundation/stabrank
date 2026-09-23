@@ -452,36 +452,49 @@ class BetaMatcher:
                 A = np.concatenate([np.broadcast_to(Ab, (len(pairs),) + Ab.shape), A], axis=1)
                 b = np.concatenate([np.broadcast_to(bb, (len(pairs),) + bb.shape),
                                     np.broadcast_to(rho1, (len(pairs), 8))], axis=1)
-                keep, _, _ = self._consistent(A, b)
+                keep, Z, ranks = self._consistent(A, b)
                 stats["brute_systems"] += len(pairs)
                 for q in np.flatnonzero(keep):
-                    surv_1.append((A[q], b[q], jb, (int(pairs[q, 0]), int(pairs[q, 1]))))
+                    surv_1.append((A[q], b[q], jb, (int(pairs[q, 0]), int(pairs[q, 1])), Z[q], int(ranks[q])))
             if not surv_1:
                 continue
-            # x_a2: the copies, the fifth term's translate (or absence) and the visible terms' options
+            # x_a2: the copies, the fifth term's translate (or absence) and the visible terms' options.
+            # When x_b and x_a1 pin (c_1, c_2, c_5) (the usual case) the x_a2 equation has known
+            # coefficients and is matched directly; otherwise the full system is solved per triple.
             triples = np.indices((A_code + 1, A_code + 1, A_code + 1)).reshape(3, -1).T
             for combo2 in itertools.product(*[range(len(cd)) for cd in codes2]):
                 c2 = tuple(int(codes2[i][combo2[i]]) for i in range(r))
                 rho2 = rho(2, c2)
-                for A1, b1, jb, j1 in surv_1:
-                    A = np.zeros((len(triples), 8, 3), dtype=complex)
-                    A[:, :, 0] = OPT[triples[:, 0]]
-                    A[:, :, 1] = OPT[triples[:, 1]]
-                    A[:, :, 2] = omega[triples[:, 2]]
-                    A = np.concatenate([np.broadcast_to(A1, (len(triples),) + A1.shape), A], axis=1)
-                    b = np.concatenate([np.broadcast_to(b1, (len(triples),) + b1.shape),
-                                        np.broadcast_to(rho2, (len(triples), 8))], axis=1)
-                    keep, Z, ranks = self._consistent(A, b)
-                    stats["brute_systems"] += len(triples)
-                    for q in np.flatnonzero(keep):
-                        z = Z[q]
-                        if ranks[q] < 3:
-                            raise UnpinnedFamily("joint reconstruction of the pair block and the fifth term: the "
-                                                 "coefficients are not determined by the three slice equations")
-                        if np.any(np.abs(z) < 1e-9):
+                for A1, b1, jb, j1, z1, rank1 in surv_1:
+                    found = []
+                    if rank1 == 3:
+                        if np.any(np.abs(z1) < 1e-9):
                             continue
-                        j2 = (int(triples[q, 0]), int(triples[q, 1]))
-                        j5 = int(triples[q, 2])
+                        lhs = z1[0] * OPT[pairs[:, 0]] + z1[1] * OPT[pairs[:, 1]]          # (1089, 8)
+                        rhs2 = rho2[None, :] - z1[2] * omega                                # (33, 8)
+                        diff = np.linalg.norm(lhs[:, None, :] - rhs2[None, :, :], axis=2)
+                        stats["brute_systems"] += len(pairs)
+                        for qp, q5 in zip(*np.nonzero(diff < 1e-7 * max(1.0, np.linalg.norm(rho2)))):
+                            found.append((z1, (int(pairs[qp, 0]), int(pairs[qp, 1])), int(q5)))
+                    else:
+                        A = np.zeros((len(triples), 8, 3), dtype=complex)
+                        A[:, :, 0] = OPT[triples[:, 0]]
+                        A[:, :, 1] = OPT[triples[:, 1]]
+                        A[:, :, 2] = omega[triples[:, 2]]
+                        A = np.concatenate([np.broadcast_to(A1, (len(triples),) + A1.shape), A], axis=1)
+                        b = np.concatenate([np.broadcast_to(b1, (len(triples),) + b1.shape),
+                                            np.broadcast_to(rho2, (len(triples), 8))], axis=1)
+                        keep, Z, ranks = self._consistent(A, b)
+                        stats["brute_systems"] += len(triples)
+                        for q in np.flatnonzero(keep):
+                            if ranks[q] < 3:
+                                raise UnpinnedFamily("joint reconstruction of the pair block and the fifth term: "
+                                                     "the coefficients are not determined by the three slice "
+                                                     "equations")
+                            if np.any(np.abs(Z[q]) < 1e-9):
+                                continue
+                            found.append((Z[q], (int(triples[q, 0]), int(triples[q, 1])), int(triples[q, 2])))
+                    for z, j2, j5 in found:
                         copy_codes = [{1: j1[0], 2: j2[0], 3: jb[0]}, {1: j1[1], 2: j2[1], 3: jb[1]}]
                         if not all(valid_term_codes(o, N1, cd) for cd in copy_codes):
                             continue

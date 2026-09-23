@@ -666,18 +666,26 @@ def control_m4_pair(args):
     expected = set()
     x0s = list(range(1 << n1)) if args.all_x0 else list(X0S)
     for terms, _ in stored:
-        key = canonical([lookup4[exact_codes(t)[0].tobytes()] for t in terms], group)
+        idx = [lookup4[exact_codes(t)[0].tobytes()] for t in terms]
+        key = canonical(idx, group)
         stored_keys[key] = terms
-        for S in itertools.combinations(range(m), n1):
-            for x0 in x0s:
-                b = slice_terms(terms, S, x0, m, n1, lookup2)
-                if b is None:
-                    continue
-                distinct = sorted(set(b))
-                fam = Family.from_cover(E, distinct)
-                exempt = [i for i, u in enumerate(distinct) if b.count(u) > 1]
-                if fam is not None and not fam.has_zero_coefficient(exempt):
-                    expected.add(key)
+        # a class is recoverable when some member of it (the group acts on the
+        # dictionary, so every member is a list of dictionary columns) has an
+        # all-visible base at one of the base points with a full family
+        for g in group:
+            if key in expected:
+                break
+            gterms = [D4[:, g[i]] for i in idx]
+            for S in itertools.combinations(range(m), n1):
+                for x0 in x0s:
+                    b = slice_terms(gterms, S, x0, m, n1, lookup2)
+                    if b is None:
+                        continue
+                    distinct = sorted(set(b))
+                    fam = Family.from_cover(E, distinct)
+                    exempt = [i for i, u in enumerate(distinct) if b.count(u) > 1]
+                    if fam is not None and not fam.has_zero_coefficient(exempt):
+                        expected.add(key)
     Mt = SliceMatcher(E, n1, verbose=args.verbose)
     recovered = {}
     t1 = time.time()
