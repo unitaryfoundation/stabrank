@@ -28,7 +28,25 @@ Python; there is no compiled kernel.
   line by the absence pattern), targets (`psi_target`, `vector_target`) and
   the exact re-decision of a hit. It replaces `slice_cover._affine_solve_C`
   by a truncated-SVD solve (module note), which the block reconstruction
-  needs.
+  needs. A base with no ordinary term (every distinct state repeated: the
+  m = 3 control and the rank-8 H3 witness bases) goes to
+  `BlockOnlyMatcher` instead of the family path: every slice is solved on
+  its own for the translate selections whose span contains it
+  (`block_only_slice`, dependent selections included with their
+  coordinate family; a slice proportional to an earlier one reuses its
+  selections), the two points of each of the four lines through x0 are
+  paired by the class map k -> 2k, each independent paired selection
+  keeps the block configurations that are consistent in the family
+  parameter (`block_line_configs`, `_theta_combos`), three lines at a
+  time are joined (the two with the fewest surviving selections drive,
+  the third is looked up through the class relation of the structure
+  lemma, `block_relation`, and a per-block lambda prefilter), and the
+  fourth line is completed (`_complete_line`: plane copies from the
+  completion table, line copies absent, copies absent on all three lines
+  read off the residual) before the exact confirmation. It finds every
+  decomposition whose selection is independent on at least three of the
+  four lines; a decomposition dependent on two or more lines is outside
+  it (`stats["dependent_lines_limit"]`).
 - `common.py`: the two cells (`ORBITS`, `X0`), paths per cell, canonical
   hashing, the partition, census and degenerate-list loaders with hash
   checks, `pairs_of`, `stage_of`, and `decide_terms` / `hit_record`.
@@ -189,8 +207,10 @@ nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/driver.py co
 ```
 
 Status (2026-09-22, one core at nice 19 on the loaded laptop, 10-minute
-cap per base; section 7 of the note has the diagnosis): no base has
-passed yet. N base 0 (seven distinct states, kappa 3) is refused at the
+cap per base; section 7 of the note has the diagnosis; the H3 entries
+below describe the family path, replaced for block-only bases on
+2026-09-23, see the next paragraph): no base has passed yet on the
+laptop. N base 0 (seven distinct states, kappa 3) is refused at the
 first coordinate slice after 25 s, 2,084,934 hash candidates from the
 3-parameter dense solve; bases 1, 2 and 5 have the same shape and were
 not run. N base 3 (three repeated pairs and one ordinary state, kappa 1):
@@ -205,7 +225,53 @@ kappa 1): 458,564 pinned states per coordinate slice (274 s and 123 s,
 from 54,260 translate-set solutions), 5,420 after the first slice's
 split tracking, more than 458,564 after the join, peak RSS 6.3 GB. H3
 bases 1 (eight distinct states, kappa 4) and 2 (four repeated pairs) were
-not run. To finish on the pod, one base per process, 15 in parallel:
+not run. On the pod (2026-09-22, one base per process, `--max-rss-gb 12`)
+N base 4 PASSED: the rank-7 witness recovered exactly once, 67 other
+genuine rank-7 decompositions, 4,489 s, 1.1 GB; the five kappa >= 3
+bases aborted at the candidate cap; H3 base 2 reached the join of the
+second coordinate slice (11,565,760 solutions, 1,958,256 states, 1,346 s,
+8.8 GB) and was killed in the composite stage.
+
+H3 block-only bases (2026-09-23, `BlockOnlyMatcher`, base 2 on the
+laptop under the 10-minute, 8 GB cap): the family path could not have
+recovered the witness there at all (its own selection at x0 + e_2 and
+x0 + 2 e_2 is the four base states, of rank 3, which the block-only solve
+rejected as dependent, and no block ever pins the family since the two
+copies t_i (x) |0>, t_i (x) |+> never occupy two classes), so the memory
+blow-up was not the obstacle. With the new path: the eight slices of
+|H3>^4 along a qutrit pair are all proportional to |H3>^2, so one solve
+(60,941 selections, 6,681 dependent, 17 to 19 s, 0.5 GB) serves all
+eight; per line 54,260 independent paired selections, of which 4,100
+(e_1), 4,100 (e_2), 100 ((1, 1)) and 100 ((1, 2)) admit a
+lambda-consistent configuration (36 to 42 s per line); the passes over
+three lines: [e_2, (1, 1), (1, 2)] and [e_1, (1, 1), (1, 2)] driven by
+the two diagonal lines, 10,000 pairs each, 2,736 lambda-feasible, 1,392
+triples, 156 s each; [e_1, e_2, (1, 2)] driven by e_1 and (1, 2), 410,000
+pairs, 19,664 feasible, 7,256 triples, 56 s; the fourth pass
+[e_1, e_2, (1, 1)] started at 369 s and had not finished at the 560 s
+deadline (record: `aborted`, peak RSS 0.60 GB, 5,184 distinct genuine
+rank-8 decompositions confirmed by then). The witness's own triple
+(lines e_1, (1, 1), (1, 2), the dependent e_2 line completed) gives 433
+block leaves, 338 combinations, 2,592 completions and 1,296 distinct
+genuine rank-8 decompositions with the witness exactly once, in 61 s
+(the base admits one rank-2 stabilizer decomposition of |H3> per block
+independently). The whole run needs about 750 s on the loaded laptop,
+so the pass criterion is not yet met under the local cap; an aborted run
+now records the hits found before the abort. To finish the H3
+block-only bases on the pod (bases 0 and 2; base 1, kappa 4 with eight
+ordinary states, stays refused at the dense-solve cap):
+
+```
+mkdir -p research/qutrit_m4_rank5/results/controls
+for k in 0 2; do
+  nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/driver.py control-witness H3 --base $k \
+    --max-rss-gb 12 --max-states 0 --max-solutions 0 --max-seconds 0 --verbose \
+    > research/qutrit_m4_rank5/results/controls/witness_H3_base_$k.log 2>&1
+done
+nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/driver.py control-witness H3 --summary
+```
+
+The earlier all-bases command, one base per process, 15 in parallel:
 
 ```
 mkdir -p research/qutrit_m4_rank5/results/controls

@@ -35,6 +35,15 @@ each solution restricting the family and the shapes; the blocks' copies are
 reconstructed from the residual coordinates at the end; every hit is
 confirmed against the whole target numerically and mod 2013265921.
 
+A base with no ordinary term (every distinct state repeated) takes a
+different route, BlockOnlyMatcher: every slice is solved on its own for the
+translate selections whose span contains it (dependent selections
+included, with their coordinate family), the two points of each line
+through x0 are paired by the class map k -> 2k, the four lines are joined
+by the per-block class relation of the structure lemma, and each survivor
+is reconstructed with the coordinate families' parameters as unknowns
+shared across the blocks and confirmed.
+
 The matcher allows every flat through x0. Facts A and B of the note only
 guarantee that the enumerated bases (full 5-covers of |M>^2 at one base
 point) are complete; nothing here assumes them. Generic in the number of
@@ -428,162 +437,1020 @@ class _ProjectorCache:
         return self.cache[Ssel]
 
 
-def _block_only_solutions(blocks, rhs, rng, fam, proj, stats, budget, where):
-    """The slice equation with no ordinary term (every distinct state
-    repeated): the slice must lie in the span of the chosen translates. The
-    selections kept are those with independent translates, the slice in
-    their span and every coordinate nonzero (the rule Matcher._join_blocks
-    applies to a pinned family; here the residual is the slice itself, so
-    the rule is exact whatever the family's dimension). Instead of the
-    product of every block's subsets (46^g for g blocks of two copies on two
-    qutrits), the blocks are split into two halves and, per column count
-    (a, b) of the halves, the dependence of [left | right | slice] under a
-    random projection to a + b + 1 coordinates mod P1 is decided as a
-    Laplace expansion into minors of the two halves, a dense feature
-    product as in slice_cover._dense; every candidate is then decided
-    exactly over the three fields."""
-    dim = blocks[0].V1.shape[0]
-    sides = _split_sides([len(b.subsets) for b in blocks])
-    r1 = rhs[0] % P1
+# ------------------------------------------------------- block-only bases ----
+#
+# A base with no ordinary term (every distinct state repeated: the m = 3
+# control and the rank-8 H3 witness bases) is matched without the
+# coefficient family. Every one of the eight slices is solved on its own for
+# the translate selections whose span contains it, the selections at the two
+# points of every line through x0 are paired by the class map k -> 2k, the
+# four lines are joined by the per-block class relation of the structure
+# lemma, and each survivor is reconstructed per block with the dependent
+# slices' coordinate parameters as unknowns shared across the blocks, the
+# blocks joined on those parameters and every combination confirmed against
+# the whole target. The earlier path (the family pinned by blocks whose
+# copies separate, the two coordinate slices joined by family compatibility,
+# the composite points solved over the joined states) missed every
+# decomposition whose selection at some slice is dependent (the four H3
+# witness base states have rank 3, so its own selection at x0 + e_2 and
+# x0 + 2 e_2 is), never pinned a family through copies that stay in one
+# class, and materialised the product of the two coordinate slices'
+# solution lists.
 
-    def side_combos(bl):
-        out = {}
-        for part in itertools.product(*[blocks[i].subsets for i in bl]):
-            cols = [blocks[i].V1[:, list(S)] for i, S in zip(bl, part) if len(S)]
-            V = np.column_stack(cols) if cols else np.zeros((dim, 0), dtype=np.int64)
-            out.setdefault(V.shape[1], []).append((part, V % P1))
-        return out
+LINES = [(E1, (2, 0)), (E2, (0, 2)), ((1, 1), (2, 2)), ((1, 2), (2, 1))]     # x and 2x through x0
+SECOND = dict(LINES)
 
-    L, R = side_combos(sides[0]), side_combos(sides[1])
 
-    def assemble(lp, rp):
-        Ssel = [None] * len(blocks)
-        for i, S in zip(sides[0], lp):
-            Ssel[i] = S
-        for i, S in zip(sides[1], rp):
-            Ssel[i] = S
-        return tuple(Ssel)
-
-    cands = []
-    for a, Ls in L.items():
-        for b, Rs in R.items():
-            if budget is not None:
-                budget.check(where)
-            if a + b > dim:
-                continue                      # dependent translates: no unique coordinates
-            if a + b == dim:                  # an independent selection of dim translates spans the slice
-                cands += [assemble(lp, rp) for lp, _ in Ls for rp, _ in Rs]
-                continue
-            s = a + b + 1
-            F = rng.integers(1, P1, size=(s, dim))
-            ML = np.stack([(F @ V) % P1 for _, V in Ls])                                  # (nL, s, a)
-            MR = np.stack([(F @ np.column_stack([V, r1])) % P1 for _, V in Rs])           # (nR, s, b + 1)
-            rows = list(range(s))
-            subsets = list(itertools.combinations(rows, a))
-            FL = np.empty((len(Ls), len(subsets)))
-            FR = np.empty((len(Rs), len(subsets)))
-            for t, I in enumerate(subsets):
-                Ic = [x for x in rows if x not in I]
-                sg = -1 if (sum(I) + sum(range(a))) % 2 else 1
-                FL[:, t] = _det_mod(ML[:, list(I), :], P1) if a else 1.0
-                FR[:, t] = (sg * _det_mod(MR[:, Ic, :], P1)) % P1
-            Z = FL @ FR.T
-            ia, ib = np.nonzero(np.fmod(Z, P1) == 0)
-            cands += [assemble(Ls[i][0], Rs[j][0]) for i, j in zip(ia, ib)]
-    if stats is not None:
-        stats["candidates"] = stats.get("candidates", 0) + len(cands)
-    out = []
-    for Ssel in cands:
-        Ps, Vs = proj(Ssel)
-        n = Vs[0].shape[1]
-        if n and rank_mod(Vs[0].T, P1) < n:
-            continue
-        ok = True
-        for fld, p in ((0, P1), (1, P2), (2, None)):
-            P = Ps[fld]
-            if P.shape[0] == 0:
-                continue
-            if p is None:
-                ok = bool(np.abs(P @ rhs[2]).max() < 1e-7 * max(1.0, float(np.abs(rhs[2]).max())))
-            else:
-                ok = not np.any(_mm_int64(P, rhs[fld][:, None], p))
-            if not ok:
-                break
-        if not ok:
-            continue
-        if n:
-            sol = _affine_solve_C(Vs[2], rhs[2])
-            if sol is None or sol[1].shape[1] or not np.all(np.abs(sol[0]) > 1e-9):
-                continue
-            for f in _pin_by_blocks(fam, blocks, Ssel, Vs, rhs, sol[0]):
-                out.append(((), Ssel, f))
-        elif np.linalg.norm(rhs[2]) > 1e-7:
-            continue
-        else:
-            out.append(((), Ssel, fam))
+def _side_combos(blocks, side):
+    """Per column count, the (part, V1 mod P1, VC) of every product of the
+    side's blocks' subsets."""
+    dim = blocks[0].VC.shape[0]
+    out = {}
+    for part in itertools.product(*[blocks[i].subsets for i in side]):
+        cols1 = [blocks[i].V1[:, list(S)] for i, S in zip(side, part) if len(S)]
+        colsC = [blocks[i].VC[:, list(S)] for i, S in zip(side, part) if len(S)]
+        V1 = np.column_stack(cols1) % P1 if cols1 else np.zeros((dim, 0), dtype=np.int64)
+        VC = np.column_stack(colsC) if colsC else np.zeros((dim, 0), dtype=complex)
+        out.setdefault(V1.shape[1], []).append((part, V1, VC))
     return out
 
 
-_ROOTS = {}
+def block_only_slice(blocks, rhs, rng, budget=None, where="", stats=None, chunk=20_000):
+    """Every translate selection (at most g classes per block) whose span
+    contains the slice rhs = (mod P1, mod P2, over C): the independent
+    selections with every coordinate nonzero (else the selection duplicates
+    a smaller one), with their unique coordinates, and the dependent
+    selections with their affine coordinate family a = a0 + N mu, dropping
+    those with a coordinate that vanishes on the whole family. Returns
+    (Ssel, a0, N) triples in block order, N with zero columns for an
+    independent selection.
 
+    Candidates come from the meet in the middle of slice_cover._dense over
+    two halves of the blocks: per column count (a, b) of the halves the
+    dependence of [left | right | slice] under a random projection to
+    a + b + 1 coordinates mod P1 is a Laplace expansion into minors of the
+    two sides. A dependent selection makes every minor vanish whatever the
+    slice, so the candidates include every dependent selection; they are
+    decided in batches by the singular values of the stacked column
+    matrices and the projection residual of the slice (exact enough for
+    roots of unity; every hit is confirmed exactly at the end)."""
+    dim = blocks[0].VC.shape[0]
+    r1 = np.asarray(rhs[0], dtype=np.int64) % P1
+    T = np.asarray(rhs[2], dtype=complex)
+    scale = max(1.0, float(np.linalg.norm(T)))
+    sides = _split_sides([len(b.subsets) for b in blocks])
+    L, R = _side_combos(blocks, sides[0]), _side_combos(blocks, sides[1])
+    out, ncand = [], 0
 
-def _cube_root_mod(p):
-    if p not in _ROOTS:
-        _ROOTS[p] = Field3(p).w
-    return _ROOTS[p]
+    def assemble(lp, rp):
+        """The selection in block order and the permutation taking the
+        column order (left side, then right side) to block order."""
+        Ssel = [None] * len(blocks)
+        for i, S in zip(sides[0], lp):
+            Ssel[i] = tuple(S)
+        for i, S in zip(sides[1], rp):
+            Ssel[i] = tuple(S)
+        col, start = {}, 0
+        for i, S in list(zip(sides[0], lp)) + list(zip(sides[1], rp)):
+            col[i] = list(range(start, start + len(S)))
+            start += len(S)
+        perm = [c for i in range(len(blocks)) for c in col[i]]
+        return tuple(Ssel), perm
 
-
-def _pin_by_blocks(fam, blocks, Ssel, Vs, rhs, aC):
-    """The family pinned through the blocks whose two copies occupy two
-    translate classes at this slice (the split-tracking idea of the H^6
-    control, applied before the family is pinned). Such a block contributes
-    c_1 w^{l_1} Q_{k_1} u + c_2 w^{l_2} Q_{k_2} u with both copies present,
-    so its merged coefficient is c_1 + c_2 = a_{k_1} w^{-l_1} + a_{k_2}
-    w^{-l_2} for the slice's coordinates a on the translates: one of nine
-    values, each a linear condition on the family, decided exactly over the
-    three fields. With no ordinary term the coordinates do not depend on the
-    family member, so the condition is exact whatever the family's
-    dimension; without it nothing pins the family before the reconstruction
-    and the join of the coordinate slices is the full product of their
-    solution lists (54,260^2 for the H3 witness base of four repeated
-    pairs). Returns the pinned subfamilies (the family itself when no block
-    with two classes moves along it)."""
-    if fam.kappa == 0:
-        return [fam]
-    a1 = _affine_solve_mod(Vs[0], rhs[0], P1)[0]
-    a2 = _affine_solve_mod(Vs[1], rhs[1], P2)[0]
-    w1, w2 = _cube_root_mod(P1), _cube_root_mod(P2)
-    n = len(fam.parts[0][0])
-    fams, pos = [fam], 0
-    for b, S in zip(blocks, Ssel):
-        idx = list(range(pos, pos + len(S)))
-        pos += len(S)
-        if b.g != 2 or len(S) != 2:
-            continue
-        new = []
-        for f in fams:
-            if f.kappa == 0 or np.abs(f.parts[2][1][b.pos]).max() < 1e-9:
-                new.append(f)                       # pinned already, or d_b constant on the family
+    for a, Ls in L.items():
+        VL1 = np.stack([V1 for _, V1, _ in Ls])
+        VLC = np.stack([VC for _, _, VC in Ls])
+        for b, Rs in R.items():
+            if budget is not None:
+                budget.check(where, solutions=len(out))
+            n = a + b
+            VR1 = np.stack([V1 for _, V1, _ in Rs])
+            VRC = np.stack([VC for _, _, VC in Rs])
+            if n == 0:
+                if np.linalg.norm(T) < 1e-7 * scale:
+                    Ssel, _ = assemble(Ls[0][0], Rs[0][0])
+                    out.append((Ssel, np.zeros(0, dtype=complex), np.zeros((0, 0), dtype=complex)))
                 continue
-            E1r = np.zeros((1, n), dtype=np.int64)
-            E1r[0, b.pos] = 1
-            ECr = E1r.astype(complex)
-            seen = set()
-            for l1 in range(3):
-                for l2 in range(3):
-                    DC = aC[idx[0]] * W3P[(-l1) % 3] + aC[idx[1]] * W3P[(-l2) % 3]
-                    key = complex(np.round(DC, 8))
-                    if key in seen:
+            if n < dim:
+                s = n + 1
+                F = rng.integers(1, P1, size=(s, dim))
+                ML = (F[None, :, :] @ VL1) % P1                                         # (nL, s, a)
+                Rcol = np.broadcast_to(r1[None, :, None], (len(Rs), dim, 1))
+                MR = (F[None, :, :] @ np.concatenate([VR1, Rcol], axis=2)) % P1         # (nR, s, b + 1)
+                rows = list(range(s))
+                subsets = list(itertools.combinations(rows, a))
+                FL = np.empty((len(Ls), len(subsets)))
+                FR = np.empty((len(Rs), len(subsets)))
+                for t, I in enumerate(subsets):
+                    Ic = [x for x in rows if x not in I]
+                    sg = -1 if (sum(I) + sum(range(a))) % 2 else 1
+                    FL[:, t] = _det_mod(ML[:, list(I), :], P1) if a else 1.0
+                    FR[:, t] = (sg * _det_mod(MR[:, Ic, :], P1)) % P1
+                Z = FL @ FR.T
+                ia, ib = np.nonzero(np.fmod(Z, P1) == 0)
+            else:
+                ia, ib = np.indices((len(Ls), len(Rs))).reshape(2, -1)
+            ncand += len(ia)
+            for start in range(0, len(ia), chunk):
+                if budget is not None:
+                    budget.check(where, solutions=len(out))
+                ca, cb = ia[start:start + chunk], ib[start:start + chunk]
+                V = np.concatenate([VLC[ca], VRC[cb]], axis=2)                          # (N, dim, n)
+                U, sv, _ = np.linalg.svd(V, full_matrices=False)
+                k = sv.shape[1]
+                rank = (sv > 1e-9 * np.maximum(1.0, sv[:, :1])).sum(axis=1)
+                coef = np.einsum("nij,i->nj", U.conj(), T)
+                coef = np.where(np.arange(k)[None, :] < rank[:, None], coef, 0)
+                res = np.linalg.norm(T[None, :] - np.einsum("nij,nj->ni", U, coef), axis=1)
+                for idx in np.flatnonzero(res < 1e-7 * scale):
+                    sol = _affine_solve_C(V[idx], T)
+                    if sol is None:
                         continue
-                    seen.add(key)
-                    D1 = (int(a1[idx[0]]) * pow(w1, (-l1) % 3, P1) + int(a1[idx[1]]) * pow(w1, (-l2) % 3, P1)) % P1
-                    D2 = (int(a2[idx[0]]) * pow(w2, (-l1) % 3, P2) + int(a2[idx[1]]) * pow(w2, (-l2) % 3, P2)) % P2
-                    f2 = f.restrict((E1r, E1r, ECr), (np.array([D1], dtype=np.int64), np.array([D2], dtype=np.int64),
-                                                       np.array([DC], dtype=complex)))
-                    if f2 is not None:
-                        new.append(f2)
-        fams = new
-    return fams
+                    a0, N = sol
+                    if N.shape[1] == 0:
+                        if not np.all(np.abs(a0) > 1e-9):
+                            continue
+                    elif np.any((np.abs(a0) < 1e-9) & (np.abs(N).sum(axis=1) < 1e-9)):
+                        continue
+                    Ssel, perm = assemble(Ls[ca[idx]][0], Rs[cb[idx]][0])
+                    out.append((Ssel, a0[perm], N[perm]))
+    if stats is not None:
+        stats["candidates"] = stats.get("candidates", 0) + ncand
+    return out
+
+
+def _meet_C(m0a, Ma, m0b, Mb):
+    """The intersection of two affine subspaces {m0 + M nu} of C^n as
+    (m0, M) with M orthonormal, or None when empty."""
+    if len(m0a) == 0:
+        return m0a, Ma
+    if Ma.shape[1] == 0 and Mb.shape[1] == 0:
+        return (m0a, Ma) if np.abs(m0a - m0b).max() < 1e-6 * max(1.0, float(np.abs(m0a).max())) else None
+    if Mb.shape[1] == 0:
+        m0a, Ma, m0b, Mb = m0b, Mb, m0a, Ma
+    if Ma.shape[1] == 0:                                  # is the point m0a in the subspace b?
+        r = m0a - m0b
+        r = r - Mb @ (Mb.conj().T @ r)
+        return (m0a, Ma) if np.abs(r).max() < 1e-6 * max(1.0, float(np.abs(m0a).max())) else None
+    sol = _affine_solve_C(np.concatenate([Ma, -Mb], axis=1), m0b - m0a)
+    if sol is None:
+        return None
+    z0, Z = sol
+    ka = Ma.shape[1]
+    m0, Mn = m0a + Ma @ z0[:ka], Ma @ Z[:ka]
+    if Mn.shape[1]:
+        U, s, _ = np.linalg.svd(Mn, full_matrices=False)
+        Mn = U[:, s > 1e-9]
+    return m0, Mn
+
+
+def _orthonormal(T):
+    if T.shape[1] == 0:
+        return T
+    U, s, _ = np.linalg.svd(T, full_matrices=False)
+    return U[:, s > 1e-9]
+
+
+def copy_patterns(o):
+    """The class patterns of one copy of a block over the four lines through
+    x0: for every pair of coordinate codes and every shape of the structure
+    lemma, the class (None when absent) at e_1, e_2, (1, 1) and (1, 2). The
+    class at the second point of each line is 2k for the class k at the
+    first (checked). Returns (patterns, the doubling map k -> 2k)."""
+    A = o.absent
+    dbl = {k: int(o.cls[k, 0, pidx((2, 0))]) for k in range(o.nclass)}
+
+    def cl(code):
+        return None if int(code) == A else int(code) // 3
+
+    pats = set()
+    for c1 in range(A + 1):
+        for c2 in range(A + 1):
+            for row in o.composite_rows(c1, c2):
+                r = {x: int(v) for x, v in zip(COMP, row)}
+                r[E1], r[E2] = c1, c2
+                pat = tuple(cl(r[x]) for x, _ in LINES)
+                for (x, y), k in zip(LINES, pat):
+                    ky = cl(r[y])
+                    if (k is None) != (ky is None) or (k is not None and dbl[k] != ky):
+                        raise AssertionError("the class at the second point of a line is not the doubled class")
+                pats.add(pat)
+    return sorted(pats, key=lambda p: [-1 if v is None else v for v in p]), dbl
+
+
+def block_relation(pats, g, drive):
+    """For g copies with the given one-copy patterns: the map from the
+    block's class sets on the two driving lines `drive` (indices into
+    LINES) to the set of its class sets on the other two lines, in LINES
+    order."""
+    other = [i for i in range(4) if i not in drive]
+    rel = {}
+    for combo in itertools.combinations_with_replacement(pats, g):
+        sets = [tuple(sorted({p[i] for p in combo if p[i] is not None})) for i in range(4)]
+        rel.setdefault((sets[drive[0]], sets[drive[1]]), set()).add((sets[other[0]], sets[other[1]]))
+    return rel
+
+
+def _is_root_shift(z):
+    """l with z = w^l, or None."""
+    for l in range(3):
+        if abs(z - W3P[l]) < 1e-7:
+            return l
+    return None
+
+
+def _solve_configs(A, rhs, tol=1e-7):
+    """Batched affine solve of A[i] z = rhs[i] for a stack A (n, r, c),
+    rhs (n, r): per configuration (z0, Z) with Z the orthonormal null space
+    of A[i], or None when inconsistent."""
+    n, r, c = A.shape
+    if n == 0:
+        return []
+    U, s, Vh = np.linalg.svd(A, full_matrices=True)
+    k = s.shape[1]
+    rank = (s > 1e-9 * np.maximum(1.0, s[:, :1])).sum(axis=1)
+    coef = np.einsum("nij,ni->nj", U.conj(), rhs)[:, :k]
+    inv = np.where(np.arange(k)[None, :] < rank[:, None], 1.0 / np.where(s > 0, s, 1.0), 0.0)
+    z0 = np.einsum("nji,nj->ni", Vh[:, :k, :].conj(), coef * inv)
+    res = np.linalg.norm(np.einsum("nij,nj->ni", A, z0) - rhs, axis=1)
+    ok = res < tol * np.maximum(1.0, np.linalg.norm(rhs, axis=1))
+    return [(z0[i], Vh[i, rank[i]:, :].conj().T) if ok[i] else None for i in range(n)]
+
+
+class BlockConfigs:
+    """The consistent configurations of one block's two copies on a line
+    (x, 2x): per configuration the codes of the copies at both points
+    (codes[i] = [[code_1(x), code_1(2x)], [code_2(x), code_2(2x)]]) and the
+    affine subspace {z0 + Z nu} of u = (c_1, c_2, theta) it allows, theta
+    the line's shared parameters (the family's lambda, then the two
+    slices' coordinate parameters); t0, T its projection to theta and
+    `pinned`, `vals` the pinned theta coordinates, for the hash join."""
+    __slots__ = ("codes", "z0", "Z", "t0", "T", "pinned", "vals", "n")
+
+    def __init__(self, codes, z0, Z, nth):
+        self.n = len(codes)
+        self.codes = np.array(codes, dtype=np.int64).reshape(self.n, 2, 2) if self.n else np.zeros((0, 2, 2), np.int64)
+        self.z0 = np.array(z0, dtype=complex).reshape(self.n, -1) if self.n else np.zeros((0, 2 + nth), dtype=complex)
+        self.Z = list(Z)
+        self.t0 = self.z0[:, 2:]
+        self.T = [_orthonormal(Zi[2:]) for Zi in self.Z]
+        self.pinned = np.array([np.abs(Ti).sum(axis=1) < 1e-9 if Ti.shape[1] else np.ones(nth, dtype=bool)
+                                for Ti in self.T], dtype=bool).reshape(self.n, nth)
+        self.vals = np.where(self.pinned, self.t0, 0)
+
+    def subset(self, idx):
+        return BlockConfigs([self.codes[i] for i in idx], [self.z0[i] for i in idx], [self.Z[i] for i in idx],
+                            self.t0.shape[1])
+
+
+def _pin_family(c1, c2, d0b, Kb):
+    """(z0, Z) over (c_1, c_2, lambda) for pinned coefficients whose sum
+    must equal d0b + Kb lambda, or None."""
+    kappa = len(Kb)
+    if kappa == 0:
+        return (np.array([c1, c2]), np.zeros((2, 0), dtype=complex)) if abs(c1 + c2 - d0b) < 1e-7 else None
+    sol = _affine_solve_C(np.asarray(Kb, dtype=complex)[None, :], np.array([c1 + c2 - d0b]))
+    if sol is None:
+        return None
+    l0, L = sol
+    z0 = np.concatenate([[c1, c2], l0])
+    Z = np.zeros((2 + kappa, L.shape[1]), dtype=complex)
+    Z[2:] = L
+    return z0, Z
+
+
+_PH_BOTH = [(l1, m1, l2, m2) for l1 in range(3) for m1 in range(3) for l2 in range(3) for m2 in range(3)
+            if (l1, m1) <= (l2, m2)]
+_INV_BOTH = {ph: np.linalg.inv(np.array([[W3P[ph[0]], W3P[ph[2]]], [W3P[ph[1]], W3P[ph[3]]]]))
+             for ph in _PH_BOTH if (ph[0] - ph[2] - ph[1] + ph[3]) % 3}
+
+
+def block_line_configs(b, Sb, S2b, ax, Nx, a2, N2, d0b, Kb, nth, offx, off2, x, y, dbl):
+    """The configurations of block b on the line (x, y = 2x): selection Sb
+    at x (S2b = 2 Sb at y), coordinates ax + Nx mu_x and a2 + N2 mu_y
+    (Nx, N2 with the columns of their slice's parameters, empty at an
+    independent slice), merged coefficient d0b + Kb lambda. Copies are
+    labelled by this line: in one class, copy 1 has the smaller (phase at
+    x, phase at y) or is the present one; in two classes copy 1 sits in
+    the first. With independent coordinates everything is in closed form:
+    a copy alone in its class keeps its modulus along the line, so its
+    phase at y is its phase at x plus the cube-root shift of the
+    coordinate ratio; two copies in one class with distinct phase
+    differences at the two points are solved by the 2 x 2 inverse. With a
+    coordinate parameter the configurations go through the batched
+    solve. Returns a BlockConfigs (possibly empty)."""
+    A = b.o.absent
+    kappa = len(Kb)
+    du = 2 + nth
+    codes, z0s, Zs = [], [], []
+
+    def add_cfg(cd, z0, Z):
+        full = np.zeros(du, dtype=complex)
+        full[:len(z0)] = z0
+        Zf = np.zeros((du, Z.shape[1] + du - len(z0)), dtype=complex)
+        Zf[:len(z0), :Z.shape[1]] = Z
+        Zf[len(z0):, Z.shape[1]:] = np.eye(du - len(z0))
+        codes.append(cd)
+        z0s.append(full)
+        Zs.append(Zf)
+
+    if len(Sb) == 0:
+        base = np.zeros((1, 1, du), dtype=complex)
+        base[0, 0, :2] = 1
+        base[0, 0, 2:2 + kappa] = -np.asarray(Kb)
+        sol = _solve_configs(base, np.array([[d0b]], dtype=complex))[0]
+        if sol is not None:
+            codes.append([[A, A], [A, A]])
+            z0s.append(sol[0])
+            Zs.append(sol[1])
+        return BlockConfigs(codes, z0s, Zs, nth)
+    mx, m2 = Nx.shape[1], N2.shape[1]
+    dependent = mx > 0 or m2 > 0
+    if len(Sb) == 1:
+        k, k2 = Sb[0], S2b[0]
+        if not dependent:
+            rho = _is_root_shift(a2[0] / ax[0])
+            rhs = np.array([ax[0], a2[0]])
+            for ph in _PH_BOTH:
+                l1, m1, l2, m2_ = ph
+                if ph in _INV_BOTH:
+                    c1, c2 = _INV_BOTH[ph] @ rhs
+                    if abs(c1) < 1e-9 or abs(c2) < 1e-9:
+                        continue
+                    sol = _pin_family(c1, c2, d0b, Kb)
+                elif rho is not None and (m1 - l1) % 3 == rho:
+                    rows = np.zeros((2, 2 + kappa), dtype=complex)
+                    rows[0, 0], rows[0, 1] = W3P[l1], W3P[l2]
+                    rows[1, 0] = rows[1, 1] = 1
+                    rows[1, 2:] = -np.asarray(Kb)
+                    sol = _solve_configs(rows[None], np.array([[ax[0], d0b]]))[0]
+                else:
+                    continue
+                if sol is not None:
+                    add_cfg([[3 * k + l1, 3 * k2 + m1], [3 * k + l2, 3 * k2 + m2_]], *sol)
+            if rho is not None:
+                for l in range(3):
+                    rows = np.zeros((2, 2 + kappa), dtype=complex)
+                    rows[0, 0] = 1
+                    rows[1, 0] = rows[1, 1] = 1
+                    rows[1, 2:] = -np.asarray(Kb)
+                    sol = _solve_configs(rows[None], np.array([[ax[0] / W3P[l], d0b]]))[0]
+                    if sol is not None:
+                        add_cfg([[3 * k + l, 3 * k2 + (l + rho) % 3], [A, A]], *sol)
+            return BlockConfigs(codes, z0s, Zs, nth)
+        TH = np.zeros((3, nth), dtype=complex)
+        TH[0, offx:offx + mx] = -Nx[0]
+        TH[1, off2:off2 + m2] = -N2[0]
+        TH[2, :kappa] = -np.asarray(Kb)
+        rhs = np.array([ax[0], a2[0], d0b], dtype=complex)
+        PH = np.array([[[W3P[l1], W3P[l2]], [W3P[m1], W3P[m2_]], [1, 1]] for l1, m1, l2, m2_ in _PH_BOTH]
+                      + [[[W3P[l], 0], [W3P[m], 0], [1, 1]] for l in range(3) for m in range(3)], dtype=complex)
+        cds = [[[3 * k + l1, 3 * k2 + m1], [3 * k + l2, 3 * k2 + m2_]] for l1, m1, l2, m2_ in _PH_BOTH] \
+            + [[[3 * k + l, 3 * k2 + m], [A, A]] for l in range(3) for m in range(3)]
+        Amat = np.concatenate([PH, np.broadcast_to(TH, (len(PH),) + TH.shape)], axis=2)
+        for cd, sol in zip(cds, _solve_configs(Amat, np.broadcast_to(rhs, (len(PH), 3)))):
+            if sol is not None:
+                codes.append(cd)
+                z0s.append(sol[0])
+                Zs.append(sol[1])
+        return BlockConfigs(codes, z0s, Zs, nth)
+    k, kp = Sb
+    p, pp = S2b.index(dbl[k]), S2b.index(dbl[kp])
+    if not dependent:
+        r1, r2 = _is_root_shift(a2[p] / ax[0]), _is_root_shift(a2[pp] / ax[1])
+        if r1 is None or r2 is None:
+            return BlockConfigs(codes, z0s, Zs, nth)
+        for l1 in range(3):
+            for l2 in range(3):
+                sol = _pin_family(ax[0] / W3P[l1], ax[1] / W3P[l2], d0b, Kb)
+                if sol is not None:
+                    add_cfg([[3 * k + l1, 3 * dbl[k] + (l1 + r1) % 3],
+                             [3 * kp + l2, 3 * dbl[kp] + (l2 + r2) % 3]], *sol)
+        return BlockConfigs(codes, z0s, Zs, nth)
+    TH = np.zeros((5, nth), dtype=complex)
+    TH[0, offx:offx + mx] = -Nx[0]
+    TH[1, off2:off2 + m2] = -N2[p]
+    TH[2, offx:offx + mx] = -Nx[1]
+    TH[3, off2:off2 + m2] = -N2[pp]
+    TH[4, :kappa] = -np.asarray(Kb)
+    rhs = np.array([ax[0], a2[p], ax[1], a2[pp], d0b], dtype=complex)
+    phs = [(l1, m1, l2, m2_) for l1 in range(3) for m1 in range(3) for l2 in range(3) for m2_ in range(3)]
+    PH = np.array([[[W3P[l1], 0], [W3P[m1], 0], [0, W3P[l2]], [0, W3P[m2_]], [1, 1]] for l1, m1, l2, m2_ in phs],
+                  dtype=complex)
+    Amat = np.concatenate([PH, np.broadcast_to(TH, (len(PH),) + TH.shape)], axis=2)
+    for (l1, m1, l2, m2_), sol in zip(phs, _solve_configs(Amat, np.broadcast_to(rhs, (len(PH), 5)))):
+        if sol is not None:
+            codes.append([[3 * k + l1, 3 * dbl[k] + m1], [3 * kp + l2, 3 * dbl[kp] + m2_]])
+            z0s.append(sol[0])
+            Zs.append(sol[1])
+    return BlockConfigs(codes, z0s, Zs, nth)
+
+
+def _compatible(t0, T, cfgs):
+    """Indices of the configurations whose pinned theta coordinates do not
+    conflict with those of the partial subspace (t0, T)."""
+    if cfgs.n == 0:
+        return np.zeros(0, dtype=np.int64)
+    P = np.abs(T).sum(axis=1) < 1e-9 if T.shape[1] else np.ones(len(t0), dtype=bool)
+    if not P.any():
+        return np.arange(cfgs.n)
+    conflict = (cfgs.pinned & P[None, :] & (np.abs(cfgs.vals - t0[None, :]) > 1e-6)).any(axis=1)
+    return np.flatnonzero(~conflict)
+
+
+def _theta_combos(per_block, nth, cap=None):
+    """Every choice of one configuration per block whose theta subspaces
+    meet, as (indices per block, t0, T); the blocks are visited in order
+    of their configuration count and the pinned coordinates are hashed
+    against before any meet. Raises BudgetExceeded past `cap` combos."""
+    order = sorted(range(len(per_block)), key=lambda i: per_block[i].n)
+    out = []
+
+    def dfs(d, t0, T, choice):
+        if d == len(order):
+            out.append((choice, t0, T))
+            if cap is not None and len(out) > cap:
+                raise BudgetExceeded(f"{len(out)} configuration combinations on one line exceed the cap {cap}")
+            return
+        cfgs = per_block[order[d]]
+        full = T.shape[1] == nth
+        for j in _compatible(t0, T, cfgs):
+            met = (cfgs.t0[j], cfgs.T[j]) if full else _meet_C(t0, T, cfgs.t0[j], cfgs.T[j])
+            if met is not None:
+                dfs(d + 1, met[0], met[1], choice + [(order[d], int(j))])
+
+    dfs(0, np.zeros(nth, dtype=complex), np.eye(nth, dtype=complex), [])
+    return [([dict(c)[i] for i in range(len(per_block))], t0, T) for c, t0, T in out]
+
+
+def _small_selections(sub, r, tol=1e-6):
+    """Independent selections (one subset of classes per block of `sub`)
+    whose span contains r with every coordinate nonzero, with their
+    coordinates in block order, by direct enumeration of the products of
+    subsets (for the few blocks of a fourth-line completion)."""
+    dim = sub[0].VC.shape[0]
+    scale = max(1.0, float(np.linalg.norm(r)))
+    out = []
+    if np.linalg.norm(r) < tol * scale:
+        return [(tuple(() for _ in sub), np.zeros(0, dtype=complex))]
+    for parts in itertools.product(*[b.subsets for b in sub]):
+        cols = [b.VC[:, list(S)] for b, S in zip(sub, parts) if len(S)]
+        if not cols:
+            continue
+        V = np.column_stack(cols)
+        if V.shape[1] > dim:
+            continue
+        sol = _affine_solve_C(V, r)
+        if sol is None or sol[1].shape[1] or not np.all(np.abs(sol[0]) > 1e-9):
+            continue
+        out.append((tuple(tuple(S) for S in parts), sol[0]))
+    return out
+
+
+class LineSelection:
+    """An independent paired selection on a line (S at x, S2 = 2S at 2x,
+    the unique coordinates of both points) with, per block, the
+    configurations that take part in a lambda-consistent combination over
+    the blocks, and per block the lambda values those configurations pin
+    (`keys`, rounded) and whether one of them leaves lambda free
+    (`free`), for the join's prefilter."""
+    __slots__ = ("S", "S2", "ax", "a2", "cfgs", "keys", "free")
+
+    def __init__(self, S, S2, ax, a2, cfgs):
+        self.S, self.S2, self.ax, self.a2, self.cfgs = S, S2, ax, a2, cfgs
+        self.keys, self.free = [], []
+        for c in cfgs:
+            full = c.pinned.all(axis=1)
+            r = np.round(c.vals, 6) + 0.0
+            self.keys.append({tuple(zip(r[i].real.tolist(), r[i].imag.tolist())) for i in np.flatnonzero(full)})
+            self.free.append(bool((~full).any()))
+
+
+def _feasible_lambda(sels):
+    """Whether some lambda is consistent with every block on every line of
+    `sels` (a necessary condition the triple stage decides exactly): per
+    block the lambda values pinned by one line must be matched by the other
+    lines unless a configuration there leaves lambda free. Returns the
+    per-block feasible sets (None for unconstrained) or None."""
+    out = []
+    for b in range(len(sels[0].keys)):
+        feas = None                                        # unconstrained so far
+        for s in sels:
+            if s.free[b]:
+                continue                                   # this line accepts any lambda on block b
+            feas = set(s.keys[b]) if feas is None else feas & s.keys[b]
+            if not feas:
+                return None
+        out.append(feas)
+    common = None
+    for feas in out:
+        if feas is None:
+            continue
+        common = set(feas) if common is None else common & feas
+        if not common:
+            return None
+    return out
+
+
+def line_completion(o, missing):
+    """For a copy with base slice u: from its codes at the six offsets of
+    the three lines other than `missing` (LINES order, first then second
+    point of each) to the set of its code pairs at the two points of the
+    missing line, over every shape of the structure lemma."""
+    A = o.absent
+    known = [z for i, (x, y) in enumerate(LINES) if i != missing for z in (x, y)]
+    mx, my = LINES[missing]
+    table = {}
+    for c1 in range(A + 1):
+        for c2 in range(A + 1):
+            for row in o.composite_rows(c1, c2):
+                full = {x: int(v) for x, v in zip(COMP, row)}
+                full[E1], full[E2] = c1, c2
+                table.setdefault(tuple(full[z] for z in known), set()).add((full[mx], full[my]))
+    return table
+
+
+class BlockOnlyMatcher:
+    """The block-only run for one base (the note at the head of this
+    section): `run()` returns the raw hits; the counts land in `stats`.
+
+    Every decomposition whose translate selection is independent (the
+    chosen translates linearly independent, so their coordinates are
+    unique) on at least three of the four lines through x0 is found: for
+    each choice of three lines, the two with the fewest surviving
+    selections drive a join, the third is looked up through the class
+    relation of the structure lemma, and the fourth line is completed from
+    the three (a copy present on two or more lines is a plane term whose
+    codes there follow, a copy present on one line is a line term absent
+    there, a copy absent on all three is a point or a line along the
+    fourth direction and is read off the residual of the fourth line's two
+    slices once every other copy's coefficient is pinned). A dependent
+    selection (its coordinates form a family) is never searched: on its
+    own line it constrains almost nothing, so a decomposition dependent on
+    two or more lines is outside this matcher; stats["dependent_lines_limit"]
+    records the limit and stats["slice_dependent"] how many selections
+    each slice dropped."""
+
+    def __init__(self, matcher, blocks, x0, target, stats, budget=None, log=None, hits=None):
+        self.matcher, self.blocks, self.x0, self.target = matcher, blocks, x0, target
+        self.stats, self.budget, self.log = stats, budget, (log or (lambda m: None))
+        self.rng = matcher.rng
+        self.dim = blocks[0].VC.shape[0]
+        self.hits = [] if hits is None else hits      # filled as the passes run, so an abort keeps them
+        self._completion = {}
+        self._confirmed = {}                    # code key -> confirmed hit, once across the passes
+        if any(b.g != 2 for b in blocks):
+            raise AssertionError("the block-only matcher handles blocks of two copies")
+
+    def _check(self, where, **kw):
+        if self.budget is not None:
+            self.budget.check(where, **kw)
+
+    def completion(self, bi, missing):
+        if (bi, missing) not in self._completion:
+            self._completion[(bi, missing)] = line_completion(self.blocks[bi].o, missing)
+        return self._completion[(bi, missing)]
+
+    def run(self):
+        st, blocks, x0 = self.stats, self.blocks, self.x0
+        st.update(slice_solutions={}, slice_dependent={}, line_pairs={}, line_alive={}, triples={}, tuples=0,
+                  block_leaves=0, combinations=0, completions=0, dependent_lines_limit=1)
+        VC0 = np.column_stack([b.VC[:, 0] for b in blocks])
+        sol0 = _affine_solve_C(VC0, self.target.rhs(x0)[2])
+        if sol0 is None:
+            st["refused"] = True
+            return []
+        self.d0, self.K = sol0
+        self.kappa = self.K.shape[1]
+        sols, seen = {}, {}
+        for x in OFFSETS:
+            t0 = time.time()
+            rhs = self.target.rhs(add(x0, x))
+            T = rhs[2]
+            j = np.flatnonzero(np.abs(T) > 1e-9)
+            key = None if len(j) == 0 else (np.round(T / T[j[0]], 8) + 0.0).tobytes()
+            if key in seen:
+                y = seen[key]
+                s = T[j[0]] / self.target.rhs(add(x0, y))[2][j[0]]
+                sols[x] = [(S, a0 * s, N) for S, a0, N in sols[y]]
+                note = f"proportional to slice {y}"
+            else:
+                sols[x] = block_only_slice(blocks, rhs, self.rng, self.budget, f"slice {x}", st)
+                seen[key] = x
+                note = f"{sum(N.shape[1] > 0 for _, _, N in sols[x])} dependent"
+            st["slice_solutions"][str(x)] = len(sols[x])
+            st["slice_dependent"][str(x)] = sum(N.shape[1] > 0 for _, _, N in sols[x])
+            st["seconds"][f"solve_{x[0]}{x[1]}"] = round(time.time() - t0, 2)
+            self.log(f"  slice {x}: {len(sols[x])} selections ({note}), {time.time() - t0:.1f}s, "
+                     f"rss {peak_rss_gb():.2f} GB")
+            if not sols[x]:
+                return []
+        st["coord_raw"] = [len(sols[E1]), len(sols[E2])]
+        pats = [copy_patterns(b.o) for b in blocks]
+        self.dbls = [d for _, d in pats]
+        self.pats = [p for p, _ in pats]
+        lines = {}
+        for li, (x, y) in enumerate(LINES):
+            t0 = time.time()
+            index = {S: a0 for S, a0, N in sols[y] if N.shape[1] == 0}
+            paired, alive = 0, []
+            for i, (S, a0, N) in enumerate(sols[x]):
+                if i % 200 == 199:
+                    self._check(f"line {x}")
+                if N.shape[1]:
+                    continue
+                S2 = tuple(tuple(sorted(self.dbls[b][k] for k in Sb)) for b, Sb in enumerate(S))
+                if S2 not in index:
+                    continue
+                paired += 1
+                sel = self._line_selection(x, y, S, S2, a0, index[S2])
+                if sel is not None:
+                    alive.append(sel)
+            lines[li] = alive
+            st["line_pairs"][str(x)] = paired
+            st["line_alive"][str(x)] = len(alive)
+            st["seconds"][f"line_{x[0]}{x[1]}"] = round(time.time() - t0, 2)
+            self.log(f"  line {x}, {y}: {paired} independent paired selections of {len(sols[x])}, {len(alive)} "
+                     f"with a lambda-consistent configuration, {time.time() - t0:.1f}s, rss {peak_rss_gb():.2f} GB")
+        del sols
+        st["coord_solutions"] = [st["line_pairs"][str(E1)], st["line_pairs"][str(E2)]]
+        st["coord_states"] = [len(lines[0]), len(lines[1])]
+        if sum(bool(lines[li]) for li in range(4)) < 3:
+            return []
+        index = [{} for _ in LINES]
+        for li in range(4):
+            for sel in lines[li]:
+                index[li].setdefault(sel.S, []).append(sel)
+        hits, t0, done = self.hits, time.time(), set()
+        for missing in range(4):
+            known = [li for li in range(4) if li != missing]
+            if not all(lines[li] for li in known):
+                continue
+            drive = tuple(sorted(sorted(known, key=lambda li: len(lines[li]))[:2]))
+            third = [li for li in known if li not in drive][0]
+            other = [i for i in range(4) if i not in drive]
+            pos = other.index(third)
+            rels = [block_relation(self.pats[b], blocks[b].g, drive) for b in range(len(blocks))]
+            A, Bs = lines[drive[0]], lines[drive[1]]
+            posting = [{} for _ in blocks]
+            for n_, sel in enumerate(lines[third]):
+                for i in range(len(blocks)):
+                    posting[i].setdefault(sel.S[i], []).append(n_)
+            pairs, new, feasible = 0, 0, 0
+            for sa in A:
+                for sb in Bs:
+                    pairs += 1
+                    if pairs % 5000 == 0:
+                        self._check("line join", states=st["tuples"])
+                    if _feasible_lambda((sa, sb)) is None:
+                        continue
+                    opts = [rels[i].get((sa.S[i], sb.S[i])) for i in range(len(blocks))]
+                    if any(o is None for o in opts):
+                        continue
+                    feasible += 1
+                    cands = [sorted({o[pos] for o in opt}) for opt in opts]
+                    for sc in self._lookup(index[third], cands, lines[third], posting):
+                        if _feasible_lambda((sa, sb, sc)) is None:
+                            continue
+                        sels = {drive[0]: sa, drive[1]: sb, third: sc}
+                        key = (missing,) + tuple(sels[li].S for li in known)
+                        if key in done:
+                            continue
+                        done.add(key)
+                        st["tuples"] += 1
+                        new += 1
+                        hits.extend(self._triple_hits(sels, missing))
+                        if st["tuples"] % 50 == 0:
+                            self._check("triples", states=st["tuples"])
+                            self.log(f"  lines {known}: {pairs} pairs, {st['tuples']} triples, {len(hits)} raw "
+                                     f"hits, {time.time() - t0:.1f}s, rss {peak_rss_gb():.2f} GB")
+            st["triples"][str(known)] = {"drive": list(drive), "pairs": pairs, "feasible_pairs": feasible,
+                                         "triples": new}
+            self.log(f"  lines {[LINES[li][0] for li in known]} (driving {[LINES[li][0] for li in drive]}): "
+                     f"{pairs} pairs, {feasible} lambda-feasible, {new} new triples, {time.time() - t0:.1f}s")
+        st["pairs"] = sum(v["pairs"] for v in st["triples"].values())
+        st["joined"] = st["tuples"]
+        st["seconds"]["join"] = round(time.time() - t0, 2)
+        self.log(f"  join: {st['tuples']} triples of lines, {st['block_leaves']} block leaves, "
+                 f"{st['combinations']} combinations, {st['completions']} completions confirmed, "
+                 f"{len(hits)} raw hits, {time.time() - t0:.1f}s")
+        return hits
+
+    def _line_selection(self, x, y, S, S2, ax, a2):
+        """The LineSelection of an independent paired selection, or None
+        when no choice of one configuration per block is lambda-consistent."""
+        kappa = self.kappa
+        per_block, pos = [], 0
+        for i, b in enumerate(self.blocks):
+            n = len(S[i])
+            none = np.zeros((n, 0), dtype=complex)
+            cfgs = block_line_configs(b, S[i], S2[i], ax[pos:pos + n], none, a2[pos:pos + n], none, self.d0[i],
+                                      self.K[i], kappa, kappa, kappa, x, y, self.dbls[i])
+            pos += n
+            if cfgs.n == 0:
+                return None
+            per_block.append(cfgs)
+        combos = _theta_combos(per_block, kappa)
+        if not combos:
+            return None
+        used = [sorted({c[i] for c, _, _ in combos}) for i in range(len(self.blocks))]
+        return LineSelection(S, S2, ax, a2, [per_block[i].subset(used[i]) for i in range(len(used))])
+
+    @staticmethod
+    def _lookup(index, per_block, entries, posting, cap=64):
+        """The line selections whose classes are, per block, one of the
+        given sets: the product of the per-block sets looked up when small,
+        else the intersection over the blocks of the posting lists of the
+        allowed class sets."""
+        if any(not c for c in per_block):
+            return []
+        if math.prod(len(c) for c in per_block) <= cap:
+            out = []
+            for key in itertools.product(*per_block):
+                out.extend(index.get(key, ()))
+            return out
+        ids = None
+        for i, c in enumerate(per_block):
+            here = set()
+            for S in c:
+                here.update(posting[i].get(S, ()))
+            ids = here if ids is None else ids & here
+            if not ids:
+                return []
+        return [entries[n_] for n_ in sorted(ids)]
+
+    def _triple_hits(self, sels, missing):
+        """Hits of three line selections (dict line index -> LineSelection)
+        with the fourth line `missing` completed: per block the choices of
+        one configuration per line consistent in (c_1, c_2, lambda), the
+        blocks joined on lambda, the missing line completed, every
+        candidate confirmed."""
+        blocks, st, kappa = self.blocks, self.stats, self.kappa
+        known = [li for li in range(4) if li != missing]
+        du = 2 + kappa
+        per_block = []
+        for bi, b in enumerate(blocks):
+            leaves_codes, leaves_z0, leaves_Z = [], [], []
+
+            def dfs(d, z0, Z, codes, fixed):
+                if d == len(known):
+                    if np.any((np.abs(z0[:2]) < 1e-9) & (np.abs(Z[:2]).sum(axis=1) < 1e-9)):
+                        return                               # a copy no member of the subspace uses
+                    leaves_codes.append([dict(codes[0]), dict(codes[1])])
+                    leaves_z0.append(z0)
+                    leaves_Z.append(Z)
+                    return
+                li = known[d]
+                x, y = LINES[li]
+                cfgs = sels[li].cfgs[bi]
+                present = len(sels[li].S[bi]) > 0
+                distinct = codes[0] != codes[1]          # a swap is a different assignment only then
+                for j in range(cfgs.n):
+                    for swap in ((False, True) if fixed and present and distinct else (False,)):
+                        z0c, Zc, cd = cfgs.z0[j], cfgs.Z[j], cfgs.codes[j]
+                        if swap:
+                            perm = np.arange(du)
+                            perm[0], perm[1] = 1, 0
+                            z0c, Zc, cd = z0c[perm], Zc[perm], cd[::-1]
+                        met = _meet_C(z0, Z, z0c, Zc)
+                        if met is None:
+                            continue
+                        new = [dict(codes[0]), dict(codes[1])]
+                        for cp in range(2):
+                            new[cp][x], new[cp][y] = int(cd[cp][0]), int(cd[cp][1])
+                        dfs(d + 1, met[0], met[1], new, fixed or present)
+
+            dfs(0, np.zeros(du, dtype=complex), np.eye(du, dtype=complex), [{}, {}], False)
+            st["block_leaves"] += len(leaves_codes)
+            if not leaves_codes:
+                return []
+            bc = BlockConfigs(np.zeros((len(leaves_codes), 2, 2), dtype=np.int64), leaves_z0, leaves_Z, kappa)
+            bc.codes = leaves_codes
+            per_block.append(bc)
+        hits = []
+        for choice, _, _ in _theta_combos(per_block, kappa):
+            st["combinations"] += 1
+            for terms in self._complete_line(choice, per_block, missing):
+                key = tuple(sorted(exact_codes(t)[0].tobytes() for t in terms))
+                if key not in self._confirmed:           # the same copies in another labelling or pass
+                    st["reconstructions"] += 1
+                    self._confirmed[key] = self.matcher.confirm(terms, 0, self.target)
+                    hits.append(self._confirmed[key])
+        return hits
+
+    @staticmethod
+    def _joint_coefficients(choice, per_block):
+        """The coefficients of every copy over the combination's joint
+        subspace: c = c0 + cW w for the free parameters w that remain once
+        the blocks' lambdas agree (none when everything is pinned), or None
+        when the blocks' subspaces do not meet."""
+        leaves = [(pb.z0[j], pb.Z[j]) for pb, j in zip(per_block, choice)]
+        dims = [Z.shape[1] for _, Z in leaves]
+        n = sum(dims)
+        rows, rhs = [], []
+        off = np.cumsum([0] + dims)
+        for b in range(1, len(leaves)):
+            z0a, Za = leaves[b - 1]
+            z0b, Zb = leaves[b]
+            R = np.zeros((Za.shape[0] - 2, n), dtype=complex)
+            R[:, off[b - 1]:off[b]] = Za[2:]
+            R[:, off[b]:off[b + 1]] = -Zb[2:]
+            rows.append(R)
+            rhs.append(z0b[2:] - z0a[2:])
+        if rows:
+            sol = _affine_solve_C(np.concatenate(rows), np.concatenate(rhs))
+            if sol is None:
+                return None
+            w0, W = sol
+        else:
+            w0, W = np.zeros(n, dtype=complex), np.eye(n, dtype=complex)
+        c0 = np.concatenate([z0[:2] + Z[:2] @ w0[off[b]:off[b + 1]] for b, (z0, Z) in enumerate(leaves)])
+        cW = np.concatenate([Z[:2] @ W[off[b]:off[b + 1]] for b, (z0, Z) in enumerate(leaves)])
+        return c0, cW
+
+    def _complete_line(self, choice, per_block, missing):
+        """The term vectors of the candidates of one combination with the
+        missing line filled in:
+        copies present on two or more known lines take their codes there
+        from the completion table, copies present on one known line are
+        absent there, copies absent on all three are read off the residual
+        of the missing line's two slices by a pinned-coefficient solve over
+        their 28 options at the first point (the class doubled and the
+        phase free at the second), the remaining free parameters of the
+        coefficients solved along."""
+        blocks, st = self.blocks, self.stats
+        known = [li for li in range(4) if li != missing]
+        mx, my = LINES[missing]
+        known_offsets = [z for li in known for z in LINES[li]]
+        jc = self._joint_coefficients(choice, per_block)
+        if jc is None:
+            return []
+        c0, cW = jc
+        nw = cW.shape[1]
+        fixed, floating = [], []
+        for bi, (b, j) in enumerate(zip(blocks, choice)):
+            for cp in range(2):
+                cd = per_block[bi].codes[j][cp]
+                npresent = sum(cd[LINES[li][0]] != b.o.absent for li in known)
+                if npresent >= 2:
+                    opts = self.completion(bi, missing).get(tuple(cd[z] for z in known_offsets))
+                    if not opts:
+                        return []
+                    fixed.append((bi, cp, sorted(opts)))
+                elif npresent == 1:
+                    fixed.append((bi, cp, [(b.o.absent, b.o.absent)]))
+                else:
+                    floating.append((bi, cp))
+        if 28 ** len(floating) > 200_000:
+            raise BudgetExceeded(f"{len(floating)} copies absent on three lines: {28 ** len(floating)} "
+                                 f"completions of the fourth line")
+        Tx, Ty = self.target.rhs(add(self.x0, mx))[2], self.target.rhs(add(self.x0, my))[2]
+        hits = []
+
+        def consistent(pairs):
+            """pairs: (bi, cp, code_x, code_y) for every copy. The residual
+            of both slices must vanish for some w."""
+            bx, by = Tx.copy(), Ty.copy()
+            Mx = np.zeros((len(Tx), nw), dtype=complex)
+            My = np.zeros((len(Ty), nw), dtype=complex)
+            for bi, cp, cx, cy in pairs:
+                i = 2 * bi + cp
+                vx, vy = blocks[bi].o.vecs[cx], blocks[bi].o.vecs[cy]
+                bx -= c0[i] * vx
+                by -= c0[i] * vy
+                Mx += np.outer(vx, cW[i])
+                My += np.outer(vy, cW[i])
+            if nw == 0:
+                return np.abs(bx).max() < 1e-6 and np.abs(by).max() < 1e-6
+            return _affine_solve_C(np.concatenate([Mx, My]), np.concatenate([bx, by])) is not None
+
+        for combo in itertools.product(*[opts for _, _, opts in fixed]):
+            self._check("completion", states=st["tuples"])
+            base = [(bi, cp, cx, cy) for (bi, cp, _), (cx, cy) in zip(fixed, combo)]
+            if not floating:
+                if consistent(base):
+                    st["completions"] += 1
+                    hits.append(self._confirm_codes(choice, per_block, base, missing))
+                continue
+            if nw == 0:
+                rx, ry = Tx.copy(), Ty.copy()
+                for bi, cp, cx, cy in base:
+                    rx -= c0[2 * bi + cp] * blocks[bi].o.vecs[cx]
+                    ry -= c0[2 * bi + cp] * blocks[bi].o.vecs[cy]
+                for extra in self._floating_from_residual(floating, c0, rx, ry):
+                    st["completions"] += 1
+                    hits.append(self._confirm_codes(choice, per_block, base + extra, missing))
+                continue
+            for codes_x in itertools.product(*[range(blocks[bi].o.absent + 1) for bi, _ in floating]):
+                second = []
+                for (bi, _), cx in zip(floating, codes_x):
+                    if cx == blocks[bi].o.absent:
+                        second.append([blocks[bi].o.absent])
+                    else:
+                        second.append([3 * self.dbls[bi][cx // 3] + m for m in range(3)])
+                for codes_y in itertools.product(*second):
+                    pairs = base + [(bi, cp, cx, cy) for (bi, cp), cx, cy in zip(floating, codes_x, codes_y)]
+                    if consistent(pairs):
+                        st["completions"] += 1
+                        hits.append(self._confirm_codes(choice, per_block, pairs, missing))
+        return [h for h in hits if h is not None]
+
+    def _floating_from_residual(self, floating, c0, rx, ry):
+        """The code pairs of the copies absent on the three known lines
+        (`floating`: (block, copy) with pinned coefficients c0) at the two
+        points of the missing line, from the residual rx, ry of those slices
+        after every other copy. The residual must be a combination of at
+        most one translate per floating copy: over the blocks involved the
+        selections whose span contains rx are enumerated directly (their
+        products of subsets, the sub-problem is small), paired with the
+        doubled selection at the second point, and per block the copies
+        are assigned to the classes with phases read off the coordinates
+        (a copy alone in a class has coordinate c w^l; two copies in one
+        class are solved over the nine phase pairs). A dependent
+        sub-selection has no unique coordinates and is not searched."""
+        blocks = self.blocks
+        by_block = {}
+        for bi, cp in floating:
+            by_block.setdefault(bi, []).append(cp)
+        order = sorted(by_block)
+        sub = [Block(blocks[bi].o, len(by_block[bi]), i) for i, bi in enumerate(order)]
+        if math.prod(len(b.subsets) for b in sub) > 200_000:
+            raise BudgetExceeded(f"{len(floating)} copies absent on three lines over {len(sub)} blocks: "
+                                 f"{math.prod(len(b.subsets) for b in sub)} selections of the fourth line")
+        selx = _small_selections(sub, rx)
+        sely = {S: a for S, a in _small_selections(sub, ry)}
+        out = []
+        for S, ax in selx:
+            S2 = tuple(tuple(sorted(self.dbls[bi][k] for k in Sb)) for bi, Sb in zip(order, S))
+            if S2 not in sely:
+                continue
+            ay = sely[S2]
+            per_block, pos = [], 0
+            for i, bi in enumerate(order):
+                cps = by_block[bi]
+                Sb, n = S[i], len(S[i])
+                alpha, beta = ax[pos:pos + n], ay[pos:pos + n]
+                pos += n
+                A = blocks[bi].o.absent
+                opts = []
+                if n == 0:
+                    opts.append([(bi, cp, A, A) for cp in cps])
+                elif n == 1:
+                    k, k2 = Sb[0], S2[i][0]
+                    for cp in cps:                                   # one copy present
+                        l, m = _is_root_shift(alpha[0] / c0[2 * bi + cp]), _is_root_shift(beta[0] / c0[2 * bi + cp])
+                        if l is not None and m is not None:
+                            opts.append([(bi, cp, 3 * k + l, 3 * k2 + m)] + [(bi, o, A, A) for o in cps if o != cp])
+                    if len(cps) == 2:                                # both present in the class
+                        c1, c2 = c0[2 * bi + cps[0]], c0[2 * bi + cps[1]]
+                        for l1, l2, m1, m2 in itertools.product(range(3), repeat=4):
+                            if (abs(c1 * W3P[l1] + c2 * W3P[l2] - alpha[0]) < 1e-6
+                                    and abs(c1 * W3P[m1] + c2 * W3P[m2] - beta[0]) < 1e-6):
+                                opts.append([(bi, cps[0], 3 * k + l1, 3 * k2 + m1),
+                                             (bi, cps[1], 3 * k + l2, 3 * k2 + m2)])
+                else:
+                    for perm in ((0, 1), (1, 0)):
+                        assign = []
+                        for cp, q in zip(cps, perm):
+                            k, k2 = Sb[q], self.dbls[bi][Sb[q]]
+                            l = _is_root_shift(alpha[q] / c0[2 * bi + cp])
+                            m = _is_root_shift(beta[S2[i].index(k2)] / c0[2 * bi + cp])
+                            if l is None or m is None:
+                                break
+                            assign.append((bi, cp, 3 * k + l, 3 * k2 + m))
+                        else:
+                            opts.append(assign)
+                if not opts:
+                    break
+                per_block.append(opts)
+            else:
+                for choice in itertools.product(*per_block):
+                    out.append([t for part in choice for t in part])
+        return out
+
+    def _confirm_codes(self, choice, per_block, pairs, missing):
+        """The term vectors of a completed candidate, or None when a copy's
+        codes are not a stabilizer state's or the two copies of a block
+        coincide."""
+        blocks = self.blocks
+        mx, my = LINES[missing]
+        codes = [[dict(per_block[bi].codes[j][cp]) for cp in range(2)] for bi, j in enumerate(choice)]
+        for bi, cp, cx, cy in pairs:
+            codes[bi][cp][mx], codes[bi][cp][my] = int(cx), int(cy)
+        terms = []
+        for bi, b in enumerate(blocks):
+            if codes[bi][0] == codes[bi][1]:
+                return None
+            for cp in range(2):
+                cd = codes[bi][cp]
+                if not b.o.valid_codes(cd):
+                    return None
+                t = np.zeros((9, self.dim), dtype=complex)
+                t[pidx(self.x0)] = b.o.u
+                for x, code in cd.items():
+                    t[pidx(add(self.x0, x))] = b.o.vecs[code]
+                terms.append(t.ravel())
+        return terms
 
 
 def solve_slice3(opts, blocks, fam, rhs, rng, stats=None, log=None, budget=None, where="", proj=None,
@@ -597,12 +1464,12 @@ def solve_slice3(opts, blocks, fam, rhs, rng, stats=None, log=None, budget=None,
     selection (`proj`), the budget is checked before every selection and
     after every candidate list, a dense solve whose feature matrices would
     exceed the budget is refused before it allocates, more than `max_cand`
-    hash candidates raises BudgetExceeded instead of AssertionError, and
-    the case of no ordinary term goes to _block_only_solutions."""
+    hash candidates raises BudgetExceeded instead of AssertionError. A slice
+    with no ordinary term belongs to BlockOnlyMatcher."""
     if proj is None:
         proj = _ProjectorCache(blocks)
     if not opts:
-        return _block_only_solutions(blocks, rhs, rng, fam, proj, stats, budget, where)
+        raise AssertionError("a slice equation with no ordinary term is solved by BlockOnlyMatcher")
     r = len(opts)
     d1, K1 = fam.parts[0]
     ords = [i for i in range(len(d1)) if i not in {b.pos for b in blocks}]
@@ -819,6 +1686,7 @@ class Matcher:
         self.verbose = verbose
         self.budget = budget                    # a Budget, or None for no caps
         self.last_stats = None                  # the stats of the current or last run (partial after an abort)
+        self.last_hits = []                     # the raw hits found so far (partial after an abort)
         self._proj = None
 
     def _check(self, where, **kw):
@@ -875,6 +1743,14 @@ class Matcher:
         opts = [self.options(distinct[i]) for i in ords]
         arrays = [o.arrays() for o in opts]
         stats.update(kappa=fam.kappa, kappa1=fam.kappa1, distinct=len(distinct), blocks=[b.g for b in blocks])
+        if not opts:
+            self.last_hits = []
+            hits = BlockOnlyMatcher(self, blocks, x0, target, stats, self.budget, self.log, self.last_hits).run()
+            hits = self._dedupe(hits)
+            stats["hits"] = len(hits)
+            stats["seconds"]["total"] = round(time.time() - t_start, 2)
+            stats["peak_rss_gb"] = round(peak_rss_gb(), 3)
+            return hits, stats
         # Both coordinate slices are solved once against the initial family;
         # the first slice's states are then joined with the second slice's
         # solutions by compatibility of their coefficient families, which
@@ -909,7 +1785,9 @@ class Matcher:
                 else:
                     pairs = self._compatible(f, sols_by_slice[e], arrays, blocks, rhs)
                 count += len(pairs)                 # the solutions of this slice over the states, as before
-                for combo, Ssel, f2 in pairs:
+                for k, (combo, Ssel, f2) in enumerate(pairs):
+                    if k % 10_000 == 9_999:
+                        self._check(f"join at coordinate slice {e}", states=len(new))
                     if f2.has_zero_coefficient(exempt):
                         stats["zero_coefficient"] += 1
                         continue
@@ -1041,7 +1919,9 @@ class Matcher:
         for c, x in enumerate(COMP):
             rhs = target.rhs(add(x0, x))
             new = []
-            for cl2, bl2, f, sp1, alive in states:
+            for k, (cl2, bl2, f, sp1, alive) in enumerate(states):
+                if k % 200 == 199:
+                    self._check(f"composite slice {x}", states=len(new))
                 codes = [np.unique(rows[i][alive[i], c]) for i in range(r)]
                 arrays = [(o.m1[cd], o.m2[cd], o.vecs[cd]) for o, cd in zip(opts, codes)]
                 sols = solve_slice3(arrays, blocks, f, rhs, self.rng, stats=stats, log=self.log,
