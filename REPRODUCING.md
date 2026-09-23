@@ -138,7 +138,11 @@ silicon laptop under load. The whole suite is not timed in the repository;
 CI allows 15 minutes per Python version (`.github/workflows/tests.yml`, job
 `pytest`).
 
-C++ (needs `cmake`, `ninja` and a C++20 compiler; no Python):
+C++ (needs `cmake`, `ninja` and a C++20 compiler; no Python). CMake uses an
+installed Eigen 3.4 if one is found (`libeigen3-dev` on Ubuntu) and otherwise
+downloads the pinned 3.4.0 tarball from a GitHub mirror, falling back to
+GitLab; pass `-DFETCHCONTENT_FULLY_DISCONNECTED=ON` to reuse an existing
+`build/_deps` without any network access:
 
 ```
 cmake -S . -B build -G Ninja

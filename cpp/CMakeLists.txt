@@ -1,13 +1,39 @@
 include(FetchContent)
 
 # --- Eigen (header-only linear algebra) ---
+# Resolution order:
+#   1. an installed Eigen 3.4 (Ubuntu `libeigen3-dev` is 3.4.0; CI installs
+#      it), found through its CMake package config;
+#   2. the pinned 3.4.0 release tarball, downloaded from the GitHub mirror
+#      first and from GitLab if the mirror fails. The two archives are
+#      byte-identical, so a single SHA256 covers both and CMake moves on to
+#      the next URL when a download fails or its hash does not match;
+#   3. an already-populated source tree. A URL download has no update step,
+#      so a reconfigure never touches the network once _deps/eigen-src
+#      exists, and -DFETCHCONTENT_FULLY_DISCONNECTED=ON (or
+#      -DFETCHCONTENT_SOURCE_DIR_EIGEN=<dir>) skips the download entirely.
+# Keep STABRANK_EIGEN_VERSION and STABRANK_EIGEN_SHA256 in step: the hash is
+# that of eigen-<version>.tar.gz as served by both hosts.
+# Eigen's own CMakeLists registers every build tree in the user package
+# registry (~/.cmake/packages), so without these two settings a stale
+# _deps/eigen-build from some other checkout would satisfy find_package.
+set(CMAKE_FIND_USE_PACKAGE_REGISTRY OFF)
+set(CMAKE_EXPORT_NO_PACKAGE_REGISTRY ON)
 find_package(Eigen3 3.4 CONFIG QUIET)
 if(NOT Eigen3_FOUND)
+  set(STABRANK_EIGEN_VERSION 3.4.0)
+  set(STABRANK_EIGEN_SHA256
+    8586084f71f9bde545ee7fa6d00288b264a2b7ac3607b974e54d13e7162c1c72)
+  if(POLICY CMP0135)
+    # Extracted files take the extraction time as their timestamp.
+    cmake_policy(SET CMP0135 NEW)
+  endif()
   FetchContent_Declare(
     eigen
-    GIT_REPOSITORY https://gitlab.com/libeigen/eigen.git
-    GIT_TAG        3.4.0
-    GIT_SHALLOW    TRUE
+    URL
+      https://github.com/eigen-mirror/eigen/archive/refs/tags/${STABRANK_EIGEN_VERSION}.tar.gz
+      https://gitlab.com/libeigen/eigen/-/archive/${STABRANK_EIGEN_VERSION}/eigen-${STABRANK_EIGEN_VERSION}.tar.gz
+    URL_HASH SHA256=${STABRANK_EIGEN_SHA256}
   )
   # Eigen's CMakeLists builds tests/docs by default; disable them without
   # permanently disabling this project's CTest registration.
@@ -17,6 +43,9 @@ if(NOT Eigen3_FOUND)
   set(BUILD_TESTING OFF CACHE BOOL "" FORCE)
   FetchContent_MakeAvailable(eigen)
   set(BUILD_TESTING "${STABRANK_BUILD_TESTING}" CACHE BOOL "" FORCE)
+  message(STATUS "Eigen ${STABRANK_EIGEN_VERSION} from ${eigen_SOURCE_DIR}")
+else()
+  message(STATUS "Eigen ${Eigen3_VERSION} from ${Eigen3_DIR}")
 endif()
 
 # --- Catch2 (C++ testing) ---
