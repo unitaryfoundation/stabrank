@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "tier": "attested",
+  "detail": "certificate script asserted: CERTIFIED chi(N^4) >= 6; re-ran 2 of 171 stored batches from scratch chosen from seed 20260922 and only checked the SHA-256 of the other 169 against research/qutrit_m4_rank5/batch_manifest_N.json; the full enumeration (38.1 CPU-h on RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host (load 20 to 30), fifteen batches in parallel at nice 19, 2026-09-23 14:25 to 18:08 UTC (three sample batches at 14:25, the 141 shared batches 15:31 to 17:34, the 27 single-cover stage C batches 17:34 to 18:08); the aggregate's two seeded re-runs (batches 121 and 169, 720 s and 583 s) on the same pod, 2026-09-23 18:50 to 19:12 UTC) was not re-run",
+  "gamma": null,
+  "content_hash": "9a8bf74e826b107a"
+}

@@ -1,6 +1,6 @@
 {
  "generated_from": "bounds/",
- "head": "ae2c6b993ad09768db0ebd85dcb77d2672e55343",
+ "head": "5e37ed6f9fb06456cde5f5110f4dabf8c4bb5f2d",
  "generated": "2026-09-23",
  "since": "2026-09-15",
  "exponents": [
@@ -328,11 +328,11 @@
    "orbit": "N",
    "m": 4,
    "lower": {
-    "rank": 5,
-    "tier": "reproduced",
-    "slug": "N-m4-lower-5",
-    "date": "2026-09-18",
-    "board_date": "2026-09-18",
+    "rank": 6,
+    "tier": "attested",
+    "slug": "N-m4-lower-6",
+    "date": "2026-09-23",
+    "board_date": "2026-09-23",
     "moved_since": true
    },
    "upper": {
@@ -1176,6 +1176,22 @@
    ],
    "board": [
     "reproduced"
+   ]
+  },
+  {
+   "orbit": "N",
+   "m": 4,
+   "rank": 6,
+   "runs": 1,
+   "log_runs": 0,
+   "cpu_hours": 38.1,
+   "solutions": 1,
+   "cpu_hours_per_solution": 38.1,
+   "bounds": [
+    "N-m4-lower-6"
+   ],
+   "board": [
+    "attested"
    ]
   },
   {
@@ -2164,11 +2180,11 @@
   {
    "date": "2026-09-23",
    "seeded": false,
-   "cpu_hours": 85.907,
-   "discoveries": 9,
+   "cpu_hours": 124.00699999999999,
+   "discoveries": 10,
    "median_declared": 0.001,
-   "cum_cpu_hours": 207.70761111111108,
-   "cum_discoveries": 89
+   "cum_cpu_hours": 245.80761111111107,
+   "cum_discoveries": 90
   }
  ],
  "bounds": [
@@ -2702,6 +2718,48 @@
     "wall_clock_hours": 7.6,
     "runs": 3,
     "hardware": "Apple silicon laptop at low priority for the 6.4-hour first enumeration; the certificate ran in 43 minutes on the 4-core CI runner with the numpy search, and re-runs here with the compiled kernel"
+   }
+  },
+  {
+   "slug": "N-m4-lower-6",
+   "file": "bounds/N-m4-lower-6.json",
+   "orbit": "N",
+   "m": 4,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "attested",
+   "ok": true,
+   "date": "2026-09-23",
+   "author": "this repository",
+   "reference": "stabrank research/qutrit_m4_rank5",
+   "method": "two-qutrit all-visible base slice: every rank-5 decomposition of |N>^4 is carried by a monomial symmetry of |N> on qutrits 1, 2 to one whose slice at x_0 = (0, 0) has all five terms nonzero (Facts A and B of the note), so that slice is a full 5-cover of |N>^2; every such cover is enumerated up to the unitary symmetry of |N>^2 and completed slice by slice under the two-qutrit slice structure lemma, modulo 65521 with exact re-decision",
+   "pull_request": 120,
+   "merge_commit": "5e37ed6f9fb06456cde5f5110f4dabf8c4bb5f2d",
+   "merge_date": "2026-09-23",
+   "added_commit": "cd2591e76edfac06a43cbdfa3bee9b830265f5bd",
+   "added_date": "2026-09-23",
+   "added_subject": "chi(N^4) >= 6: the rank-5 exclusion run, its batch manifest, and the attested bound",
+   "receipt": "certs/N-m4-lower-6.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_n_m4_rank5_attested.py",
+   "certificate_budget_s": 3600,
+   "certificate_attested": {
+    "batches": "research/qutrit_m4_rank5/batch_manifest_N.json",
+    "recomputed": 2,
+    "compute_hours": 38.1,
+    "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host (load 20 to 30), fifteen batches in parallel at nice 19, 2026-09-23 14:25 to 18:08 UTC (three sample batches at 14:25, the 141 shared batches 15:31 to 17:34, the 27 single-cover stage C batches 17:34 to 18:08); the aggregate's two seeded re-runs (batches 121 and 169, 720 s and 583 s) on the same pod, 2026-09-23 18:50 to 19:12 UTC",
+    "note": "The exclusion of every rank-5 decomposition of |N>^4 lives in the 171 stored batch outputs under research/qutrit_m4_rank5/results/N/ (17 stage A batches over the 197,440 full 5-covers of |N>^2 with distinct independent base states, 98 stage B batches over the 12,175 dependent covers, 56 stage C batches over the 16,181 covers with a repeated state, including the cancel-at-base multisets T + (b, b) and the 27 covers with two blocks in one Pauli orbit, each alone in its batch), 225,796 covers matched at the base point x_0 = (0, 0) along qutrits 1, 2, every candidate re-decided mod 2013265921 and numerically, 0 hits, 0 refused, 0 undecided. The certificate checks the partition against the enumerator, re-enumerates the degenerate covers, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/qutrit_m4_rank5/batch.py, which regenerates any batch (batch.py N K).",
+    "total": 171
+   },
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 38.1,
+    "wall_clock_hours": 4.1,
+    "runs": 1,
+    "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host (load 20 to 30), fifteen batches in parallel at nice 19, 2026-09-23 14:25 to 18:08 UTC (three sample batches at 14:25, the 141 shared batches 15:31 to 17:34, the 27 single-cover stage C batches 17:34 to 18:08); the aggregate's two seeded re-runs (batches 121 and 169, 720 s and 583 s) on the same pod, 2026-09-23 18:50 to 19:12 UTC"
    }
   },
   {
