@@ -1,0 +1,91 @@
+{
+ "batch": {
+  "index": 0,
+  "stage": "A",
+  "units": [
+   [
+    117,
+    0,
+    359
+   ],
+   [
+    117,
+    2,
+    357
+   ],
+   [
+    117,
+    8,
+    351
+   ]
+  ],
+  "n_units": 3
+ },
+ "orbit": "N",
+ "m": 4,
+ "rank": 5,
+ "n1": 2,
+ "N": 360,
+ "group_order": 72,
+ "x0": [
+  0,
+  0
+ ],
+ "partition_sha256": "455303990789bf9c8c4f1ac5b2ed9df2046e85830badc62492135013258fce84",
+ "degenerate_sha256": null,
+ "covers": 18215,
+ "matched": 18215,
+ "refused": 0,
+ "coord_solution_hist": {
+  "17,289": 1050,
+  "9,81": 706,
+  "2,4": 1900,
+  "6,36": 203,
+  "8,64": 661,
+  "40,1600": 116,
+  "12,144": 898,
+  "24,576": 106,
+  "16,256": 238,
+  "4,16": 1049,
+  "11,121": 1126,
+  "18,324": 420,
+  "10,100": 518,
+  "5,25": 960,
+  "3,9": 1614,
+  "20,400": 46,
+  "19,361": 1674,
+  "15,225": 2100,
+  "23,529": 382,
+  "14,196": 810,
+  "13,169": 490,
+  "44,1936": 80,
+  "34,1156": 98,
+  "7,49": 224,
+  "22,484": 40,
+  "32,1024": 16,
+  "1,1": 690
+ },
+ "hits": [],
+ "hit_count": 0,
+ "decompositions": 0,
+ "undecided": [],
+ "deterministic_sha256": "a67063c614687cdd2fcbb381fb13b2cac3d2f7a2eb757e616656f882e4fb055c",
+ "candidates": 96866,
+ "kernel_s": 24.836605310440063,
+ "match_s": 964.1515362262726,
+ "max_seconds": 3600.0,
+ "aborted_at_deadline": false,
+ "wall_s": 989.9222619533539,
+ "cpu_s": 984.5899999999999,
+ "started": "2026-09-23T14:25:15+00:00",
+ "ended": "2026-09-23T14:41:45+00:00",
+ "hostname": "b429c21234f4",
+ "git_commit": "2126dde5543ccb93f3f26119d8dcca8e9ebf801e",
+ "matcher": "reference",
+ "kernel_version": "Linux 6.8.0-51-generic #52~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Dec  9 15:00:52 UTC 2",
+ "machine": "x86_64",
+ "python": "3.12.14",
+ "numpy": "2.3.5",
+ "hit_numerics": [],
+ "sha256": "c9b6c3fadf8e8fbaab5612d23558f8389bd740200d07b4a7ab50ac8b2de0a404"
+}

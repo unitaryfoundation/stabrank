@@ -1011,3 +1011,20 @@ re-enumerated the degenerate covers, re-ran batches 39 (773 s) and 56
 as `bounds/H3-m4-lower-6.json` at the attested tier. The N run (171
 batches) is in progress; its 27 dependent-translate covers are the open
 item for that state.
+
+## 10. The N run (2026-09-23)
+
+All 171 N batches ran on the RunPod pod between 14:25 and 18:08 UTC: three
+as the sample batches, the 141 shared batches fifteen at a time from 15:31
+to 17:34, and the 27 single-cover stage C batches (two blocks in one Pauli
+orbit) from 17:34 to 18:08, none of which needed the dependent-translates
+refusal. Totals from the aggregate: stage A 17 batches over 197,440 full
+5-covers, stage B 98 batches over 12,175 dependent covers, stage C 56
+batches over 16,181 covers with a repeated state, 225,796 covers matched,
+0 hits, 0 refused, 0 undecided, 37.7 CPU-hours. The aggregate with
+`--recheck 2 --recheck-seed 20260922` verified every stored batch,
+re-enumerated the degenerate covers, re-ran batches 121 (720 s) and 169
+(583 s) from scratch with matching deterministic hashes, wrote
+`batch_manifest_N.json`, and printed `CERTIFIED chi(N^4) >= 6` in 1,317 s.
+With the Lean rank-7 witness the cell is 6 <= chi(N^4) <= 7, filed as
+`bounds/N-m4-lower-6.json` at the attested tier.
