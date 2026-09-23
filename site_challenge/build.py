@@ -309,12 +309,14 @@ def leaderboard(entries):
 
 
 def next_target(orbit, base, cells=None, lead="needs "):
-    """The cheapest cell that would beat the published exponent.
+    """The cell with the lowest implied exponent that would beat the published one.
 
-    An empty progress bar on every row carries no information; naming the
-    smallest rank at each m that would move the number is actionable. A rank
-    below the board's own lower bound at that m is not a target, so when the
-    per-cell records are given those m are skipped.
+    An empty progress bar on every row carries no information; naming a rank
+    that would move the number is actionable. At each m the candidate is the
+    largest rank below p^(base m), and among the m the one with the smallest
+    exponent log_p(r)/m is shown. A rank below the board's own lower bound at
+    that m is not a target, so when the per-cell records are given those m are
+    skipped.
     """
     p = ORBIT_P[orbit]
     best = None
