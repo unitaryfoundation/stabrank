@@ -27,6 +27,11 @@ Commands
                             covers assigned round-robin to batches of about
                             --target-bc-s seconds at the rates of
                             results/degenerate_sample.json
+  partition-stage-c [--list L] [--out P] [--target-s S] [--s-per-cover R]
+                            write the stage C repair partition over a regenerated
+                            degenerate list (stage C batches only, indices after
+                            partition.json's, the original stage C batches named as
+                            superseded); see docs/notes/h6_rank5_stagec_repair.md
   control-witness           recover the rank-6 witness bounds/qubit_H-m6-upper-6.json
                             from its own all-visible (triple, base point) slices
   control-m4                recover the rank-4 decompositions of |H>^4 from the
@@ -193,6 +198,53 @@ def partition(args):
           f"at the stored rates; wrote {PARTITION} (sha256 {sha[:16]})")
 
 
+def partition_stage_c(args):
+    """A stage C repair partition (docs/notes/h6_rank5_stagec_repair.md):
+    the stage C covers of a regenerated degenerate list, round-robin over
+    batches of about --target-s seconds at --s-per-cover, with indices
+    continuing after the original partition's so the records live beside the
+    stored ones. The stage B covers of the new list must be exactly those of
+    the original list, which keeps the stored stage A and B batches valid;
+    the original stage C batches are named as superseded."""
+    E = CoverEnumerator(N1)
+    base = common.load_partition(PARTITION)
+    path = os.path.join(HERE, args.list)
+    covers, deg = common.load_degenerate(path)
+    old_covers, _ = common.load_degenerate(os.path.join(HERE, base["degenerate"]["file"]),
+                                           base["degenerate"]["sha256"])
+    ids = {"B": [k for k, c in enumerate(covers) if stage_of(c) == "B"],
+           "C": [k for k, c in enumerate(covers) if stage_of(c) == "C"]}
+    if [covers[k] for k in ids["B"]] != sorted(c for c in old_covers if stage_of(c) == "B"):
+        raise SystemExit("the stage B covers of the new list differ from the original list's")
+    if not set(c for c in old_covers if stage_of(c) == "C") <= set(covers[k] for k in ids["C"]):
+        raise SystemExit("a stage C cover of the original list is missing from the new list")
+    superseded = [g["index"] for g in base["batch_geometry"] if g["stage"] == "C"]
+    first = max(g["index"] for g in base["batch_geometry"]) + 1
+    total = args.s_per_cover * len(ids["C"])
+    n = max(1, math.ceil(total / args.target_s))
+    geometry = [{"index": first + b, "stage": "C", "cover_ids": ids["C"][b::n]} for b in range(n)]
+    rec = {"orbit": "qubit_H", "m": 6, "rank": 5, "n1": N1, "N": E.N, "group_order": E.info["order"],
+           "repair": {"of": os.path.relpath(PARTITION, HERE), "partition_sha256": base["sha256"],
+                      "superseded_batches": superseded,
+                      "reason": "stage C re-run with the repaired matcher over the regenerated degenerate "
+                                "list (docs/notes/h6_rank5_stagec_repair.md)"},
+           "stage_a_batches": 0, "stage_b_batches": 0, "stage_c_batches": n, "first_index": first,
+           "cost_model": {"s_per_cover": args.s_per_cover, "source": args.rate_source},
+           "target_bc_s": args.target_s, "estimated_s": {"C": total, "total": total},
+           "degenerate": {"file": args.list, "sha256": deg["sha256"], "count": len(covers),
+                          "stage_b_covers": len(ids["B"]), "stage_c_covers": len(ids["C"])},
+           "batches": n, "git": git_commit(),
+           "generated": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
+           "batch_geometry": geometry}
+    out = os.path.join(HERE, args.out)
+    sha = common.write_hashed(out, rec)
+    print(f"{len(ids['C'])} stage C covers of {args.list} in {n} batches {first}..{first + n - 1} "
+          f"({len(ids['C']) // n} or {-(-len(ids['C']) // n)} covers, about {total / n:.0f} s each at "
+          f"{args.s_per_cover} s per cover; {total / 3600:.2f} CPU-h); supersedes batches "
+          f"{superseded[0]}..{superseded[-1]} of partition.json; wrote {out} (sha256 {sha[:16]})")
+    return 0
+
+
 # ---------------------------------------------------------------- match ----
 
 def match_cover(M, E, cover, rec, rank):
@@ -341,6 +393,20 @@ def degenerate_covers(E, r, covers3, covers4):
                     ms = tuple(sorted(T + (a, b)))
                     if E.is_cover(ms) and ok(ms):
                         out.add(ms)
+            # two copies of a state outside T and its span whose coefficients
+            # cancel at the base point: the merged coefficient is zero, T
+            # alone covers psi there, and the family over T + b has b dead
+            # but exempt. Neither route above lists these (the pool holds
+            # span(T) only, the parallel pairs are distinct), and property P
+            # does not exclude them: two copies present at x0 with c_1 = -c_2
+            # is not a term vanishing at x0.
+            in_pool = set(pool)
+            for b in range(E.N):
+                if b in in_pool:
+                    continue
+                ms = tuple(sorted(T + (b, b)))
+                if ok(ms):
+                    out.add(ms)
     if r == 5:
         for Cv in covers4:
             span = [x for x in range(E.N) if x not in Cv and E.rank_mod2(tuple(Cv) + (x,), False) == 4]
@@ -502,8 +568,9 @@ def degenerate(args):
                "covers3": len(covers3), "covers4": len(covers4), "count": len(deg),
                "by_pattern": by, "seconds": dt, "git": git_commit(),
                "covers": [list(c) for c in deg]}
-        sha = common.write_hashed(DEGENERATE, rec)
-        print(f"wrote {DEGENERATE} (sha256 {sha[:16]})")
+        out = os.path.join(HERE, args.out) if args.out else DEGENERATE
+        sha = common.write_hashed(out, rec)
+        print(f"wrote {out} (sha256 {sha[:16]})")
     if not args.sample:
         return 0
     # timing sample: --sample covers from each multiplicity pattern, evenly
@@ -546,6 +613,16 @@ def main(argv):
     p.add_argument("--match-ms", type=float, default=1.4, help="matcher milliseconds per cover (census)")
     p.add_argument("--no-census", action="store_true", help="ignore results/kernel_census.json")
     p.set_defaults(fn=partition)
+    p = sub.add_parser("partition-stage-c")
+    p.add_argument("--list", default="degenerate_covers_v2.json",
+                   help="the regenerated degenerate list under research/h6_rank5/")
+    p.add_argument("--out", default="partition_stage_c_v2.json")
+    p.add_argument("--target-s", type=float, default=600.0, help="seconds per batch")
+    p.add_argument("--s-per-cover", type=float, default=0.26,
+                   help="matcher seconds per stage C cover (four base points); the default is the pod "
+                        "rate of the 2026-09-22 run, 3,598 CPU-s over 13,852 covers")
+    p.add_argument("--rate-source", default="pod run 2026-09-22: stage C 3,598 CPU-s over 13,852 covers")
+    p.set_defaults(fn=partition_stage_c)
     p = sub.add_parser("census")
     p.add_argument("--verbose", action="store_true")
     p.set_defaults(fn=census)
@@ -570,6 +647,8 @@ def main(argv):
     p = sub.add_parser("degenerate")
     p.add_argument("--sample", type=int, default=0, help="time N covers of each multiplicity pattern")
     p.add_argument("--write", action="store_true", help="store the list as degenerate_covers.json")
+    p.add_argument("--out", default=None,
+                   help="with --write, the file name under research/h6_rank5/ instead of degenerate_covers.json")
     p.set_defaults(fn=degenerate)
     args = ap.parse_args(argv[1:])
     common.lower_priority()

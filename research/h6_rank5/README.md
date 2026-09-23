@@ -40,6 +40,15 @@ full run, about 36 CPU-hours, has not been launched; three test batches
   tuples into `dictionary(2, 3)`, with the count by multiplicity pattern
   and the file's hash, which the partition and every stage B or C batch
   record.
+- `degenerate_covers_v2.json`, `degenerate_covers_v2_delta.json`,
+  `partition_stage_c_v2.json`: the stage C repair
+  (`docs/notes/h6_rank5_stagec_repair.md`): the list regenerated with the
+  cancel-at-base route of `degenerate_covers` (28,396 covers, the 2,154
+  added ones in the delta file, stage B unchanged) and the partition of
+  its 16,006 stage C covers into batches 190 to 196, which supersede
+  batches 173 to 189. `batch.py K --partition
+  research/h6_rank5/partition_stage_c_v2.json` runs one; `aggregate.py`
+  picks the repair partition up when the file exists.
 - `batch.py`: one batch by index (below).
 - `aggregate.py`: the certificate-side check (below).
 - `results/`: `batch_<K>.json` for every batch run so far; the controls

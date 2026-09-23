@@ -24,6 +24,7 @@ M = 6                       # copies of |H>
 RANK = 5
 ORBIT = "qubit_H"
 PARTITION = os.path.join(HERE, "partition.json")
+REPAIR = os.path.join(HERE, "partition_stage_c_v2.json")      # the stage C repair partition, when present
 DEGENERATE = os.path.join(HERE, "degenerate_covers.json")
 RESULTS = os.path.join(HERE, "results")
 CENSUS = os.path.join(RESULTS, "kernel_census.json")
@@ -106,11 +107,18 @@ def load_degenerate(path=DEGENERATE, expect_sha256=None):
 
 
 def batch_geometry(part, index):
-    if not 0 <= index < len(part["batch_geometry"]):
-        raise IndexError(f"batch index {index} outside 0..{len(part['batch_geometry']) - 1}")
-    geo = part["batch_geometry"][index]
-    assert geo["index"] == index
-    return geo
+    """The geometry entry with the given batch index (a repair partition's
+    indices continue after the original partition's, so the position in
+    the list and the index differ)."""
+    geos = part["batch_geometry"]
+    first = geos[0]["index"] if geos else 0
+    if 0 <= index - first < len(geos) and geos[index - first]["index"] == index:
+        return geos[index - first]
+    for geo in geos:
+        if geo["index"] == index:
+            return geo
+    raise IndexError(f"batch index {index} not in the partition "
+                     f"({first}..{geos[-1]['index'] if geos else first - 1})")
 
 
 def pairs_of(E):
