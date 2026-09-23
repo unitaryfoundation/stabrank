@@ -1,6 +1,6 @@
 {
  "generated_from": "bounds/",
- "head": "f1017fdf7f86a9cff6df2438be34ececff1c5e18",
+ "head": "2ce2188bcde0855200b915c35bedefc598af266a",
  "generated": "2026-09-23",
  "since": "2026-09-15",
  "exponents": [
@@ -347,6 +347,36 @@
    "moved_since": true
   },
   {
+   "orbit": "N",
+   "m": 5,
+   "lower": null,
+   "upper": {
+    "rank": 12,
+    "tier": "verified",
+    "slug": "N-m5-upper-12",
+    "date": "2026-09-23",
+    "board_date": "2026-09-23",
+    "moved_since": true
+   },
+   "settled": false,
+   "moved_since": true
+  },
+  {
+   "orbit": "N",
+   "m": 6,
+   "lower": null,
+   "upper": {
+    "rank": 16,
+    "tier": "verified",
+    "slug": "N-m6-upper-16",
+    "date": "2026-09-23",
+    "board_date": "2026-09-23",
+    "moved_since": true
+   },
+   "settled": false,
+   "moved_since": true
+  },
+  {
    "orbit": "H3",
    "m": 2,
    "lower": {
@@ -408,6 +438,36 @@
     "date": "2026-05-27",
     "board_date": "2026-09-12",
     "moved_since": false
+   },
+   "settled": false,
+   "moved_since": true
+  },
+  {
+   "orbit": "H3",
+   "m": 5,
+   "lower": null,
+   "upper": {
+    "rank": 12,
+    "tier": "verified",
+    "slug": "H3-m5-upper-12",
+    "date": "2026-09-23",
+    "board_date": "2026-09-23",
+    "moved_since": true
+   },
+   "settled": false,
+   "moved_since": true
+  },
+  {
+   "orbit": "H3",
+   "m": 6,
+   "lower": null,
+   "upper": {
+    "rank": 16,
+    "tier": "verified",
+    "slug": "H3-m6-upper-16",
+    "date": "2026-09-23",
+    "board_date": "2026-09-23",
+    "moved_since": true
    },
    "settled": false,
    "moved_since": true
@@ -517,6 +577,21 @@
     "slug": "T3-m5-upper-18",
     "date": "2026-09-17",
     "board_date": "2026-09-17",
+    "moved_since": true
+   },
+   "settled": false,
+   "moved_since": true
+  },
+  {
+   "orbit": "T3",
+   "m": 6,
+   "lower": null,
+   "upper": {
+    "rank": 27,
+    "tier": "verified",
+    "slug": "T3-m6-upper-27",
+    "date": "2026-09-23",
+    "board_date": "2026-09-23",
     "moved_since": true
    },
    "settled": false,
@@ -896,6 +971,36 @@
    },
    "settled": false,
    "moved_since": true
+  },
+  {
+   "orbit": "T5",
+   "m": 3,
+   "lower": null,
+   "upper": {
+    "rank": 24,
+    "tier": "verified",
+    "slug": "T5-m3-upper-24",
+    "date": "2026-09-23",
+    "board_date": "2026-09-23",
+    "moved_since": true
+   },
+   "settled": false,
+   "moved_since": true
+  },
+  {
+   "orbit": "T5",
+   "m": 4,
+   "lower": null,
+   "upper": {
+    "rank": 64,
+    "tier": "verified",
+    "slug": "T5-m4-upper-64",
+    "date": "2026-09-23",
+    "board_date": "2026-09-23",
+    "moved_since": true
+   },
+   "settled": false,
+   "moved_since": true
   }
  ],
  "cost_by_cell": [
@@ -1075,6 +1180,22 @@
   },
   {
    "orbit": "N",
+   "m": 5,
+   "rank": 12,
+   "runs": 1,
+   "log_runs": 0,
+   "cpu_hours": 0.001,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.001,
+   "bounds": [
+    "N-m5-upper-12"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "N",
    "m": 6,
    "rank": 15,
    "runs": 4,
@@ -1084,6 +1205,22 @@
    "cpu_hours_per_solution": null,
    "bounds": [],
    "board": []
+  },
+  {
+   "orbit": "N",
+   "m": 6,
+   "rank": 16,
+   "runs": 1,
+   "log_runs": 0,
+   "cpu_hours": 0.001,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.001,
+   "bounds": [
+    "N-m6-upper-16"
+   ],
+   "board": [
+    "verified"
+   ]
   },
   {
    "orbit": "H3",
@@ -1160,6 +1297,22 @@
   },
   {
    "orbit": "H3",
+   "m": 5,
+   "rank": 12,
+   "runs": 1,
+   "log_runs": 0,
+   "cpu_hours": 0.001,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.001,
+   "bounds": [
+    "H3-m5-upper-12"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "H3",
    "m": 6,
    "rank": 15,
    "runs": 4,
@@ -1169,6 +1322,22 @@
    "cpu_hours_per_solution": null,
    "bounds": [],
    "board": []
+  },
+  {
+   "orbit": "H3",
+   "m": 6,
+   "rank": 16,
+   "runs": 1,
+   "log_runs": 0,
+   "cpu_hours": 0.001,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.001,
+   "bounds": [
+    "H3-m6-upper-16"
+   ],
+   "board": [
+    "verified"
+   ]
   },
   {
    "orbit": "T3",
@@ -1293,6 +1462,22 @@
    ],
    "board": [
     "lean"
+   ]
+  },
+  {
+   "orbit": "T3",
+   "m": 6,
+   "rank": 27,
+   "runs": 1,
+   "log_runs": 0,
+   "cpu_hours": 0.001,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.001,
+   "bounds": [
+    "T3-m6-upper-27"
+   ],
+   "board": [
+    "verified"
    ]
   },
   {
@@ -1792,6 +1977,38 @@
    ]
   },
   {
+   "orbit": "T5",
+   "m": 3,
+   "rank": 24,
+   "runs": 1,
+   "log_runs": 0,
+   "cpu_hours": 0.001,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.001,
+   "bounds": [
+    "T5-m3-upper-24"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "T5",
+   "m": 4,
+   "rank": 64,
+   "runs": 1,
+   "log_runs": 0,
+   "cpu_hours": 0.001,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.001,
+   "bounds": [
+    "T5-m4-upper-64"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
    "orbit": "T3sector0",
    "m": 2,
    "rank": 2,
@@ -1943,11 +2160,11 @@
   {
    "date": "2026-09-23",
    "seeded": false,
-   "cpu_hours": 74.7,
-   "discoveries": 1,
-   "median_declared": 74.7,
-   "cum_cpu_hours": 196.50061111111108,
-   "cum_discoveries": 81
+   "cpu_hours": 74.70700000000001,
+   "discoveries": 8,
+   "median_declared": 0.001,
+   "cum_cpu_hours": 196.5076111111111,
+   "cum_discoveries": 88
   }
  ],
  "bounds": [
@@ -2177,6 +2394,76 @@
    "compute": null
   },
   {
+   "slug": "H3-m5-upper-12",
+   "file": "bounds/H3-m5-upper-12.json",
+   "orbit": "H3",
+   "m": 5,
+   "direction": "upper",
+   "rank": 12,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-09-23",
+   "author": "this repository",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "method": "structured construction",
+   "pull_request": 115,
+   "merge_commit": "2ce2188bcde0855200b915c35bedefc598af266a",
+   "merge_date": "2026-09-23",
+   "added_commit": "bd2b13d4cf153ba9321cfa2faf4143e5c8472ba3",
+   "added_date": "2026-09-23",
+   "added_subject": "Sweep of 2026-09-23: T5 and qutrit product witnesses, a T5 m=2 rank-7 search, literature update",
+   "receipt": "certs/H3-m5-upper-12.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "H3-m6-upper-16",
+   "file": "bounds/H3-m6-upper-16.json",
+   "orbit": "H3",
+   "m": 6,
+   "direction": "upper",
+   "rank": 16,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-09-23",
+   "author": "this repository",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "method": "structured construction",
+   "pull_request": 115,
+   "merge_commit": "2ce2188bcde0855200b915c35bedefc598af266a",
+   "merge_date": "2026-09-23",
+   "added_commit": "bd2b13d4cf153ba9321cfa2faf4143e5c8472ba3",
+   "added_date": "2026-09-23",
+   "added_subject": "Sweep of 2026-09-23: T5 and qutrit product witnesses, a T5 m=2 rank-7 search, literature update",
+   "receipt": "certs/H3-m6-upper-16.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
    "slug": "N-m2-lower-3",
    "file": "bounds/N-m2-lower-3.json",
    "orbit": "N",
@@ -2400,6 +2687,76 @@
    "lean_receipt": "certs/lean-LeanProofs-M4StabRank.json",
    "lean_receipt_ok": true,
    "compute": null
+  },
+  {
+   "slug": "N-m5-upper-12",
+   "file": "bounds/N-m5-upper-12.json",
+   "orbit": "N",
+   "m": 5,
+   "direction": "upper",
+   "rank": 12,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-09-23",
+   "author": "this repository",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "method": "structured construction",
+   "pull_request": 115,
+   "merge_commit": "2ce2188bcde0855200b915c35bedefc598af266a",
+   "merge_date": "2026-09-23",
+   "added_commit": "bd2b13d4cf153ba9321cfa2faf4143e5c8472ba3",
+   "added_date": "2026-09-23",
+   "added_subject": "Sweep of 2026-09-23: T5 and qutrit product witnesses, a T5 m=2 rank-7 search, literature update",
+   "receipt": "certs/N-m5-upper-12.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "N-m6-upper-16",
+   "file": "bounds/N-m6-upper-16.json",
+   "orbit": "N",
+   "m": 6,
+   "direction": "upper",
+   "rank": 16,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-09-23",
+   "author": "this repository",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "method": "structured construction",
+   "pull_request": 115,
+   "merge_commit": "2ce2188bcde0855200b915c35bedefc598af266a",
+   "merge_date": "2026-09-23",
+   "added_commit": "bd2b13d4cf153ba9321cfa2faf4143e5c8472ba3",
+   "added_date": "2026-09-23",
+   "added_subject": "Sweep of 2026-09-23: T5 and qutrit product witnesses, a T5 m=2 rank-7 search, literature update",
+   "receipt": "certs/N-m6-upper-16.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
   },
   {
    "slug": "S-m1-lower-2",
@@ -3369,6 +3726,41 @@
    }
   },
   {
+   "slug": "T3-m6-upper-27",
+   "file": "bounds/T3-m6-upper-27.json",
+   "orbit": "T3",
+   "m": 6,
+   "direction": "upper",
+   "rank": 27,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-09-23",
+   "author": "this repository",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "method": "structured construction",
+   "pull_request": 115,
+   "merge_commit": "2ce2188bcde0855200b915c35bedefc598af266a",
+   "merge_date": "2026-09-23",
+   "added_commit": "bd2b13d4cf153ba9321cfa2faf4143e5c8472ba3",
+   "added_date": "2026-09-23",
+   "added_subject": "Sweep of 2026-09-23: T5 and qutrit product witnesses, a T5 m=2 rank-7 search, literature update",
+   "receipt": "certs/T3-m6-upper-27.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
    "slug": "T5-m1-lower-3",
    "file": "bounds/T5-m1-lower-3.json",
    "orbit": "T5",
@@ -3501,6 +3893,76 @@
     "wall_clock_hours": 0.0479,
     "runs": 2,
     "hardware": "arm64 Darwin, 18 cores"
+   }
+  },
+  {
+   "slug": "T5-m3-upper-24",
+   "file": "bounds/T5-m3-upper-24.json",
+   "orbit": "T5",
+   "m": 3,
+   "direction": "upper",
+   "rank": 24,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-09-23",
+   "author": "this repository",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "method": "structured construction",
+   "pull_request": 115,
+   "merge_commit": "2ce2188bcde0855200b915c35bedefc598af266a",
+   "merge_date": "2026-09-23",
+   "added_commit": "bd2b13d4cf153ba9321cfa2faf4143e5c8472ba3",
+   "added_date": "2026-09-23",
+   "added_subject": "Sweep of 2026-09-23: T5 and qutrit product witnesses, a T5 m=2 rank-7 search, literature update",
+   "receipt": "certs/T5-m3-upper-24.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "T5-m4-upper-64",
+   "file": "bounds/T5-m4-upper-64.json",
+   "orbit": "T5",
+   "m": 4,
+   "direction": "upper",
+   "rank": 64,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-09-23",
+   "author": "this repository",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "method": "structured construction",
+   "pull_request": 115,
+   "merge_commit": "2ce2188bcde0855200b915c35bedefc598af266a",
+   "merge_date": "2026-09-23",
+   "added_commit": "bd2b13d4cf153ba9321cfa2faf4143e5c8472ba3",
+   "added_date": "2026-09-23",
+   "added_subject": "Sweep of 2026-09-23: T5 and qutrit product witnesses, a T5 m=2 rank-7 search, literature update",
+   "receipt": "certs/T5-m4-upper-64.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
    }
   },
   {

@@ -1897,6 +1897,181 @@
    "attested": null
   },
   {
+   "slug": "H3-m5-upper-12",
+   "orbit": "H3",
+   "m": 5,
+   "direction": "upper",
+   "rank": 12,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.45237190142858297,
+   "date": "2026-09-23",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "structured construction",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "H3-m6-upper-16",
+   "orbit": "H3",
+   "m": 6,
+   "direction": "upper",
+   "rank": 16,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.42061983571430495,
+   "date": "2026-09-23",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "structured construction",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "N-m5-upper-12",
+   "orbit": "N",
+   "m": 5,
+   "direction": "upper",
+   "rank": 12,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.45237190142858297,
+   "date": "2026-09-23",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "structured construction",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "N-m6-upper-16",
+   "orbit": "N",
+   "m": 6,
+   "direction": "upper",
+   "rank": 16,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.42061983571430495,
+   "date": "2026-09-23",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "structured construction",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "T3-m6-upper-27",
+   "orbit": "T3",
+   "m": 6,
+   "direction": "upper",
+   "rank": 27,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.5,
+   "date": "2026-09-23",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "structured construction",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "T5-m3-upper-24",
+   "orbit": "T5",
+   "m": 3,
+   "direction": "upper",
+   "rank": 24,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.6582119562353882,
+   "date": "2026-09-23",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "structured construction",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "T5-m4-upper-64",
+   "orbit": "T5",
+   "m": 4,
+   "direction": "upper",
+   "rank": 64,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.6460148371100896,
+   "date": "2026-09-23",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "structured construction",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
    "slug": "qubit_H-m6-lower-6",
    "orbit": "qubit_H",
    "m": 6,
