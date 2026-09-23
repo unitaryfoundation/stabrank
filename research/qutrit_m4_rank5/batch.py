@@ -17,10 +17,19 @@ slices all satisfy the modular equations) is re-decided here exactly: the
 terms are rebuilt from their phase codes and |M>^4 is tested against their
 span mod 2013265921 and in floating point (common.decide_terms). A hit with
 |M>^4 in the span is a decomposition with at most five terms, and the batch
-exits 2 with DECOMPOSITION FOUND on its last stdout line; a run that raises,
-or a hit on which the two tests disagree, is recorded under `undecided`,
-which fails the batch (exit 1). Exit 0 when every cover was matched and no
-hit is a decomposition.
+exits 2 with DECOMPOSITION FOUND on its last stdout line; a run that raises
+(UnpinnedFamily from the block reconstruction included), or a hit on which
+the two tests disagree, is recorded under `undecided`, which fails the batch
+(exit 1). Exit 0 when every cover was matched and no hit is a decomposition.
+
+--max-seconds S is the batch's wall-clock guard against the stage C tail
+(one cover has run for hours): the matcher checks the deadline inside its
+join and composite loops and aborts the running cover with BudgetExceeded,
+and every cover not yet started is recorded as undecided with the reason
+"not run", so the batch ends with a record that names the covers left over
+instead of running on. 0 (the default) means no guard. The aborted batch
+exits 1 and fails the aggregate; re-run it with --force and a larger cap
+or without one.
 
 Output: <out-dir>/batch_<K>.json (default results/ORBIT/), skipped when it
 exists (resume by rerunning; --force overwrites). The record's
@@ -48,11 +57,22 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common  # noqa: E402
 from common import M, N1, N2, RANK, X0  # noqa: E402
 from cover_census import P1, P2, CoverEnumerator3, Field3, _reduce  # noqa: E402
-from matcher import Matcher, psi_target  # noqa: E402
+from matcher import Budget, Matcher, psi_target  # noqa: E402
+
+
+def past_deadline(matcher):
+    return matcher.budget is not None and matcher.budget.deadline is not None \
+        and time.time() > matcher.budget.deadline
 
 
 def match_cover(orbit, matcher, target, cover, x0, rec, numerics):
-    """One cover at the base point, accumulated into the record."""
+    """One cover at the base point, accumulated into the record. A cover
+    reached after the batch's --max-seconds deadline is not run and is
+    recorded as undecided with that reason."""
+    if past_deadline(matcher):
+        rec["undecided"].append({"cover": [int(u) for u in cover], "x0": list(x0),
+                                 "reason": "not run: the batch passed its --max-seconds deadline"})
+        return
     try:
         hits, st = matcher.run(cover, x0, target)
     except Exception as exc:                          # noqa: BLE001
@@ -76,16 +96,18 @@ def match_cover(orbit, matcher, target, cover, x0, rec, numerics):
                                      "hit": len(rec["hits"]) - 1})
 
 
-def run_batch(orbit, part, index, verbose=False):
+def run_batch(orbit, part, index, verbose=False, max_seconds=0.0):
     """Run batch `index` of the partition. Returns (deterministic record,
-    extra fields), the extra fields not part of the deterministic hash."""
+    extra fields), the extra fields not part of the deterministic hash.
+    max_seconds > 0 sets the batch's wall-clock guard (module note)."""
     geo = common.batch_geometry(part, index)
     stage = geo["stage"]
     x0 = tuple(part["x0"])
     assert x0 == X0[orbit], "the partition's base point is not the cell's"
     E = CoverEnumerator3(orbit, N2)
     assert E.N == part["N"] and E.info["order"] == part["group_order"], "dictionary differs from the partition's"
-    matcher = Matcher(E.D, N2, E.F1, E.F2, verbose=verbose)
+    budget = Budget(seconds=max_seconds) if max_seconds else None
+    matcher = Matcher(E.D, N2, E.F1, E.F2, verbose=verbose, budget=budget)
     target = psi_target(orbit, N2, E.F1, E.F2)
     rec = {"batch": {"index": index, "stage": stage},
            "orbit": orbit, "m": M, "rank": RANK, "n1": N1, "N": E.N, "group_order": E.info["order"],
@@ -93,7 +115,7 @@ def run_batch(orbit, part, index, verbose=False):
            "covers": 0, "matched": 0, "refused": 0, "coord_solution_hist": {},
            "hits": [], "hit_count": 0, "decompositions": 0, "undecided": []}
     numerics = []
-    extra = {"candidates": 0, "kernel_s": 0.0, "match_s": 0.0}
+    extra = {"candidates": 0, "kernel_s": 0.0, "match_s": 0.0, "max_seconds": max_seconds}
     t0 = time.time()
     if stage == "A":
         units = geo["units"]
@@ -134,6 +156,7 @@ def run_batch(orbit, part, index, verbose=False):
     rec["hit_count"] = len(rec["hits"])
     rec["decompositions"] = sum(h["decomposition"] for h in rec["hits"])
     rec["deterministic_sha256"] = common.sha256_json(rec)
+    extra["aborted_at_deadline"] = past_deadline(matcher) and bool(rec["undecided"])
     extra["wall_s"] = time.time() - t0
     extra["hit_numerics"] = numerics
     return rec, extra
@@ -146,6 +169,9 @@ def main(argv):
     ap.add_argument("--partition", default=None)
     ap.add_argument("--out-dir", default=None)
     ap.add_argument("--force", action="store_true", help="overwrite an existing result")
+    ap.add_argument("--max-seconds", type=float, default=0.0,
+                    help="wall-clock guard for the batch: the running cover is aborted and the covers not yet "
+                         "started are recorded as undecided (0: none)")
     ap.add_argument("--verbose", action="store_true")
     a = ap.parse_args(argv[1:])
     common.lower_priority()
@@ -164,11 +190,12 @@ def main(argv):
           flush=True)
     started = datetime.datetime.now(datetime.timezone.utc)
     t_all = time.time()
-    rec, extra = run_batch(orbit, part, index, verbose=a.verbose)
+    rec, extra = run_batch(orbit, part, index, verbose=a.verbose, max_seconds=a.max_seconds)
     ended = datetime.datetime.now(datetime.timezone.utc)
     ru = os.times()
     rec.update({
         "candidates": extra["candidates"], "kernel_s": extra["kernel_s"], "match_s": extra["match_s"],
+        "max_seconds": extra["max_seconds"], "aborted_at_deadline": extra["aborted_at_deadline"],
         "wall_s": time.time() - t_all, "cpu_s": ru.user + ru.system,
         "started": started.isoformat(timespec="seconds"), "ended": ended.isoformat(timespec="seconds"),
         "hostname": socket.gethostname(), "git_commit": common.git_commit(),
@@ -197,6 +224,11 @@ def main(argv):
               flush=True)
         return 2
     if rec["undecided"]:
+        if rec["aborted_at_deadline"]:
+            not_run = sum(1 for u in rec["undecided"] if u["reason"].startswith("not run"))
+            print(f"{orbit} batch {index} ABORTED at the --max-seconds {a.max_seconds:.0f}s deadline: "
+                  f"{len(rec['undecided']) - not_run} cover(s) aborted while running, {not_run} not run; "
+                  f"see {os.path.relpath(path, common.ROOT)}", flush=True)
         raise RuntimeError(f"{orbit} batch {index}: {len(rec['undecided'])} undecided cover(s); see {path}")
     print(f"{orbit} batch {index} complete: no hit is a decomposition of |{orbit}>^4; written "
           f"{os.path.relpath(path, common.ROOT)}", flush=True)

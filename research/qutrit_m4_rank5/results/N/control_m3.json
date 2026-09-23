@@ -1,6 +1,6 @@
 {
  "orbit": "N",
- "git": "597f7e42987bd7750388acfabd3051e7fd1bb3f8",
+ "git": "b13bdb514291ae0c9ae0d1f28e34e292994f8b92",
  "bases": 924,
  "runs": 201,
  "own_pairs": 1,
@@ -11,7 +11,7 @@
  "unknown": 0,
  "missing": 0,
  "own_missed": [],
- "seconds": 98.91057586669922,
+ "seconds": 63.25345420837402,
  "stats": {
   "matched": 201,
   "refused": 0,

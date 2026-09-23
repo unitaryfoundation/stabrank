@@ -132,14 +132,18 @@ class BudgetExceeded(Exception):
 
 
 class UnpinnedFamily(Exception):
-    """A state reached the block reconstruction with parameters left in its
-    coefficient family. The reconstruction takes the residual coordinates at
-    one member of the family, so with a free parameter it would decide the
-    copies at an arbitrary point and could miss the decomposition; the run
-    raises instead, and the batch records the cover as undecided. Carrying
-    the parameter into the reconstruction as an unknown shared by the blocks
-    (as BlockOnlyMatcher does for its coordinate families) is the treatment
-    this exception stands in for."""
+    """A state reached the final loop of the family path in a shape its
+    block reconstruction does not handle: several blocks with parameters
+    left in the coefficient family (the parameter would have to be shared
+    across the blocks' reconstructions), or a strict coordinate solve that
+    cannot place a slice residual on the chosen translates (the translates
+    of two blocks dependent, so the split of the residual between them is
+    a family; a nonzero residual with no translate chosen; a residual
+    outside the span at the solve tolerance). A single block with a
+    coefficient family is reconstructed with the family parameter as an
+    unknown (reconstruct_block), so it does not raise. The run raises
+    instead of deciding the state at an arbitrary member, and the batch
+    records the cover as undecided."""
 
 
 class Budget:
@@ -1578,6 +1582,16 @@ def reconstruct_block(o, g, D, data, rng):
     summing to D, all nonzero, and each copy a valid stabilizer state; the
     flag says whether a coefficient family remained (degenerate).
 
+    When the state's coefficient family d = d0 + K lambda still has kappa
+    parameters, D is the pair (D0, DK) with the merged coefficient
+    D0 + DK lambda and every coordinate is the pair (a0, A) with
+    a0 + A lambda; lambda then enters the solve as kappa further unknowns
+    next to the g copy coefficients, so the copies are decided on the whole
+    family at once (the reconstruction at a random member, which the review
+    found, is gone), and a lambda left free at the end is a degenerate
+    result like a free copy coefficient. A scalar D and scalar coordinates
+    are the kappa = 0 case.
+
     The translate set records the classes with a nonzero net coordinate
     only. Two or more copies can sit in one further class with phases and
     coefficients that cancel there (c_1 w^{l_1} + c_2 w^{l_2} = 0), which the
@@ -1588,9 +1602,21 @@ def reconstruct_block(o, g, D, data, rng):
     shapes of the structure lemma for them (composite_rows), which keeps
     the extra freedom small: a plane copy has one class per composite point
     and at most three phases."""
-    ones = np.ones((g, 1), dtype=complex)
-    c0 = np.full(g, D / g, dtype=complex)
-    Kc = _affine_solve_C(ones.T, np.zeros(1, dtype=complex))[1]     # sum-zero directions
+    if isinstance(D, tuple):
+        D0, DK = D[0], np.asarray(D[1], dtype=complex).reshape(-1)
+    else:
+        D0, DK = D, np.zeros(0, dtype=complex)
+    kappa = len(DK)
+
+    def affine(v):
+        """(constant, row over lambda) of a coordinate given as a scalar or a pair."""
+        if isinstance(v, tuple):
+            return complex(v[0]), np.asarray(v[1], dtype=complex).reshape(-1)
+        return complex(v), np.zeros(kappa, dtype=complex)
+
+    # the unknowns z = (c_1, ..., c_g, lambda); sum_j c_j - DK lambda = D0
+    row = np.concatenate([np.ones(g, dtype=complex), -DK])[None, :]
+    c0, Kc = _affine_solve_C(row, np.array([D0], dtype=complex))
     if [x for x, _ in data[:2]] != [E1, E2]:
         raise AssertionError("block data must start with the two coordinate offsets")
     A_code = o.absent
@@ -1613,7 +1639,8 @@ def reconstruct_block(o, g, D, data, rng):
     def dfs(idx, c0, Kc, codes):
         if idx == len(data):
             degenerate = Kc.shape[1] > 0
-            c = c0 + Kc @ (rng.normal(size=Kc.shape[1]) + 1j * rng.normal(size=Kc.shape[1])) if degenerate else c0
+            z = c0 + Kc @ (rng.normal(size=Kc.shape[1]) + 1j * rng.normal(size=Kc.shape[1])) if degenerate else c0
+            c = z[:g]
             if np.any(np.abs(c) < 1e-9):
                 return
             full = [dict(cd) for cd in codes]
@@ -1634,7 +1661,9 @@ def reconstruct_block(o, g, D, data, rng):
             extra += list(itertools.combinations(others, nz))
         for Z in extra:
             classes = S + list(Z)
-            b = np.array([a[k] for k in S] + [0.0] * len(Z), dtype=complex)
+            parts = [affine(a[k]) for k in S] + [(0.0, np.zeros(kappa, dtype=complex))] * len(Z)
+            b = np.array([p[0] for p in parts], dtype=complex)
+            Bl = np.array([p[1] for p in parts], dtype=complex).reshape(len(classes), kappa)
             for assign in itertools.product(classes + [None], repeat=g):
                 used = [k for k in assign if k is not None]
                 if set(used) != set(classes) or any(used.count(k) < 2 for k in Z):
@@ -1656,9 +1685,10 @@ def reconstruct_block(o, g, D, data, rng):
                     phase_opts.append(ls)
                 else:
                     for phases in itertools.product(*phase_opts):
-                        A = np.zeros((len(classes), g), dtype=complex)
+                        A = np.zeros((len(classes), g + kappa), dtype=complex)
                         for j, l in zip(present, phases):
                             A[classes.index(assign[j]), j] = W3P[l]
+                        A[:, g:] = -Bl                       # A c - Bl lambda = b
                         sol = _affine_solve_C(A @ Kc, b - A @ c0)
                         if sol is None:
                             continue
@@ -1796,6 +1826,7 @@ class Matcher:
             return [], stats
         blocks = [Block(self.options(u), mult[u], i) for i, u in enumerate(distinct) if mult[u] > 1]
         self._proj = _ProjectorCache(blocks)
+        self._compat_index = None
         self.last_stats = stats
         bpos = {b.pos for b in blocks}
         exempt = tuple(sorted(bpos))
@@ -1895,8 +1926,13 @@ class Matcher:
         direction space and against the unpinned ones pairwise; every
         candidate is then decided exactly by the restriction, so the list is
         complete (the P1 family of a solution contains its complex family)."""
-        key = id(sols)
-        if getattr(self, "_compat_index", (None,))[0] != key:
+        # the index is keyed on the solution list itself (a reference is
+        # kept, so the list cannot be freed and its id reused): keyed on
+        # id(sols) it was served stale to the next run whose second-slice
+        # list landed at the same address, which dropped compatible pairs
+        # unrecorded (8 of the 270 product-control runs lost their hit)
+        idx = getattr(self, "_compat_index", None)
+        if idx is None or idx[0] is not sols:
             pinned, free = {}, []
             for j, (_, _, f) in enumerate(sols):
                 if f.kappa1 == 0:
@@ -1907,7 +1943,7 @@ class Matcher:
             n = len(sols[0][2].parts[0][0])
             D = (np.array([sols[j][2].parts[0][0] for j in flat], dtype=np.int64) % P1 if flat
                  else np.zeros((0, n), dtype=np.int64))
-            self._compat_index = (key, pinned, free, D, flat)
+            self._compat_index = (sols, pinned, free, D, flat)
         _, pinned, free, D, flat = self._compat_index
         d0, K = f1.parts[0]
         if K.shape[1] == 0:
@@ -1950,42 +1986,55 @@ class Matcher:
             new.append(sp2)
         return new
 
-    def _block_coordinates(self, fam, arrays, blocks, combo, Ssel, rhs, strict=False):
+    def _block_coordinates(self, fam, arrays, blocks, combo, Ssel, rhs, strict=False, affine=False):
         """Coordinates of the residual rhs - W d on the chosen translates
         (complex), or None when it does not lie in their span or the split
         between blocks is ambiguous (the chosen translates of different
         blocks dependent). In the join None means no pruning; at the final
         reconstruction (`strict`) it would mean a silently dropped state, so
-        the run raises UnpinnedFamily there instead."""
-        d = fam.coefficients(self.rng)
+        the run raises UnpinnedFamily there instead. With `affine` the
+        coordinates are returned as (a0, A) with a(lambda) = a0 + A lambda
+        over the family d = d0 + K lambda (A has kappa columns), which the
+        reconstruction of a single block takes with lambda as an unknown;
+        without it the residual is taken at a generic member of the family."""
+        d0, K = fam.parts[2]
+        if not affine:
+            d0, K = fam.coefficients(self.rng), K[:, :0]
         r_all = len(arrays) + len(blocks)
         bpos = {b.pos for b in blocks}
         ords = [i for i in range(r_all) if i not in bpos]
         W = np.zeros((rhs[2].shape[0], r_all), dtype=complex)
         for i, c in zip(ords, combo):
             W[:, i] = arrays[ords.index(i)][2][c]
-        res = rhs[2] - W @ d
+        res = np.column_stack([rhs[2] - W @ d0, -(W @ K)])          # columns: the constant part, then per lambda
         _, Vs = self._proj(Ssel)
         V = Vs[2]
         if V.shape[1] == 0:
-            if np.linalg.norm(res) < 1e-7:
-                return np.zeros(0)
+            if np.abs(res).max() < 1e-7:
+                out = np.zeros((0, K.shape[1] + 1), dtype=complex)
+                return (out[:, 0], out[:, 1:]) if affine else out[:, 0]
             if strict:
                 raise UnpinnedFamily("reconstruction: a slice residual is nonzero with no translate chosen")
             return None
-        sol = _affine_solve_C(V, res)
-        if sol is None:
-            if strict:
-                raise UnpinnedFamily("reconstruction: a slice residual lies outside the span of the chosen "
-                                     "translates at the solve tolerance although the exact restriction accepted it")
-            return None
-        if sol[1].shape[1]:
-            if strict:
-                raise UnpinnedFamily(f"reconstruction: the chosen translates of the blocks are dependent "
-                                     f"({sol[1].shape[1]} free coordinates), so the split of the residual between "
-                                     "the blocks is a family; carrying it as unknowns is not implemented")
-            return None
-        return sol[0]
+        cols = []
+        for j in range(res.shape[1]):
+            sol = _affine_solve_C(V, res[:, j])
+            if sol is None:
+                if strict:
+                    raise UnpinnedFamily("reconstruction: a slice residual lies outside the span of the chosen "
+                                         "translates at the solve tolerance although the exact restriction "
+                                         "accepted it")
+                return None
+            if sol[1].shape[1]:
+                if strict:
+                    raise UnpinnedFamily(f"reconstruction: the chosen translates of the blocks are dependent "
+                                         f"({sol[1].shape[1]} free coordinates), so the split of the residual "
+                                         "between the blocks is a family; carrying it as unknowns is not "
+                                         "implemented")
+                return None
+            cols.append(sol[0])
+        a = np.column_stack(cols)
+        return (a[:, 0], a[:, 1:]) if affine else a[:, 0]
 
     def _complete(self, distinct, x0, opts, ords, blocks, cl, bl, fam, sp, target, stats):
         r = len(opts)
@@ -2025,11 +2074,14 @@ class Matcher:
         hits = []
         full_arrays = [o.arrays() for o in opts]
         for cl2, bl2, f, _, _ in states:
-            if blocks and f.kappa > 0:
+            if len(blocks) > 1 and f.kappa > 0:
                 stats["unpinned"] = stats.get("unpinned", 0) + 1
                 raise UnpinnedFamily(f"{f.kappa}-parameter coefficient family left after the nine slice "
-                                     f"equations on a base with a repeated state (blocks {[b.g for b in blocks]}); "
-                                     "the block reconstruction would use an arbitrary member of the family")
+                                     f"equations on a base with {len(blocks)} repeated states (blocks "
+                                     f"{[b.g for b in blocks]}); the reconstruction with the parameter shared "
+                                     "across several blocks is not implemented")
+            if blocks and f.kappa > 0:
+                stats["unpinned_reconstructed"] = stats.get("unpinned_reconstructed", 0) + 1
             ord_terms = []
             for i in range(r):
                 o = opts[i]
@@ -2040,11 +2092,10 @@ class Matcher:
                 for c, x in enumerate(COMP):
                     t[pidx(add(x0, x))] = o.vecs[cl2[c][i]]
                 ord_terms.append(t.ravel())
-            d = f.coefficients(self.rng)
-            coeffs = [d[i] for i in ords]
             if not blocks:
                 hits.append(self.confirm(ord_terms, f.kappa, target))
                 continue
+            d0, K = f.parts[2]
             per_block = [[] for _ in blocks]
             for s, x in enumerate(OFFSETS):
                 if s < 2:
@@ -2052,17 +2103,17 @@ class Matcher:
                 else:
                     combo, Ssel = cl2[s - 2], bl2[s - 2]
                 rhs = target.rhs(add(x0, x))
-                a = self._block_coordinates(f, full_arrays, blocks, combo, Ssel, rhs, strict=True)
+                a0, A = self._block_coordinates(f, full_arrays, blocks, combo, Ssel, rhs, strict=True, affine=True)
                 pos = 0
                 for bi, (b, S) in enumerate(zip(blocks, Ssel)):
-                    per_block[bi].append((x, {k: a[pos + j] for j, k in enumerate(S)}))
+                    per_block[bi].append((x, {k: (a0[pos + j], A[pos + j]) for j, k in enumerate(S)}))
                     pos += len(S)
-            recon = [reconstruct_block(b.o, b.g, d[b.pos], per_block[bi], self.rng)
+            recon = [reconstruct_block(b.o, b.g, (d0[b.pos], K[b.pos]), per_block[bi], self.rng)
                      for bi, b in enumerate(blocks)]
             stats["reconstructions"] += 1
             for choice in itertools.product(*recon):
                 terms = list(ord_terms)
-                degenerate = f.kappa > 0
+                degenerate = False
                 for b, (copies, deg) in zip(blocks, choice):
                     degenerate |= deg
                     for _, cd in copies:

@@ -19,11 +19,14 @@ Commands (ORBIT is N or H3)
                             list the dependent and repeated full 5-covers (stages B, C),
                             time K of each multiplicity pattern through the matcher,
                             and with --write store the list with its hash
-  partition ORBIT [--target-s S] [--target-bc-s S] [--match-ms X]
+  partition ORBIT [--target-s S] [--target-bc-s S] [--match-ms X] [--rates JSON]
                             write partition_ORBIT.json: stage A pivot pairs grouped
                             into batches of about S seconds (census seconds plus X ms
-                            per cover), stage B and C covers round-robin into batches
-                            of about --target-bc-s seconds at the sampled rates
+                            per cover), stage B covers round-robin into batches of about
+                            --target-bc-s seconds, stage C covers dealt longest first onto
+                            the least loaded batch (a cover estimated at the target or
+                            above gets its own batch), at the sampled rates by pattern or
+                            the --rates overrides by cover class
   sample ORBIT [--count K]  time the matcher on K stage A covers drawn from the census
   control-covers ORBIT      the census's full 3-covers and 4-covers against the stored
                             rank-3 list and slice_lift.all_decompositions at rank 4
@@ -212,6 +215,45 @@ def degenerate_covers(E, r, covers3, covers4):
     return sorted(out)
 
 
+def dependent_block_translates(Mt, u1, u2):
+    """Whether some choice of at most two Pauli translates of each of the
+    two block states u1, u2 is linearly dependent (two states in one Pauli
+    orbit are the plain case; |00>, |01> against |0+> another). On such a
+    selection the strict `_block_coordinates` of the final loop raises
+    UnpinnedFamily, and the (2, 2, 1) covers with this property are the
+    heavy tail of stage C (note, section 8)."""
+    T1, T2 = Mt.options(u1).T, Mt.options(u2).T
+
+    def subs(T):
+        return [S for j in (1, 2) for S in itertools.combinations(range(len(T)), j)]
+
+    for S1 in subs(T1):
+        for S2 in subs(T2):
+            V = np.column_stack([T1[i] for i in S1] + [T2[i] for i in S2])
+            if np.linalg.matrix_rank(V, tol=1e-8) < V.shape[1]:
+                return True
+    return False
+
+
+def cover_class(E, Mt, cover):
+    """The cost class of a stage B or C cover: "B" for five distinct states;
+    for a repeated cover its multiplicity pattern, with " kappa>=1" appended
+    when the distinct states are dependent (the only covers on which the
+    kappa > 0 UnpinnedFamily can fire) and " dependent" appended to a
+    (2, 2, 1) cover whose two blocks admit dependent translates."""
+    if stage_of(cover) == "B":
+        return "B"
+    distinct = sorted(set(cover))
+    key = str(common.multiplicity_pattern(cover))
+    fam = Family.from_cover(E, distinct)
+    if fam is not None and fam.kappa:
+        key += " kappa>=1"
+    rep = [u for u in distinct if cover.count(u) > 1]
+    if len(rep) == 2 and dependent_block_translates(Mt, rep[0], rep[1]):
+        key += " dependent"
+    return key
+
+
 def degenerate(args):
     orbit = args.orbit
     E = enumerator(orbit)
@@ -325,25 +367,70 @@ def partition(args):
     with open(common.degenerate_sample_path(orbit)) as f:
         smp = json.load(f)
     rates = {pat: float(np.mean(v["seconds"])) for pat, v in smp["patterns"].items()}
+    rates["B"] = rates.pop("(1, 1, 1, 1, 1)")
+    source = "degenerate_sample.json means by pattern"
+    if args.rates:
+        rates.update({k: float(v) for k, v in json.loads(args.rates).items()})
+        source = "degenerate_sample.json means by pattern, overridden by --rates"
+    Mt = new_matcher()
+    classes = [cover_class(E, Mt, c) for c in covers]
+
+    def rate_of(cls):
+        # the finest key present: "(2, 2, 1) dependent", then "(2, 2, 1)"
+        parts = cls.split(" ")
+        for j in range(len(parts), 0, -1):
+            key = " ".join(parts[:j])
+            if key in rates:
+                return rates[key]
+        raise KeyError(f"no rate for cover class {cls!r}")
+
     rec["cost_model"]["degenerate_sample"] = os.path.relpath(common.degenerate_sample_path(orbit), HERE)
-    rec["cost_model"]["s_per_cover_by_pattern"] = rates
+    rec["cost_model"]["s_per_cover_by_class"] = {cls: rate_of(cls) for cls in sorted(set(classes))}
+    rec["cost_model"]["rates_source"] = source
+    rec["cost_model"]["covers_by_class"] = {cls: classes.count(cls) for cls in sorted(set(classes))}
     ids = {"B": [], "C": []}
     cost = {"B": 0.0, "C": 0.0}
     for k, c in enumerate(covers):
         st = stage_of(c)
         ids[st].append(k)
-        cost[st] += rates[str(common.multiplicity_pattern(c))]
-    for st in ("B", "C"):
-        if not ids[st]:
-            continue
-        n = max(1, math.ceil(cost[st] / args.target_bc_s))
+        cost[st] += rate_of(classes[k])
+    if ids["B"]:
+        n = max(1, math.ceil(cost["B"] / args.target_bc_s))
         # round robin over the sorted cover list: the cost of a cover
         # correlates with its 3-cover or 4-cover, so contiguous chunks
         # would not balance
         for b in range(n):
-            geometry.append({"index": len(geometry), "stage": st, "cover_ids": ids[st][b::n]})
-        rec[f"stage_{st.lower()}_batches"] = n
-        rec["estimated_s"][st] = cost[st]
+            geometry.append({"index": len(geometry), "stage": "B", "cover_ids": ids["B"][b::n]})
+        rec["stage_b_batches"] = n
+        rec["estimated_s"]["B"] = cost["B"]
+    if ids["C"]:
+        # stage C has a heavy tail: a cover whose estimate reaches the
+        # target gets a batch of its own, the rest are dealt by longest
+        # processing time first onto the least loaded batch, so the
+        # (2, 2, 1) covers are spread and every batch estimate stays near
+        # the target; within a batch the cheap covers run first, so a
+        # --max-seconds abort leaves the fewest covers not run
+        heavy = [k for k in ids["C"] if rate_of(classes[k]) >= args.target_bc_s]
+        light = [k for k in ids["C"] if k not in set(heavy)]
+        n_light = max(1, math.ceil(sum(rate_of(classes[k]) for k in light) / args.target_bc_s)) if light else 0
+        loads = [0.0] * n_light
+        members = [[] for _ in range(n_light)]
+        for k in sorted(light, key=lambda k: (-rate_of(classes[k]), k)):
+            b = min(range(n_light), key=lambda b: (loads[b], b))
+            loads[b] += rate_of(classes[k])
+            members[b].append(k)
+        for b in range(n_light):
+            mem = sorted(members[b], key=lambda k: (rate_of(classes[k]), k))
+            geometry.append({"index": len(geometry), "stage": "C", "cover_ids": mem,
+                             "estimated_s": round(loads[b], 1),
+                             "classes": {cls: sum(1 for k in mem if classes[k] == cls)
+                                         for cls in sorted(set(classes[k] for k in mem))}})
+        for k in sorted(heavy, key=lambda k: (-rate_of(classes[k]), k)):
+            geometry.append({"index": len(geometry), "stage": "C", "cover_ids": [k],
+                             "estimated_s": round(rate_of(classes[k]), 1), "classes": {classes[k]: 1}})
+        rec["stage_c_batches"] = n_light + len(heavy)
+        rec["stage_c_single_cover_batches"] = len(heavy)
+        rec["estimated_s"]["C"] = cost["C"]
     rec["degenerate"] = {"file": os.path.relpath(common.degenerate_path(orbit), HERE), "sha256": deg["sha256"],
                          "count": len(covers), "stage_b_covers": len(ids["B"]),
                          "stage_c_covers": len(ids["C"])}
@@ -1017,6 +1104,10 @@ def main(argv):
     p.add_argument("--target-s", type=float, default=700.0, help="seconds per stage A batch")
     p.add_argument("--target-bc-s", type=float, default=700.0, help="seconds per stage B or C batch")
     p.add_argument("--match-ms", type=float, default=70.0, help="matcher milliseconds per stage A cover")
+    p.add_argument("--rates", default=None,
+                   help="JSON object of seconds per cover by class, overriding the sampled means: keys \"B\", "
+                        "a multiplicity pattern such as \"(2, 1, 1, 1)\", or a pattern with \" kappa>=1\" or "
+                        "\" dependent\" appended (driver.cover_class)")
     p = add("sample", sample)
     p.add_argument("--count", type=int, default=200)
     add("control-covers", control_covers)

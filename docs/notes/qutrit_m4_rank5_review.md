@@ -1,5 +1,13 @@
 # Review of the rank-5 exclusion pipeline for |N>^4 and |H3>^4
 
+Follow-up (2026-09-23, later): section 8 of the exclusion note records
+what was done about the open items of section 4 (the single-block
+unpinned family is reconstructed with the parameter as an unknown, the
+dependent-translates raise stays and is confined to 27 N covers run as
+single-cover batches, the lists and partitions were regenerated), and a
+further defect found on the way: `Matcher._compatible` cached its index by
+`id(sols)` and served it stale across runs, dropping compatible pairs.
+
 Status (2026-09-23). Review of `research/qutrit_m4_rank5/` at the head of
 `qutrit-m4-rank5-pipeline` (commit e548e5a) against the argument of
 `docs/notes/qutrit_m4_rank5_exclusion.md`, sections 1 to 7. The question
