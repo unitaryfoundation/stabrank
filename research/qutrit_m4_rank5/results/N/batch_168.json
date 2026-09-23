@@ -1,0 +1,51 @@
+{
+ "batch": {
+  "index": 168,
+  "stage": "C",
+  "cover_ids": [
+   26305
+  ],
+  "n_covers": 1
+ },
+ "orbit": "N",
+ "m": 4,
+ "rank": 5,
+ "n1": 2,
+ "N": 360,
+ "group_order": 72,
+ "x0": [
+  0,
+  0
+ ],
+ "partition_sha256": "455303990789bf9c8c4f1ac5b2ed9df2046e85830badc62492135013258fce84",
+ "degenerate_sha256": "a505dcbbc00a3e3296163c8751dd34269932154ec2323adce837a821e7e98df3",
+ "covers": 1,
+ "matched": 1,
+ "refused": 0,
+ "coord_solution_hist": {
+  "196,7056": 1
+ },
+ "hits": [],
+ "hit_count": 0,
+ "decompositions": 0,
+ "undecided": [],
+ "deterministic_sha256": "86bf4680625041760e84aa970a3f09ba405281135067cc8674e2886d67d84681",
+ "candidates": 0,
+ "kernel_s": 0.0,
+ "match_s": 809.7111525535583,
+ "max_seconds": 14400.0,
+ "aborted_at_deadline": false,
+ "wall_s": 810.529078245163,
+ "cpu_s": 811.23,
+ "started": "2026-09-23T17:54:07+00:00",
+ "ended": "2026-09-23T18:07:38+00:00",
+ "hostname": "b429c21234f4",
+ "git_commit": "2126dde5543ccb93f3f26119d8dcca8e9ebf801e",
+ "matcher": "reference",
+ "kernel_version": "Linux 6.8.0-51-generic #52~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Dec  9 15:00:52 UTC 2",
+ "machine": "x86_64",
+ "python": "3.12.14",
+ "numpy": "2.3.5",
+ "hit_numerics": [],
+ "sha256": "b811fa0e64c6838e9d3b554bafdd20887d657b358a6fc866ced4e51ae15678b6"
+}
