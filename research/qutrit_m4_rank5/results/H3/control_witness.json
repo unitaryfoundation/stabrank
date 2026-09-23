@@ -1,0 +1,60 @@
+{
+ "orbit": "H3",
+ "git": "b449a56bdaeb4037907d68e7ab00206643cadd10",
+ "witness": "bounds/H3-m4-upper-8.json",
+ "rank": 8,
+ "bases_total": 3,
+ "run": 1,
+ "passed": 0,
+ "aborted": [
+  0
+ ],
+ "failed": [],
+ "missing": [
+  1,
+  2
+ ],
+ "pass": false,
+ "complete": false,
+ "bases": [
+  {
+   "base": 0,
+   "cover": [
+    0,
+    0,
+    117,
+    117,
+    129,
+    129,
+    141,
+    141
+   ],
+   "x0": [
+    0,
+    0
+   ],
+   "distinct": 4,
+   "multiplicities": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "kappa": 1,
+   "outcome": "aborted",
+   "reason": "join at coordinate slice (0, 1): 458564 states exceed the cap 200000",
+   "seconds": 458.6,
+   "peak_rss_gb": 6.316,
+   "witness_hits": 0,
+   "other_decompositions": 0,
+   "git": "b449a56bdaeb4037907d68e7ab00206643cadd10",
+   "host": "vincentrusso-MacBook-Pro",
+   "coord_solutions": [
+    458564
+   ],
+   "coord_states": [
+    5420
+   ]
+  }
+ ]
+}

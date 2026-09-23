@@ -34,9 +34,21 @@ Python; there is no compiled kernel.
   checks, `pairs_of`, `stage_of`, and `decide_terms` / `hit_record`.
 - `driver.py`: `census`, `degenerate [--sample K --cap-s S] [--write]`,
   `partition`, `sample`, the controls `control-covers`, `control-planted`,
-  `control-product`, `control-m3`, `control-witness`, and `export-witness`
-  (the seven Lean terms of the rank-7 N witness to
-  `N_m4_rank7_witness.json`).
+  `control-product`, `control-m3`, `control-witness` (one base per process,
+  below), and `export-witness` (the seven Lean terms of the rank-7 N
+  witness to `N_m4_rank7_witness.json`, each recognised as a stabilizer
+  state by `stabilizer_spec`, affine support and quadratic phase, and
+  stored with its (k, x0, W, Q, l) spec; the earlier version tested
+  membership in `dictionary(3, 4)`, 7,439,040 states of dimension 81, whose
+  construction with its phase patterns and field images takes tens of GB).
+- `N_m4_rank7_witness.json`: the exported witness (phase codes, specs,
+  coefficients).
+- `results/controls/witness_ORBIT_base_K.json`: one record per
+  `control-witness` base: the base, its counts (distinct states,
+  multiplicities, kappa), the caps, the outcome (`pass`, `fail`,
+  `aborted`) with its reason, seconds, peak RSS and the matcher's stats
+  (partial after an abort); `results/ORBIT/control_witness.json` is their
+  collection (`--summary`).
 - `partition_N.json`, `partition_H3.json`: the batch geometry per cell,
   hashed. N: 1,209 pivot pairs in 37 stage A batches, 12,175 dependent
   covers in 128 stage B batches, 5,910 repeated covers in 39 stage C
@@ -152,4 +164,62 @@ H3.
 
 Section 5 of the note lists them; `results/ORBIT/control_*.json` hold the
 outcomes. Run with `driver.py control-covers N`, `control-planted N`,
-`control-product N`, `control-m3 N`, `control-witness N` (and H3).
+`control-product N`, `control-m3 N` (and H3).
+
+### control-witness
+
+The rank-7 N witness (the Lean terms) and the rank-8 H3 witness
+(`bounds/H3-m4-upper-8.json`) recovered from their all-visible (qutrit
+pair, base point) slices with the matcher at rank 7 or 8. N has 6 bases,
+H3 has 3 (`--list-bases` prints them with their distinct-state count,
+multiplicities and kappa). Each base runs in its own process and writes
+`results/controls/witness_ORBIT_base_K.json`; a base passes when the
+witness is recovered exactly once as a genuine rank-7 (rank-8)
+decomposition. The caps `--max-rss-gb` (default 8; also refuses a dense
+solve whose feature matrices would exceed it, before allocating),
+`--max-states` (200,000 joined states), `--max-solutions` (2,000,000 per
+slice equation, the `_dense` candidate cap included) and `--max-seconds`
+abort the base with the reason recorded instead of letting the process be
+killed; 0 disables a cap.
+
+```
+nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/driver.py control-witness N --list-bases
+nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/driver.py control-witness N --base 3 --max-rss-gb 100 --max-states 0 --max-seconds 0
+nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/driver.py control-witness N --summary
+```
+
+Status (2026-09-22, one core at nice 19 on the loaded laptop, 10-minute
+cap per base; section 7 of the note has the diagnosis): no base has
+passed yet. N base 0 (seven distinct states, kappa 3) is refused at the
+first coordinate slice after 25 s, 2,084,934 hash candidates from the
+3-parameter dense solve; bases 1, 2 and 5 have the same shape and were
+not run. N base 3 (three repeated pairs and one ordinary state, kappa 1):
+80,759 solutions per coordinate slice (42 s and 28 s), 6,785 states after
+the first, the join of the second still running at the deadline after
+3.9 million pairs (1.2 million dropped by a dead coefficient, 2.7 million
+by the split tracking), peak RSS 1.5 GB. N base 4 (one repeated pair,
+kappa 2): 87,766 solutions per slice (160 s and 171 s), 3,689 states
+after the first, more than 200,338 joined states after the second,
+peak RSS 0.8 GB. H3 base 0 (four repeated pairs, no ordinary state,
+kappa 1): 458,564 pinned states per coordinate slice (274 s and 123 s,
+from 54,260 translate-set solutions), 5,420 after the first slice's
+split tracking, more than 458,564 after the join, peak RSS 6.3 GB. H3
+bases 1 (eight distinct states, kappa 4) and 2 (four repeated pairs) were
+not run. To finish on the pod, one base per process, 15 in parallel:
+
+```
+mkdir -p research/qutrit_m4_rank5/results/controls
+{ seq 0 5 | sed 's/^/N /'; seq 0 2 | sed 's/^/H3 /'; } | xargs -P 15 -L 1 sh -c \
+  'nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/driver.py control-witness "$0" --base "$1" \
+   --max-rss-gb 100 --max-states 20000000 --max-solutions 20000000 --max-seconds 0 --verbose \
+   > research/qutrit_m4_rank5/results/controls/witness_"$0"_base_"$1".log 2>&1'
+nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/driver.py control-witness N --summary
+nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/driver.py control-witness H3 --summary
+```
+
+Nine processes in all (six N, three H3), each within the pod's 124 GB
+through `--max-rss-gb 100` (the cap is checked before every translate-set
+selection and after every slice, and a dense solve is refused before it
+allocates when its estimate exceeds the cap). The kappa-3 and kappa-4
+bases will still abort at `--max-solutions` unless it is raised further;
+their first coordinate slice has millions of exact solutions.

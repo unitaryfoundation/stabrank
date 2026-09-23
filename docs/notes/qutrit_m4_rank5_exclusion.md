@@ -432,7 +432,9 @@ cells, item 3 passes for N and is unfinished for H3, item 4 was not run).
    multisets; the stored rank-4 decomposition is recovered from its own
    all-visible base, and 200 further sampled (multiset, base point) pairs
    produce genuine rank-4 decompositions only in the stored G_3 class (9
-   genuine hits in 201 runs, 0 refused, 287 s): PASS. For H3 the same
+   genuine hits in 201 runs, 0 refused, 287 s; 144 s with the same
+   counts after the solver changes made for the witness control): PASS.
+   For H3 the same
    command (`control-m3 H3 --sample 200`) ran for 60 minutes without
    finishing and was killed; it logged no partial counts (the multiset
    enumeration and the first runs print nothing until the end), so the H3
@@ -440,7 +442,12 @@ cells, item 3 passes for N and is unfinished for H3, item 4 was not run).
    them have every distinct state repeated or kappa = 2, and the block
    translate sets multiply; the control should be rerun with a smaller
    `--sample` and its per-run timing printed.
-4. `control-witness`: NOT RUN (status paragraph below).
+4. `control-witness`: run one base per process under a 10-minute cap;
+   no base passed yet. Four of the nine bases were run (N bases 0, 3, 4,
+   H3 base 0); each aborted with its reason recorded, none was killed.
+   The kappa-3 base is refused at the first coordinate slice (millions of
+   exact solutions), the bases with repeated states finish both
+   coordinate slices but their join exceeds 200,000 states or the cap.
 
 Rates (per cover, one base point). Stage A (`driver.py sample`, 300
 census covers): N 126 ms mean, 100 ms median, 1.13 s max; H3 100 ms, 82
@@ -500,14 +507,6 @@ Status of what the plan asked for and this session did not finish (the
 session ran under a 10-minute cap per job after the first degenerate
 sampling attempt hung for two hours on one stage C cover):
 
-- `control-witness` (the rank-7 N witness exported from the Lean file by
-  `driver.py export-witness`, the rank-8 H3 witness of
-  `bounds/H3-m4-upper-8.json`, each recovered from its all-visible base
-  points with the matcher at rank 7 or 8): NOT RUN. It needs the dense
-  1-parameter solve at 7 or 8 terms (28^3 x 28^4 and 28^4 x 28^4 feature
-  products per slice), which the 10-minute cap does not fit for every
-  base; `--base K` runs one (base, x0) pair at a time and the report is
-  written after every base.
 - Measured batches: NOT RUN. The rates above come from the samples; the
   first stage A, B and C batch of each cell should be run on the pod
   before the rest (`batch.py N 0`, `batch.py N 37`, `batch.py N 165`,
@@ -518,3 +517,147 @@ sampling attempt hung for two hours on one stage C cover):
 - The aggregate has not been exercised on stored batches of these cells;
   it is the H^6 aggregate with the cell, base point and per-cell paths
   added.
+
+The witness control (2026-09-22, `driver.py control-witness`, one base per
+process, 10-minute cap per run, one core at nice 19 on the loaded
+laptop). The rank-7 N witness (the seven Lean terms, exported by
+`export-witness`) has 6 all-visible (base, x0) pairs, all at x0 = (2, 2)
+and each from one qutrit pair: bases 0, 1, 2 and 5 have seven distinct
+states with kappa = 3, base 3 has three repeated pairs and one ordinary
+state (multiplicities (2, 2, 2, 1), kappa = 1), base 4 one repeated pair
+and five ordinary states ((2, 1, 1, 1, 1, 1), kappa = 2). The rank-8 H3
+witness (`bounds/H3-m4-upper-8.json`, four m = 3 terms tensored with a
+rank-2 decomposition of |H3>) has 3 pairs at x0 = (0, 0): bases 0 and 2
+are four repeated pairs with no ordinary state ((2, 2, 2, 2), kappa = 1
+on the four distinct states), base 1 eight distinct states with
+kappa = 4. The earlier attempts (the N run killed with exit 137 after 63
+minutes on the 124 GB pod, the H3 run stopped after 4 hours without
+output) are explained by three separate costs, each now bounded with an
+explicit failure.
+
+1. Memory: `export-witness` checked that the seven Lean terms are
+   stabilizer states by membership in `dictionary(3, 4)`, which has
+   7,439,040 states of dimension 81; the dictionary, its phase patterns,
+   the two field images and the lookup table run to tens of GB and this
+   is the most likely place the pod run died (the export runs first, and
+   the matcher on any base uses less than 7 GB, below). The terms are now
+   recognised directly (`stabilizer_spec`: affine support of size 3^k,
+   quadratic phase exponent on its coordinates, fitted exactly mod 3) and
+   stored with their (k, x0, W, Q, l) specs; the export takes seconds.
+2. The dense coefficient-family solve with many ordinary states. N base 0
+   (kappa = 3, seven ordinary states, 28 options each) hits the
+   2,000,000-candidate cap of `slice_cover._dense` at the first
+   coordinate slice after 25 s (peak RSS 1.4 GB): a 3-parameter family of
+   seven terms in a 9-dimensional slice has millions of exact solutions at
+   one slice, and the feature product itself is small (614,656 x 21,952
+   with 70 Laplace features, about 0.4 GB). H3 base 1 (kappa = 4, eight
+   ordinary states) is the 4-hour run: 28^4 x 28^4 sides with 252
+   features, chunks of 32 rows against 614,656, about 1e14 flops before
+   the first candidate is decided, and the same candidate explosion after
+   it. These bases are refused, not computed: `Budget.check_dense`
+   estimates the feature matrices from the side products and the
+   parameter count before the solve allocates, and the candidate cap
+   raises `BudgetExceeded` with the count. Bases 1, 2 and 5 of N have
+   the same shape as base 0 and were not run.
+3. The product over the blocks' translate sets when several states repeat.
+   With no ordinary state (H3 bases 0 and 2) the old path enumerated
+   46^4 = 4,477,456 translate-set selections per slice equation, each
+   with three annihilators computed in Python; and nothing pins the
+   1-parameter family before the reconstruction, so the states after the
+   two coordinate slices are the full product of the two solution lists.
+   Both are replaced. The selections are now found by a meet in the
+   middle over two halves of the blocks: per column count (a, b) of the
+   halves the dependence of [left translates | right translates | slice]
+   under a random projection to a + b + 1 coordinates mod 65521 is a
+   Laplace expansion into minors of the two sides, a feature product as
+   in `_dense`; every candidate is decided exactly (independent
+   translates over F_65521, the slice in their span over the three fields,
+   every coordinate nonzero, the rule `_join_blocks` already applied to a
+   pinned family). And a block whose two copies occupy two translate
+   classes at a slice contributes c_1 w^{l_1} Q_{k_1} u + c_2 w^{l_2}
+   Q_{k_2} u, so its merged coefficient c_1 + c_2 is one of the nine values
+   a_{k_1} w^{-l_1} + a_{k_2} w^{-l_2} of the slice's coordinates a on the
+   translates, each a linear condition that pins the family exactly over
+   the three fields (`_pin_by_blocks`, the split-tracking idea of the H^6
+   control applied before the family is pinned; with no ordinary state the
+   coordinates do not depend on the family member, so the condition is
+   exact). The second coordinate slice is now solved once against the
+   initial family and joined with the first slice's states by family
+   compatibility (pinned against pinned by the coefficient vector mod
+   65521, a dictionary lookup; otherwise by the annihilator of the
+   direction space, then the exact restriction), which gives the same
+   states as solving it once per state. The block projectors are cached
+   per selection and the matmul mod 2013265921 runs in int64 (16-bit
+   split) instead of object arithmetic. Per-run caps: `--max-rss-gb`
+   (checked before every selection and after every slice from
+   /proc/self/statm on Linux, the peak on macOS), `--max-states`,
+   `--max-solutions`, `--max-seconds`; every abort writes the base's
+   record with the reason and the partial stats.
+
+Regression: the planted control and the m = 3 control for N give the
+same counts as before the changes (9 genuine hits in 201 runs, 0
+refused; 144 s against 287 s); every solver change is exact or a superset
+hash followed by the exact decision, and the m = 3 control exercises the
+no-ordinary-state path throughout since chi(|M>) = 2.
+
+Per base (`results/controls/witness_ORBIT_base_K.json`,
+`results/ORBIT/control_witness.json`; "solutions" are against the initial
+family, "states" after the dead-coefficient and split-tracking filters):
+
+- N base 0 (kappa 3): ABORTED at the first coordinate slice, 2,084,934
+  hash candidates, 25 s, peak RSS 1.4 GB.
+- N base 3 (kappa 1, blocks 2, 2, 2, one ordinary state): 80,759
+  solutions per coordinate slice (42 s and 28 s), 6,785 states after the
+  first, the join of the second still running at the deadline (575 s)
+  after 3.9 million pairs, 1,201,872 dropped by a dead coefficient and
+  2,738,863 by the split tracking, peak RSS 1.5 GB. The pairs come from
+  the first-slice states the ordinary state does not pin (kappa still 1),
+  each compatible with every pinned second-slice solution on the family
+  line; the join runs at about 8,000 pairs per second here, so the base
+  needs roughly 15 to 30 minutes on this machine before its composite
+  stage, and is the most likely N base to pass on the pod.
+- N base 4 (kappa 2, one block, five ordinary states): 87,766 solutions
+  per slice (160 s and 171 s), 3,689 states after the first, more than
+  200,338 after the join (the states cap; 602,372 pairs dropped by a
+  dead coefficient and 449,434 by the split tracking by then), peak RSS
+  0.8 GB. Each joined state costs a six-slice composite stage over 46
+  translate sets, so the base is a matter of hours on the pod with the
+  cap raised.
+- H3 base 0 (kappa 1, blocks 2, 2, 2, 2, no ordinary state): 54,260
+  translate-set solutions per slice from 1,983,517 hash candidates,
+  458,564 pinned states after `_pin_by_blocks` (274 s and 123 s), 5,420
+  after the first slice's split tracking (453,144 pruned), more than
+  458,564 after the join (the states cap), peak RSS 6.3 GB (the projector
+  cache and the candidate lists). The join size comes from the first-slice
+  solutions no block pins (no block with two classes moving along the
+  family), which are the whole family line and therefore compatible with
+  every pinned second-slice state; those pairs are pruned only when the
+  second slice's splits are compared with the composite slices.
+- N bases 1, 2, 5 and H3 bases 1, 2: not run (bases 1, 2, 5 and H3 base 1
+  have the shape refused under item 2; H3 base 2 has the shape of H3 base
+  0).
+
+None of the four bases passed within the cap, so the control is still
+open; the pipeline is not declared ready on this count. What the runs do
+establish: no base exceeds 7 GB, so the 124 GB pod holds 15 at a time;
+every abort is recorded with its reason; and the remaining cost is the
+number of states after the two coordinate slices at rank 7 and 8, which
+the rank-5 batches never approach (their kappa is at most 1 and the
+sampled covers have at most 32,092 second-slice solutions). To finish on
+the pod (one base per process, all nine at once, each within 100 GB):
+
+```
+mkdir -p research/qutrit_m4_rank5/results/controls
+{ seq 0 5 | sed 's/^/N /'; seq 0 2 | sed 's/^/H3 /'; } | xargs -P 15 -L 1 sh -c \
+  'nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/driver.py control-witness "$0" --base "$1" \
+   --max-rss-gb 100 --max-states 20000000 --max-solutions 20000000 --max-seconds 0 --verbose \
+   > research/qutrit_m4_rank5/results/controls/witness_"$0"_base_"$1".log 2>&1'
+nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/driver.py control-witness N --summary
+nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/driver.py control-witness H3 --summary
+```
+
+The kappa-3 and kappa-4 bases (N 0, 1, 2, 5 and H3 1) will abort at the
+20,000,000-candidate cap unless it is raised further, and their first
+slice then has millions of states; a pass on those bases needs a
+different order of solving (two slices jointly, or the family pinned by
+the composite points first), not more memory.

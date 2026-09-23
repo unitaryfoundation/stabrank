@@ -45,8 +45,11 @@ from __future__ import annotations
 
 import importlib.util
 import itertools
+import math
 import os
+import resource
 import sys
+import time
 
 import numpy as np
 
@@ -56,7 +59,8 @@ sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(ROOT, "verify_challenge"))
 import slice_cover  # noqa: E402
 from cover_census import P1, P2, Field3, patterns, rank_mod  # noqa: E402
-from slice_cover import Family, _affine_solve_mod, _projectors, slice_system, solve_slice  # noqa: E402
+from slice_cover import (Family, _affine_solve_mod, _annihilator_mod, _dense, _det_mod,  # noqa: E402
+                         _independent_columns_mod, _mitm, _projectors, _split_sides, slice_system)
 
 
 def _affine_solve_C(A, b, tol=1e-7):
@@ -92,6 +96,80 @@ E1, E2 = (1, 0), (0, 1)
 COMP = [(1, 1), (2, 0), (0, 2), (1, 2), (2, 1), (2, 2)]     # composite offsets, solved in this order
 OFFSETS = [E1, E2] + COMP                                  # every nonzero offset
 NUM_TOL = 1e-8
+
+
+# ---------------------------------------------------------------- budget ----
+
+def peak_rss_gb():
+    """Peak resident set size of this process in GB (ru_maxrss is bytes on
+    macOS and KiB on Linux)."""
+    r = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    return r / 2 ** 30 if sys.platform == "darwin" else r / 2 ** 20
+
+
+def current_rss_gb():
+    """Current resident set size in GB: /proc/self/statm where it exists
+    (Linux), else the peak."""
+    try:
+        with open("/proc/self/statm") as f:
+            return int(f.read().split()[1]) * resource.getpagesize() / 2 ** 30
+    except (OSError, IndexError, ValueError):
+        return peak_rss_gb()
+
+
+class BudgetExceeded(Exception):
+    """A run refused for cost: the message names the checkpoint and the
+    quantity that exceeded its cap."""
+
+
+class Budget:
+    """Caps a Matcher.run honours instead of growing without bound: the
+    process's resident set (GB), the number of joined states carried from
+    one slice to the next, the number of solutions any one slice equation
+    may return, the estimated size (GB) of a dense coefficient-family
+    solve, and a wall-clock deadline. Every cap is checked at the point
+    where the next step would exceed it and raises BudgetExceeded, so the
+    caller records the reason instead of being killed."""
+
+    def __init__(self, max_rss_gb=None, max_states=None, max_solutions=None, max_dense_gb=None,
+                 seconds=None):
+        self.max_rss_gb = max_rss_gb
+        self.max_states = max_states
+        self.max_solutions = max_solutions
+        self.max_dense_gb = max_dense_gb if max_dense_gb is not None else max_rss_gb
+        self.deadline = None if seconds is None else time.time() + seconds
+        self.checks = 0
+
+    def check(self, where, states=None, solutions=None):
+        self.checks += 1
+        if self.max_rss_gb is not None:
+            rss = current_rss_gb()
+            if rss > self.max_rss_gb:
+                raise BudgetExceeded(f"{where}: resident set {rss:.2f} GB exceeds the cap {self.max_rss_gb} GB")
+        if self.deadline is not None and time.time() > self.deadline:
+            raise BudgetExceeded(f"{where}: past the wall-clock deadline")
+        if states is not None and self.max_states is not None and states > self.max_states:
+            raise BudgetExceeded(f"{where}: {states} states exceed the cap {self.max_states}")
+        if solutions is not None and self.max_solutions is not None and solutions > self.max_solutions:
+            raise BudgetExceeded(f"{where}: {solutions} slice solutions exceed the cap {self.max_solutions}")
+
+    def check_dense(self, where, sizes, kv, nsel):
+        """Refuse a dense solve whose feature matrices would not fit: with k
+        parameters and n = k + 1 the Laplace features number C(2n, n) per
+        side, held as float64 rows over the side product, and `nsel`
+        translate-set selections repeat the solve."""
+        if not kv or self.max_dense_gb is None:
+            return 0.0
+        n = kv + 1
+        feats = math.comb(2 * n, n)
+        sides = _split_sides(sizes)
+        prods = [math.prod(sizes[i] for i in s) for s in sides]
+        gb = sum(p * (feats + n * n) * 8 for p in prods) / 2 ** 30
+        if gb > self.max_dense_gb:
+            raise BudgetExceeded(f"{where}: dense solve with {kv} parameters over sides {prods} needs about "
+                                 f"{gb:.1f} GB of features ({feats} per side, {nsel} translate-set selections), "
+                                 f"above the cap {self.max_dense_gb} GB")
+        return gb
 
 
 def constructions_common():
@@ -314,35 +392,264 @@ def restrict(fam, Ws, rhss):
     return fam
 
 
-def solve_slice3(opts, blocks, fam, rhs, rng, stats=None, log=None):
-    """slice_cover.solve_slice, plus the case of no ordinary term (every
-    distinct state repeated, which happens in the m = 3 control where
-    chi(|M>) = 2): the equation is then that the slice lies in the span of
-    the chosen translates, i.e. its projection onto their annihilator
-    vanishes over the three fields."""
-    if opts:
-        return solve_slice(opts, blocks, fam, rhs, rng, stats=stats, log=log)
+def _mm_int64(A, B, p):
+    """A @ B mod p in int64 for p below 2^31: B is split into 16-bit halves
+    so that every dot product stays below 2^63 (inner dimension below 2^15).
+    Replaces slice_cover._mm, whose path for p above 2^26 (the exact
+    re-decision prime P2) multiplies object arrays in a Python loop and was
+    the largest single cost of Family.restrict."""
+    A = np.asarray(A, dtype=np.int64) % p
+    B = np.asarray(B, dtype=np.int64) % p
+    if A.shape[-1] == 0:
+        return np.zeros(A.shape[:-1] + B.shape[1:], dtype=np.int64)
+    if p < (1 << 26):
+        return (A @ B) % p
+    if p >= (1 << 31) or A.shape[-1] >= (1 << 15):
+        return slice_cover_mm(A, B, p)
+    hi = (A @ (B >> 16)) % p
+    lo = (A @ (B & 0xFFFF)) % p
+    return ((hi << 16) + lo) % p
+
+
+slice_cover_mm = slice_cover._mm
+slice_cover._mm = _mm_int64
+
+
+class _ProjectorCache:
+    """slice_cover._projectors per translate-set selection, computed once
+    per run (the blocks are fixed within Matcher.run)."""
+
+    def __init__(self, blocks):
+        self.blocks, self.cache = blocks, {}
+
+    def __call__(self, Ssel):
+        if Ssel not in self.cache:
+            self.cache[Ssel] = _projectors(self.blocks, Ssel)
+        return self.cache[Ssel]
+
+
+def _block_only_solutions(blocks, rhs, rng, fam, proj, stats, budget, where):
+    """The slice equation with no ordinary term (every distinct state
+    repeated): the slice must lie in the span of the chosen translates. The
+    selections kept are those with independent translates, the slice in
+    their span and every coordinate nonzero (the rule Matcher._join_blocks
+    applies to a pinned family; here the residual is the slice itself, so
+    the rule is exact whatever the family's dimension). Instead of the
+    product of every block's subsets (46^g for g blocks of two copies on two
+    qutrits), the blocks are split into two halves and, per column count
+    (a, b) of the halves, the dependence of [left | right | slice] under a
+    random projection to a + b + 1 coordinates mod P1 is decided as a
+    Laplace expansion into minors of the two halves, a dense feature
+    product as in slice_cover._dense; every candidate is then decided
+    exactly over the three fields."""
+    dim = blocks[0].V1.shape[0]
+    sides = _split_sides([len(b.subsets) for b in blocks])
+    r1 = rhs[0] % P1
+
+    def side_combos(bl):
+        out = {}
+        for part in itertools.product(*[blocks[i].subsets for i in bl]):
+            cols = [blocks[i].V1[:, list(S)] for i, S in zip(bl, part) if len(S)]
+            V = np.column_stack(cols) if cols else np.zeros((dim, 0), dtype=np.int64)
+            out.setdefault(V.shape[1], []).append((part, V % P1))
+        return out
+
+    L, R = side_combos(sides[0]), side_combos(sides[1])
+
+    def assemble(lp, rp):
+        Ssel = [None] * len(blocks)
+        for i, S in zip(sides[0], lp):
+            Ssel[i] = S
+        for i, S in zip(sides[1], rp):
+            Ssel[i] = S
+        return tuple(Ssel)
+
+    cands = []
+    for a, Ls in L.items():
+        for b, Rs in R.items():
+            if budget is not None:
+                budget.check(where)
+            if a + b > dim:
+                continue                      # dependent translates: no unique coordinates
+            if a + b == dim:                  # an independent selection of dim translates spans the slice
+                cands += [assemble(lp, rp) for lp, _ in Ls for rp, _ in Rs]
+                continue
+            s = a + b + 1
+            F = rng.integers(1, P1, size=(s, dim))
+            ML = np.stack([(F @ V) % P1 for _, V in Ls])                                  # (nL, s, a)
+            MR = np.stack([(F @ np.column_stack([V, r1])) % P1 for _, V in Rs])           # (nR, s, b + 1)
+            rows = list(range(s))
+            subsets = list(itertools.combinations(rows, a))
+            FL = np.empty((len(Ls), len(subsets)))
+            FR = np.empty((len(Rs), len(subsets)))
+            for t, I in enumerate(subsets):
+                Ic = [x for x in rows if x not in I]
+                sg = -1 if (sum(I) + sum(range(a))) % 2 else 1
+                FL[:, t] = _det_mod(ML[:, list(I), :], P1) if a else 1.0
+                FR[:, t] = (sg * _det_mod(MR[:, Ic, :], P1)) % P1
+            Z = FL @ FR.T
+            ia, ib = np.nonzero(np.fmod(Z, P1) == 0)
+            cands += [assemble(Ls[i][0], Rs[j][0]) for i, j in zip(ia, ib)]
+    if stats is not None:
+        stats["candidates"] = stats.get("candidates", 0) + len(cands)
     out = []
-    for Ssel in itertools.product(*[b.subsets for b in blocks]):
-        Ps, _ = _projectors(blocks, Ssel)
+    for Ssel in cands:
+        Ps, Vs = proj(Ssel)
+        n = Vs[0].shape[1]
+        if n and rank_mod(Vs[0].T, P1) < n:
+            continue
         ok = True
         for fld, p in ((0, P1), (1, P2), (2, None)):
             P = Ps[fld]
             if P.shape[0] == 0:
                 continue
             if p is None:
-                ok &= bool(np.abs(P @ rhs[2]).max() < 1e-7 * max(1.0, float(np.abs(rhs[2]).max())))
+                ok = bool(np.abs(P @ rhs[2]).max() < 1e-7 * max(1.0, float(np.abs(rhs[2]).max())))
             else:
-                acc = np.zeros(P.shape[0], dtype=np.int64)
-                for j in range(P.shape[1]):
-                    acc = (acc + (P[:, j] % p) * (int(rhs[fld][j]) % p) % p) % p
-                ok &= not np.any(acc)
+                ok = not np.any(_mm_int64(P, rhs[fld][:, None], p))
             if not ok:
                 break
-        if ok:
-            out.append(((), Ssel))
-    if stats is not None:
-        stats["candidates"] = stats.get("candidates", 0) + len(out)
+        if not ok:
+            continue
+        if n:
+            sol = _affine_solve_C(Vs[2], rhs[2])
+            if sol is None or sol[1].shape[1] or not np.all(np.abs(sol[0]) > 1e-9):
+                continue
+            for f in _pin_by_blocks(fam, blocks, Ssel, Vs, rhs, sol[0]):
+                out.append(((), Ssel, f))
+        elif np.linalg.norm(rhs[2]) > 1e-7:
+            continue
+        else:
+            out.append(((), Ssel, fam))
+    return out
+
+
+_ROOTS = {}
+
+
+def _cube_root_mod(p):
+    if p not in _ROOTS:
+        _ROOTS[p] = Field3(p).w
+    return _ROOTS[p]
+
+
+def _pin_by_blocks(fam, blocks, Ssel, Vs, rhs, aC):
+    """The family pinned through the blocks whose two copies occupy two
+    translate classes at this slice (the split-tracking idea of the H^6
+    control, applied before the family is pinned). Such a block contributes
+    c_1 w^{l_1} Q_{k_1} u + c_2 w^{l_2} Q_{k_2} u with both copies present,
+    so its merged coefficient is c_1 + c_2 = a_{k_1} w^{-l_1} + a_{k_2}
+    w^{-l_2} for the slice's coordinates a on the translates: one of nine
+    values, each a linear condition on the family, decided exactly over the
+    three fields. With no ordinary term the coordinates do not depend on the
+    family member, so the condition is exact whatever the family's
+    dimension; without it nothing pins the family before the reconstruction
+    and the join of the coordinate slices is the full product of their
+    solution lists (54,260^2 for the H3 witness base of four repeated
+    pairs). Returns the pinned subfamilies (the family itself when no block
+    with two classes moves along it)."""
+    if fam.kappa == 0:
+        return [fam]
+    a1 = _affine_solve_mod(Vs[0], rhs[0], P1)[0]
+    a2 = _affine_solve_mod(Vs[1], rhs[1], P2)[0]
+    w1, w2 = _cube_root_mod(P1), _cube_root_mod(P2)
+    n = len(fam.parts[0][0])
+    fams, pos = [fam], 0
+    for b, S in zip(blocks, Ssel):
+        idx = list(range(pos, pos + len(S)))
+        pos += len(S)
+        if b.g != 2 or len(S) != 2:
+            continue
+        new = []
+        for f in fams:
+            if f.kappa == 0 or np.abs(f.parts[2][1][b.pos]).max() < 1e-9:
+                new.append(f)                       # pinned already, or d_b constant on the family
+                continue
+            E1r = np.zeros((1, n), dtype=np.int64)
+            E1r[0, b.pos] = 1
+            ECr = E1r.astype(complex)
+            seen = set()
+            for l1 in range(3):
+                for l2 in range(3):
+                    DC = aC[idx[0]] * W3P[(-l1) % 3] + aC[idx[1]] * W3P[(-l2) % 3]
+                    key = complex(np.round(DC, 8))
+                    if key in seen:
+                        continue
+                    seen.add(key)
+                    D1 = (int(a1[idx[0]]) * pow(w1, (-l1) % 3, P1) + int(a1[idx[1]]) * pow(w1, (-l2) % 3, P1)) % P1
+                    D2 = (int(a2[idx[0]]) * pow(w2, (-l1) % 3, P2) + int(a2[idx[1]]) * pow(w2, (-l2) % 3, P2)) % P2
+                    f2 = f.restrict((E1r, E1r, ECr), (np.array([D1], dtype=np.int64), np.array([D2], dtype=np.int64),
+                                                       np.array([DC], dtype=complex)))
+                    if f2 is not None:
+                        new.append(f2)
+        fams = new
+    return fams
+
+
+def solve_slice3(opts, blocks, fam, rhs, rng, stats=None, log=None, budget=None, where="", proj=None,
+                 max_cand=2_000_000):
+    """slice_cover.solve_slice with the same hashing (meet in the middle on a
+    random functional mod P1 for a pinned family, the Laplace-feature dense
+    solve when parameters remain), returning (combo, Ssel, family) triples
+    with the family already restricted by the slice equation, so the caller
+    does not decide each solution a second time. Differences from
+    slice_cover: the blocks' projectors are cached per translate-set
+    selection (`proj`), the budget is checked before every selection and
+    after every candidate list, a dense solve whose feature matrices would
+    exceed the budget is refused before it allocates, more than `max_cand`
+    hash candidates raises BudgetExceeded instead of AssertionError, and
+    the case of no ordinary term goes to _block_only_solutions."""
+    if proj is None:
+        proj = _ProjectorCache(blocks)
+    if not opts:
+        return _block_only_solutions(blocks, rhs, rng, fam, proj, stats, budget, where)
+    r = len(opts)
+    d1, K1 = fam.parts[0]
+    ords = [i for i in range(len(d1)) if i not in {b.pos for b in blocks}]
+    assert len(ords) == r
+    d0v = d1[ords]
+    Kv = _independent_columns_mod(K1[ords].reshape(r, -1), P1)
+    nsel = math.prod(len(b.subsets) for b in blocks)
+    if budget is not None:
+        budget.check_dense(where, [len(o[0]) for o in opts], Kv.shape[1], nsel)
+    out = []
+    for Ssel in itertools.product(*[b.subsets for b in blocks]):
+        if budget is not None:
+            budget.check(where, solutions=len(out))
+        Ps = None
+        if blocks:
+            Ps, _ = proj(Ssel)
+            popts = [(o[0] @ Ps[0].T) % P1 for o in opts]
+            prhs = (Ps[0] @ rhs[0]) % P1
+        else:
+            popts = [o[0] for o in opts]
+            prhs = rhs[0]
+        sizes = [len(o) for o in popts]
+        sides = _split_sides(sizes)
+        t0 = time.time()
+        if Kv.shape[1] == 0:
+            cands = _mitm(popts, d0v, prhs, sides, rng)
+        else:
+            try:
+                cands = _dense(popts, d0v, Kv, prhs, sides, rng, max_cand)
+            except AssertionError as e:
+                raise BudgetExceeded(f"{where}: {e}") from None
+        if stats is not None:
+            stats["candidates"] = stats.get("candidates", 0) + len(cands)
+        if log is not None and (Kv.shape[1] or len(cands) > 100_000):
+            log(f"    translate sets {Ssel}: {Kv.shape[1]} parameters, sizes {sizes}, "
+                f"{len(cands)} candidates [{time.time() - t0:.1f}s]")
+        if cands and Kv.shape[1] == 0:
+            Cm = np.array(cands, dtype=np.int64)
+            acc = np.zeros((len(Cm), prhs.shape[0]), dtype=np.int64)
+            for i in range(r):
+                acc = (acc + (int(d0v[i]) * popts[i][Cm[:, i]]) % P1) % P1
+            keep = np.all(acc == (prhs % P1)[None, :], axis=1)
+            cands = [c for c, k in zip(cands, keep) if k]
+        for combo in cands:
+            f2 = restrict(fam, *slice_system(opts, blocks, combo, Ssel, rhs, Ps))
+            if f2 is not None:
+                out.append((combo, Ssel, f2))
     return out
 
 
@@ -498,7 +805,7 @@ class Matcher:
     """Every decomposition of a target with a given base slice at a given
     base point along the first two qutrits (see the module note)."""
 
-    def __init__(self, D, n2, F1=None, F2=None, seed=29, verbose=False):
+    def __init__(self, D, n2, F1=None, F2=None, seed=29, verbose=False, budget=None):
         self.D, self.n2 = D, n2
         self.codes, self.C = patterns(D)
         self.F1 = F1 or Field3(P1)
@@ -510,6 +817,13 @@ class Matcher:
         self.rng = np.random.default_rng(seed)
         self.cache = {}
         self.verbose = verbose
+        self.budget = budget                    # a Budget, or None for no caps
+        self.last_stats = None                  # the stats of the current or last run (partial after an abort)
+        self._proj = None
+
+    def _check(self, where, **kw):
+        if self.budget is not None:
+            self.budget.check(where, **kw)
 
     def log(self, msg):
         if self.verbose:
@@ -538,8 +852,10 @@ class Matcher:
         span decision."""
         x0 = tuple(int(v) for v in x0)
         stats = {"kappa": None, "kappa1": None, "distinct": 0, "blocks": [], "coord_solutions": [],
-                 "joined": 0, "composite_solutions": 0, "candidates": 0, "zero_coefficient": 0,
-                 "split_pruned": 0, "reconstructions": 0, "hits": 0, "refused": False}
+                 "coord_states": [], "joined": 0, "composite_solutions": 0, "composite_states": [],
+                 "candidates": 0, "zero_coefficient": 0, "split_pruned": 0, "reconstructions": 0,
+                 "hits": 0, "refused": False, "seconds": {}, "peak_rss_gb": None}
+        t_start = time.time()
         distinct = sorted(set(int(u) for u in cover))
         mult = {u: list(cover).count(u) for u in distinct}
         b1, b2, bC = target.rhs(x0)
@@ -548,6 +864,8 @@ class Matcher:
             stats["refused"] = True
             return [], stats
         blocks = [Block(self.options(u), mult[u], i) for i, u in enumerate(distinct) if mult[u] > 1]
+        self._proj = _ProjectorCache(blocks)
+        self.last_stats = stats
         bpos = {b.pos for b in blocks}
         exempt = tuple(sorted(bpos))
         if fam.has_zero_coefficient(exempt):
@@ -557,36 +875,114 @@ class Matcher:
         opts = [self.options(distinct[i]) for i in ords]
         arrays = [o.arrays() for o in opts]
         stats.update(kappa=fam.kappa, kappa1=fam.kappa1, distinct=len(distinct), blocks=[b.g for b in blocks])
+        # Both coordinate slices are solved once against the initial family;
+        # the first slice's states are then joined with the second slice's
+        # solutions by compatibility of their coefficient families, which
+        # gives exactly the states of solving the second slice against each
+        # first-slice state in turn (the family restricted by both slice
+        # equations either way) without repeating the second slice's hashing
+        # once per state, the cost that dominated at rank 7 with a block.
         states = [([], [], fam, [None] * len(blocks))]
+        sols_by_slice = {}
         for e in (E1, E2):
             rhs = target.rhs(add(x0, e))
+            t0 = time.time()
+            sols = solve_slice3(arrays, blocks, fam, rhs, self.rng, stats=stats, log=self.log,
+                                budget=self.budget, where=f"coordinate slice {e}", proj=self._proj)
+            self._check(f"coordinate slice {e}", solutions=len(sols))
+            sols_by_slice[e] = sols
+            stats.setdefault("coord_raw", []).append(len(sols))
+            stats["seconds"][f"solve_{e[0]}{e[1]}"] = round(time.time() - t0, 2)
+            self.log(f"  slice {e}: {len(sols)} solutions against the initial family, {time.time() - t0:.1f}s, "
+                     f"rss {peak_rss_gb():.2f} GB")
+            if not sols:
+                stats["coord_states"].append(0)
+                stats["peak_rss_gb"] = round(peak_rss_gb(), 3)
+                return [], stats
+        for e in (E1, E2):
+            rhs = target.rhs(add(x0, e))
+            t0 = time.time()
             new, count = [], 0
             for cl, bl, f, sp in states:
-                sols = solve_slice3(arrays, blocks, f, rhs, self.rng, stats=stats, log=self.log)
-                count += len(sols)
-                for combo, Ssel in sols:
-                    f2 = restrict(f, *slice_system(arrays, blocks, combo, Ssel, rhs))
-                    if f2 is None or f2.has_zero_coefficient(exempt):
-                        stats["zero_coefficient"] += f2 is not None
+                if e == E1:
+                    pairs = sols_by_slice[e]
+                else:
+                    pairs = self._compatible(f, sols_by_slice[e], arrays, blocks, rhs)
+                count += len(pairs)                 # the solutions of this slice over the states, as before
+                for combo, Ssel, f2 in pairs:
+                    if f2.has_zero_coefficient(exempt):
+                        stats["zero_coefficient"] += 1
                         continue
                     sp2 = self._join_blocks(f2, arrays, blocks, combo, Ssel, rhs, sp)
                     if sp2 is None:
                         stats["split_pruned"] += 1
                         continue
                     new.append((cl + [tuple(int(c) for c in combo)], bl + [Ssel], f2, sp2))
+                self._check(f"join at coordinate slice {e}", states=len(new))
             stats["coord_solutions"].append(count)
+            stats["coord_states"].append(len(new))
+            stats["seconds"][f"join_{e[0]}{e[1]}"] = round(time.time() - t0, 2)
             states = new
-            self.log(f"  slice {e}: {count} solutions, {len(states)} states, "
-                     f"parameters {sorted(set(f.kappa for _, _, f, _ in states))}")
+            self.log(f"  slice {e}: {count} solutions over the states, {len(states)} states after the join, "
+                     f"parameters {sorted(set(f.kappa for _, _, f, _ in states))}, "
+                     f"{time.time() - t0:.1f}s, rss {peak_rss_gb():.2f} GB")
             if not states:
+                stats["peak_rss_gb"] = round(peak_rss_gb(), 3)
                 return [], stats
         stats["joined"] = len(states)
         hits = []
-        for cl, bl, f, sp in states:
+        t0 = time.time()
+        for k, (cl, bl, f, sp) in enumerate(states):
             hits.extend(self._complete(distinct, x0, opts, ords, blocks, cl, bl, f, sp, target, stats))
+            if self.verbose and (k + 1) % 200 == 0:
+                self.log(f"  composite stage: {k + 1}/{len(states)} joined states, {len(hits)} raw hits, "
+                         f"{time.time() - t0:.1f}s, rss {peak_rss_gb():.2f} GB")
+        stats["seconds"]["composite"] = round(time.time() - t0, 2)
         hits = self._dedupe(hits)
         stats["hits"] = len(hits)
+        stats["seconds"]["total"] = round(time.time() - t_start, 2)
+        stats["peak_rss_gb"] = round(peak_rss_gb(), 3)
         return hits, stats
+
+    def _compatible(self, f1, sols, arrays, blocks, rhs):
+        """The solutions (combo, Ssel, f2raw) of a slice against the initial
+        family whose family meets f1, each returned with f1 restricted by
+        that slice equation (the meet). Candidates are found mod P1: a
+        pinned f1 against the pinned solutions by the coefficient vector
+        (a dict lookup) and against the unpinned ones by membership, an
+        unpinned f1 against the pinned solutions by the annihilator of its
+        direction space and against the unpinned ones pairwise; every
+        candidate is then decided exactly by the restriction, so the list is
+        complete (the P1 family of a solution contains its complex family)."""
+        key = id(sols)
+        if getattr(self, "_compat_index", (None,))[0] != key:
+            pinned, free = {}, []
+            for j, (_, _, f) in enumerate(sols):
+                if f.kappa1 == 0:
+                    pinned.setdefault(tuple(int(x) for x in f.parts[0][0] % P1), []).append(j)
+                else:
+                    free.append(j)
+            flat = [j for js in pinned.values() for j in js]
+            n = len(sols[0][2].parts[0][0])
+            D = (np.array([sols[j][2].parts[0][0] for j in flat], dtype=np.int64) % P1 if flat
+                 else np.zeros((0, n), dtype=np.int64))
+            self._compat_index = (key, pinned, free, D, flat)
+        _, pinned, free, D, flat = self._compat_index
+        d0, K = f1.parts[0]
+        if K.shape[1] == 0:
+            cand = list(pinned.get(tuple(int(x) for x in d0 % P1), [])) + free
+        else:
+            Ann = _annihilator_mod(K % P1, P1)                       # rows a with a K = 0 mod P1
+            hit = np.flatnonzero(~np.any(_mm_int64(Ann, (D - d0[None, :]).T % P1, P1), axis=0)) if len(flat) else []
+            cand = [flat[i] for i in hit] + free
+        out = []
+        for j in cand:
+            combo, Ssel, _ = sols[j]
+            Ps = self._proj(Ssel)[0] if blocks else None
+            f2 = restrict(f1, *slice_system(arrays, blocks, combo, Ssel, rhs, Ps))
+            if f2 is not None:
+                out.append((combo, Ssel, f2))
+        return out
 
     def _join_blocks(self, fam, arrays, blocks, combo, Ssel, rhs, splits):
         """With a pinned family the residual must use every chosen translate
@@ -625,7 +1021,7 @@ class Matcher:
         for i, c in zip(ords, combo):
             W[:, i] = arrays[ords.index(i)][2][c]
         res = rhs[2] - W @ d
-        _, Vs = _projectors(blocks, Ssel)
+        _, Vs = self._proj(Ssel)
         V = Vs[2]
         if V.shape[1] == 0:
             return np.zeros(0) if np.linalg.norm(res) < 1e-7 else None
@@ -640,18 +1036,21 @@ class Matcher:
         rows = [opts[i].composite_rows(cl[0][i], cl[1][i]) for i in range(r)]
         exempt = tuple(sorted(b.pos for b in blocks))
         states = [([], [], fam, sp, [np.ones(len(R), dtype=bool) for R in rows])]
+        if len(stats["composite_states"]) < len(COMP):
+            stats["composite_states"] = [0] * len(COMP)
         for c, x in enumerate(COMP):
             rhs = target.rhs(add(x0, x))
             new = []
             for cl2, bl2, f, sp1, alive in states:
                 codes = [np.unique(rows[i][alive[i], c]) for i in range(r)]
                 arrays = [(o.m1[cd], o.m2[cd], o.vecs[cd]) for o, cd in zip(opts, codes)]
-                sols = solve_slice3(arrays, blocks, f, rhs, self.rng, stats=stats, log=self.log)
+                sols = solve_slice3(arrays, blocks, f, rhs, self.rng, stats=stats, log=self.log,
+                                    budget=self.budget, where=f"composite slice {x}", proj=self._proj)
                 stats["composite_solutions"] += len(sols)
-                for combo, Ssel in sols:
-                    f2 = restrict(f, *slice_system(arrays, blocks, combo, Ssel, rhs))
-                    if f2 is None or f2.has_zero_coefficient(exempt):
-                        stats["zero_coefficient"] += f2 is not None
+                self._check(f"composite slice {x}", solutions=len(sols), states=len(new))
+                for combo, Ssel, f2 in sols:
+                    if f2.has_zero_coefficient(exempt):
+                        stats["zero_coefficient"] += 1
                         continue
                     sp2 = self._join_blocks(f2, arrays, blocks, combo, Ssel, rhs, sp1)
                     if sp2 is None:
@@ -661,6 +1060,7 @@ class Matcher:
                     alive2 = [alive[i] & (rows[i][:, c] == chosen[i]) for i in range(r)]
                     new.append((cl2 + [chosen], bl2 + [Ssel], f2, sp2, alive2))
             states = new
+            stats["composite_states"][c] += len(states)
             if not states:
                 return []
         hits = []

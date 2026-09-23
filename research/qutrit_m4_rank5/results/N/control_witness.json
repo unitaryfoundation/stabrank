@@ -1,0 +1,139 @@
+{
+ "orbit": "N",
+ "git": "b449a56bdaeb4037907d68e7ab00206643cadd10",
+ "witness": "research/qutrit_m4_rank5/N_m4_rank7_witness.json",
+ "rank": 7,
+ "bases_total": 6,
+ "run": 3,
+ "passed": 0,
+ "aborted": [
+  0,
+  3,
+  4
+ ],
+ "failed": [],
+ "missing": [
+  1,
+  2,
+  5
+ ],
+ "pass": false,
+ "complete": false,
+ "bases": [
+  {
+   "base": 0,
+   "cover": [
+    8,
+    32,
+    113,
+    117,
+    249,
+    321,
+    345
+   ],
+   "x0": [
+    2,
+    2
+   ],
+   "distinct": 7,
+   "multiplicities": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "kappa": 3,
+   "outcome": "aborted",
+   "reason": "coordinate slice (1, 0): 2084934 slice candidates: structural degeneracy of the family",
+   "seconds": 24.6,
+   "peak_rss_gb": 1.388,
+   "witness_hits": 0,
+   "other_decompositions": 0,
+   "git": "b449a56bdaeb4037907d68e7ab00206643cadd10",
+   "host": "vincentrusso-MacBook-Pro",
+   "coord_solutions": [],
+   "coord_states": []
+  },
+  {
+   "base": 3,
+   "cover": [
+    32,
+    32,
+    115,
+    115,
+    117,
+    321,
+    321
+   ],
+   "x0": [
+    2,
+    2
+   ],
+   "distinct": 4,
+   "multiplicities": [
+    2,
+    2,
+    2,
+    1
+   ],
+   "kappa": 1,
+   "outcome": "aborted",
+   "reason": "join at coordinate slice (0, 1): past the wall-clock deadline",
+   "seconds": 578.7,
+   "peak_rss_gb": 1.527,
+   "witness_hits": 0,
+   "other_decompositions": 0,
+   "git": "b449a56bdaeb4037907d68e7ab00206643cadd10",
+   "host": "vincentrusso-MacBook-Pro",
+   "coord_solutions": [
+    80759
+   ],
+   "coord_states": [
+    6785
+   ]
+  },
+  {
+   "base": 4,
+   "cover": [
+    32,
+    34,
+    113,
+    115,
+    117,
+    321,
+    321
+   ],
+   "x0": [
+    2,
+    2
+   ],
+   "distinct": 6,
+   "multiplicities": [
+    2,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "kappa": 2,
+   "outcome": "aborted",
+   "reason": "join at coordinate slice (0, 1): 200338 states exceed the cap 200000",
+   "seconds": 480.4,
+   "peak_rss_gb": 0.781,
+   "witness_hits": 0,
+   "other_decompositions": 0,
+   "git": "b449a56bdaeb4037907d68e7ab00206643cadd10",
+   "host": "vincentrusso-MacBook-Pro",
+   "coord_solutions": [
+    87766
+   ],
+   "coord_states": [
+    3689
+   ]
+  }
+ ]
+}
