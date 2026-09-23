@@ -1,0 +1,56 @@
+{
+ "witness": "bounds/qubit_H-m5-upper-6.json",
+ "git": "de2540cac37156d85d2177a9799b0fb668f60d16",
+ "generated": "2026-09-23T21:26:21+00:00",
+ "max_cand": 10000000,
+ "bases": [
+  {
+   "base": 5,
+   "cover": [
+    74,
+    183,
+    908,
+    350,
+    180,
+    166
+   ],
+   "x0": 3,
+   "pairs": [
+    [
+     0,
+     4
+    ]
+   ],
+   "distinct": 6,
+   "kappa": 2,
+   "status": "recovered",
+   "rank6_decompositions": 1,
+   "witness_recovered": true,
+   "seconds": 251.24946284294128,
+   "stats": {
+    "kappa": 2,
+    "kappa1": 2,
+    "distinct": 6,
+    "blocks": [],
+    "coord_solutions": [
+     246,
+     910
+    ],
+    "joined": 814,
+    "types": 991,
+    "composite_solutions": 1,
+    "candidates": 10144758,
+    "zero_coefficient": 192,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  }
+ ],
+ "passed": 1,
+ "aborted": 0,
+ "total": 1
+}

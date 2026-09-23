@@ -394,9 +394,13 @@ class BetaMatcher:
         (c_1, c_2, c_5) are the solution of the linear system formed by the
         three slice equations in the translate basis of the repeated state
         and c_1 + c_2 = D; the system is solved in batches, offset by offset
-        (x_b, then x_a1, then x_a2), keeping the consistent assignments. A
-        surviving assignment whose system leaves a coefficient free raises
-        UnpinnedFamily. Every survivor is assembled and confirmed like any
+        (x_b, then x_a1), keeping the consistent assignments; when the first
+        two offsets pin the three coefficients (the usual case) the x_a2
+        equation is matched directly with known coefficients over the
+        copies' 33 x 33 codes and the fifth term's 33, otherwise the full
+        system is solved per triple. A surviving assignment whose system
+        leaves a coefficient free raises UnpinnedFamily. Every survivor is
+        assembled and confirmed like any
         other hit. The visible terms' codes at x_b and x_a1 are fixed by the
         caller (cb, c1codes)."""
         if len(blocks) != 1 or blocks[0].g != 2:
