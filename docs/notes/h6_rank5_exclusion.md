@@ -1,7 +1,8 @@
 # Excluding rank 5 for |H>^6: design note
 
-Status (2026-09-21). Not run to completion, and not certifiable until it
-is. The enumeration and matching machinery exists
+Status (2026-09-21; the run is in section 7, the stage C repair and the
+figures that now stand in section 9). Not run to completion, and not
+certifiable until it is. The enumeration and matching machinery exists
 (`verify_challenge/slice_cover.py`, `research/h6_rank5/driver.py`, with
 the two hot paths compiled in `cpp/src/cover5.cpp` and
 `cpp/src/slice_match.cpp`), both positive controls pass on every base
@@ -217,7 +218,18 @@ stabilizer state through `valid_term_codes`); for a pair the admissible
 splits (c_1, c_2) with c_1 + c_2 = D are also tracked from slice to slice
 (`_refine_split`: a slice on two translates pins them up to phases, a slice
 on one translate constrains them once pinned), which is what removes the
-multiplicity of section 5.
+multiplicity of section 5. The translate set of a slice records only the
+classes with nonzero net coordinate, and two copies can share a further
+class with c_1 i^{l_1} + c_2 i^{l_2} = 0 there, so the reconstruction also
+lets copies use classes outside the set, each by at least two copies with
+net coordinate zero (`docs/notes/h6_rank5_stagec_repair.md`, defect 2;
+before 2026-09-23 such copies were marked absent and the decomposition
+lost). A state with a block that reaches the reconstruction with
+parameters left in its family, or whose blocks' chosen translates are
+dependent, raises `UnpinnedFamily` instead of being decided at an
+arbitrary member of the family or dropped; a batch records the cover as
+undecided and the aggregate fails (defect 3 of the same note; neither
+case occurred in the run, section 9).
 
 Per slice (`solve_slice`): when the family is a point, meet in the middle
 on a random functional mod 65521 over the per-term option lists (33 per
@@ -281,7 +293,15 @@ enumerate): 26,242 full 5-covers whose base states are dependent or
 repeated, over the two 3-cover classes and the 3,460 4-cover classes
 without further symmetry reduction: 12,390 with five distinct dependent
 states (kappa = 1), 13,840 with one state repeated (3,460 x 4, kappa = 0),
-6 with a triple, 6 with two pairs. Sampled per-cover cost in Python (the
+6 with a triple, 6 with two pairs. This list misses the (2, 1, 1, 1)
+multisets T + (b, b) with T a full 3-cover and b outside span(T), the
+base of a decomposition whose two copies cancel at x_0 (merged
+coefficient zero; property P does not exclude it, since two present
+copies cancelling is not a term vanishing at x_0); the regenerated list
+`degenerate_covers_v2.json` adds the 2,154 of them (1,077 per 3-cover:
+every state outside T, as span(T) holds no other stabilizer state), for
+28,396 covers, 16,006 of them stage C, with stage B unchanged
+(`docs/notes/h6_rank5_stagec_repair.md`, sections 1 and 3). Sampled per-cover cost in Python (the
 compiled matcher declines these), twelve covers per pattern evenly spaced
 through the list, four base points each, no hit
 (`results/degenerate_sample.json`): the dependent covers 8.9 s mean (9.6
@@ -384,6 +404,19 @@ them. Round robin rather than contiguous chunks because the cost of a
 cover correlates with its 3-cover or 4-cover, which the sorted order
 groups.
 
+Stage C repair (2026-09-23). Batches 173 to 189 are superseded by the
+repair partition `partition_stage_c_v2.json` (`driver.py
+partition-stage-c`): the 16,006 stage C covers of the regenerated list
+`degenerate_covers_v2.json` round-robin over 7 batches, indices 190 to
+196, of 2,286 or 2,287 covers, sized at the pod's 0.26 s per cover. The
+repair partition names `partition.json` by hash and the 17 superseded
+batches; its records carry its hash and the new list's. `aggregate.py`
+reads it when the file exists: the stored stage A and B records are
+checked against `partition.json` as before (their list has the same
+stage B covers, which the aggregate verifies), the fresh enumeration is
+compared with the new list, and the seven repair records replace the
+original stage C records in the checks, the totals, and the manifest.
+
 Batch (`batch.py K`, resumable, `--native`/`--no-native` with
 `STABRANK_NO_NATIVE=1` honoured). A stage A batch runs the compiled 5-cover
 kernel on its pivot pairs and the matcher on each cover at the four base
@@ -485,6 +518,11 @@ deterministic hashes, in 1,569 s total. Together with the QPG cat witness
 this gives chi(H^6) = 6, filed as `bounds/qubit_H-m6-lower-6.json` at the
 attested tier.
 
+The stage C figures above were superseded the next day (section 9): the
+exclusion now rests on the 15 stage A batches, the 158 stage B batches,
+and the 7 repair batches 190 to 196 (16,006 covers, 64,024 matched runs,
+1.25 CPU-hours), 180 batches and 74.7 CPU-hours in all.
+
 ## 8. The no-native cross-check (2026-09-22)
 
 Stage A batch 14 (7,795 pivot pairs, the smallest stage A batch) was
@@ -501,3 +539,51 @@ depends on the implementation, and because the deterministic hash covers
 it, the two hashes differ (8b3884ee against 4dd56468) while the exact
 content agrees. A future revision of the record format should leave the
 candidate count out of the deterministic part.
+
+## 9. The stage C repair (2026-09-23)
+
+The review of the qutrit port of this pipeline
+(`docs/notes/qutrit_m4_rank5_review.md`) found three defects in the
+stage C path of the matcher and one in the aggregate, all present here;
+`docs/notes/h6_rank5_stagec_repair.md` records them and their fixes. In
+short: the stage C list missed the multisets T + (b, b) with b outside
+span(T), the base of a decomposition whose two copies cancel at x_0;
+`reconstruct_block` marked copies absent at a slice where they cancel and
+lost the decomposition; a state with a block that reached the final loop
+with an unpinned family, or with dependent block translates, was decided
+at a random family member or dropped; and a refused run did not fail the
+aggregate. A dry pass of the fixed matcher over the 13,852 stored stage C
+covers found that none of their 55,408 runs reaches a block
+reconstruction (2,646 get through the coordinate slices and all die at a
+composite slice, as the stored histograms also say), so the fixes to the
+matcher change no stored record; the exclusion was incomplete by the
+2,154 missing covers.
+
+Run. The regenerated list `degenerate_covers_v2.json` (28,396 covers,
+sha256 `8d4fc693…`; stage B unchanged) and the repair partition
+`partition_stage_c_v2.json` (sha256 `be4ff271…`, section 6) were
+committed at c919fc3, and the seven repair batches 190 to 196 ran on the
+RunPod pod (16 vCPU AMD EPYC 4564P, shared host, nice 19, the seven in
+parallel) on 2026-09-23 from 09:17 to 09:32 UTC by the records' clock:
+16,006 covers, 64,024 matched runs, 0 refused, 0 hits, 0 undecided, 4,507
+CPU-s (1.25 CPU-hours), 529 to 864 s of wall time per batch. `aggregate.py
+--dry-run --partial` then passed every stored check over the 180 batches
+(15 stage A, 158 stage B, 7 stage C), and `aggregate.py --recheck 2
+--recheck-seed 20260921` re-enumerated the degenerate covers into the new
+list, verified every record, wrote the 180-entry `batch_manifest.json`
+(which names the repair partition, its list, and the 17 superseded
+batches), re-ran batches 10 (574 s) and 140 (949 s) from scratch with
+matching deterministic hashes, and printed `CERTIFIED chi(qubit_H^6) >= 6`
+in 1,793 s. The 17 original stage C records stay under `results/` but
+are not in the manifest. Totals for the exclusion as it now stands: 180
+batches, 5,939,465 + 12,390 + 16,006 covers, 74.7 CPU-hours (stage A
+2.8, stage B 69.6, stage C 1.3).
+
+Dependencies added to the bound's notes: the cancel-at-base multisets are
+now in the stage C list, since property P does not exclude them, and the
+block reconstruction allows cancelling copies. The rank-6 witness control
+on its repeated bases (section 5) has not been re-run under the repaired
+matcher; on that control several ordinary base states are Pauli translates
+of the repeated state, so the strict reconstruction could raise
+`UnpinnedFamily` where the old code dropped a state. It is a control, not
+part of the exclusion, and the re-run is listed in the repair note.

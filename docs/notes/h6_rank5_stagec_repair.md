@@ -275,15 +275,21 @@ found none among the added ones.
 
 ## 6. The bound afterwards
 
-Until the seven repair batches exist, the certificate
-`verify_challenge/cert_qubit_h_m6_rank5_attested.py` does not pass: with
-the repair partition present the aggregate reports the seven batches
-missing; without it (`--no-repair`) the fresh enumeration differs from the
-stored list. The stored records and the bound file are untouched, but the
-claim they support is incomplete by the 2,154 covers, so this branch
-should land together with the pod records, or after them.
+Run record (2026-09-23). The seven repair batches ran on the pod as in
+section 5 (records' clock 09:17 to 09:32 UTC, seven in parallel): 16,006
+covers, 64,024 matched runs, 0 refused, 0 hits, 0 undecided, 4,507 CPU-s,
+529 to 864 s of wall time per batch. `aggregate.py --dry-run --partial`
+passed every stored check over the 180 batches, and `aggregate.py
+--recheck 2 --recheck-seed 20260921` re-ran batches 10 (574 s) and 140
+(949 s) with matching deterministic hashes and printed `CERTIFIED
+chi(qubit_H^6) >= 6` in 1,793 s; the 180-entry `batch_manifest.json` and
+the records `results/batch_190.json` to `batch_196.json` are committed.
+The witness control on its repeated bases has not been re-run. Before the
+records existed the certificate did not pass (with the repair partition
+present the aggregate reported the seven batches missing; without it,
+`--no-repair`, the fresh enumeration differed from the stored list).
 
-After a clean run:
+The edits that followed the run:
 
 - `research/h6_rank5/batch_manifest.json` is the new manifest (180
   entries; the 17 superseded stage C records stay in `results/` for the
