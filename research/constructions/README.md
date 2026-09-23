@@ -21,7 +21,8 @@ repository root with `uv run --extra challenge python research/constructions/<sc
 | `two_qutrit_slice.py` | two-qutrit slicing at N m=4 and H3 m=4 (2026-09-21): every four-qutrit stabilizer state with a given slice at a base point enumerated as per-slice Pauli-class and phase codes (19683 nine-slice, 324 line, 1 point), then the exact search for rank <= 6 decompositions with a minimal two-qutrit slice, by per-slice residual-rank tables, a join from the two most constraining slices, and an exact completion of the invisible terms; `--control` runs its three controls |
 | `two_qubit_slice.py` | the qubit analogue at qubit_H m=6 (2026-09-21): every m-qubit stabilizer state with a given slice at a base point of F_2^{n_1} enumerated as per-slice Pauli-class and phase codes (8385 per base slice for two sliced qubits and four remaining), per-slice residual tables over 65^4 code combinations, the join and the exact completion as in the qutrit script, plus a dedicated path for two invisible terms on one line (the shape of the known rank-6 decomposition); `--control`, `--witness bounds/qubit_H-m6-upper-6.json --rank 6`, and `--m 4 --n1 2 --rank 4` are its controls, `--ratio-tables J` prints the per-ratio exact and stabilizer counts |
 | `kvv_cat_m9.py` | the nine-copy qubit_H witness `bounds/qubit_H-m9-upper-18.json` (2026-09-22): the glued cat_10 projected onto |0> and |1> on the last qubit, plus the four other cat routes to nine copies (glue cat_6 with cat_5, 3 chi(T^5), T^6 x T^3, T^7 x T^2), all 18 terms, with a pruning pass over the pool of states they use |
-| `product_witness.py` | exact tensor-product witnesses from bound files already on the board (x0 and l concatenated, W and Q block diagonal, coefficients multiplied in sympy); wrote `qubit_T-m8-upper-9`, `qubit_T-m10-upper-18`, `S-m7-upper-16`, `S-m8-upper-16` (2026-09-22) |
+| `product_witness.py` | exact tensor-product witnesses from bound files already on the board (x0 and l concatenated, W and Q block diagonal, coefficients multiplied in sympy); wrote `qubit_T-m8-upper-9`, `qubit_T-m10-upper-18`, `S-m7-upper-16`, `S-m8-upper-16` (2026-09-22); since 2026-09-23 a factor whose cell has no witness-bearing bound file (the Lean and literature entries at N, H3, T3 m <= 3) is taken from the stored lists under `data/` with coefficients fitted exactly by `fit_coeffs.fit`, `--date` sets the provenance date, and the notes name the single-copy product baseline for T5; wrote `T5-m3-upper-24`, `T5-m4-upper-64`, `N-m5-upper-12`, `N-m6-upper-16`, `H3-m5-upper-12`, `H3-m6-upper-16`, `T3-m6-upper-27` (2026-09-23; the T5 m=5 product of 192 terms was built and not filed because its verification exceeded the 900 s budget) |
+| `t5_m2_merge.py` | the structured rank-7 search at T5 m=2 (2026-09-23): fixes `--keep` of the nine terms of a product of two rank-3 single-ququint decompositions (all 55 unordered products of the 10 decompositions) and finds every pair of two-ququint stabilizer states completing them to |T5>^2, exactly over F_q for a prime q = 1 (mod 5) by hashing the quotient images of the 3,900 states (no pair loop), with every collision re-decided over Q(w5) by DomainMatrix rank; `--control` reruns the three positive controls (seven product terms recover the dropped two, six witness terms recover the other two, seven witness terms admit only the dropped term) |
 | `t3_sector_contraction.py` | the qutrit cat gluing for the T3 Z-eigensectors (2026-09-22): all rank-3 decompositions of the m=3 and m=4 sector carry states, every contraction through the m=2 sector bra into the m=5 sectors (nine terms each), the pool of states they use, and the exact tests for a five-term sector decomposition sharing four contraction terms (`--sector`, `--skip`, `--budget`, `--rank5`) |
 
 ## What is validated
@@ -77,6 +78,16 @@ repository root with `uv run --extra challenge python research/constructions/<sc
   `kvv_cat_m9.py` checks every route against |T>^9 to 1e-14 before the
   exact conversion. `product_witness.py` writes exact terms, so its check
   is the verifier itself.
+- `t5_m2_merge.py --control`: fixing any seven of the nine product terms
+  recovers the two dropped ones (36 of 36 fixed sets); fixing any six of
+  the eight terms of `bounds/T5-m2-upper-8.json` recovers the other two
+  (28 of 28); fixing seven witness terms and asking for one completing
+  state returns exactly the dropped term (8 of 8) and no other. Reduction
+  mod the prime ideal above q = 10061 preserves every dependency over
+  Q(w5), so the mod-q pass can only over-report, and each report is
+  re-decided exactly; the search also checks that the fixed terms and the
+  target stay independent mod q (a dependency there would be re-decided
+  exactly as a lower-rank hit).
 - Every hit any script reports is checked numerically against the target and
   written as amplitude vectors under `results/` (not committed) for
   `verify_challenge/to_witness.py`, which is the exact step.

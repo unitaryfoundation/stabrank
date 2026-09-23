@@ -672,3 +672,163 @@ to enumerate the eight-qutrit flats; not run), not more annealing.
    so the product minus one term is a strict local optimum of the
    annealer, as at the T3 sector; the cell now holds the product at the
    baseline exponent.
+
+## 2026-09-23: T5 products, a structured rank-7 search at T5 m=2, qutrit products
+
+Scripts: `research/constructions/product_witness.py` (extended),
+`research/constructions/t5_m2_merge.py`. Everything ran as one process at
+nice 19 under a hard process-group cap (15 minutes per run), about 1.3
+CPU-hours in all. The literature update of the same day is section 7 of
+`literature_sweep_2026_09.md` (nothing new). Bound files written today are
+listed at the end; none moves a published exponent.
+
+### (a) T5 at m=3, 4, 5: products of the board's own witnesses
+
+The T5 orbit is measured against the single-copy product bound
+log_5(3) = 0.6826 (no exponent is published for any p = 5 state), and the
+m=2 cell already sits below it (rank 8, 0.6460). Products of the m=1
+(rank 3) and m=2 (rank 8) witnesses therefore land below the baseline at
+every m; the site does not count that as a beaten exponent, and the notes
+of each file say so.
+
+| cell | factors | rank | exponent | verification |
+|---|---|---|---|---|
+| T5 m=3 | m=1 x m=2 | 24 | log_5(24)/3 = 0.6582 | symbolic, 35 s |
+| T5 m=4 | m=2 x m=2 | 64 | log_5(64)/4 = 0.6460 | symbolic, 238 s |
+| T5 m=5 | m=2 x m=2 x m=1 | 192 | log_5(192)/5 = 0.6533 | not finished: killed at the 900 s cap |
+
+The m=5 file (192 terms on 3125 amplitudes, coefficients in
+Q(w5, sqrt(1/8 - sqrt 5/40), sqrt(1/4 - sqrt 5/10))) is correct by
+construction but the verifier's per-entry simplification did not finish
+under the 900 s budget (`validate_bounds.py` caps T5 at m <= 5 precisely
+because 5^5 amplitudes are the edge of that budget), so it is not filed.
+Scaling from m=4 (64 x 625 term entries in 238 s) puts it near an hour.
+A witness for that cell would need either a cheaper exact check for
+Q(w5) coefficients (the analogue of `_fit_cyclotomic` for T3, deciding
+each entry in the number field instead of by `simplify`) or a smaller
+decomposition.
+
+`product_witness.py` now takes a factor from the stored decomposition
+lists under `research/constructions/data/` when the cell's bound file has
+no witness (the Lean and literature entries at N, H3, and T3, m <= 3),
+with the coefficients fitted exactly by `fit_coeffs.fit`, and its notes
+carry the baseline sentence for orbits without a published exponent.
+
+### (b) T5 at m=2: no rank-7 decomposition keeps five product terms
+
+Cell 5 <= chi(|T5>^2) <= 8; the product of two rank-3 single-ququint
+decompositions has nine terms. |T5> has ten rank-3 decompositions over the
+30 single-ququint states, not five as `bounds/T5-m1-upper-3.json` says:
+one for each pair of basis states {|a>, |b>}, completed by one
+full-support state (the pivot search of 2026-09-20 counted them up to the
+order-5 Clifford stabilizer, which does not act freely on the pairs). The
+55 unordered products (the copy swap identifies (a, b) with (b, a)) give
+55 nine-term decompositions of |T5>^2.
+
+Search. Fix five of the nine product terms with free coefficients and ask
+for two two-ququint stabilizer states t1, t2 with |T5>^2 in span(five
+fixed, t1, t2). Every amplitude in sight is 0 or a power of w5 up to the
+normalisation, so the whole problem reduces exactly mod the prime ideal
+above q = 10061 = 1 (mod 5), with w5 sent to an element of order 5 in F_q.
+For each fixed set the quotient of F_q^25 by span(five fixed, psi) has
+dimension 19 (checked for every set; a drop would have been re-decided
+exactly as a lower-rank hit); t1, t2 can complete the decomposition only
+if their images in the quotient are parallel or one of them vanishes, and
+parallel images are found by hashing the canonically scaled quotient
+vectors of all 3,900 states in one pass, with no pair loop. Reduction mod
+a prime preserves every dependency over Q(w5), so the pass over-reports
+and never misses; every report is re-decided over Q(w5) by exact rank
+(sympy `DomainMatrix` over `QQ.algebraic_field(w5)`).
+
+| fixed product terms | fixed sets | in-span singles (all the fixed terms themselves) | parallel pairs re-decided exactly | exact completions | wall |
+|---|---|---|---|---|---|
+| 5 (rank <= 7) | 55 x C(9, 5) = 6930 | 34,650 | 227,700 | 0 | 174 s |
+| 6 (rank <= 8) | 55 x C(9, 6) = 4620 | 27,720 | 257,400 | 0 | 211 s |
+
+The parallel pairs are genuine three-term dependencies among stabilizer
+states modulo the fixed span (states on a common flat, for instance) that
+do not involve the target; none survives the exact test. Controls
+(`--control`, 7 s): fixing any seven of the nine product terms recovers
+the dropped two (36 of 36); fixing any six of the eight terms of
+`bounds/T5-m2-upper-8.json` recovers the other two (28 of 28); fixing
+seven witness terms and asking for one state returns exactly the dropped
+term (8 of 8) and nothing else, so no rank-7 decomposition shares seven
+terms with the rank-8 witness either.
+
+Result: no seven-term decomposition of |T5>^2 contains five terms of any
+product of two rank-3 single-ququint decompositions, and no eight-term
+one contains six. The rank-8 witness on the board (three points, four
+lines, one plane) shares 4 terms with one of the 55 products, 3 with
+another, 2 with six, 1 with fourteen, and none with the other 33, so it is
+consistent with the six-term statement and shows that a rank-8
+decomposition can keep four product terms. A rank-7 decomposition sharing
+four product terms would need a pivot loop over the third new state
+(3,900 quotient searches per fixed set, about 8 minutes each in the
+present Python; not run). Nothing here is a lower bound; the cell stays
+5 <= chi <= 8.
+
+### (c) N, H3, and T3 at m=5 and m=6: products from the stored exact decompositions
+
+The brief's product values (N m=5 <= 21, N m=6 <= 49, H3 m=5 <= 24,
+H3 m=6 <= 64, T3 m=6 <= 64) come from the witness-bearing bound files
+alone; the board's m <= 3 cells at N, H3, and T3 are Lean or literature
+entries without a witness, and the stored minimal-decomposition lists
+under `research/constructions/data/` hold smaller factors: the rank-3
+decompositions of |N>^2 and |H3>^2, the unique rank-4 decompositions of
+|N>^3 and |H3>^3, and the three-line rank-3 decomposition of |T3>^2.
+`product_witness.py` now fits those exactly (`fit_coeffs.fit`, the
+cyclotomic route for T3) and multiplies them, so the products filed are
+the best the board's own values imply:
+
+| cell | factors | rank | exponent | verification |
+|---|---|---|---|---|
+| N m=5 | m=2 (rank 3, decomposition 0 of 30) x m=3 (rank 4) | 12 | log_3(12)/5 = 0.4524 | symbolic, 1 s |
+| N m=6 | m=3 x m=3 | 16 | log_3(16)/6 = 0.4206 (the baseline) | symbolic, 1 s |
+| H3 m=5 | m=2 (rank 3, decomposition 0 of 30) x m=3 (rank 4) | 12 | 0.4524 | symbolic, 389 s |
+| H3 m=6 | m=3 x m=3 | 16 | 0.4206 (the baseline) | symbolic, 2 s |
+| T3 m=6 | m=2 x m=2 x m=2 (rank 3 each) | 27 | log_3(27)/6 = 0.5000 (the baseline) | symbolic, 13 s |
+
+All five cells were empty. The N m=6 and H3 m=6 witnesses are the
+sixteen-term products whose merge anneals are in
+`merge_recipes_2026_09.md`, section 3, now filed as exact witnesses. The
+verification times split by the parity of m for H3, as they did for the
+face state on 2026-09-22: at odd m the target amplitudes are odd in the
+nested radical sqrt((3 + sqrt 3)/6), and sympy's per-entry simplification
+is two orders of magnitude slower (389 s for 243 entries at m=5 against
+2 s for 729 entries at m=6). The H3 m=5 file is the only one of the five
+that came near the ten-minute limit.
+
+Not filed: T3 m=5 stays at the annealed rank 18 (the product m=2 x m=3
+would be 24); the S cells at m=5 and m=6 already hold witnesses.
+
+### Bound files written today
+
+| file | rank | exponent | tier | method |
+|---|---|---|---|---|
+| `T5-m3-upper-24.json` | 24 | 0.6582 | verified (symbolic, 35 s) | product m=1 x m=2 |
+| `T5-m4-upper-64.json` | 64 | 0.6460 | verified (symbolic, 238 s) | product m=2 x m=2 |
+| `N-m5-upper-12.json` | 12 | 0.4524 | verified (symbolic, 1 s) | product m=2 x m=3 from the stored lists |
+| `N-m6-upper-16.json` | 16 | 0.4206 | verified (symbolic, 1 s) | product m=3 x m=3 |
+| `H3-m5-upper-12.json` | 12 | 0.4524 | verified (symbolic, 389 s) | product m=2 x m=3 |
+| `H3-m6-upper-16.json` | 16 | 0.4206 | verified (symbolic, 2 s) | product m=3 x m=3 |
+| `T3-m6-upper-27.json` | 27 | 0.5000 | verified (symbolic, 13 s) | product m=2 x m=2 x m=2 |
+
+The T5 m=5 product (192 terms, 0.6533) was built and not filed: its
+verification was killed at the 900 s cap.
+
+### Sharpest facts of the session
+
+1. T5 m=2: no seven-term decomposition of |T5>^2 keeps five terms of any
+   of the 55 products of two rank-3 single-ququint decompositions, and no
+   eight-term one keeps six; the exact mod-q quotient search decides each
+   fixed set in about 25 ms and its three positive controls pass in full.
+   |T5> has ten rank-3 decompositions, not five.
+2. T5 products land below the orbit's single-copy baseline at m=3 and
+   m=4 (0.6582 and 0.6460) because the m=2 cell already does; that is
+   the product bound, not a beaten exponent, and the files say so.
+3. The board's own minimal decompositions give N and H3 at m=5 rank 12
+   and T3 at m=6 rank 27, below the products the witness-bearing bound
+   files alone imply (21, 24, and 64).
+4. Verification cost for H3 (as for the face state) is governed by the
+   parity of m, not by the size of the target: 389 s at m=5 against 2 s
+   at m=6.
