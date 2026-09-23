@@ -35,9 +35,11 @@ Commands (ORBIT is N or H3)
                             |M>^2) recovered from every base point
   control-m3 ORBIT          the rank-4 decompositions of |M>^3 recovered by 2 + 1 slicing
                             from every full 4-cover of |M> by single-qutrit states
-  control-witness ORBIT [--base K]
+  control-witness ORBIT --base K | --list-bases | --summary
                             the rank-7 N witness (Lean) or the rank-8 H3 witness
-                            recovered from its all-visible base points
+                            recovered from its all-visible base points, one base per
+                            process (results/controls/witness_ORBIT_base_K.json), with
+                            --max-rss-gb, --max-states, --max-solutions, --max-seconds caps
   export-witness            write N_m4_rank7_witness.json from the Lean term definitions
 
 Running a batch: `batch.py ORBIT K`; checking the results: `aggregate.py ORBIT`.
@@ -60,10 +62,11 @@ import common  # noqa: E402
 from common import HERE, M, N1, N2, RANK, ROOT, X0, git_commit, pairs_of, stage_of  # noqa: E402
 from cover_census import (P1, P2, CoverEnumerator3, Field3, _canon_rows, _groups_by_key,  # noqa: E402
                           _reduce)
-from matcher import (COMP, E1, E2, PTS, W3, Matcher, Target, TermOpts, add, constructions_common,  # noqa: E402
-                     exact_codes, field_vector, move_front, pidx, psi_target, slice_base, vector_target)
+from matcher import (COMP, E1, E2, PTS, W3, Budget, BudgetExceeded, Matcher, Target, TermOpts, add,  # noqa: E402
+                     constructions_common, digits, exact_codes, family_from, field_vector, move_front,
+                     peak_rss_gb, pidx, psi_target, slice_base, vector_target)
 from rank_exclusion import dictionary, symmetry_orbit_reps  # noqa: E402
-from slice_cover import Family  # noqa: E402
+from slice_cover import Family, _affine_solve_mod  # noqa: E402
 
 WITNESS_N = os.path.join(HERE, "N_m4_rank7_witness.json")
 WITNESS_H3 = os.path.join(ROOT, "bounds", "H3-m4-upper-8.json")
@@ -715,6 +718,63 @@ def norrell_rank7_terms():
     return terms
 
 
+def stabilizer_spec(v, p, n):
+    """The (k, x0, W, Q, l) spec (research/constructions/common.term_vector)
+    of a vector on n qudits of prime dimension p whose entries are 0 or
+    p-th roots of unity times a common scalar: the support must be an affine
+    subspace x0 + row space of W of dimension k and the phase exponent a
+    quadratic y -> y Q y^T + l . y on its coordinates. Raises otherwise. The
+    row-reduction and the fit are exact mod p."""
+    codes = exact_codes(v)[0].astype(np.int64)
+    supp = np.flatnonzero(codes)
+    digs = digits(n)
+    S = digs[supp]                                           # support points, x0 first (lowest index)
+    x0 = S[0]
+    D = (S - x0[None, :]) % p
+    k = int(round(math.log(len(supp), p)))
+    if p ** k != len(supp):
+        raise AssertionError(f"support of size {len(supp)} is not a power of {p}")
+    # basis of the difference set by row reduction; the set is a subspace iff
+    # its rank is k (it has p^k distinct elements inside a rank-k row space)
+    _, Nker = _affine_solve_mod(D, np.zeros(len(D), dtype=np.int64), p)
+    rank = n - Nker.shape[1]
+    if rank != k:
+        raise AssertionError(f"support differences span rank {rank}, expected {k}")
+    basis = []
+    for d in D:
+        cand = basis + [d]
+        _, Nk = _affine_solve_mod(np.array(cand).T if cand else np.zeros((n, 0), dtype=np.int64),
+                                  np.zeros(n, dtype=np.int64), p)
+        if Nk.shape[1] == 0:
+            basis = cand
+        if len(basis) == k:
+            break
+    W = np.array(basis, dtype=np.int64).reshape(k, n)
+    # coordinates y of every support point and the fit of the exponent
+    Wsol = {}
+    for y in itertools.product(range(p), repeat=k):
+        x = (x0 + np.array(y) @ W) % p
+        Wsol[tuple(int(t) for t in x)] = y
+    monos = [(i, j) for i in range(k) for j in range(i, k)]
+    rows, rhs = [], []
+    for pos in supp:
+        x = tuple(int(t) for t in digs[pos])
+        if x not in Wsol:
+            raise AssertionError("support is not the affine subspace of its first k independent differences")
+        y = Wsol[x]
+        rows.append([y[i] * y[j] % p for i, j in monos] + list(y))
+        rhs.append((codes[pos] - 1) % p)
+    sol = _affine_solve_mod(np.array(rows, dtype=np.int64), np.array(rhs, dtype=np.int64), p)
+    if sol is None:
+        raise AssertionError("the phase exponent is not quadratic on the support")
+    coef = sol[0]
+    Q = [[0] * k for _ in range(k)]
+    for t, (i, j) in enumerate(monos):
+        Q[i][j] = int(coef[t])
+    return {"k": k, "x0": [int(t) for t in x0], "W": W.tolist(), "Q": Q,
+            "l": [int(t) for t in coef[len(monos):]]}
+
+
 def export_witness(args):
     """Write N_m4_rank7_witness.json: the seven Lean terms as phase codes,
     checked to reproduce |N>^4 with rank 7."""
@@ -727,15 +787,22 @@ def export_witness(args):
     rank = int(np.linalg.matrix_rank(A, tol=1e-8))
     if res > 1e-9 or rank != 7:
         raise AssertionError(f"the Lean terms do not reproduce |N>^4: residual {res:.2e}, rank {rank}")
-    D4 = dictionary(3, 4)
-    M4 = Matcher(D4, 4, Field3(P1), Field3(P2))
-    for t in terms:
-        M4.index_of(t)                                   # raises unless a dictionary state
+    # Each term is recognised as a stabilizer state directly (affine support,
+    # quadratic phase), not by membership in dictionary(3, 4): that dictionary
+    # has 7,439,040 states of dimension 81 and building it with its phase
+    # patterns and field images takes tens of GB, which is where the first
+    # pod run of control-witness died (exit 137).
+    specs = [stabilizer_spec(t, 3, 4) for t in terms]
+    for t, sp in zip(terms, specs):
+        v = cc.term_vector(sp, 3, 4)
+        if not np.array_equal(exact_codes(v)[0], exact_codes(t)[0]):
+            raise AssertionError("the recognised spec does not rebuild the Lean term")
     doc = {"orbit": "N", "m": 4, "rank": 7, "source": "lean_proofs/LeanProofs/NorrellM4Pointwise.lean "
            "(norrell_m4_decomposition), rebuilt numerically by driver.norrell_rank7_terms",
            "index": "y_0 y_1 y_2 y_3 with y_0 the most significant digit",
            "codes": "0 zero, 1..3 = 1, w, w^2 with the first nonzero entry made 1",
            "terms": [exact_codes(t)[0].astype(int).tolist() for t in terms],
+           "specs": specs, "specs_format": "(k, x0, W, Q, l) as in research/constructions/common.term_vector",
            "coeffs": [[float(z.real), float(z.imag)] for z in c], "residual": res}
     with open(WITNESS_N, "w") as f:
         json.dump(doc, f)
@@ -759,19 +826,14 @@ def witness_terms(orbit):
     return terms, int(w["rank"]), os.path.relpath(WITNESS_H3, ROOT)
 
 
-def control_witness(args):
-    """Control (d): the rank-7 N witness or the rank-8 H3 witness recovered
-    from its own all-visible (qutrit pair, base point) slices, the matcher
-    running at rank 7 or 8 through the family and block machinery."""
-    orbit = args.orbit
-    terms, rank, source = witness_terms(orbit)
-    cc = constructions_common()
-    psi = cc.target(orbit, M)
-    A = np.column_stack(terms)
-    c, *_ = np.linalg.lstsq(A, psi, rcond=None)
-    assert np.linalg.norm(A @ c - psi) < 1e-9 and np.linalg.matrix_rank(A, tol=1e-8) == rank
-    Mt = new_matcher(verbose=args.verbose)
-    target = psi_target(orbit, N2, Mt.F1, Mt.F2)
+CONTROLS_DIR = os.path.join(common.RESULTS_ROOT, "controls")
+
+
+def witness_bases(orbit, Mt, terms):
+    """The all-visible (base, x0) pairs of the witness: for every qutrit
+    pair S and base point x0 at which no term vanishes, the sorted tuple of
+    dictionary indices of the slices, with the pairs (S, unsorted base)
+    sharing it. Sorted, so the index of a base is stable."""
     bases = {}
     for S in itertools.combinations(range(M), 2):
         moved = np.column_stack([move_front(t, S, M) for t in terms])
@@ -779,35 +841,143 @@ def control_witness(args):
             b = slice_base(Mt, moved, x0)
             if b is not None:
                 bases.setdefault((tuple(sorted(b)), x0), []).append((S, b))
+    return sorted(bases.items())
+
+
+def base_summary(Mt, target, cover, x0):
+    """Distinct states, multiplicities and the coefficient-family dimension
+    of a base at x0 (None when the target slice is not in the span)."""
+    distinct = sorted(set(int(u) for u in cover))
+    mult = sorted((list(cover).count(u) for u in distinct), reverse=True)
+    b1, b2, bC = target.rhs(x0)
+    fam = family_from(Mt.U1[distinct], Mt.U2[distinct], Mt.C[:, distinct], b1, b2, bC)
+    return {"distinct": len(distinct), "multiplicities": mult, "repeated": len(distinct) < len(cover),
+            "kappa": None if fam is None else fam.kappa, "kappa1": None if fam is None else fam.kappa1}
+
+
+def witness_base_path(orbit, k):
+    return os.path.join(CONTROLS_DIR, f"witness_{orbit}_base_{k}.json")
+
+
+def control_witness(args):
+    """Control (d): the rank-7 N witness or the rank-8 H3 witness recovered
+    from its own all-visible (qutrit pair, base point) slices, the matcher
+    running at rank 7 or 8 through the family and block machinery. One base
+    per process (`--base K`), each written to results/controls/ as it
+    finishes, aborted with a recorded reason when it exceeds `--max-rss-gb`,
+    `--max-states`, `--max-solutions` or `--max-seconds`; `--list-bases`
+    prints the bases with their counts; `--summary` collects the per-base
+    files into results/ORBIT/control_witness.json."""
+    orbit = args.orbit
+    terms, rank, source = witness_terms(orbit)
+    cc = constructions_common()
+    psi = cc.target(orbit, M)
+    A = np.column_stack(terms)
+    c, *_ = np.linalg.lstsq(A, psi, rcond=None)
+    assert np.linalg.norm(A @ c - psi) < 1e-9 and np.linalg.matrix_rank(A, tol=1e-8) == rank
+    budget = Budget(max_rss_gb=args.max_rss_gb, max_states=args.max_states, max_solutions=args.max_solutions,
+                    seconds=args.max_seconds)
+    Mt = new_matcher(verbose=args.verbose)
+    Mt.budget = budget
+    target = psi_target(orbit, N2, Mt.F1, Mt.F2)
+    bases = witness_bases(orbit, Mt, terms)
     print(f"{orbit} rank-{rank} witness ({source}): {len(bases)} all-visible (base, x0) pairs over the 6 "
           f"qutrit pairs and 9 points")
-    report = {"witness": source, "rank": rank, "bases": []}
-    passed, selected = 0, -1
-    for (cover, x0), Ss in sorted(bases.items()):
-        selected += 1
-        if args.base is not None and selected != args.base:
-            continue
-        repeated = len(set(cover)) < len(cover)
-        t0 = time.time()
+    if args.list_bases:
+        for k, ((cover, x0), Ss) in enumerate(bases):
+            s = base_summary(Mt, target, cover, x0)
+            done = os.path.exists(witness_base_path(orbit, k))
+            print(f"  base {k:2d}: {cover} x0 {x0} pairs {len(Ss)} distinct {s['distinct']} "
+                  f"multiplicities {s['multiplicities']} kappa {s['kappa']} (kappa1 {s['kappa1']})"
+                  f"{' [result present]' if done else ''}")
+        return 0
+    if args.summary:
+        return witness_summary(orbit, rank, source, bases)
+    if args.base is None:
+        print("control-witness runs one base per process: give --base K (see --list-bases) or --summary",
+              file=sys.stderr)
+        return 2
+    if not 0 <= args.base < len(bases):
+        print(f"--base must be in 0..{len(bases) - 1}", file=sys.stderr)
+        return 2
+    (cover, x0), Ss = bases[args.base]
+    s = base_summary(Mt, target, cover, x0)
+    S, b = Ss[0]
+    wkey = sorted(exact_codes(move_front(v, S, M))[0].tobytes() for v in terms)
+    rec = {"orbit": orbit, "git": git_commit(), "witness": source, "rank": rank, "base": args.base,
+           "cover": list(cover), "x0": list(x0), "pairs": [list(S_) for S_, _ in Ss], **s,
+           "caps": {"max_rss_gb": args.max_rss_gb, "max_states": args.max_states,
+                    "max_solutions": args.max_solutions, "max_seconds": args.max_seconds},
+           "host": os.uname().nodename, "started": datetime.datetime.now().isoformat(timespec="seconds")}
+    print(f"base {args.base}: {cover} x0 {x0} ({len(Ss)} pairs, distinct {s['distinct']}, multiplicities "
+          f"{s['multiplicities']}, kappa {s['kappa']}), caps {rec['caps']}", flush=True)
+    t0 = time.time()
+    outcome, reason, hits, st = "aborted", None, [], None
+    try:
         hits, st = Mt.run(cover, x0, target)
-        good = [h for h in hits if genuine(h, rank)]
-        S, b = Ss[0]
-        wkey = sorted(exact_codes(move_front(v, S, M))[0].tobytes() for v in terms)
-        same = any(sorted(exact_codes(t)[0].tobytes() for t in h["terms"]) == wkey for h in good)
-        dt = time.time() - t0
-        print(f"base {cover} x0 {x0} ({len(Ss)} pairs, {'repeated' if repeated else 'distinct'}, "
-              f"kappa {st['kappa']}): {len(good)} rank-{rank} decompositions, witness itself "
-              f"{'recovered' if same else 'not among them'}, {dt:.0f}s, stats {st}", flush=True)
-        report["bases"].append({"cover": list(cover), "x0": list(x0), "pairs": [list(s) for s, _ in Ss],
-                                "repeated": repeated, "hits": len(good), "witness_recovered": same,
-                                "seconds": dt, "stats": st})
-        passed += same
-        suffix = "" if args.base is None else f"_{args.base}"
-        report["pass"] = passed == len(report["bases"]) and bool(report["bases"])
-        report["complete"] = selected == len(bases) - 1 or args.base is not None
-        write_control(orbit, f"control_witness{suffix}", report)     # after every base: an outer cap may kill the run
-    print(f"control-witness: {passed}/{len(report['bases'])} bases recover the rank-{rank} witness")
-    return 0 if report["pass"] else 1
+        outcome = "ran"
+    except BudgetExceeded as e:
+        reason = str(e)
+    except (AssertionError, MemoryError) as e:
+        reason = f"{type(e).__name__}: {e}"
+    if st is None:
+        st = Mt.last_stats                      # the partial counts up to the abort
+    dt = time.time() - t0
+    good = [h for h in hits if genuine(h, rank)]
+    witness_hits = sum(sorted(exact_codes(t)[0].tobytes() for t in h["terms"]) == wkey for h in good)
+    others = len(good) - witness_hits
+    if outcome == "ran":
+        outcome = "pass" if witness_hits == 1 else "fail"
+        if witness_hits == 0:
+            reason = f"witness not among the {len(good)} genuine rank-{rank} decompositions"
+    rec.update({"outcome": outcome, "reason": reason, "seconds": round(dt, 1),
+                "peak_rss_gb": round(peak_rss_gb(), 3), "stats": st, "raw_hits": len(hits),
+                "genuine": len(good), "witness_hits": witness_hits, "other_decompositions": others,
+                "other_terms": [[exact_codes(t)[0].astype(int).tolist() for t in h["terms"]]
+                                for h in good if sorted(exact_codes(t)[0].tobytes() for t in h["terms"]) != wkey]})
+    os.makedirs(CONTROLS_DIR, exist_ok=True)
+    path = witness_base_path(orbit, args.base)
+    with open(path, "w") as f:
+        json.dump(rec, f, indent=1)
+    print(f"base {args.base}: {outcome.upper()}{'' if reason is None else ' (' + reason + ')'}: {witness_hits} "
+          f"witness hit, {others} other genuine rank-{rank} decompositions, {len(hits)} raw hits, {dt:.0f}s, "
+          f"peak rss {rec['peak_rss_gb']} GB, stats {st}", flush=True)
+    print(f"wrote {os.path.relpath(path, ROOT)}")
+    return 0 if outcome == "pass" else 1
+
+
+def witness_summary(orbit, rank, source, bases):
+    """Collect the per-base files into results/ORBIT/control_witness.json."""
+    rows, missing = [], []
+    for k in range(len(bases)):
+        path = witness_base_path(orbit, k)
+        if not os.path.exists(path):
+            missing.append(k)
+            continue
+        with open(path) as f:
+            r = json.load(f)
+        if r["cover"] != list(bases[k][0][0]) or r["x0"] != list(bases[k][0][1]):
+            raise AssertionError(f"{path} is for a different base than index {k} now names")
+        rows.append({k_: r[k_] for k_ in ("base", "cover", "x0", "distinct", "multiplicities", "kappa", "outcome",
+                                            "reason", "seconds", "peak_rss_gb", "witness_hits",
+                                            "other_decompositions", "git", "host")})
+        rows[-1]["coord_solutions"] = (r["stats"] or {}).get("coord_solutions")
+        rows[-1]["coord_states"] = (r["stats"] or {}).get("coord_states")
+    passed = sum(r["outcome"] == "pass" for r in rows)
+    aborted = [r["base"] for r in rows if r["outcome"] == "aborted"]
+    failed = [r["base"] for r in rows if r["outcome"] == "fail"]
+    doc = {"witness": source, "rank": rank, "bases_total": len(bases), "run": len(rows), "passed": passed,
+           "aborted": aborted, "failed": failed, "missing": missing,
+           "pass": passed == len(bases), "complete": not missing, "bases": rows}
+    write_control(orbit, "control_witness", doc)
+    for r in rows:
+        print(f"  base {r['base']:2d}: {r['outcome']:7s} {r['seconds']:7.0f}s rss {r['peak_rss_gb']:.2f} GB "
+              f"kappa {r['kappa']} mult {r['multiplicities']} coord {r['coord_solutions']} "
+              f"witness {r['witness_hits']} others {r['other_decompositions']}"
+              f"{'' if r['reason'] is None else ' :: ' + r['reason']}")
+    print(f"control-witness {orbit}: {passed}/{len(bases)} bases pass, {len(aborted)} aborted, {len(failed)} failed, "
+          f"{len(missing)} not run")
+    return 0 if doc["pass"] else 1
 
 
 def main(argv):
@@ -843,9 +1013,22 @@ def main(argv):
                    help="further (multiset, base point) pairs to run beyond the stored decompositions' own "
                         "(0: all, about an hour)")
     p = add("control-witness", control_witness)
-    p.add_argument("--base", type=int, default=None, help="run only the k-th (base, x0) pair (0-based)")
+    p.add_argument("--base", type=int, default=None, help="run the k-th (base, x0) pair (0-based, see --list-bases)")
+    p.add_argument("--list-bases", action="store_true", help="print the all-visible bases with their counts")
+    p.add_argument("--summary", action="store_true", help="collect results/controls/witness_ORBIT_base_*.json")
+    p.add_argument("--max-rss-gb", type=float, default=8.0, help="abort the base once the resident set "
+                   "exceeds this (also caps the estimated size of a dense solve); 0: no cap")
+    p.add_argument("--max-states", type=int, default=200_000, help="abort when more joined states are carried "
+                   "from one slice to the next; 0: no cap")
+    p.add_argument("--max-solutions", type=int, default=2_000_000, help="abort when one slice equation returns "
+                   "more solutions; 0: no cap")
+    p.add_argument("--max-seconds", type=float, default=0.0, help="abort the base at this wall-clock age "
+                   "(0: none); the outer cap should be a little larger")
     add("export-witness", export_witness, orbit=False)
     args = ap.parse_args(argv[1:])
+    for cap in ("max_rss_gb", "max_states", "max_solutions", "max_seconds"):
+        if getattr(args, cap, None) == 0:
+            setattr(args, cap, None)
     common.lower_priority()
     return args.fn(args) or 0
 

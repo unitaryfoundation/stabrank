@@ -1,0 +1,88 @@
+{
+ "orbit": "N",
+ "git": "b449a56bdaeb4037907d68e7ab00206643cadd10",
+ "witness": "research/qutrit_m4_rank5/N_m4_rank7_witness.json",
+ "rank": 7,
+ "base": 4,
+ "cover": [
+  32,
+  34,
+  113,
+  115,
+  117,
+  321,
+  321
+ ],
+ "x0": [
+  2,
+  2
+ ],
+ "pairs": [
+  [
+   1,
+   3
+  ]
+ ],
+ "distinct": 6,
+ "multiplicities": [
+  2,
+  1,
+  1,
+  1,
+  1,
+  1
+ ],
+ "repeated": true,
+ "kappa": 2,
+ "kappa1": 2,
+ "caps": {
+  "max_rss_gb": 8.0,
+  "max_states": 200000,
+  "max_solutions": 2000000,
+  "max_seconds": 560.0
+ },
+ "host": "vincentrusso-MacBook-Pro",
+ "started": "2026-09-22T19:54:13",
+ "outcome": "aborted",
+ "reason": "join at coordinate slice (0, 1): 200338 states exceed the cap 200000",
+ "seconds": 480.4,
+ "peak_rss_gb": 0.781,
+ "stats": {
+  "kappa": 2,
+  "kappa1": 2,
+  "distinct": 6,
+  "blocks": [
+   2
+  ],
+  "coord_solutions": [
+   87766
+  ],
+  "coord_states": [
+   3689
+  ],
+  "joined": 0,
+  "composite_solutions": 0,
+  "composite_states": [],
+  "candidates": 5658746,
+  "zero_coefficient": 602372,
+  "split_pruned": 449434,
+  "reconstructions": 0,
+  "hits": 0,
+  "refused": false,
+  "seconds": {
+   "solve_10": 159.81,
+   "solve_01": 171.19,
+   "join_10": 0.71
+  },
+  "peak_rss_gb": null,
+  "coord_raw": [
+   87766,
+   87766
+  ]
+ },
+ "raw_hits": 0,
+ "genuine": 0,
+ "witness_hits": 0,
+ "other_decompositions": 0,
+ "other_terms": []
+}
