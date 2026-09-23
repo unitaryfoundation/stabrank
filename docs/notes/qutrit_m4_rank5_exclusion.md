@@ -1,6 +1,8 @@
 # Excluding rank 5 for |N>^4 and |H3>^4: design and costing note
 
-Status (2026-09-22). Design and costing only; nothing here is a bound. The
+Status (2026-09-22; section 8 added 2026-09-23 with the launch plan after
+the review, which supersedes section 7's lists, partitions, and pod
+commands). Design and costing only; nothing here is a bound. The
 cells stand at 5 <= chi(N^4) <= 7 (`bounds/N-m4-lower-5.json`,
 `bounds/N-m4-upper-7.json`, the Lean witness `norrell_m4_stabRank_le_seven`)
 and 5 <= chi(H3^4) <= 8 (`bounds/H3-m4-lower-5.json`,
@@ -581,7 +583,9 @@ explicit failure.
    the three fields (`_pin_by_blocks`, the split-tracking idea of the H^6
    control applied before the family is pinned; with no ordinary state the
    coordinates do not depend on the family member, so the condition is
-   exact). The second coordinate slice is now solved once against the
+   exact; this step was removed in commit e548e5a, when the block-only
+   bases moved to `BlockOnlyMatcher`, and the family path pins the family
+   by the slice restrictions alone). The second coordinate slice is now solved once against the
    initial family and joined with the first slice's states by family
    compatibility (pinned against pinned by the coefficient vector mod
    65521, a dictionary lookup; otherwise by the annihilator of the
@@ -766,3 +770,227 @@ hits in 201 runs, 0 refused, the stored class recovered from its own
 base; 99 s against 144 s), and `control-planted N` recovers all 32
 planted decompositions with the same further-decomposition counts
 (0, 0, 1, 9) and 0 candidates rejected by the final check.
+
+## 8. Launch plan (2026-09-23, after the review)
+
+What changed since section 7. The review
+(`docs/notes/qutrit_m4_rank5_review.md`) found three defects in the stage
+C path and one in the aggregate; its second commit fixed the block
+reconstruction for cancelling copies, made the final loop of `_complete`
+raise `UnpinnedFamily` instead of reconstructing at a random member of an
+unpinned family, added the cancel-at-base multisets T + (b, b) to the
+degenerate enumeration, and made the aggregate fail on a refusal. The
+`_pin_by_blocks` step that section 7 describes was removed in commit
+e548e5a: the family is pinned by the slice restrictions alone, and the
+block-only bases take `BlockOnlyMatcher`. This session added the
+following.
+
+- `Matcher._compatible` cached its index over the second coordinate
+  slice's solutions by `id(sols)`. The list is freed at the end of each
+  run and the next run's list often gets the same address, so the stale
+  index was served and compatible pairs were dropped with no record. The
+  product control lost 8 of its 270 hits this way (one solution per
+  slice, zero states after the join); a batch of any stage could lose a
+  state the same way. The index is keyed on the list object now, with a
+  reference kept, and reset per run. Every control below was re-run after
+  this fix.
+- A single block whose coefficient family still has kappa parameters at
+  the final loop is reconstructed with the parameter as an unknown:
+  `_block_coordinates` returns the residual coordinates as a0 + A lambda
+  over d = d0 + K lambda, and `reconstruct_block` carries lambda next to
+  the copy coefficients through its solves, so the copies are decided on
+  the whole family at once. This is the configuration `control-m3 N`
+  reaches (kappa = 1, one block of two), which aborted with
+  `UnpinnedFamily` after the review's fix and passes again (924
+  multisets, 9 genuine hits in 201 runs, 0 refused, the stored class
+  recovered from its own base, 63 s). `UnpinnedFamily` remains for
+  several blocks with kappa > 0 (the parameter would have to be shared
+  across the blocks' reconstructions), and for the strict coordinate
+  solve: dependent translates of two blocks, a nonzero residual with no
+  translate chosen, a residual outside the span at the solve tolerance.
+- `batch.py --max-seconds S`: the matcher aborts the running cover at
+  the deadline (`BudgetExceeded`, recorded as undecided) and every cover
+  not yet started is recorded as undecided with the reason "not run", so
+  a batch caught by the stage C tail ends with a record naming what is
+  left instead of running for hours. The batch exits 1 and fails the
+  aggregate; the record carries `max_seconds` and `aborted_at_deadline`
+  outside the deterministic part.
+- `driver.cover_class` and the partition by class (below).
+
+Where `UnpinnedFamily` can fire at rank 5. The kappa > 0 case needs a
+dependent set of distinct states, and among the stage C covers those are
+the (2, 1, 1, 1) covers T + (x, y) with x in span(T): 124 for N and 8 for
+H3, one block each, so the multi-block kappa > 0 raise cannot occur on a
+listed cover and the single-block case is reconstructed rather than
+raised. The dependent-translates raise needs two blocks whose chosen
+translates (at most two each) are linearly dependent: `cover_class`
+finds 27 such (2, 2, 1) covers for N (blocks in one Pauli orbit, or a
+translate of one block in the span of two of the other, as |0+> lies in
+the span of |00> and |01>) and none for H3. The two tolerance raises can
+fire on any block cover in principle; they did not fire on any cover run
+below.
+
+Dry pass (this laptop, one core at nice 19, load average 12 to 16, every
+cover under a 90 or 120 s deadline; `UnpinnedFamily` caught and counted).
+Every kappa >= 1 stage C cover of both cells was run, all 27 dependent
+(2, 2, 1) N covers were attempted (6 before the sample was cut), and the
+rest was sampled evenly over each list. The N pass ran before the index
+fix; 59 of its 124 kappa >= 1 covers were re-run after it with the same
+outcomes (0 hits, 0 reconstructions, 17.6 s median).
+
+| cell | class | covers | run | outcome | reached the final loop | seconds per cover (mean, median, max) |
+|---|---|---|---|---|---|---|
+| N | (2, 1, 1, 1) kappa >= 1 | 124 | 124 | all decided, 0 hits | 0 | 27.4, 38.0, 51.2 |
+| N | (2, 1, 1, 1) kappa = 0 | 15,883 | 147 | all decided, 0 hits | 0 | 0.77, 0.29, 7.7 |
+| N | (2, 2, 1) independent | 60 | 3 | all decided, 0 hits | 0 | 5.5, 4.6, 9.2 |
+| N | (2, 2, 1) dependent | 27 | 6 | all 6 past the 90 s deadline at a composite slice | 0 | above 90 |
+| N | (3, 1, 1) | 87 | 0 | (sampled in section 7: 6.9 s) | | |
+| H3 | (2, 1, 1, 1) kappa >= 1 | 8 | 8 | all decided, 0 hits | 0 | 6.4, 5.2, 10.5 |
+| H3 | (2, 1, 1, 1) kappa = 0 | 6,980 | 295 | all decided, 0 hits | 0 | 0.24, 0.10, 3.8 |
+| H3 | (2, 2, 1) | 18 | 1 | decided, 0 hits | 0 | 4.5 |
+| H3 | (3, 1, 1) | 18 | 4 | all decided, 0 hits | 0 | 0.03 |
+
+No run raised `UnpinnedFamily`, no run was refused, and no state reached
+the final loop at all (every state dies at a composite slice, as in the
+H^6 dry pass of `docs/notes/h6_rank5_stagec_repair.md`). The 27
+dependent (2, 2, 1) covers of N are the stage C tail that section 7 met
+(the 234 s cover, the two-hour cover, the 1,661 s batch): they cannot be
+decided on the laptop under the cap and they are the only listed covers
+on which the dependent-translates raise can fire. The decision is to keep
+the raise and run those 27 covers as single-cover batches without a
+deadline (below); if one raises, the record names it, the aggregate does
+not certify, and the follow-up is the reconstruction with the residual
+split between the two blocks carried as unknowns, or a separate argument
+for that cover. Everything else in stage C is decided by the matcher as
+it stands.
+
+Planted (2, 2, 1) instance with two blocks in one Pauli orbit: not
+testable end to end under the cap. At n2 = 1 (three-qutrit terms, the
+m = 3 geometry) all 8 planted instances (random shapes, small integer
+coefficients, 0 to 5 of the 8 slices with dependent block columns) passed
+45 s at a composite slice: two blocks of two copies span the whole
+three-dimensional slice space, so the coordinate equations are vacuous
+and the joined states are the full product of the option lists. At
+n2 = 2 one instance (base (30, 224, 224, 332, 332)) passed 470 s at
+composite slice (1, 2). The case is covered instead by a unit test on the
+strict coordinate solve (`tests/test_qutrit_m4_rank5.py`: two blocks in
+one Pauli orbit with a shared translate raise "dependent", independent
+translates return the coordinates, the other two strict raises fire on
+their inputs, and `batch.match_cover` records a raising run as
+undecided), and the covers it affects are exactly the 27 single-cover
+batches.
+
+Lists (`driver.py degenerate --write`, 17 s and 3 s):
+
+| cell | covers | stage B | stage C | (2, 1, 1, 1) | of which kappa >= 1 | (2, 2, 1) | of which dependent | (3, 1, 1) | sha256 |
+|---|---|---|---|---|---|---|---|---|---|
+| N | 28,356 | 12,175 | 16,181 | 16,007 | 124 | 87 | 27 | 87 | `a505dcbbc00a3e32` |
+| H3 | 13,136 | 6,112 | 7,024 | 6,988 | 8 | 18 | 0 | 18 | `8b41e2740a03c196` |
+
+The aggregate's fresh enumeration equals both lists. The stage B covers
+are unchanged from section 7; the addition is the T + (b, b) route,
+10,271 covers for N and 2,136 for H3, all of pattern (2, 1, 1, 1) with
+kappa = 0.
+
+Rates and partition (`driver.py partition ORBIT --target-s 600
+--target-bc-s 600 --match-ms M --rates JSON`). Stage A and B rates are
+the pod's measured ones (54 and 21 ms per stage A cover, 4.8 and 4.3 s
+per stage B cover). Stage C rates by class, from the dry pass scaled by
+the pod-to-laptop ratio of stage B (0.85) and rounded up: N 0.8 s per
+(2, 1, 1, 1) cover, 25 s with kappa >= 1, 7 s per (3, 1, 1), 10 s per
+independent (2, 2, 1), and a nominal 3,600 s per dependent (2, 2, 1)
+cover (the pod's 10.9 s stage C mean over the old list of 5,910 covers,
+64,400 CPU-s, leaves about 2,000 s per dependent cover once the other
+classes are accounted for at these rates); H3 0.3, 6, 0.15, 5 s. The
+stage C covers are dealt longest first onto the least loaded batch, a
+cover at or above the target gets its own batch, and the cheap covers of
+a batch run first so that a deadline abort leaves the fewest not run.
+
+| cell | stage A | stage B | stage C, shared batches | stage C, single-cover batches | batches | projected CPU-h |
+|---|---|---|---|---|---|---|
+| N | 17 (0 to 16), 3.1 h | 98 (17 to 114), 124 or 125 covers, 16.2 h | 29 (115 to 143), 554 to 562 covers, about 590 s each, 4.7 h | 27 (144 to 170), 27.0 h nominal | 171 | 51.1 (24.1 without the nominal tail) |
+| H3 | 9 (0 to 8), 1.4 h | 44 (9 to 52), 138 or 139 covers, 7.3 h | 4 (53 to 56), 1,748 to 1,764 covers, about 560 s each, 0.6 h | 0 | 57 | 9.3 |
+
+Every shared stage C batch of N holds 4 or 5 kappa >= 1 covers and 0 to
+3 independent (2, 2, 1) covers; every H3 stage C batch holds 2 kappa >= 1
+and 4 or 5 (2, 2, 1) covers. Partition hashes `455303990789bf9c` (N) and
+`d6b847ec0efda241` (H3). Both hashes and both list hashes differ from
+section 7's, so the six sample batches run on the pod against the old
+partitions (N 0, 37, 165 and H3 0, 28, 85) do not verify against the
+new geometry and are not reused; the corresponding first batches of each
+stage are N 0, 17, 115 and H3 0, 9, 53.
+
+Controls after the changes (this laptop): `control-planted N` and `H3`
+recover all 32 planted decompositions per cell with 0 candidates
+rejected (further decompositions with the same base N 0, 0, 1, 20 and
+H3 0, 0, 0, 15; the repeated case draws from the new list, so the N
+count differs from the review's 27); `control-product N` 270 of 270 and
+`H3` 81 of 81; `control-m3 N --sample 200` as above. `control-covers`
+does not touch the matcher and was not re-run. `aggregate.py N --dry-run
+--partial` and the H3 counterpart pass every stored check against the
+empty results directories (fresh enumeration equal to the list, geometry
+tiles the list once). `batch.py H3 53 --max-seconds 20` exercised the
+guard: 42 covers matched, 1 aborted at a composite slice, 1,705 not run,
+exit 1.
+
+Pod commands (16-vCPU Linux, from the repository root after `uv sync
+--extra challenge`; rerunning any loop resumes, finished batches are
+skipped). First the six sample batches, one process each, and the
+partial aggregates, to check the rates before the rest:
+
+```
+mkdir -p research/qutrit_m4_rank5/results/N research/qutrit_m4_rank5/results/H3
+printf 'N 0\nN 17\nN 115\nH3 0\nH3 9\nH3 53\n' | xargs -P 6 -L 1 sh -c \
+  'nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/batch.py "$0" "$1" --max-seconds 3600 \
+   > research/qutrit_m4_rank5/results/"$0"/batch_"$1".log 2>&1'
+nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/aggregate.py N --dry-run --partial
+nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/aggregate.py H3 --dry-run --partial
+```
+
+Then everything, 15 processes at a time: the shared batches under a
+3,600 s guard (six times their estimate), the 27 single-cover N batches
+with no guard:
+
+```
+seq 0 143 | xargs -P 15 -n 1 sh -c \
+  'nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/batch.py N "$0" --max-seconds 3600 \
+   > research/qutrit_m4_rank5/results/N/batch_"$0".log 2>&1'
+seq 0 56 | xargs -P 15 -n 1 sh -c \
+  'nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/batch.py H3 "$0" --max-seconds 3600 \
+   > research/qutrit_m4_rank5/results/H3/batch_"$0".log 2>&1'
+seq 144 170 | xargs -P 15 -n 1 sh -c \
+  'nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/batch.py N "$0" \
+   > research/qutrit_m4_rank5/results/N/batch_"$0".log 2>&1'
+```
+
+A batch that hits the guard prints `ABORTED at the --max-seconds` and
+exits 1; list them with `grep -l ABORTED
+research/qutrit_m4_rank5/results/*/batch_*.log`, and re-run each with
+`--force` and no guard (`batch.py N K --force`). A single-cover batch
+that exits 1 with `UnpinnedFamily` in its record's `undecided` list is
+the dependent-translates case above. Then the aggregates, the dry run
+first and then the certificate's command, which re-runs two batches
+drawn with seed 20260922 from the batches present (N batches 121 and
+169 when all 171 are present, a shared stage C batch and a single-cover
+one; H3 batches 39 and 56):
+
+```
+nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/aggregate.py N --dry-run --partial
+nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/aggregate.py H3 --dry-run --partial
+nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/aggregate.py N --recheck 2 --recheck-seed 20260922
+nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/aggregate.py H3 --recheck 2 --recheck-seed 20260922
+```
+
+The last two write `batch_manifest_N.json` and `batch_manifest_H3.json`
+and print the claim lines; then fill the placeholders of the two draft
+bound files and move them to `bounds/`. Wall time on 15 cores: H3 about
+45 minutes; N about 2 hours for the 144 shared batches plus whatever the
+27 single-cover batches take, which is the one open cost (two hours for
+one of them on the pod in section 7).
+
+Dependencies of the bound files to record with the run, beyond section
+2: the cancel-at-base case (a base multiset T + (b, b) with b outside
+span(T) and the two copies cancelling at x_0, which Fact B does not
+exclude and which the stage C list now holds), and, for N, the 27
+dependent (2, 2, 1) covers decided by the matcher with the strict
+reconstruction rather than a separate argument.

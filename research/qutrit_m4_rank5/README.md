@@ -68,18 +68,27 @@ Python; there is no compiled kernel.
   (partial after an abort); `results/ORBIT/control_witness.json` is their
   collection (`--summary`).
 - `partition_N.json`, `partition_H3.json`: the batch geometry per cell,
-  hashed. N: 1,209 pivot pairs in 37 stage A batches, 12,175 dependent
-  covers in 128 stage B batches, 5,910 repeated covers in 39 stage C
-  batches (204 batches: 0 to 36 A, 37 to 164 B, 165 to 203 C). H3: 2,390
-  pivot pairs in 28 stage A batches, 6,112 dependent covers in 57 stage B
-  batches, 4,888 repeated covers in 8 stage C batches (93 batches: 0 to 27
-  A, 28 to 84 B, 85 to 92 C). Targets of 540 s per batch at the laptop
-  rates (census seconds plus 126 ms (N) or 100 ms (H3) per stage A cover;
-  the sampled seconds per cover by multiplicity pattern for B and C, round
-  robin over the sorted lists).
+  hashed (note, section 8). N: 1,209 pivot pairs in 17 stage A batches
+  (0 to 16), 12,175 dependent covers in 98 stage B batches (17 to 114,
+  124 or 125 covers), 16,181 repeated covers in 56 stage C batches: 29
+  shared batches (115 to 143, 554 to 562 covers) and 27 single-cover
+  batches (144 to 170) for the (2, 2, 1) covers whose two blocks admit
+  dependent translates, the stage C tail; 171 batches. H3: 2,390 pivot
+  pairs in 9 stage A batches (0 to 8), 6,112 dependent covers in 44 stage
+  B batches (9 to 52, 138 or 139 covers), 7,024 repeated covers in 4
+  stage C batches (53 to 56, 1,748 to 1,764 covers); 57 batches. Targets
+  of 600 s per batch at the pod rates (`--match-ms 54` and `21`; `--rates`
+  by cover class: stage B 4.8 and 4.3 s, (2, 1, 1, 1) 0.8 and 0.3 s, 25
+  and 6 s with kappa >= 1, (3, 1, 1) 7 and 0.15 s, (2, 2, 1) 10 and 5 s,
+  dependent (2, 2, 1) a nominal 3,600 s). Stage B is round robin over the
+  sorted list; stage C is dealt longest first onto the least loaded batch
+  (`driver.cover_class` gives the class), a cover at or above the target
+  alone in its batch, the cheap covers of a batch first.
 - `degenerate_covers_N.json`, `degenerate_covers_H3.json`: the stage B and
   C covers as sorted index tuples into `dictionary(3, 2)`, with the counts
-  by multiplicity pattern and the file's hash.
+  by multiplicity pattern and the file's hash; N 28,356 covers (12,175
+  stage B, 16,181 stage C), H3 13,136 (6,112, 7,024), including the
+  cancel-at-base multisets T + (b, b) with b outside span(T).
 - `results/N/`, `results/H3/`: `kernel_census.json` (per pivot pair the
   covers, candidates and seconds, plus the hashed lists of full 3-, 4- and
   5-covers), `degenerate_sample.json`, `sample.json`, the controls
@@ -96,6 +105,12 @@ Python; there is no compiled kernel.
   missing manifest.
 - `match_prototype.py`: the stage A prototype behind the note's
   measurements; not used by the pipeline.
+- `tests/test_qutrit_m4_rank5.py` (repository `tests/`): the strict block
+  coordinate solve (dependent translates of two blocks, a residual with
+  no translate, a residual outside the span raise `UnpinnedFamily`;
+  independent translates return the coordinates), the batch record of a
+  raising run and of a deadline abort, `cover_class` on the 27 dependent
+  (2, 2, 1) N covers, and the cancel-at-base multisets in the N list.
 
 The certificates are `verify_challenge/cert_n_m4_rank5_attested.py` and
 `verify_challenge/cert_h3_m4_rank5_attested.py` (`CERTIFIED chi(N^4) >= 6`,
@@ -113,9 +128,15 @@ degenerate list (hash checked against the partition). Every hit the matcher
 returns is re-decided exactly (`common.decide_terms`); a hit with |M>^4 in
 the span of its terms is a decomposition with at most five terms and the
 batch exits 2 with `DECOMPOSITION FOUND` on its last line. A cover whose
-run raises, or a hit on which the modular and numeric decisions disagree,
-is recorded under `undecided` and fails the batch (exit 1). Exit 0
-otherwise. The record's deterministic part (geometry, cell, base point,
+run raises (`UnpinnedFamily` from the block reconstruction included), or
+a hit on which the modular and numeric decisions disagree, is recorded
+under `undecided` and fails the batch (exit 1). Exit 0 otherwise.
+`--max-seconds S` guards the batch against the stage C tail: the running
+cover is aborted at the deadline (`BudgetExceeded`, recorded as
+undecided) and every cover not yet started is recorded as undecided with
+the reason "not run"; the batch prints `ABORTED at the --max-seconds`,
+exits 1, and is re-run with `--force` and a larger cap or none. The
+record's deterministic part (geometry, cell, base point,
 partition and degenerate-list hashes, counts, the coordinate-slice solution
 histogram, the hits as phase codes with their decisions, `undecided`) is
 hashed as `deterministic_sha256`; timing, host, git commit and version
@@ -149,21 +170,42 @@ From the repository root after `uv sync --extra challenge`. One batch:
 nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/batch.py N K
 ```
 
-All batches of one cell on a 16-vCPU pod, 15 at a time, one log per batch
-(204 batches for N, 93 for H3):
+The first batch of each stage first (N 0, 17, 115 and H3 0, 9, 53, one
+process each), then the partial aggregates, to check the rates:
 
 ```
 mkdir -p research/qutrit_m4_rank5/results/N research/qutrit_m4_rank5/results/H3
-seq 0 203 | xargs -P 15 -n 1 sh -c \
-  'nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/batch.py N "$0" \
-   > research/qutrit_m4_rank5/results/N/batch_"$0".log 2>&1'
-seq 0 92 | xargs -P 15 -n 1 sh -c \
-  'nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/batch.py H3 "$0" \
-   > research/qutrit_m4_rank5/results/H3/batch_"$0".log 2>&1'
+printf 'N 0\nN 17\nN 115\nH3 0\nH3 9\nH3 53\n' | xargs -P 6 -L 1 sh -c \
+  'nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/batch.py "$0" "$1" --max-seconds 3600 \
+   > research/qutrit_m4_rank5/results/"$0"/batch_"$1".log 2>&1'
+nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/aggregate.py N --dry-run --partial
+nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/aggregate.py H3 --dry-run --partial
 ```
 
-Rerunning the same command resumes (finished batches are skipped).
-Progress and the final check, per cell:
+All batches on a 16-vCPU pod, 15 at a time, one log per batch: the
+shared batches under a 3,600 s guard, the 27 single-cover N batches (the
+dependent (2, 2, 1) covers, the stage C tail) without one:
+
+```
+seq 0 143 | xargs -P 15 -n 1 sh -c \
+  'nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/batch.py N "$0" --max-seconds 3600 \
+   > research/qutrit_m4_rank5/results/N/batch_"$0".log 2>&1'
+seq 0 56 | xargs -P 15 -n 1 sh -c \
+  'nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/batch.py H3 "$0" --max-seconds 3600 \
+   > research/qutrit_m4_rank5/results/H3/batch_"$0".log 2>&1'
+seq 144 170 | xargs -P 15 -n 1 sh -c \
+  'nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/batch.py N "$0" \
+   > research/qutrit_m4_rank5/results/N/batch_"$0".log 2>&1'
+```
+
+Rerunning the same command resumes (finished batches are skipped). A
+batch that hit the guard is listed by `grep -l ABORTED
+research/qutrit_m4_rank5/results/*/batch_*.log` and re-run with `--force`
+and no `--max-seconds`. Projected: N 24 CPU-hours for the shared batches
+plus the 27 single-cover batches (a nominal hour each; one such cover
+took two hours on the pod), H3 9.3 CPU-hours. Progress and the final
+check, per cell (the seeded recheck re-runs N batches 121 and 169 and H3
+batches 39 and 56 once every batch is present):
 
 ```
 nice -n 19 uv run --extra challenge python research/qutrit_m4_rank5/aggregate.py N --dry-run --partial
@@ -182,7 +224,16 @@ H3.
 
 Section 5 of the note lists them; `results/ORBIT/control_*.json` hold the
 outcomes. Run with `driver.py control-covers N`, `control-planted N`,
-`control-product N`, `control-m3 N` (and H3).
+`control-product N`, `control-m3 N` (and H3). Status after the review
+fixes and the two matcher changes of 2026-09-23 (the stale
+second-coordinate-slice index keyed on `id(sols)`, which had cost the
+product control 8 of its 270 hits, and the single-block reconstruction
+with the coefficient family's parameter as an unknown; note, section 8):
+`control-planted` recovers all 32 planted decompositions per cell with 0
+candidates rejected, `control-product` 270 of 270 (N) and 81 of 81 (H3),
+`control-m3 N --sample 200` 9 genuine hits in 201 runs, 0 refused, the
+stored class recovered (63 s). `control-m3 H3` is still the unfinished
+item of section 7.
 
 ### control-witness
 
