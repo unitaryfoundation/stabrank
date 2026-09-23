@@ -1280,13 +1280,16 @@ class SliceMatcher:
     reconstructed from the residuals; every hit is confirmed against
     psi^{n1 + n2}."""
 
-    def __init__(self, enum, n1, verbose=False, seed=29, native=True):
+    def __init__(self, enum, n1, verbose=False, seed=29, native=True, max_cand=2_000_000):
         self.E = enum
         self.n1, self.n2 = n1, enum.n
         self.F1, self.F2 = enum.F1, enum.F2
         self.verbose = verbose
         self.rng = np.random.default_rng(seed)
         self.cache = {}
+        # the candidate cap of the dense (parametric) slice solve; exceeding it
+        # raises, and a batch records the run as undecided
+        self.max_cand = max_cand
         # the compiled stage A kernel (cpp/src/slice_match.cpp) for distinct,
         # independent base states; STABRANK_NO_NATIVE=1 or native=False keeps
         # everything in this module, which stays the reference
@@ -1379,7 +1382,8 @@ class SliceMatcher:
             rhs = self.rhs(x0, coord[k])
             new, count = [], 0
             for cl, bl, f, sp in states:
-                sols = solve_slice(arrays, blocks, f, rhs, self.rng, stats=stats, log=self.log)
+                sols = solve_slice(arrays, blocks, f, rhs, self.rng, max_cand=self.max_cand, stats=stats,
+                                   log=self.log)
                 count += len(sols)
                 for combo, Ssel in sols:
                     f2 = f.restrict(*slice_system(arrays, blocks, combo, Ssel, rhs))
@@ -1491,7 +1495,8 @@ class SliceMatcher:
             arrays = [(o.m1[cd], o.m2[cd], o.vecs[cd]) for o, cd in zip(opts, codes)]
             new = []
             for cl2, bl2, f, sp1 in states:
-                sols = solve_slice(arrays, blocks, f, rhs, self.rng, stats=stats, log=self.log)
+                sols = solve_slice(arrays, blocks, f, rhs, self.rng, max_cand=self.max_cand, stats=stats,
+                                   log=self.log)
                 stats["composite_solutions"] += len(sols)
                 for combo, Ssel in sols:
                     f2 = f.restrict(*slice_system(arrays, blocks, combo, Ssel, rhs))
