@@ -188,6 +188,20 @@ def degenerate_covers(E, r, covers3, covers4):
                     ms = tuple(sorted(T + (a, b)))
                     if E.is_cover(ms) and ok(ms):
                         out.add(ms)
+            # two copies of a state outside T and its span whose coefficients
+            # cancel at the base point: the merged coefficient is zero, T
+            # alone covers psi there, and the family over T + b has b dead
+            # but exempt. Neither route above lists these (the pool holds
+            # span(T) only, the parallel pairs are distinct), and PR #86's
+            # Fact B does not exclude them: it takes the invisible terms to
+            # vanish at x0 one by one, not two present copies cancelling.
+            in_pool = set(pool)
+            for b in range(E.N):
+                if b in in_pool:
+                    continue
+                ms = tuple(sorted(T + (b, b)))
+                if ok(ms):
+                    out.add(ms)
     if r == 5:
         for Cv in covers4:
             span = E.in_span(Cv)

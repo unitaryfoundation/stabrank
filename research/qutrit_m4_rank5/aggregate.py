@@ -106,6 +106,10 @@ def check_batch(orbit, rec, part, geo, problems):
         problems.append(f"batch {idx}: the coordinate-slice histogram does not sum to matched")
     if rec.get("undecided"):
         problems.append(f"batch {idx}: {len(rec['undecided'])} undecided cover(s)")
+    if rec.get("refused"):
+        # a refusal is a dead ordinary coefficient, which the stage lists
+        # exclude; one in a batch means the matcher and the list disagree
+        problems.append(f"batch {idx}: {rec['refused']} refused cover(s)")
     if rec.get("hit_count") != len(rec.get("hits", [])):
         problems.append(f"batch {idx}: hit_count disagrees with the hits list")
     if rec.get("decompositions") != sum(h.get("decomposition", False) for h in rec.get("hits", [])):
