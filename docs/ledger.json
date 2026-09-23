@@ -1754,39 +1754,7 @@
     "compute_hours": 73.4,
     "hardware": "187 batches on a RunPod CPU pod (16 vCPU AMD EPYC 4564P, shared host at load 30 to 45, ten batches in parallel, nice 19), 2026-09-22 01:37 to 08:31 UTC; batches 14, 15, and 173 on an Apple silicon laptop (one core, nice 19) during the pipeline test on 2026-09-21; the aggregate's two seeded re-runs (batches 11 and 148) on the pod",
     "note": "The exclusion of every rank-5 decomposition of |H>^6 lives in the 190 stored batch outputs under research/h6_rank5/results/ (15 stage A batches over the 5,939,465 full 5-covers of |H>^3 with distinct independent base states, 158 stage B batches over the 12,390 dependent covers, 17 stage C batches over the 13,852 covers with a repeated state), each matching its covers at the four base points and re-deciding every candidate mod 2013265921 and numerically. The certificate checks the partition against the enumerator, re-enumerates the degenerate covers, verifies the hashes and geometry of every output, re-decides every stored hit, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/h6_rank5/batch.py, which regenerates any batch (`batch.py K`, 73.4 CPU-hours for all 190 on the pod: stage A 2.8, stage B 69.6, stage C 1.0).",
-    "total": 190
-   }
-  },
-  {
-   "slug": "qubit_H-m6-lower-6",
-   "orbit": "qubit_H",
-   "m": 6,
-   "direction": "lower",
-   "rank": 6,
-   "tier": "attested",
-   "ok": true,
-   "gamma": null,
-   "date": "2026-09-22",
-   "author": "this repository",
-   "github": [
-    "vprusso"
-   ],
-   "method": "all-visible base slice: every rank-5 decomposition of |H>^6 restricts, along some three qubits at some base point, to a full 5-cover of |H>^3 with all five terms nonzero; every such cover is enumerated up to symmetry and completed slice by slice under the slice structure lemma, modulo 65521 with exact re-decision",
-   "reference": "stabrank research/h6_rank5",
-   "compute": {
-    "cpu_hours": 73.4,
-    "wall_clock_hours": 6.9,
-    "runs": 1,
-    "hardware": "187 batches on a RunPod CPU pod (16 vCPU AMD EPYC 4564P, shared host at load 30 to 45, ten batches in parallel, nice 19), 2026-09-22 01:37 to 08:31 UTC; batches 14, 15, and 173 on an Apple silicon laptop (one core, nice 19) during the pipeline test on 2026-09-21; the aggregate's two seeded re-runs (batches 11 and 148) on the pod"
-   },
-   "budget_s": 3600,
-   "attested": {
-    "batches": "research/h6_rank5/batch_manifest.json",
-    "recomputed": 2,
-    "compute_hours": 73.4,
-    "hardware": "187 batches on a RunPod CPU pod (16 vCPU AMD EPYC 4564P, shared host at load 30 to 45, ten batches in parallel, nice 19), 2026-09-22 01:37 to 08:31 UTC; batches 14, 15, and 173 on an Apple silicon laptop (one core, nice 19) during the pipeline test on 2026-09-21; the aggregate's two seeded re-runs (batches 11 and 148) on the pod",
-    "note": "The exclusion of every rank-5 decomposition of |H>^6 lives in the 190 stored batch outputs under research/h6_rank5/results/ (15 stage A batches over the 5,939,465 full 5-covers of |H>^3 with distinct independent base states, 158 stage B batches over the 12,390 dependent covers, 17 stage C batches over the 13,852 covers with a repeated state), each matching its covers at the four base points and re-deciding every candidate mod 2013265921 and numerically. The certificate checks the partition against the enumerator, re-enumerates the degenerate covers, verifies the hashes and geometry of every output, re-decides every stored hit, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/h6_rank5/batch.py, which regenerates any batch (`batch.py K`, 73.4 CPU-hours for all 190 on the pod: stage A 2.8, stage B 69.6, stage C 1.0).",
-    "total": 190
+    "total": 180
    }
   },
   {
@@ -1818,7 +1786,7 @@
     "compute_hours": 73.4,
     "hardware": "187 batches on a RunPod CPU pod (16 vCPU AMD EPYC 4564P, shared host at load 30 to 45, ten batches in parallel, nice 19), 2026-09-22 01:37 to 08:31 UTC; batches 14, 15, and 173 on an Apple silicon laptop (one core, nice 19) during the pipeline test on 2026-09-21; the aggregate's two seeded re-runs (batches 11 and 148) on the pod",
     "note": "The exclusion of every rank-5 decomposition of |H>^6 lives in the 190 stored batch outputs under research/h6_rank5/results/ (15 stage A batches over the 5,939,465 full 5-covers of |H>^3 with distinct independent base states, 158 stage B batches over the 12,390 dependent covers, 17 stage C batches over the 13,852 covers with a repeated state), each matching its covers at the four base points and re-deciding every candidate mod 2013265921 and numerically. The certificate checks the partition against the enumerator, re-enumerates the degenerate covers, verifies the hashes and geometry of every output, re-decides every stored hit, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/h6_rank5/batch.py, which regenerates any batch (`batch.py K`, 73.4 CPU-hours for all 190 on the pod: stage A 2.8, stage B 69.6, stage C 1.0).",
-    "total": 190
+    "total": 180
    }
   },
   {
@@ -1850,7 +1818,7 @@
     "compute_hours": 73.4,
     "hardware": "187 batches on a RunPod CPU pod (16 vCPU AMD EPYC 4564P, shared host at load 30 to 45, ten batches in parallel, nice 19), 2026-09-22 01:37 to 08:31 UTC; batches 14, 15, and 173 on an Apple silicon laptop (one core, nice 19) during the pipeline test on 2026-09-21; the aggregate's two seeded re-runs (batches 11 and 148) on the pod",
     "note": "The exclusion of every rank-5 decomposition of |H>^6 lives in the 190 stored batch outputs under research/h6_rank5/results/ (15 stage A batches over the 5,939,465 full 5-covers of |H>^3 with distinct independent base states, 158 stage B batches over the 12,390 dependent covers, 17 stage C batches over the 13,852 covers with a repeated state), each matching its covers at the four base points and re-deciding every candidate mod 2013265921 and numerically. The certificate checks the partition against the enumerator, re-enumerates the degenerate covers, verifies the hashes and geometry of every output, re-decides every stored hit, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/h6_rank5/batch.py, which regenerates any batch (`batch.py K`, 73.4 CPU-hours for all 190 on the pod: stage A 2.8, stage B 69.6, stage C 1.0).",
-    "total": 190
+    "total": 180
    }
   },
   {
@@ -1927,6 +1895,38 @@
    },
    "budget_s": null,
    "attested": null
+  },
+  {
+   "slug": "qubit_H-m6-lower-6",
+   "orbit": "qubit_H",
+   "m": 6,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "attested",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-23",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "all-visible base slice: every rank-5 decomposition of |H>^6 restricts, along some three qubits at some base point, to a full 5-cover of |H>^3 with all five terms nonzero; every such cover is enumerated up to symmetry and completed slice by slice under the slice structure lemma, modulo 65521 with exact re-decision",
+   "reference": "stabrank research/h6_rank5",
+   "compute": {
+    "cpu_hours": 74.7,
+    "wall_clock_hours": 7.2,
+    "runs": 2,
+    "hardware": "187 batches on a RunPod CPU pod (16 vCPU AMD EPYC 4564P, shared host at load 30 to 45, ten batches in parallel, nice 19), 2026-09-22 01:37 to 08:31 UTC; batches 14, 15, and 173 on an Apple silicon laptop (one core, nice 19) during the pipeline test on 2026-09-21; the aggregate's two seeded re-runs (batches 11 and 148) on the pod; the stage C repair batches 190 to 196 on the same pod (seven in parallel, nice 19), 2026-09-23 09:17 to 09:32 UTC, and the aggregate's two seeded re-runs (batches 10 and 140) on the pod afterwards"
+   },
+   "budget_s": 3600,
+   "attested": {
+    "batches": "research/h6_rank5/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 74.7,
+    "hardware": "187 batches on a RunPod CPU pod (16 vCPU AMD EPYC 4564P, shared host at load 30 to 45, ten batches in parallel, nice 19), 2026-09-22 01:37 to 08:31 UTC; batches 14, 15, and 173 on an Apple silicon laptop (one core, nice 19) during the pipeline test on 2026-09-21; the aggregate's two seeded re-runs (batches 11 and 148) on the pod; the stage C repair batches 190 to 196 on the same pod (seven in parallel, nice 19), 2026-09-23 09:17 to 09:32 UTC, and the aggregate's two seeded re-runs (batches 10 and 140) on the pod afterwards",
+    "note": "The exclusion of every rank-5 decomposition of |H>^6 lives in 180 stored batch outputs under research/h6_rank5/results/: 15 stage A batches over the 5,939,465 full 5-covers of |H>^3 with distinct independent base states, 158 stage B batches over the 12,390 dependent covers (partition.json, batches 0 to 172), and the 7 stage C repair batches 190 to 196 (partition_stage_c_v2.json) over the 16,006 covers with a repeated state of the regenerated list degenerate_covers_v2.json, which supersede the 17 original stage C batches 173 to 189 over 13,852 covers (docs/notes/h6_rank5_stagec_repair.md: the original list missed the 2,154 multisets T + (b, b) with b outside span(T), and the block reconstruction missed cancelling copies). Each batch matches its covers at the four base points and re-decides every candidate mod 2013265921 and numerically. The certificate checks both partitions against the enumerator, re-enumerates the degenerate covers into the regenerated list, verifies the hashes and geometry of every output, re-decides every stored hit, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/h6_rank5/batch.py, which regenerates any batch (`batch.py K`, with --partition research/h6_rank5/partition_stage_c_v2.json for 190 to 196): 74.7 CPU-hours on the pod, stage A 2.8, stage B 69.6, stage C 1.3.",
+    "total": 180
+   }
   }
  ]
 }
