@@ -1,0 +1,3 @@
+batch 28 of 160: stage B, 150 covers, 1 run(s) per cover, compiled kernels, deadline 3600s
+batch 28: 150 covers, 150 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 801s, wall 802s; deterministic sha256 ed73269be03d53f3
+batch 28 complete: no hit is a decomposition of |T>^5; written research/t5_rank5/results/batch_28.json

@@ -11,8 +11,8 @@
     "attested": {
       "batches": "research/t5_rank5/batch_manifest.json",
       "recomputed": 2,
-      "compute_hours": "FILL: as the m = 5 bound",
-      "hardware": "FILL: as the m = 5 bound",
+      "compute_hours": 36.4,
+      "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host (load 30 to 40), fifteen batches in parallel at nice 19, 2026-09-24 07:37 to 10:04 UTC (the gamma smoke batch 159 at 07:37, the 160-batch loop 07:40 to 10:04); the aggregate's two seeded re-runs (batches 10 and 58) on the same pod at 10:05 UTC",
       "note": "The exclusion of every rank-5 decomposition of |T>^5 lives in the stored batch outputs under research/t5_rank5/results/ (the full 5-covers, 4-covers and 3-covers of |T>^3 up to symmetry, each matched at the base point 00 along qubits 1, 2 with the invisible terms on every flat missing 00 and every candidate re-decided mod 2013265921 and numerically): 0 hits, 0 refused, 0 undecided. The certificate re-enumerates the lists, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/t5_rank5/batch.py, which regenerates any batch (batch.py K)."
     }
   },
@@ -20,7 +20,7 @@
     "author": "this repository",
     "reference": "stabrank research/t5_rank5",
     "method": "projection monotonicity applied to the attested exact rank-5 exclusion at m=5",
-    "date": "FILL",
+    "date": "2026-09-24",
     "github": [
       "vprusso"
     ],

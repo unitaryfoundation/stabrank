@@ -322,7 +322,7 @@ decompositions of |T>^3 (0 exact rows at tau^{+-2}). They are consistency
 checks on the stage (gamma) runs they say are empty, not inputs of the
 exclusion.
 
-## 6. Rates, partition and the pipeline test
+## 6. Rates, partition, and the pipeline test
 
 Measured by `driver.py sample STAGE` (`results/rates.json`,
 `results/sample_*.json`), per cover, one process at nice 19 with a load
@@ -533,13 +533,37 @@ setsid nohup sh -c 'STABRANK_NO_NATIVE=1 nice -n 19 /root/.local/bin/uv run --ex
 Copy back `research/t5_rank5/results/batch_*.json`, the logs,
 `batch_manifest.json` and the no-native record with rsync over port
 40096, commit them, fill the placeholders of
-`research/t5_rank5/qubit_T-m5-lower-6.json.draft` and
-`qubit_T-m6-lower-6.json.draft` (compute hours, hardware, dates, the batch
+`bounds/qubit_T-m5-lower-6.json` and
+`bounds/qubit_T-m6-lower-6.json` (compute hours, hardware, dates, the batch
 indices of the re-runs) and move them to `bounds/`; the submissions
 workflow verifies every touched bound, so the drafts keep their suffix
 until the manifest exists. Then run
 `verify_challenge/cert_qubit_t_m5_rank5_attested.py` and update the board:
 chi(T^5) = 6 and chi(T^6) = 6.
+
+### 8.1 The run (2026-09-24)
+
+All 160 batches ran on the RunPod pod with the anneal loops paused: the
+gamma smoke batch 159 at 07:37 UTC (4 covers, 84 runs, 105 s), then the
+160-batch loop fifteen at a time from 07:40 to 10:04 UTC. Totals from the
+aggregate: stage A 5 batches over the 6,115,136 distinct independent full
+5-covers of |T>^3 (507 s per batch, 0.4 ms per cover), stage B 138 batches
+over the 20,653 dependent covers (887 s per batch, 5.9 s per cover, about
+four times the laptop rate against the factor two the partition assumed),
+stage C 12 batches over the 23,120 multisets with a repeated state (371 s
+per batch), stage beta' 4 batches over the 4,709 full 4-covers with all six
+invisible flats (421 s per batch), and stage gamma 1 batch over the 4 full
+3-covers with all 21 flat pairs (106 s); 0 hits, 0 refused, 0 undecided,
+36.4 CPU-hours in all (the partition estimated 25). The aggregate with
+`--recheck 2 --recheck-seed 20260924` re-enumerated the 3-covers, the
+4-covers, and the degenerate list (equal to the stored ones, 54 s),
+verified every stored batch, re-ran batches 10 (550 s) and 58 (565 s) from
+scratch with matching deterministic hashes, wrote `batch_manifest.json`,
+and printed `CERTIFIED chi(qubit_T^5) >= 6` in 1,169 s. With the Lean-tier
+rank-6 witnesses the cells are chi(T^5) = 6 and chi(T^6) = 6, filed as
+`bounds/qubit_T-m5-lower-6.json` and `bounds/qubit_T-m6-lower-6.json` at
+the attested tier. The `--no-native` replay of stage A batch 4 was started
+on the pod after the run; its record goes under `results/nonative/`.
 
 ## 9. What is proved, what is assumed, what is open
 

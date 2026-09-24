@@ -1,0 +1,3 @@
+batch 4 of 160: stage A, 2858 pivot pairs, 1 run(s) per cover, compiled kernels, deadline 3600s
+batch 4: 308655 covers, 308655 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 102s, match 133s, wall 235s; deterministic sha256 69be84ae6f12908f
+batch 4 complete: no hit is a decomposition of |T>^5; written research/t5_rank5/results/batch_4.json
