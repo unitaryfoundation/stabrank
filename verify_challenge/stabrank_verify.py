@@ -127,16 +127,58 @@ def orbit_state(orbit):
     raise ValueError(f"unknown orbit {orbit!r}")
 
 
-ORBIT_P = {"S": 3, "N": 3, "H3": 3, "T3": 3, "qubit_H": 2, "qubit_T": 2, "T5": 5}
+ORBIT_P = {"S": 3, "N": 3, "H3": 3, "T3": 3, "qubit_H": 2, "qubit_T": 2, "T5": 5,
+           "cat": 2}
 
 ORBIT_LABEL = {
     "S": "Strange", "N": "Norrell", "H3": "H₃", "T3": "T₃",
     "qubit_H": "H-type", "qubit_T": "BK T-type", "T5": "T₅",
+    "cat": "magic cat",
 }
+
+# ------------------------------------------------------------- families ----
+# A family is a track indexed by the qubit count m rather than by copies of
+# one state: |cat_m> is one m-qubit state per m and is not a tensor power of
+# anything. `target_vector` builds the family state directly; `orbit_state`
+# has nothing to return for it. See docs/notes/new_orbits_design.md, section 6.
+FAMILY = {"cat"}
+
+
+def _weight(x, m):
+    return sum((x >> j) & 1 for j in range(m))
+
+
+def cat_vector(m):
+    """|cat_m> = 2^{-1/2}(|T>^m + |T_perp>^m) with |T> = 2^{-1/2}(|0> + e^{i pi/4}|1>)
+    and |T_perp> = Z|T> (Qassim, Pashayan, and Gosset, arXiv:2106.07740, Eq. 3).
+
+    The odd-weight strings cancel and the even-weight ones double, so the
+    closed form is 2^{-(m-1)/2} sum_{|x| even} i^{|x|/2} |x>, with the string
+    read most significant bit first as everywhere in the verifier.
+    """
+    if m < 1:
+        raise ValueError("cat_m needs m >= 1")
+    scale = sp.Integer(2) ** sp.Rational(-(m - 1), 2)
+    out = sp.zeros(2 ** m, 1)
+    for x in range(2 ** m):
+        w = _weight(x, m)
+        if w % 2 == 0:
+            out[x] = scale * sp.I ** (w // 2)
+    return out
+
+
+def family_vector(orbit, m):
+    """The m-qubit state of a family track, exactly."""
+    if orbit == "cat":
+        return cat_vector(m)
+    raise ValueError(f"unknown family {orbit!r}")
 
 
 def target_vector(orbit, m):
-    """|M>^{ot m} as an exact column vector of length p^m."""
+    """|M>^{ot m} as an exact column vector of length p^m, or the m-qubit
+    state of a family track."""
+    if orbit in FAMILY:
+        return family_vector(orbit, m)
     v = orbit_state(orbit)
     out = v
     for _ in range(m - 1):
@@ -215,6 +257,30 @@ def implied_gamma(p, rank, m):
     return float(sp.log(rank, p) / m)
 
 
+def exponent_copies(orbit, m):
+    """The denominator of the exponent a rank at m implies, or None when the
+    cell implies no exponent.
+
+    For a copy orbit it is m. For the cat family it is m - 2: gluing l copies
+    of |cat_m> through <cat_2| gives |cat_{l(m-2)+2}| in chi(cat_m)^l terms,
+    and chi(T^n)/2 <= chi(cat_n) <= chi(T^n) (QPG Eq. 4) turns that into the
+    qubit exponent log_2 chi(cat_m)/(m - 2); at m = 2 there is none.
+    """
+    if orbit == "cat":
+        return m - 2 if m > 2 else None
+    return m
+
+
+def implied_exponent(orbit, rank, m):
+    """The exponent the board shows for chi(target(orbit, m)) <= rank: the
+    per-copy exponent for a copy orbit, the implied H-type exponent for a cat
+    cell, None where the cell implies none."""
+    n = exponent_copies(orbit, int(m))
+    if n is None:
+        return None
+    return implied_gamma(ORBIT_P[orbit], int(rank), n)
+
+
 def verify_upper(sub):
     """Rebuild the decomposition exactly and require it to equal the target."""
     orbit, m, rank = sub["orbit"], int(sub["m"]), int(sub["rank"])
@@ -255,9 +321,10 @@ def verify_upper(sub):
             return Result(False, None,
                           f"decomposition does not reproduce the target{extra}")
     how = "symbolically" if modes == {"symbolic"} else "to 60 significant digits"
+    what = f"|{orbit}_{m}>" if orbit in FAMILY else f"|{orbit}>^{{ot {m}}}"
     return Result(True, "verified",
-                  f"{rank} stabilizer terms reproduce |{orbit}>^{{ot {m}}}, checked {how}",
-                  implied_gamma(p, rank, m))
+                  f"{rank} stabilizer terms reproduce {what}, checked {how}",
+                  implied_exponent(orbit, rank, m))
 
 
 BUDGET_DEFAULT_S = 900
@@ -450,8 +517,7 @@ def verify_lean(sub):
         # with the bound, so do not fail the bound: drop to the other checks and
         # let the site show the module as broken.
         return None
-    p = ORBIT_P[sub["orbit"]]
-    g = (implied_gamma(p, int(sub["rank"]), int(sub["m"]))
+    g = (implied_exponent(sub["orbit"], int(sub["rank"]), int(sub["m"]))
          if sub["direction"] == "upper" else None)
     return Result(True, "lean", f"{thm} in {mod}, machine-checked by Lean", g)
 
@@ -474,8 +540,8 @@ def verify(sub, budget_s=BUDGET_DEFAULT_S):
             return Result(True, "cited",
                           "no decomposition supplied; recorded as cited and cannot "
                           "set a record",
-                          implied_gamma(ORBIT_P[sub["orbit"]], int(sub["rank"]),
-                                        int(sub["m"])))
+                          implied_exponent(sub["orbit"], int(sub["rank"]),
+                                           int(sub["m"])))
         return verify_upper(sub)
     if sub["direction"] == "lower":
         return verify_lower(sub, budget_s)

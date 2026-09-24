@@ -1,0 +1,15 @@
+{
+  "schema_version": "0.1",
+  "orbit": "cat",
+  "m": 5,
+  "direction": "lower",
+  "rank": 3,
+  "provenance": {
+    "author": "Qassim, Pashayan, and Gosset",
+    "reference": "arXiv:2106.07740",
+    "date": "2021-06-14",
+    "github": [],
+    "method": "literature"
+  },
+  "notes": "Qassim, Pashayan, and Gosset (arXiv:2106.07740), appendix, Lemma 3: chi(cat_5) > 2. Their proof reduces any two-term decomposition to the canonical form C|cat_5> proportional to |0^5> + gamma|1^a 0^{5-a}> (their Lemma 2), pins gamma down to seven candidates from the Pauli spectrum |<cat_5|P|cat_5>| in {0, 1/4, 1/2, 1}, and compares the Pauli spectra of the seven candidate states with that of |cat_5> by computer (782 Paulis with expectation zero for cat_5 against 710 for each candidate). With bounds/cat-m5-upper-3.json the cell is exact, chi(cat_5) = 3, as in their Table 1. Cited: the spectrum comparison is theirs, not the pipeline's; a rank-2 exclusion over the 2,423,520 five-qubit stabilizer states would reproduce it."
+}

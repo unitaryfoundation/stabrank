@@ -28,6 +28,10 @@ SCHEMA = os.path.join(ROOT, "schema", "bound.schema.json")
 # say so because its cap is global.
 M_CAP = {"T5": 5}
 
+# Family tracks are indexed by the qubit count, and the smallest members are
+# stabilizer states or empty: |cat_1> = |0>, so the cat track starts at m = 2.
+M_MIN = {"cat": 2}
+
 
 def tier_requirements(sub):
     """Cross-field rules the schema cannot express, as (errors, notes).
@@ -43,6 +47,10 @@ def tier_requirements(sub):
         errors.append(f"m = {sub['m']} exceeds the verification budget for "
                       f"{sub['orbit']}, which is m <= {cap} ({sub['orbit']} has "
                       f"5^m amplitudes; the schema's cap of 8 is for qutrits)")
+    low = M_MIN.get(sub.get("orbit"))
+    if low is not None and isinstance(sub.get("m"), int) and sub["m"] < low:
+        errors.append(f"m = {sub['m']} is below the first cell of the "
+                      f"{sub['orbit']} family, which is m = {low}")
     if d == "upper" and "certificate" in sub:
         errors.append("an upper bound is settled by a decomposition, not a "
                       "certificate script; drop 'certificate'")

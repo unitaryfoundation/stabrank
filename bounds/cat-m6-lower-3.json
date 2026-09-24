@@ -1,0 +1,15 @@
+{
+  "schema_version": "0.1",
+  "orbit": "cat",
+  "m": 6,
+  "direction": "lower",
+  "rank": 3,
+  "provenance": {
+    "author": "Qassim, Pashayan, and Gosset",
+    "reference": "arXiv:2106.07740",
+    "date": "2021-06-14",
+    "github": [],
+    "method": "literature"
+  },
+  "notes": "chi(cat_6) >= 3 from chi(cat_6) >= chi(cat_5) > 2 (Qassim, Pashayan, and Gosset, arXiv:2106.07740, appendix): <0|_m |cat_m> is proportional to |cat_{m-1}>, so the rank is non-decreasing in m, and Lemma 3 gives chi(cat_5) > 2. With bounds/cat-m6-upper-3.json the cell is exact, chi(cat_6) = 3, as in their Table 1 and in the text after Theorem 1 (\"the stabilizer rank of |cat_6> is exactly 3\"). Cited, for the same reason as the m = 5 lower bound."
+}

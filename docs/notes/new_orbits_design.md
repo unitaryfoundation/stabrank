@@ -467,9 +467,11 @@ The board therefore shows, in the exponent column of a cat cell,
 labeled as the implied H-type exponent, and measures the track against
 the published log_2(3)/4 like the two qubit orbits. `implied_exponent`
 in `stabrank_verify.py` carries the rule, and `next_target` uses m - 2 in
-place of m, so the cheapest cells that would beat the exponent are
-chi(cat_8) <= 5 (0.3870; it would give chi(T^{(x) 8}) <= 10 through Eq. 4)
-and chi(cat_10) <= 8 (0.3750; QPG's glued |cat_10> has 9 terms). Since
+place of m. By the board's usual rule (the largest rank below the threshold
+at each m, then the lowest exponent among them) it names chi(cat_7) <= 3
+(0.3170); the cells nearest the known values that would beat the exponent
+are chi(cat_8) <= 5 (0.3870; it would give chi(T^{(x) 8}) <= 10 through
+Eq. 4) and chi(cat_10) <= 8 (0.3750; QPG's glued |cat_10> has 9 terms). Since
 |T> and the board's |H> = cos(pi/8)|0> + sin(pi/8)|1> are one Clifford
 orbit, chi(T^{(x) m}) is the `qubit_H` cell at m.
 
@@ -570,7 +572,8 @@ the weight rather than on the count of zeros) and a `catVec m` with its
 3. `verify_challenge/validate_bounds.py`: `M_MIN["cat"] = 2`.
 4. `verify_challenge/cert_family_rank1.py`: exact rank-1 exclusion for
    cat_3 and cat_4.
-5. `research/constructions/qpg_cat.py`: the seven witnesses.
+5. `research/constructions/qpg_cat.py`: the seven witnesses, with a row in
+   `research/constructions/README.md`.
 6. `bounds/cat-m{2..8}-upper-*.json`, `bounds/cat-m{3..8}-lower-*.json`,
    with `certs/` receipts for the verified ones.
 7. `site_challenge/build.py`: `ORBIT_ORDER`, `SYSTEM`, `BASELINE`,

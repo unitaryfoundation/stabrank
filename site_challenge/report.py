@@ -37,6 +37,7 @@ PUBLISHED_REF = {
     "S": "labib2026stabilizer", "N": "labib2026stabilizer",
     "H3": "labib2026stabilizer", "T3": "labib2026stabilizer",
     "qubit_H": "qassim2021improved", "qubit_T": "qassim2021improved",
+    "cat": "qassim2021improved",
 }
 
 # Shown in place of a reference for an orbit with no published exponent, whose
