@@ -1,0 +1,3 @@
+batch 52 of 160: stage B, 150 covers, 1 run(s) per cover, compiled kernels, deadline 3600s
+batch 52: 150 covers, 150 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 918s, wall 918s; deterministic sha256 288c0bcd40dfc2a8
+batch 52 complete: no hit is a decomposition of |T>^5; written research/t5_rank5/results/batch_52.json

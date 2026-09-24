@@ -1,0 +1,17 @@
+partition research/t5_rank5/partition.json: qubit_T m=5 rank=5 n1=2 x0=[0], 160 batches (A 5, B 138, C 12, beta 4, gamma 1), sha256 41d4cdad723391d2
+lists re-enumerated in 54s: 4 full 3-covers (equal to the stored), 4709 full 4-covers (equal to the stored census), 43773 degenerate 5-multisets (equal to the stored list)
+batches present 160/160
+stage A: 5/5 batches, 6115136 covers, 6115136 matched, 0 refused, 0 undecided, 0 hits; 0.70 CPU-h (507s per batch, 0.4 ms per cover); projected stage total 0.70 CPU-h at this rate (partition estimate 0.75)
+stage B: 138/138 batches, 20653 covers, 20653 matched, 0 refused, 0 undecided, 0 hits; 34.01 CPU-h (887s per batch, 5928.0 ms per cover); projected stage total 34.01 CPU-h at this rate (partition estimate 22.93)
+stage C: 12/12 batches, 23120 covers, 23120 matched, 0 refused, 0 undecided, 0 hits; 1.24 CPU-h (371s per batch, 192.3 ms per cover); projected stage total 1.24 CPU-h at this rate (partition estimate 0.71)
+stage beta: 4/4 batches, 4709 covers, 28254 matched, 0 refused, 0 undecided, 0 hits; 0.47 CPU-h (421s per batch, 357.3 ms per cover); projected stage total 0.47 CPU-h at this rate (partition estimate 0.57)
+stage gamma: 1/1 batches, 4 covers, 84 matched, 0 refused, 0 undecided, 0 hits; 0.03 CPU-h (106s per batch, 26457.5 ms per cover); projected stage total 0.03 CPU-h at this rate (partition estimate 0.03)
+every stored check passes: all batches present, hashes verify, geometry matches the partition, the stage A units are the enumerator's pivot pairs, the census and the cover lists match their hashes and are tiled exactly once, no refused or undecided run, no hit is a decomposition of |T>^5
+wrote research/t5_rank5/batch_manifest.json: 160 batch(es)
+seed: 20260924
+re-running 2 batch(es) from scratch: [10, 58] -> /tmp/t5_rank5_recheck_jxqijk4o
+  batch 10 (stage B): 550s, deterministic hash matches (35a624c9635b2b69)
+  batch 58 (stage B): 565s, deterministic hash matches (1cc532164c9a5c47)
+aggregate complete in 1169s
+CERTIFIED chi(qubit_T^5) >= 6
+AGG_EXIT 0

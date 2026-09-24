@@ -11,8 +11,8 @@
     "attested": {
       "batches": "research/t5_rank5/batch_manifest.json",
       "recomputed": 2,
-      "compute_hours": "FILL: total CPU-hours from the aggregate",
-      "hardware": "FILL: RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host, fifteen batches in parallel at nice 19, DATE START to END UTC; the aggregate's two seeded re-runs (batches FILL) on the same pod at FILL UTC",
+      "compute_hours": 36.4,
+      "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host (load 30 to 40), fifteen batches in parallel at nice 19, 2026-09-24 07:37 to 10:04 UTC (the gamma smoke batch 159 at 07:37, the 160-batch loop 07:40 to 10:04); the aggregate's two seeded re-runs (batches 10 and 58) on the same pod at 10:05 UTC",
       "note": "The exclusion of every rank-5 decomposition of |T>^5 lives in the stored batch outputs under research/t5_rank5/results/ (partition.json: stage A batches over the 6,115,136 full 5-covers of |T>^3 with distinct independent base states, stage B batches over the 20,653 dependent covers, stage C batches over the 23,120 covers with a repeated state, the 4,308 cancel-at-base multisets included, stage beta batches over the 4,709 full 4-covers, each with the invisible term on every one of the six flats missing 00, and one stage gamma batch over the 4 full 3-covers with every one of the 21 flat pairs), every base matched at the base point 00 along qubits 1, 2 and every candidate re-decided mod 2013265921 and numerically: 0 hits, 0 refused, 0 undecided. The certificate checks the partition against the enumerator and the census hash, re-enumerates the 3-covers, the 4-covers and the degenerate 5-multisets, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/t5_rank5/batch.py, which regenerates any batch (batch.py K)."
     }
   },
@@ -20,15 +20,15 @@
     "author": "this repository",
     "reference": "stabrank research/t5_rank5",
     "method": "two-qubit base slice at 00: every rank-5 decomposition of |T>^5 has three, four or five terms visible at 00 along qubits 1, 2 (chi(T^3) = 3), so its base is a full 3-, 4- or 5-cover of |T>^3 and the invisible terms lie on the six flats missing 00; every base is completed slice by slice under the slice structure lemma for every flat choice, modulo 65521 over Q(zeta_24) with exact re-decision",
-    "date": "FILL",
+    "date": "2026-09-24",
     "github": [
       "vprusso"
     ],
     "compute": {
-      "cpu_hours": "FILL",
-      "wall_clock_hours": "FILL",
+      "cpu_hours": 36.4,
+      "wall_clock_hours": 2.5,
       "runs": 1,
-      "hardware": "FILL: as above"
+      "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host (load 30 to 40), fifteen batches in parallel at nice 19, 2026-09-24 07:37 to 10:04 UTC (the gamma smoke batch 159 at 07:37, the 160-batch loop 07:40 to 10:04); the aggregate's two seeded re-runs (batches 10 and 58) on the same pod at 10:05 UTC"
     }
   },
   "notes": "With the rank-6 witness bounds/qubit_T-m5-upper-6.json (Lean tier) this settles chi(T^5) = 6, and by projection chi(T^6) = 6. The argument (docs/notes/t5_rank5_exclusion.md) depends on: (1) Fact 2, at most two absent terms at any two-qubit point: chi(T^3) = 3, bounds/qubit_T-m3-lower-3.json; no analogue of the H^5 Fact 1 is used, since chi(T^4) = 3 lets a one-qubit slice see three terms. (2) The single base point 00: the visible terms there number three, four or five, and the matchers carry the invisible terms with every flat of F_2^2 missing 00 (the 124 flat configurations Fact 2 allows split by the invisible multiset at 00 into 28 cases, all run). (3) The slice structure lemma, which makes every option set exhaustive; the matchers assume nothing about the visible terms' flats. (4) The lists: the 5-cover census of |T>^3 by the compiled kernel (research/t5_rank5/results/census5_full.json, regenerated per pivot pair by the batches), the degenerate 5-multisets (degenerate5.json), the 4-covers of the rank-4 record (research/t5_rank4/covers4.json) and the 4 3-covers, all re-enumerated by the certificate. (5) Exactness: amplitudes in Q(zeta_24), both primes 1 mod 24, modular supersets, every candidate and hit re-decided mod 2013265921 and in floating point; a block, residual or pair the matcher cannot decide raises and fails the batch (none did). (6) Controls (results/control_*.json): the rank-6 witness from its all-visible bases at 00 (the two kappa = 2 bases abort at the default candidate cap and are recorded as aborted, on no rank-5 path), planted instances at every flat and flat pair including the repeated-base, ambiguous, same-state and cancelling-pair variants, the rank-3 decomposition of |T>^4 along a qubit pair, the lists against fresh enumerations, and the stored residual tables as consistency checks."
