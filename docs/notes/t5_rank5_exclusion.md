@@ -565,6 +565,22 @@ rank-6 witnesses the cells are chi(T^5) = 6 and chi(T^6) = 6, filed as
 the attested tier. The `--no-native` replay of stage A batch 4 was started
 on the pod after the run; its record goes under `results/nonative/`.
 
+### 8.2 The no-native cross-check (2026-09-24)
+
+Stage A batch 4 (2,858 pivot pairs, the smallest stage A batch) was re-run
+on the pod with `STABRANK_NO_NATIVE=1`, so both the 5-cover kernel and the
+matcher were the Python reference implementations: 12,180 s (kernel
+10,898 s, matching 1,282 s) against 235 s compiled.
+`results/nonative/batch_4.json` has the same deterministic hash as the
+stored `results/batch_4.json` (69be84ae6f12908f): 308,655
+covers, 308,655 matched runs, the same coordinate-slice solution
+histogram, 0 hits, 0 refused, 0 undecided. The modular candidate count
+(301,944,807 against 300,680,845) differs as it
+must between two kernels with different hash functionals, and sits
+outside the deterministic part, as does the native run count; this is
+the runner change recorded in the H^5 note's section 8.2, and here the
+cross-check is bit for bit.
+
 ## 9. What is proved, what is assumed, what is open
 
 Proved by argument or table here: Fact 2 (a board bound), the base-point
