@@ -1,0 +1,3 @@
+batch 59 of 74: units 82783..85446 (2664 pivot pairs, about 600 pod s), compiled kernel, deadline 3600s
+batch 59: 2664 of 2664 units run, 31130302 modular candidates, 0 hits, 0 decompositions, 0 undecided; kernel 643s, wall 645s; deterministic sha256 7a79235ecb50a930
+batch 59 complete: no 5-set of its units has |T5>^2 in its span; written research/t5q_m2_rank5/results/batch_59.json

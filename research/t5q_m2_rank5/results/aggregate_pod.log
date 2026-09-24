@@ -1,0 +1,6 @@
+partition research/t5q_m2_rank5/partition.json: T5 m=2 rank=5, 155422 units in 74 batches, sha256 0ada0a9f1a289312
+plan re-enumerated in 2s: 3900 states, group order 50, 98 pivots, 155422 units, dictionary sha256 618955a96555d1f4 (equal to the partition's)
+low-rank censuses in 153s: k = 1: 0 hit(s), 0 candidates over 1 unit(s), k = 2: 0 hit(s), 0 candidates over 98 unit(s), k = 3: 0 hit(s), 0 candidates over 98 unit(s), k = 4: 0 hit(s), 7367 candidates over 155422 unit(s)
+batches present 74/74
+155422/155422 units run in the batches present, 2795734903 modular candidates, 1 hits, 0 undecided; 13.34 kernel CPU-h (13.40 process CPU-h, 649 kernel s per batch, 1.05e-07 s per M^2); projected census 13.3 CPU-h at this rate (partition estimate 12.3 pod CPU-h)
+DECOMPOSITION FOUND: psi_2 = |T5>^2 lies in the span of the 5 stabilizer states [525, 563, 591, 619, 637] (batch 31, numerical rank 5, residual 1.65e-15); chi(T5^2) <= 5; 1 such hit(s)

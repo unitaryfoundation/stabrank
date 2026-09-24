@@ -1,0 +1,3 @@
+batch 68 of 74: units 111287..115535 (4249 pivot pairs, about 600 pod s), compiled kernel, deadline 3600s
+batch 68: 4249 of 4249 units run, 24720140 modular candidates, 0 hits, 0 decompositions, 0 undecided; kernel 551s, wall 554s; deterministic sha256 1942f284805ada21
+batch 68 complete: no 5-set of its units has |T5>^2 in its span; written research/t5q_m2_rank5/results/batch_68.json
