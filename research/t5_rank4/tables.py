@@ -7,7 +7,7 @@ under results/tables.json.
 
 For a stored minimal decomposition (d_i, u_i) of |T>^{n_2} and a slice
 ratio tau^j (tau = a_1 / a_0 = e^{i pi/4} tan(beta) the ratio between
-neighbouring points of F_2^{n_1}), the table counts, over every code
+neighboring points of F_2^{n_1}), the table counts, over every code
 combination of the visible terms (4 2^{n_2} + 1 options each: the phased
 Pauli translates of u_i and absence), the combinations whose residual
 tau^j psi_{n_2} - sum_i d_i w_i is zero ("exact") and those whose residual

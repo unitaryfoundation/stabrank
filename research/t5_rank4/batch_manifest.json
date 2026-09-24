@@ -1,0 +1,74 @@
+{
+ "partition": "research/t5_rank4/partition.json",
+ "partition_sha256": "1f73f0ba38274b8a3b8fd31aac3699f200ef8e73c14ad69791a42c6fd9acbd1c",
+ "census_sha256": "e83212833195240a34594635b9e775f3fa3c64a5b908bec2e6b37677e12d624c",
+ "complete": true,
+ "batches": [
+  {
+   "id": "batch_0",
+   "params": {
+    "stage": "A",
+    "covers": 940,
+    "matched": 1880,
+    "hits": 0
+   },
+   "output": "research/t5_rank4/results/batch_0.json",
+   "sha256": "b140ec5f508caf143260a499078df67814a6b44c1cced0c75bb77f7a8d3b30ff"
+  },
+  {
+   "id": "batch_1",
+   "params": {
+    "stage": "A",
+    "covers": 940,
+    "matched": 1880,
+    "hits": 0
+   },
+   "output": "research/t5_rank4/results/batch_1.json",
+   "sha256": "d945f3a300d158e85917c2d05b3cebe493ed099cc23ebf983f2724dc6e0827a1"
+  },
+  {
+   "id": "batch_2",
+   "params": {
+    "stage": "A",
+    "covers": 939,
+    "matched": 1878,
+    "hits": 0
+   },
+   "output": "research/t5_rank4/results/batch_2.json",
+   "sha256": "9cb9b458f4ac35726acd3db3fa08e4477419ea069f65d65f3da4a26a5c55e2c1"
+  },
+  {
+   "id": "batch_3",
+   "params": {
+    "stage": "A",
+    "covers": 939,
+    "matched": 1878,
+    "hits": 0
+   },
+   "output": "research/t5_rank4/results/batch_3.json",
+   "sha256": "143e608a8772197a270dd3d5cf3340751357be121eddb4478a2a2757b1a91a04"
+  },
+  {
+   "id": "batch_4",
+   "params": {
+    "stage": "A",
+    "covers": 939,
+    "matched": 1878,
+    "hits": 0
+   },
+   "output": "research/t5_rank4/results/batch_4.json",
+   "sha256": "a13fabf582772fb67e536b885bf861e27084800c3871375ca6be225e6c8ddeb1"
+  },
+  {
+   "id": "batch_5",
+   "params": {
+    "stage": "C",
+    "covers": 12,
+    "matched": 24,
+    "hits": 0
+   },
+   "output": "research/t5_rank4/results/batch_5.json",
+   "sha256": "22348a9202a3cca0920316f124217473e1e521089d96e9c9c12327310ff77c0c"
+  }
+ ]
+}

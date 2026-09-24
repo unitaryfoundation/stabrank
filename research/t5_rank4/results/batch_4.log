@@ -1,0 +1,4 @@
+batch 4 of 6: kind A, 939 covers, compiled kernel
+batch 4: 939 covers, 1878 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; match 0s, wall 1s; deterministic sha256 a9f787afbdafec7b
+batch 4 complete: no hit is a decomposition of |T>^5; written research/t5_rank4/results/batch_4.json
+[run.py] exit 0 in 2s

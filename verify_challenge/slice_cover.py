@@ -70,7 +70,7 @@ qubit T state |T> = cos(beta)|0> + e^{i pi/4} sin(beta)|1> with cos(2 beta)
 = 1/sqrt 3 when `Field`, `CoverEnumerator` and `confirm_decomposition` are
 given orbit="qubit_T". The only orbit-dependent quantities are the target
 psi^n (the enumerator's psi and its slices) and the slice ratio a_1 / a_0
-between neighbouring points of F_2^{n_1} (tan(pi/8) at H; at T the complex
+between neighboring points of F_2^{n_1} (tan(pi/8) at H; at T the complex
 number tau = e^{i pi/4} tan(beta) with tan(beta) = (sqrt 3 - 1) / sqrt 2).
 The T amplitudes divided by cos(beta)^n lie in Q(zeta_24) = Q(i, sqrt 2,
 sqrt 3), and both primes are 1 mod 24, so the modular target at T is the

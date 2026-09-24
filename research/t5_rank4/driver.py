@@ -20,7 +20,7 @@ Commands
                             --write, store them as covers4.json with their hash
   control-census            the census against the numeric enumerator of
                             slice_lift.all_decompositions (5,205 rank-4 tuples,
-                            the full ones canonicalised under the symmetry group)
+                            the full ones canonicalized under the symmetry group)
                             and the 3-covers against the stored rank-3 list
   control-witness [--reference] [--base K] [--max-cand N]
                             recover the rank-6 witness bounds/qubit_T-m5-upper-6.json
@@ -177,9 +177,9 @@ def canonical(idx, group):
 def control_census(args):
     """The census against the numeric enumerator: slice_lift.all_decompositions
     ("qubit_T", 3, 4) lists 5,205 rank-4 index tuples of |T>^3 (at least one
-    per orbit, non-full covers included); the full ones among them, canonicalised
+    per orbit, non-full covers included); the full ones among them, canonicalized
     under the unitary symmetry group of psi_3, must equal the census's kind A
-    covers canonicalised, and the numeric rank-3 tuples must equal the 3-covers
+    covers canonicalized, and the numeric rank-3 tuples must equal the 3-covers
     and the stored rank-3 list (qubit_T_m3_rank3.json) up to the group."""
     from slice_lift import all_decompositions
     E = make_enumerator()
