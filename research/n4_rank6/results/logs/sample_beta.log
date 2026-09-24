@@ -1,0 +1,16 @@
+beta (1, 1, 1, 1, 1): 50719 items, 40 sampled: per item mean 0.2923s, median 0.3157s, max 0.510s [12s]
+beta (1, 1, 1, 1, 1) dependent: 1452 items, 40 sampled: per item mean 0.7650s, median 0.7535s, max 0.990s [31s]
+beta (2, 1, 1, 1): 2253 items, 40 sampled: per item mean 0.0871s, median 0.0762s, max 0.280s [3s]
+beta (2, 1, 1, 1) dependent: 24 items, 24 sampled: per item mean 0.1369s, median 0.1348s, max 0.156s [3s]
+beta (2, 2, 1): 20 items, 20 sampled: per item mean 2.2894s, median 2.2652s, max 2.773s [46s]
+beta (3, 1, 1): 20 items, 20 sampled: per item mean 0.1304s, median 0.1250s, max 0.150s [3s]
+beta: 184 items, 2944 runs, hits 0, refused 0, undecided 0; hist {'0,0,0,0': 2944}
+[run.py] exit 0 after 98.9s
+beta (1, 1, 1, 1, 1): 50719 items, 30 sampled: per item mean 0.0400s, median 0.0400s, max 0.041s, trimmed mean 0.0400s (0 tail items) [1s]
+beta (1, 1, 1, 1, 1) dependent: 1452 items, 30 sampled: per item mean 0.7900s, median 0.7920s, max 0.950s, trimmed mean 0.7900s (0 tail items) [24s]
+beta (2, 1, 1, 1): 2253 items, 30 sampled: per item mean 0.0805s, median 0.0803s, max 0.084s, trimmed mean 0.0805s (0 tail items) [2s]
+beta (2, 1, 1, 1) dependent: 24 items, 24 sampled: per item mean 0.1470s, median 0.1473s, max 0.171s, trimmed mean 0.1470s (0 tail items) [4s]
+beta (2, 2, 1): 20 items, 20 sampled: per item mean 2.4885s, median 2.5163s, max 2.772s, trimmed mean 2.4885s (0 tail items) [50s]
+beta (3, 1, 1): 20 items, 20 sampled: per item mean 0.1417s, median 0.1401s, max 0.158s, trimmed mean 0.1417s (0 tail items) [3s]
+beta: 154 items, 2464 runs, hits 0, refused 0, undecided 0; hist {'0,0,0,0': 2464}
+[run.py] exit 0 after 139.2s

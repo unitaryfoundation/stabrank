@@ -1,0 +1,6 @@
+  decomposition 0 pair (0, 1): base (2, 3, 8, 10) flats []: 9 hits, recovered
+  decomposition 0 pair (0, 2): base (2, 3, 8, 10) flats []: 9 hits, recovered
+  decomposition 0 pair (1, 2): base (2, 3, 8, 10) flats []: 9 hits, recovered
+wrote research/n4_rank6/results/control_m3.json
+control-m3: 3 (decomposition, pair) runs, PASS [1s]
+[run.py] exit 0 after 1.6s

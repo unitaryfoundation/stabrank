@@ -1,0 +1,23 @@
+  base 0: (32, 32, 115, 115, 117, 321, 321) kappa 1: ABORTED BudgetExceeded: join at coordinate slice (0, 1): past the wall-clock deadline after 82s
+  base 1: (32, 34, 113, 115, 117, 321, 321) kappa 2: ABORTED BudgetExceeded: join at coordinate slice (0, 1): past the wall-clock deadline after 80s
+[run.py] KILLED at cap after 600.2s
+  base 0: (32, 32, 115, 115, 117, 321, 321) kappa 1: ABORTED BudgetExceeded: join at coordinate slice (0, 1): past the wall-clock deadline after 65s
+  base 1: (32, 34, 113, 115, 117, 321, 321) kappa 2: ABORTED BudgetExceeded: join at coordinate slice (0, 1): past the wall-clock deadline after 61s
+[run.py] KILLED at cap after 601.0s
+  base 0: (32, 32, 115, 115, 117, 321, 321) kappa 1: ABORTED BudgetExceeded: join at coordinate slice (0, 1): past the wall-clock deadline after 26s
+  base 1: (32, 34, 113, 115, 117, 321, 321) kappa 2: ABORTED BudgetExceeded: join at coordinate slice (0, 1): past the wall-clock deadline after 25s
+[run.py] KILLED at cap after 600.4s
+base 0: (32, 32, 115, 115, 117, 321, 321) pairs [[0, 2]] distinct 4 kappa 1
+base 1: (32, 34, 113, 115, 117, 321, 321) pairs [[1, 3]] distinct 6 kappa 2
+base 2: (32, 34, 113, 115, 117, 321, 345) pairs [[2, 3]] distinct 7 kappa 3
+base 3: (8, 32, 113, 117, 249, 321, 345) pairs [[0, 3]] distinct 7 kappa 3
+base 4: (8, 32, 115, 117, 249, 273, 321) pairs [[0, 1]] distinct 7 kappa 3
+base 5: (8, 34, 113, 117, 273, 321, 345) pairs [[1, 2]] distinct 7 kappa 3
+  base 0: (32, 32, 115, 115, 117, 321, 321) kappa 1: ABORTED BudgetExceeded: coordinate slice (0, 1): past the wall-clock deadline after 25s
+  base 1: (32, 34, 113, 115, 117, 321, 321) kappa 2: ABORTED BudgetExceeded: coordinate slice (0, 1): past the wall-clock deadline after 25s
+  base 2: (32, 34, 113, 115, 117, 321, 345) kappa 3: not run (three-parameter family)
+  base 3: (8, 32, 113, 117, 249, 321, 345) kappa 3: not run (three-parameter family)
+  base 4: (8, 32, 115, 117, 249, 273, 321) kappa 3: not run (three-parameter family)
+  base 5: (8, 34, 113, 117, 273, 321, 345) kappa 3: not run (three-parameter family)
+control-witness: 0/6 all-visible bases recover the witness, 2 aborted; FAIL (recorded, not required); wrote results/control_witness.json
+[run.py] exit 1 after 51.0s

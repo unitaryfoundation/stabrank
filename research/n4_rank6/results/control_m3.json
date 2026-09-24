@@ -1,0 +1,60 @@
+{
+ "git": "8d96035115a3c05ce700a301d255db2635aa15fc",
+ "generated": "2026-09-24T15:54:38+00:00",
+ "stored": 1,
+ "rows": [
+  {
+   "decomposition": 0,
+   "pair": [
+    0,
+    1
+   ],
+   "base": [
+    2,
+    3,
+    8,
+    10
+   ],
+   "flats": [],
+   "visible": 4,
+   "hits": 9,
+   "status": "recovered"
+  },
+  {
+   "decomposition": 0,
+   "pair": [
+    0,
+    2
+   ],
+   "base": [
+    2,
+    3,
+    8,
+    10
+   ],
+   "flats": [],
+   "visible": 4,
+   "hits": 9,
+   "status": "recovered"
+  },
+  {
+   "decomposition": 0,
+   "pair": [
+    1,
+    2
+   ],
+   "base": [
+    2,
+    3,
+    8,
+    10
+   ],
+   "flats": [],
+   "visible": 4,
+   "hits": 9,
+   "status": "recovered"
+  }
+ ],
+ "seconds": 1.0981907844543457,
+ "pass": true
+}

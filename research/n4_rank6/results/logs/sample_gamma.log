@@ -1,0 +1,10 @@
+gamma (1, 1, 1, 1): 478 items, 30 sampled: per item mean 0.2309s, median 0.2545s, max 0.427s [7s]
+gamma (1, 1, 1, 1) dependent: 7 items, 7 sampled: per item mean 0.3843s, median 0.2897s, max 0.923s [3s]
+gamma (2, 1, 1): 20 items, 20 sampled: per item mean 0.3891s, median 0.3910s, max 0.416s [8s]
+gamma: 57 items, 7752 runs, hits 0, refused 0, undecided 0; hist {'0,0,0,0': 7742, '3/0,0,0,0': 8, '3/3,0,0,0': 2}
+[run.py] exit 0 after 18.2s
+gamma (1, 1, 1, 1): 478 items, 30 sampled: per item mean 0.0783s, median 0.0784s, max 0.082s, trimmed mean 0.0783s (0 tail items) [2s]
+gamma (1, 1, 1, 1) dependent: 7 items, 7 sampled: per item mean 0.4110s, median 0.3195s, max 1.021s, trimmed mean 0.4110s (0 tail items) [3s]
+gamma (2, 1, 1): 20 items, 20 sampled: per item mean 0.4219s, median 0.4174s, max 0.453s, trimmed mean 0.4219s (0 tail items) [8s]
+gamma: 57 items, 7752 runs, hits 0, refused 0, undecided 0; hist {'0,0,0,0': 7742, '3/0,0,0,0': 8, '3/3,0,0,0': 2}
+[run.py] exit 0 after 33.7s

@@ -1,0 +1,31 @@
+G_2: 72 unitaries up to phase, induced permutations equal to the census's group of order 72
+Traceback (most recent call last):
+  File "/Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-ab906a6996d53253c/research/n4_rank6/driver.py", line 1117, in <module>
+    sys.exit(main(sys.argv))
+             ~~~~^^^^^^^^^^
+  File "/Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-ab906a6996d53253c/research/n4_rank6/driver.py", line 1113, in main
+    return args.fn(args) or 0
+           ~~~~~~~^^^^^^
+  File "/Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-ab906a6996d53253c/research/n4_rank6/driver.py", line 990, in control_orbit
+    tgt = planted_target(g_terms, coeffs, Mt.F1, Mt.F2)
+  File "/Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-ab906a6996d53253c/research/n4_rank6/invisible3.py", line 981, in planted_target
+    return vector_target(vec, 2, F1, F2)
+  File "/Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-ab906a6996d53253c/research/qutrit_m4_rank5/matcher.py", line 1774, in vector_target
+    return Target(T_C, field_vector(T_C, F1), field_vector(T_C, F2), n2)
+                       ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-ab906a6996d53253c/research/qutrit_m4_rank5/matcher.py", line 1767, in field_vector
+    assert abs(a + b * W3 - z) < 1e-6, "entry is not in Z[w]"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: entry is not in Z[w]
+[run.py] exit 1 after 1.1s
+G_2: 72 unitaries up to phase, induced permutations equal to the census's group of order 72
+8 of the 72 unitaries are monomial with cube-root entries
+  alpha base (45, 72, 304, 313, 319, 327) -> (45, 72, 132, 136, 277, 319): image found; 12 random elements consistent (stabilizer images, permuted base, canonical form)
+  beta base (2, 8, 60, 169, 249) -> (7, 8, 69, 249, 359): image found; 12 random elements consistent (stabilizer images, permuted base, canonical form)
+  alpha base (39, 44, 81, 89, 117, 238) -> (39, 44, 81, 89, 117, 238): image found; 12 random elements consistent (stabilizer images, permuted base, canonical form)
+  beta base (36, 73, 74, 131, 225) -> (40, 44, 72, 252, 319): image found; 12 random elements consistent (stabilizer images, permuted base, canonical form)
+  alpha base (9, 113, 115, 177, 284, 288) -> (9, 113, 115, 177, 284, 288): image found; 12 random elements consistent (stabilizer images, permuted base, canonical form)
+  beta base (36, 41, 72, 172, 293) -> (36, 41, 72, 172, 293): image found; 12 random elements consistent (stabilizer images, permuted base, canonical form)
+wrote research/n4_rank6/results/control_orbit.json
+control-orbit: PASS
+[run.py] exit 0 after 3.0s

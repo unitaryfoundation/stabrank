@@ -1,0 +1,8 @@
+B6: fresh 259655 orbits, stored 259655: equal
+C6: fresh 321553 orbits, stored 321553: equal
+k5: fresh 54488 orbits, stored 54488: equal
+k4: fresh 505 orbits, stored 505: equal
+census research/n4_rank6/results/census6_N_full.json: 1209 rows, 37201212 full 6-covers, pivot pairs equal to the enumerator's 1209
+wrote research/n4_rank6/results/control_lists.json
+control-lists: PASS
+[run.py] exit 0 after 70.5s

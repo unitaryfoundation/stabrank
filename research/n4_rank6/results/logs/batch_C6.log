@@ -1,0 +1,8 @@
+batch 845 of 1345: stage C6, 968 items ((2, 1, 1, 1, 1)), 1 run(s) per item, compiled kernels, candidate cap 2000000
+batch 845: 968 items, 968 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 20s, wall 20s; deterministic sha256 a60e72cbf72ba64d
+batch 845 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_845.json
+[run.py] exit 0 after 20.6s
+batch 861 of 1057: stage C6, 3142 items ((2, 1, 1, 1, 1)), 1 run(s) per item, compiled kernels, candidate cap 2000000
+batch 861: 3142 items, 3142 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 38s, wall 38s; deterministic sha256 37f4cf4210db9dc4
+batch 861 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_861.json
+[run.py] exit 0 after 38.7s

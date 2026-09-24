@@ -1,0 +1,8 @@
+batch 38 of 1345: stage B6, 362 items (kappa 1), 1 run(s) per item, compiled kernels, candidate cap 2000000
+batch 38: 362 items, 362 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 187s, wall 188s; deterministic sha256 d043da76ccd0542e
+batch 38 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_38.json
+[run.py] exit 0 after 188.0s
+batch 54 of 1057: stage B6, 362 items (kappa 1), 1 run(s) per item, compiled kernels, candidate cap 2000000
+batch 54: 362 items, 362 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 186s, wall 187s; deterministic sha256 3b47cfba501450d8
+batch 54 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_54.json
+[run.py] exit 0 after 187.2s

@@ -1,0 +1,39 @@
+C6 (2, 1, 1, 1, 1): 307822 items, 40 sampled: per item mean 0.1040s, median 0.1033s, max 0.469s [4s]
+C6 (2, 1, 1, 1, 1) dependent: 7407 items, 40 sampled: per item mean 0.4072s, median 0.1645s, max 4.964s [16s]
+C6 (2, 2, 1, 1): 3945 items, 40 sampled: per item mean 8.4520s, median 0.1625s, max 325.319s [338s]
+[run.py] KILLED at cap after 600.4s
+C6 (2, 1, 1, 1, 1): 307822 items, 12 sampled: per item mean 0.1258s, median 0.1298s, max 0.161s [2s]
+C6 (2, 1, 1, 1, 1) dependent: 7407 items, 12 sampled: per item mean 2.0441s, median 0.3093s, max 16.606s [25s]
+C6 (2, 2, 1, 1): 3945 items, 12 sampled: per item mean 25.6547s, median 0.1587s, max 305.604s [308s]
+C6 (2, 2, 1, 1) dependent: 36 items, 1 sampled: per item mean 243.9622s, median 243.9622s, max 243.962s [244s]
+C6 (2, 2, 2): 8 items, 8 sampled: per item mean 0.3599s, median 0.3723s, max 0.423s [3s]
+C6 (3, 1, 1, 1): 2253 items, 12 sampled: per item mean 0.0310s, median 0.0128s, max 0.081s [0s]
+[run.py] KILLED at cap after 600.2s
+C6 (2, 1, 1, 1, 1): 307822 items, 10 sampled: per item mean 0.1545s, median 0.1306s, max 0.475s, trimmed mean 0.1545s (0 tail items) [2s]
+C6 (2, 1, 1, 1, 1) dependent: 7407 items, 10 sampled: per item mean 0.8556s, median 0.2230s, max 4.839s, trimmed mean 0.8556s (0 tail items) [9s]
+  (225, 225, 252, 306, 333, 333) None: capped at 40.0s (composite slice (1, 1): past the wall-clock deadline)
+C6 (2, 2, 1, 1): 3945 items, 10 sampled: per item mean 4.1940s, median 0.1808s, max 40.001s, trimmed mean 0.2155s (1 tail items) [42s]
+  (8, 8, 117, 117, 249, 345) None: capped at 40.0s (composite slice (1, 1): past the wall-clock deadline)
+  (36, 36, 72, 72, 130, 143) None: capped at 40.0s (composite slice (1, 1): past the wall-clock deadline)
+C6 (2, 2, 1, 1) dependent: 36 items, 2 sampled: per item mean 40.0023s, median 40.0023s, max 40.003s, trimmed mean 40.0023s (2 tail items) [80s]
+C6 (2, 2, 2): 8 items, 8 sampled: per item mean 0.4512s, median 0.4439s, max 0.523s, trimmed mean 0.4512s (0 tail items) [4s]
+C6 (3, 1, 1, 1): 2253 items, 10 sampled: per item mean 0.0313s, median 0.0156s, max 0.087s, trimmed mean 0.0313s (0 tail items) [0s]
+C6 (3, 1, 1, 1) dependent: 24 items, 9 sampled: per item mean 5.2110s, median 0.7440s, max 14.114s, trimmed mean 5.2110s (0 tail items) [47s]
+C6 (3, 2, 1): 38 items, 4 sampled: per item mean 11.9638s, median 6.4002s, max 34.147s, trimmed mean 11.9638s (0 tail items) [48s]
+C6 (4, 1, 1): 20 items, 10 sampled: per item mean 0.3240s, median 0.0207s, max 1.523s, trimmed mean 0.3240s (0 tail items) [3s]
+C6: 73 items, 70 runs, hits 0, refused 0, undecided 0; hist {'0': 39, '6,6': 3, '245,245': 3, '1,1': 3, '16,16': 2, '4,4': 2, '230,230': 2, '201,201': 2}
+[run.py] exit 0 after 237.9s
+C6 (2, 1, 1, 1, 1): 307822 items, 10 sampled: per item mean 0.0476s, median 0.0084s, max 0.402s, trimmed mean 0.0476s (0 tail items) [0s]
+C6 (2, 1, 1, 1, 1) dependent: 7407 items, 10 sampled: per item mean 0.9189s, median 0.1930s, max 5.488s, trimmed mean 0.9189s (0 tail items) [9s]
+  (225, 225, 252, 306, 333, 333) None: capped at 40.0s (composite slice (1, 1): past the wall-clock deadline)
+C6 (2, 2, 1, 1): 3945 items, 10 sampled: per item mean 4.1900s, median 0.1742s, max 40.002s, trimmed mean 0.2109s (1 tail items) [42s]
+  (8, 8, 117, 117, 249, 345) None: capped at 40.0s (composite slice (1, 1): past the wall-clock deadline)
+  (36, 36, 72, 72, 130, 143) None: capped at 40.0s (composite slice (2, 0): past the wall-clock deadline)
+C6 (2, 2, 1, 1) dependent: 36 items, 2 sampled: per item mean 40.0028s, median 40.0028s, max 40.003s, trimmed mean 40.0028s (2 tail items) [80s]
+C6 (2, 2, 2): 8 items, 8 sampled: per item mean 0.3513s, median 0.3639s, max 0.395s, trimmed mean 0.3513s (0 tail items) [3s]
+C6 (3, 1, 1, 1): 2253 items, 10 sampled: per item mean 0.0140s, median 0.0138s, max 0.016s, trimmed mean 0.0140s (0 tail items) [0s]
+C6 (3, 1, 1, 1) dependent: 24 items, 10 sampled: per item mean 5.4916s, median 5.3171s, max 13.719s, trimmed mean 5.4916s (0 tail items) [55s]
+C6 (3, 2, 1): 38 items, 7 sampled: per item mean 6.7199s, median 0.8805s, max 31.945s, trimmed mean 6.7199s (0 tail items) [47s]
+C6 (4, 1, 1): 20 items, 10 sampled: per item mean 0.3084s, median 0.0196s, max 1.429s, trimmed mean 0.3084s (0 tail items) [3s]
+C6: 77 items, 74 runs, hits 0, refused 0, undecided 0; hist {'0': 40, '6,6': 3, '10,10': 3, '245,245': 3, '1,1': 3, '16,16': 2, '4,4': 2, '230,230': 2}
+[run.py] exit 0 after 411.2s

@@ -19,11 +19,11 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
-sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(ROOT, "verify_challenge"))
 sys.path.insert(0, os.path.join(ROOT, "research", "qutrit_m4_rank5"))
+sys.path.insert(0, HERE)
 from cover_census import CoverEnumerator3  # noqa: E402
-import common as qcommon  # noqa: E402
+from common import qcommon  # noqa: E402  (research/n4_rank6/common.py loads the rank-5 common by file)
 from degenerate6 import canonical_codes, group_perms, span_states  # noqa: E402
 
 RESULTS = os.path.join(HERE, "results")

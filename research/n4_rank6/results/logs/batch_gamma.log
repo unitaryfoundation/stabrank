@@ -1,0 +1,8 @@
+batch 1342 of 1345: stage gamma, 478 items ((1, 1, 1, 1)), 136 run(s) per item, compiled kernels, candidate cap 2000000
+batch 1342: 478 items, 65008 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 50s, wall 51s; deterministic sha256 62425bba2e68ce89
+batch 1342 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_1342.json
+[run.py] exit 0 after 50.9s
+batch 1054 of 1057: stage gamma, 478 items ((1, 1, 1, 1)), 136 run(s) per item, compiled kernels, candidate cap 2000000
+batch 1054: 478 items, 65008 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 50s, wall 51s; deterministic sha256 39bd3f575471c006
+batch 1054 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_1054.json
+[run.py] exit 0 after 50.9s

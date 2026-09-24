@@ -1,0 +1,19 @@
+  beta p00 h base (8, 8, 27, 150, 321): 1 hits, planted recovered, 1.18s
+  beta p01 h base (8, 117, 151, 151, 249): 1 hits, planted recovered, 1.56s
+  beta p02 h base (8, 43, 43, 79, 358): 1 hits, planted recovered, 0.30s
+  beta p10 h base (36, 63, 142, 250, 250): 36 hits, planted recovered, 57.13s
+  beta p11 h base (38, 64, 117, 225, 225): 1 hits, planted recovered, 1.29s
+  beta p12 h base (8, 8, 117, 150, 273): 1 hits, planted recovered, 0.08s
+  beta p20 h base (36, 45, 239, 319, 319): 1 hits, planted recovered, 1.10s
+  beta p21 h base (8, 41, 41, 249, 358): 1 hits, planted recovered, 0.64s
+  beta L01_000102 h base (36, 64, 64, 143, 239): 3 hits, planted recovered, 30.38s
+  beta L01_101112 h base (8, 8, 130, 251, 359): 1 hits, planted recovered, 0.60s
+  beta L10_001020 h base (8, 143, 143, 263, 321): 1 hits, planted recovered, 1.18s
+  beta L10_011121 h base (8, 8, 117, 174, 273): 1 hits, planted recovered, 0.17s
+  beta L11_011220 h base (8, 8, 27, 115, 216): 1 hits, planted recovered, 1.62s
+  beta L11_021021 h base (37, 44, 226, 226, 335): 1 hits, planted recovered, 15.13s
+  beta L12_001221 h base (8, 8, 43, 143, 358): 1 hits, planted recovered, 1.49s
+  beta L12_021120 h base (36, 36, 43, 79, 117): 12 hits, planted recovered, 7.44s
+wrote research/n4_rank6/results/control_planted_beta_h.json
+control-planted (beta): 16/16 planted decompositions recovered in 123s; by stage {'b6': [0, 0], 'c6': [0, 0], 'beta': [16, 16], 'gamma': [0, 0]}; PASS
+[run.py] exit 0 after 123.3s

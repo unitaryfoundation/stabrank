@@ -1,0 +1,24 @@
+partition research/n4_rank6/partition.json: N m=4 rank=6 n1=2 x0=[2, 2], 1345 batches (A6 38, B6 807, C6 385, beta 112, gamma 3), sha256 9e246afbc54ad56d
+6-cover census re-run over 1209 pivot pairs in 516s: every count equal
+lists re-enumerated in 77s: B6 259655, C6 321553, k5 54488, k4 505 orbits (all equal to the stored lists)
+batches present 6/1345, missing 1339
+stage B6: 3/807 batches, 392 items, 392 matched, 0 refused, 0 undecided, 0 hits; 0.22 CPU-h (268s per batch, 2048.16 ms per item); projected stage total 147.73 CPU-h at this rate (partition estimate 134.95 pod)
+stage C6: 1/385 batches, 968 items, 968 matched, 0 refused, 0 undecided, 0 hits; 0.01 CPU-h (20s per batch, 20.99 ms per item); projected stage total 1.87 CPU-h at this rate (partition estimate 63.17 pod)
+stage beta: 1/112 batches, 513 items, 8208 matched, 0 refused, 0 undecided, 0 hits; 0.01 CPU-h (51s per batch, 99.10 ms per item); projected stage total 1.50 CPU-h at this rate (partition estimate 17.98 pod)
+stage gamma: 1/3 batches, 478 items, 65008 matched, 0 refused, 0 undecided, 0 hits; 0.01 CPU-h (51s per batch, 105.86 ms per item); projected stage total 0.01 CPU-h at this rate (partition estimate 0.13 pod)
+partial: every stored check passes for the 6 batches present; 1339 to go
+wrote research/n4_rank6/batch_manifest.partial.json: 6 batch(es) (partial)
+dry run: re-runs skipped; NOT CERTIFIED
+[run.py] exit 1 after 598.7s
+partition research/n4_rank6/partition.json: N m=4 rank=6 n1=2 x0=[2, 2], 1057 batches (A6 54, B6 807, C6 166, beta 27, gamma 3), sha256 597eca221ac6d6b3
+lists re-enumerated in 75s: B6 259655, C6 321553, k5 54488, k4 505 orbits (all equal to the stored lists)
+batches present 7/1057, missing 1050
+stage A6: 1/54 batches, 753064 items, 753064 matched, 0 refused, 0 undecided, 0 hits; 0.14 CPU-h (499s per batch, 0.66 ms per item); projected stage total 6.84 CPU-h at this rate (partition estimate 8.60 pod)
+stage B6: 3/807 batches, 392 items, 392 matched, 0 refused, 0 undecided, 0 hits; 0.22 CPU-h (267s per batch, 2041.22 ms per item); projected stage total 147.23 CPU-h at this rate (partition estimate 134.95 pod)
+stage C6: 1/166 batches, 3142 items, 3142 matched, 0 refused, 0 undecided, 0 hits; 0.01 CPU-h (38s per batch, 12.24 ms per item); projected stage total 1.09 CPU-h at this rate (partition estimate 26.85 pod)
+stage beta: 1/27 batches, 3623 items, 57968 matched, 0 refused, 0 undecided, 0 hits; 0.05 CPU-h (177s per batch, 48.93 ms per item); projected stage total 0.74 CPU-h at this rate (partition estimate 3.79 pod)
+stage gamma: 1/3 batches, 478 items, 65008 matched, 0 refused, 0 undecided, 0 hits; 0.01 CPU-h (51s per batch, 105.92 ms per item); projected stage total 0.01 CPU-h at this rate (partition estimate 0.05 pod)
+partial: every stored check passes for the 7 batches present; 1050 to go
+wrote research/n4_rank6/batch_manifest.partial.json: 7 batch(es) (partial)
+dry run: re-runs skipped; NOT CERTIFIED
+[run.py] exit 1 after 80.1s

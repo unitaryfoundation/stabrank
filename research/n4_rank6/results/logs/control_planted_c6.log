@@ -1,0 +1,46 @@
+  c6 (2, 1, 1, 1, 1) reference base (0, 37, 130, 131, 131, 333): 6 hits, planted recovered, 0.17s
+  c6 (2, 1, 1, 1, 1) dependent reference base (8, 43, 43, 143, 335, 358): 21 hits, planted recovered, 11.00s
+  c6 (2, 2, 1, 1) reference base (8, 8, 27, 27, 249, 321): UNDECIDED composite slice (1, 2): past the wall-clock deadline
+  c6 (2, 2, 2) reference base (8, 8, 226, 226, 335, 335): 1 hits, planted recovered, 1.76s
+  c6 (3, 1, 1, 1) reference base (36, 41, 41, 41, 77, 226): 6 hits, planted recovered, 51.25s
+  c6 (3, 1, 1, 1) dependent reference base (8, 117, 117, 117, 249, 345): 6 hits, planted recovered, 4.08s
+  c6 (3, 2, 1) reference base (36, 36, 36, 72, 143, 143): UNDECIDED composite slice (1, 2): past the wall-clock deadline
+[run.py] KILLED at cap after 600.2s
+  c6 (2, 1, 1, 1, 1) reference base (0, 37, 130, 131, 131, 333): 6 hits, planted recovered, 0.15s
+  c6 (2, 1, 1, 1, 1) reference base (8, 32, 113, 134, 134, 288): 6 hits, planted recovered, 0.15s
+  c6 (2, 1, 1, 1, 1) dependent reference base (8, 8, 34, 115, 174, 273): UNDECIDED composite slice (1, 1): past the wall-clock deadline
+  c6 (2, 1, 1, 1, 1) dependent reference base (37, 64, 81, 250, 347, 347): 1 hits, planted recovered, 0.29s
+Traceback (most recent call last):
+  File "/Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-ab906a6996d53253c/research/n4_rank6/driver.py", line 1092, in <module>
+    sys.exit(main(sys.argv))
+             ~~~~^^^^^^^^^^
+  File "/Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-ab906a6996d53253c/research/n4_rank6/driver.py", line 1088, in main
+    return args.fn(args) or 0
+           ~~~~~~~^^^^^^
+  File "/Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-ab906a6996d53253c/research/n4_rank6/driver.py", line 693, in control_planted
+    record("c6", cl, "reference", base, terms, coeffs, lambda tgt: run_c6(Mt, tgt, base))
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-ab906a6996d53253c/research/n4_rank6/driver.py", line 645, in record
+    hits, st = fn(tgt)
+               ~~^^^^^
+  File "/Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-ab906a6996d53253c/research/n4_rank6/driver.py", line 693, in <lambda>
+    record("c6", cl, "reference", base, terms, coeffs, lambda tgt: run_c6(Mt, tgt, base))
+                                                                   ~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-ab906a6996d53253c/research/n4_rank6/stages.py", line 136, in run_c6
+    return M.run(cover, X0, target)
+           ~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-ab906a6996d53253c/research/qutrit_m4_rank5/matcher.py", line 1922, in run
+    hits = BlockOnlyMatcher(self, blocks, x0, target, stats, self.budget, self.log, self.last_hits).run()
+  File "/Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-ab906a6996d53253c/research/qutrit_m4_rank5/matcher.py", line 1050, in run
+    s = T[j[0]] / self.target.rhs(add(x0, y))[2][j[0]]
+          ~^^^
+IndexError: index 0 is out of bounds for axis 0 with size 0
+[run.py] exit 1 after 103.2s
+  c6 (2, 1, 1, 1, 1) reference base (0, 37, 130, 131, 131, 333): 6 hits, planted recovered, 0.13s
+  c6 (2, 1, 1, 1, 1) dependent reference base (8, 43, 43, 143, 335, 358): 21 hits, planted recovered, 9.20s
+  c6 (2, 2, 2) reference base (8, 8, 226, 226, 335, 335): 1 hits, planted recovered, 1.23s
+  c6 (3, 1, 1, 1) reference base (8, 8, 8, 36, 117, 358): 6 hits, planted recovered, 43.26s
+  c6 (3, 1, 1, 1) dependent reference base (36, 36, 36, 130, 143, 239): UNDECIDED composite slice (1, 1): past the wall-clock deadline
+wrote research/n4_rank6/results/control_planted_c6.json
+control-planted (c6): 4/5 planted decompositions recovered in 252s; by stage {'b6': [0, 0], 'c6': [4, 9], 'beta': [0, 0], 'gamma': [0, 0]}; FAIL
+[run.py] exit 1 after 253.1s

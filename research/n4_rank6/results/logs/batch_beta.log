@@ -1,0 +1,8 @@
+batch 1230 of 1345: stage beta, 513 items ((1, 1, 1, 1, 1)), 16 run(s) per item, compiled kernels, candidate cap 2000000
+batch 1230: 513 items, 8208 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 50s, wall 51s; deterministic sha256 676b722c80052bb3
+batch 1230 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_1230.json
+[run.py] exit 0 after 51.1s
+batch 1027 of 1057: stage beta, 3623 items ((1, 1, 1, 1, 1)), 16 run(s) per item, compiled kernels, candidate cap 2000000
+batch 1027: 3623 items, 57968 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 177s, wall 177s; deterministic sha256 0e351a4a40d27f3a
+batch 1027 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_1027.json
+[run.py] exit 0 after 177.6s
