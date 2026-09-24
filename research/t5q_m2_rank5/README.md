@@ -1,9 +1,18 @@
-# research/t5q_m2_rank5: the rank-5 exclusion of |T5>^2 by direct census
+# research/t5q_m2_rank5: the rank-5 census of |T5>^2
 
-The pipeline behind `T5-m2-lower-6.json.draft` (a bound only after the pod
-run, the aggregate and the manifest) and its two projections
-(`T5-m3-lower-6.json.draft`, `T5-m4-lower-6.json.draft`). With ranks 1 to
-4 excluded, a rank-5 decomposition of psi_2 = |T5>^2 over the 3,900
+Built to exclude rank 5; the census instead found the rank-5
+decomposition. The pod run of 2026-09-24 (74 batches, 155,422 units, 13.4
+CPU-hours, 0 undecided) returned exactly one 5-set, the states [525, 563,
+591, 619, 637] of batch 31: the five Z(x)Z eigensectors of |T5>^2, each a
+stabilizer state because the cubic x^3 + y^3 is quadratic on every line
+x + y = c. It is `bounds/T5-m2-upper-5.json` (Lean tier), and with
+`bounds/T5-m2-lower-5.json` the cell is settled at chi(|T5>^2) = 5;
+`decomposition.py` works the set out and section 8 of
+`docs/notes/t5q_m2_rank5_exclusion.md` records the outcome. The exclusion
+drafts and `verify_challenge/cert_t5_m2_rank5_attested.py` are deleted.
+The rest of this file describes the pipeline as it was built and run.
+
+With ranks 1 to 4 excluded, a rank-5 decomposition of psi_2 = |T5>^2 over the 3,900
 two-ququint stabilizer states is a 5-set of distinct independent states
 whose span contains psi_2, with every coefficient nonzero; one member of
 every orbit under the unitary symmetry group (order 50) contains one of
@@ -29,7 +38,7 @@ Files
 | `batch.py K` | one batch (`--resume`, `--max-seconds`, `--no-native`; exit 2 on `DECOMPOSITION FOUND`, exit 1 on any undecided unit) |
 | `aggregate.py` | the certificate-side check and the batch manifest (`--dry-run --partial` during the run, `--recheck 2 --recheck-seed 20260925` at the end; `--no-low-census` skips the 100 s k = 1..4 censuses) |
 | `results/` | `plan.json`, `rates.json`, `sample.json`, `control_*.json`, `batch_K.json` and `batch_K.log` |
-| `T5-m*-lower-6.json.draft` | the bound files to fill in and move to `bounds/` after the run; `verify_challenge/cert_t5_m2_rank5_attested.py` is their certificate |
+| `decomposition.py` | the hit of batch 31 rebuilt from the dictionary: the five lines x + y = c with phase w^(3c x^2 - 3c^2 x), the Z[w] identity, the coefficients w^(c^3)/sqrt 5 against `fit_coeffs.fit`, the symbolic verification, the orbit of the 5-set under the symmetry group (size one), and the common stabilizer <Z(x)Z> |
 
 Commands, in the order they were run on the laptop (all at nice 19, one
 process at a time, through `research/t5_rank5/run.py` with a 600 s cap:
@@ -115,9 +124,10 @@ setsid nohup sh -c 'STABRANK_NO_NATIVE=1 nice -n 19 /root/.local/bin/uv run --ex
 Copy back `research/t5q_m2_rank5/results/batch_*.json`, the logs,
 `batch_manifest.json`, the control records and the no-native record
 (`rsync -avz -e "ssh -i ~/.ssh/id_ed25519 -p 40096" root@157.157.221.30:/root/stabrank-h6/research/t5q_m2_rank5/ research/t5q_m2_rank5/`),
-commit them, fill the placeholders of the three drafts (compute hours,
-hardware, dates, the batch indices of the re-runs) and move them to
-`bounds/`; the submissions workflow verifies every touched bound, so the
-drafts keep their suffix until the manifest exists. Then run
-`verify_challenge/cert_t5_m2_rank5_attested.py` and update the board:
-6 <= chi(T5^2) <= 8, 6 <= chi(T5^3) <= 24, 6 <= chi(T5^4) <= 64.
+and commit them. That is what happened on 2026-09-24 (12:32 to 13:36 UTC,
+15 processes, 13.4 CPU-hours); `aggregate.py --recheck 2` re-derived the
+plan and the k = 1..4 censuses, found the 74 records complete with 0
+undecided units, and stopped with exit 2 at the hit of batch 31 before its
+two seeded re-runs, so the no-native replay and the re-runs were not made.
+The hit is `bounds/T5-m2-upper-5.json`; see `decomposition.py` and section
+8 of the note.
