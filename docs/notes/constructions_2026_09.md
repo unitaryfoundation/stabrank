@@ -832,3 +832,72 @@ verification was killed at the 900 s cap.
 4. Verification cost for H3 (as for the face state) is governed by the
    parity of m, not by the size of the target: 389 s at m=5 against 2 s
    at m=6.
+
+## 2026-09-24: chi(|T5>^2) = 5, the Z (x) Z sector decomposition
+
+The rank-5 census of |T5>^2 (`research/t5q_m2_rank5`,
+`docs/notes/t5q_m2_rank5_exclusion.md`, built to exclude rank 5) ran on
+the pod and returned one 5-set, which is a rank-5 decomposition. With
+`bounds/T5-m2-lower-5.json` the cell is settled exactly: chi(|T5>^2) = 5,
+against chi(|T5>) = 3 and the product 9. Section 8 of the exclusion note
+has the run and the checks; `research/t5q_m2_rank5/decomposition.py`
+rebuilds the set.
+
+### The identity
+
+On the line x + y = c of F_5^2 the cubic phase of |T5>^2 is quadratic in
+the line parameter,
+
+    x^3 + (c - x)^3 = c^3 + 3c x^2 - 3c^2 x,
+
+so the projection of |T5>^2 onto the eigenspace Z (x) Z = w^c is
+w^{c^3} / sqrt 5 times the stabilizer state
+5^{-1/2} sum_x w^{3c x^2 - 3c^2 x} |x, c - x>. The five sectors are the
+five terms (x0 = (0, c), W = (1, 4), Q = 3c, l = -3c^2, coefficient
+w^{c^3} / sqrt 5). This is the Pauli eigensector construction of section
+3 (`sectors.py`) with P = Z (x) Z, the p = 5 analogue of the two-copy
+carry decomposition of |T3>; `sectors.py` was written for the qutrit
+orbits and never ran on T5, so the census found what a one-second
+structured check would have. The set is fixed by the whole symmetry group
+of |T5>^2 (unitary and antiunitary), and the census is complete over
+orbits, so it is the only rank-5 decomposition over the stabilizer
+states. It is not a product of single-copy decompositions: the five
+states are entangled lines sharing exactly the stabilizer <Z (x) Z>.
+
+The construction stops at m = 2. A Z-type line a x + b y = d makes the
+cubic part (1 - a^3 / b^3) x^3 vanish only for a = b (cubing is a
+bijection of F_5^*), and at m = 3 no plane a x + b y + c z = d removes the
+cubic part of x^3 + y^3 + z^3 (a = b = c is forced and -3x^2 y - 3x y^2
+remains), so the sector route at m = 3 is the product 15, and a rank
+below 15 there needs something other than Z-type sectors.
+
+### Bound files written today
+
+| file | rank | exponent | tier | method |
+|---|---|---|---|---|
+| `T5-m2-upper-5.json` | 5 | 0.5000 | lean (`t5_m2_stabRankP_le_five`) | the Z (x) Z sectors, found by the census of `research/t5q_m2_rank5` |
+| `T5-m3-upper-15.json` | 15 | 0.5609 | lean (`t5_m3_stabRankP_le_fifteen`, multiplicativity) | product m=2 x m=1, replaces `T5-m3-upper-24.json` |
+| `T5-m4-upper-25.json` | 25 | 0.5000 | lean (`t5_m4_stabRankP_le_twentyfive`, multiplicativity) | product m=2 x m=2, replaces `T5-m4-upper-64.json` |
+
+The T5 cells now read chi(|T5>) = 3, chi(|T5>^2) = 5, chi(|T5>^3) <= 15,
+chi(|T5>^4) <= 25; the per-copy exponent 0.5 at m = 2 and m = 4 is
+measured against the single-copy baseline log_5(3) = 0.6826, since no
+exponent is published for any p = 5 state. `T5-m2-upper-8.json` stays on
+the board as the superseded annealed witness. The Lean modules
+(`T5M2StabRank.lean` extended, `T5M3StabRank.lean`, `T5M4StabRank.lean`)
+are written by hand: `lean_proofs/tools/gen_witness_lean.py` has no
+p = 5 branch.
+
+### Sharpest facts of the session
+
+1. chi(|T5>^2) = 5 exactly, strictly subadditive (5 < 9), by a one-line
+   identity: the cubic x^3 + y^3 is quadratic on every line x + y = c.
+2. The decomposition is unique over the stabilizer states and is the
+   Z (x) Z eigensector decomposition; the structured sector search of
+   section 3, run for T5, finds it directly. Before running a census to
+   exclude a rank, run `sectors.py` on the cell.
+3. The 2026-09-23 merge search (section (b) above) could not have found
+   it: it fixed five terms of a nine-term product, and the sector terms
+   are not product terms.
+4. No Z-type sector decomposition exists at m = 3; the m = 3 and m = 4
+   cells hold the products 15 and 25.

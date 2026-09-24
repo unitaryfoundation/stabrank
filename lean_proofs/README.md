@@ -13,7 +13,7 @@ mapping is:
 | Appendix A.2, H_3 m=2,3 | `H3M2Pointwise.lean`, `H3M3.lean`, `H3M3Pointwise.lean` |
 | Appendix A.3, Norrell m=2,3,4 | `NorrellM2Pointwise.lean`, `NorrellM3.lean`, `NorrellM3Pointwise.lean`, `NorrellM4Pointwise.lean` |
 | Qubit H-type m=2,3,4 and T-type m=2,3,4 (bound files) | `QubitShared.lean`, `QubitHStabRank.lean`, `QubitTStabRank.lean`, `QubitTM4StabRank.lean` |
-| Ququint T5 m=1 (both directions) and m=2 upper (bound files) | `Ququint.lean`, `T5Minors.lean`, `T5M1StabRank.lean`, `T5M2StabRank.lean` |
+| Ququint T5 m=1 (both directions), m=2 upper (rank 8 and rank 5), m=3 and m=4 upper by multiplicativity (bound files) | `Ququint.lean`, `T5Minors.lean`, `T5M1StabRank.lean`, `T5M2StabRank.lean`, `T5M3StabRank.lean`, `T5M4StabRank.lean` |
 | Lower bounds S m=1, H m=2, T m=2, N m=2, H_3 m=2 (bound files) | `Stabilizer/RankOne.lean`, `StrangeM1Lower.lean`, `QubitM2Lower.lean`, `M2Lower.lean` |
 | Dictionary completeness at two qutrits, reparametrisation, covering lemma (shared library for scan-based lower bounds; no bound yet) | `Stabilizer/Reparam.lean`, `QutritDict2.lean`, `QutritDict2Keys.lean`, `Stabilizer/Covering.lean`; `Bench/` (throughput, not imported) |
 | H_3 m=4, T_3 m=3,4,5, Strange m=5, qubit H-type m=5,6,7,8,10, qubit T-type m=5,6 (bound-file witnesses, reflection route) | `Stabilizer/Reflect.lean`, `Stabilizer/Chunks.lean`, `ReflectBases.lean`, `ReflectQubit.lean`, `ReflectQutrit.lean`, `H3M4StabRank.lean`, `T3M3StabRank.lean`, `T3M4StabRank.lean`, `T3M5Data.lean`, `T3M5Key0.lean` to `T3M5Key8.lean`, `T3M5StabRank.lean`, `StrangeM5Data.lean`, `StrangeM5Key0.lean` to `StrangeM5Key8.lean`, `StrangeM5StabRank.lean`, `QubitHM5StabRank.lean`, `QubitHM6StabRank.lean`, `QubitHM7StabRank.lean`, `QubitHM8Data.lean`, `QubitHM8Key0.lean` to `QubitHM8Key7.lean`, `QubitHM8StabRank.lean`, `QubitHM10Data.lean`, `QubitHM10Key0.lean` to `QubitHM10Key63.lean`, `QubitHM10StabRank.lean`, `QubitTM5StabRank.lean`, `QubitTM6StabRank.lean` |
@@ -438,7 +438,19 @@ mapping is:
   terms of `bounds/T5-m2-upper-8.json` (three points, four lines, one
   full-support state) with coefficients `β_j / 5`, `β_j ∈ ℤ[ω₅]` (the file's
   `c_j` times `√5^(k_j - 2)`), decided at the 25 digit strings by the same
-  tactic sequence as the one-copy identity.
+  tactic sequence as the one-copy identity. `t5_m2_stabRankP_le_five`: the
+  five terms of `bounds/T5-m2-upper-5.json`, the lines `x + y = c` with
+  phase `ω^(3c x² - 3c² x)` (the `Z ⊗ Z` eigensectors of `|T5⟩^⊗2`; on such
+  a line `x³ + y³ = c³ + 3c x² - 3c² x`), with coefficients `ω^(c³)/5` on
+  the unnormalised terms, decided by the same tactic sequence. With the
+  rank-4 exclusion of `bounds/T5-m2-lower-5.json` this is `χ(|T5⟩^⊗2) = 5`.
+
+- `LeanProofs/T5M3StabRank.lean`, `LeanProofs/T5M4StabRank.lean`:
+  `tensorP_t5Vec` (`|T5⟩^⊗n ⊗ |T5⟩^⊗m = |T5⟩^⊗(n+m)` on digit strings, as
+  `tensorP_hVec`), then `t5_m3_stabRankP_le_fifteen` and
+  `t5_m4_stabRankP_le_twentyfive` from `stabRankP_tensor_le` and the m=2
+  and m=1 theorems; the terms of `bounds/T5-m3-upper-15.json` and
+  `bounds/T5-m4-upper-25.json` are the products that lemma counts.
 - `LeanProofs/Stabilizer/RankOne.lean`: `stabRank ψ > 1` from
   non-membership. `stabRank_gt_one_of_not_stab`: for a predicate closed under
   nonzero rescaling (`IsStabP.smul`, `IsStab.smul`), a nonzero `ψ` outside it

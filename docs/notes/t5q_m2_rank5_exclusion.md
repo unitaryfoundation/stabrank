@@ -1,13 +1,17 @@
 # The rank-5 exclusion of |T5>^2 by direct census
 
-Status (2026-09-24). Pipeline built and tested on the laptop; the census
-has not run. Nothing here is a bound until the 74 batches of
-`research/t5q_m2_rank5/partition.json` have run, `aggregate.py --recheck 2`
-prints `CERTIFIED chi(T5^2) >= 6`, and the three drafts move to `bounds/`.
-The design and its measurements are section 6 of
+Status (2026-09-24, evening). The census ran on the pod and did not
+exclude rank 5: it returned one 5-set, and that set is a rank-5
+decomposition of |T5>^2 (section 8). The board now holds
+`bounds/T5-m2-upper-5.json` at the Lean tier, and with
+`bounds/T5-m2-lower-5.json` the cell is settled, chi(|T5>^2) = 5. The
+exclusion drafts and their certificate script are deleted; sections 1 to 7
+are kept as written before the run, since the argument they make is what
+makes the census complete and the decomposition unique. The design and
+its measurements are section 6 of
 `docs/notes/next_exclusion_feasibility_2.md`; this note carries the
 argument, the census as partitioned, the controls with their results, the
-soundness checklist, and the pod commands.
+soundness checklist, the pod commands, and the outcome.
 
 Notation. psi_2 = |T5>^2 with |T5> = 5^{-1/2} sum_x w_5^{x^3} |x>, so the
 entry of psi_2 at (x, y) is w_5^{x^3 + y^3} / 5. The dictionary is the
@@ -334,3 +338,114 @@ sessions; about 0.3 CPU-hours in all.
 | test batch | `batch.py 73 --max-seconds 560` | 246 s | 13,747 units, 0 sets, 0 undecided |
 | aggregate | `aggregate.py --dry-run --partial` | 97 s | every stored check passes for batch 73 |
 | reference plants | `driver.py control-planted --count 8 --reference` | 60 s | 8 of 8 |
+
+## 8. Outcome: the census found the decomposition
+
+The pod run (2026-09-24, 12:32 to 13:36 UTC, fifteen processes, all 74
+batches at commit 2b751cb, batch 73 included) ran every one of the
+155,422 units: 2,795,734,903 modular candidates, 13.4 process CPU-hours
+(1.05e-7 s per squared member count, against the partition's estimate of
+12.3 pod CPU-hours), 0 undecided units, and one hit. Batch 31, unit
+(637, 525), returned the 5-set [525, 563, 591, 619, 637] with both
+fullness flags set, psi_2 in its span modulo 2013265921 and numerically
+(residual 1.65e-15), numerical rank 5, every coefficient nonzero.
+`aggregate.py --recheck 2` re-derived the plan and the k = 1..4 censuses,
+found the records complete, re-decided the hit, and stopped with exit 2
+on `DECOMPOSITION FOUND` before its two seeded re-runs; the no-native
+replay of batch 73 was not made either. Neither matters for what follows:
+a decomposition is checked by exhibiting it, and the batch records are
+the whole census.
+
+### 8.1 What the set is
+
+`research/t5q_m2_rank5/decomposition.py` rebuilds the five states from
+the dictionary. In the board's parametrization they are
+
+| index | k | x0 | W | Q | l | coefficient |
+|---|---|---|---|---|---|---|
+| 525 | 1 | (0, 0) | (1, 4) | 0 | 0 | w^0 / sqrt 5 |
+| 563 | 1 | (0, 1) | (1, 4) | 3 | 2 | w^1 / sqrt 5 |
+| 591 | 1 | (0, 2) | (1, 4) | 1 | 3 | w^3 / sqrt 5 |
+| 619 | 1 | (0, 3) | (1, 4) | 4 | 3 | w^2 / sqrt 5 |
+| 637 | 1 | (0, 4) | (1, 4) | 2 | 2 | w^4 / sqrt 5 |
+
+that is, state c is the line x + y = c of F_5^2, parametrized by x, with
+the quadratic phase w^{3c x^2 - 3c^2 x} (Q = 3c, l = -3c^2 mod 5), and its
+coefficient is w^{c^3} / sqrt 5. The identity behind it is one line: on
+x + y = c,
+
+    x^3 + y^3 = x^3 + (c - x)^3 = c^3 + 3c x^2 - 3c^2 x,
+
+the cubic terms cancel, so the restriction of the phase polynomial of
+psi_2 to each line is quadratic and each restriction is a stabilizer
+state. The lines x + y = c are the eigenspaces of Z (x) Z (eigenvalue
+w^c), so the decomposition is the Pauli eigensector construction of
+`research/constructions/sectors.py` with P = Z (x) Z: psi_2 = sum_c Pi_c
+psi_2 with every sector a stabilizer state (norm 1/sqrt 5 each, overlap 1
+with the listed state). It is the p = 5 analogue of the two-copy carry
+decomposition of |T3> (three Z (x) Z sectors), and `sectors.py` would have
+found it in a second had it been run for T5; it was written for the qutrit
+orbits only. The five states share the stabilizer <Z (x) Z> (eigenphase
+w^c on sector c) and no other Weyl operator; none is a product state, so
+the decomposition is not a product of single-copy decompositions (5 < 9
+rules that out anyway).
+
+Checks: the identity is decided in Z[w] (an element is zero iff its five
+integer coefficients on 1, w, ..., w^4 agree, as in
+`cert_t5_m1_rank2.py`); `fit_coeffs.fit` recovers the coefficients
+w^{c^3} / sqrt 5 as nested radicals that agree with them to 30 digits;
+`verify_upper` accepts the witness symbolically in 0.2 s; the numerical
+residual is 1.2e-15. The Lean theorem `t5_m2_stabRankP_le_five`
+(`LeanProofs.T5M2StabRank`) enters the five lines as `stabTerm`s with
+coefficients w^{c^3}/5 on the unnormalised terms and decides the identity
+at the 25 digit strings by the tactic sequence of the rank-8 theorem
+(9 s).
+
+### 8.2 Uniqueness
+
+The 5-set is fixed by every generator of the unitary symmetry group G
+(order 50): the four nontrivial elements of the order-5 Clifford
+stabilizer of |T5>, acting on the first copy, shift the sectors
+c -> c + a for a = 1, 2, 3, 4, and the copy swap fixes each line. The
+antiunitary symmetry fixes the set too (it sends sector c to -c). So the
+orbit of the set under G is the set itself, and every state of the set has
+the same orbit root, 637, which is why the hit was listed from the unit
+(637, 525) with 637 as pivot. Section 1.2 shows that every G-orbit of
+5-sets with psi_2 in their span contains a listed set, and the census
+listed exactly one; hence, with ranks 1 to 4 excluded (section 1.1), this
+is the only rank-5 decomposition of |T5>^2 over the stabilizer states, up
+to the modular caveat of section 1.4 (a member dropped by a zero image
+modulo 65521 that is nonzero over Q(zeta_5), the same assumption every
+kernel census of the project makes). No rerun is needed to count the
+decompositions: every batch record has `units_run` equal to its unit
+count and the aggregate's stop at the first hit only affected the
+aggregate; the 74 records are the complete census and hold one hit.
+
+The uniqueness also has a direct reading. A Z-type sector decomposition
+uses lines a x + b y = d; the cubic part of x^3 + y^3 restricted to such a
+line is (1 - a^3 / b^3) x^3, which vanishes only for a = b since cubing is
+a bijection of F_5^* (gcd(3, 4) = 1), so x + y = c is the only family of
+lines that works. At m = 3 no plane a x + b y + c z = d works at all: the
+x^3 and y^3 coefficients force a = b = c, and then x^3 + y^3 - (x + y)^3
+= -3x^2 y - 3x y^2 remains. So the sector route gives exactly the product
+15 at m = 3 (`bounds/T5-m3-upper-15.json`) and 25 at m = 4
+(`bounds/T5-m4-upper-25.json`), and a rank below 15 at m = 3 needs
+something other than Z-type sectors.
+
+### 8.3 What it settles
+
+chi(|T5>^2) = 5 exactly: `bounds/T5-m2-upper-5.json` (Lean tier) with
+`bounds/T5-m2-lower-5.json` (the numerical rank-4 exclusion, re-derived
+exactly by the k = 1..4 censuses of this pipeline, `control-rank4` and the
+aggregate). Against chi(|T5>) = 3 the pair is strictly subadditive, 5 < 9,
+and the per-copy exponent is log_5(5)/2 = 0.5 against the single-copy
+baseline log_5(3) = 0.6826 (no exponent is published for any p = 5 state,
+so the site records it against that baseline). The products give
+chi(|T5>^3) <= 15 (0.5609) and chi(|T5>^4) <= 25 (0.5), both at the Lean
+tier through `stabRankP_tensor_le`, replacing the rank-24 and rank-64
+products of the annealed rank-8 cell. The drafts `T5-m2-lower-6`,
+`T5-m3-lower-6`, `T5-m4-lower-6` and `verify_challenge/
+cert_t5_m2_rank5_attested.py` are deleted; the pipeline, its controls and
+the 74 records stay as the record of the census. Open: a rank below 15 at
+m = 3 and below 25 at m = 4, and a lower bound at m = 3 beyond the
+projection of the m = 2 cell.

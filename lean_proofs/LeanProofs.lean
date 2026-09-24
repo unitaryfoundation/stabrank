@@ -35,6 +35,8 @@ import LeanProofs.Ququint
 import LeanProofs.T5Minors
 import LeanProofs.T5M1StabRank
 import LeanProofs.T5M2StabRank
+import LeanProofs.T5M3StabRank
+import LeanProofs.T5M4StabRank
 import LeanProofs.Stabilizer.RankOne
 import LeanProofs.StrangeM1Lower
 import LeanProofs.QubitM2Lower

@@ -31,7 +31,8 @@ search from the pivot |00> must find the product decomposition
 {|00>, |0+>, |+0>, |++>} of (|+> - |0>)^2, the two-copy Norrell-type state
 |N5>^2, whose rank is 4.
 
-Printed claim: CERTIFIED chi(T5^2) >= 5
+Printed claims: CERTIFIED chi(T5^2) >= 5
+                CERTIFIED chi(T5^3) >= 5 and chi(T5^4) >= 5 (projection monotonicity)
 """
 
 import os
@@ -99,6 +100,12 @@ def main():
     print(f"T5 m=2: no rank-4 decomposition from any of the {len(reps)} pivot "
           f"representatives [{time.time() - t0:.0f}s]")
     print("CERTIFIED chi(T5^2) >= 5")
+    # Projection monotonicity (Lean: stabRankP_powVecP_mono in
+    # lean_proofs/LeanProofs/Stabilizer/SliceP.lean): every amplitude of |T5>
+    # is nonzero, so slicing carries a rank-r decomposition of T5^(m+1) to one
+    # of T5^m, and the m=2 exclusion bounds the m=3 and m=4 cells as well.
+    for m in (3, 4):
+        print(f"CERTIFIED chi(T5^{m}) >= 5")
     return 0
 
 

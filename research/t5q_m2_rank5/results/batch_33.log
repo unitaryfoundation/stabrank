@@ -1,0 +1,3 @@
+batch 33 of 74: units 37997..39443 (1447 pivot pairs, about 601 pod s), compiled kernel, deadline 3600s
+batch 33: 1447 of 1447 units run, 39910379 modular candidates, 0 hits, 0 decompositions, 0 undecided; kernel 670s, wall 672s; deterministic sha256 f3edf3b9373e8758
+batch 33 complete: no 5-set of its units has |T5>^2 in its span; written research/t5q_m2_rank5/results/batch_33.json

@@ -1,0 +1,3 @@
+batch 13 of 74: units 12370..13033 (664 pivot pairs, about 600 pod s), compiled kernel, deadline 3600s
+batch 13: 664 of 664 units run, 48679711 modular candidates, 0 hits, 0 decompositions, 0 undecided; kernel 697s, wall 701s; deterministic sha256 19dcebf0d9d7ea1e
+batch 13 complete: no 5-set of its units has |T5>^2 in its span; written research/t5q_m2_rank5/results/batch_13.json
