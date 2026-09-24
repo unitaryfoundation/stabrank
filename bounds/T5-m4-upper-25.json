@@ -19,7 +19,7 @@
       "hardware": "Apple silicon laptop, one core; direct construction, no search"
     }
   },
-  "notes": "Tensor product of the exact decompositions T5-m2-upper-5.json (taken 2 times): chi(|T5>^2) <= 5 x chi(|T5>^2) <= 5 gives chi(|T5>^4) <= 25, exponent 0.5000. Replaces the rank-64 tensor square of the annealed rank-8 m=2 witness (T5-m4-upper-64.json, 2026-09-23). The orbit has no published exponent and is measured against the single-copy product bound log_5(3) = 0.6826; this exponent is below that baseline because the m=2 factor already is, so it beats no published exponent and the site does not count it as one. It is the sub-multiplicative value the board already implied. Terms are the exact products (x0 and l concatenated, W and Q block diagonal) and coefficients the exact products, built by research/constructions/product_witness.py.",
+  "notes": "Tensor product of the exact decompositions T5-m2-upper-5.json (taken 2 times): chi(|T5>^2) <= 5 x chi(|T5>^2) <= 5 gives chi(|T5>^4) <= 25, exponent 0.5000. Replaces the rank-64 tensor square of the annealed rank-8 m=2 witness (T5-m4-upper-64.json, 2026-09-23). The orbit has no published exponent and is measured against the single-copy product bound log_5(3) = 0.6826; this exponent is below that baseline because the m=2 factor already is, so it beats no published exponent and the site does not count it as one. It is the sub-multiplicative value the board already implied. Terms are the exact products (x0 and l concatenated, W and Q block diagonal) and coefficients the exact products, built by research/constructions/product_witness.py. Lean: t5_m4_stabRankP_le_twentyfive in LeanProofs.T5M4StabRank proves stabRankP 5 |T5>^4 <= 25 from the m=2 theorem and the multiplicativity lemma stabRankP_tensor_le; the 25 terms here are the products that lemma counts.",
   "witness": {
     "terms": [
       {
@@ -975,5 +975,9 @@
       "exp(2*I*pi/5)/5",
       "exp(-4*I*pi/5)/5"
     ]
+  },
+  "lean": {
+    "module": "LeanProofs.T5M4StabRank",
+    "theorem": "t5_m4_stabRankP_le_twentyfive"
   }
 }
