@@ -193,7 +193,7 @@ a.m:hover{background:var(--soft);color:var(--ac)}
 .orb h3 a:hover{color:var(--ac)}
 .statebox{border:1px solid var(--bd);border-left:4px solid var(--ac);
 border-radius:var(--r);padding:16px 20px;background:var(--card);margin:4px 0 14px}
-.stateeq{font-size:19px;line-height:1.8}
+.stateeq{font-size:19px;line-height:1.8;overflow-x:auto}
 .stateeq sup{font-size:.7em}
 .ket{font-family:var(--font);font-weight:600;white-space:nowrap}
 .ket math{font-size:1.02em}
