@@ -1,0 +1,113 @@
+{
+ "class": "two_blocks",
+ "x0": [
+  2,
+  2
+ ],
+ "items": 4047,
+ "rows": [
+  {
+   "cover": [
+    0,
+    0,
+    8,
+    8,
+    117,
+    249
+   ],
+   "seconds": 0.34537410736083984,
+   "kappa": 0,
+   "coord_raw": [
+    6,
+    6
+   ],
+   "coord_solutions": [
+    6
+   ],
+   "hits": 0,
+   "error": null,
+   "dense_raw": null
+  },
+  {
+   "cover": [
+    8,
+    8,
+    41,
+    41,
+    77,
+    130
+   ],
+   "seconds": 0.2673919200897217,
+   "kappa": 0,
+   "coord_raw": [
+    0
+   ],
+   "coord_solutions": [],
+   "hits": 0,
+   "error": null,
+   "dense_raw": null
+  },
+  {
+   "cover": [
+    8,
+    47,
+    169,
+    169,
+    226,
+    226
+   ],
+   "seconds": 0.32297301292419434,
+   "kappa": 0,
+   "coord_raw": [
+    0
+   ],
+   "coord_solutions": [],
+   "hits": 0,
+   "error": null,
+   "dense_raw": null
+  },
+  {
+   "cover": [
+    36,
+    36,
+    72,
+    118,
+    118,
+    239
+   ],
+   "seconds": 0.340958833694458,
+   "kappa": 0,
+   "coord_raw": [
+    0
+   ],
+   "coord_solutions": [],
+   "hits": 0,
+   "error": null,
+   "dense_raw": null
+  },
+  {
+   "cover": [
+    36,
+    117,
+    117,
+    117,
+    117,
+    239
+   ],
+   "seconds": 1.6057682037353516,
+   "kappa": 0,
+   "coord_raw": [
+    1,
+    1
+   ],
+   "coord_solutions": [
+    1,
+    1
+   ],
+   "hits": 0,
+   "error": null,
+   "dense_raw": null
+  }
+ ],
+ "mean_s": 0.576493215560913
+}

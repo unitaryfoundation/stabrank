@@ -1,0 +1,148 @@
+{
+ "x0": [
+  2,
+  2
+ ],
+ "flats": [
+  "p00",
+  "p01",
+  "p10",
+  "p11",
+  "p12",
+  "p21",
+  "L01_101112",
+  "L10_011121",
+  "L12_001221"
+ ],
+ "planted": {
+  "p00": {
+   "planted": 2,
+   "recovered": 2,
+   "seconds": 0.005910515785217285
+  },
+  "p01": {
+   "planted": 2,
+   "recovered": 2,
+   "seconds": 0.02152717113494873
+  },
+  "p10": {
+   "planted": 2,
+   "recovered": 2,
+   "seconds": 0.0061293840408325195
+  },
+  "p11": {
+   "planted": 2,
+   "recovered": 2,
+   "seconds": 0.006205081939697266
+  },
+  "p12": {
+   "planted": 2,
+   "recovered": 2,
+   "seconds": 0.005848050117492676
+  },
+  "p21": {
+   "planted": 2,
+   "recovered": 2,
+   "seconds": 0.005766391754150391
+  },
+  "L01_101112": {
+   "planted": 2,
+   "recovered": 2,
+   "seconds": 0.05337405204772949
+  },
+  "L10_011121": {
+   "planted": 2,
+   "recovered": 2,
+   "seconds": 0.029788851737976074
+  },
+  "L12_001221": {
+   "planted": 2,
+   "recovered": 2,
+   "seconds": 0.005610942840576172
+  }
+ },
+ "real": {
+  "p00": {
+   "bases": 40,
+   "ms_per_run": 71.32794857025146,
+   "max_ms": 193.0220127105713,
+   "died_at": {
+    "coordinate point": 40
+   },
+   "hits": 0
+  },
+  "p01": {
+   "bases": 40,
+   "ms_per_run": 2.064633369445801,
+   "max_ms": 2.2971630096435547,
+   "died_at": {
+    "coordinate point": 40
+   },
+   "hits": 0
+  },
+  "p10": {
+   "bases": 40,
+   "ms_per_run": 2.13930606842041,
+   "max_ms": 3.197908401489258,
+   "died_at": {
+    "coordinate point": 40
+   },
+   "hits": 0
+  },
+  "p11": {
+   "bases": 40,
+   "ms_per_run": 2.1148502826690674,
+   "max_ms": 2.863168716430664,
+   "died_at": {
+    "coordinate point": 40
+   },
+   "hits": 0
+  },
+  "p12": {
+   "bases": 40,
+   "ms_per_run": 2.0895838737487793,
+   "max_ms": 2.3496150970458984,
+   "died_at": {
+    "coordinate point": 40
+   },
+   "hits": 0
+  },
+  "p21": {
+   "bases": 40,
+   "ms_per_run": 2.122950553894043,
+   "max_ms": 2.3491382598876953,
+   "died_at": {
+    "coordinate point": 40
+   },
+   "hits": 0
+  },
+  "L01_101112": {
+   "bases": 40,
+   "ms_per_run": 2.1002113819122314,
+   "max_ms": 2.346038818359375,
+   "died_at": {
+    "coordinate point": 40
+   },
+   "hits": 0
+  },
+  "L10_011121": {
+   "bases": 40,
+   "ms_per_run": 2.054429054260254,
+   "max_ms": 2.26593017578125,
+   "died_at": {
+    "coordinate point": 40
+   },
+   "hits": 0
+  },
+  "L12_001221": {
+   "bases": 40,
+   "ms_per_run": 2.082306146621704,
+   "max_ms": 2.3458003997802734,
+   "died_at": {
+    "coordinate point": 40
+   },
+   "hits": 0
+  }
+ },
+ "pass": true
+}

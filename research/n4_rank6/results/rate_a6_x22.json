@@ -1,0 +1,19 @@
+{
+ "x0": [
+  2,
+  2
+ ],
+ "covers": 20000,
+ "pairs": 12,
+ "dependent_from_kernel": 0,
+ "ms_per_cover": 0.6761382937431335,
+ "native_runs": 20000,
+ "hits": 0,
+ "refused": 0,
+ "coord_raw_hist": {
+  "0": 20000
+ },
+ "reference_checked": 50,
+ "reference_mismatches": 0,
+ "reference_ms_per_cover": 55.9450626373291
+}

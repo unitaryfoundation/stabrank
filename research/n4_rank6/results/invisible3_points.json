@@ -1,0 +1,178 @@
+{
+ "x0": [
+  2,
+  2
+ ],
+ "bases": {
+  "5-covers": {
+   "count": 60,
+   "points": {
+    "00": {
+     "ratio": 0.25,
+     "zero_fraction": 1.0,
+     "mean_solutions": 0.0,
+     "max_solutions": 0,
+     "hist": {
+      "0": 60
+     },
+     "ms_per_solve": 2.062054475148519
+    },
+    "01": {
+     "ratio": 0.25,
+     "zero_fraction": 1.0,
+     "mean_solutions": 0.0,
+     "max_solutions": 0,
+     "hist": {
+      "0": 60
+     },
+     "ms_per_solve": 1.9325772921244304
+    },
+    "02": {
+     "ratio": -0.5,
+     "zero_fraction": 1.0,
+     "mean_solutions": 0.0,
+     "max_solutions": 0,
+     "hist": {
+      "0": 60
+     },
+     "ms_per_solve": 1.9425034523010254
+    },
+    "10": {
+     "ratio": 0.25,
+     "zero_fraction": 1.0,
+     "mean_solutions": 0.0,
+     "max_solutions": 0,
+     "hist": {
+      "0": 60
+     },
+     "ms_per_solve": 1.93560520807902
+    },
+    "11": {
+     "ratio": 0.25,
+     "zero_fraction": 1.0,
+     "mean_solutions": 0.0,
+     "max_solutions": 0,
+     "hist": {
+      "0": 60
+     },
+     "ms_per_solve": 1.943794886271159
+    },
+    "12": {
+     "ratio": -0.5,
+     "zero_fraction": 1.0,
+     "mean_solutions": 0.0,
+     "max_solutions": 0,
+     "hist": {
+      "0": 60
+     },
+     "ms_per_solve": 1.9324580828348796
+    },
+    "20": {
+     "ratio": -0.5,
+     "zero_fraction": 1.0,
+     "mean_solutions": 0.0,
+     "max_solutions": 0,
+     "hist": {
+      "0": 60
+     },
+     "ms_per_solve": 1.9654234250386557
+    },
+    "21": {
+     "ratio": -0.5,
+     "zero_fraction": 1.0,
+     "mean_solutions": 0.0,
+     "max_solutions": 0,
+     "hist": {
+      "0": 60
+     },
+     "ms_per_solve": 1.916038990020752
+    }
+   }
+  },
+  "4-covers": {
+   "count": 60,
+   "points": {
+    "00": {
+     "ratio": 0.25,
+     "zero_fraction": 1.0,
+     "mean_solutions": 0.0,
+     "max_solutions": 0,
+     "hist": {
+      "0": 60
+     },
+     "ms_per_solve": 0.15396674474080402
+    },
+    "01": {
+     "ratio": 0.25,
+     "zero_fraction": 1.0,
+     "mean_solutions": 0.0,
+     "max_solutions": 0,
+     "hist": {
+      "0": 60
+     },
+     "ms_per_solve": 0.14107624689737958
+    },
+    "02": {
+     "ratio": -0.5,
+     "zero_fraction": 1.0,
+     "mean_solutions": 0.0,
+     "max_solutions": 0,
+     "hist": {
+      "0": 60
+     },
+     "ms_per_solve": 0.1381953557332357
+    },
+    "10": {
+     "ratio": 0.25,
+     "zero_fraction": 1.0,
+     "mean_solutions": 0.0,
+     "max_solutions": 0,
+     "hist": {
+      "0": 60
+     },
+     "ms_per_solve": 0.1377582550048828
+    },
+    "11": {
+     "ratio": 0.25,
+     "zero_fraction": 1.0,
+     "mean_solutions": 0.0,
+     "max_solutions": 0,
+     "hist": {
+      "0": 60
+     },
+     "ms_per_solve": 0.14228026072184244
+    },
+    "12": {
+     "ratio": -0.5,
+     "zero_fraction": 1.0,
+     "mean_solutions": 0.0,
+     "max_solutions": 0,
+     "hist": {
+      "0": 60
+     },
+     "ms_per_solve": 0.1438419024149577
+    },
+    "20": {
+     "ratio": -0.5,
+     "zero_fraction": 1.0,
+     "mean_solutions": 0.0,
+     "max_solutions": 0,
+     "hist": {
+      "0": 60
+     },
+     "ms_per_solve": 0.1465876897176107
+    },
+    "21": {
+     "ratio": -0.5,
+     "zero_fraction": 1.0,
+     "mean_solutions": 0.0,
+     "max_solutions": 0,
+     "hist": {
+      "0": 60
+     },
+     "ms_per_solve": 0.14066696166992188
+    }
+   }
+  }
+ }
+}
