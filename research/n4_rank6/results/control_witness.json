@@ -1,0 +1,259 @@
+{
+ "witness": "research/qutrit_m4_rank5/N_m4_rank7_witness.json",
+ "git": "bc8f8be212a427e27971632b2459cca9c1cd6087",
+ "generated": "2026-09-24T17:07:16+00:00",
+ "cap_s": 25.0,
+ "x0": [
+  2,
+  2
+ ],
+ "bases": [
+  {
+   "base": 0,
+   "cover": [
+    32,
+    32,
+    115,
+    115,
+    117,
+    321,
+    321
+   ],
+   "pairs": [
+    [
+     0,
+     2
+    ]
+   ],
+   "distinct": 4,
+   "multiplicities": [
+    2,
+    2,
+    2,
+    1
+   ],
+   "kappa": 1,
+   "status": "aborted",
+   "reason": "BudgetExceeded: coordinate slice (0, 1): past the wall-clock deadline",
+   "seconds": 25.000000953674316,
+   "stats": {
+    "kappa": 1,
+    "kappa1": 1,
+    "distinct": 4,
+    "blocks": [
+     2,
+     2,
+     2
+    ],
+    "coord_solutions": [],
+    "coord_states": [],
+    "joined": 0,
+    "composite_solutions": 0,
+    "composite_states": [],
+    "candidates": 157316,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "hits": 0,
+    "refused": false,
+    "seconds": {
+     "solve_10": 16.89
+    },
+    "peak_rss_gb": null,
+    "native": false,
+    "dense_raw": 709960,
+    "coord_raw": [
+     80759
+    ]
+   }
+  },
+  {
+   "base": 1,
+   "cover": [
+    32,
+    34,
+    113,
+    115,
+    117,
+    321,
+    321
+   ],
+   "pairs": [
+    [
+     1,
+     3
+    ]
+   ],
+   "distinct": 6,
+   "multiplicities": [
+    2,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "kappa": 2,
+   "status": "aborted",
+   "reason": "BudgetExceeded: coordinate slice (0, 1): past the wall-clock deadline",
+   "seconds": 25.090914964675903,
+   "stats": {
+    "kappa": 2,
+    "kappa1": 2,
+    "distinct": 6,
+    "blocks": [
+     2
+    ],
+    "coord_solutions": [],
+    "coord_states": [],
+    "joined": 0,
+    "composite_solutions": 0,
+    "composite_states": [],
+    "candidates": 164675,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "hits": 0,
+    "refused": false,
+    "seconds": {
+     "solve_10": 13.51
+    },
+    "peak_rss_gb": null,
+    "native": false,
+    "dense_raw": 5038813,
+    "coord_raw": [
+     87766
+    ]
+   }
+  },
+  {
+   "base": 2,
+   "cover": [
+    32,
+    34,
+    113,
+    115,
+    117,
+    321,
+    345
+   ],
+   "pairs": [
+    [
+     2,
+     3
+    ]
+   ],
+   "distinct": 7,
+   "multiplicities": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "kappa": 3,
+   "status": "not run",
+   "reason": "kappa 3: the Python dense solve"
+  },
+  {
+   "base": 3,
+   "cover": [
+    8,
+    32,
+    113,
+    117,
+    249,
+    321,
+    345
+   ],
+   "pairs": [
+    [
+     0,
+     3
+    ]
+   ],
+   "distinct": 7,
+   "multiplicities": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "kappa": 3,
+   "status": "not run",
+   "reason": "kappa 3: the Python dense solve"
+  },
+  {
+   "base": 4,
+   "cover": [
+    8,
+    32,
+    115,
+    117,
+    249,
+    273,
+    321
+   ],
+   "pairs": [
+    [
+     0,
+     1
+    ]
+   ],
+   "distinct": 7,
+   "multiplicities": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "kappa": 3,
+   "status": "not run",
+   "reason": "kappa 3: the Python dense solve"
+  },
+  {
+   "base": 5,
+   "cover": [
+    8,
+    34,
+    113,
+    117,
+    273,
+    321,
+    345
+   ],
+   "pairs": [
+    [
+     1,
+     2
+    ]
+   ],
+   "distinct": 7,
+   "multiplicities": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "kappa": 3,
+   "status": "not run",
+   "reason": "kappa 3: the Python dense solve"
+  }
+ ],
+ "passed": 0,
+ "aborted": 2,
+ "all_visible_bases": 6,
+ "complete": true,
+ "pass": false
+}

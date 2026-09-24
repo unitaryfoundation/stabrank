@@ -1,0 +1,5 @@
+B6 kappa 1: 256970 items, 40 sampled: per item mean 0.5549s, median 0.2889s, max 2.859s, dense 0.2077s [22s]
+B6 kappa 2: 2683 items, 29 sampled: per item mean 5.2482s, median 5.5360s, max 7.738s, dense 0.0000s [152s]
+B6 kappa 3: 2 items, 1 sampled: per item mean 396.9792s, median 396.9792s, max 396.979s, dense 0.0000s [397s]
+B6: 70 items, 70 runs, hits 0, refused 0, undecided 0; hist {'0': 41, '2,2': 2, '79,79': 2, '158,158': 2, '8,8': 2, '9,9': 1, '49,49': 1, '13,13': 1}
+[run.py] exit 0 after 572.3s

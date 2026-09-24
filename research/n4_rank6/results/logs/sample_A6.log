@@ -1,0 +1,4 @@
+A6: 40 covers from 12 random pairs: 0.528 ms per cover, kernel 6.105 ms per cover; hits 0, refused 0; Matcher.run agrees on 40/40; hist {'0': 40}
+[run.py] exit 0 after 1.0s
+A6: 20000 covers from 12 random pairs: 0.629 ms per cover, kernel 0.069 ms per cover; hits 0, refused 0; Matcher.run agrees on 100/100; hist {'0': 20000}
+[run.py] exit 0 after 15.2s

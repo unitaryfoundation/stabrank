@@ -42,20 +42,21 @@ time at nice 19, through `research/t5_rank5/run.py` with a 600 s cap):
 uv run --extra challenge python research/n4_rank6/driver.py lists --write
 uv run --extra challenge python research/n4_rank6/driver.py control-planted --stage b6
 uv run --extra challenge python research/n4_rank6/driver.py control-planted --stage c6
-uv run --extra challenge python research/n4_rank6/driver.py control-planted --stage beta
+uv run --extra challenge python research/n4_rank6/driver.py control-planted --stage beta --kinds a,d,r
+uv run --extra challenge python research/n4_rank6/driver.py control-planted --stage beta --kinds h --cap 30
 uv run --extra challenge python research/n4_rank6/driver.py control-planted --stage gamma
 uv run --extra challenge python research/n4_rank6/driver.py control-orbit
 uv run --extra challenge python research/n4_rank6/driver.py control-m3
-uv run --extra challenge python research/n4_rank6/driver.py control-witness
+uv run --extra challenge python research/n4_rank6/driver.py control-witness --cap 25
 uv run --extra challenge python research/n4_rank6/driver.py control-lists
-uv run --extra challenge python research/n4_rank6/driver.py sample A6
-uv run --extra challenge python research/n4_rank6/driver.py sample B6
-uv run --extra challenge python research/n4_rank6/driver.py sample C6
-uv run --extra challenge python research/n4_rank6/driver.py sample beta
-uv run --extra challenge python research/n4_rank6/driver.py sample gamma
+uv run --extra challenge python research/n4_rank6/driver.py sample A6 --count 20000 --reference 100
+uv run --extra challenge python research/n4_rank6/driver.py sample B6 --count 40 --budget 450
+uv run --extra challenge python research/n4_rank6/driver.py sample C6 --count 10 --budget 420 --item-cap 40
+uv run --extra challenge python research/n4_rank6/driver.py sample beta --count 30 --budget 300
+uv run --extra challenge python research/n4_rank6/driver.py sample gamma --count 30 --budget 200
 uv run --extra challenge python research/n4_rank6/driver.py partition --target-s 600
-uv run --extra challenge python research/n4_rank6/batch.py K            # one batch per stage as the pipeline test
-uv run --extra challenge python research/n4_rank6/aggregate.py --dry-run --partial
+uv run --extra challenge python research/n4_rank6/batch.py K            # K in 0, 54, 765, 859, 861, 1027, 1054: one batch per stage and class
+uv run --extra challenge python research/n4_rank6/aggregate.py --dry-run --partial --no-reenumerate-census
 ```
 
 The pod run and the final aggregate are the exclusion note's section 8.

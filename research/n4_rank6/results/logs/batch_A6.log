@@ -1,0 +1,6 @@
+batch 0 of 1345: stage A6, 2 pivot pairs, 1 run(s) per item, compiled kernels, candidate cap 2000000
+[run.py] KILLED at cap after 600.7s
+batch 0 of 1057: stage A6, 1 pivot pairs, 1 run(s) per item, compiled kernels, candidate cap 2000000
+batch 0: 753064 items, 753064 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 5s, match 493s, wall 499s; deterministic sha256 05f4d28cc35d0fae
+batch 0 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_0.json
+[run.py] exit 0 after 499.7s

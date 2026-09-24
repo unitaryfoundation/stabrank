@@ -1,0 +1,26 @@
+{
+ "stage": "A6",
+ "count": 20000,
+ "runs": 20000,
+ "hits": 0,
+ "refused": 0,
+ "undecided": 0,
+ "hist": {
+  "0": 20000
+ },
+ "by_class": {
+  "A6": {
+   "items": 20000,
+   "mean_s": 0.0006293097972869873,
+   "dense_mean_s": 0.0
+  }
+ },
+ "generated": "2026-09-24T17:45:36+00:00",
+ "git": "bc8f8be212a427e27971632b2459cca9c1cd6087",
+ "budget_s": 480.0,
+ "kernel_s_per_cover": 6.880984306335449e-05,
+ "per_item_mean_s": 0.0006293097972869873,
+ "reference_checked": 100,
+ "reference_agree": 100,
+ "wall_s": 14.34932279586792
+}

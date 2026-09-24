@@ -371,6 +371,33 @@ def sample(args):
             picks = _spread(lst, n)
             secs, dsecs, first = [], [], {}
             t_cl = time.time()
+            # a warm pass first (untimed, within a third of the class budget): the
+            # option tables and shape tables of the states touched are built once
+            # per process, and a batch of thousands of items runs with them warm,
+            # so timing cold items would overstate the cheap classes several times
+            warm_until = t_cl + per_class_budget / 3
+            for it in picks:
+                if time.time() > warm_until:
+                    break
+                Mt.budget = Budget(seconds=args.item_cap) if args.item_cap else None
+                if IM is not None:
+                    IM.deadline = time.time() + args.item_cap if args.item_cap else None
+                try:
+                    for unit in ([None] if stage in ("B6", "C6") else (FLAT_NAMES if stage == "beta" else FLAT_PAIRS)):
+                        if stage == "B6":
+                            kap = int(cl.split()[1])
+                            set_max_cand(2_000_000 if kap == 1 else 200_000_000)
+                            run_b6(Mt, Fl, target, it, kap)
+                        elif stage == "C6":
+                            run_c6(Mt, target, it)
+                        elif stage == "beta":
+                            IM.run_one(it, unit, target)
+                        else:
+                            IM.run_two(it, unit, target)
+                except (UnpinnedFamily, BudgetExceeded):
+                    pass
+            rec.setdefault("warm_s", {})[cl] = time.time() - t_cl
+            t_cl = time.time()
             for it in picks:
                 if secs and time.time() - t_cl > per_class_budget:
                     break
@@ -469,11 +496,13 @@ def partition(args):
     costs = [POD_FACTOR_COMPILED * (by[(i, j)][6] + a_rate * by[(i, j)][3]) for i, j, _ in units]
     geometry, cur, acc = [], [], 0.0
     for u, c in zip(units, costs):
-        cur.append(list(u))
-        acc += c
-        if acc >= args.target_s:
+        # a batch closes before a pair would carry it past the target, so a
+        # heavy pair (the pivot 117 pairs run 500 pod seconds each) sits alone
+        if cur and acc + c > args.target_s:
             geometry.append({"index": len(geometry), "stage": "A6", "units": cur, "estimated_s": round(acc, 1)})
             cur, acc = [], 0.0
+        cur.append(list(u))
+        acc += c
     if cur:
         geometry.append({"index": len(geometry), "stage": "A6", "units": cur, "estimated_s": round(acc, 1)})
     est = {"A6": float(sum(costs))}

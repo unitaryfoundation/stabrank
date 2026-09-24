@@ -1,0 +1,106 @@
+{
+ "partition": "research/n4_rank6/partition.json",
+ "partition_sha256": "597eca221ac6d6b33278033dafe5e63c8179d5dc675e8f32cd418c1adf636b23",
+ "census_sha256": "4b25c770bcb1cfe310796a1a8ab820f019ab305b3cd8753c500acc7d6e494bc4",
+ "reps_sha256": "e6432f0d7506fcca623edf74f3211b09c62f36f0266040e2c28f0621a30ad9c7",
+ "complete": false,
+ "batches": [
+  {
+   "id": "batch_0",
+   "params": {
+    "stage": "A6",
+    "pivot_pairs": 1,
+    "runs_per_item": 1,
+    "max_cand": 2000000,
+    "matched": 753064,
+    "hits": 0
+   },
+   "output": "research/n4_rank6/results/batch_0.json",
+   "sha256": "597e44b671c5cb75c652e7f0832cee13ba43e43ed7d958079f4fe2d83b47b6e4"
+  },
+  {
+   "id": "batch_54",
+   "params": {
+    "stage": "B6",
+    "items": 362,
+    "class": "kappa 1",
+    "runs_per_item": 1,
+    "max_cand": 2000000,
+    "matched": 362,
+    "hits": 0
+   },
+   "output": "research/n4_rank6/results/batch_54.json",
+   "sha256": "64f2014fb03bc92d93d6ef1ef77287a5e768b80e970e4e16d3d356c324dbecc5"
+  },
+  {
+   "id": "batch_765",
+   "params": {
+    "stage": "B6",
+    "items": 29,
+    "class": "kappa 2",
+    "runs_per_item": 1,
+    "max_cand": 200000000,
+    "matched": 29,
+    "hits": 0
+   },
+   "output": "research/n4_rank6/results/batch_765.json",
+   "sha256": "16525ecb16873eb8263384f9e49d43e9bc3ff6e6135c28c91980d72f282a331b"
+  },
+  {
+   "id": "batch_859",
+   "params": {
+    "stage": "B6",
+    "items": 1,
+    "class": "kappa 3",
+    "runs_per_item": 1,
+    "max_cand": 200000000,
+    "matched": 1,
+    "hits": 0
+   },
+   "output": "research/n4_rank6/results/batch_859.json",
+   "sha256": "5c8f238c6889b925d1c13136cc1b718ca921ed78dd410d620135edc16c553154"
+  },
+  {
+   "id": "batch_861",
+   "params": {
+    "stage": "C6",
+    "items": 3142,
+    "class": "(2, 1, 1, 1, 1)",
+    "runs_per_item": 1,
+    "max_cand": 2000000,
+    "matched": 3142,
+    "hits": 0
+   },
+   "output": "research/n4_rank6/results/batch_861.json",
+   "sha256": "8d2e9321f2eaa3457c595c2cb4ba0cdfa1fa11993630f9a9e87d1c730396e40f"
+  },
+  {
+   "id": "batch_1027",
+   "params": {
+    "stage": "beta",
+    "items": 3623,
+    "class": "(1, 1, 1, 1, 1)",
+    "runs_per_item": 16,
+    "max_cand": 2000000,
+    "matched": 57968,
+    "hits": 0
+   },
+   "output": "research/n4_rank6/results/batch_1027.json",
+   "sha256": "c74d3a89e872b5ff6d33090bc5eccbdbdb79c5ff730cb60ad4dfaf2e4a241120"
+  },
+  {
+   "id": "batch_1054",
+   "params": {
+    "stage": "gamma",
+    "items": 478,
+    "class": "(1, 1, 1, 1)",
+    "runs_per_item": 136,
+    "max_cand": 2000000,
+    "matched": 65008,
+    "hits": 0
+   },
+   "output": "research/n4_rank6/results/batch_1054.json",
+   "sha256": "78a3275cb30335d882e1ae6ac5aa60c47468ced506e54fa07549f27b332d8ff0"
+  }
+ ]
+}
