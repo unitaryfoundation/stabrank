@@ -1,0 +1,47 @@
+{
+ "orbit": "qubit_T",
+ "x0s": [
+  0,
+  1
+ ],
+ "stages": {
+  "independent": {
+   "runs": 60,
+   "hits": 0,
+   "refused": 0,
+   "undecided": 0,
+   "capped": 0,
+   "hist": {
+    "": 60
+   },
+   "native_runs": 0,
+   "per_run_mean_s": 0.18612829446792603,
+   "per_run_median_s": 0.12342214584350586,
+   "per_run_max_s": 1.2340106964111328,
+   "per_x0_mean_s": {
+    "0": 0.013428020477294921,
+    "1": 0.35882856845855715
+   }
+  },
+  "repeated": {
+   "runs": 24,
+   "hits": 0,
+   "refused": 0,
+   "undecided": 0,
+   "capped": 0,
+   "hist": {
+    "": 24
+   },
+   "native_runs": 0,
+   "per_run_mean_s": 7.016262918710709,
+   "per_run_median_s": 0.03620648384094238,
+   "per_run_max_s": 43.658036947250366,
+   "per_x0_mean_s": {
+    "0": 0.004941821098327637,
+    "1": 14.02758401632309
+   }
+  }
+ },
+ "generated": "2026-09-24T03:15:40+00:00",
+ "git": "4c41f25752332d2496bcaddbd0dc95274a192791"
+}

@@ -1,0 +1,29 @@
+{
+ "decomposition_indices": [
+  1030,
+  1439,
+  6164
+ ],
+ "options_per_term": 65,
+ "combinations_per_ratio": 274625,
+ "sampled": 54925,
+ "ratios": {
+  "-1": {
+   "exact": 0,
+   "stabilizer": 0,
+   "rank2": 0,
+   "collisions": 7755,
+   "key_zero_rows": 0,
+   "seconds": 351.22836685180664,
+   "seconds_per_combo": 0.006394690338676498,
+   "projected_full_seconds": 1756.1418342590332,
+   "hits": []
+  }
+ },
+ "chunk": [
+  54925,
+  109850
+ ],
+ "generated": "2026-09-24T04:24:01+00:00",
+ "git": "4c41f25752332d2496bcaddbd0dc95274a192791"
+}
