@@ -519,6 +519,28 @@ stored batch, re-ran batches 19 (stage B, 249 s) and 319 (stage beta,
 replay of stage A batch 15 (item 7 of the checklist) was started on the pod
 after the run; its record goes under `results/nonative/` when it finishes.
 
+### 8.2 The no-native cross-check (2026-09-24)
+
+Stage A batch 15 (5,100 pivot pairs, the smallest stage A batch) was
+re-run on the pod with `STABRANK_NO_NATIVE=1`, so both the 5-cover kernel
+and the matcher were the Python reference implementations: 8,312 s
+(kernel 8,096 s, matching 216 s) against 424 s compiled.
+`results/nonative/batch_15.json` agrees with the stored
+`results/batch_15.json` on every exact quantity: 26,336 covers, 52,672
+matched runs, the same coordinate-slice solution histogram, 0 hits, 0
+refused, 0 undecided. Two fields differ. The modular candidate count
+(86,864,687 against 86,719,704) sits outside the deterministic part and
+counts the superset each kernel's random hash functional lets through
+before exact re-decision, so it depends on the implementation. The field
+`native_runs` (0 against 52,672) sits inside the deterministic part, which
+is a defect of this runner inherited from `research/h6_rank5/batch.py`:
+it counts how many matcher runs took the compiled path, so the
+deterministic hash of a reference replay can never equal the stored one,
+and the cross-check has to be read field by field, as here. The rank-4
+pipeline for |T>^5 (`research/t5_rank4/batch.py`) keeps that field outside
+the hash; this runner is left as run, since changing the hash definition
+after the fact would invalidate the 323 stored hashes and the manifest.
+
 ## 9. What is proved, what is assumed, what is open
 
 Proved by table or argument here: Fact 1 (given the 30-element list),
