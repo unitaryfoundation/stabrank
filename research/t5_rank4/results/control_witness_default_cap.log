@@ -1,0 +1,17 @@
+14 distinct all-visible (base, x0) pairs over the 10 qubit pairs; flat types: (0, 1): P,P,P,P,P,P; (0, 2): L03,L03,P,P,P,P; (0, 3): P,P,P,P,P,P; (0, 4): L02,L13,L02,L13,L02,L13; (1, 2): P,P,P,P,P,P; (1, 3): P,P,P,P,L03,L03; (1, 4): L02,L13,L02,L13,L02,L13; (2, 3): P,P,P,P,P,P; (2, 4): L02,L13,L02,L13,L02,L13; (3, 4): L02,L13,L02,L13,L02,L13
+  base 0: cover (2, 105, 30, 444, 12, 238) x0 00 kappa 0 (3 pairs): 4 genuine rank-6 decompositions, witness recovered, 2.9s, coord [8, 64], joined 64, blocks [], native True
+  base 1: cover (3, 106, 32, 447, 9, 234) x0 00 kappa 0 (1 pairs): 4 genuine rank-6 decompositions, witness recovered, 2.9s, coord [8, 64], joined 64, blocks [], native True
+  base 2: cover (29, 241, 78, 735, 378, 454) x0 01 kappa 0 (2 pairs): 1 genuine rank-6 decompositions, witness recovered, 0.7s, coord [1, 1], joined 1, blocks [], native True
+  base 3: cover (29, 241, 78, 735, 378, 454) x0 10 kappa 0 (1 pairs): 1 genuine rank-6 decompositions, witness recovered, 0.7s, coord [1, 1], joined 1, blocks [], native True
+  base 4: cover (31, 446, 33, 452, 84, 739) x0 00 kappa 2: ABORTED AssertionError: 2049233 slice candidates: structural degeneracy of the family after 13s
+  base 5: cover (31, 446, 33, 452, 84, 739) x0 11 kappa 2: ABORTED AssertionError: 2049362 slice candidates: structural degeneracy of the family after 13s
+  base 6: cover (33, 452, 84, 739, 31, 446) x0 00 kappa 2: ABORTED AssertionError: 2049184 slice candidates: structural degeneracy of the family after 13s
+  base 7: cover (33, 452, 84, 739, 31, 446) x0 11 kappa 2: ABORTED AssertionError: 2049384 slice candidates: structural degeneracy of the family after 13s
+  base 8: cover (35, 244, 87, 747, 382, 445) x0 01 kappa 0 (1 pairs): 1 genuine rank-6 decompositions, witness recovered, 0.7s, coord [1, 1], joined 1, blocks [], native True
+  base 9: cover (192, 239, 194, 760, 28, 443) x0 10 kappa 0 (1 pairs): 1 genuine rank-6 decompositions, witness recovered, 0.7s, coord [1, 1], joined 1, blocks [], native True
+  base 10: cover (200, 236, 197, 741, 34, 453) x0 01 kappa 0 (1 pairs): 1 genuine rank-6 decompositions, witness recovered, 0.7s, coord [1, 1], joined 1, blocks [], native True
+  base 11: cover (200, 236, 197, 741, 34, 453) x0 10 kappa 0 (2 pairs): 1 genuine rank-6 decompositions, witness recovered, 0.7s, coord [1, 1], joined 1, blocks [], native True
+  base 12: cover (379, 461, 375, 975, 653, 758) x0 11 kappa 0 (3 pairs): 4 genuine rank-6 decompositions, witness recovered, 2.9s, coord [8, 64], joined 64, blocks [], native True
+  base 13: cover (380, 463, 381, 995, 652, 736) x0 11 kappa 0 (1 pairs): 4 genuine rank-6 decompositions, witness recovered, 3.0s, coord [8, 64], joined 64, blocks [], native True
+control-witness (native): 10/14 bases recover the witness, 4 aborted; FAIL
+[run.py] exit 1 in 69s

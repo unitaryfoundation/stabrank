@@ -1,0 +1,705 @@
+{
+ "seed": 11,
+ "git": "ed917ba6c67c32342236506003b85f277909aa26",
+ "generated": "2026-09-24T01:59:03+00:00",
+ "plants": [
+  {
+   "kind": "a",
+   "x0": 0,
+   "base": [
+    144,
+    591,
+    769,
+    1057
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.6861519813537598,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 1,
+    "composite_solutions": 1,
+    "candidates": 34,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "kind": "a",
+   "x0": 1,
+   "base": [
+    233,
+    525,
+    895,
+    1073
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.7671868801116943,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 1,
+    "composite_solutions": 1,
+    "candidates": 46,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "kind": "b",
+   "x0": 0,
+   "base": [
+    15,
+    188,
+    260,
+    608
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.7409930229187012,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 2,
+    "composite_solutions": 1,
+    "candidates": 32,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "kind": "b",
+   "x0": 1,
+   "base": [
+    41,
+    634,
+    642,
+    1076
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.722707986831665,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 2,
+    "composite_solutions": 1,
+    "candidates": 37,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "kind": "c",
+   "x0": 0,
+   "base": [
+    23,
+    23,
+    29,
+    66
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.7096538543701172,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 3,
+    "blocks": [
+     2
+    ],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 1,
+    "composite_solutions": 1,
+    "candidates": 6,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 1,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "kind": "c",
+   "x0": 1,
+   "base": [
+    230,
+    255,
+    946,
+    946
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.7260768413543701,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 3,
+    "blocks": [
+     2
+    ],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 1,
+    "composite_solutions": 1,
+    "candidates": 3,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 1,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "kind": "d",
+   "x0": 0,
+   "base": [
+    483,
+    599,
+    747,
+    747
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.7862851619720459,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 3,
+    "blocks": [
+     2
+    ],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 2,
+    "composite_solutions": 1,
+    "candidates": 4,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 1,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "kind": "d",
+   "x0": 1,
+   "base": [
+    72,
+    461,
+    461,
+    679
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.7840020656585693,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 3,
+    "blocks": [
+     2
+    ],
+    "coord_solutions": [
+     3,
+     9
+    ],
+    "joined": 9,
+    "types": 10,
+    "composite_solutions": 10,
+    "candidates": 24,
+    "zero_coefficient": 0,
+    "split_pruned": 9,
+    "reconstructions": 1,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "kind": "e",
+   "x0": 0,
+   "base": [
+    323,
+    773,
+    926,
+    1003
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.7157437801361084,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 1,
+    "composite_solutions": 1,
+    "candidates": 29,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "kind": "e",
+   "x0": 1,
+   "base": [
+    301,
+    385,
+    485,
+    1008
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.7295308113098145,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 1,
+    "composite_solutions": 1,
+    "candidates": 37,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "kind": "a",
+   "x0": 0,
+   "base": [
+    259,
+    338,
+    576,
+    1003
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.7233529090881348,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 1,
+    "composite_solutions": 1,
+    "candidates": 28,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "kind": "a",
+   "x0": 1,
+   "base": [
+    92,
+    636,
+    650,
+    694
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.725283145904541,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 1,
+    "composite_solutions": 1,
+    "candidates": 33,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "kind": "b",
+   "x0": 0,
+   "base": [
+    516,
+    600,
+    603,
+    647
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.7436950206756592,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 2,
+    "composite_solutions": 1,
+    "candidates": 53,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "kind": "b",
+   "x0": 1,
+   "base": [
+    44,
+    470,
+    597,
+    746
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.7376039028167725,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 2,
+    "composite_solutions": 1,
+    "candidates": 42,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "kind": "c",
+   "x0": 0,
+   "base": [
+    29,
+    72,
+    772,
+    772
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.7449777126312256,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 3,
+    "blocks": [
+     2
+    ],
+    "coord_solutions": [
+     2,
+     2
+    ],
+    "joined": 1,
+    "types": 1,
+    "composite_solutions": 1,
+    "candidates": 6,
+    "zero_coefficient": 0,
+    "split_pruned": 2,
+    "reconstructions": 1,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "kind": "c",
+   "x0": 1,
+   "base": [
+    85,
+    650,
+    650,
+    703
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.8157079219818115,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 3,
+    "blocks": [
+     2
+    ],
+    "coord_solutions": [
+     19,
+     35
+    ],
+    "joined": 4,
+    "types": 4,
+    "composite_solutions": 11,
+    "candidates": 70,
+    "zero_coefficient": 0,
+    "split_pruned": 53,
+    "reconstructions": 1,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "kind": "d",
+   "x0": 0,
+   "base": [
+    16,
+    742,
+    997,
+    997
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.7904748916625977,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 3,
+    "blocks": [
+     2
+    ],
+    "coord_solutions": [
+     9,
+     1
+    ],
+    "joined": 1,
+    "types": 2,
+    "composite_solutions": 1,
+    "candidates": 11,
+    "zero_coefficient": 0,
+    "split_pruned": 8,
+    "reconstructions": 1,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "kind": "d",
+   "x0": 1,
+   "base": [
+    201,
+    201,
+    323,
+    1066
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.7589490413665771,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 3,
+    "blocks": [
+     2
+    ],
+    "coord_solutions": [
+     2,
+     2
+    ],
+    "joined": 1,
+    "types": 2,
+    "composite_solutions": 1,
+    "candidates": 7,
+    "zero_coefficient": 0,
+    "split_pruned": 1,
+    "reconstructions": 1,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "kind": "e",
+   "x0": 0,
+   "base": [
+    28,
+    83,
+    420,
+    952
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.7367708683013916,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 1,
+    "composite_solutions": 1,
+    "candidates": 35,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "kind": "e",
+   "x0": 1,
+   "base": [
+    209,
+    531,
+    788,
+    1014
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.7452280521392822,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 1,
+    "composite_solutions": 1,
+    "candidates": 43,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  }
+ ],
+ "recovered": 20,
+ "total": 20
+}

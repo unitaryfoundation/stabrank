@@ -1,0 +1,578 @@
+{
+ "witness": "bounds/qubit_T-m5-upper-6.json",
+ "git": "ed917ba6c67c32342236506003b85f277909aa26",
+ "generated": "2026-09-24T01:57:53+00:00",
+ "max_cand": 2000000,
+ "matcher": "reference",
+ "bases": [
+  {
+   "base": 0,
+   "cover": [
+    2,
+    105,
+    30,
+    444,
+    12,
+    238
+   ],
+   "x0": 0,
+   "pairs": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     3
+    ]
+   ],
+   "distinct": 6,
+   "kappa": 0,
+   "status": "recovered",
+   "rank6_decompositions": 4,
+   "witness_recovered": true,
+   "seconds": 3.3372788429260254,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 6,
+    "blocks": [],
+    "coord_solutions": [
+     8,
+     64
+    ],
+    "joined": 64,
+    "types": 64,
+    "composite_solutions": 4,
+    "candidates": 177878,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 4,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "base": 1,
+   "cover": [
+    3,
+    106,
+    32,
+    447,
+    9,
+    234
+   ],
+   "x0": 0,
+   "pairs": [
+    [
+     0,
+     3
+    ]
+   ],
+   "distinct": 6,
+   "kappa": 0,
+   "status": "recovered",
+   "rank6_decompositions": 4,
+   "witness_recovered": true,
+   "seconds": 3.2602591514587402,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 6,
+    "blocks": [],
+    "coord_solutions": [
+     8,
+     64
+    ],
+    "joined": 64,
+    "types": 64,
+    "composite_solutions": 4,
+    "candidates": 177303,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 4,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "base": 2,
+   "cover": [
+    29,
+    241,
+    78,
+    735,
+    378,
+    454
+   ],
+   "x0": 1,
+   "pairs": [
+    [
+     0,
+     1
+    ],
+    [
+     2,
+     3
+    ]
+   ],
+   "distinct": 6,
+   "kappa": 0,
+   "status": "recovered",
+   "rank6_decompositions": 1,
+   "witness_recovered": true,
+   "seconds": 0.8340408802032471,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 6,
+    "blocks": [],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 1,
+    "composite_solutions": 1,
+    "candidates": 39598,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "base": 3,
+   "cover": [
+    29,
+    241,
+    78,
+    735,
+    378,
+    454
+   ],
+   "x0": 2,
+   "pairs": [
+    [
+     1,
+     2
+    ]
+   ],
+   "distinct": 6,
+   "kappa": 0,
+   "status": "recovered",
+   "rank6_decompositions": 1,
+   "witness_recovered": true,
+   "seconds": 0.7925369739532471,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 6,
+    "blocks": [],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 1,
+    "composite_solutions": 1,
+    "candidates": 39121,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "base": 4,
+   "cover": [
+    31,
+    446,
+    33,
+    452,
+    84,
+    739
+   ],
+   "x0": 0,
+   "pairs": [
+    [
+     1,
+     3
+    ]
+   ],
+   "distinct": 6,
+   "kappa": 2,
+   "status": "aborted",
+   "reason": "AssertionError: 2049054 slice candidates: structural degeneracy of the family",
+   "seconds": 12.820253849029541
+  },
+  {
+   "base": 5,
+   "cover": [
+    31,
+    446,
+    33,
+    452,
+    84,
+    739
+   ],
+   "x0": 3,
+   "pairs": [
+    [
+     1,
+     3
+    ]
+   ],
+   "distinct": 6,
+   "kappa": 2,
+   "status": "aborted",
+   "reason": "AssertionError: 2049176 slice candidates: structural degeneracy of the family",
+   "seconds": 12.739713907241821
+  },
+  {
+   "base": 6,
+   "cover": [
+    33,
+    452,
+    84,
+    739,
+    31,
+    446
+   ],
+   "x0": 0,
+   "pairs": [
+    [
+     0,
+     2
+    ]
+   ],
+   "distinct": 6,
+   "kappa": 2,
+   "status": "aborted",
+   "reason": "AssertionError: 2049234 slice candidates: structural degeneracy of the family",
+   "seconds": 12.622802972793579
+  },
+  {
+   "base": 7,
+   "cover": [
+    33,
+    452,
+    84,
+    739,
+    31,
+    446
+   ],
+   "x0": 3,
+   "pairs": [
+    [
+     0,
+     2
+    ]
+   ],
+   "distinct": 6,
+   "kappa": 2,
+   "status": "aborted",
+   "reason": "AssertionError: 2049368 slice candidates: structural degeneracy of the family",
+   "seconds": 12.623324871063232
+  },
+  {
+   "base": 8,
+   "cover": [
+    35,
+    244,
+    87,
+    747,
+    382,
+    445
+   ],
+   "x0": 1,
+   "pairs": [
+    [
+     0,
+     3
+    ]
+   ],
+   "distinct": 6,
+   "kappa": 0,
+   "status": "recovered",
+   "rank6_decompositions": 1,
+   "witness_recovered": true,
+   "seconds": 0.762427806854248,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 6,
+    "blocks": [],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 1,
+    "composite_solutions": 1,
+    "candidates": 39398,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "base": 9,
+   "cover": [
+    192,
+    239,
+    194,
+    760,
+    28,
+    443
+   ],
+   "x0": 2,
+   "pairs": [
+    [
+     0,
+     3
+    ]
+   ],
+   "distinct": 6,
+   "kappa": 0,
+   "status": "recovered",
+   "rank6_decompositions": 1,
+   "witness_recovered": true,
+   "seconds": 0.7628448009490967,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 6,
+    "blocks": [],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 1,
+    "composite_solutions": 1,
+    "candidates": 39686,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "base": 10,
+   "cover": [
+    200,
+    236,
+    197,
+    741,
+    34,
+    453
+   ],
+   "x0": 1,
+   "pairs": [
+    [
+     1,
+     2
+    ]
+   ],
+   "distinct": 6,
+   "kappa": 0,
+   "status": "recovered",
+   "rank6_decompositions": 1,
+   "witness_recovered": true,
+   "seconds": 0.7821052074432373,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 6,
+    "blocks": [],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 1,
+    "composite_solutions": 1,
+    "candidates": 39393,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "base": 11,
+   "cover": [
+    200,
+    236,
+    197,
+    741,
+    34,
+    453
+   ],
+   "x0": 2,
+   "pairs": [
+    [
+     0,
+     1
+    ],
+    [
+     2,
+     3
+    ]
+   ],
+   "distinct": 6,
+   "kappa": 0,
+   "status": "recovered",
+   "rank6_decompositions": 1,
+   "witness_recovered": true,
+   "seconds": 0.7612450122833252,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 6,
+    "blocks": [],
+    "coord_solutions": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "types": 1,
+    "composite_solutions": 1,
+    "candidates": 39123,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "base": 12,
+   "cover": [
+    379,
+    461,
+    375,
+    975,
+    653,
+    758
+   ],
+   "x0": 3,
+   "pairs": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     3
+    ]
+   ],
+   "distinct": 6,
+   "kappa": 0,
+   "status": "recovered",
+   "rank6_decompositions": 4,
+   "witness_recovered": true,
+   "seconds": 3.1849117279052734,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 6,
+    "blocks": [],
+    "coord_solutions": [
+     8,
+     64
+    ],
+    "joined": 64,
+    "types": 64,
+    "composite_solutions": 4,
+    "candidates": 177587,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 4,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "base": 13,
+   "cover": [
+    380,
+    463,
+    381,
+    995,
+    652,
+    736
+   ],
+   "x0": 3,
+   "pairs": [
+    [
+     0,
+     3
+    ]
+   ],
+   "distinct": 6,
+   "kappa": 0,
+   "status": "recovered",
+   "rank6_decompositions": 4,
+   "witness_recovered": true,
+   "seconds": 3.167139768600464,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 6,
+    "blocks": [],
+    "coord_solutions": [
+     8,
+     64
+    ],
+    "joined": 64,
+    "types": 64,
+    "composite_solutions": 4,
+    "candidates": 177939,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 0,
+    "unpinned": 0,
+    "hits": 4,
+    "refused": false,
+    "native": false
+   }
+  }
+ ],
+ "passed": 10,
+ "aborted": 4,
+ "total": 14
+}
