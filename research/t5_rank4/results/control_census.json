@@ -1,0 +1,28 @@
+{
+ "git": "01beee47fec4ea2d4f9fc56df89aba8198c08ac0",
+ "generated": "2026-09-24T01:49:09+00:00",
+ "group_order": 162,
+ "N": 1080,
+ "numeric_rank4_tuples": 5205,
+ "numeric_full_4covers": 4697,
+ "numeric_non_full": 508,
+ "numeric_rank3_tuples": 8,
+ "census_independent": 4697,
+ "census_degenerate": 12,
+ "census_bases": 4709,
+ "census_kinds": {
+  "A": 4697,
+  "B": 0,
+  "C": 12
+ },
+ "orbits_numeric_full4": 2372,
+ "orbits_census4": 2372,
+ "orbits_numeric3": 4,
+ "orbits_census3": 4,
+ "orbits_stored3": 4,
+ "one_per_orbit": false,
+ "degenerate_from_numeric_3covers_equal": true,
+ "census_seconds": 60.74834203720093,
+ "numeric_seconds": 1.0680909156799316,
+ "pass": true
+}

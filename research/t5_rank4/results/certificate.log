@@ -1,0 +1,14 @@
+seed: 20260924
+partition research/t5_rank4/partition.json: qubit_T m=5 rank=4 n1=2 x0=[0, 1], 6 batches (A 5, B 0, C 1), sha256 1f73f0ba38274b8a
+census re-enumerated in 62s: 4 full 3-covers, 4697 independent full 4-covers, 12 degenerate multisets, 4709 bases (equal to the stored census)
+batches present 6/6
+kind A: 5/5 batches, 4697 covers, 9394 matched, 0 refused, 0 undecided, 0 hits; 0.1 CPU-min (1s per batch, 1.1 ms per cover); projected kind total 0.1 CPU-min at this rate (partition estimate 0.0)
+kind C: 1/1 batches, 12 covers, 24 matched, 0 refused, 0 undecided, 0 hits; 0.0 CPU-min (1s per batch, 100.0 ms per cover); projected kind total 0.0 CPU-min at this rate (partition estimate 0.0)
+every stored check passes: all batches present, hashes verify, geometry matches the partition, the census matches its hash and is tiled exactly once, no refused or undecided run, no hit is a decomposition of |T>^5
+seed: 20260924
+re-running 2 batch(es) from scratch: [0, 1] -> /var/folders/y6/ht74t4s93l55nf4mqctl4qw40000gn/T/t5_rank4_recheck_0v26tiee
+  batch 0 (kind A): 2s, deterministic hash matches (3d67b74e7d68676c)
+  batch 1 (kind A): 2s, deterministic hash matches (3e6cd157ee251285)
+aggregate complete in 66s
+CERTIFIED chi(qubit_T^5) >= 5
+[run.py] exit 0 in 67s

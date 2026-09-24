@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_T",
+  "m": 6,
+  "direction": "lower",
+  "rank": 5,
+  "certificate": {
+    "script": "verify_challenge/cert_qubit_t_m5_rank4_attested.py",
+    "expect": "CERTIFIED chi(qubit_T^6) >= 5",
+    "budget_s": 1800,
+    "attested": {
+      "batches": "research/t5_rank4/batch_manifest.json",
+      "recomputed": 2,
+      "compute_hours": 0.002,
+      "hardware": "Apple M5 Pro laptop (macOS 26.5.1), one core at nice 19 under load from other sessions, 2026-09-24 02:25 UTC; the aggregate's two seeded re-runs (batches 0 and 1) on the same machine at 02:26 UTC",
+      "note": "The exclusion of every rank-4 decomposition of |T>^5 lives in the 6 stored batch outputs under research/t5_rank4/results/ (the 4,709 full 4-covers of |T>^3 up to symmetry, each matched at the base points 00 and 01 along qubits 1, 2 with every candidate re-decided mod 2013265921 and numerically): 0 hits, 0 refused, 0 undecided. The certificate re-enumerates the census, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/t5_rank4/batch.py, which regenerates any batch (batch.py K)."
+    }
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank research/t5_rank4",
+    "method": "projection monotonicity applied to the attested exact rank-4 exclusion at m=5",
+    "date": "2026-09-24",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.0,
+      "wall_clock_hours": 0.0,
+      "runs": 0,
+      "hardware": "none beyond the m=5 certificate, which this cell re-runs"
+    }
+  },
+  "notes": "chi(psi (x) phi) >= chi(psi) when phi has a nonzero computational amplitude, applied 1 time to chi(T^5) >= 5 (Lean: stabRankP_powVecP_mono in lean_proofs/LeanProofs/Stabilizer/SliceP.lean). The certificate is the m=5 attested one, which prints this line after certifying the rank-4 exclusion; the cell inherits the attested tier. Puts the cell at 5 <= chi(T^6) <= 6 (bounds/qubit_T-m6-upper-6.json), replacing the lower bound of 4 from the slice-and-lift argument."
+}

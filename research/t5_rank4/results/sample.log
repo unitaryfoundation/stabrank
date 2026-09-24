@@ -1,0 +1,3 @@
+kind A (native): 100 of 4697 covers x 2 base points: per (cover, x0) mean 0.0000s, median 0.0000s, max 0.000s; hits 0, refused 0, undecided 0, capped 0; histogram {'1,1': 7, '0': 180, '4,16': 3, '2,4': 1, '3,9': 1, '4,0': 4, '1,0': 4}
+kind C (native): 12 of 12 covers x 2 base points: per (cover, x0) mean 0.0094s, median 0.0038s, max 0.035s; hits 0, refused 0, undecided 0, capped 0; histogram {'8,8': 4, '0': 16, '8,0': 4}
+[run.py] exit 0 in 2s

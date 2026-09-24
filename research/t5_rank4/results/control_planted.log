@@ -1,0 +1,22 @@
+  plant 0 kind a x0 00 base (144, 591, 769, 1057): 1 hits, planted recovered, 0.69s, kappa 0 blocks [] coord [1, 1] recon 0
+  plant 0 kind a x0 01 base (233, 525, 895, 1073): 1 hits, planted recovered, 0.77s, kappa 0 blocks [] coord [1, 1] recon 0
+  plant 1 kind b x0 00 base (15, 188, 260, 608): 1 hits, planted recovered, 0.74s, kappa 0 blocks [] coord [1, 1] recon 0
+  plant 1 kind b x0 01 base (41, 634, 642, 1076): 1 hits, planted recovered, 0.72s, kappa 0 blocks [] coord [1, 1] recon 0
+  plant 2 kind c x0 00 base (23, 23, 29, 66): 1 hits, planted recovered, 0.71s, kappa 0 blocks [2] coord [1, 1] recon 1
+  plant 2 kind c x0 01 base (230, 255, 946, 946): 1 hits, planted recovered, 0.73s, kappa 0 blocks [2] coord [1, 1] recon 1
+  plant 3 kind d x0 00 base (483, 599, 747, 747): 1 hits, planted recovered, 0.79s, kappa 0 blocks [2] coord [1, 1] recon 1
+  plant 3 kind d x0 01 base (72, 461, 461, 679): 1 hits, planted recovered, 0.78s, kappa 0 blocks [2] coord [3, 9] recon 1
+  plant 4 kind e x0 00 base (323, 773, 926, 1003): 1 hits, planted recovered, 0.72s, kappa 0 blocks [] coord [1, 1] recon 0
+  plant 4 kind e x0 01 base (301, 385, 485, 1008): 1 hits, planted recovered, 0.73s, kappa 0 blocks [] coord [1, 1] recon 0
+  plant 5 kind a x0 00 base (259, 338, 576, 1003): 1 hits, planted recovered, 0.72s, kappa 0 blocks [] coord [1, 1] recon 0
+  plant 5 kind a x0 01 base (92, 636, 650, 694): 1 hits, planted recovered, 0.73s, kappa 0 blocks [] coord [1, 1] recon 0
+  plant 6 kind b x0 00 base (516, 600, 603, 647): 1 hits, planted recovered, 0.74s, kappa 0 blocks [] coord [1, 1] recon 0
+  plant 6 kind b x0 01 base (44, 470, 597, 746): 1 hits, planted recovered, 0.74s, kappa 0 blocks [] coord [1, 1] recon 0
+  plant 7 kind c x0 00 base (29, 72, 772, 772): 1 hits, planted recovered, 0.74s, kappa 0 blocks [2] coord [2, 2] recon 1
+  plant 7 kind c x0 01 base (85, 650, 650, 703): 1 hits, planted recovered, 0.82s, kappa 0 blocks [2] coord [19, 35] recon 1
+  plant 8 kind d x0 00 base (16, 742, 997, 997): 1 hits, planted recovered, 0.79s, kappa 0 blocks [2] coord [9, 1] recon 1
+  plant 8 kind d x0 01 base (201, 201, 323, 1066): 1 hits, planted recovered, 0.76s, kappa 0 blocks [2] coord [2, 2] recon 1
+  plant 9 kind e x0 00 base (28, 83, 420, 952): 1 hits, planted recovered, 0.74s, kappa 0 blocks [] coord [1, 1] recon 0
+  plant 9 kind e x0 01 base (209, 531, 788, 1014): 1 hits, planted recovered, 0.75s, kappa 0 blocks [] coord [1, 1] recon 0
+control-planted: 20/20 planted decompositions recovered; PASS
+[run.py] exit 0 in 16s

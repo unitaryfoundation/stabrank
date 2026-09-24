@@ -1,0 +1,4 @@
+2 full 2-covers and 206 independent full 3-covers of |T>^2, 5 dependent or repeated, 211 bases [0s]
+matched 422 (cover, x0) pairs in 2s; 6 hits, 1 classes of rank-3 decompositions of |T>^4; stored 1, expected recoverable 1; not stored 0, missing 0, unexpected 0; stats {'matched': 422, 'refused': 0, 'hits': 6, 'non_genuine': 0, 'undecided': 0, 'native_runs': 412}
+control-m4-pair: PASS
+[run.py] exit 0 in 10s
