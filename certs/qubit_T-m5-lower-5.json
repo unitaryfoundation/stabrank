@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "tier": "attested",
+  "detail": "certificate script asserted: CERTIFIED chi(qubit_T^5) >= 5; re-ran 2 of 6 stored batches from scratch chosen from seed 20260924 and only checked the SHA-256 of the other 4 against research/t5_rank4/batch_manifest.json; the full enumeration (0.002 CPU-h on Apple M5 Pro laptop (macOS 26.5.1), one core at nice 19 under load from other sessions, 2026-09-24 02:25 UTC; the aggregate's two seeded re-runs (batches 0 and 1) on the same machine at 02:26 UTC) was not re-run",
+  "gamma": null,
+  "content_hash": "1d8f85c7e99f073a"
+}
