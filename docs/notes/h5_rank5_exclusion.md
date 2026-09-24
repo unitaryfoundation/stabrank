@@ -497,6 +497,28 @@ touched bound, so the draft keeps its suffix until the manifest exists.
 Then update the board and project the bound to no other cell (the m = 6
 cell already has chi = 6; m >= 7 cells hold chi >= 6 from it).
 
+### 8.1 The run (2026-09-23 to 2026-09-24)
+
+All 323 batches ran on the RunPod pod: the stage A probe batch 0 at 21:56
+UTC (446,924 covers, 222 s), then the 323-batch loop fifteen at a time from
+22:02 to 00:28 UTC, with the pod's two anneal loops paused for it. Totals
+from the aggregate: stage A 16 batches over the 5,939,465 full 5-covers of
+|H>^3 (326 s per batch, 0.9 ms per cover), stage B 293 batches over the
+12,390 dependent covers (431 s per batch, 10.2 s per cover), stage C 9
+batches over the 16,006 covers with a repeated state (82 s per batch), and
+stage beta 5 batches over the 3,466 full 4-covers (286 s per batch); every
+cover matched at both base points, 0 hits, 0 refused, 0 undecided, 37.2
+CPU-hours in all (the partition estimated 53). The aggregate with
+`--recheck 2 --recheck-seed 20260923` re-enumerated the degenerate covers
+and the stage beta bases (equal to the stored lists, 214 s), verified every
+stored batch, re-ran batches 19 (stage B, 249 s) and 319 (stage beta,
+227 s) from scratch with matching deterministic hashes, wrote
+`batch_manifest.json`, and printed `CERTIFIED chi(qubit_H^5) >= 6` in
+691 s. With the Lean rank-6 witness the cell is chi(H^5) = 6, filed as
+`bounds/qubit_H-m5-lower-6.json` at the attested tier. The `--no-native`
+replay of stage A batch 15 (item 7 of the checklist) was started on the pod
+after the run; its record goes under `results/nonative/` when it finishes.
+
 ## 9. What is proved, what is assumed, what is open
 
 Proved by table or argument here: Fact 1 (given the 30-element list),

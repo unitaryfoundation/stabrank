@@ -1,0 +1,3 @@
+batch 7 of 323: stage A, 187 pivot pairs, compiled kernels, deadline 3600s
+batch 7: 413767 covers, 827534 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 19s, match 343s, wall 362s; deterministic sha256 cc8c21cf64598cde
+batch 7 complete: no hit is a decomposition of |H>^5; written research/h5_rank5/results/batch_7.json

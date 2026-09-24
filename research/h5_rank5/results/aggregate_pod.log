@@ -1,0 +1,16 @@
+partition research/h5_rank5/partition.json: qubit_H m=5 rank=5 n1=2 x0=[0, 1], 323 batches (A 16, B 293, C 9, beta 5), sha256 f6afa1c778771af5
+lists re-enumerated in 214s: 28396 degenerate covers (equal to the stored list), 3466 beta bases (equal to the stored list)
+batches present 323/323
+stage A: 16/16 batches, 5939465 covers, 11878930 matched, 0 refused, 0 undecided, 0 hits; 1.45 CPU-h (326s per batch, 0.9 ms per cover); projected stage total 1.5 CPU-h at this rate (partition estimate 2.6)
+stage B: 293/293 batches, 12390 covers, 24780 matched, 0 refused, 0 undecided, 0 hits; 35.10 CPU-h (431s per batch, 10198.3 ms per cover); projected stage total 35.1 CPU-h at this rate (partition estimate 48.7)
+stage C: 9/9 batches, 16006 covers, 32012 matched, 0 refused, 0 undecided, 0 hits; 0.21 CPU-h (82s per batch, 46.2 ms per cover); projected stage total 0.2 CPU-h at this rate (partition estimate 1.4)
+stage beta: 5/5 batches, 3466 covers, 6932 matched, 0 refused, 0 undecided, 0 hits; 0.40 CPU-h (286s per batch, 412.0 ms per cover); projected stage total 0.4 CPU-h at this rate (partition estimate 0.7)
+every stored check passes: all batches present, hashes verify, geometry matches the partition, the stage A units are the enumerator's pivot pairs, the census and both cover lists match their hashes and are tiled exactly once, no refused or undecided run, no hit is a decomposition of |H>^5
+wrote research/h5_rank5/batch_manifest.json: 323 batch(es)
+seed: 20260923
+re-running 2 batch(es) from scratch: [19, 319] -> /tmp/h5_rank5_recheck_d2ewq9p9
+  batch 19 (stage B): 249s, deterministic hash matches (e4605b9b7b99696f)
+  batch 319 (stage beta): 227s, deterministic hash matches (aff4b084e902bf76)
+aggregate complete in 691s
+CERTIFIED chi(qubit_H^5) >= 6
+AGG_EXIT 0

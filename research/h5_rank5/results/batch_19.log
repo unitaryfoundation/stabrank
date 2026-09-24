@@ -1,0 +1,3 @@
+batch 19 of 323: stage B, 43 covers, compiled kernels, deadline 3600s
+batch 19: 43 covers, 86 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 404s, wall 404s; deterministic sha256 e4605b9b7b99696f
+batch 19 complete: no hit is a decomposition of |H>^5; written research/h5_rank5/results/batch_19.json

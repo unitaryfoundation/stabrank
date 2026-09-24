@@ -1,0 +1,3 @@
+batch 289 of 323: stage B, 42 covers, compiled kernels, deadline 3600s
+batch 289: 42 covers, 84 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 465s, wall 466s; deterministic sha256 1d02a8f9d123ed7a
+batch 289 complete: no hit is a decomposition of |H>^5; written research/h5_rank5/results/batch_289.json

@@ -1,0 +1,3 @@
+batch 138 of 323: stage B, 42 covers, compiled kernels, deadline 3600s
+batch 138: 42 covers, 84 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 384s, wall 385s; deterministic sha256 9d3d3a7b5048abac
+batch 138 complete: no hit is a decomposition of |H>^5; written research/h5_rank5/results/batch_138.json
