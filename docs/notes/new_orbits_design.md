@@ -383,3 +383,201 @@ same day the annealer (4 chains, 8000 iterations per temperature, seed
 7002) found a rank-8 decomposition that refits exactly and verifies
 symbolically, so the cell is 5 <= chi(T5^2) <= 8 and T5 is a board orbit
 with four cells; section 5 lists what was added.
+
+## 6. Magic cat states: a track indexed by the qubit count (2026-09-24)
+
+The board's seven orbits are all of the form "one state, m copies". The
+magic cat states of Qassim, Pashayan, and Gosset (arXiv:2106.07740, QPG
+below) are the first track that is not: |cat_m> is one m-qubit state per
+m, not a tensor power of anything, and the family is what carries the
+published qubit exponent. This section fixes the definition the board
+adopts, how the columns apply, and which cells the two public sources
+fill. Every value comes from QPG or from Kissinger, van de Wetering, and
+Vilmart (arXiv:2202.09202, KvdWV below); nothing in this section is a new
+bound.
+
+### 6.1 Definition
+
+QPG Eq. (3), with |T> = 2^{-1/2}(|0> + e^{i pi/4}|1>) and |T_perp> = Z|T>:
+
+    |cat_m> = 2^{-1/2} (|T>^{(x) m} + |T_perp>^{(x) m}).
+
+Expanding, the odd-weight strings cancel and the even-weight ones double:
+
+    |cat_m> = 2^{-(m-1)/2} sum_{x in F_2^m, |x| even} i^{|x|/2} |x>.
+
+KvdWV (Section 4.1) write the same state as 2^{-1/2}(I + Z^{(x) n})|T>^{(x) n}
+and as two ZX spiders with phases pi/4 and 5 pi/4, normalized by
+1/sqrt 2^{n+1}; the three forms agree on the nose, and
+`tests/test_families.py` checks the closed form against the tensor-power
+definition symbolically for m <= 6. The amplitudes are fourth roots of
+unity times the one scalar (1/sqrt 2)^{m-1}, so the target lives in Q(i)
+up to that scalar, a subfield of the Q(zeta_8) that the qubit witnesses
+already use. The two-qubit case |cat_2> = 2^{-1/2}(|00> + i|11>) is a
+stabilizer state and |cat_1> = |0>, so the track starts at m = 2.
+
+Orbit key `cat`, local dimension 2, and `m` is the number of qubits. The
+target constructor `target_vector("cat", m)` builds the closed form
+directly; `orbit_state("cat")` raises, since there is no single-qubit
+state to take powers of, and the code that assumed one (the symmetry
+reduction of `rank_exclusion`, the slice lemma in `slice_lift`) is
+listed in 6.4 as not yet adapted.
+
+### 6.2 How the board's columns apply
+
+Rank. chi(cat_m) per m, upper and lower, exactly as for every other cell.
+
+Exponent. A cat cell has no per-copy exponent of its own, but every cat
+cell bounds the qubit exponent through the gluing identity that QPG use
+in the proof of their Theorem 1 and that KvdWV restate in ZX (their
+Section 4.2). With <cat_2| = 2^{-1/2}(<00| - i<11|) applied to the last
+qubit of |cat_a> and the first of |cat_b>, the inner products are
+
+    <cat_2|(|T>|T>)           = 2^{-1/2}(1/2 - i e^{i pi/2}/2) = 2^{-1/2},
+    <cat_2|(|T_perp>|T_perp>) = 2^{-1/2}(1/2 - i e^{i pi/2}/2) = 2^{-1/2},
+    <cat_2|(|T>|T_perp>)      = 2^{-1/2}(1/2 - i (-i)/2)     = 0,
+
+and the fourth vanishes in the same way, so
+
+    (I (x) <cat_2| (x) I)(|cat_a> (x) |cat_b>) = (1/2) |cat_{a+b-2}>.
+
+A bra that is a stabilizer state does not increase the number of terms,
+so chi(cat_{a+b-2}) <= chi(cat_a) chi(cat_b). Chaining l copies of
+|cat_m> gives chi(cat_{l(m-2)+2}) <= chi(cat_m)^l, and QPG Eq. (4),
+
+    chi(T^{(x) m}) / 2 <= chi(cat_m) <= chi(T^{(x) m}),
+
+(upper side: |cat_m> = 2^{-1/2}(I + Z^{(x) m})|T>^{(x) m} and the projector
+is a stabilizer projector; lower side: |T><T| = (I + A)/2 with A the
+Clifford e^{-i pi/4} S X, so |T>^{(x) m} is proportional to |cat_m> +
+(A (x) I)|cat_m>) turns that into chi(T^{(x) (l(m-2)+2)}) <= 2 chi(cat_m)^l.
+Hence
+
+    limsup_n log_2 chi(T^{(x) n}) / n <= log_2 chi(cat_m) / (m - 2)
+
+for every m >= 3. This is QPG's Theorem 4 at k = 1 (the repetition code),
+made constructive: the chain replaces the hypothesis (their Eq. 14) that
+chi(T^{(x) n}) has a well-defined exponent. At m = 6 and rank 3 it is the
+published log_2(3)/4 = 0.3963.
+
+The board therefore shows, in the exponent column of a cat cell,
+
+    gamma_H(cat_m, r) = log_2(r) / (m - 2)        (m >= 3; none at m = 2),
+
+labeled as the implied H-type exponent, and measures the track against
+the published log_2(3)/4 like the two qubit orbits. `implied_exponent`
+in `stabrank_verify.py` carries the rule, and `next_target` uses m - 2 in
+place of m, so the cheapest cells that would beat the exponent are
+chi(cat_8) <= 5 (0.3870; it would give chi(T^{(x) 8}) <= 10 through Eq. 4)
+and chi(cat_10) <= 8 (0.3750; QPG's glued |cat_10> has 9 terms). Since
+|T> and the board's |H> = cos(pi/8)|0> + sin(pi/8)|1> are one Clifford
+orbit, chi(T^{(x) m}) is the `qubit_H` cell at m.
+
+Relation to the `qubit_H` cells. Eq. (4) ties every cat cell to the H cell
+at the same m in both directions, so the board's intervals must satisfy
+cat_lower <= H_upper and H_lower <= 2 cat_upper at every m; the test
+checks this on the committed bound files. Nothing new follows in either
+direction today: from the attested chi(H^5) = chi(H^6) = 6 one gets
+chi(cat_5), chi(cat_6) >= 3, which QPG already prove; from chi(H^7) >= 6
+one gets chi(cat_7) >= 3, which QPG's monotonicity gives; and
+chi(cat_8) <= 6 gives chi(H^8) <= 12, already on the board from KvdWV. So
+no repo-derived cat cell is filed, and none of the cat cells changes an H
+cell.
+
+### 6.3 Cells and tiers
+
+QPG Table 1 (bottom row), checked against their text and appendix:
+
+| m | chi(cat_m) | where | tier here |
+|---|---|---|---|
+| 2 | = 1 | Eq. (5): a stabilizer state; lower bound trivial | verified (one-term witness) |
+| 3 | = 2 | upper: <0|_4 of the cat_4 decomposition (appendix; KvdWV Sec. 4.1 in ZX); lower: not a stabilizer state, <cat_3|XXI|cat_3> = 1/2 (appendix) | verified upper (projected terms), verified lower (exact rank-1 exclusion) |
+| 4 | = 2 | upper: i|E> + ((1-i)/2) 2^{-1/2}(|0^4> - i|1^4>), E the even-weight uniform state (appendix; KvdWV Sec. 4.1); lower: monotone from cat_3 | verified upper, verified lower (exact rank-1 exclusion of cat_4 itself) |
+| 5 | = 3 | upper: <0|_6 of the cat_6 decomposition (appendix; KvdWV Sec. 4.1); lower: Lemma 3 of the appendix, chi(cat_5) > 2, a canonical-form reduction plus a computer comparison of Pauli spectra | verified upper, cited lower |
+| 6 | = 3 | upper: Eq. (5), 2^{-3/2}(|0^6> - i|1^6>) + 2^{-1/2} e^{3 i pi/4}(|E_6> + i|K_6>), K_6 = prod_{i<j} CZ_ij E_6; lower: monotone from cat_5 | verified upper, cited lower |
+| 7 | 3 <= . <= 6 | upper: <0|_8 of the cat_8 construction; lower: monotone from cat_5 | verified upper, cited lower |
+| 8 | 3 <= . <= 6 | upper: <cat_2|_{4,5}(|cat_4> (x) |cat_6>), 2 x 3 terms (appendix); lower: monotone | verified upper, cited lower |
+
+The verified upper bounds are mechanical replays of constructions the
+papers state, not new decompositions: `research/constructions/qpg_cat.py`
+builds the terms numerically exactly as written (the two cat_4 terms, the
+three cat_6 terms, their contraction through <cat_2|, and the <0|
+projections that QPG and KvdWV both state as the way to smaller m),
+converts them with `to_witness.witness_from_vectors`, and the verifier
+checks the identity symbolically. The provenance of every file names the
+paper, and the method is `literature`. The contraction at m = 8 gives six
+nonzero, linearly independent terms and each projection keeps every term,
+so the witnesses have exactly the ranks the papers claim; had a projection
+collapsed two terms the file would have had to stay cited at the paper's
+value rather than record a smaller one.
+
+The lower bounds at m = 3 and m = 4 are exact: `cert_family_rank1.py`
+shows the state is not a stabilizer state in integer arithmetic (support
+not an affine subspace of F_2^m, or the phase function on it not a Z_4
+quadratic form with even cross terms, decided on the exact fourth-root
+exponents), which is the rank-1 exclusion. QPG's own argument is the Pauli
+spectrum, an equivalent test. The lower bounds at m = 5 to 8 stay cited:
+QPG's Lemma 3 rests on a computer comparison of Pauli spectra that is
+theirs, not the pipeline's, and the cheapest machine check here would be a
+rank-2 exclusion over the 2,423,520 five-qubit stabilizer states (a
+dictionary of about 0.6 GB in memory), which is offline work rather than a
+certificate under the budget. Monotonicity chi(cat_m) >= chi(cat_{m-1})
+(from <0|_m |cat_m> proportional to |cat_{m-1}>) then carries a five-qubit
+result to m = 6, 7, 8 by the same projection lemma the qubit_H cells use.
+
+Two points the papers leave to the reader. QPG's appendix opens with "we
+have already shown chi(cat_2) <= 2", where Eq. (6) and the table say
+chi(cat_2) = 1; |cat_2> is written out as a stabilizer state, so 1 is the
+value. And the phase on |K_6>: prod_{i<j} CZ_ij on an even-weight string
+gives (-1)^{C(|x|,2)} = (-1)^{|x|/2}, which is the sign the construction
+here uses and which reproduces Eq. (5) to machine precision.
+
+### 6.4 Machinery
+
+Ready now: `verify_upper`, `fit_coeffs.fit`, and `to_witness` work from
+`target_vector("cat", m)` unchanged, so a new decomposition of any
+|cat_m> for m <= 10 (the schema cap; 1024 amplitudes) is checkable today,
+and `validate_bounds.py` refuses m < 2. `cert_family_rank1.py` decides
+rank 1 exactly for any family cell.
+
+Not adapted: `rank_exclusion.symmetry_orbit_reps` builds its group from
+`orbit_state`; for cat the natural group is the qubit permutations, the
+Clifford G = (X + Y)/sqrt 2 on any single qubit (it fixes |T> and negates
+|T_perp>, so it maps |cat_m> to the sign-flipped cat, which the search
+would have to treat as a second target or as a symmetry up to a Clifford
+of the dictionary), and complex conjugation composed with Z^{(x) m}. The
+slice lemma in `slice_lift` uses that every single-qubit slice of the
+target is proportional to the target one size down; for cat the two
+slices are <0|_m |cat_m> proportional to |cat_{m-1}> and <1|_m |cat_m>
+proportional to G_1|cat_{m-1}>, so both are Clifford images of the
+smaller cat and the lift test goes through with one extra Clifford in
+the meet-in-the-middle, the same shape of change as the block lift in
+section 2. Lean: the reflection route fits, since the target is
+(1/sqrt 2)^{m-1} times a vector with entries in {0, 1, i, -1, -i}, all in
+the basis B4 = {1, sqrt 2, i, i sqrt 2} of the qubit_H modules; what is
+missing is a `cat` branch in `gen_witness_lean.make_orbit` (target
+entry i^{|x|/2} on even strings, scalar s2^{m-1}/2^{m-1}, a statistic on
+the weight rather than on the count of zeros) and a `catVec m` with its
+`catVec_eq_ev` lemma on the Lean side.
+
+### 6.5 Files touched
+
+1. `verify_challenge/stabrank_verify.py`: `FAMILY`, `target_vector` for
+   `cat`, `ORBIT_P["cat"] = 2`, `ORBIT_LABEL`, `implied_exponent`, and
+   `exponent_copies` (m - 2 for cat); `verify`, `verify_upper`, and
+   `verify_lean` report the implied exponent through it.
+2. `schema/bound.schema.json`: `"cat"` in the `orbit` enum.
+3. `verify_challenge/validate_bounds.py`: `M_MIN["cat"] = 2`.
+4. `verify_challenge/cert_family_rank1.py`: exact rank-1 exclusion for
+   cat_3 and cat_4.
+5. `research/constructions/qpg_cat.py`: the seven witnesses.
+6. `bounds/cat-m{2..8}-upper-*.json`, `bounds/cat-m{3..8}-lower-*.json`,
+   with `certs/` receipts for the verified ones.
+7. `site_challenge/build.py`: `ORBIT_ORDER`, `SYSTEM`, `BASELINE`,
+   `ORBIT_TEX`, `BASE_TEX`, `ORBIT_DEF`, `COLOR`, `FAMILY_KET` for the
+   ket rendering, `next_target` on `exponent_copies`, and the `--no-verify`
+   path classifies pure citations without a receipt.
+   `site_challenge/report.py`: `PUBLISHED_REF["cat"]`.
+8. `CONTRIBUTING.md` orbit table; `docs/refs.bib` unchanged (both sources
+   already present).
+9. `tests/test_families.py`.
