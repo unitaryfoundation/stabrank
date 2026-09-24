@@ -1,0 +1,3119 @@
+{
+ "plants": [
+  {
+   "stage": "gamma",
+   "unit": [
+    "B",
+    "B"
+   ],
+   "kind": "cancel1",
+   "base": [
+    140,
+    159,
+    539
+   ],
+   "status": "recovered",
+   "hits": 564,
+   "seconds": 238.95424699783325,
+   "stats": {
+    "flats": [
+     "B",
+     "B"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     3,
+     1,
+     2
+    ],
+    "modes": [
+     [
+      3,
+      "exact"
+     ],
+     [
+      1,
+      "scan2"
+     ],
+     [
+      2,
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     42
+    ],
+    "scan_candidates": 0,
+    "scan_solutions": 0,
+    "scan2_collisions": 26018,
+    "scan2_solutions": 26110,
+    "absent_at_flat": 0,
+    "same_state": 96,
+    "cancelling": 1,
+    "pair_solutions": 678,
+    "candidates": 14830,
+    "hits": 564,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "p01",
+   "kind": "a",
+   "base": [
+    140,
+    159,
+    539,
+    937
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.3529531955718994,
+   "stats": {
+    "flat": "p01",
+    "kappa": 0,
+    "distinct": 4,
+    "blocks": [],
+    "exact_solutions": [
+     1,
+     1
+    ],
+    "scan_candidates": 1,
+    "scan_solutions": 1,
+    "absent_at_flat": 0,
+    "ambiguous": 0,
+    "brute": 0,
+    "brute_systems": 0,
+    "second_solutions": 0,
+    "split_pruned": 0,
+    "candidates": 42,
+    "reconstructions": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "p01",
+   "kind": "b",
+   "base": [
+    220,
+    381,
+    882,
+    957
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.34627294540405273,
+   "stats": {
+    "flat": "p01",
+    "kappa": 0,
+    "distinct": 4,
+    "blocks": [],
+    "exact_solutions": [
+     2,
+     2
+    ],
+    "scan_candidates": 1,
+    "scan_solutions": 1,
+    "absent_at_flat": 0,
+    "ambiguous": 0,
+    "brute": 0,
+    "brute_systems": 0,
+    "second_solutions": 0,
+    "split_pruned": 0,
+    "candidates": 65,
+    "reconstructions": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "p01",
+   "kind": "c",
+   "base": [
+    260,
+    260,
+    477,
+    506
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.3458538055419922,
+   "stats": {
+    "flat": "p01",
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [
+     2
+    ],
+    "exact_solutions": [
+     1,
+     1
+    ],
+    "scan_candidates": 2,
+    "scan_solutions": 2,
+    "absent_at_flat": 0,
+    "ambiguous": 0,
+    "brute": 0,
+    "brute_systems": 0,
+    "second_solutions": 0,
+    "split_pruned": 3,
+    "candidates": 5,
+    "reconstructions": 1,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "p01",
+   "kind": "e",
+   "base": [
+    536,
+    536,
+    538,
+    906
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 1.1619977951049805,
+   "stats": {
+    "flat": "p01",
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [
+     2
+    ],
+    "exact_solutions": [
+     1,
+     1
+    ],
+    "scan_candidates": 121,
+    "scan_solutions": 61,
+    "absent_at_flat": 0,
+    "ambiguous": 1,
+    "brute": 1,
+    "brute_systems": 32670,
+    "second_solutions": 0,
+    "split_pruned": 59,
+    "candidates": 3,
+    "reconstructions": 2,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "p10",
+   "kind": "a",
+   "base": [
+    234,
+    316,
+    753,
+    1016
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.3281371593475342,
+   "stats": {
+    "flat": "p10",
+    "kappa": 0,
+    "distinct": 4,
+    "blocks": [],
+    "exact_solutions": [
+     1,
+     1
+    ],
+    "scan_candidates": 1,
+    "scan_solutions": 1,
+    "absent_at_flat": 0,
+    "ambiguous": 0,
+    "brute": 0,
+    "brute_systems": 0,
+    "second_solutions": 0,
+    "split_pruned": 0,
+    "candidates": 35,
+    "reconstructions": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "p10",
+   "kind": "b",
+   "base": [
+    326,
+    478,
+    517,
+    989
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.3323080539703369,
+   "stats": {
+    "flat": "p10",
+    "kappa": 0,
+    "distinct": 4,
+    "blocks": [],
+    "exact_solutions": [
+     4,
+     4
+    ],
+    "scan_candidates": 1,
+    "scan_solutions": 1,
+    "absent_at_flat": 0,
+    "ambiguous": 0,
+    "brute": 0,
+    "brute_systems": 0,
+    "second_solutions": 0,
+    "split_pruned": 0,
+    "candidates": 104,
+    "reconstructions": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "p10",
+   "kind": "c",
+   "base": [
+    232,
+    393,
+    1078,
+    1078
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.34020185470581055,
+   "stats": {
+    "flat": "p10",
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [
+     2
+    ],
+    "exact_solutions": [
+     1,
+     1
+    ],
+    "scan_candidates": 1,
+    "scan_solutions": 1,
+    "absent_at_flat": 0,
+    "ambiguous": 0,
+    "brute": 0,
+    "brute_systems": 0,
+    "second_solutions": 0,
+    "split_pruned": 1,
+    "candidates": 3,
+    "reconstructions": 1,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "p10",
+   "kind": "e",
+   "base": [
+    141,
+    141,
+    734,
+    870
+   ],
+   "status": "recovered",
+   "hits": 12,
+   "seconds": 5.555345296859741,
+   "stats": {
+    "flat": "p10",
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [
+     2
+    ],
+    "exact_solutions": [
+     1,
+     1
+    ],
+    "scan_candidates": 306,
+    "scan_solutions": 225,
+    "absent_at_flat": 0,
+    "ambiguous": 1,
+    "brute": 1,
+    "brute_systems": 84942,
+    "second_solutions": 0,
+    "split_pruned": 223,
+    "candidates": 16,
+    "reconstructions": 5,
+    "hits": 12,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "p11",
+   "kind": "a",
+   "base": [
+    421,
+    654,
+    672,
+    716
+   ],
+   "status": "recovered",
+   "hits": 8,
+   "seconds": 2.5651891231536865,
+   "stats": {
+    "flat": "p11",
+    "kappa": 0,
+    "distinct": 4,
+    "blocks": [],
+    "exact_solutions": [
+     1,
+     1
+    ],
+    "scan_candidates": 8,
+    "scan_solutions": 8,
+    "absent_at_flat": 0,
+    "ambiguous": 0,
+    "brute": 0,
+    "brute_systems": 0,
+    "second_solutions": 0,
+    "split_pruned": 0,
+    "candidates": 35,
+    "reconstructions": 0,
+    "hits": 8,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "p11",
+   "kind": "b",
+   "base": [
+    593,
+    727,
+    867,
+    1057
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.3323960304260254,
+   "stats": {
+    "flat": "p11",
+    "kappa": 0,
+    "distinct": 4,
+    "blocks": [],
+    "exact_solutions": [
+     1,
+     1
+    ],
+    "scan_candidates": 1,
+    "scan_solutions": 1,
+    "absent_at_flat": 0,
+    "ambiguous": 0,
+    "brute": 0,
+    "brute_systems": 0,
+    "second_solutions": 0,
+    "split_pruned": 0,
+    "candidates": 43,
+    "reconstructions": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "p11",
+   "kind": "c",
+   "base": [
+    277,
+    536,
+    536,
+    804
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.35132598876953125,
+   "stats": {
+    "flat": "p11",
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [
+     2
+    ],
+    "exact_solutions": [
+     1,
+     1
+    ],
+    "scan_candidates": 2,
+    "scan_solutions": 2,
+    "absent_at_flat": 0,
+    "ambiguous": 0,
+    "brute": 0,
+    "brute_systems": 0,
+    "second_solutions": 0,
+    "split_pruned": 1,
+    "candidates": 12,
+    "reconstructions": 1,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "p11",
+   "kind": "e",
+   "base": [
+    446,
+    462,
+    544,
+    544
+   ],
+   "status": "recovered",
+   "hits": 2,
+   "seconds": 2.092733860015869,
+   "stats": {
+    "flat": "p11",
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [
+     2
+    ],
+    "exact_solutions": [
+     1,
+     1
+    ],
+    "scan_candidates": 123,
+    "scan_solutions": 63,
+    "absent_at_flat": 0,
+    "ambiguous": 1,
+    "brute": 1,
+    "brute_systems": 32670,
+    "second_solutions": 0,
+    "split_pruned": 58,
+    "candidates": 3,
+    "reconstructions": 4,
+    "hits": 2,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "B",
+   "kind": "a",
+   "base": [
+    223,
+    275,
+    778,
+    852
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.5040152072906494,
+   "stats": {
+    "flat": "B",
+    "kappa": 0,
+    "distinct": 4,
+    "blocks": [],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 1,
+    "scan_solutions": 1,
+    "absent_at_flat": 0,
+    "ambiguous": 0,
+    "brute": 0,
+    "brute_systems": 0,
+    "second_solutions": 1,
+    "split_pruned": 0,
+    "candidates": 15,
+    "reconstructions": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "B",
+   "kind": "b",
+   "base": [
+    817,
+    901,
+    935,
+    944
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.4944930076599121,
+   "stats": {
+    "flat": "B",
+    "kappa": 0,
+    "distinct": 4,
+    "blocks": [],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 1,
+    "scan_solutions": 1,
+    "absent_at_flat": 0,
+    "ambiguous": 0,
+    "brute": 0,
+    "brute_systems": 0,
+    "second_solutions": 1,
+    "split_pruned": 0,
+    "candidates": 17,
+    "reconstructions": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "B",
+   "kind": "c",
+   "base": [
+    165,
+    165,
+    292,
+    842
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.3842501640319824,
+   "stats": {
+    "flat": "B",
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [
+     2
+    ],
+    "exact_solutions": [
+     4
+    ],
+    "scan_candidates": 8,
+    "scan_solutions": 8,
+    "absent_at_flat": 0,
+    "ambiguous": 0,
+    "brute": 0,
+    "brute_systems": 0,
+    "second_solutions": 1,
+    "split_pruned": 6,
+    "candidates": 7,
+    "reconstructions": 1,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "B",
+   "kind": "e",
+   "base": [
+    484,
+    484,
+    494,
+    600
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.9954979419708252,
+   "stats": {
+    "flat": "B",
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [
+     2
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 811,
+    "scan_solutions": 607,
+    "absent_at_flat": 0,
+    "ambiguous": 2,
+    "brute": 2,
+    "brute_systems": 143748,
+    "second_solutions": 8,
+    "split_pruned": 610,
+    "candidates": 12,
+    "reconstructions": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "C1",
+   "kind": "a",
+   "base": [
+    12,
+    561,
+    638,
+    926
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.49615478515625,
+   "stats": {
+    "flat": "C1",
+    "kappa": 0,
+    "distinct": 4,
+    "blocks": [],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 6,
+    "scan_solutions": 6,
+    "absent_at_flat": 0,
+    "ambiguous": 0,
+    "brute": 0,
+    "brute_systems": 0,
+    "second_solutions": 1,
+    "split_pruned": 0,
+    "candidates": 24,
+    "reconstructions": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "C1",
+   "kind": "b",
+   "base": [
+    137,
+    331,
+    608,
+    646
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.49755024909973145,
+   "stats": {
+    "flat": "C1",
+    "kappa": 0,
+    "distinct": 4,
+    "blocks": [],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 1,
+    "scan_solutions": 1,
+    "absent_at_flat": 0,
+    "ambiguous": 0,
+    "brute": 0,
+    "brute_systems": 0,
+    "second_solutions": 1,
+    "split_pruned": 0,
+    "candidates": 30,
+    "reconstructions": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "C1",
+   "kind": "c",
+   "base": [
+    232,
+    821,
+    821,
+    887
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.368725061416626,
+   "stats": {
+    "flat": "C1",
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [
+     2
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 111,
+    "scan_solutions": 90,
+    "absent_at_flat": 0,
+    "ambiguous": 0,
+    "brute": 0,
+    "brute_systems": 0,
+    "second_solutions": 18,
+    "split_pruned": 89,
+    "candidates": 20,
+    "reconstructions": 2,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "C1",
+   "kind": "e",
+   "base": [
+    209,
+    209,
+    403,
+    623
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 1.0390620231628418,
+   "stats": {
+    "flat": "C1",
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [
+     2
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 343,
+    "scan_solutions": 283,
+    "absent_at_flat": 0,
+    "ambiguous": 1,
+    "brute": 1,
+    "brute_systems": 378972,
+    "second_solutions": 0,
+    "split_pruned": 281,
+    "candidates": 1,
+    "reconstructions": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "D1",
+   "kind": "a",
+   "base": [
+    138,
+    262,
+    332,
+    349
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.49611425399780273,
+   "stats": {
+    "flat": "D1",
+    "kappa": 0,
+    "distinct": 4,
+    "blocks": [],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 1,
+    "scan_solutions": 1,
+    "absent_at_flat": 0,
+    "ambiguous": 0,
+    "brute": 0,
+    "brute_systems": 0,
+    "second_solutions": 1,
+    "split_pruned": 0,
+    "candidates": 15,
+    "reconstructions": 0,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "D1",
+   "kind": "b",
+   "base": [
+    230,
+    370,
+    806,
+    1056
+   ],
+   "status": "recovered",
+   "hits": 8,
+   "seconds": 2.737691879272461,
+   "stats": {
+    "flat": "D1",
+    "kappa": 0,
+    "distinct": 4,
+    "blocks": [],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 5,
+    "scan_solutions": 5,
+    "absent_at_flat": 0,
+    "ambiguous": 0,
+    "brute": 0,
+    "brute_systems": 0,
+    "second_solutions": 8,
+    "split_pruned": 0,
+    "candidates": 24,
+    "reconstructions": 0,
+    "hits": 8,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "D1",
+   "kind": "c",
+   "base": [
+    236,
+    631,
+    1000,
+    1000
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.5036320686340332,
+   "stats": {
+    "flat": "D1",
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [
+     2
+    ],
+    "exact_solutions": [
+     6
+    ],
+    "scan_candidates": 336,
+    "scan_solutions": 210,
+    "absent_at_flat": 0,
+    "ambiguous": 0,
+    "brute": 0,
+    "brute_systems": 0,
+    "second_solutions": 1,
+    "split_pruned": 177,
+    "candidates": 18,
+    "reconstructions": 1,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "D1",
+   "kind": "e",
+   "base": [
+    106,
+    553,
+    553,
+    1049
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 1.016503095626831,
+   "stats": {
+    "flat": "D1",
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [
+     2
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 663,
+    "scan_solutions": 543,
+    "absent_at_flat": 0,
+    "ambiguous": 2,
+    "brute": 2,
+    "brute_systems": 161172,
+    "second_solutions": 27,
+    "split_pruned": 552,
+    "candidates": 29,
+    "reconstructions": 2,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p01",
+    "p01"
+   ],
+   "kind": "a",
+   "base": [
+    133,
+    797,
+    858
+   ],
+   "status": "recovered",
+   "hits": 6,
+   "seconds": 1.930931806564331,
+   "stats": {
+    "flats": [
+     "p01",
+     "p01"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     2,
+     3,
+     1
+    ],
+    "modes": [
+     [
+      2,
+      "exact"
+     ],
+     [
+      3,
+      "exact"
+     ],
+     [
+      1,
+      "scan2"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     1
+    ],
+    "scan_candidates": 0,
+    "scan_solutions": 0,
+    "scan2_collisions": 6,
+    "scan2_solutions": 6,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 4,
+    "hits": 6,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p01",
+    "p10"
+   ],
+   "kind": "a",
+   "base": [
+    308,
+    394,
+    449
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.33432507514953613,
+   "stats": {
+    "flats": [
+     "p01",
+     "p10"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     3,
+     1,
+     2
+    ],
+    "modes": [
+     [
+      3,
+      "exact"
+     ],
+     [
+      1,
+      "scan"
+     ],
+     [
+      2,
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 2,
+    "scan_solutions": 2,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 1,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p01",
+    "p11"
+   ],
+   "kind": "a",
+   "base": [
+    5,
+    559,
+    993
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.3324410915374756,
+   "stats": {
+    "flats": [
+     "p01",
+     "p11"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     2,
+     1,
+     3
+    ],
+    "modes": [
+     [
+      2,
+      "exact"
+     ],
+     [
+      1,
+      "scan"
+     ],
+     [
+      3,
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 2,
+    "scan_solutions": 2,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 2,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p01",
+    "B"
+   ],
+   "kind": "a",
+   "base": [
+    119,
+    566,
+    1059
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.33171677589416504,
+   "stats": {
+    "flats": [
+     "p01",
+     "B"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     3,
+     2,
+     1
+    ],
+    "modes": [
+     [
+      3,
+      "exact"
+     ],
+     [
+      2,
+      "scan"
+     ],
+     [
+      1,
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 2,
+    "scan_solutions": 2,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 1,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p01",
+    "B"
+   ],
+   "kind": "ray",
+   "base": [
+    187,
+    321,
+    481
+   ],
+   "status": "recovered",
+   "hits": 4,
+   "seconds": 1.2914202213287354,
+   "stats": {
+    "flats": [
+     "p01",
+     "B"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     3,
+     2,
+     1
+    ],
+    "modes": [
+     [
+      3,
+      "exact"
+     ],
+     [
+      2,
+      "scan"
+     ],
+     [
+      1,
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 5,
+    "scan_solutions": 5,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 3,
+    "hits": 4,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p01",
+    "C1"
+   ],
+   "kind": "a",
+   "base": [
+    115,
+    215,
+    484
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.3594019412994385,
+   "stats": {
+    "flats": [
+     "p01",
+     "C1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     1,
+     2,
+     3
+    ],
+    "modes": [
+     [
+      1,
+      "scan"
+     ],
+     [
+      2,
+      "scan"
+     ],
+     [
+      3,
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 10,
+    "scan_solutions": 10,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 1,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p01",
+    "D1"
+   ],
+   "kind": "a",
+   "base": [
+    120,
+    667,
+    921
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.339216947555542,
+   "stats": {
+    "flats": [
+     "p01",
+     "D1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     2,
+     3,
+     1
+    ],
+    "modes": [
+     [
+      2,
+      "exact"
+     ],
+     [
+      3,
+      "scan"
+     ],
+     [
+      1,
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 9,
+    "scan_solutions": 9,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 2,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p01",
+    "D1"
+   ],
+   "kind": "ray",
+   "base": [
+    820,
+    952,
+    1068
+   ],
+   "status": "recovered",
+   "hits": 32,
+   "seconds": 10.233885049819946,
+   "stats": {
+    "flats": [
+     "p01",
+     "D1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     2,
+     3,
+     1
+    ],
+    "modes": [
+     [
+      2,
+      "exact"
+     ],
+     [
+      3,
+      "scan"
+     ],
+     [
+      1,
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 33,
+    "scan_solutions": 33,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 1,
+    "hits": 32,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p10",
+    "p10"
+   ],
+   "kind": "a",
+   "base": [
+    207,
+    520,
+    699
+   ],
+   "status": "recovered",
+   "hits": 2,
+   "seconds": 0.6622209548950195,
+   "stats": {
+    "flats": [
+     "p10",
+     "p10"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     1,
+     3,
+     2
+    ],
+    "modes": [
+     [
+      1,
+      "exact"
+     ],
+     [
+      3,
+      "exact"
+     ],
+     [
+      2,
+      "scan2"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     1
+    ],
+    "scan_candidates": 0,
+    "scan_solutions": 0,
+    "scan2_collisions": 2,
+    "scan2_solutions": 2,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 2,
+    "hits": 2,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p10",
+    "p11"
+   ],
+   "kind": "a",
+   "base": [
+    112,
+    339,
+    519
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.3346397876739502,
+   "stats": {
+    "flats": [
+     "p10",
+     "p11"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     1,
+     2,
+     3
+    ],
+    "modes": [
+     [
+      1,
+      "exact"
+     ],
+     [
+      2,
+      "scan"
+     ],
+     [
+      3,
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 2,
+    "scan_solutions": 2,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 1,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p10",
+    "B"
+   ],
+   "kind": "a",
+   "base": [
+    147,
+    303,
+    610
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.3331429958343506,
+   "stats": {
+    "flats": [
+     "p10",
+     "B"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     3,
+     1,
+     2
+    ],
+    "modes": [
+     [
+      3,
+      "exact"
+     ],
+     [
+      1,
+      "scan"
+     ],
+     [
+      2,
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 2,
+    "scan_solutions": 2,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 2,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p10",
+    "B"
+   ],
+   "kind": "ray",
+   "base": [
+    208,
+    699,
+    958
+   ],
+   "status": "recovered",
+   "hits": 4,
+   "seconds": 1.2946710586547852,
+   "stats": {
+    "flats": [
+     "p10",
+     "B"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     3,
+     1,
+     2
+    ],
+    "modes": [
+     [
+      3,
+      "exact"
+     ],
+     [
+      1,
+      "scan"
+     ],
+     [
+      2,
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 5,
+    "scan_solutions": 5,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 2,
+    "hits": 4,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p10",
+    "C1"
+   ],
+   "kind": "a",
+   "base": [
+    110,
+    521,
+    914
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.33384013175964355,
+   "stats": {
+    "flats": [
+     "p10",
+     "C1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     1,
+     3,
+     2
+    ],
+    "modes": [
+     [
+      1,
+      "exact"
+     ],
+     [
+      3,
+      "scan"
+     ],
+     [
+      2,
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 2,
+    "scan_solutions": 2,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 1,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p10",
+    "C1"
+   ],
+   "kind": "ray",
+   "base": [
+    54,
+    935,
+    1078
+   ],
+   "status": "recovered",
+   "hits": 4,
+   "seconds": 1.2884628772735596,
+   "stats": {
+    "flats": [
+     "p10",
+     "C1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     1,
+     3,
+     2
+    ],
+    "modes": [
+     [
+      1,
+      "exact"
+     ],
+     [
+      3,
+      "scan"
+     ],
+     [
+      2,
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 5,
+    "scan_solutions": 5,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 1,
+    "hits": 4,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p10",
+    "D1"
+   ],
+   "kind": "a",
+   "base": [
+    325,
+    550,
+    769
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.33633899688720703,
+   "stats": {
+    "flats": [
+     "p10",
+     "D1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     1,
+     3,
+     2
+    ],
+    "modes": [
+     [
+      1,
+      "scan"
+     ],
+     [
+      3,
+      "exact"
+     ],
+     [
+      2,
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 2,
+    "scan_solutions": 2,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 16,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p11",
+    "p11"
+   ],
+   "kind": "a",
+   "base": [
+    17,
+    67,
+    221
+   ],
+   "status": "recovered",
+   "hits": 15,
+   "seconds": 4.8114988803863525,
+   "stats": {
+    "flats": [
+     "p11",
+     "p11"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     1,
+     2,
+     3
+    ],
+    "modes": [
+     [
+      1,
+      "exact"
+     ],
+     [
+      2,
+      "exact"
+     ],
+     [
+      3,
+      "scan2"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     1
+    ],
+    "scan_candidates": 0,
+    "scan_solutions": 0,
+    "scan2_collisions": 15,
+    "scan2_solutions": 15,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 7,
+    "hits": 15,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p11",
+    "B"
+   ],
+   "kind": "a",
+   "base": [
+    183,
+    639,
+    918
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.3504750728607178,
+   "stats": {
+    "flats": [
+     "p11",
+     "B"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     1,
+     2,
+     3
+    ],
+    "modes": [
+     [
+      1,
+      "scan"
+     ],
+     [
+      2,
+      "exact"
+     ],
+     [
+      3,
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 8,
+    "scan_solutions": 8,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 121,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p11",
+    "C1"
+   ],
+   "kind": "a",
+   "base": [
+    310,
+    484,
+    810
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.33214521408081055,
+   "stats": {
+    "flats": [
+     "p11",
+     "C1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     1,
+     2,
+     3
+    ],
+    "modes": [
+     [
+      1,
+      "exact"
+     ],
+     [
+      2,
+      "scan"
+     ],
+     [
+      3,
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 2,
+    "scan_solutions": 2,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 2,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p11",
+    "C1"
+   ],
+   "kind": "ray",
+   "base": [
+    266,
+    590,
+    853
+   ],
+   "status": "recovered",
+   "hits": 4,
+   "seconds": 1.3027749061584473,
+   "stats": {
+    "flats": [
+     "p11",
+     "C1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     1,
+     2,
+     3
+    ],
+    "modes": [
+     [
+      1,
+      "exact"
+     ],
+     [
+      2,
+      "scan"
+     ],
+     [
+      3,
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     3
+    ],
+    "scan_candidates": 7,
+    "scan_solutions": 7,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 5,
+    "hits": 4,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p11",
+    "D1"
+   ],
+   "kind": "a",
+   "base": [
+    483,
+    644,
+    809
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.3371450901031494,
+   "stats": {
+    "flats": [
+     "p11",
+     "D1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     2,
+     1,
+     3
+    ],
+    "modes": [
+     [
+      2,
+      "exact"
+     ],
+     [
+      1,
+      "scan"
+     ],
+     [
+      3,
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 2,
+    "scan_solutions": 2,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 1,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "p11",
+    "D1"
+   ],
+   "kind": "ray",
+   "base": [
+    554,
+    600,
+    627
+   ],
+   "status": "recovered",
+   "hits": 4,
+   "seconds": 1.2881572246551514,
+   "stats": {
+    "flats": [
+     "p11",
+     "D1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     2,
+     1,
+     3
+    ],
+    "modes": [
+     [
+      2,
+      "exact"
+     ],
+     [
+      1,
+      "scan"
+     ],
+     [
+      3,
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 5,
+    "scan_solutions": 5,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 3,
+    "hits": 4,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "B",
+    "B"
+   ],
+   "kind": "a",
+   "base": [
+    498,
+    876,
+    1011
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 3.048016309738159,
+   "stats": {
+    "flats": [
+     "B",
+     "B"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     3,
+     1,
+     2
+    ],
+    "modes": [
+     [
+      3,
+      "exact"
+     ],
+     [
+      1,
+      "scan2"
+     ],
+     [
+      2,
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     1
+    ],
+    "scan_candidates": 0,
+    "scan_solutions": 0,
+    "scan2_collisions": 6,
+    "scan2_solutions": 2,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 2,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "B",
+    "C1"
+   ],
+   "kind": "a",
+   "base": [
+    66,
+    235,
+    301
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.5023202896118164,
+   "stats": {
+    "flats": [
+     "B",
+     "C1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     1,
+     2,
+     3
+    ],
+    "modes": [
+     [
+      1,
+      "scan"
+     ],
+     [
+      2,
+      "scan"
+     ],
+     [
+      3,
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 2,
+    "scan_solutions": 2,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 1,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "B",
+    "D1"
+   ],
+   "kind": "a",
+   "base": [
+    122,
+    334,
+    790
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 1.5911719799041748,
+   "stats": {
+    "flats": [
+     "B",
+     "D1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     2,
+     1,
+     3
+    ],
+    "modes": [
+     [
+      2,
+      "scan"
+     ],
+     [
+      1,
+      "scan"
+     ],
+     [
+      3,
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1
+    ],
+    "scan_candidates": 27,
+    "scan_solutions": 27,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 1,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "C1",
+    "C1"
+   ],
+   "kind": "a",
+   "base": [
+    26,
+    269,
+    944
+   ],
+   "status": "recovered",
+   "hits": 10,
+   "seconds": 6.570945978164673,
+   "stats": {
+    "flats": [
+     "C1",
+     "C1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     1,
+     2,
+     3
+    ],
+    "modes": [
+     [
+      1,
+      "exact"
+     ],
+     [
+      2,
+      "scan2"
+     ],
+     [
+      3,
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     10
+    ],
+    "scan_candidates": 0,
+    "scan_solutions": 0,
+    "scan2_collisions": 1322,
+    "scan2_solutions": 1318,
+    "absent_at_flat": 0,
+    "same_state": 2,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 1701,
+    "hits": 10,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "C1",
+    "D1"
+   ],
+   "kind": "a",
+   "base": [
+    223,
+    349,
+    825
+   ],
+   "status": "recovered",
+   "hits": 5,
+   "seconds": 1.6955571174621582,
+   "stats": {
+    "flats": [
+     "C1",
+     "D1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     1,
+     2,
+     3
+    ],
+    "modes": [
+     [
+      1,
+      "scan"
+     ],
+     [
+      2,
+      "scan"
+     ],
+     [
+      3,
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     5
+    ],
+    "scan_candidates": 54,
+    "scan_solutions": 54,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 10,
+    "hits": 5,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "D1",
+    "D1"
+   ],
+   "kind": "a",
+   "base": [
+    307,
+    583,
+    739
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 3.110558271408081,
+   "stats": {
+    "flats": [
+     "D1",
+     "D1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     2,
+     1,
+     3
+    ],
+    "modes": [
+     [
+      2,
+      "exact"
+     ],
+     [
+      1,
+      "scan2"
+     ],
+     [
+      3,
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     1
+    ],
+    "scan_candidates": 0,
+    "scan_solutions": 0,
+    "scan2_collisions": 51,
+    "scan2_solutions": 47,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "pair_solutions": 0,
+    "candidates": 5,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "C1",
+    "C1"
+   ],
+   "kind": "same",
+   "base": [
+    140,
+    159,
+    539
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 3.3071091175079346,
+   "stats": {
+    "flats": [
+     "C1",
+     "C1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     1,
+     2,
+     3
+    ],
+    "modes": [
+     [
+      1,
+      "exact"
+     ],
+     [
+      2,
+      "scan2"
+     ],
+     [
+      3,
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     0
+    ],
+    "scan_candidates": 0,
+    "scan_solutions": 0,
+    "scan2_collisions": 434,
+    "scan2_solutions": 433,
+    "absent_at_flat": 0,
+    "same_state": 1,
+    "cancelling": 0,
+    "pair_solutions": 1,
+    "candidates": 9,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "C1",
+    "C1"
+   ],
+   "kind": "same1",
+   "base": [
+    598,
+    1002,
+    1016
+   ],
+   "status": "recovered",
+   "hits": 50,
+   "seconds": 23.072829961776733,
+   "stats": {
+    "flats": [
+     "C1",
+     "C1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     1,
+     2,
+     3
+    ],
+    "modes": [
+     [
+      1,
+      "exact"
+     ],
+     [
+      2,
+      "scan2"
+     ],
+     [
+      3,
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     35
+    ],
+    "scan_candidates": 0,
+    "scan_solutions": 0,
+    "scan2_collisions": 1056,
+    "scan2_solutions": 1051,
+    "absent_at_flat": 0,
+    "same_state": 1,
+    "cancelling": 0,
+    "pair_solutions": 27,
+    "candidates": 777,
+    "hits": 50,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "C1",
+    "C1"
+   ],
+   "kind": "cancel",
+   "base": [
+    727,
+    785,
+    1075
+   ],
+   "status": "recovered",
+   "hits": 496,
+   "seconds": 212.96749305725098,
+   "stats": {
+    "flats": [
+     "C1",
+     "C1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     1,
+     2,
+     3
+    ],
+    "modes": [
+     [
+      1,
+      "exact"
+     ],
+     [
+      2,
+      "scan2"
+     ],
+     [
+      3,
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     0
+    ],
+    "scan_candidates": 0,
+    "scan_solutions": 0,
+    "scan2_collisions": 32178,
+    "scan2_solutions": 32273,
+    "absent_at_flat": 0,
+    "same_state": 96,
+    "cancelling": 1,
+    "pair_solutions": 640,
+    "candidates": 2621,
+    "hits": 496,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "C1",
+    "C1"
+   ],
+   "kind": "cancel1",
+   "base": [
+    8,
+    79,
+    186
+   ],
+   "status": "recovered",
+   "hits": 814,
+   "seconds": 318.3370339870453,
+   "stats": {
+    "flats": [
+     "C1",
+     "C1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     1,
+     2,
+     3
+    ],
+    "modes": [
+     [
+      1,
+      "exact"
+     ],
+     [
+      2,
+      "scan2"
+     ],
+     [
+      3,
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     300
+    ],
+    "scan_candidates": 0,
+    "scan_solutions": 0,
+    "scan2_collisions": 50374,
+    "scan2_solutions": 50526,
+    "absent_at_flat": 0,
+    "same_state": 152,
+    "cancelling": 1,
+    "pair_solutions": 658,
+    "candidates": 4284,
+    "hits": 814,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "D1",
+    "D1"
+   ],
+   "kind": "same",
+   "base": [
+    140,
+    159,
+    539
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 3.280626058578491,
+   "stats": {
+    "flats": [
+     "D1",
+     "D1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     2,
+     1,
+     3
+    ],
+    "modes": [
+     [
+      2,
+      "exact"
+     ],
+     [
+      1,
+      "scan2"
+     ],
+     [
+      3,
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     0
+    ],
+    "scan_candidates": 0,
+    "scan_solutions": 0,
+    "scan2_collisions": 383,
+    "scan2_solutions": 381,
+    "absent_at_flat": 0,
+    "same_state": 1,
+    "cancelling": 0,
+    "pair_solutions": 1,
+    "candidates": 14,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "D1",
+    "D1"
+   ],
+   "kind": "same1",
+   "base": [
+    598,
+    1002,
+    1016
+   ],
+   "status": "recovered",
+   "hits": 37,
+   "seconds": 18.938403129577637,
+   "stats": {
+    "flats": [
+     "D1",
+     "D1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     2,
+     1,
+     3
+    ],
+    "modes": [
+     [
+      2,
+      "exact"
+     ],
+     [
+      1,
+      "scan2"
+     ],
+     [
+      3,
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     22
+    ],
+    "scan_candidates": 0,
+    "scan_solutions": 0,
+    "scan2_collisions": 1054,
+    "scan2_solutions": 1051,
+    "absent_at_flat": 0,
+    "same_state": 1,
+    "cancelling": 0,
+    "pair_solutions": 27,
+    "candidates": 746,
+    "hits": 37,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "D1",
+    "D1"
+   ],
+   "kind": "cancel",
+   "base": [
+    727,
+    785,
+    1075
+   ],
+   "status": "recovered",
+   "hits": 496,
+   "seconds": 212.74161624908447,
+   "stats": {
+    "flats": [
+     "D1",
+     "D1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     2,
+     1,
+     3
+    ],
+    "modes": [
+     [
+      2,
+      "exact"
+     ],
+     [
+      1,
+      "scan2"
+     ],
+     [
+      3,
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     0
+    ],
+    "scan_candidates": 0,
+    "scan_solutions": 0,
+    "scan2_collisions": 26418,
+    "scan2_solutions": 26514,
+    "absent_at_flat": 0,
+    "same_state": 96,
+    "cancelling": 1,
+    "pair_solutions": 640,
+    "candidates": 2442,
+    "hits": 496,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "B",
+    "B"
+   ],
+   "kind": "cancel",
+   "base": [
+    140,
+    159,
+    539
+   ],
+   "status": "recovered",
+   "hits": 496,
+   "seconds": 211.3476119041443,
+   "stats": {
+    "flats": [
+     "B",
+     "B"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     3,
+     1,
+     2
+    ],
+    "modes": [
+     [
+      3,
+      "exact"
+     ],
+     [
+      1,
+      "scan2"
+     ],
+     [
+      2,
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     0
+    ],
+    "scan_candidates": 0,
+    "scan_solutions": 0,
+    "scan2_collisions": 25956,
+    "scan2_solutions": 26048,
+    "absent_at_flat": 0,
+    "same_state": 96,
+    "cancelling": 1,
+    "pair_solutions": 640,
+    "candidates": 14873,
+    "hits": 496,
+    "refused": false,
+    "native": false
+   }
+  }
+ ],
+ "runs": [
+  {
+   "stage": "gamma",
+   "only": "B+B",
+   "kinds": "cancel1",
+   "seed": 11,
+   "git": "59a0c992459d5b32122981d010e4407e51e8b740",
+   "generated": "2026-09-24T06:24:10+00:00",
+   "recovered": 1,
+   "total": 1,
+   "seconds": 238.97884511947632
+  },
+  {
+   "stage": "all",
+   "only": null,
+   "kinds": "a,b,c,e,ray",
+   "seed": 11,
+   "git": "59a0c992459d5b32122981d010e4407e51e8b740",
+   "generated": "2026-09-24T06:25:36+00:00",
+   "recovered": 51,
+   "total": 51,
+   "seconds": 68.43080997467041
+  },
+  {
+   "id": "2026-09-24T06:36:47+00:00 gamma C1+C1 same,same1,cancel,cancel1",
+   "stage": "gamma",
+   "only": "C1+C1",
+   "kinds": "same,same1,cancel,cancel1",
+   "seed": 11,
+   "git": "59a0c992459d5b32122981d010e4407e51e8b740",
+   "generated": "2026-09-24T06:36:47+00:00",
+   "recovered": 4,
+   "total": 4,
+   "seconds": 557.6985621452332,
+   "complete": true
+  },
+  {
+   "id": "2026-09-24T07:19:55+00:00 gamma D1+D1 same,same1,cancel,cancel1",
+   "stage": "gamma",
+   "only": "D1+D1",
+   "kinds": "same,same1,cancel,cancel1",
+   "seed": 11,
+   "git": "23ab64d5247e2618f364a48c8227f4622fe43b12",
+   "generated": "2026-09-24T07:19:55+00:00",
+   "recovered": 3,
+   "total": 3,
+   "seconds": 234.9694697856903,
+   "complete": false
+  },
+  {
+   "id": "2026-09-24T07:30:08+00:00 gamma B+B cancel",
+   "stage": "gamma",
+   "only": "B+B",
+   "kinds": "cancel",
+   "seed": 11,
+   "git": "dd23c8eb9b1ed4c197e0d8af74b0235bd7616fdb",
+   "generated": "2026-09-24T07:30:08+00:00",
+   "recovered": 1,
+   "total": 1,
+   "seconds": 211.35143494606018,
+   "complete": true
+  }
+ ],
+ "recovered": 60,
+ "total": 60,
+ "by_stage": {
+  "beta": [
+   24,
+   24
+  ],
+  "gamma": [
+   36,
+   36
+  ]
+ },
+ "pass": true
+}

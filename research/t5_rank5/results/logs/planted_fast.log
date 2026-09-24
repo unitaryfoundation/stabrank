@@ -1,0 +1,54 @@
+  beta p01 kind a base (140, 159, 539, 937): 1 hits, planted recovered, 0.35s, exact [1, 1] scan 1 second 0 ambiguous 0 brute 0
+  beta p01 kind b base (220, 381, 882, 957): 1 hits, planted recovered, 0.35s, exact [2, 2] scan 1 second 0 ambiguous 0 brute 0
+  beta p01 kind c base (260, 260, 477, 506): 1 hits, planted recovered, 0.35s, exact [1, 1] scan 2 second 0 ambiguous 0 brute 0
+  beta p01 kind e base (536, 536, 538, 906): 1 hits, planted recovered, 1.16s, exact [1, 1] scan 61 second 0 ambiguous 1 brute 1
+  beta p10 kind a base (234, 316, 753, 1016): 1 hits, planted recovered, 0.33s, exact [1, 1] scan 1 second 0 ambiguous 0 brute 0
+  beta p10 kind b base (326, 478, 517, 989): 1 hits, planted recovered, 0.33s, exact [4, 4] scan 1 second 0 ambiguous 0 brute 0
+  beta p10 kind c base (232, 393, 1078, 1078): 1 hits, planted recovered, 0.34s, exact [1, 1] scan 1 second 0 ambiguous 0 brute 0
+  beta p10 kind e base (141, 141, 734, 870): 12 hits, planted recovered, 5.56s, exact [1, 1] scan 225 second 0 ambiguous 1 brute 1
+  beta p11 kind a base (421, 654, 672, 716): 8 hits, planted recovered, 2.57s, exact [1, 1] scan 8 second 0 ambiguous 0 brute 0
+  beta p11 kind b base (593, 727, 867, 1057): 1 hits, planted recovered, 0.33s, exact [1, 1] scan 1 second 0 ambiguous 0 brute 0
+  beta p11 kind c base (277, 536, 536, 804): 1 hits, planted recovered, 0.35s, exact [1, 1] scan 2 second 0 ambiguous 0 brute 0
+  beta p11 kind e base (446, 462, 544, 544): 2 hits, planted recovered, 2.09s, exact [1, 1] scan 63 second 0 ambiguous 1 brute 1
+  beta B kind a base (223, 275, 778, 852): 1 hits, planted recovered, 0.50s, exact [1] scan 1 second 1 ambiguous 0 brute 0
+  beta B kind b base (817, 901, 935, 944): 1 hits, planted recovered, 0.49s, exact [1] scan 1 second 1 ambiguous 0 brute 0
+  beta B kind c base (165, 165, 292, 842): 1 hits, planted recovered, 0.38s, exact [4] scan 8 second 1 ambiguous 0 brute 0
+  beta B kind e base (484, 484, 494, 600): 1 hits, planted recovered, 1.00s, exact [1] scan 607 second 8 ambiguous 2 brute 2
+  beta C1 kind a base (12, 561, 638, 926): 1 hits, planted recovered, 0.50s, exact [1] scan 6 second 1 ambiguous 0 brute 0
+  beta C1 kind b base (137, 331, 608, 646): 1 hits, planted recovered, 0.50s, exact [1] scan 1 second 1 ambiguous 0 brute 0
+  beta C1 kind c base (232, 821, 821, 887): 1 hits, planted recovered, 0.37s, exact [1] scan 90 second 18 ambiguous 0 brute 0
+  beta C1 kind e base (209, 209, 403, 623): 1 hits, planted recovered, 1.04s, exact [1] scan 283 second 0 ambiguous 1 brute 1
+  beta D1 kind a base (138, 262, 332, 349): 1 hits, planted recovered, 0.50s, exact [1] scan 1 second 1 ambiguous 0 brute 0
+  beta D1 kind b base (230, 370, 806, 1056): 8 hits, planted recovered, 2.74s, exact [1] scan 5 second 8 ambiguous 0 brute 0
+  beta D1 kind c base (236, 631, 1000, 1000): 1 hits, planted recovered, 0.50s, exact [6] scan 210 second 1 ambiguous 0 brute 0
+  beta D1 kind e base (106, 553, 553, 1049): 1 hits, planted recovered, 1.02s, exact [1] scan 543 second 27 ambiguous 2 brute 2
+  gamma ('p01', 'p01') kind a base (133, 797, 858): 6 hits, planted recovered, 1.93s, order [2, 3, 1] exact [1, 1] scan 0 scan2 6 pair 0
+  gamma ('p01', 'p10') kind a base (308, 394, 449): 1 hits, planted recovered, 0.33s, order [3, 1, 2] exact [1] scan 2 scan2 0 pair 0
+  gamma ('p01', 'p11') kind a base (5, 559, 993): 1 hits, planted recovered, 0.33s, order [2, 1, 3] exact [1] scan 2 scan2 0 pair 0
+  gamma ('p01', 'B') kind a base (119, 566, 1059): 1 hits, planted recovered, 0.33s, order [3, 2, 1] exact [1] scan 2 scan2 0 pair 0
+  gamma ('p01', 'B') kind ray base (187, 321, 481): 4 hits, planted recovered, 1.29s, order [3, 2, 1] exact [1] scan 5 scan2 0 pair 0
+  gamma ('p01', 'C1') kind a base (115, 215, 484): 1 hits, planted recovered, 0.36s, order [1, 2, 3] exact [1] scan 10 scan2 0 pair 0
+  gamma ('p01', 'D1') kind a base (120, 667, 921): 1 hits, planted recovered, 0.34s, order [2, 3, 1] exact [1] scan 9 scan2 0 pair 0
+  gamma ('p01', 'D1') kind ray base (820, 952, 1068): 32 hits, planted recovered, 10.23s, order [2, 3, 1] exact [1] scan 33 scan2 0 pair 0
+  gamma ('p10', 'p10') kind a base (207, 520, 699): 2 hits, planted recovered, 0.66s, order [1, 3, 2] exact [1, 1] scan 0 scan2 2 pair 0
+  gamma ('p10', 'p11') kind a base (112, 339, 519): 1 hits, planted recovered, 0.33s, order [1, 2, 3] exact [1] scan 2 scan2 0 pair 0
+  gamma ('p10', 'B') kind a base (147, 303, 610): 1 hits, planted recovered, 0.33s, order [3, 1, 2] exact [1] scan 2 scan2 0 pair 0
+  gamma ('p10', 'B') kind ray base (208, 699, 958): 4 hits, planted recovered, 1.29s, order [3, 1, 2] exact [1] scan 5 scan2 0 pair 0
+  gamma ('p10', 'C1') kind a base (110, 521, 914): 1 hits, planted recovered, 0.33s, order [1, 3, 2] exact [1] scan 2 scan2 0 pair 0
+  gamma ('p10', 'C1') kind ray base (54, 935, 1078): 4 hits, planted recovered, 1.29s, order [1, 3, 2] exact [1] scan 5 scan2 0 pair 0
+  gamma ('p10', 'D1') kind a base (325, 550, 769): 1 hits, planted recovered, 0.34s, order [1, 3, 2] exact [1] scan 2 scan2 0 pair 0
+  gamma ('p11', 'p11') kind a base (17, 67, 221): 15 hits, planted recovered, 4.81s, order [1, 2, 3] exact [1, 1] scan 0 scan2 15 pair 0
+  gamma ('p11', 'B') kind a base (183, 639, 918): 1 hits, planted recovered, 0.35s, order [1, 2, 3] exact [1] scan 8 scan2 0 pair 0
+  gamma ('p11', 'C1') kind a base (310, 484, 810): 1 hits, planted recovered, 0.33s, order [1, 2, 3] exact [1] scan 2 scan2 0 pair 0
+  gamma ('p11', 'C1') kind ray base (266, 590, 853): 4 hits, planted recovered, 1.30s, order [1, 2, 3] exact [3] scan 7 scan2 0 pair 0
+  gamma ('p11', 'D1') kind a base (483, 644, 809): 1 hits, planted recovered, 0.34s, order [2, 1, 3] exact [1] scan 2 scan2 0 pair 0
+  gamma ('p11', 'D1') kind ray base (554, 600, 627): 4 hits, planted recovered, 1.29s, order [2, 1, 3] exact [1] scan 5 scan2 0 pair 0
+  gamma ('B', 'B') kind a base (498, 876, 1011): 1 hits, planted recovered, 3.05s, order [3, 1, 2] exact [1, 1] scan 0 scan2 2 pair 0
+  gamma ('B', 'C1') kind a base (66, 235, 301): 1 hits, planted recovered, 0.50s, order [1, 2, 3] exact [1] scan 2 scan2 0 pair 0
+  gamma ('B', 'D1') kind a base (122, 334, 790): 1 hits, planted recovered, 1.59s, order [2, 1, 3] exact [1] scan 27 scan2 0 pair 0
+  gamma ('C1', 'C1') kind a base (26, 269, 944): 10 hits, planted recovered, 6.57s, order [1, 2, 3] exact [1, 10] scan 0 scan2 1318 pair 0
+  gamma ('C1', 'D1') kind a base (223, 349, 825): 5 hits, planted recovered, 1.70s, order [1, 2, 3] exact [5] scan 54 scan2 0 pair 0
+  gamma ('D1', 'D1') kind a base (307, 583, 739): 1 hits, planted recovered, 3.11s, order [2, 1, 3] exact [1, 1] scan 0 scan2 47 pair 0
+control-planted (all, a,b,c,e,ray): 51/51 planted decompositions recovered in 68s; PASS
+control-planted record: 52/52 recovered over 2 run(s) (beta [24, 24], gamma [28, 28]); PASS
+[run.py] exit 0 after 69.0s

@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import select
 import signal
 import subprocess
 import sys
@@ -64,7 +65,10 @@ def main(argv):
     killed = False
     try:
         while True:
-            line = proc.stdout.readline()
+            # wait at most a second for output, so that a silent child is
+            # still killed at the cap (readline alone would block past it)
+            ready, _, _ = select.select([proc.stdout], [], [], 1.0)
+            line = proc.stdout.readline() if ready else ""
             if line:
                 sys.stdout.write(line)
                 sys.stdout.flush()

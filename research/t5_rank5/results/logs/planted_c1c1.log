@@ -1,0 +1,4 @@
+  gamma ('C1', 'C1') kind same base (140, 159, 539): 1 hits, planted recovered, 3.31s, order [1, 2, 3] exact [1, 0] scan 0 scan2 433 pair 1
+  gamma ('C1', 'C1') kind same1 base (598, 1002, 1016): 50 hits, planted recovered, 23.14s, order [1, 2, 3] exact [1, 35] scan 0 scan2 1051 pair 27
+  gamma ('C1', 'C1') kind samec base (727, 785, 1075): 1024 hits, planted recovered, 362.02s, order [1, 2, 3] exact [1, 928] scan 0 scan2 1185 pair 192
+[run.py] KILLED at cap after 590.8s

@@ -1,0 +1,18 @@
+{
+ "git": "e8684222136b0ab2d117359d678c4b281812a710",
+ "generated": "2026-09-24T06:47:42+00:00",
+ "covers3": 4,
+ "covers4": 4697,
+ "repeated4": 12,
+ "degenerate5": 43773,
+ "covers4_sha256": "e83212833195240a34594635b9e775f3fa3c64a5b908bec2e6b37677e12d624c",
+ "degenerate_sha256": "669d76129e8d33a7e135fe75fda4a56b4afa493968565c5255738af7a2304278",
+ "census_sha256": "3342a0616b67edbf05c112e6d1061be358d25fd7c9243740ef4ba5188c87eaab",
+ "census_covers": 6115136,
+ "units": 4672,
+ "seconds": 37.91071701049805,
+ "covers4_equal": true,
+ "degenerate_equal": true,
+ "census_units_equal": true,
+ "pass": true
+}

@@ -1,0 +1,2 @@
+stage C (reference): 224 covers, 224 runs: per cover mean 0.2796s, median 0.0091s, max 12.221s; by pattern {'(2, 1, 1, 1)': 0.0528, '(3, 1, 1)': 0.0139, '(2, 2, 1)': 4.3248}; per unit {'0': 0.2796}; hits 0, refused 0, undecided 0, capped 0; histogram {'0': 158, '1,1': 10, '68,1020': 4, '29,29': 4, '9,18': 3, '8,8': 3, '38,380': 3, '9,45': 3, '95,665': 3, '95,1520': 3}
+[run.py] exit 0 after 63.3s

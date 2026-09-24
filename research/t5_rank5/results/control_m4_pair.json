@@ -1,0 +1,72 @@
+{
+ "git": "59a0c992459d5b32122981d010e4407e51e8b740",
+ "generated": "2026-09-24T06:46:45+00:00",
+ "x0": [
+  0
+ ],
+ "bases": 211,
+ "independent": 206,
+ "degenerate": 5,
+ "group_order": 1944,
+ "stored": 1,
+ "expected": 1,
+ "recovered": 1,
+ "unknown": 0,
+ "missing": 0,
+ "extra": 0,
+ "seconds": 0.7199349403381348,
+ "stats": {
+  "matched": 211,
+  "refused": 0,
+  "hits": 5,
+  "non_genuine": 0,
+  "undecided": 0,
+  "native_runs": 206
+ },
+ "matcher": "native",
+ "pass": true,
+ "recovered_from": {
+  "(889, 1329, 5623)": [
+   [
+    [
+     1,
+     6,
+     9
+    ],
+    0
+   ],
+   [
+    [
+     1,
+     6,
+     9
+    ],
+    0
+   ],
+   [
+    [
+     10,
+     12,
+     21
+    ],
+    0
+   ],
+   [
+    [
+     10,
+     12,
+     21
+    ],
+    0
+   ],
+   [
+    [
+     10,
+     12,
+     21
+    ],
+    0
+   ]
+  ]
+ }
+}

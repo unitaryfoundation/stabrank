@@ -1,0 +1,12 @@
+partition research/t5_rank5/partition.json: qubit_T m=5 rank=5 n1=2 x0=[0], 160 batches (A 5, B 138, C 12, beta 4, gamma 1), sha256 41d4cdad723391d2
+lists re-enumerated in 37s: 4 full 3-covers (equal to the stored), 4709 full 4-covers (equal to the stored census), 43773 degenerate 5-multisets (equal to the stored list)
+batches present 5/160, missing 155
+stage A: 1/5 batches, 1559276 covers, 1559276 matched, 0 refused, 0 undecided, 0 hits; 0.07 CPU-h (267s per batch, 0.2 ms per cover); projected stage total 0.29 CPU-h at this rate (partition estimate 0.75)
+stage B: 1/138 batches, 150 covers, 150 matched, 0 refused, 0 undecided, 0 hits; 0.08 CPU-h (285s per batch, 1897.9 ms per cover); projected stage total 10.89 CPU-h at this rate (partition estimate 22.93)
+stage C: 1/12 batches, 1927 covers, 1927 matched, 0 refused, 0 undecided, 0 hits; 0.04 CPU-h (128s per batch, 66.5 ms per cover); projected stage total 0.43 CPU-h at this rate (partition estimate 0.71)
+stage beta: 1/4 batches, 1178 covers, 7068 matched, 0 refused, 0 undecided, 0 hits; 0.06 CPU-h (200s per batch, 169.7 ms per cover); projected stage total 0.22 CPU-h at this rate (partition estimate 0.57)
+stage gamma: 1/1 batches, 4 covers, 84 matched, 0 refused, 0 undecided, 0 hits; 0.02 CPU-h (62s per batch, 15417.5 ms per cover); projected stage total 0.02 CPU-h at this rate (partition estimate 0.03)
+partial: every stored check passes for the 5 batches present; 155 to go
+wrote research/t5_rank5/batch_manifest.partial.json: 5 batch(es) (partial)
+dry run: re-runs skipped; NOT CERTIFIED
+[run.py] exit 1 after 38.0s
