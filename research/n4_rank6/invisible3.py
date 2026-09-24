@@ -120,7 +120,7 @@ import numpy as np
 
 import common  # noqa: E402  (research/n4_rank6/common.py)
 from common import FLATS, OFFSETS, P1, P2, X0, add, offset_index, pidx  # noqa: E402
-from matcher import (COMP, E1, E2, W3P, Block, BudgetExceeded, Family, TermOpts, UnpinnedFamily,  # noqa: E402
+from matcher import (COMP, E1, E2, W3P, Block, Budget, BudgetExceeded, Family, TermOpts, UnpinnedFamily,  # noqa: E402
                      _affine_solve_C, _ProjectorCache, pauli_apply, rank_mod, reconstruct_block, restrict,
                      slice_system, solve_slice3, vector_target)
 from cover_census import _canon_rows, _reduce  # noqa: E402
@@ -266,6 +266,14 @@ class InvisibleMatcher3:
     def _check_deadline(self, where):
         if self.deadline is not None and time.time() > self.deadline:
             raise BudgetExceeded(f"{where}: past the batch deadline")
+
+    def _budget(self):
+        """A matcher.Budget carrying the deadline into solve_slice3."""
+        if self.deadline is None:
+            return None
+        b = Budget()
+        b.deadline = self.deadline
+        return b
 
     # -- the projected dictionary tables and the one-fresh-term scan --
     def _table(self, blocks, Ssel, Ps):
@@ -660,7 +668,7 @@ class InvisibleMatcher3:
 
                 if not fresh:
                     sols = solve_slice3(arrays, blocks, f, rhs, self.rng, stats=stats, proj=proj,
-                                        where=f"exact {y}", max_cand=self.max_cand)
+                                        where=f"exact {y}", max_cand=self.max_cand, budget=self._budget())
                     n_exact += len(sols)
                     for combo, Ssel, f2 in sols:
                         if f2.has_zero_coefficient(exempt):
