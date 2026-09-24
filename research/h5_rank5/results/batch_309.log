@@ -1,0 +1,3 @@
+batch 309 of 323: stage C, 1779 covers, compiled kernels, deadline 3600s
+batch 309: 1779 covers, 3558 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 92s, wall 92s; deterministic sha256 a44c2d131461b388
+batch 309 complete: no hit is a decomposition of |H>^5; written research/h5_rank5/results/batch_309.json

@@ -1,0 +1,3 @@
+batch 80 of 323: stage B, 43 covers, compiled kernels, deadline 3600s
+batch 80: 43 covers, 86 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 413s, wall 413s; deterministic sha256 c750e1afd640e3d4
+batch 80 complete: no hit is a decomposition of |H>^5; written research/h5_rank5/results/batch_80.json

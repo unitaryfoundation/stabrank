@@ -1,0 +1,3 @@
+batch 92 of 323: stage B, 43 covers, compiled kernels, deadline 3600s
+batch 92: 43 covers, 86 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 424s, wall 424s; deterministic sha256 8bf086d0ef70b6f2
+batch 92 complete: no hit is a decomposition of |H>^5; written research/h5_rank5/results/batch_92.json

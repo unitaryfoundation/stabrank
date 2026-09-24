@@ -1,0 +1,3 @@
+batch 318 of 323: stage beta, 694 covers, compiled kernels, deadline 3600s
+batch 318: 694 covers, 1388 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 296s, wall 297s; deterministic sha256 b08a664586dbc8ed
+batch 318 complete: no hit is a decomposition of |H>^5; written research/h5_rank5/results/batch_318.json

@@ -1,0 +1,3 @@
+batch 157 of 323: stage B, 42 covers, compiled kernels, deadline 3600s
+batch 157: 42 covers, 84 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 379s, wall 380s; deterministic sha256 18d9ef1a6d2adde5
+batch 157 complete: no hit is a decomposition of |H>^5; written research/h5_rank5/results/batch_157.json

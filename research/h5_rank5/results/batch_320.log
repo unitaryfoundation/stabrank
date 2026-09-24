@@ -1,0 +1,3 @@
+batch 320 of 323: stage beta, 693 covers, compiled kernels, deadline 3600s
+batch 320: 693 covers, 1386 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 288s, wall 289s; deterministic sha256 abad7c4e4df2e17b
+batch 320 complete: no hit is a decomposition of |H>^5; written research/h5_rank5/results/batch_320.json
