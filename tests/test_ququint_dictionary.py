@@ -193,7 +193,8 @@ def test_t5_certificate_claims_match(name, script):
     assert cert["script"] == "verify_challenge/" + script
     src = open(os.path.join(ROOT, cert["script"])).read()
     assert f'print("{cert["expect"]}")' in src
-    assert f"Printed claim: {cert['expect']}" in src
+    assert (f"Printed claim: {cert['expect']}" in src
+            or f"Printed claims: {cert['expect']}" in src)
 
 
 def test_t5_m1_exact_exclusion():
