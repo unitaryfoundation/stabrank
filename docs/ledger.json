@@ -2198,6 +2198,70 @@
     "note": "The exclusion of every rank-5 decomposition of |H>^5 lives in the stored batch outputs under research/h5_rank5/results/ (partition.json: 16 stage A batches over the 5,939,465 full 5-covers of |H>^3 with distinct independent base states, 293 stage B batches over the 12,390 dependent covers, 9 stage C batches over the 16,006 covers with a repeated state, including the cancel-at-base multisets, and 5 stage beta batches over the 3,466 full 4-covers, 6 of them with a repeated state), each cover matched at the base points 00 and 01 along qubits 1, 2 and every candidate re-decided mod 2013265921 and numerically: 0 hits, 0 refused, 0 undecided. The certificate checks the partition against the enumerator and the census hash, re-enumerates the degenerate covers and the stage beta bases, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/h5_rank5/batch.py, which regenerates any batch (batch.py K).",
     "total": 323
    }
+  },
+  {
+   "slug": "qubit_T-m5-lower-5",
+   "orbit": "qubit_T",
+   "m": 5,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "attested",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-24",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "two-qubit base slice: every rank-4 decomposition of |T>^5 has, along qubits 1, 2 at a base point in {00, 01}, all four terms visible, so its base is a full 4-cover of |T>^3; every such cover is completed slice by slice under the slice structure lemma, modulo 65521 over Q(zeta_24) with exact re-decision",
+   "reference": "stabrank research/t5_rank4",
+   "compute": {
+    "cpu_hours": 0.002,
+    "wall_clock_hours": 0.002,
+    "runs": 1,
+    "hardware": "Apple M5 Pro laptop (macOS 26.5.1), one core at nice 19 under load from other sessions, 2026-09-24 02:25 UTC; the aggregate's two seeded re-runs (batches 0 and 1) on the same machine at 02:26 UTC"
+   },
+   "budget_s": 1800,
+   "attested": {
+    "batches": "research/t5_rank4/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 0.002,
+    "hardware": "Apple M5 Pro laptop (macOS 26.5.1), one core at nice 19 under load from other sessions, 2026-09-24 02:25 UTC; the aggregate's two seeded re-runs (batches 0 and 1) on the same machine at 02:26 UTC",
+    "note": "The exclusion of every rank-4 decomposition of |T>^5 lives in the stored batch outputs under research/t5_rank4/results/ (partition.json over the census covers4.json: the 4,709 full 4-covers of |T>^3 up to the unitary symmetry of |T>^3, 4,697 of distinct independent states and 12 with a repeated state, each matched at the base points 00 and 01 along qubits 1, 2 with every candidate re-decided mod 2013265921 and numerically): 0 hits, 0 refused, 0 undecided. The certificate re-enumerates the census, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/t5_rank4/batch.py, which regenerates any batch (batch.py K).",
+    "total": 6
+   }
+  },
+  {
+   "slug": "qubit_T-m6-lower-5",
+   "orbit": "qubit_T",
+   "m": 6,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "attested",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-24",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "projection monotonicity applied to the attested exact rank-4 exclusion at m=5",
+   "reference": "stabrank research/t5_rank4",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond the m=5 certificate, which this cell re-runs"
+   },
+   "budget_s": 1800,
+   "attested": {
+    "batches": "research/t5_rank4/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 0.002,
+    "hardware": "Apple M5 Pro laptop (macOS 26.5.1), one core at nice 19 under load from other sessions, 2026-09-24 02:25 UTC; the aggregate's two seeded re-runs (batches 0 and 1) on the same machine at 02:26 UTC",
+    "note": "The exclusion of every rank-4 decomposition of |T>^5 lives in the 6 stored batch outputs under research/t5_rank4/results/ (the 4,709 full 4-covers of |T>^3 up to symmetry, each matched at the base points 00 and 01 along qubits 1, 2 with every candidate re-decided mod 2013265921 and numerically): 0 hits, 0 refused, 0 undecided. The certificate re-enumerates the census, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/t5_rank4/batch.py, which regenerates any batch (batch.py K).",
+    "total": 6
+   }
   }
  ]
 }
