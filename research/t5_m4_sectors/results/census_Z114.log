@@ -1,0 +1,17 @@
+string Z^1 Z^1 Z^4, eigenvalue w^0: dictionary 3900 states, unitary symmetry group of order 50, 102 orbits [0.5s]
+  pivot 1/102 (state 24): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 196} [1s]
+  pivot 11/102 (state 501): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 1711} [8s]
+  pivot 21/102 (state 643): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 3717} [18s]
+  pivot 31/102 (state 2464): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 5638} [28s]
+  pivot 41/102 (state 3121): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 1, 4: 6394} [35s]
+  pivot 51/102 (state 3421): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 1, 4: 6825} [41s]
+  pivot 61/102 (state 3519): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 1, 4: 7104} [46s]
+  pivot 71/102 (state 3613): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 1, 4: 7264} [48s]
+  pivot 81/102 (state 3733): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 1, 4: 7332} [49s]
+  pivot 91/102 (state 3838): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 1, 4: 7382} [50s]
+  pivot 101/102 (state 3868): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 1, 4: 7396} [50s]
+  pivot 102/102 (state 3873): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 1, 4: 7400} [50s]
+hits per k: {'1': 0, '2': 0, '3': 0, '4': 0}; candidates {'1': 0, '2': 0, '3': 1, '4': 7400}; units {'1': 1, '2': 102, '3': 102, '4': 155448}; 50s
+VERDICT: the Z^1 Z^1 Z^4 sector of |T5>^3 has stabilizer rank >= 5 (= 5 with the five sub-sector products)
+wrote /Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-a48dcc4fc225d52f9/research/t5_m4_sectors/results/census_Z114_d0.json
+[run.py] exit 0 after 50.9s

@@ -1,0 +1,11 @@
+string Z^1 Z^1 Z^1, eigenvalue w^1: dictionary 3900 states, unitary symmetry group of order 150, 48 orbits [0.6s]
+  pivot 1/48 (state 24): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 96} [0s]
+  pivot 11/48 (state 754): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 2134} [9s]
+  pivot 21/48 (state 1996): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 2950} [15s]
+  pivot 31/48 (state 2621): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 3149} [18s]
+  pivot 41/48 (state 3713): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 3214} [20s]
+  pivot 48/48 (state 3862): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 3215} [20s]
+hits per k: {'1': 0, '2': 0, '3': 0, '4': 0}; candidates {'1': 0, '2': 0, '3': 0, '4': 3215}; units {'1': 1, '2': 48, '3': 48, '4': 53671}; 20s
+VERDICT: the Z^1 Z^1 Z^1 sector of |T5>^3 has stabilizer rank >= 5 (= 5 with the five sub-sector products)
+wrote /Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-a48dcc4fc225d52f9/research/t5_m4_sectors/results/census_Z111_d1.json
+[run.py] exit 0 after 20.5s
