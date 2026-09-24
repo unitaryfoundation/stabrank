@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "tier": "attested",
+  "detail": "certificate script asserted: CERTIFIED chi(qubit_H^5) >= 6; re-ran 2 of 323 stored batches from scratch chosen from seed 20260923 and only checked the SHA-256 of the other 321 against research/h5_rank5/batch_manifest.json; the full enumeration (37.2 CPU-h on RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host (load 25 to 40), fifteen batches in parallel at nice 19, 2026-09-23 21:56 to 2026-09-24 00:28 UTC (stage A probe batch 0 at 21:56, the 323-batch run 22:02 to 00:28); the aggregate's two seeded re-runs (batches 19 and 319) on the same pod at 00:28 UTC) was not re-run",
+  "gamma": null,
+  "content_hash": "0ecad4c46b64be7d"
+}
