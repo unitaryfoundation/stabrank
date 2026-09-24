@@ -1,0 +1,39 @@
+{
+ "git": "a3468f5c21708d5b4b28f457d54167625324ee0d",
+ "generated": "2026-09-24T12:11:50+00:00",
+ "N": 3900,
+ "group_order": 50,
+ "pivots": 98,
+ "census": {
+  "1": {
+   "k": 1,
+   "hits": [],
+   "candidates": 0,
+   "units": 1,
+   "seconds": 4.076957702636719e-05
+  },
+  "2": {
+   "k": 2,
+   "hits": [],
+   "candidates": 0,
+   "units": 98,
+   "seconds": 0.18697500228881836
+  },
+  "3": {
+   "k": 3,
+   "hits": [],
+   "candidates": 0,
+   "units": 98,
+   "seconds": 0.2080690860748291
+  },
+  "4": {
+   "k": 4,
+   "hits": [],
+   "candidates": 7367,
+   "units": 155422,
+   "seconds": 92.21132111549377
+  }
+ },
+ "passed": true,
+ "seconds": 92.63471388816833
+}

@@ -1,0 +1,832 @@
+{
+ "seed": 11,
+ "git": "a3468f5c21708d5b4b28f457d54167625324ee0d",
+ "generated": "2026-09-24T12:10:03+00:00",
+ "path": "native",
+ "plants": [
+  {
+   "kind": "random",
+   "states": [
+    501,
+    521,
+    1946,
+    2301,
+    3107
+   ],
+   "coeffs": [
+    1,
+    3,
+    2,
+    4,
+    5
+   ],
+   "pivot": 501,
+   "partner": 521,
+   "sets": 1,
+   "candidates": 96831,
+   "members": 3378,
+   "listed": true,
+   "full_flags": [
+    true,
+    true
+   ],
+   "decomposition": true,
+   "coefficients_recovered": true,
+   "full_sets": 1,
+   "status": "recovered",
+   "seconds": 0.9812150001525879
+  },
+  {
+   "kind": "random",
+   "states": [
+    505,
+    2114,
+    2940,
+    3697,
+    3819
+   ],
+   "coeffs": [
+    5,
+    3,
+    1,
+    2,
+    4
+   ],
+   "pivot": 505,
+   "partner": 2114,
+   "sets": 1,
+   "candidates": 14761,
+   "members": 1785,
+   "listed": true,
+   "full_flags": [
+    true,
+    true
+   ],
+   "decomposition": true,
+   "coefficients_recovered": true,
+   "full_sets": 1,
+   "status": "recovered",
+   "seconds": 0.2585008144378662
+  },
+  {
+   "kind": "random",
+   "states": [
+    964,
+    1789,
+    1998,
+    2613,
+    3070
+   ],
+   "coeffs": [
+    2,
+    3,
+    5,
+    4,
+    1
+   ],
+   "pivot": 964,
+   "partner": 1789,
+   "sets": 1,
+   "candidates": 24848,
+   "members": 2110,
+   "listed": true,
+   "full_flags": [
+    true,
+    true
+   ],
+   "decomposition": true,
+   "coefficients_recovered": true,
+   "full_sets": 1,
+   "status": "recovered",
+   "seconds": 0.3732569217681885
+  },
+  {
+   "kind": "random",
+   "states": [
+    1377,
+    1885,
+    2157,
+    3210,
+    3835
+   ],
+   "coeffs": [
+    3,
+    5,
+    2,
+    1,
+    4
+   ],
+   "pivot": 1377,
+   "partner": 1885,
+   "sets": 1,
+   "candidates": 22284,
+   "members": 2014,
+   "listed": true,
+   "full_flags": [
+    true,
+    true
+   ],
+   "decomposition": true,
+   "coefficients_recovered": true,
+   "full_sets": 1,
+   "status": "recovered",
+   "seconds": 0.3348419666290283
+  },
+  {
+   "kind": "random",
+   "states": [
+    56,
+    1080,
+    1820,
+    2672,
+    3033
+   ],
+   "coeffs": [
+    3,
+    1,
+    5,
+    2,
+    4
+   ],
+   "pivot": 56,
+   "partner": 1080,
+   "sets": 1,
+   "candidates": 58063,
+   "members": 2819,
+   "listed": true,
+   "full_flags": [
+    true,
+    true
+   ],
+   "decomposition": true,
+   "coefficients_recovered": true,
+   "full_sets": 1,
+   "status": "recovered",
+   "seconds": 0.6786148548126221
+  },
+  {
+   "kind": "random",
+   "states": [
+    298,
+    788,
+    2197,
+    3514,
+    3884
+   ],
+   "coeffs": [
+    1,
+    4,
+    3,
+    2,
+    5
+   ],
+   "pivot": 298,
+   "partner": 788,
+   "sets": 1,
+   "candidates": 77919,
+   "members": 3111,
+   "listed": true,
+   "full_flags": [
+    true,
+    true
+   ],
+   "decomposition": true,
+   "coefficients_recovered": true,
+   "full_sets": 1,
+   "status": "recovered",
+   "seconds": 0.8132679462432861
+  },
+  {
+   "kind": "random",
+   "states": [
+    1321,
+    1826,
+    2438,
+    2719,
+    3532
+   ],
+   "coeffs": [
+    5,
+    1,
+    3,
+    4,
+    2
+   ],
+   "pivot": 1321,
+   "partner": 1826,
+   "sets": 1,
+   "candidates": 24376,
+   "members": 2073,
+   "listed": true,
+   "full_flags": [
+    true,
+    true
+   ],
+   "decomposition": true,
+   "coefficients_recovered": true,
+   "full_sets": 1,
+   "status": "recovered",
+   "seconds": 0.3214559555053711
+  },
+  {
+   "kind": "random",
+   "states": [
+    349,
+    1791,
+    2694,
+    3194,
+    3340
+   ],
+   "coeffs": [
+    1,
+    4,
+    3,
+    5,
+    2
+   ],
+   "pivot": 349,
+   "partner": 1791,
+   "sets": 1,
+   "candidates": 23859,
+   "members": 2108,
+   "listed": true,
+   "full_flags": [
+    true,
+    true
+   ],
+   "decomposition": true,
+   "coefficients_recovered": true,
+   "full_sets": 1,
+   "status": "recovered",
+   "seconds": 0.3263838291168213
+  },
+  {
+   "kind": "random",
+   "states": [
+    347,
+    1204,
+    1236,
+    3021,
+    3634
+   ],
+   "coeffs": [
+    3,
+    2,
+    4,
+    5,
+    1
+   ],
+   "pivot": 347,
+   "partner": 1204,
+   "sets": 1,
+   "candidates": 51026,
+   "members": 2695,
+   "listed": true,
+   "full_flags": [
+    true,
+    true
+   ],
+   "decomposition": true,
+   "coefficients_recovered": true,
+   "full_sets": 1,
+   "status": "recovered",
+   "seconds": 0.5431883335113525
+  },
+  {
+   "kind": "random",
+   "states": [
+    241,
+    550,
+    762,
+    3598,
+    3837
+   ],
+   "coeffs": [
+    4,
+    1,
+    3,
+    2,
+    5
+   ],
+   "pivot": 241,
+   "partner": 550,
+   "sets": 1,
+   "candidates": 96245,
+   "members": 3349,
+   "listed": true,
+   "full_flags": [
+    true,
+    true
+   ],
+   "decomposition": true,
+   "coefficients_recovered": true,
+   "full_sets": 1,
+   "status": "recovered",
+   "seconds": 0.955388069152832
+  },
+  {
+   "kind": "random",
+   "states": [
+    70,
+    362,
+    1405,
+    2652,
+    2718
+   ],
+   "coeffs": [
+    5,
+    1,
+    3,
+    4,
+    2
+   ],
+   "pivot": 70,
+   "partner": 362,
+   "sets": 1,
+   "candidates": 115155,
+   "members": 3537,
+   "listed": true,
+   "full_flags": [
+    true,
+    true
+   ],
+   "decomposition": true,
+   "coefficients_recovered": true,
+   "full_sets": 1,
+   "status": "recovered",
+   "seconds": 1.0683367252349854
+  },
+  {
+   "kind": "random",
+   "states": [
+    846,
+    952,
+    1006,
+    1228,
+    1859
+   ],
+   "coeffs": [
+    4,
+    5,
+    1,
+    3,
+    2
+   ],
+   "pivot": 846,
+   "partner": 952,
+   "sets": 1,
+   "candidates": 67586,
+   "members": 2947,
+   "listed": true,
+   "full_flags": [
+    true,
+    true
+   ],
+   "decomposition": true,
+   "coefficients_recovered": true,
+   "full_sets": 1,
+   "status": "recovered",
+   "seconds": 0.689978837966919
+  },
+  {
+   "kind": "equal",
+   "states": [
+    156,
+    418,
+    2909,
+    3420,
+    3892
+   ],
+   "coeffs": [
+    1,
+    4,
+    1,
+    3,
+    2
+   ],
+   "pivot": 156,
+   "partner": 418,
+   "sets": 1,
+   "candidates": 103607,
+   "members": 3481,
+   "listed": true,
+   "full_flags": [
+    true,
+    true
+   ],
+   "decomposition": true,
+   "coefficients_recovered": true,
+   "full_sets": 1,
+   "status": "recovered",
+   "seconds": 0.9055612087249756
+  },
+  {
+   "kind": "equal",
+   "states": [
+    316,
+    2577,
+    2699,
+    3427,
+    3569
+   ],
+   "coeffs": [
+    1,
+    1,
+    3,
+    4,
+    2
+   ],
+   "pivot": 316,
+   "partner": 2577,
+   "sets": 1,
+   "candidates": 6095,
+   "members": 1322,
+   "listed": true,
+   "full_flags": [
+    true,
+    true
+   ],
+   "decomposition": true,
+   "coefficients_recovered": true,
+   "full_sets": 1,
+   "status": "recovered",
+   "seconds": 0.12058305740356445
+  },
+  {
+   "kind": "equal",
+   "states": [
+    559,
+    1727,
+    1876,
+    2585,
+    3066
+   ],
+   "coeffs": [
+    1,
+    1,
+    3,
+    2,
+    4
+   ],
+   "pivot": 559,
+   "partner": 1727,
+   "sets": 1,
+   "candidates": 25903,
+   "members": 2172,
+   "listed": true,
+   "full_flags": [
+    true,
+    true
+   ],
+   "decomposition": true,
+   "coefficients_recovered": true,
+   "full_sets": 1,
+   "status": "recovered",
+   "seconds": 0.33678102493286133
+  },
+  {
+   "kind": "equal",
+   "states": [
+    556,
+    635,
+    2122,
+    2492,
+    3894
+   ],
+   "coeffs": [
+    2,
+    3,
+    4,
+    1,
+    1
+   ],
+   "pivot": 556,
+   "partner": 635,
+   "sets": 1,
+   "candidates": 91034,
+   "members": 3264,
+   "listed": true,
+   "full_flags": [
+    true,
+    true
+   ],
+   "decomposition": true,
+   "coefficients_recovered": true,
+   "full_sets": 1,
+   "status": "recovered",
+   "seconds": 0.7835419178009033
+  },
+  {
+   "kind": "pauli",
+   "states": [
+    838,
+    963,
+    1213,
+    2213,
+    2338
+   ],
+   "coeffs": [
+    1,
+    3,
+    4,
+    5,
+    2
+   ],
+   "pivot": 838,
+   "partner": 963,
+   "sets": 1,
+   "candidates": 66942,
+   "members": 2936,
+   "listed": true,
+   "full_flags": [
+    true,
+    true
+   ],
+   "decomposition": true,
+   "coefficients_recovered": true,
+   "full_sets": 1,
+   "status": "recovered",
+   "seconds": 0.6380050182342529
+  },
+  {
+   "kind": "pauli",
+   "states": [
+    1165,
+    1415,
+    1665,
+    2290,
+    2540
+   ],
+   "coeffs": [
+    3,
+    5,
+    4,
+    1,
+    2
+   ],
+   "pivot": 1165,
+   "partner": 1415,
+   "sets": 1,
+   "candidates": 40755,
+   "members": 2484,
+   "listed": true,
+   "full_flags": [
+    true,
+    true
+   ],
+   "decomposition": true,
+   "coefficients_recovered": true,
+   "full_sets": 1,
+   "status": "recovered",
+   "seconds": 0.45085811614990234
+  },
+  {
+   "kind": "pauli",
+   "states": [
+    1041,
+    2416,
+    3291,
+    3666,
+    3791
+   ],
+   "coeffs": [
+    4,
+    3,
+    2,
+    5,
+    1
+   ],
+   "pivot": 1041,
+   "partner": 2416,
+   "sets": 1,
+   "candidates": 8871,
+   "members": 1483,
+   "listed": true,
+   "full_flags": [
+    true,
+    true
+   ],
+   "decomposition": true,
+   "coefficients_recovered": true,
+   "full_sets": 1,
+   "status": "recovered",
+   "seconds": 0.15353798866271973
+  },
+  {
+   "kind": "pauli",
+   "states": [
+    1238,
+    2238,
+    2738,
+    2863,
+    3488
+   ],
+   "coeffs": [
+    2,
+    5,
+    1,
+    3,
+    4
+   ],
+   "pivot": 1238,
+   "partner": 2238,
+   "sets": 1,
+   "candidates": 12011,
+   "members": 1661,
+   "listed": true,
+   "full_flags": [
+    true,
+    true
+   ],
+   "decomposition": true,
+   "coefficients_recovered": true,
+   "full_sets": 1,
+   "status": "recovered",
+   "seconds": 0.19638895988464355
+  },
+  {
+   "kind": "repeated",
+   "states": [
+    2301,
+    2965,
+    3136,
+    3238,
+    3238
+   ],
+   "coeffs": [
+    3,
+    5,
+    4,
+    2,
+    1
+   ],
+   "pivot": 2301,
+   "partner": 2965,
+   "sets": 170,
+   "candidates": 2122,
+   "members": 934,
+   "k4_hits": 1,
+   "k4_candidates": 1,
+   "k4_subsets": [
+    [
+     2301,
+     2965,
+     3136,
+     3238
+    ]
+   ],
+   "kernel_full_sets": 0,
+   "kernel_genuine_full": 0,
+   "flags_agree_with_decisions": true,
+   "planted_set_not_listed": true,
+   "some_set_contains_a_4_subset": true,
+   "status": "recovered",
+   "seconds": 0.08938288688659668
+  },
+  {
+   "kind": "repeated",
+   "states": [
+    1114,
+    1114,
+    2085,
+    2234,
+    2362
+   ],
+   "coeffs": [
+    3,
+    1,
+    2,
+    5,
+    4
+   ],
+   "pivot": 1114,
+   "partner": 2085,
+   "sets": 148,
+   "candidates": 18245,
+   "members": 1814,
+   "k4_hits": 1,
+   "k4_candidates": 1,
+   "k4_subsets": [
+    [
+     1114,
+     2085,
+     2234,
+     2362
+    ]
+   ],
+   "kernel_full_sets": 0,
+   "kernel_genuine_full": 0,
+   "flags_agree_with_decisions": true,
+   "planted_set_not_listed": true,
+   "some_set_contains_a_4_subset": true,
+   "status": "recovered",
+   "seconds": 0.25835609436035156
+  },
+  {
+   "kind": "dependent",
+   "states": [
+    0,
+    5,
+    10,
+    33,
+    49
+   ],
+   "coeffs": [
+    4,
+    1,
+    2,
+    3,
+    5
+   ],
+   "pivot": 0,
+   "partner": 5,
+   "sets": 2901,
+   "candidates": 144326,
+   "members": 3894,
+   "k4_hits": 15,
+   "k4_candidates": 15,
+   "k4_subsets": [
+    [
+     0,
+     5,
+     10,
+     33
+    ],
+    [
+     0,
+     5,
+     10,
+     49
+    ],
+    [
+     0,
+     5,
+     33,
+     49
+    ]
+   ],
+   "kernel_full_sets": 2646,
+   "kernel_genuine_full": 2646,
+   "flags_agree_with_decisions": true,
+   "planted_set_not_listed": true,
+   "some_set_contains_a_4_subset": true,
+   "status": "recovered",
+   "seconds": 1.3658339977264404
+  },
+  {
+   "kind": "dependent",
+   "states": [
+    0,
+    5,
+    10,
+    33,
+    42
+   ],
+   "coeffs": [
+    5,
+    4,
+    3,
+    1,
+    2
+   ],
+   "pivot": 0,
+   "partner": 5,
+   "sets": 2901,
+   "candidates": 149329,
+   "members": 3894,
+   "k4_hits": 15,
+   "k4_candidates": 15,
+   "k4_subsets": [
+    [
+     0,
+     5,
+     10,
+     33
+    ],
+    [
+     0,
+     5,
+     10,
+     42
+    ],
+    [
+     0,
+     5,
+     33,
+     42
+    ]
+   ],
+   "kernel_full_sets": 2646,
+   "kernel_genuine_full": 2646,
+   "flags_agree_with_decisions": true,
+   "planted_set_not_listed": true,
+   "some_set_contains_a_4_subset": true,
+   "status": "recovered",
+   "seconds": 1.3674790859222412
+  }
+ ],
+ "recovered": 24,
+ "total": 24,
+ "passed": true,
+ "seconds": 14.017998695373535
+}

@@ -1,0 +1,16 @@
+{
+ "git": "a3468f5c21708d5b4b28f457d54167625324ee0d",
+ "generated": "2026-09-24T12:08:19+00:00",
+ "pattern": true,
+ "codes": true,
+ "modular": true,
+ "roots_of_unity": true,
+ "supports": true,
+ "w5_mod_p1": 21009,
+ "w5_mod_p2": 815036133,
+ "N": 3900,
+ "group_order": 50,
+ "pivots": 98,
+ "dictionary_sha256": "618955a96555d1f493e578fa4516b6522e7c4153fb68b36a6f6709014a173f30",
+ "passed": true
+}

@@ -1,0 +1,4 @@
+batch 73 of 74: units 141675..155421 (13747 pivot pairs, about 331 pod s), compiled kernel, deadline 560s
+batch 73: 13747 of 13747 units run, 8159653 modular candidates, 0 hits, 0 decompositions, 0 undecided; kernel 245s, wall 246s; deterministic sha256 c1fc768367bd3189
+batch 73 complete: no 5-set of its units has |T5>^2 in its span; written research/t5q_m2_rank5/results/batch_73.json
+[run.py] exit 0 after 246.4s

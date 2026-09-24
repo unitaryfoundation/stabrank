@@ -1,0 +1,10 @@
+{
+ "sec_per_m2": 7.420409920981588e-08,
+ "sec_per_m2_kernel": 7.420409920981588e-08,
+ "units_sampled": 163,
+ "seconds": 34.24588632583618,
+ "seed": 11,
+ "git": "a3468f5c21708d5b4b28f457d54167625324ee0d",
+ "generated": "2026-09-24T12:12:26+00:00",
+ "hostname": "vincentrusso-MacBook-Pro"
+}
