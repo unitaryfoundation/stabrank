@@ -1,0 +1,4 @@
+batch 15 of 323: stage A, 5100 pivot pairs, Python reference
+batch 15: 26336 covers, 52672 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 8096s, match 216s, wall 8312s; deterministic sha256 9124029e7506de47
+batch 15 complete: no hit is a decomposition of |H>^5; written research/h5_rank5/results/nonative/batch_15.json
+NONATIVE_EXIT 0
