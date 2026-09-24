@@ -1,6 +1,6 @@
 {
  "generated_from": "bounds/",
- "head": "385fd48af6aee9cebb524faa3254799d619a8499",
+ "head": "70fffa011385518adc4095cd608a1930d8271863",
  "generated": "2026-09-24",
  "since": "2026-09-15",
  "exponents": [
@@ -106,15 +106,15 @@
    "published_txt": "log\u20853",
    "reference": null,
    "best": {
-    "gamma": 0.6460148371100896,
+    "gamma": 0.5,
     "tier": "lean",
     "m": 2,
-    "rank": 8,
-    "slug": "T5-m2-upper-8",
-    "date": "2026-09-21"
+    "rank": 5,
+    "slug": "T5-m2-upper-5",
+    "date": "2026-09-24"
    },
    "verdict": "beats",
-   "gap": -0.036591357375895806
+   "gap": -0.18260619448598536
   }
  ],
  "cells": [
@@ -962,26 +962,33 @@
     "moved_since": true
    },
    "upper": {
-    "rank": 8,
+    "rank": 5,
     "tier": "lean",
-    "slug": "T5-m2-upper-8",
-    "date": "2026-09-21",
-    "board_date": "2026-09-21",
+    "slug": "T5-m2-upper-5",
+    "date": "2026-09-24",
+    "board_date": "2026-09-24",
     "moved_since": true
    },
-   "settled": false,
+   "settled": true,
    "moved_since": true
   },
   {
    "orbit": "T5",
    "m": 3,
-   "lower": null,
+   "lower": {
+    "rank": 5,
+    "tier": "reproduced",
+    "slug": "T5-m3-lower-5",
+    "date": "2026-09-24",
+    "board_date": "2026-09-24",
+    "moved_since": true
+   },
    "upper": {
-    "rank": 24,
-    "tier": "verified",
-    "slug": "T5-m3-upper-24",
-    "date": "2026-09-23",
-    "board_date": "2026-09-23",
+    "rank": 15,
+    "tier": "lean",
+    "slug": "T5-m3-upper-15",
+    "date": "2026-09-24",
+    "board_date": "2026-09-24",
     "moved_since": true
    },
    "settled": false,
@@ -990,13 +997,20 @@
   {
    "orbit": "T5",
    "m": 4,
-   "lower": null,
+   "lower": {
+    "rank": 5,
+    "tier": "reproduced",
+    "slug": "T5-m4-lower-5",
+    "date": "2026-09-24",
+    "board_date": "2026-09-24",
+    "moved_since": true
+   },
    "upper": {
-    "rank": 64,
-    "tier": "verified",
-    "slug": "T5-m4-upper-64",
-    "date": "2026-09-23",
-    "board_date": "2026-09-23",
+    "rank": 25,
+    "tier": "lean",
+    "slug": "T5-m4-upper-25",
+    "date": "2026-09-24",
+    "board_date": "2026-09-24",
     "moved_since": true
    },
    "settled": false,
@@ -1999,13 +2013,31 @@
    "orbit": "T5",
    "m": 2,
    "rank": 5,
-   "runs": 2,
+   "runs": 76,
    "log_runs": 0,
-   "cpu_hours": 0.04,
-   "solutions": 1,
-   "cpu_hours_per_solution": 0.04,
+   "cpu_hours": 13.44,
+   "solutions": 2,
+   "cpu_hours_per_solution": 6.72,
    "bounds": [
-    "T5-m2-lower-5"
+    "T5-m2-lower-5",
+    "T5-m2-upper-5"
+   ],
+   "board": [
+    "lean",
+    "reproduced"
+   ]
+  },
+  {
+   "orbit": "T5",
+   "m": 3,
+   "rank": 5,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "T5-m3-lower-5"
    ],
    "board": [
     "reproduced"
@@ -2014,33 +2046,49 @@
   {
    "orbit": "T5",
    "m": 3,
-   "rank": 24,
+   "rank": 15,
    "runs": 1,
    "log_runs": 0,
    "cpu_hours": 0.001,
    "solutions": 1,
    "cpu_hours_per_solution": 0.001,
    "bounds": [
-    "T5-m3-upper-24"
+    "T5-m3-upper-15"
    ],
    "board": [
-    "verified"
+    "lean"
    ]
   },
   {
    "orbit": "T5",
    "m": 4,
-   "rank": 64,
+   "rank": 5,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "T5-m4-lower-5"
+   ],
+   "board": [
+    "reproduced"
+   ]
+  },
+  {
+   "orbit": "T5",
+   "m": 4,
+   "rank": 25,
    "runs": 1,
    "log_runs": 0,
    "cpu_hours": 0.001,
    "solutions": 1,
    "cpu_hours_per_solution": 0.001,
    "bounds": [
-    "T5-m4-upper-64"
+    "T5-m4-upper-25"
    ],
    "board": [
-    "verified"
+    "lean"
    ]
   },
   {
@@ -2195,20 +2243,20 @@
   {
    "date": "2026-09-23",
    "seeded": false,
-   "cpu_hours": 124.00699999999999,
-   "discoveries": 10,
+   "cpu_hours": 124.005,
+   "discoveries": 8,
    "median_declared": 0.001,
-   "cum_cpu_hours": 245.80761111111107,
-   "cum_discoveries": 90
+   "cum_cpu_hours": 245.8056111111111,
+   "cum_discoveries": 88
   },
   {
    "date": "2026-09-24",
    "seeded": false,
-   "cpu_hours": 73.602,
-   "discoveries": 5,
-   "median_declared": 0.002,
-   "cum_cpu_hours": 319.4096111111111,
-   "cum_discoveries": 95
+   "cpu_hours": 87.004,
+   "discoveries": 10,
+   "median_declared": 0.001,
+   "cum_cpu_hours": 332.8096111111111,
+   "cum_discoveries": 98
   }
  ],
  "bounds": [
@@ -3989,6 +4037,41 @@
    }
   },
   {
+   "slug": "T5-m2-upper-5",
+   "file": "bounds/T5-m2-upper-5.json",
+   "orbit": "T5",
+   "m": 2,
+   "direction": "upper",
+   "rank": 5,
+   "tier": "lean",
+   "ok": true,
+   "date": "2026-09-24",
+   "author": "this repository",
+   "reference": "stabrank docs/notes/t5q_m2_rank5_exclusion.md",
+   "method": "direct census of the 5-sets of two-ququint stabilizer states whose span contains |T5>^2 (compiled 5-cover kernel, one set per orbit of the unitary symmetry group), then exact refit",
+   "pull_request": 138,
+   "merge_commit": "70fffa011385518adc4095cd608a1930d8271863",
+   "merge_date": "2026-09-24",
+   "added_commit": "adc82188a67452918eb9392d57d5b8fe11b61a68",
+   "added_date": "2026-09-24",
+   "added_subject": "chi(T5^2) = 5: the rank-5 witness of |T5>^2 and its products at m = 3 and 4",
+   "receipt": null,
+   "receipt_matches": null,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": "LeanProofs.T5M2StabRank",
+   "lean_theorem": "t5_m2_stabRankP_le_five",
+   "lean_receipt": "certs/lean-LeanProofs-T5M2StabRank.json",
+   "lean_receipt_ok": true,
+   "compute": {
+    "cpu_hours": 13.4,
+    "wall_clock_hours": 1.06,
+    "runs": 74,
+    "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host, fifteen batches in parallel at nice 19 (2026-09-24 12:32 to 13:36 UTC); about 0.3 laptop CPU-hours of controls before it"
+   }
+  },
+  {
    "slug": "T5-m2-upper-8",
    "file": "bounds/T5-m2-upper-8.json",
    "orbit": "T5",
@@ -4024,33 +4107,68 @@
    }
   },
   {
-   "slug": "T5-m3-upper-24",
-   "file": "bounds/T5-m3-upper-24.json",
+   "slug": "T5-m3-lower-5",
+   "file": "bounds/T5-m3-lower-5.json",
    "orbit": "T5",
    "m": 3,
-   "direction": "upper",
-   "rank": 24,
-   "tier": "verified",
+   "direction": "lower",
+   "rank": 5,
+   "tier": "reproduced",
    "ok": true,
-   "date": "2026-09-23",
+   "date": "2026-09-24",
    "author": "this repository",
-   "reference": "stabrank research/constructions/product_witness.py",
-   "method": "structured construction",
-   "pull_request": 115,
-   "merge_commit": "2ce2188bcde0855200b915c35bedefc598af266a",
-   "merge_date": "2026-09-23",
-   "added_commit": "bd2b13d4cf153ba9321cfa2faf4143e5c8472ba3",
-   "added_date": "2026-09-23",
-   "added_subject": "Sweep of 2026-09-23: T5 and qutrit product witnesses, a T5 m=2 rank-7 search, literature update",
-   "receipt": "certs/T5-m3-upper-24.json",
+   "reference": "stabrank verify_challenge",
+   "method": "projection monotonicity applied to the exact rank-4 exclusion at m=2",
+   "pull_request": 138,
+   "merge_commit": "70fffa011385518adc4095cd608a1930d8271863",
+   "merge_date": "2026-09-24",
+   "added_commit": "21ac4ab44e2fb5178528e0b66c4800581af82753",
+   "added_date": "2026-09-24",
+   "added_subject": "T5 m = 3 and 4: lower bound 5 by projection from the rank-4 exclusion at m = 2",
+   "receipt": "certs/T5-m3-lower-5.json",
    "receipt_matches": true,
-   "certificate_script": null,
+   "certificate_script": "verify_challenge/cert_t5_m2_rank4.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
    "lean_theorem": null,
    "lean_receipt": null,
    "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond the m=2 certificate, which this cell re-runs"
+   }
+  },
+  {
+   "slug": "T5-m3-upper-15",
+   "file": "bounds/T5-m3-upper-15.json",
+   "orbit": "T5",
+   "m": 3,
+   "direction": "upper",
+   "rank": 15,
+   "tier": "lean",
+   "ok": true,
+   "date": "2026-09-24",
+   "author": "this repository",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "method": "structured construction",
+   "pull_request": 138,
+   "merge_commit": "70fffa011385518adc4095cd608a1930d8271863",
+   "merge_date": "2026-09-24",
+   "added_commit": "adc82188a67452918eb9392d57d5b8fe11b61a68",
+   "added_date": "2026-09-24",
+   "added_subject": "chi(T5^2) = 5: the rank-5 witness of |T5>^2 and its products at m = 3 and 4",
+   "receipt": null,
+   "receipt_matches": null,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": "LeanProofs.T5M3StabRank",
+   "lean_theorem": "t5_m3_stabRankP_le_fifteen",
+   "lean_receipt": "certs/lean-LeanProofs-T5M3StabRank.json",
+   "lean_receipt_ok": true,
    "compute": {
     "cpu_hours": 0.001,
     "wall_clock_hours": 0.001,
@@ -4059,33 +4177,68 @@
    }
   },
   {
-   "slug": "T5-m4-upper-64",
-   "file": "bounds/T5-m4-upper-64.json",
+   "slug": "T5-m4-lower-5",
+   "file": "bounds/T5-m4-lower-5.json",
    "orbit": "T5",
    "m": 4,
-   "direction": "upper",
-   "rank": 64,
-   "tier": "verified",
+   "direction": "lower",
+   "rank": 5,
+   "tier": "reproduced",
    "ok": true,
-   "date": "2026-09-23",
+   "date": "2026-09-24",
    "author": "this repository",
-   "reference": "stabrank research/constructions/product_witness.py",
-   "method": "structured construction",
-   "pull_request": 115,
-   "merge_commit": "2ce2188bcde0855200b915c35bedefc598af266a",
-   "merge_date": "2026-09-23",
-   "added_commit": "bd2b13d4cf153ba9321cfa2faf4143e5c8472ba3",
-   "added_date": "2026-09-23",
-   "added_subject": "Sweep of 2026-09-23: T5 and qutrit product witnesses, a T5 m=2 rank-7 search, literature update",
-   "receipt": "certs/T5-m4-upper-64.json",
+   "reference": "stabrank verify_challenge",
+   "method": "projection monotonicity applied to the exact rank-4 exclusion at m=2",
+   "pull_request": 138,
+   "merge_commit": "70fffa011385518adc4095cd608a1930d8271863",
+   "merge_date": "2026-09-24",
+   "added_commit": "21ac4ab44e2fb5178528e0b66c4800581af82753",
+   "added_date": "2026-09-24",
+   "added_subject": "T5 m = 3 and 4: lower bound 5 by projection from the rank-4 exclusion at m = 2",
+   "receipt": "certs/T5-m4-lower-5.json",
    "receipt_matches": true,
-   "certificate_script": null,
+   "certificate_script": "verify_challenge/cert_t5_m2_rank4.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
    "lean_theorem": null,
    "lean_receipt": null,
    "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond the m=2 certificate, which this cell re-runs"
+   }
+  },
+  {
+   "slug": "T5-m4-upper-25",
+   "file": "bounds/T5-m4-upper-25.json",
+   "orbit": "T5",
+   "m": 4,
+   "direction": "upper",
+   "rank": 25,
+   "tier": "lean",
+   "ok": true,
+   "date": "2026-09-24",
+   "author": "this repository",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "method": "structured construction",
+   "pull_request": 138,
+   "merge_commit": "70fffa011385518adc4095cd608a1930d8271863",
+   "merge_date": "2026-09-24",
+   "added_commit": "adc82188a67452918eb9392d57d5b8fe11b61a68",
+   "added_date": "2026-09-24",
+   "added_subject": "chi(T5^2) = 5: the rank-5 witness of |T5>^2 and its products at m = 3 and 4",
+   "receipt": null,
+   "receipt_matches": null,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": "LeanProofs.T5M4StabRank",
+   "lean_theorem": "t5_m4_stabRankP_le_twentyfive",
+   "lean_receipt": "certs/lean-LeanProofs-T5M4StabRank.json",
+   "lean_receipt_ok": true,
    "compute": {
     "cpu_hours": 0.001,
     "wall_clock_hours": 0.001,
