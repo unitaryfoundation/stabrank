@@ -1,0 +1,141 @@
+{
+ "class": "kappa2",
+ "x0": [
+  2,
+  2
+ ],
+ "items": 2685,
+ "rows": [
+  {
+   "cover": [
+    0,
+    36,
+    37,
+    38,
+    72,
+    117
+   ],
+   "seconds": 4.499722957611084,
+   "kappa": 2,
+   "coord_raw": [
+    0
+   ],
+   "coord_solutions": [],
+   "hits": 0,
+   "error": null,
+   "dense_raw": 7268321
+  },
+  {
+   "cover": [
+    8,
+    27,
+    117,
+    174,
+    249,
+    321
+   ],
+   "seconds": 11.61719298362732,
+   "kappa": 2,
+   "coord_raw": [
+    20,
+    20
+   ],
+   "coord_solutions": [
+    20,
+    64
+   ],
+   "hits": 0,
+   "error": null,
+   "dense_raw": 4766966
+  },
+  {
+   "cover": [
+    8,
+    36,
+    72,
+    117,
+    143,
+    345
+   ],
+   "seconds": 8.71802020072937,
+   "kappa": 2,
+   "coord_raw": [
+    602,
+    602
+   ],
+   "coord_solutions": [
+    602,
+    19620
+   ],
+   "hits": 0,
+   "error": null,
+   "dense_raw": 4095553
+  },
+  {
+   "cover": [
+    8,
+    43,
+    117,
+    130,
+    226,
+    239
+   ],
+   "seconds": 6.347170829772949,
+   "kappa": 2,
+   "coord_raw": [
+    80,
+    80
+   ],
+   "coord_solutions": [
+    80,
+    216
+   ],
+   "hits": 0,
+   "error": null,
+   "dense_raw": 4089381
+  },
+  {
+   "cover": [
+    36,
+    45,
+    72,
+    143,
+    306,
+    319
+   ],
+   "seconds": 7.235864162445068,
+   "kappa": 2,
+   "coord_raw": [
+    6,
+    6
+   ],
+   "coord_solutions": [
+    6,
+    36
+   ],
+   "hits": 0,
+   "error": null,
+   "dense_raw": 8169103
+  },
+  {
+   "cover": [
+    41,
+    43,
+    77,
+    79,
+    226,
+    335
+   ],
+   "seconds": 2.779181957244873,
+   "kappa": 2,
+   "coord_raw": [
+    0
+   ],
+   "coord_solutions": [],
+   "hits": 0,
+   "error": null,
+   "dense_raw": 598227
+  }
+ ],
+ "mean_s": 6.86619218190511
+}

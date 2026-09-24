@@ -1,0 +1,41 @@
+{
+ "group_order": 72,
+ "k5": {
+  "full 5-covers (census)": {
+   "multisets": 197440,
+   "orbits": 50719
+  },
+  "dependent 5-covers": {
+   "multisets": 12175,
+   "orbits": 1452
+  },
+  "repeated 5-multisets": {
+   "multisets": 16181,
+   "orbits": 2317
+  },
+  "all": {
+   "multisets": 225796,
+   "orbits": 54488
+  }
+ },
+ "k4": {
+  "full 4-covers (census)": {
+   "multisets": 1403,
+   "orbits": 478
+  },
+  "dependent 4-covers": {
+   "multisets": 31,
+   "orbits": 7
+  },
+  "repeated 4-multisets": {
+   "multisets": 87,
+   "orbits": 20
+  },
+  "all": {
+   "multisets": 1521,
+   "orbits": 505
+  }
+ },
+ "covers3_orbits": 8,
+ "seconds": 2.471086025238037
+}

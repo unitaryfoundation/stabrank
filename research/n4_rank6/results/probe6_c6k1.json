@@ -1,0 +1,187 @@
+{
+ "class": "c6k1",
+ "x0": [
+  2,
+  2
+ ],
+ "items": 7407,
+ "rows": [
+  {
+   "cover": [
+    0,
+    0,
+    8,
+    117,
+    249,
+    345
+   ],
+   "seconds": 6.083755970001221,
+   "kappa": 1,
+   "coord_raw": [
+    511,
+    511
+   ],
+   "coord_solutions": [
+    511,
+    18112
+   ],
+   "hits": 0,
+   "error": null,
+   "dense_raw": 49625
+  },
+  {
+   "cover": [
+    8,
+    8,
+    32,
+    202,
+    259,
+    335
+   ],
+   "seconds": 0.3702068328857422,
+   "kappa": 1,
+   "coord_raw": [
+    10,
+    10
+   ],
+   "coord_solutions": [
+    10,
+    4
+   ],
+   "hits": 0,
+   "error": null,
+   "dense_raw": 139509
+  },
+  {
+   "cover": [
+    8,
+    27,
+    27,
+    113,
+    115,
+    216
+   ],
+   "seconds": 0.3661518096923828,
+   "kappa": 1,
+   "coord_raw": [
+    9,
+    9
+   ],
+   "coord_solutions": [
+    9,
+    15
+   ],
+   "hits": 0,
+   "error": null,
+   "dense_raw": 239351
+  },
+  {
+   "cover": [
+    8,
+    36,
+    77,
+    77,
+    130,
+    249
+   ],
+   "seconds": 0.32206082344055176,
+   "kappa": 1,
+   "coord_raw": [
+    5,
+    5
+   ],
+   "coord_solutions": [
+    5,
+    17
+   ],
+   "hits": 0,
+   "error": null,
+   "dense_raw": 139557
+  },
+  {
+   "cover": [
+    8,
+    46,
+    185,
+    185,
+    226,
+    335
+   ],
+   "seconds": 0.28939223289489746,
+   "kappa": 1,
+   "coord_raw": [
+    0
+   ],
+   "coord_solutions": [],
+   "hits": 0,
+   "error": null,
+   "dense_raw": 671535
+  },
+  {
+   "cover": [
+    36,
+    36,
+    72,
+    131,
+    225,
+    250
+   ],
+   "seconds": 0.41298699378967285,
+   "kappa": 1,
+   "coord_raw": [
+    21,
+    21
+   ],
+   "coord_solutions": [
+    21,
+    37
+   ],
+   "hits": 0,
+   "error": null,
+   "dense_raw": 212179
+  },
+  {
+   "cover": [
+    36,
+    45,
+    45,
+    143,
+    239,
+    319
+   ],
+   "seconds": 0.27507925033569336,
+   "kappa": 1,
+   "coord_raw": [
+    0
+   ],
+   "coord_solutions": [],
+   "hits": 0,
+   "error": null,
+   "dense_raw": 198996
+  },
+  {
+   "cover": [
+    41,
+    43,
+    77,
+    117,
+    117,
+    335
+   ],
+   "seconds": 0.26139211654663086,
+   "kappa": 1,
+   "coord_raw": [
+    8,
+    8
+   ],
+   "coord_solutions": [
+    8,
+    16
+   ],
+   "hits": 0,
+   "error": null,
+   "dense_raw": 125890
+  }
+ ],
+ "mean_s": 1.047628253698349
+}

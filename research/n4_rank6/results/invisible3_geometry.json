@@ -1,0 +1,395 @@
+{
+ "x0": [
+  2,
+  2
+ ],
+ "coordinate_points": [
+  [
+   0,
+   2
+  ],
+  [
+   2,
+   0
+  ]
+ ],
+ "flats": [
+  {
+   "name": "p00",
+   "kind": "point",
+   "points": [
+    [
+     0,
+     0
+    ]
+   ],
+   "contains_coordinate_points": [],
+   "ratios": [
+    0.25
+   ]
+  },
+  {
+   "name": "p01",
+   "kind": "point",
+   "points": [
+    [
+     0,
+     1
+    ]
+   ],
+   "contains_coordinate_points": [],
+   "ratios": [
+    0.25
+   ]
+  },
+  {
+   "name": "p02",
+   "kind": "point",
+   "points": [
+    [
+     0,
+     2
+    ]
+   ],
+   "contains_coordinate_points": [
+    [
+     0,
+     2
+    ]
+   ],
+   "ratios": [
+    -0.5
+   ]
+  },
+  {
+   "name": "p10",
+   "kind": "point",
+   "points": [
+    [
+     1,
+     0
+    ]
+   ],
+   "contains_coordinate_points": [],
+   "ratios": [
+    0.25
+   ]
+  },
+  {
+   "name": "p11",
+   "kind": "point",
+   "points": [
+    [
+     1,
+     1
+    ]
+   ],
+   "contains_coordinate_points": [],
+   "ratios": [
+    0.25
+   ]
+  },
+  {
+   "name": "p12",
+   "kind": "point",
+   "points": [
+    [
+     1,
+     2
+    ]
+   ],
+   "contains_coordinate_points": [],
+   "ratios": [
+    -0.5
+   ]
+  },
+  {
+   "name": "p20",
+   "kind": "point",
+   "points": [
+    [
+     2,
+     0
+    ]
+   ],
+   "contains_coordinate_points": [
+    [
+     2,
+     0
+    ]
+   ],
+   "ratios": [
+    -0.5
+   ]
+  },
+  {
+   "name": "p21",
+   "kind": "point",
+   "points": [
+    [
+     2,
+     1
+    ]
+   ],
+   "contains_coordinate_points": [],
+   "ratios": [
+    -0.5
+   ]
+  },
+  {
+   "name": "L01_000102",
+   "kind": "line",
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ]
+   ],
+   "contains_coordinate_points": [
+    [
+     0,
+     2
+    ]
+   ],
+   "ratios": [
+    0.25,
+    0.25,
+    -0.5
+   ]
+  },
+  {
+   "name": "L01_101112",
+   "kind": "line",
+   "points": [
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ]
+   ],
+   "contains_coordinate_points": [],
+   "ratios": [
+    0.25,
+    0.25,
+    -0.5
+   ]
+  },
+  {
+   "name": "L10_001020",
+   "kind": "line",
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ]
+   ],
+   "contains_coordinate_points": [
+    [
+     2,
+     0
+    ]
+   ],
+   "ratios": [
+    0.25,
+    0.25,
+    -0.5
+   ]
+  },
+  {
+   "name": "L10_011121",
+   "kind": "line",
+   "points": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "contains_coordinate_points": [],
+   "ratios": [
+    0.25,
+    0.25,
+    -0.5
+   ]
+  },
+  {
+   "name": "L11_011220",
+   "kind": "line",
+   "points": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ]
+   ],
+   "contains_coordinate_points": [
+    [
+     2,
+     0
+    ]
+   ],
+   "ratios": [
+    0.25,
+    -0.5,
+    -0.5
+   ]
+  },
+  {
+   "name": "L11_021021",
+   "kind": "line",
+   "points": [
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "contains_coordinate_points": [
+    [
+     0,
+     2
+    ]
+   ],
+   "ratios": [
+    -0.5,
+    0.25,
+    -0.5
+   ]
+  },
+  {
+   "name": "L12_001221",
+   "kind": "line",
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "contains_coordinate_points": [],
+   "ratios": [
+    0.25,
+    -0.5,
+    -0.5
+   ]
+  },
+  {
+   "name": "L12_021120",
+   "kind": "line",
+   "points": [
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ]
+   ],
+   "contains_coordinate_points": [
+    [
+     0,
+     2
+    ],
+    [
+     2,
+     0
+    ]
+   ],
+   "ratios": [
+    -0.5,
+    0.25,
+    -0.5
+   ]
+  }
+ ],
+ "gamma_flat_multisets": 136,
+ "gamma_pairs_missing_both_coordinate_points": 45,
+ "flats_missing_both_coordinate_points": [
+  "p00",
+  "p01",
+  "p10",
+  "p11",
+  "p12",
+  "p21",
+  "L01_101112",
+  "L10_011121",
+  "L12_001221"
+ ],
+ "flats_with_one_coordinate_point": [
+  "p02",
+  "p20",
+  "L01_000102",
+  "L10_001020",
+  "L11_011220",
+  "L11_021021"
+ ],
+ "flats_with_both_coordinate_points": [
+  "L12_021120"
+ ],
+ "ratios_from_x0": {
+  "00": 0.25,
+  "01": 0.25,
+  "02": -0.5,
+  "10": 0.25,
+  "11": 0.25,
+  "12": -0.5,
+  "20": -0.5,
+  "21": -0.5
+ }
+}

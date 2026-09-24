@@ -1,0 +1,23 @@
+{
+ "x0": [
+  2,
+  2
+ ],
+ "cases": {
+  "B6 kappa1": {
+   "planted": 6,
+   "agree": 6,
+   "planted_found": 6,
+   "filter_s": 0.20535818735758463,
+   "reference_s": 1.3076706329981487
+  },
+  "C6 (2,1,1,1,1) k1": {
+   "planted": 6,
+   "agree": 6,
+   "planted_found": 6,
+   "filter_s": 3.003918766975403,
+   "reference_s": 0.7568910916646322
+  }
+ },
+ "pass": true
+}
