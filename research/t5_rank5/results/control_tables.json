@@ -1,0 +1,47 @@
+{
+ "git": "59a0c992459d5b32122981d010e4407e51e8b740",
+ "generated": "2026-09-24T06:46:25+00:00",
+ "checks": {
+  "rank2_j1": {
+   "combos": 274625,
+   "exact": 0,
+   "stabilizer": 0,
+   "rank2": 0,
+   "pass": true
+  },
+  "rank2_j-1": {
+   "combos": 274625,
+   "exact": 0,
+   "stabilizer": 0,
+   "rank2": 0,
+   "pass": true
+  },
+  "t3_j2": {
+   "decompositions": 8,
+   "totals": {
+    "-2": [
+     0,
+     0
+    ],
+    "-1": [
+     1,
+     111
+    ],
+    "0": [
+     8,
+     768
+    ],
+    "1": [
+     1,
+     111
+    ],
+    "2": [
+     0,
+     0
+    ]
+   },
+   "pass": true
+  }
+ },
+ "pass": true
+}

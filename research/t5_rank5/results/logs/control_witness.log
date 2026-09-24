@@ -1,0 +1,7 @@
+4 distinct all-visible (base, x0) pairs at x0 in ['00'] over the 10 qubit pairs; flat types: (0, 1): P,P,P,P,P,P; (0, 2): L03,L03,P,P,P,P; (0, 3): P,P,P,P,P,P; (0, 4): L02,L13,L02,L13,L02,L13; (1, 2): P,P,P,P,P,P; (1, 3): P,P,P,P,L03,L03; (1, 4): L02,L13,L02,L13,L02,L13; (2, 3): P,P,P,P,P,P; (2, 4): L02,L13,L02,L13,L02,L13; (3, 4): L02,L13,L02,L13,L02,L13
+  base 0: cover (2, 105, 30, 444, 12, 238) x0 00 kappa 0 (3 pairs): 4 genuine rank-6 decompositions, witness recovered, 1.3s, coord [8, 64], joined 64, blocks [], native True
+  base 1: cover (3, 106, 32, 447, 9, 234) x0 00 kappa 0 (1 pairs): 4 genuine rank-6 decompositions, witness recovered, 1.3s, coord [8, 64], joined 64, blocks [], native True
+  base 2: cover (31, 446, 33, 452, 84, 739) x0 00 kappa 2: ABORTED AssertionError: 2049233 slice candidates: structural degeneracy of the family after 8s
+  base 3: cover (33, 452, 84, 739, 31, 446) x0 00 kappa 2: ABORTED AssertionError: 2049229 slice candidates: structural degeneracy of the family after 7s
+control-witness (native, cap 2000000): 2/4 bases recover the witness, 2 aborted; FAIL
+[run.py] exit 1 after 18.2s

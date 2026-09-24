@@ -1,0 +1,4 @@
+  gamma ('B', 'B') kind cancel1 base (140, 159, 539): 564 hits, planted recovered, 238.95s, order [3, 1, 2] exact [1, 42] scan 0 scan2 26110 pair 678
+control-planted (gamma, B+B, cancel1): 1/1 planted decompositions recovered in 239s; PASS
+control-planted record: 1/1 recovered over 1 run(s) (beta [0, 0], gamma [1, 1]); PASS
+[run.py] exit 0 after 239.6s

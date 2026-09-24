@@ -1,0 +1,2 @@
+4672 pivot pairs in 5 stage A batches (0.75 pod CPU-h), 138 stage B (22.93), 12 stage C (0.71), 4 stage beta (0.57), 1 stage gamma (0.034); 160 batches, 25.0 pod CPU-h at 2.0 x the laptop rates; wrote /Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-ad7e31e21de65cb41/research/t5_rank5/partition.json (sha256 41d4cdad723391d2)
+[run.py] exit 0 after 0.8s

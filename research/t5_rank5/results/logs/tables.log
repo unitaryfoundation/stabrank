@@ -1,0 +1,5 @@
+rank-2 table j = 1: 274625 combinations, exact 0, stabilizer 0, rank <= 2: 0 (38303 collisions decided): OK
+rank-2 table j = -1: 274625 combinations, exact 0, stabilizer 0, rank <= 2: 0 (38668 collisions decided): OK
+rank-3 decompositions of |T>^3 (8) at tau^j: (exact, stabilizer) = {'-2': (0, 0), '-1': (1, 111), '0': (8, 768), '1': (1, 111), '2': (0, 0)}: exact at j = +-2 zero, OK
+tables: PASS
+[run.py] exit 0 after 0.3s

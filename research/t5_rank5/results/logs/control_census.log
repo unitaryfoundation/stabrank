@@ -1,0 +1,4 @@
+fresh: 4 full 3-covers, 4697 full 4-covers of distinct independent states, 12 repeated 4-multisets, 43773 degenerate 5-multisets [38s]
+4-cover census research/t5_rank4/covers4.json (sha256 e83212833195240a): equal; degenerate list (sha256 669d76129e8d33a7): equal; census research/t5_rank5/results/census5_full.json: 4672 rows, 6115136 covers, pivot pairs equal to the enumerator's 4672
+control-census: PASS
+[run.py] exit 0 after 38.7s

@@ -1,0 +1,23 @@
+  gamma ('C1', 'C1') kind same base (140, 159, 539): 1 hits, planted recovered, 3.30s, order [1, 2, 3] exact [1, 0] scan 0 scan2 433 pair 1
+Traceback (most recent call last):
+  File "/Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-ad7e31e21de65cb41/research/t5_rank5/driver.py", line 1067, in <module>
+    sys.exit(main(sys.argv))
+             ~~~~^^^^^^^^^^
+  File "/Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-ad7e31e21de65cb41/research/t5_rank5/driver.py", line 1063, in main
+    return args.fn(args) or 0
+           ~~~~~~~^^^^^^
+  File "/Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-ad7e31e21de65cb41/research/t5_rank5/driver.py", line 806, in control_planted
+    _merge_planted(report, run_meta, time.time() - t_all, final=False)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-ad7e31e21de65cb41/research/t5_rank5/driver.py", line 831, in _merge_planted
+    merged["runs"] = [r for r in merged["runs"] if r["id"] != run_meta["id"]]
+                                                   ~^^^^^^
+KeyError: 'id'
+[run.py] exit 1 after 3.9s
+  gamma ('C1', 'C1') kind same base (140, 159, 539): 1 hits, planted recovered, 3.31s, order [1, 2, 3] exact [1, 0] scan 0 scan2 433 pair 1
+  gamma ('C1', 'C1') kind same1 base (598, 1002, 1016): 50 hits, planted recovered, 23.07s, order [1, 2, 3] exact [1, 35] scan 0 scan2 1051 pair 27
+  gamma ('C1', 'C1') kind cancel base (727, 785, 1075): 496 hits, planted recovered, 212.97s, order [1, 2, 3] exact [1, 0] scan 0 scan2 32273 pair 640
+  gamma ('C1', 'C1') kind cancel1 base (8, 79, 186): 814 hits, planted recovered, 318.34s, order [1, 2, 3] exact [1, 300] scan 0 scan2 50526 pair 658
+control-planted (gamma, C1+C1, same,same1,cancel,cancel1): 4/4 planted decompositions recovered in 558s; PASS
+control-planted record: 56/56 recovered over 3 run(s) (beta [24, 24], gamma [32, 32]); PASS
+[run.py] exit 0 after 558.3s

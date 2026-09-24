@@ -1,0 +1,4 @@
+43773 degenerate 5-multisets over 4 full 3-covers and 4697 full 4-covers: by pattern {'(2, 1, 1, 1)': 23096, '(1, 1, 1, 1, 1)': 20653, '(3, 1, 1)': 12, '(2, 2, 1)': 12}, by family {'4 distinct, kappa 0': 23096, '5 distinct, kappa 1': 20653, '3 distinct, kappa 0': 24}; stage B 20653, stage C 23120 [6s]
+the feasibility probe's list (43773): equal
+wrote research/t5_rank5/degenerate5.json (sha256 669d76129e8d33a7)
+[run.py] exit 0 after 9.6s
