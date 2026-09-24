@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "tier": "attested",
+  "detail": "certificate script asserted: CERTIFIED chi(qubit_T^5) >= 6; re-ran 2 of 160 stored batches from scratch chosen from seed 20260924 and only checked the SHA-256 of the other 158 against research/t5_rank5/batch_manifest.json; the full enumeration (36.4 CPU-h on RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host (load 30 to 40), fifteen batches in parallel at nice 19, 2026-09-24 07:37 to 10:04 UTC (the gamma smoke batch 159 at 07:37, the 160-batch loop 07:40 to 10:04); the aggregate's two seeded re-runs (batches 10 and 58) on the same pod at 10:05 UTC) was not re-run",
+  "gamma": null,
+  "content_hash": "6d2cdbfb037a9550"
+}

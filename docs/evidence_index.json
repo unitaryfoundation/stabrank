@@ -1,7 +1,7 @@
 {
  "generated_from": "bounds/",
- "head": "bf2bd2f567b6a4dcb12affd77f22c08c624307e0",
- "generated": "2026-09-23",
+ "head": "385fd48af6aee9cebb524faa3254799d619a8499",
+ "generated": "2026-09-24",
  "since": "2026-09-15",
  "exponents": [
   {
@@ -858,11 +858,11 @@
    "orbit": "qubit_T",
    "m": 5,
    "lower": {
-    "rank": 5,
+    "rank": 6,
     "tier": "attested",
-    "slug": "qubit_T-m5-lower-5",
+    "slug": "qubit_T-m5-lower-6",
     "date": "2026-09-24",
-    "board_date": "2026-09-23",
+    "board_date": "2026-09-24",
     "moved_since": true
    },
    "upper": {
@@ -873,18 +873,18 @@
     "board_date": "2026-09-18",
     "moved_since": true
    },
-   "settled": false,
+   "settled": true,
    "moved_since": true
   },
   {
    "orbit": "qubit_T",
    "m": 6,
    "lower": {
-    "rank": 5,
+    "rank": 6,
     "tier": "attested",
-    "slug": "qubit_T-m6-lower-5",
+    "slug": "qubit_T-m6-lower-6",
     "date": "2026-09-24",
-    "board_date": "2026-09-23",
+    "board_date": "2026-09-24",
     "moved_since": true
    },
    "upper": {
@@ -895,7 +895,7 @@
     "board_date": "2026-09-12",
     "moved_since": false
    },
-   "settled": false,
+   "settled": true,
    "moved_since": true
   },
   {
@@ -1872,16 +1872,18 @@
    "orbit": "qubit_T",
    "m": 5,
    "rank": 6,
-   "runs": 1,
+   "runs": 2,
    "log_runs": 0,
-   "cpu_hours": 0.001,
-   "solutions": 1,
-   "cpu_hours_per_solution": 0.001,
+   "cpu_hours": 36.400999999999996,
+   "solutions": 2,
+   "cpu_hours_per_solution": 18.200499999999998,
    "bounds": [
-    "qubit_T-m5-upper-6"
+    "qubit_T-m5-upper-6",
+    "qubit_T-m5-lower-6"
    ],
    "board": [
-    "lean"
+    "lean",
+    "attested"
    ]
   },
   {
@@ -1923,11 +1925,14 @@
    "runs": 1,
    "log_runs": 1,
    "cpu_hours": 0.0,
-   "solutions": 1,
+   "solutions": 2,
    "cpu_hours_per_solution": 0.0,
-   "bounds": [],
+   "bounds": [
+    "qubit_T-m6-lower-6"
+   ],
    "board": [
-    "lean"
+    "lean",
+    "attested"
    ]
   },
   {
@@ -2199,11 +2204,11 @@
   {
    "date": "2026-09-24",
    "seeded": false,
-   "cpu_hours": 37.202000000000005,
-   "discoveries": 3,
+   "cpu_hours": 73.602,
+   "discoveries": 5,
    "median_declared": 0.002,
-   "cum_cpu_hours": 283.0096111111111,
-   "cum_discoveries": 93
+   "cum_cpu_hours": 319.4096111111111,
+   "cum_discoveries": 95
   }
  ],
  "bounds": [
@@ -5216,6 +5221,48 @@
    }
   },
   {
+   "slug": "qubit_T-m5-lower-6",
+   "file": "bounds/qubit_T-m5-lower-6.json",
+   "orbit": "qubit_T",
+   "m": 5,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "attested",
+   "ok": true,
+   "date": "2026-09-24",
+   "author": "this repository",
+   "reference": "stabrank research/t5_rank5",
+   "method": "two-qubit base slice at 00: every rank-5 decomposition of |T>^5 has three, four or five terms visible at 00 along qubits 1, 2 (chi(T^3) = 3), so its base is a full 3-, 4- or 5-cover of |T>^3 and the invisible terms lie on the six flats missing 00; every base is completed slice by slice under the slice structure lemma for every flat choice, modulo 65521 over Q(zeta_24) with exact re-decision",
+   "pull_request": 132,
+   "merge_commit": "385fd48af6aee9cebb524faa3254799d619a8499",
+   "merge_date": "2026-09-24",
+   "added_commit": "a10a9e6e6b116436a06da7bf690d032400e47ca1",
+   "added_date": "2026-09-24",
+   "added_subject": "chi(T^5) >= 6 and chi(T^6) >= 6: the rank-5 exclusion run, its batch manifest, and the attested bounds",
+   "receipt": "certs/qubit_T-m5-lower-6.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_t_m5_rank5_attested.py",
+   "certificate_budget_s": 3600,
+   "certificate_attested": {
+    "batches": "research/t5_rank5/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 36.4,
+    "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host (load 30 to 40), fifteen batches in parallel at nice 19, 2026-09-24 07:37 to 10:04 UTC (the gamma smoke batch 159 at 07:37, the 160-batch loop 07:40 to 10:04); the aggregate's two seeded re-runs (batches 10 and 58) on the same pod at 10:05 UTC",
+    "note": "The exclusion of every rank-5 decomposition of |T>^5 lives in the stored batch outputs under research/t5_rank5/results/ (partition.json: stage A batches over the 6,115,136 full 5-covers of |T>^3 with distinct independent base states, stage B batches over the 20,653 dependent covers, stage C batches over the 23,120 covers with a repeated state, the 4,308 cancel-at-base multisets included, stage beta batches over the 4,709 full 4-covers, each with the invisible term on every one of the six flats missing 00, and one stage gamma batch over the 4 full 3-covers with every one of the 21 flat pairs), every base matched at the base point 00 along qubits 1, 2 and every candidate re-decided mod 2013265921 and numerically: 0 hits, 0 refused, 0 undecided. The certificate checks the partition against the enumerator and the census hash, re-enumerates the 3-covers, the 4-covers and the degenerate 5-multisets, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/t5_rank5/batch.py, which regenerates any batch (batch.py K).",
+    "total": 160
+   },
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 36.4,
+    "wall_clock_hours": 2.5,
+    "runs": 1,
+    "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host (load 30 to 40), fifteen batches in parallel at nice 19, 2026-09-24 07:37 to 10:04 UTC (the gamma smoke batch 159 at 07:37, the 160-batch loop 07:40 to 10:04); the aggregate's two seeded re-runs (batches 10 and 58) on the same pod at 10:05 UTC"
+   }
+  },
+  {
    "slug": "qubit_T-m5-upper-6",
    "file": "bounds/qubit_T-m5-upper-6.json",
    "orbit": "qubit_T",
@@ -5315,6 +5362,48 @@
     "hardware": "Apple M5 Pro laptop (macOS 26.5.1), one core at nice 19 under load from other sessions, 2026-09-24 02:25 UTC; the aggregate's two seeded re-runs (batches 0 and 1) on the same machine at 02:26 UTC",
     "note": "The exclusion of every rank-4 decomposition of |T>^5 lives in the 6 stored batch outputs under research/t5_rank4/results/ (the 4,709 full 4-covers of |T>^3 up to symmetry, each matched at the base points 00 and 01 along qubits 1, 2 with every candidate re-decided mod 2013265921 and numerically): 0 hits, 0 refused, 0 undecided. The certificate re-enumerates the census, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/t5_rank4/batch.py, which regenerates any batch (batch.py K).",
     "total": 6
+   },
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond the m=5 certificate, which this cell re-runs"
+   }
+  },
+  {
+   "slug": "qubit_T-m6-lower-6",
+   "file": "bounds/qubit_T-m6-lower-6.json",
+   "orbit": "qubit_T",
+   "m": 6,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "attested",
+   "ok": true,
+   "date": "2026-09-24",
+   "author": "this repository",
+   "reference": "stabrank research/t5_rank5",
+   "method": "projection monotonicity applied to the attested exact rank-5 exclusion at m=5",
+   "pull_request": 132,
+   "merge_commit": "385fd48af6aee9cebb524faa3254799d619a8499",
+   "merge_date": "2026-09-24",
+   "added_commit": "a10a9e6e6b116436a06da7bf690d032400e47ca1",
+   "added_date": "2026-09-24",
+   "added_subject": "chi(T^5) >= 6 and chi(T^6) >= 6: the rank-5 exclusion run, its batch manifest, and the attested bounds",
+   "receipt": "certs/qubit_T-m6-lower-6.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_t_m5_rank5_attested.py",
+   "certificate_budget_s": 3600,
+   "certificate_attested": {
+    "batches": "research/t5_rank5/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 36.4,
+    "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host (load 30 to 40), fifteen batches in parallel at nice 19, 2026-09-24 07:37 to 10:04 UTC (the gamma smoke batch 159 at 07:37, the 160-batch loop 07:40 to 10:04); the aggregate's two seeded re-runs (batches 10 and 58) on the same pod at 10:05 UTC",
+    "note": "The exclusion of every rank-5 decomposition of |T>^5 lives in the stored batch outputs under research/t5_rank5/results/ (the full 5-covers, 4-covers and 3-covers of |T>^3 up to symmetry, each matched at the base point 00 along qubits 1, 2 with the invisible terms on every flat missing 00 and every candidate re-decided mod 2013265921 and numerically): 0 hits, 0 refused, 0 undecided. The certificate re-enumerates the lists, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/t5_rank5/batch.py, which regenerates any batch (batch.py K).",
+    "total": 160
    },
    "lean_module": null,
    "lean_theorem": null,
