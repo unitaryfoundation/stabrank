@@ -99,7 +99,7 @@ census of `research/t5q_m2_rank5`; with the rank-4 exclusion of
 `bounds/T5-m2-lower-5.json` this settles `χ(|T5⟩^⊗2) = 5`. -/
 
 /-- The five terms of `bounds/T5-m2-upper-5.json`: the line `x + y = c`
-    parametrised by `x`, with phase `ω^(3c x² - 3c² x)`, for `c = 0, …, 4`. -/
+    parametrized by `x`, with phase `ω^(3c x² - 3c² x)`, for `c = 0, …, 4`. -/
 noncomputable def t5T2s : Fin 5 → (Fin (5 ^ 2) → ℂ)
   | 0 => stabTerm 5 2 1 ![0, 0] ![![1, 4]] ![![0]] ![0]
   | 1 => stabTerm 5 2 1 ![0, 1] ![![1, 4]] ![![3]] ![2]
@@ -112,7 +112,7 @@ theorem t5T2s_isStab (j : Fin 5) : IsStabP 5 (t5T2s j) := by
     exact isStabP_stabTerm 5 2 1 _ _ _ _
       (affinePtP_injective_of_pivots _ _ ![0] (by decide +kernel))
 
-/-- The coefficients on the unnormalised terms, `ω^(c³) / 5`: the file's
+/-- The coefficients on the unnormalized terms, `ω^(c³) / 5`: the file's
     `ω^(c³)/√5` on the `1/√5`-normalised lines, against the `1/5` of
     `|T5⟩^⊗2`. -/
 noncomputable def t5Coef2s : Fin 5 → ℂ :=
