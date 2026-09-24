@@ -863,15 +863,22 @@ class InvisibleMatcher3:
                     raise UnpinnedFamily("numeric and modular decisions of a cancelling pair disagree")
                 if not num:
                     continue
-                c5 = ((cw[0] * int(self.F1.wpow[l])) % P1, (cw[1] * int(self.F2.wpow[l])) % P2, cw[2] * W3P[l])
+                # the terms are (s, w^m v') and (s, w^{m-l} w') for s a class translate of v' and a
+                # phase m (the common slice at the first point is s up to a phase, which moves
+                # into the second-point codes), with coefficients c_v w^{-m} and c_w w^{l-m}
                 for s in self._class_states(v):
                     os_ = self.options(s)
-                    k4, m4 = os_.code_of(M.C[:, v])
-                    k5, m5 = os_.code_of(W3P[(-l) % 3] * M.C[:, w])
-                    nb = [{"v": s, "codes": {t0: 0, t: 3 * k4 + m4}, "birth": t0, "flat": 0},
-                          {"v": s, "codes": {t0: 0, t: 3 * k5 + m5}, "birth": t0, "flat": 1}]
-                    stats["pair_solutions"] += 1
-                    out.append((al2, {**Ssels, t: ()}, _extend_pinned(f, [cv, c5]), nb, None, sp))
+                    for m in range(3):
+                        k4, m4 = os_.code_of(W3P[m] * M.C[:, v])
+                        k5, m5 = os_.code_of(W3P[(m - l) % 3] * M.C[:, w])
+                        g4 = ((cv[0] * int(self.F1.wpow[(-m) % 3])) % P1, (cv[1] * int(self.F2.wpow[(-m) % 3])) % P2,
+                              cv[2] * W3P[(-m) % 3])
+                        g5 = ((cw[0] * int(self.F1.wpow[(l - m) % 3])) % P1,
+                              (cw[1] * int(self.F2.wpow[(l - m) % 3])) % P2, cw[2] * W3P[(l - m) % 3])
+                        nb = [{"v": s, "codes": {t0: 0, t: 3 * k4 + m4}, "birth": t0, "flat": 0},
+                              {"v": s, "codes": {t0: 0, t: 3 * k5 + m5}, "birth": t0, "flat": 1}]
+                        stats["pair_solutions"] += 1
+                        out.append((al2, {**Ssels, t: ()}, _extend_pinned(f, [g4, g5]), nb, None, sp))
         return out
 
     def _assemble(self, alive, Ssels, f, born, blocks, ords, opts, tabs, flats, target, stats):

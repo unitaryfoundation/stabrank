@@ -1,0 +1,11 @@
+  R5: 50000/197440 5-covers, 705157 sets [4s]
+  R5: 100000/197440 5-covers, 1631737 sets [8s]
+  R5: 150000/197440 5-covers, 2526251 sets [12s]
+  R5 done: 3222224 (T_5, x) pairs, span-state histogram {0: 7192, 1: 3301, 2: 8534, 3: 4838, 4: 13836, 5: 6654, 6: 8619, 7: 9252, 8: 4796, 9: 7701, 10: 5565, 11: 817, 12: 772, 13: 7176, 14: 18066, 18: 1448, 19: 42635, 35: 46238} [16s]
+  R4: 58932 span pairs, 847501 parallel pairs [16s]
+  R3: [72, 23220, 12410, 1715580] [18s]
+B6: 2701615 full dependent 6-sets, 259655 orbits, kappa {'1': 256970, '2': 2683, '3': 2} [72s]
+C6: 1602177 distinct multisets, 321553 orbits, by pattern {'(3, 1, 1, 1)': 2277, '(2, 1, 1, 1, 1)': 315229, '(2, 2, 1, 1)': 3981, '(4, 1, 1)': 20, '(3, 2, 1)': 38, '(2, 2, 2)': 8} [82s]
+k5: 225796 multisets, 54488 orbits; k4: 1521 multisets, 505 orbits [83s]
+wrote research/n4_rank6/reps_N.json (sha256 e6432f0d7506fcca): B6 259655, C6 321553, k5 54488, k4 505
+[run.py] exit 0 after 84.3s

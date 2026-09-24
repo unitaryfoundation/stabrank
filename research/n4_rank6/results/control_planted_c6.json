@@ -1,0 +1,294 @@
+{
+ "seed": 11,
+ "git": "e64036c2e10c585593176f422e24ea0e2cc2d0c2",
+ "generated": "2026-09-24T15:45:18+00:00",
+ "plants": [
+  {
+   "stage": "c6",
+   "unit": "(2, 1, 1, 1, 1)",
+   "kind": "reference",
+   "base": [
+    0,
+    37,
+    130,
+    131,
+    131,
+    333
+   ],
+   "status": "recovered",
+   "hits": 6,
+   "seconds": 0.13304805755615234,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 5,
+    "blocks": [
+     2
+    ],
+    "coord_solutions": [
+     52,
+     52
+    ],
+    "coord_states": [
+     1,
+     1
+    ],
+    "joined": 1,
+    "composite_solutions": 206,
+    "composite_states": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "candidates": 1174,
+    "zero_coefficient": 0,
+    "split_pruned": 302,
+    "reconstructions": 1,
+    "hits": 6,
+    "refused": false,
+    "peak_rss_gb": 0.287,
+    "native": false,
+    "coord_raw": [
+     52,
+     52
+    ]
+   }
+  },
+  {
+   "stage": "c6",
+   "unit": "(2, 1, 1, 1, 1) dependent",
+   "kind": "reference",
+   "base": [
+    8,
+    43,
+    43,
+    143,
+    335,
+    358
+   ],
+   "status": "recovered",
+   "hits": 21,
+   "seconds": 9.195316076278687,
+   "stats": {
+    "kappa": 1,
+    "kappa1": 1,
+    "distinct": 5,
+    "blocks": [
+     2
+    ],
+    "coord_solutions": [
+     747,
+     6723
+    ],
+    "coord_states": [
+     9,
+     81
+    ],
+    "joined": 81,
+    "composite_solutions": 10935,
+    "composite_states": [
+     243,
+     243,
+     243,
+     162,
+     162,
+     162
+    ],
+    "candidates": 16161,
+    "zero_coefficient": 7290,
+    "split_pruned": 9810,
+    "reconstructions": 162,
+    "hits": 21,
+    "refused": false,
+    "peak_rss_gb": 0.287,
+    "native": false,
+    "dense_raw": 5793636,
+    "coord_raw": [
+     747,
+     747
+    ]
+   }
+  },
+  {
+   "stage": "c6",
+   "unit": "(2, 2, 1, 1)",
+   "kind": "reference",
+   "status": "not planted",
+   "reason": "two blocks or a block of four: the planted target keeps every slice alive past the cap; the real bases are run and any raise is recorded as undecided"
+  },
+  {
+   "stage": "c6",
+   "unit": "(2, 2, 1, 1) dependent",
+   "kind": "reference",
+   "status": "not planted",
+   "reason": "two blocks or a block of four: the planted target keeps every slice alive past the cap; the real bases are run and any raise is recorded as undecided"
+  },
+  {
+   "stage": "c6",
+   "unit": "(2, 2, 2)",
+   "kind": "reference",
+   "base": [
+    8,
+    8,
+    226,
+    226,
+    335,
+    335
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 1.2310311794281006,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 3,
+    "blocks": [
+     2,
+     2,
+     2
+    ],
+    "coord_solutions": [
+     65,
+     61
+    ],
+    "coord_states": [
+     1,
+     1
+    ],
+    "joined": 4,
+    "composite_solutions": 0,
+    "composite_states": [],
+    "candidates": 16016,
+    "zero_coefficient": 0,
+    "split_pruned": 0,
+    "reconstructions": 1,
+    "hits": 1,
+    "refused": false,
+    "peak_rss_gb": 0.357,
+    "native": false,
+    "tuples": 4,
+    "block_leaves": 38,
+    "combinations": 75,
+    "completions": 4,
+    "dependent_lines_limit": 1,
+    "coord_raw": [
+     140,
+     70
+    ],
+    "pairs": 4
+   }
+  },
+  {
+   "stage": "c6",
+   "unit": "(3, 1, 1, 1)",
+   "kind": "reference",
+   "base": [
+    8,
+    8,
+    8,
+    36,
+    117,
+    358
+   ],
+   "status": "recovered",
+   "hits": 6,
+   "seconds": 43.260180950164795,
+   "stats": {
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [
+     3
+    ],
+    "coord_solutions": [
+     43,
+     301
+    ],
+    "coord_states": [
+     7,
+     49
+    ],
+    "joined": 49,
+    "composite_solutions": 7628,
+    "composite_states": [
+     147,
+     399,
+     1083,
+     163,
+     55,
+     55
+    ],
+    "candidates": 7811,
+    "zero_coefficient": 0,
+    "split_pruned": 6014,
+    "reconstructions": 55,
+    "hits": 6,
+    "refused": false,
+    "peak_rss_gb": 0.357,
+    "native": false,
+    "coord_raw": [
+     43,
+     43
+    ]
+   }
+  },
+  {
+   "stage": "c6",
+   "unit": "(3, 1, 1, 1) dependent",
+   "kind": "reference",
+   "base": [
+    36,
+    36,
+    36,
+    130,
+    143,
+    239
+   ],
+   "status": "undecided",
+   "reason": "composite slice (1, 1): past the wall-clock deadline",
+   "seconds": 194.72279596328735
+  },
+  {
+   "stage": "c6",
+   "unit": "(3, 2, 1)",
+   "kind": "reference",
+   "status": "not planted",
+   "reason": "two blocks or a block of four: the planted target keeps every slice alive past the cap; the real bases are run and any raise is recorded as undecided"
+  },
+  {
+   "stage": "c6",
+   "unit": "(4, 1, 1)",
+   "kind": "reference",
+   "status": "not planted",
+   "reason": "two blocks or a block of four: the planted target keeps every slice alive past the cap; the real bases are run and any raise is recorded as undecided"
+  }
+ ],
+ "only": null,
+ "kinds": null,
+ "cap_s": 120.0,
+ "recovered": 4,
+ "total": 5,
+ "by_stage": {
+  "b6": [
+   0,
+   0
+  ],
+  "c6": [
+   4,
+   9
+  ],
+  "beta": [
+   0,
+   0
+  ],
+  "gamma": [
+   0,
+   0
+  ]
+ },
+ "seconds": 252.36622023582458,
+ "pass": false
+}

@@ -31,8 +31,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 QUTRIT = os.path.join(ROOT, "research", "qutrit_m4_rank5")
 for _p in (QUTRIT, os.path.join(ROOT, "verify_challenge"), HERE):
-    if _p not in sys.path:
-        sys.path.insert(0, _p)
+    # this directory first, so that `driver` and `common` resolve here and
+    # not to the rank-5 pipeline's modules of the same names
+    while _p in sys.path:
+        sys.path.remove(_p)
+    sys.path.insert(0, _p)
 from cover_census import P1, P2, CoverEnumerator3, Field3, rank_mod  # noqa: E402
 from matcher import (COMP, E1, E2, OFFSETS, PTS, Matcher, add, exact_codes, pidx, psi_target,  # noqa: E402
                      term_from_codes)
@@ -46,6 +49,11 @@ def _load_by_file(name, path):
 
 
 qcommon = _load_by_file("qutrit_m4_common", os.path.join(QUTRIT, "common.py"))
+# matcher.py and the rank-5 common put their own directory first; this one
+# goes back to the front so that `driver` resolves here
+while HERE in sys.path:
+    sys.path.remove(HERE)
+sys.path.insert(0, HERE)
 
 N1 = 2                      # sliced qutrits
 N2 = 2                      # unsliced qutrits (the base slice is a cover of psi_2 = |N>^2)

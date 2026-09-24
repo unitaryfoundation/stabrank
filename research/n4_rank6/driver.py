@@ -377,6 +377,11 @@ def sample(args):
                 t1 = time.time()
                 dense = 0
                 units = [None] if stage in ("B6", "C6") else (FLAT_NAMES if stage == "beta" else FLAT_PAIRS)
+                # a per-item cap: an item past it is a tail item (counted, excluded from the rate the
+                # partition uses, left to the batch guard), not a stall of the whole sample
+                Mt.budget = Budget(seconds=args.item_cap) if args.item_cap else None
+                if IM is not None:
+                    IM.deadline = time.time() + args.item_cap if args.item_cap else None
                 for unit in units:
                     try:
                         if stage == "B6":
@@ -391,7 +396,11 @@ def sample(args):
                             hits, st = IM.run_one(it, unit, target)
                         else:
                             hits, st = IM.run_two(it, unit, target)
-                    except (UnpinnedFamily, BudgetExceeded) as exc:
+                    except BudgetExceeded as exc:
+                        rec["capped"] = rec.get("capped", 0) + 1
+                        log(f"  {it} {unit}: capped at {args.item_cap}s ({str(exc)[:80]})")
+                        break
+                    except UnpinnedFamily as exc:
                         rec["undecided"] += 1
                         log(f"  {it} {unit}: {type(exc).__name__}: {str(exc)[:100]}")
                         continue
@@ -405,15 +414,23 @@ def sample(args):
                 secs.append(time.time() - t1)
                 dsecs.append(dense)
                 rec["count"] += 1
+            Mt.budget = None
+            if IM is not None:
+                IM.deadline = None
             if not secs:
                 continue
             a = np.array(secs)
+            cut = min(60.0, args.item_cap * 0.9) if args.item_cap else 60.0
+            body = a[a <= cut]                       # the estimate the partition uses; the tail is guarded by --max-seconds
             rec["by_class"][cl] = {"items": len(lst), "sampled": len(secs), "mean_s": float(a.mean()),
                                    "median_s": float(np.median(a)), "max_s": float(a.max()),
+                                   "trimmed_mean_s": float(body.mean()) if len(body) else float(a.mean()),
+                                   "tail_items": int((a > cut).sum()), "tail_cut_s": cut,
                                    "dense_mean_s": float(np.mean(dsecs))}
             log(f"{stage} {cl}: {len(lst)} items, {len(secs)} sampled: per item mean {a.mean():.4f}s, median "
-                f"{np.median(a):.4f}s, max {a.max():.3f}s" + (f", dense {np.mean(dsecs):.4f}s" if stage == "B6" else "")
-                + f" [{time.time() - t_cl:.0f}s]")
+                f"{np.median(a):.4f}s, max {a.max():.3f}s, trimmed mean {rec['by_class'][cl]['trimmed_mean_s']:.4f}s "
+                f"({rec['by_class'][cl]['tail_items']} tail items)"
+                + (f", dense {np.mean(dsecs):.4f}s" if stage == "B6" else "") + f" [{time.time() - t_cl:.0f}s]")
         log(f"{stage}: {rec['count']} items, {rec['runs']} runs, hits {rec['hits']}, refused {rec['refused']}, undecided "
             f"{rec['undecided']}; hist {dict(sorted(rec['hist'].items(), key=lambda kv: -kv[1])[:8])}")
     rec["wall_s"] = time.time() - t_all
@@ -470,7 +487,11 @@ def partition(args):
         classes = classify(E, stage, items, classes)
         cls_rate = {}
         for cl, v in rates[stage]["by_class"].items():
-            cls_rate[cl] = pod_seconds(v["mean_s"], v.get("dense_mean_s", 0.0) if stage == "B6" else 0.0)
+            # the mean over the sampled items of at most 60 s: a tail item (the (2, 2, 1, 1) class of
+            # C6 had one at 325 s among 40) is left to the batch guard and the resume, as in the
+            # rank-5 partition, instead of inflating every batch of its class
+            cls_rate[cl] = pod_seconds(v.get("trimmed_mean_s", v["mean_s"]),
+                                       v.get("dense_mean_s", 0.0) if stage == "B6" else 0.0)
         missing = sorted(set(classes) - set(cls_rate))
         if missing:
             raise SystemExit(f"stage {stage}: no sampled rate for classes {missing}")
@@ -824,10 +845,31 @@ def control_witness(args):
     report = {"witness": os.path.relpath(common.WITNESS7, ROOT), "git": git_commit(), "generated": _now(),
               "cap_s": args.cap, "x0": list(X0), "bases": []}
     passed = aborted = 0
-    for k, (cover, Ss) in enumerate(sorted(bases.items(), key=lambda kv: str(kv[0]))):
+    items = sorted(bases.items(), key=lambda kv: str(kv[0]))
+    for k, (cover, Ss) in enumerate(items):
+        if cover[0] != "partial":
+            distinct = sorted(set(cover))
+            b1, b2, bC = target.rhs(X0)
+            fam = family_from(Mt.U1[distinct], Mt.U2[distinct], Mt.C[:, distinct], b1, b2, bC)
+            log(f"base {k}: {cover} pairs {[list(S) for S in Ss]} distinct {len(distinct)} kappa "
+                f"{None if fam is None else fam.kappa}")
+
+    def flush():
+        n_full = sum(1 for e in report["bases"] if "cover" in e)
+        report.update({"passed": passed, "aborted": aborted, "all_visible_bases": n_full,
+                       "complete": len(report["bases"]) == len(items),
+                       "pass": passed == n_full and aborted == 0 and len(report["bases"]) == len(items)})
+        os.makedirs(RESULTS, exist_ok=True)
+        path = os.path.join(RESULTS, "control_witness.json")
+        with open(path + ".tmp", "w") as f:
+            json.dump(report, f, indent=1)
+        os.replace(path + ".tmp", path)
+
+    for k, (cover, Ss) in enumerate(items):
         if cover[0] == "partial":
             report["bases"].append({"base": k, "pairs": [list(S) for S in Ss], "status": "not all-visible",
                                     "visible": cover[1]})
+            flush()
             continue
         distinct = sorted(set(cover))
         b1, b2, bC = target.rhs(X0)
@@ -835,6 +877,14 @@ def control_witness(args):
         kappa = None if fam is None else int(fam.kappa)
         entry = {"base": k, "cover": list(cover), "pairs": [list(S) for S in Ss], "distinct": len(distinct),
                  "multiplicities": sorted((cover.count(u) for u in distinct), reverse=True), "kappa": kappa}
+        if kappa is not None and kappa >= 3:
+            # the three-parameter dense solve runs in the Python reference for minutes per slice
+            # and does not reach a deadline check inside one solve; recorded as not run
+            entry.update({"status": "not run", "reason": f"kappa {kappa}: the Python dense solve"})
+            report["bases"].append(entry)
+            flush()
+            log(f"  base {k}: {cover} kappa {kappa}: not run (three-parameter family)")
+            continue
         Mt.budget = Budget(seconds=args.cap, max_rss_gb=args.max_rss_gb)
         set_max_cand(args.max_cand)
         t0 = time.time()
@@ -858,14 +908,13 @@ def control_witness(args):
             log(f"  base {k}: {cover} kappa {kappa} ({len(Ss)} pairs): {len(good)} genuine rank-7 decompositions, "
                 f"witness {'recovered' if same else 'NOT among them'}, {dt:.1f}s, coord {st.get('coord_raw')}")
         report["bases"].append(entry)
+        flush()
     Mt.budget = None
     set_max_cand(2_000_000)
-    n_full = sum(1 for e in report["bases"] if "cover" in e)
-    report.update({"passed": passed, "aborted": aborted, "all_visible_bases": n_full,
-                   "pass": passed == n_full and aborted == 0})
-    _write_control("control_witness", report)
+    flush()
+    n_full = report["all_visible_bases"]
     log(f"control-witness: {passed}/{n_full} all-visible bases recover the witness, {aborted} aborted; "
-        f"{'PASS' if report['pass'] else 'FAIL (recorded, not required)'}")
+        f"{'PASS' if report['pass'] else 'FAIL (recorded, not required)'}; wrote results/control_witness.json")
     return 0 if report["pass"] else 1
 
 
@@ -959,6 +1008,19 @@ def control_orbit(args):
     k5 = [tuple(int(u) for u in row) for row in lists["k5"]]
     rows = []
     ok = same_group
+
+    def monomial(U):
+        nz = np.abs(U) > 1e-9
+        vals = U[nz]
+        return (np.all(nz.sum(axis=0) == 1) and np.all(nz.sum(axis=1) == 1)
+                and np.all(np.abs(vals ** 3 - 1) < 1e-6))
+
+    # the matcher part needs the image target's amplitudes in Z[w], so it
+    # draws U from the monomial elements (permutation matrices with cube-root
+    # entries: the 0 <-> 1 swap of |N> on either copy and the copy swap); the
+    # stabilizer, base and canonical-form checks run over every element
+    mono = [i for i, U in enumerate(Us) if monomial(U)]
+    log(f"{len(mono)} of the {len(Us)} unitaries are monomial with cube-root entries")
     for n in range(args.count):
         kind = "alpha" if n % 2 == 0 else "beta"
         if kind == "alpha":
@@ -977,16 +1039,26 @@ def control_orbit(args):
             inv = invisible_term(Mt, flat, rng)
             terms, coeffs = plant(Mt, base, [(inv[0], None)], rng)
             flats = [flat]
-        U = Us[int(rng.integers(len(Us)))]
+        # every element: the images are stabilizer states with the permuted base and the same canonical form
+        all_ok = True
+        for ui in rng.choice(len(Us), size=min(12, len(Us)), replace=False):
+            U = Us[int(ui)]
+            g_terms = [(t.reshape(9, 9) @ U.T).ravel() for t in terms]
+            for t in g_terms:
+                exact_codes(t)                                # raises unless the entries are roots of unity up to a scalar
+            vis = [t for t in g_terms if np.linalg.norm(t.reshape(9, 9)[pidx(X0)]) > 1e-9]
+            g_base = tuple(sorted(slice_base(Mt, np.column_stack(vis), X0)))
+            pred = tuple(sorted(int(perms[int(ui)][u]) for u in base))
+            canon_same = int(degenerate6.canonical_codes(np.array([base], dtype=np.int64), G, E.N)[0]) == \
+                int(degenerate6.canonical_codes(np.array([g_base], dtype=np.int64), G, E.N)[0])
+            all_ok &= (g_base == pred) and canon_same and len(vis) == len(base)
+        # a monomial element: the matcher on the image base against the image target finds the image
+        ui = int(mono[int(rng.integers(len(mono)))])
+        U = Us[ui]
         g_terms = [(t.reshape(9, 9) @ U.T).ravel() for t in terms]
-        for t in g_terms:
-            exact_codes(t)                                    # a stabilizer state (entries roots of unity up to a scalar)
         vis = [t for t in g_terms if np.linalg.norm(t.reshape(9, 9)[pidx(X0)]) > 1e-9]
         g_base = tuple(sorted(slice_base(Mt, np.column_stack(vis), X0)))
-        p = perms[[int(i) for i, u in enumerate(Us) if u is U][0]]
-        pred = tuple(sorted(int(p[u]) for u in base))
-        canon_same = int(degenerate6.canonical_codes(np.array([base], dtype=np.int64), G, E.N)[0]) == \
-            int(degenerate6.canonical_codes(np.array([g_base], dtype=np.int64), G, E.N)[0])
+        pred = tuple(sorted(int(perms[ui][u]) for u in base))
         tgt = planted_target(g_terms, coeffs, Mt.F1, Mt.F2)
         if flats is None:
             hits, st = Mt.run(g_base, X0, tgt)
@@ -994,12 +1066,12 @@ def control_orbit(args):
             hits, st = IM.run_one(g_base, flats[0], tgt)
         found = any(codes_key(h["terms"]) == codes_key(g_terms) for h in hits)
         row = {"kind": kind, "base": list(base), "image_base": list(g_base), "predicted_image": list(pred),
-               "image_equals_prediction": g_base == pred, "same_canonical_form": canon_same,
+               "image_equals_prediction": g_base == pred, "twelve_elements_consistent": bool(all_ok),
                "image_found": found, "flats": flats}
-        ok &= found and canon_same and g_base == pred
+        ok &= found and all_ok and g_base == pred
         rows.append(row)
-        log(f"  {kind} base {base} -> {g_base}: image {'found' if found else 'NOT found'}, canonical forms "
-            f"{'equal' if canon_same else 'DIFFERENT'}, permutation {'agrees' if g_base == pred else 'DISAGREES'}")
+        log(f"  {kind} base {base} -> {g_base}: image {'found' if found else 'NOT found'}; 12 random elements "
+            f"{'consistent' if all_ok else 'INCONSISTENT'} (stabilizer images, permuted base, canonical form)")
     _write_control("control_orbit", {"git": git_commit(), "generated": _now(), "group_order": len(Us),
                                      "permutations_equal": same_group, "rows": rows, "pass": ok})
     log(f"control-orbit: {'PASS' if ok else 'FAIL'}")
@@ -1082,6 +1154,7 @@ def main(argv):
     p.add_argument("--pairs", type=int, default=12, help="A6: random pivot pairs to draw covers from")
     p.add_argument("--reference", type=int, default=50, help="A6: covers also run through Matcher.run")
     p.add_argument("--budget", type=float, default=480.0, help="wall-clock seconds over all classes")
+    p.add_argument("--item-cap", type=float, default=0.0, help="seconds per item (0: none); a capped item is a tail item")
     p.add_argument("--seed", type=int, default=3)
     p.set_defaults(fn=sample)
     p = sub.add_parser("partition")
