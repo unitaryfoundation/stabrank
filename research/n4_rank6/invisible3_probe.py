@@ -42,13 +42,13 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
-sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(ROOT, "verify_challenge"))
 sys.path.insert(0, os.path.join(ROOT, "research", "qutrit_m4_rank5"))
+sys.path.insert(0, HERE)
 from cover_census import CoverEnumerator3, P1, P2, _canon_rows  # noqa: E402
 from matcher import (COMP, E1, E2, PTS, Family, Matcher, add, exact_codes, family_from, pidx, psi_target,  # noqa: E402
                      rank_mod, restrict, slice_base, slice_system, solve_slice3, vector_target)
-import common as qcommon  # noqa: E402
+from common import qcommon  # noqa: E402  (research/n4_rank6/common.py loads the rank-5 common by file)
 from probe6 import random_shape_term  # noqa: E402
 
 RESULTS = os.path.join(HERE, "results")
