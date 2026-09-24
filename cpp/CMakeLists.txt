@@ -76,6 +76,9 @@ add_library(stabrank_core_lib STATIC
   src/t3_scan.cpp
   src/slice_match.cpp
   src/cover5.cpp
+  src/cover6.cpp
+  src/slice_match3.cpp
+  src/dense_solve.cpp
 )
 
 target_include_directories(stabrank_core_lib PUBLIC
@@ -103,6 +106,9 @@ if(BUILD_TESTING)
     tests/test_t3_scan.cpp
     tests/test_slice_match.cpp
     tests/test_cover5.cpp
+    tests/test_cover6.cpp
+    tests/test_slice_match3.cpp
+    tests/test_dense_solve.cpp
   )
 
   target_compile_definitions(stabrank_tests PRIVATE

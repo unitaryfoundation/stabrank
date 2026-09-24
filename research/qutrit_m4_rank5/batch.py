@@ -159,6 +159,7 @@ def run_batch(orbit, part, index, verbose=False, max_seconds=0.0):
     extra["aborted_at_deadline"] = past_deadline(matcher) and bool(rec["undecided"])
     extra["wall_s"] = time.time() - t0
     extra["hit_numerics"] = numerics
+    extra["matcher"] = "native" if matcher.native_cls is not None else "reference"
     return rec, extra
 
 
@@ -199,7 +200,7 @@ def main(argv):
         "wall_s": time.time() - t_all, "cpu_s": ru.user + ru.system,
         "started": started.isoformat(timespec="seconds"), "ended": ended.isoformat(timespec="seconds"),
         "hostname": socket.gethostname(), "git_commit": common.git_commit(),
-        "matcher": "reference",
+        "matcher": extra["matcher"],
         "kernel_version": f"{platform.system()} {platform.release()} {platform.version()}",
         "machine": platform.machine(), "python": platform.python_version(), "numpy": np.__version__,
         "hit_numerics": extra["hit_numerics"],

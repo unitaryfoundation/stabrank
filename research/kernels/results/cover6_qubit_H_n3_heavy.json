@@ -1,0 +1,54 @@
+{
+ "kernel": "cover6_pair",
+ "orbit": "qubit_H",
+ "n": 3,
+ "N": 1080,
+ "rows": [
+  {
+   "pivot": 3,
+   "partner": 706,
+   "members": 373,
+   "covers": 206294,
+   "candidates": 3532228,
+   "native_s": 1.9974029064178467
+  },
+  {
+   "pivot": 356,
+   "partner": 540,
+   "members": 535,
+   "covers": 40789,
+   "candidates": 25903049,
+   "native_s": 9.063614845275879
+  },
+  {
+   "pivot": 3,
+   "partner": 354,
+   "members": 725,
+   "covers": 2415058,
+   "candidates": 38418570,
+   "native_s": 19.637904167175293
+  },
+  {
+   "pivot": 3,
+   "partner": 932,
+   "members": 147,
+   "covers": 2628,
+   "candidates": 90970,
+   "native_s": 0.44989895820617676
+  },
+  {
+   "pivot": 811,
+   "partner": 924,
+   "members": 148,
+   "covers": 19,
+   "candidates": 172802,
+   "native_s": 0.07905292510986328
+  }
+ ],
+ "host": {
+  "machine": "arm64",
+  "system": "Darwin",
+  "python": "3.14.7"
+ },
+ "generated": "2026-09-24T08:24:52"
+}

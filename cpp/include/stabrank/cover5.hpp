@@ -26,6 +26,12 @@ struct Cover5Inputs {
     const uint8_t* members;  // N: admissible further members
     int64_t max_run;         // largest parallel class accepted (an error above)
     uint64_t seed;
+    // 1: the projective key is one random functional mod 65521 (16 bits,
+    // about M^2 / (2 x 65521) accidental candidates per third pivot at M
+    // members, the rate docs/notes/kernels_k6_p3.md measures); 2: two
+    // functionals, a 32-bit key. The covers reported are the same either
+    // way (every candidate is decided exactly); only `candidates` changes.
+    int key_functionals = 1;
 };
 
 struct Cover5Found {

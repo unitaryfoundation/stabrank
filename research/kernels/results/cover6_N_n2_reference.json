@@ -1,0 +1,86 @@
+{
+ "kernel": "cover6_pair",
+ "orbit": "N",
+ "n": 2,
+ "N": 360,
+ "rows": [
+  {
+   "pivot": 359,
+   "partner": 346,
+   "members": 0,
+   "covers": 0,
+   "candidates": 0,
+   "native_s": 2.9802322387695312e-05,
+   "reference_s": 2.5033950805664062e-05,
+   "reference_covers": 0,
+   "reference_candidates": 0,
+   "equal": true
+  },
+  {
+   "pivot": 359,
+   "partner": 184,
+   "members": 18,
+   "covers": 3,
+   "candidates": 173,
+   "native_s": 0.0019130706787109375,
+   "reference_s": 0.02156209945678711,
+   "reference_covers": 3,
+   "reference_candidates": 173,
+   "equal": true
+  },
+  {
+   "pivot": 359,
+   "partner": 42,
+   "members": 33,
+   "covers": 27,
+   "candidates": 3570,
+   "native_s": 0.001905202865600586,
+   "reference_s": 0.3974189758300781,
+   "reference_covers": 27,
+   "reference_candidates": 3570,
+   "equal": true
+  },
+  {
+   "pivot": 357,
+   "partner": 84,
+   "members": 52,
+   "covers": 19,
+   "candidates": 2958,
+   "native_s": 0.002310037612915039,
+   "reference_s": 0.3433370590209961,
+   "reference_covers": 19,
+   "reference_candidates": 2958,
+   "equal": true
+  },
+  {
+   "pivot": 348,
+   "partner": 132,
+   "members": 56,
+   "covers": 21,
+   "candidates": 1375,
+   "native_s": 0.0015940666198730469,
+   "reference_s": 0.17666006088256836,
+   "reference_covers": 21,
+   "reference_candidates": 1375,
+   "equal": true
+  },
+  {
+   "pivot": 297,
+   "partner": 111,
+   "members": 166,
+   "covers": 11698,
+   "candidates": 216427,
+   "native_s": 0.1640639305114746,
+   "reference_s": 25.65405797958374,
+   "reference_covers": 11698,
+   "reference_candidates": 216427,
+   "equal": true
+  }
+ ],
+ "host": {
+  "machine": "arm64",
+  "system": "Darwin",
+  "python": "3.14.7"
+ },
+ "generated": "2026-09-24T08:28:03"
+}

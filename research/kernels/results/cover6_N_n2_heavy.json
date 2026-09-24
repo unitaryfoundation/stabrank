@@ -1,0 +1,62 @@
+{
+ "kernel": "cover6_pair",
+ "orbit": "N",
+ "n": 2,
+ "N": 360,
+ "rows": [
+  {
+   "pivot": 117,
+   "partner": 0,
+   "members": 358,
+   "covers": 753064,
+   "candidates": 5622158,
+   "native_s": 4.797739028930664
+  },
+  {
+   "pivot": 117,
+   "partner": 2,
+   "members": 356,
+   "covers": 819910,
+   "candidates": 5892868,
+   "native_s": 5.266762018203735
+  },
+  {
+   "pivot": 279,
+   "partner": 0,
+   "members": 357,
+   "covers": 45446,
+   "candidates": 3908796,
+   "native_s": 1.994385004043579
+  },
+  {
+   "pivot": 279,
+   "partner": 2,
+   "members": 355,
+   "covers": 173728,
+   "candidates": 3935868,
+   "native_s": 2.1025390625
+  },
+  {
+   "pivot": 281,
+   "partner": 0,
+   "members": 353,
+   "covers": 47622,
+   "candidates": 3741065,
+   "native_s": 1.8432152271270752
+  },
+  {
+   "pivot": 281,
+   "partner": 150,
+   "members": 205,
+   "covers": 17004,
+   "candidates": 460394,
+   "native_s": 0.3188951015472412
+  }
+ ],
+ "host": {
+  "machine": "arm64",
+  "system": "Darwin",
+  "python": "3.14.7"
+ },
+ "generated": "2026-09-24T08:28:20"
+}
