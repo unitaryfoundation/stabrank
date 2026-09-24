@@ -455,3 +455,60 @@ No explicit finite-copy decomposition of any board state, no exact or
 approximate rank value, and no machine-search paper on stabilizer
 decompositions appeared between 2026-09-22 and 2026-09-23. No BibTeX
 entry was added.
+
+## 8. Update of 2026-09-24
+
+Nothing moves a cell. What was checked:
+
+- arXiv API (the HTTPS endpoint; the HTTP one now redirects), the thirteen
+  phrase queries of sections 5 to 7 plus "Dicke state" and "W state" with
+  stabilizer, "Clifford+T" with simulation and rank or decomposition, and
+  nonstabilizerness with rank, sorted by last update.
+- The arXiv `quant-ph/new` listing for 2026-09-24 (81 new entries, 18
+  cross-lists, 56 replacements) and `quant-ph/pastweek?show=500` (2026-09-18
+  to 2026-09-24; the Friday list truncated at 108 of 115 entries by the
+  cap), titles screened for stabilizer, stabiliser, magic,
+  nonstabilizerness, Clifford, cat state, qutrit, qudit, T-count, extent,
+  decomposition, and rank; abstracts read for everything that passed.
+- Semantic Scholar citation lists of arXiv:1601.07601 (430 citing papers),
+  2106.07740 (60), 2012.11739 (9), 2003.01130 (5), 2110.07781 (14),
+  2107.10551 (17), 2106.03214 (17), and 2202.09202 (53), sorted by date: no
+  citing paper dated 2026-09-20 or later outside the lists of sections 5 to
+  7. OpenAlex by DOI for Bravyi-Gosset (354 citing works, newest 2026-08-25,
+  a PRA paper on private capacity with nonstabilizer environments, no rank
+  content), Qassim-Pashayan-Gosset (49, newest the Jardine Zenodo deposits
+  already in section 7), Lovitz-Steffan (6), and Peleg-Shpilka-Volk (1);
+  the Labib DOI returns 404 there.
+- Seven web searches for the phrases above in 2026.
+
+Nothing rank-relevant was posted or revised on arXiv between 2026-09-23 and
+2026-09-24. The only item outside section 7 that surfaced is the metadata
+of the Jardine Zenodo series (section 7), read again through OpenAlex: the
+chi(|T_BK>^6) >= 4 claim there is now moot, since the board holds
+chi(|T>^5) = chi(|T>^6) = 6 (`bounds/qubit_T-m5-lower-6.json`,
+`qubit_T-m6-lower-6.json`, the pod certificate of 2026-09-24), and the
+chi(cat_8) <= 6 witness and the 2^{m/2 - 1} coset-split bound do not move a
+cell, as section 7 says. The source policy stands: Zenodo software deposits
+are not cited as the source of any bound.
+
+Not rank-relevant after reading the abstract, so the next sweep can skip
+them: 2609.26898 (GKP logical Gaussian states), 2609.27128, 2609.27177
+(learning Clifford-scrambled and Clifford-encoded product states),
+2609.27390, 2609.27537 (stabilizer Renyi entropy), 2609.27497 (MPO rank),
+2609.27565, 2609.27640, 2609.27801 (transversal multi-controlled-Z codes),
+2609.27983 (optical cat states), 2609.28237, 2609.27724, 2609.28318,
+2609.28369, 2512.13777, 2602.04443, 2603.14641, 2605.16614 (replaced
+2026-09-23; surface-code gates, qudit twisted-torus codes, a GPU stabilizer
+simulator, magic secret sharing), 2601.21874, 2603.10296, 2609.26516,
+2609.26372, 2609.25359, 2609.25227, 2609.22564 (Dicke-state photonic
+graphs, no rank content), 2609.22176, 2609.24805, 2609.24794, 2609.21536,
+2609.19485, 2609.16813, 2607.28600, 2609.10974, 2608.25414, 2606.27105.
+Title only, off topic: 2609.24147, 2609.23348, 2609.23057, 2609.24606,
+2609.20766, 2609.20721, 2609.20693, 2609.20214, 2609.20137, 2609.19484,
+2609.19184, 2609.19147, 2609.20500, 2510.26845, 2601.01626, 2608.12472,
+2608.28563, 2606.24368, 2602.23687, 2609.06177, 2510.15067, 2608.09115,
+2608.24370 (Clifford+T simulator benchmarks), 2507.04337, 2512.23799.
+
+No explicit finite-copy decomposition of any board state, no exact or
+approximate rank value, and no machine-search paper on stabilizer
+decompositions appeared. No BibTeX entry was added.
