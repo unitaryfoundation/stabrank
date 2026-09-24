@@ -33,7 +33,8 @@ enumeration rests on the stored outputs and on the committed runner
 (research/t5_rank4/results/control_*.json, results/tables.json) are part of
 the record and are not re-run here.
 
-Printed claim: CERTIFIED chi(qubit_T^5) >= 5
+Printed claims: CERTIFIED chi(qubit_T^5) >= 5
+                CERTIFIED chi(qubit_T^6) >= 5 (projection monotonicity)
 """
 
 import os
@@ -59,6 +60,11 @@ def main():
     if proc.returncode != 0 or CLAIM not in lines:
         print("aggregation did not certify", file=sys.stderr)
         return 1
+    # Projection monotonicity (Lean: stabRankP_powVecP_mono in
+    # lean_proofs/LeanProofs/Stabilizer/SliceP.lean): both amplitudes of |T>
+    # are nonzero, so slicing carries a rank-r decomposition of T^6 to one of
+    # T^5, and the m=5 exclusion bounds the m=6 cell as well.
+    print("CERTIFIED chi(qubit_T^6) >= 5")
     return 0
 
 

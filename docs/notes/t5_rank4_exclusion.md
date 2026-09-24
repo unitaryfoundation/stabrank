@@ -3,9 +3,9 @@
 Status (2026-09-24). Pipeline built, controlled, run and aggregated on
 the laptop: every full 4-cover of |T>^3 matched at both base points, 0
 hits, 0 refused, 0 undecided, `CERTIFIED chi(qubit_T^5) >= 5` printed by
-the aggregate and by the certificate script; the draft bound
-`research/t5_rank4/qubit_T-m5-lower-5.json.draft` waits for the
-submissions workflow. The cell was 4 <= chi(T^5) <= 6
+the aggregate and by the certificate script, which also prints
+`CERTIFIED chi(qubit_T^6) >= 5` by projection monotonicity; the bounds are
+filed as `bounds/qubit_T-m5-lower-5.json` and `bounds/qubit_T-m6-lower-5.json`. The cell was 4 <= chi(T^5) <= 6
 (`bounds/qubit_T-m5-lower-4.json`, the rank-3 exclusion by slice and lift;
 `bounds/qubit_T-m5-upper-6.json`, the product witness at the Lean tier).
 Excluding rank 4 gives chi(T^5) >= 5 and, by projection, chi(T^6) >= 5 (the
@@ -268,7 +268,7 @@ rank-3 hits forming one class under the unitary symmetry group of psi_4
 missing, nothing unexpected, nothing outside the stored list, no refusal,
 no undecided run.
 
-## 6. Rates, partition and the run
+## 6. Rates, partition, and the run
 
 Measured by `driver.py sample --count 100` (`results/rates.json`), per
 (cover, x_0) run:

@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_T",
+  "m": 5,
+  "direction": "lower",
+  "rank": 5,
+  "certificate": {
+    "script": "verify_challenge/cert_qubit_t_m5_rank4_attested.py",
+    "expect": "CERTIFIED chi(qubit_T^5) >= 5",
+    "budget_s": 1800,
+    "attested": {
+      "batches": "research/t5_rank4/batch_manifest.json",
+      "recomputed": 2,
+      "compute_hours": 0.002,
+      "hardware": "Apple M5 Pro laptop (macOS 26.5.1), one core at nice 19 under load from other sessions, 2026-09-24 02:25 UTC; the aggregate's two seeded re-runs (batches 0 and 1) on the same machine at 02:26 UTC",
+      "note": "The exclusion of every rank-4 decomposition of |T>^5 lives in the stored batch outputs under research/t5_rank4/results/ (partition.json over the census covers4.json: the 4,709 full 4-covers of |T>^3 up to the unitary symmetry of |T>^3, 4,697 of distinct independent states and 12 with a repeated state, each matched at the base points 00 and 01 along qubits 1, 2 with every candidate re-decided mod 2013265921 and numerically): 0 hits, 0 refused, 0 undecided. The certificate re-enumerates the census, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/t5_rank4/batch.py, which regenerates any batch (batch.py K)."
+    }
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank research/t5_rank4",
+    "method": "two-qubit base slice: every rank-4 decomposition of |T>^5 has, along qubits 1, 2 at a base point in {00, 01}, all four terms visible, so its base is a full 4-cover of |T>^3; every such cover is completed slice by slice under the slice structure lemma, modulo 65521 over Q(zeta_24) with exact re-decision",
+    "date": "2026-09-24",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.002,
+      "wall_clock_hours": 0.002,
+      "runs": 1,
+      "hardware": "Apple M5 Pro laptop (macOS 26.5.1), one core at nice 19 under load from other sessions, 2026-09-24 02:25 UTC; the aggregate's two seeded re-runs (batches 0 and 1) on the same machine at 02:26 UTC"
+    }
+  },
+  "notes": "Puts the cell at 5 <= chi(T^5) <= 6 (bounds/qubit_T-m5-upper-6.json, Lean tier) and by projection chi(T^6) >= 5. The argument (docs/notes/t5_rank4_exclusion.md) depends on: (1) Fact 1, every term full along every qubit: chi(T^4) = 3, so a one-qubit slice with three visible terms is the unique rank-3 decomposition of |T>^4 (qubit_T_m4_rank3.json, completeness up to symmetry assumed as in qubit_T-m5-lower-4.json) with a local fourth term, and the residual tables of research/constructions/two_qubit_slice.py for it have no exact and no stabilizer combination at the slice ratio tau^{+-1}, tau = e^{i pi/4} tan(beta) (recomputed, results/tables.json). (2) Fact 2, at most one absent term at a two-qubit point: chi(T^3) = 3, bounds/qubit_T-m3-lower-3.json. (3) The flat lemma (every term a plane or a diagonal line, at most one line per diagonal) and the base point: all four terms visible at 00 or 01; one line on each diagonal is excluded by the same tables for the 8 rank-3 decompositions of |T>^3 at tau^{+-2} (0 exact combinations). (4) The slice structure lemma; the matcher assumes nothing beyond the base point. (5) The census covers4.json (CoverEnumerator.covers(4) at orbit qubit_T plus the 12 multisets T + (x,), x in T, over the 4 full 3-covers; span(T) holds no further state, so no dependent 4-set and no cancel-at-base multiset exists), equal up to symmetry to the full covers among the numeric enumerator's 5,205 rank-4 tuples (4,697 in 2,372 orbits) and re-enumerated by the certificate. (6) Exactness: amplitudes in Q(zeta_24), both primes 1 mod 24, modular supersets, every candidate and hit re-decided mod 2013265921 and in floating point; an undecidable block or residual raises and fails the batch (none did). (7) Controls (results/control_*.json): the rank-6 witness from its all-visible pair bases (kernel and reference), planted four-term instances of five kinds, the rank-3 decomposition of |T>^4 along a qubit pair, the census against the numeric enumerator."
+}
