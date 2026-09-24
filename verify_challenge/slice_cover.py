@@ -64,6 +64,27 @@ sign per basis pair, the product of the pair signs on a triple, free codes
 on basis points that are not coordinate directions), and every hit is
 confirmed as a decomposition of psi^m in floating point and mod
 2013265921.
+
+Orbits. Everything above is written for |H>; the same code runs for the
+qubit T state |T> = cos(beta)|0> + e^{i pi/4} sin(beta)|1> with cos(2 beta)
+= 1/sqrt 3 when `Field`, `CoverEnumerator` and `confirm_decomposition` are
+given orbit="qubit_T". The only orbit-dependent quantities are the target
+psi^n (the enumerator's psi and its slices) and the slice ratio a_1 / a_0
+between neighbouring points of F_2^{n_1} (tan(pi/8) at H; at T the complex
+number tau = e^{i pi/4} tan(beta) with tan(beta) = (sqrt 3 - 1) / sqrt 2).
+The T amplitudes divided by cos(beta)^n lie in Q(zeta_24) = Q(i, sqrt 2,
+sqrt 3), and both primes are 1 mod 24, so the modular target at T is the
+scaled psi^n / cos(beta)^n with entry tau^{|x|} (a scalar multiple, which
+changes no span, cover or slice equation), reduced by the ring homomorphism
+that sends zeta_8 to the same primitive eighth root the H field uses (so
+that i, and with it every phase code, is the same element of F_p in both
+fields and in the compiled kernels) and a primitive cube root of unity to
+any one mod p. Any such homomorphism gives a valid necessary condition
+for a dependency, and the exact decision mod 2013265921 is Galois
+invariant because the automorphisms fixing i map stabilizer states to
+stabilizer states and psi to a Galois conjugate that lies in the same
+spans. The qubit_H path is unchanged by the parameter (its constants and
+code paths are the same expressions as before).
 """
 
 from __future__ import annotations
@@ -94,11 +115,40 @@ def _root16(p):
     raise ValueError
 
 
-class Field:
-    """Q(zeta_16) reduced modulo a prime p = 1 mod 16."""
+def _root3(p):
+    """A primitive cube root of unity mod p (p = 1 mod 3)."""
+    for g in range(2, p):
+        w = pow(g, (p - 1) // 3, p)
+        if w != 1:
+            return w
+    raise ValueError
 
-    def __init__(self, p):
+
+ORBITS = ("qubit_H", "qubit_T")
+
+
+def ratio_complex(orbit):
+    """The slice ratio a_1 / a_0 of the single-copy state over C."""
+    if orbit == "qubit_H":
+        return np.tan(np.pi / 8)
+    if orbit == "qubit_T":
+        return np.exp(1j * np.pi / 4) * (np.sqrt(3) - 1) / np.sqrt(2)
+    raise ValueError(f"unsupported orbit {orbit!r}")
+
+
+class Field:
+    """Q(zeta_16) reduced modulo a prime p = 1 mod 16 (orbit qubit_H), or
+    Q(zeta_24) modulo a prime p = 1 mod 24 (orbit qubit_T), with the target
+    psi^n and the slice ratio of the orbit. The zeta_16 constants are always
+    computed (i and zeta_8 are shared by both fields and with the compiled
+    kernels, which find the same root); `ratio` is tan(pi/8) at H and
+    tau = zeta_8 (sqrt 3 - 1) / sqrt 2 at T."""
+
+    def __init__(self, p, orbit="qubit_H"):
+        if orbit not in ORBITS:
+            raise ValueError(f"unsupported orbit {orbit!r}")
         self.p = p
+        self.orbit = orbit
         self.zeta = _root16(p)
         z, zi = self.zeta, pow(self.zeta, p - 2, p)
         self.i = pow(z, 4, p)
@@ -108,12 +158,33 @@ class Field:
         assert (self.cos ** 2 + self.sin ** 2) % p == 1
         assert (2 * self.cos * self.sin) ** 2 % p == inv2          # sin(pi/4)^2 = 1/2
         self.tan = self.sin * pow(self.cos, p - 2, p) % p
+        if orbit == "qubit_H":
+            self.ratio = self.tan
+        else:
+            if p % 24 != 1:
+                raise ValueError("the qubit_T field needs a prime that is 1 mod 24")
+            zeta8 = pow(z, 2, p)
+            self.sqrt2 = (zeta8 + pow(zeta8, p - 2, p)) % p
+            w = _root3(p)
+            self.sqrt3 = (-self.i * (w - w * w)) % p
+            assert pow(self.sqrt2, 2, p) == 2 and pow(self.sqrt3, 2, p) == 3
+            self.ratio = zeta8 * (self.sqrt3 - 1) % p * pow(self.sqrt2, p - 2, p) % p
+            # tau^2 = i (2 - sqrt 3), that is tan(beta)^2 = 2 - sqrt 3
+            assert (pow(self.ratio, 2, p) * pow(self.i, p - 2, p) - 2 + self.sqrt3) % p == 0
         self.ipow = np.array([pow(self.i, k, p) for k in range(4)], dtype=np.int64)
         self.inv_table = None
         if p < 1 << 20:
             t = np.zeros(p, dtype=np.int64)
             t[1:] = [pow(int(a), p - 2, p) for a in range(1, p)]
             self.inv_table = t
+
+    def slice_factor(self, w, n1):
+        """The scalar alpha_x of the slice psi^{n1 + n2} -> alpha_x psi^{n2}
+        at a point x of weight w: cos^{n1 - w} sin^w at H, tau^w at T (the
+        scaled target)."""
+        if self.orbit == "qubit_H":
+            return pow(self.cos, n1 - w, self.p) * pow(self.sin, w, self.p) % self.p
+        return pow(self.ratio, w, self.p)
 
     def inv(self, a):
         a = np.asarray(a, dtype=np.int64) % self.p
@@ -122,10 +193,10 @@ class Field:
         return np.vectorize(lambda x: pow(int(x), self.p - 2, self.p), otypes=[np.int64])(a)
 
     def target(self, n):
-        """psi^n as a vector over F_p, entry x is cos^(n - |x|) sin^|x|."""
+        """psi^n as a vector over F_p: entry x is cos^(n - |x|) sin^|x| at H
+        and tau^|x| at T (psi^n / cos(beta)^n)."""
         w = np.array([bin(x).count("1") for x in range(1 << n)])
-        return np.array([pow(self.cos, n - int(k), self.p) * pow(self.sin, int(k), self.p) % self.p
-                         for k in w], dtype=np.int64)
+        return np.array([self.slice_factor(int(k), n) for k in w], dtype=np.int64)
 
     def codes_to_field(self, codes):
         """Phase codes (0 zero, 1..4 = 1, i, -1, -i) to F_p."""
@@ -198,17 +269,19 @@ class CoverEnumerator:
     per orbit of the unitary symmetry group, modulo P1 with exact re-checks.
     """
 
-    def __init__(self, n, D=None, verbose=False, seed=17, native=True):
+    def __init__(self, n, D=None, verbose=False, seed=17, native=True, orbit="qubit_H"):
         self.n = n
+        self.orbit = orbit
         self.D = dictionary(2, n) if D is None else D
         self.N = self.D.shape[1]
         self.codes, self.C = patterns(self.D)
-        self.F1, self.F2 = Field(P1), Field(P2)
+        self.F1, self.F2 = Field(P1, orbit), Field(P2, orbit)
         self.U1 = self.F1.codes_to_field(self.codes)         # (N, dim)
         self.U2 = self.F2.codes_to_field(self.codes)
         self.psi1, self.psi2 = self.F1.target(n), self.F2.target(n)
-        self.psi = psi_for("qubit_H", n)
-        reps, info = symmetry_orbit_reps("qubit_H", n, self.D, antiunitary=False)
+        self.psi = psi_for(orbit, n)
+        self.ratio = ratio_complex(orbit)                     # a_1 / a_0 over C
+        reps, info = symmetry_orbit_reps(orbit, n, self.D, antiunitary=False)
         self.reps, self.info = np.sort(reps), info
         self.rng = np.random.default_rng(seed)
         self.rng_seed = seed
@@ -274,8 +347,8 @@ class CoverEnumerator:
         return cand, partners
 
     def covers(self, r, max_run=64, max_found=None, pivots=None):
-        """All full r-covers (r in 3, 4, 5) up to symmetry, as a sorted list
-        of index tuples, plus the count of modular candidates."""
+        """All full r-covers (r in 2, 3, 4, 5) up to symmetry, as a sorted
+        list of index tuples, plus the count of modular candidates."""
         F = self.F1
         found, ncand = set(), 0
         t0 = time.time()
@@ -287,6 +360,17 @@ class CoverEnumerator:
             member_mask = np.zeros(self.N, dtype=bool)
             member_mask[members] = True
             Qi, _ = _reduce(F, self.Q1, self.Q1[i])
+            if r == 2:
+                # psi in span(u_i, u_l): the image of l mod span(psi, u_i) is
+                # zero; l runs over the partners (one per stabilizer orbit)
+                for l in partners:
+                    if Qi[l].any():
+                        continue
+                    ncand += 1
+                    idx = tuple(sorted((i, int(l))))
+                    if self.is_cover(idx) and self.is_full(idx):
+                        found.add(idx)
+                continue
             if r == 3:
                 # psi in span(u_i, u_l, u_m): images of l, m mod span(psi, u_i) parallel
                 keep = member_mask.copy()
@@ -1307,7 +1391,7 @@ class SliceMatcher:
         out = np.zeros((1 << n1, len(psi_p)), dtype=np.int64)
         for x in range(1 << n1):
             w = bin(x).count("1")
-            alpha = pow(F.cos, n1 - w, F.p) * pow(F.sin, w, F.p) % F.p
+            alpha = F.slice_factor(w, n1)
             out[x] = [int(v) * alpha % F.p for v in psi_p]
         return out
 
@@ -1340,9 +1424,9 @@ class SliceMatcher:
 
     def rhs(self, x0, x):
         e = bin(x).count("1") - bin(x0).count("1")
-        r1 = (self.E.psi1 * pow(self.F1.tan, e % (P1 - 1), P1)) % P1
-        r2 = (self.E.psi2 * pow(self.F2.tan, e % (P2 - 1), P2)) % P2
-        rC = self.E.psi * (np.tan(np.pi / 8) ** e)
+        r1 = (self.E.psi1 * pow(self.F1.ratio, e % (P1 - 1), P1)) % P1
+        r2 = (self.E.psi2 * pow(self.F2.ratio, e % (P2 - 1), P2)) % P2
+        rC = self.E.psi * (self.E.ratio ** e)
         return r1, r2, rC
 
     def run(self, cover, x0):
@@ -1581,7 +1665,7 @@ class SliceMatcher:
         """Residual, coefficients and rank of the terms against psi^m, in
         floating point and (the span condition) mod P2."""
         m = self.n1 + self.n2
-        res, c = confirm_decomposition(terms, m)
+        res, c = confirm_decomposition(terms, m, self.E.orbit)
         A = np.column_stack(terms)
         rank = int(np.linalg.matrix_rank(A, tol=1e-8))
         codes = np.array([exact_codes(t)[0] for t in terms])
@@ -1608,9 +1692,9 @@ def x0_reps(n1):
     return [(1 << w) - 1 for w in range(n1 + 1)]
 
 
-def confirm_decomposition(terms, m):
+def confirm_decomposition(terms, m, orbit="qubit_H"):
     """Residual of psi^m against the span of the terms and the coefficients."""
     A = np.column_stack(terms)
-    psi = psi_for("qubit_H", m)
+    psi = psi_for(orbit, m)
     c, *_ = np.linalg.lstsq(A, psi, rcond=None)
     return float(np.linalg.norm(A @ c - psi)), c
