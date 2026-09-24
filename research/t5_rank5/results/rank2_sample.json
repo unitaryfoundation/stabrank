@@ -1,0 +1,36 @@
+{
+ "decomposition_indices": [
+  1030,
+  1439,
+  6164
+ ],
+ "options_per_term": 65,
+ "combinations_per_ratio": 274625,
+ "sampled": 1000,
+ "ratios": {
+  "1": {
+   "exact": 0,
+   "stabilizer": 0,
+   "rank2": 0,
+   "collisions": 127,
+   "key_zero_rows": 0,
+   "seconds": 7.14962100982666,
+   "seconds_per_combo": 0.00714962100982666,
+   "projected_full_seconds": 1963.4646698236465,
+   "hits": []
+  },
+  "-1": {
+   "exact": 0,
+   "stabilizer": 0,
+   "rank2": 0,
+   "collisions": 141,
+   "key_zero_rows": 0,
+   "seconds": 7.035184860229492,
+   "seconds_per_combo": 0.0070351848602294926,
+   "projected_full_seconds": 1932.0376422405243,
+   "hits": []
+  }
+ },
+ "generated": "2026-09-24T03:38:17+00:00",
+ "git": "4c41f25752332d2496bcaddbd0dc95274a192791"
+}

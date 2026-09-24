@@ -1,0 +1,44 @@
+[    3.3s] decomposition indices [1030, 1439, 6164], 65 options per term, 274625 combinations per ratio
+[  386.1s] j = 1: 54925 combos in 382.7s (6.97 ms each; full table 31.9 min): exact 0, stabilizer 0, rank <= 2: 0 (collisions decided 7606, key-zero rows 0)
+wrote research/t5_rank5/results/rank2_j1_0_54925.json
+[run.py] exit 0 after 386.7s
+[    3.2s] decomposition indices [1030, 1439, 6164], 65 options per term, 274625 combinations per ratio
+[  382.3s] j = 1: 54925 combos in 379.0s (6.90 ms each; full table 31.6 min): exact 0, stabilizer 0, rank <= 2: 0 (collisions decided 7720, key-zero rows 1)
+wrote research/t5_rank5/results/rank2_j1_54925_109850.json
+[run.py] exit 0 after 382.9s
+[    3.1s] decomposition indices [1030, 1439, 6164], 65 options per term, 274625 combinations per ratio
+[  368.2s] j = 1: 54925 combos in 365.0s (6.65 ms each; full table 30.4 min): exact 0, stabilizer 0, rank <= 2: 0 (collisions decided 7580, key-zero rows 0)
+wrote research/t5_rank5/results/rank2_j1_109850_164775.json
+[run.py] exit 0 after 368.9s
+[    3.1s] decomposition indices [1030, 1439, 6164], 65 options per term, 274625 combinations per ratio
+[  368.7s] j = 1: 54925 combos in 365.5s (6.66 ms each; full table 30.5 min): exact 0, stabilizer 0, rank <= 2: 0 (collisions decided 7853, key-zero rows 0)
+wrote research/t5_rank5/results/rank2_j1_164775_219700.json
+[run.py] exit 0 after 369.3s
+[    3.2s] decomposition indices [1030, 1439, 6164], 65 options per term, 274625 combinations per ratio
+[  353.2s] j = 1: 54925 combos in 350.0s (6.37 ms each; full table 29.2 min): exact 0, stabilizer 0, rank <= 2: 0 (collisions decided 7544, key-zero rows 0)
+wrote research/t5_rank5/results/rank2_j1_219700_274625.json
+[run.py] exit 0 after 353.9s
+[    2.8s] decomposition indices [1030, 1439, 6164], 65 options per term, 274625 combinations per ratio
+[  353.0s] j = -1: 54925 combos in 350.1s (6.37 ms each; full table 29.2 min): exact 0, stabilizer 0, rank <= 2: 0 (collisions decided 7625, key-zero rows 0)
+wrote research/t5_rank5/results/rank2_j-1_0_54925.json
+[run.py] exit 0 after 353.6s
+[    3.1s] decomposition indices [1030, 1439, 6164], 65 options per term, 274625 combinations per ratio
+[  354.3s] j = -1: 54925 combos in 351.2s (6.39 ms each; full table 29.3 min): exact 0, stabilizer 0, rank <= 2: 0 (collisions decided 7755, key-zero rows 0)
+wrote research/t5_rank5/results/rank2_j-1_54925_109850.json
+[run.py] exit 0 after 355.0s
+[    3.1s] decomposition indices [1030, 1439, 6164], 65 options per term, 274625 combinations per ratio
+[  361.1s] j = -1: 54925 combos in 357.9s (6.52 ms each; full table 29.8 min): exact 0, stabilizer 0, rank <= 2: 0 (collisions decided 7727, key-zero rows 0)
+wrote research/t5_rank5/results/rank2_j-1_109850_164775.json
+[run.py] exit 0 after 361.8s
+[    3.0s] decomposition indices [1030, 1439, 6164], 65 options per term, 274625 combinations per ratio
+[  362.4s] j = -1: 54925 combos in 359.4s (6.54 ms each; full table 30.0 min): exact 0, stabilizer 0, rank <= 2: 0 (collisions decided 7859, key-zero rows 0)
+wrote research/t5_rank5/results/rank2_j-1_164775_219700.json
+[run.py] exit 0 after 363.2s
+[    3.3s] decomposition indices [1030, 1439, 6164], 65 options per term, 274625 combinations per ratio
+[  361.1s] j = -1: 54925 combos in 357.7s (6.51 ms each; full table 29.8 min): exact 0, stabilizer 0, rank <= 2: 0 (collisions decided 7702, key-zero rows 0)
+wrote research/t5_rank5/results/rank2_j-1_219700_274625.json
+[run.py] exit 0 after 361.9s
+j = 1: 274625 combos in 30.7 min: exact 0, stabilizer 0, rank <= 2: 0 (collisions decided 38303)
+j = -1: 274625 combos in 29.6 min: exact 0, stabilizer 0, rank <= 2: 0 (collisions decided 38668)
+wrote research/t5_rank5/results/rank2_full.json
+[run.py] exit 0 after 0.2s

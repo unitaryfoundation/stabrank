@@ -1,0 +1,28 @@
+{
+ "combinations_per_ratio": 274625,
+ "ratios": {
+  "1": {
+   "exact": 0,
+   "stabilizer": 0,
+   "rank2": 0,
+   "collisions": 38303,
+   "key_zero_rows": 1,
+   "seconds": 1842.2650001049042,
+   "hits": [],
+   "combos": 274625
+  },
+  "-1": {
+   "exact": 0,
+   "stabilizer": 0,
+   "rank2": 0,
+   "collisions": 38668,
+   "key_zero_rows": 0,
+   "seconds": 1776.4200689792633,
+   "hits": [],
+   "combos": 274625
+  }
+ },
+ "chunks": 10,
+ "generated": "2026-09-24T04:42:09+00:00",
+ "git": "4c41f25752332d2496bcaddbd0dc95274a192791"
+}
