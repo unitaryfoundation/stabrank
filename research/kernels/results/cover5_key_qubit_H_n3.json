@@ -1,0 +1,69 @@
+{
+ "kernel": "cover5_pair",
+ "orbit": "qubit_H",
+ "n": 3,
+ "N": 1080,
+ "rows": [
+  {
+   "pivot": 3,
+   "partner": 706,
+   "key1_s": 0.009843111038208008,
+   "key1_candidates": 13789,
+   "key1_covers": 131,
+   "key2_s": 0.00982522964477539,
+   "key2_candidates": 13504,
+   "key2_covers": 131,
+   "equal": true
+  },
+  {
+   "pivot": 356,
+   "partner": 540,
+   "key1_s": 0.029242277145385742,
+   "key1_candidates": 83278,
+   "key1_covers": 0,
+   "key2_s": 0.030232906341552734,
+   "key2_candidates": 83083,
+   "key2_covers": 0,
+   "equal": true
+  },
+  {
+   "pivot": 3,
+   "partner": 354,
+   "key1_s": 0.04143095016479492,
+   "key1_candidates": 74041,
+   "key1_covers": 1131,
+   "key2_s": 0.043105125427246094,
+   "key2_candidates": 73209,
+   "key2_covers": 1131,
+   "equal": true
+  },
+  {
+   "pivot": 3,
+   "partner": 0,
+   "key1_s": 0.1938791275024414,
+   "key1_candidates": 618821,
+   "key1_covers": 11580,
+   "key2_s": 0.19972705841064453,
+   "key2_candidates": 616748,
+   "key2_covers": 11580,
+   "equal": true
+  },
+  {
+   "pivot": 148,
+   "partner": 323,
+   "key1_s": 0.0687720775604248,
+   "key1_candidates": 176338,
+   "key1_covers": 1514,
+   "key2_s": 0.06744980812072754,
+   "key2_candidates": 166804,
+   "key2_covers": 1514,
+   "equal": true
+  }
+ ],
+ "host": {
+  "machine": "arm64",
+  "system": "Darwin",
+  "python": "3.14.7"
+ },
+ "generated": "2026-09-24T08:37:20"
+}

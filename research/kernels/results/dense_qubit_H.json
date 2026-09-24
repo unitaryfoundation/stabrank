@@ -1,0 +1,180 @@
+{
+ "kernel": "dense_solve",
+ "orbit": "qubit_H",
+ "x0": 0,
+ "n1": 2,
+ "list": "research/h6_rank5/degenerate_covers_v2.json",
+ "rows": [
+  {
+   "cover": [
+    0,
+    3,
+    12,
+    352,
+    619
+   ],
+   "kappa": 1,
+   "coord_solutions": [
+    62,
+    51
+   ],
+   "hits": 0,
+   "native_s": 0.22837400436401367,
+   "reference_s": 2.5083138942718506,
+   "dense_raw": 141174,
+   "native_candidates": 17073,
+   "reference_candidates": 158514,
+   "equal": true
+  },
+  {
+   "cover": [
+    3,
+    75,
+    353,
+    407,
+    912
+   ],
+   "kappa": 1,
+   "coord_solutions": [
+    34,
+    1
+   ],
+   "hits": 0,
+   "native_s": 0.10968685150146484,
+   "reference_s": 0.9782350063323975,
+   "dense_raw": 4220,
+   "native_candidates": 636,
+   "reference_candidates": 4784,
+   "equal": true
+  },
+  {
+   "cover": [
+    3,
+    230,
+    293,
+    505,
+    749
+   ],
+   "kappa": 1,
+   "coord_solutions": [
+    0
+   ],
+   "hits": 0,
+   "native_s": 0.12423300743103027,
+   "reference_s": 2.4441630840301514,
+   "dense_raw": 141047,
+   "native_candidates": 0,
+   "reference_candidates": 141041,
+   "equal": true
+  },
+  {
+   "cover": [
+    5,
+    148,
+    293,
+    353,
+    655
+   ],
+   "kappa": 1,
+   "coord_solutions": [
+    1,
+    1
+   ],
+   "hits": 0,
+   "native_s": 0.10499095916748047,
+   "reference_s": 1.0904960632324219,
+   "dense_raw": 13308,
+   "native_candidates": 576,
+   "reference_candidates": 13828,
+   "equal": true
+  },
+  {
+   "cover": [
+    30,
+    75,
+    353,
+    662,
+    809
+   ],
+   "kappa": 1,
+   "coord_solutions": [
+    0
+   ],
+   "hits": 0,
+   "native_s": 0.1172940731048584,
+   "reference_s": 2.3475639820098877,
+   "dense_raw": 141120,
+   "native_candidates": 0,
+   "reference_candidates": 141062,
+   "equal": true
+  },
+  {
+   "cover": [
+    75,
+    148,
+    185,
+    636,
+    749
+   ],
+   "kappa": 1,
+   "coord_solutions": [
+    0
+   ],
+   "hits": 0,
+   "native_s": 0.11049485206604004,
+   "reference_s": 1.982180118560791,
+   "dense_raw": 106291,
+   "native_candidates": 0,
+   "reference_candidates": 106218,
+   "equal": true
+  },
+  {
+   "cover": [
+    75,
+    353,
+    379,
+    607,
+    810
+   ],
+   "kappa": 1,
+   "coord_solutions": [
+    0
+   ],
+   "hits": 0,
+   "native_s": 0.11086797714233398,
+   "reference_s": 2.315098285675049,
+   "dense_raw": 141107,
+   "native_candidates": 0,
+   "reference_candidates": 141037,
+   "equal": true
+  },
+  {
+   "cover": [
+    148,
+    352,
+    353,
+    463,
+    912
+   ],
+   "kappa": 1,
+   "coord_solutions": [
+    0
+   ],
+   "hits": 0,
+   "native_s": 0.10538387298583984,
+   "reference_s": 2.3044629096984863,
+   "dense_raw": 141040,
+   "native_candidates": 0,
+   "reference_candidates": 141075,
+   "equal": true
+  }
+ ],
+ "native_s_per_cover": 0.1264156997203827,
+ "reference_s_per_cover": 1.9963141679763794,
+ "host": {
+  "machine": "arm64",
+  "system": "Darwin",
+  "python": "3.14.7"
+ },
+ "generated": "2026-09-24T08:27:00"
+}

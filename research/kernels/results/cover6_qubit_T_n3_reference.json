@@ -1,0 +1,38 @@
+{
+ "kernel": "cover6_pair",
+ "orbit": "qubit_T",
+ "n": 3,
+ "N": 1080,
+ "rows": [
+  {
+   "pivot": 1073,
+   "partner": 1067,
+   "members": 4,
+   "covers": 0,
+   "candidates": 1,
+   "native_s": 0.0017790794372558594,
+   "reference_s": 0.00041866302490234375,
+   "reference_covers": 0,
+   "reference_candidates": 1,
+   "equal": true
+  },
+  {
+   "pivot": 1019,
+   "partner": 717,
+   "members": 220,
+   "covers": 356,
+   "candidates": 981792,
+   "native_s": 0.4393126964569092,
+   "reference_s": 72.19477987289429,
+   "reference_covers": 356,
+   "reference_candidates": 981792,
+   "equal": true
+  }
+ ],
+ "host": {
+  "machine": "arm64",
+  "system": "Darwin",
+  "python": "3.14.7"
+ },
+ "generated": "2026-09-24T09:05:04"
+}

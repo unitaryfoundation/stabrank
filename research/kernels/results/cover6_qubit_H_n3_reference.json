@@ -1,0 +1,62 @@
+{
+ "kernel": "cover6_pair",
+ "orbit": "qubit_H",
+ "n": 3,
+ "N": 1080,
+ "rows": [
+  {
+   "pivot": 3,
+   "partner": 932,
+   "members": 147,
+   "covers": 2628,
+   "candidates": 90970,
+   "native_s": 0.05615711212158203,
+   "reference_s": 7.2988481521606445,
+   "reference_covers": 2628,
+   "reference_candidates": 90970,
+   "equal": true
+  },
+  {
+   "pivot": 811,
+   "partner": 924,
+   "members": 148,
+   "covers": 19,
+   "candidates": 172802,
+   "native_s": 0.07881021499633789,
+   "reference_s": 13.075485944747925,
+   "reference_covers": 19,
+   "reference_candidates": 172802,
+   "equal": true
+  },
+  {
+   "pivot": 582,
+   "partner": 1025,
+   "members": 54,
+   "covers": 0,
+   "candidates": 3363,
+   "native_s": 0.0020911693572998047,
+   "reference_s": 0.26755619049072266,
+   "reference_covers": 0,
+   "reference_candidates": 3363,
+   "equal": true
+  },
+  {
+   "pivot": 1074,
+   "partner": 1043,
+   "members": 6,
+   "covers": 0,
+   "candidates": 0,
+   "native_s": 3.218650817871094e-05,
+   "reference_s": 0.00014281272888183594,
+   "reference_covers": 0,
+   "reference_candidates": 0,
+   "equal": true
+  }
+ ],
+ "host": {
+  "machine": "arm64",
+  "system": "Darwin",
+  "python": "3.14.7"
+ },
+ "generated": "2026-09-24T08:24:21"
+}

@@ -253,25 +253,127 @@ def _groups_by_key(keys):
     return [order[s:e] for s, e in zip(starts, ends) if e - s >= 2]
 
 
-def _native_cover5():
-    """The compiled 5-cover pair kernel from stabrank_core, or None."""
+def _native_symbol(name):
+    """A compiled kernel of stabrank_core by name, or None when the extension
+    is missing, predates the kernel, or STABRANK_NO_NATIVE is set."""
     if os.environ.get("STABRANK_NO_NATIVE"):
         return None
     try:
-        from stabrank.stabrank_core import cover5_pair
+        from stabrank import stabrank_core
     except ImportError:
         return None
-    return cover5_pair
+    return getattr(stabrank_core, name, None)
+
+
+def _native_cover5():
+    """The compiled 5-cover pair kernel from stabrank_core, or None."""
+    return _native_symbol("cover5_pair")
+
+
+def pair_covers6_reference(E, i, j, Qi, member_mask, max_run=4096):
+    """Full 6-covers containing the pivot i and the partner j with the other
+    four members above j inside member_mask, over an enumerator E with the
+    attributes F1, N, rng, is_cover and is_full (CoverEnumerator here, or
+    the qutrit CoverEnumerator3): a third pivot k and a fourth pivot l > k
+    over the members with a nonzero image, and a pair (a, b) above l whose
+    images are parallel modulo span(psi, u_i, u_j, u_k, u_l) over F_P1
+    (projective key of two random functionals), every candidate decided
+    exactly. The reference for cover6_pair (cpp/src/cover6.cpp). Returns
+    (set of sorted tuples, candidates)."""
+    F = E.F1
+    p = F.p
+    found, ncand = set(), 0
+    if not np.any(Qi[j]):
+        return found, 0
+    R, _ = _reduce(F, Qi, Qi[j])
+    keep = member_mask & (np.arange(E.N) > j)
+    keep[i] = False
+    ids = np.flatnonzero(keep)
+    Rm = R[ids]
+    has = Rm.any(axis=1)
+    ids, Rm = ids[has], Rm[has]
+    M = len(ids)
+    if M < 4 or Rm.shape[1] < 2:
+        return found, ncand
+    for kk in range(M - 3):
+        rk = Rm[kk]
+        c = int(np.argmax(rk != 0))
+        rows = Rm[kk + 1:]
+        g = (rows[:, c] * F.inv(rk[c])) % p
+        A = np.delete((rows - g[:, None] * rk[None, :]) % p, c, axis=1)
+        idk = ids[kk + 1:]
+        hasA = A.any(axis=1)
+        A, idk = A[hasA], idk[hasA]
+        Mk = len(idk)
+        if Mk < 3:
+            continue
+        first = np.argmax(A != 0, axis=1)
+        lead = A[np.arange(Mk), first]
+        Al = (A * F.inv(lead)[:, None]) % p
+        coef = A[:, first].T                                                  # coef[l, m] = A[m, first[l]]
+        res = (A[None, :, :] - coef[:, :, None] * Al[:, None, :]) % p        # (Mk, Mk, D3)
+        nz = res != 0
+        hasres = nz.any(axis=2)
+        f0 = np.argmax(nz, axis=2)
+        lead2 = np.take_along_axis(res, f0[:, :, None], axis=2)[:, :, 0]
+        sc = np.where(hasres, F.inv(lead2), 0)
+        res = (res * sc[:, :, None]) % p
+        fa = E.rng.integers(1, p, size=res.shape[2])
+        fb = E.rng.integers(1, p, size=res.shape[2])
+        key = ((res @ fa) % p) * p + ((res @ fb) % p)                        # (Mk, Mk)
+        sent = np.int64(p) * p + np.arange(Mk)
+        bad = ~hasres | (np.arange(Mk)[None, :] <= np.arange(Mk)[:, None])
+        key = np.where(bad, sent[None, :], key)
+        order = np.argsort(key, axis=1, kind="stable")
+        sk = np.take_along_axis(key, order, axis=1)
+        eq = sk[:, 1:] == sk[:, :-1]
+        for l, t in zip(*np.nonzero(eq)):
+            if t > 0 and eq[l, t - 1]:
+                continue
+            e = t + 1
+            while e < Mk - 1 and eq[l, e]:
+                e += 1
+            run = order[l, t:e + 1]
+            if len(run) > max_run:
+                raise AssertionError(f"parallel class of size {len(run)} at {i}, {j}, {ids[kk]}, {idk[l]}")
+            for a, b in itertools.combinations(sorted(idk[run].tolist()), 2):
+                ncand += 1
+                idx = tuple(sorted((i, j, int(ids[kk]), int(idk[l]), a, b)))
+                if E.is_cover(idx) and E.is_full(idx):
+                    found.add(idx)
+    return found, ncand
+
+
+def pair_covers6_native(E, kernel, i, j, member_mask, max_run=4096):
+    """pair_covers6_reference through cover6_pair: the kernel decides the span
+    condition mod P2 and the fullness mod both primes; a cover full modulo
+    exactly one prime (a modular accident) is decided here numerically."""
+    idx, flags, _, ncand, _ = kernel(
+        E.Q1, E.U1, E.psi1, E.U2, E.psi2, int(i), int(j),
+        np.ascontiguousarray(member_mask, dtype=np.uint8), int(max_run), int(E.rng_seed))
+    found = set()
+    for row, (f1, f2) in zip(np.asarray(idx), np.asarray(flags)):
+        t = tuple(int(x) for x in row)
+        if f1 and f2:
+            found.add(t)
+        elif f1 or f2:
+            if E.is_full(t):
+                found.add(t)
+    return found, int(ncand)
 
 
 class CoverEnumerator:
-    """Full r-covers of psi^n (r = 3, 4, 5) over the n-qubit dictionary, one
-    per orbit of the unitary symmetry group, modulo P1 with exact re-checks.
+    """Full r-covers of psi^n (r = 3, 4, 5, 6) over the n-qubit dictionary,
+    one per orbit of the unitary symmetry group, modulo P1 with exact
+    re-checks. wide_key selects the 32-bit projective key of the compiled
+    5-cover kernel (the same covers, fewer accidental candidates; the
+    default keeps the 16-bit key of the H^6, H^5, and T^5 runs).
     """
 
-    def __init__(self, n, D=None, verbose=False, seed=17, native=True, orbit="qubit_H"):
+    def __init__(self, n, D=None, verbose=False, seed=17, native=True, orbit="qubit_H", wide_key=False):
         self.n = n
         self.orbit = orbit
+        self.wide_key = wide_key
         self.D = dictionary(2, n) if D is None else D
         self.N = self.D.shape[1]
         self.codes, self.C = patterns(self.D)
@@ -289,6 +391,7 @@ class CoverEnumerator:
         # quotient by psi (coordinate 0, where psi = cos^n is nonzero)
         self.Q1, _ = _reduce(self.F1, self.U1, self.psi1)      # (N, dim - 1)
         self.native_cover5 = _native_cover5() if native else None
+        self.native_cover6 = _native_symbol("cover6_pair") if native else None
 
     def log(self, s):
         if self.verbose:
@@ -347,7 +450,7 @@ class CoverEnumerator:
         return cand, partners
 
     def covers(self, r, max_run=64, max_found=None, pivots=None):
-        """All full r-covers (r in 2, 3, 4, 5) up to symmetry, as a sorted
+        """All full r-covers (r in 2, 3, 4, 5, 6) up to symmetry, as a sorted
         list of index tuples, plus the count of modular candidates."""
         F = self.F1
         found, ncand = set(), 0
@@ -397,16 +500,21 @@ class CoverEnumerator:
         return sorted(found), ncand
 
     def pair_covers(self, r, i, j, Qi, member_mask, max_run=64):
-        """Full r-covers (r = 4, 5) containing the pivot i and the partner j,
-        with the other members above j inside member_mask; Qi is the
+        """Full r-covers (r = 4, 5, 6) containing the pivot i and the partner
+        j, with the other members above j inside member_mask; Qi is the
         dictionary reduced modulo span(psi, u_i). Returns (set, candidates).
         For r = 5 the compiled kernel (cpp/src/cover5.cpp) runs the same
         search when stabrank_core provides it and STABRANK_NO_NATIVE is not
-        set; this method's own code is the reference."""
+        set; this method's own code is the reference. For r = 6 the search
+        is pair_covers6_reference, compiled in cpp/src/cover6.cpp."""
         F = self.F1
         found, ncand = set(), 0
         if r == 5 and self.native_cover5 is not None:
             return self._pair_covers_native(i, j, member_mask, max_run)
+        if r == 6:
+            if self.native_cover6 is not None:
+                return pair_covers6_native(self, self.native_cover6, i, j, member_mask, max(max_run, 4096))
+            return pair_covers6_reference(self, i, j, Qi, member_mask, max(max_run, 4096))
         if not np.any(Qi[j]):
             return found, 0                                    # u_j in span(psi, u_i)
         R, _ = _reduce(F, Qi, Qi[j])                   # mod span(psi, u_i, u_j)
@@ -476,7 +584,8 @@ class CoverEnumerator:
         exactly one prime (a modular accident) is decided here numerically."""
         idx, flags, ncand, _ = self.native_cover5(
             self.Q1, self.U1, self.psi1, self.U2, self.psi2, int(i), int(j),
-            np.ascontiguousarray(member_mask, dtype=np.uint8), int(max_run), int(self.rng_seed))
+            np.ascontiguousarray(member_mask, dtype=np.uint8), int(max_run), int(self.rng_seed),
+            2 if self.wide_key else 1)
         found = set()
         for row, (f1, f2) in zip(np.asarray(idx), np.asarray(flags)):
             t = tuple(int(x) for x in row)
@@ -1008,6 +1117,38 @@ def _dense(popts, d0v, Kv, prhs, sides, rng, max_cand, p=P1):
     return out
 
 
+def _dense_native(kernel, popts, popts2, d0v, Kv, d02, K2v, prhs, prhs2, sides, rng, max_cand, stats=None):
+    """_dense through the compiled dense_solve (cpp/src/dense_solve.cpp): the
+    same Laplace features over the same two sides, evaluated in exact int64
+    arithmetic, every zero decided on the whole projected equation mod P1
+    (u in span(v) by rank) and mod P2 with the family's data there before it
+    is returned; a superset of the exact solutions, which the caller decides
+    with Family.restrict as for the reference. The feature-zero count (the
+    reference's candidate count) goes to stats["candidates"]; more than
+    max_cand of them raise as the reference does."""
+    r = len(popts)
+    o1 = [np.ascontiguousarray(o % P1, dtype=np.int64) for o in popts]
+    o2 = [np.ascontiguousarray(o % P2, dtype=np.int64) for o in popts2]
+    try:
+        combos, raw, _ = kernel(o1, o2, np.ascontiguousarray(d0v % P1, dtype=np.int64),
+                                np.ascontiguousarray(Kv % P1, dtype=np.int64).reshape(r, -1),
+                                np.ascontiguousarray(d02 % P2, dtype=np.int64),
+                                np.ascontiguousarray(K2v % P2, dtype=np.int64).reshape(r, -1),
+                                np.ascontiguousarray(prhs % P1, dtype=np.int64),
+                                np.ascontiguousarray(prhs2 % P2, dtype=np.int64),
+                                [int(i) for i in sides[0]], [int(i) for i in sides[1]], int(max_cand),
+                                int(rng.integers(1, 1 << 62)))
+    except RuntimeError as e:
+        raise AssertionError(str(e)) from None
+    if stats is not None:
+        stats["dense_raw"] = stats.get("dense_raw", 0) + int(raw)
+    return [tuple(int(o) for o in row) for row in np.asarray(combos)]
+
+
+def _native_dense():
+    return _native_symbol("dense_solve")
+
+
 def solve_slice(opts, blocks, fam, rhs, rng, max_cand=2_000_000, stats=None, log=None):
     """Solutions of sum_i d_i w_i + (block contributions) = rhs for some d
     in the family: a list of (combo, Ssel) with combo the option index per
@@ -1016,10 +1157,12 @@ def solve_slice(opts, blocks, fam, rhs, rng, max_cand=2_000_000, stats=None, log
     candidate decided exactly (F_P1, C, F_P2)."""
     r = len(opts)
     d1, K1 = fam.parts[0]
+    d2, K2 = fam.parts[1]
     ords = [i for i in range(len(d1)) if i not in {b.pos for b in blocks}]
     assert len(ords) == r
     d0v = d1[ords]
     Kv = _independent_columns_mod(K1[ords].reshape(r, -1), P1)
+    dense = _native_dense() if 1 <= Kv.shape[1] <= 2 else None
     out = []
     for Ssel in itertools.product(*[b.subsets for b in blocks]):
         Ps, Vs = _projectors(blocks, Ssel)
@@ -1034,6 +1177,14 @@ def solve_slice(opts, blocks, fam, rhs, rng, max_cand=2_000_000, stats=None, log
         t0 = time.time()
         if Kv.shape[1] == 0:
             cands = _mitm(popts, d0v, prhs, sides, rng)
+        elif dense is not None:
+            if Ps is None:
+                popts2, prhs2 = [o[1] for o in opts], rhs[1]
+            else:
+                popts2 = [_mm(o[1], Ps[1].T, P2) for o in opts]
+                prhs2 = _mm(Ps[1], rhs[1][:, None], P2)[:, 0]
+            cands = _dense_native(dense, popts, popts2, d0v, Kv, d2[ords], K2[ords].reshape(r, -1), prhs, prhs2,
+                                  sides, rng, max_cand, stats)
         else:
             cands = _dense(popts, d0v, Kv, prhs, sides, rng, max_cand)
         if stats is not None:

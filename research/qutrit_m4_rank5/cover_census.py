@@ -17,6 +17,7 @@ import numpy as np
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.join(ROOT, "verify_challenge"))
 from rank_exclusion import dictionary, psi_for, symmetry_orbit_reps  # noqa: E402
+from slice_cover import _native_symbol, pair_covers6_native, pair_covers6_reference  # noqa: E402
 from slice_lift import stabilizer_orbit_labels  # noqa: E402
 
 P1 = 65521
@@ -147,7 +148,14 @@ def rank_mod(M, p):
 
 
 class CoverEnumerator3:
-    def __init__(self, orbit, n, D=None, verbose=False, seed=17):
+    """Full r-covers of |M>^n (r = 3, 4, 5, 6) over the n-qutrit dictionary,
+    one per orbit of the unitary symmetry group, modulo P1 with exact
+    re-checks. The r = 5 search is this module's own numpy code; r = 6 is
+    slice_cover.pair_covers6_reference, compiled in cpp/src/cover6.cpp and
+    used when stabrank_core provides it and STABRANK_NO_NATIVE is not set
+    (native=False keeps the reference)."""
+
+    def __init__(self, orbit, n, D=None, verbose=False, seed=17, native=True):
         self.orbit, self.n = orbit, n
         self.D = dictionary(3, n) if D is None else D
         self.N = self.D.shape[1]
@@ -160,8 +168,10 @@ class CoverEnumerator3:
         reps, info = symmetry_orbit_reps(orbit, n, self.D, antiunitary=False)
         self.reps, self.info = np.sort(reps), info
         self.rng = np.random.default_rng(seed)
+        self.rng_seed = seed
         self.verbose = verbose
         self.Q1, _ = _reduce(self.F1, self.U1, self.psi1)
+        self.native_cover6 = _native_symbol("cover6_pair") if native else None
 
     def log(self, s):
         if self.verbose:
@@ -249,7 +259,7 @@ class CoverEnumerator3:
         return sorted(found), ncand
 
     def pair_covers(self, r, i, j, Qi, member_mask, max_run=64, block=16):
-        """Full r-covers (r = 4, 5) with pivot i, partner j, other members
+        """Full r-covers (r = 4, 5, 6) with pivot i, partner j, other members
         above j in member_mask. Returns (set, candidates, M)."""
         F = self.F1
         found, ncand = set(), 0
@@ -259,6 +269,13 @@ class CoverEnumerator3:
         keep = member_mask & (np.arange(self.N) > j)
         keep[i] = False
         ids = np.flatnonzero(keep)
+        if r == 6:
+            M = int(np.count_nonzero(R[ids].any(axis=1)))
+            if self.native_cover6 is not None:
+                found, ncand = pair_covers6_native(self, self.native_cover6, i, j, member_mask, max(max_run, 4096))
+            else:
+                found, ncand = pair_covers6_reference(self, i, j, Qi, member_mask, max(max_run, 4096))
+            return found, ncand, M
         if r == 4:
             Rc, has = _canon_rows(F, R[ids])
             ids2, Rc = ids[has], Rc[has]

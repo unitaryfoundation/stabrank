@@ -1,0 +1,42 @@
+{
+ "kernel": "SliceMatch3Kernel",
+ "orbit": "H3",
+ "rows": [
+  {
+   "x0": [
+    1,
+    1
+   ],
+   "covers": 200,
+   "native_ms_per_cover": 0.2898240089416504,
+   "reference_ms_per_cover": 30.5343759059906,
+   "mismatches": 0,
+   "coord_hist": {
+    "2,4": 49,
+    "5,25": 28,
+    "3,9": 40,
+    "9,81": 74,
+    "4,16": 9
+   }
+  },
+  {
+   "x0": [
+    0,
+    0
+   ],
+   "covers": 200,
+   "native_ms_per_cover": 0.10030984878540039,
+   "reference_ms_per_cover": 1.8200981616973877,
+   "mismatches": 0,
+   "coord_hist": {
+    "": 200
+   }
+  }
+ ],
+ "host": {
+  "machine": "arm64",
+  "system": "Darwin",
+  "python": "3.14.7"
+ },
+ "generated": "2026-09-24T08:26:42"
+}

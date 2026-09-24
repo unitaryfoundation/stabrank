@@ -1,0 +1,115 @@
+{
+ "kernel": "dense_solve (qutrit matcher)",
+ "orbit": "N",
+ "x0": [
+  0,
+  0
+ ],
+ "kind": "B6",
+ "rows": [
+  {
+   "cover": [
+    0,
+    1,
+    36,
+    37,
+    73,
+    117
+   ],
+   "kappa": 1,
+   "coord_raw": [
+    3102,
+    3102
+   ],
+   "coord_solutions": [
+    3102,
+    38016
+   ],
+   "hits": 0,
+   "native_s": 6.409872770309448,
+   "reference_s": 69.81969404220581,
+   "dense_raw": 3635157,
+   "equal": true
+  },
+  {
+   "cover": [
+    0,
+    1,
+    37,
+    38,
+    73,
+    117
+   ],
+   "kappa": 1,
+   "coord_raw": [
+    1106,
+    1106
+   ],
+   "coord_solutions": [
+    1106,
+    14394
+   ],
+   "hits": 0,
+   "native_s": 3.833656072616577,
+   "reference_s": 67.38843297958374,
+   "dense_raw": 3630587,
+   "equal": true
+  },
+  {
+   "cover": [
+    0,
+    1,
+    37,
+    72,
+    73,
+    117
+   ],
+   "kappa": 1,
+   "coord_raw": [
+    3102,
+    3102
+   ],
+   "coord_solutions": [
+    3102,
+    38016
+   ],
+   "hits": 0,
+   "native_s": 6.190239906311035,
+   "reference_s": 69.64830160140991,
+   "dense_raw": 3634812,
+   "equal": true
+  },
+  {
+   "cover": [
+    0,
+    1,
+    37,
+    73,
+    74,
+    117
+   ],
+   "kappa": 1,
+   "coord_raw": [
+    1106,
+    1106
+   ],
+   "coord_solutions": [
+    1106,
+    14394
+   ],
+   "hits": 0,
+   "native_s": 3.8566601276397705,
+   "reference_s": 68.56843185424805,
+   "dense_raw": 3630445,
+   "equal": true
+  }
+ ],
+ "native_s_per_cover": 5.072607219219208,
+ "reference_s_per_cover": 68.85621511936188,
+ "host": {
+  "machine": "arm64",
+  "system": "Darwin",
+  "python": "3.14.7"
+ },
+ "generated": "2026-09-24T08:45:07"
+}

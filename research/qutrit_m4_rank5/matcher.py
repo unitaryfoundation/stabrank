@@ -68,8 +68,9 @@ sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(ROOT, "verify_challenge"))
 import slice_cover  # noqa: E402
 from cover_census import P1, P2, Field3, patterns, rank_mod  # noqa: E402
-from slice_cover import (Family, _affine_solve_mod, _annihilator_mod, _dense, _det_mod,  # noqa: E402
-                         _independent_columns_mod, _mitm, _projectors, _split_sides, slice_system)
+from slice_cover import (Family, _affine_solve_mod, _annihilator_mod, _dense, _dense_native, _det_mod,  # noqa: E402
+                         _independent_columns_mod, _mitm, _native_dense, _projectors, _split_sides,
+                         slice_system)
 
 
 def _affine_solve_C(A, b, tol=1e-7):
@@ -1487,10 +1488,15 @@ def solve_slice3(opts, blocks, fam, rhs, rng, stats=None, log=None, budget=None,
         raise AssertionError("a slice equation with no ordinary term is solved by BlockOnlyMatcher")
     r = len(opts)
     d1, K1 = fam.parts[0]
+    d2, K2 = fam.parts[1]
     ords = [i for i in range(len(d1)) if i not in {b.pos for b in blocks}]
     assert len(ords) == r
     d0v = d1[ords]
     Kv = _independent_columns_mod(K1[ords].reshape(r, -1), P1)
+    # the compiled dense solve (cpp/src/dense_solve.cpp) for one or two
+    # parameters; its feature matrices are the reference's, so the budget
+    # check below applies to it as well
+    dense = _native_dense() if 1 <= Kv.shape[1] <= 2 else None
     nsel = math.prod(len(b.subsets) for b in blocks)
     if budget is not None:
         budget.check_dense(where, [len(o[0]) for o in opts], Kv.shape[1], nsel)
@@ -1513,7 +1519,16 @@ def solve_slice3(opts, blocks, fam, rhs, rng, stats=None, log=None, budget=None,
             cands = _mitm(popts, d0v, prhs, sides, rng)
         else:
             try:
-                cands = _dense(popts, d0v, Kv, prhs, sides, rng, max_cand)
+                if dense is not None:
+                    if Ps is None:
+                        popts2, prhs2 = [o[1] for o in opts], rhs[1]
+                    else:
+                        popts2 = [_mm_int64(o[1], Ps[1].T, P2) for o in opts]
+                        prhs2 = _mm_int64(Ps[1], rhs[1][:, None], P2)[:, 0]
+                    cands = _dense_native(dense, popts, popts2, d0v, Kv, d2[ords], K2[ords].reshape(r, -1), prhs,
+                                          prhs2, sides, rng, max_cand, stats)
+                else:
+                    cands = _dense(popts, d0v, Kv, prhs, sides, rng, max_cand)
             except AssertionError as e:
                 raise BudgetExceeded(f"{where}: {e}") from None
         if stats is not None:
@@ -1761,11 +1776,28 @@ def vector_target(T_C, n2, F1, F2):
 
 # --------------------------------------------------------------- matcher ----
 
+def _native_kernel3_class():
+    """The compiled stage A matcher from stabrank_core, or None."""
+    if os.environ.get("STABRANK_NO_NATIVE"):
+        return None
+    try:
+        from stabrank.stabrank_core import SliceMatch3Kernel
+    except ImportError:
+        return None
+    return SliceMatch3Kernel
+
+
 class Matcher:
     """Every decomposition of a target with a given base slice at a given
-    base point along the first two qutrits (see the module note)."""
+    base point along the first two qutrits (see the module note). With
+    native (the default unless STABRANK_NO_NATIVE is set) a base of
+    distinct, independent states runs through the compiled stage A kernel
+    SliceMatch3Kernel (cpp/src/slice_match3.cpp), one kernel per target;
+    every hit it returns is confirmed here as for the reference path, and
+    the kernel declines (status 1 or 2) exactly where this module refuses
+    or takes the family path."""
 
-    def __init__(self, D, n2, F1=None, F2=None, seed=29, verbose=False, budget=None):
+    def __init__(self, D, n2, F1=None, F2=None, seed=29, verbose=False, budget=None, native=True):
         self.D, self.n2 = D, n2
         self.codes, self.C = patterns(D)
         self.F1 = F1 or Field3(P1)
@@ -1781,6 +1813,9 @@ class Matcher:
         self.last_stats = None                  # the stats of the current or last run (partial after an abort)
         self.last_hits = []                     # the raw hits found so far (partial after an abort)
         self._proj = None
+        self.seed = seed
+        self.native_cls = _native_kernel3_class() if native else None
+        self._native = None                     # (target, kernel) of the last target seen
 
     def _check(self, where, **kw):
         if self.budget is not None:
@@ -1806,6 +1841,46 @@ class Matcher:
             raise AssertionError("a base slice is not a dictionary state")
         return self.lookup[key]
 
+    def _native_kernel(self, target):
+        if self._native is None or self._native[0] is not target:
+            dim2 = 3 ** self.n2
+            k = self.native_cls(np.ascontiguousarray(self.codes, dtype=np.int8),
+                                np.ascontiguousarray(target.T_1.reshape(9, dim2), dtype=np.int64),
+                                np.ascontiguousarray(target.T_2.reshape(9, dim2), dtype=np.int64), self.seed)
+            self._native = (target, k)
+        return self._native[1]
+
+    def _run_native(self, cover, x0, target, stats, t_start):
+        """Stage A through the compiled kernel; None when the kernel declines
+        (a dependent base, a modular rank accident, or a refusal, which the
+        kernel decides modulo the primes only), in which case the caller runs
+        the reference path and decides."""
+        res = self._native_kernel(target).run([int(c) for c in cover], pidx(x0))
+        if res["status"] != 0:
+            return None
+        hits = []
+        for h in np.asarray(res["hits"]):
+            terms = [term_from_codes(c) for c in h]
+            hits.append(self.confirm(terms, 0, target))
+        hits = self._dedupe(hits)
+        # the reference records the raw solution counts of the two coordinate
+        # slices in coord_raw and returns before coord_solutions is written
+        # when one of them is empty; with both nonempty the family is a point,
+        # so every pair of solutions joins: coord_solutions = [n1, n1 n2]
+        raw = [int(v) for v in res["coord_solutions"]]       # [n1] or [n1, n1 n2], cumulative
+        if raw[-1] == 0:
+            coord_raw, coord_solutions, coord_states = raw, [], [0]
+        else:
+            n1, n12 = raw
+            coord_raw, coord_solutions, coord_states = [n1, n12 // n1], [n1, n12], [n1, n12]
+        stats.update(kappa=0, kappa1=0, distinct=len(cover), blocks=[], coord_raw=coord_raw,
+                     coord_solutions=coord_solutions, coord_states=coord_states, joined=int(res["joined"]),
+                     composite_solutions=int(res["composite_solutions"]), candidates=int(res["candidates"]),
+                     hits=len(hits), native=True)
+        stats["seconds"]["total"] = round(time.time() - t_start, 2)
+        stats["peak_rss_gb"] = round(peak_rss_gb(), 3)
+        return hits, stats
+
     def run(self, cover, x0, target):
         """(hits, stats) for the base slice `cover` (a tuple of dictionary
         indices, repeats allowed) at x0 against `target`; each hit is a dict
@@ -1815,8 +1890,13 @@ class Matcher:
         stats = {"kappa": None, "kappa1": None, "distinct": 0, "blocks": [], "coord_solutions": [],
                  "coord_states": [], "joined": 0, "composite_solutions": 0, "composite_states": [],
                  "candidates": 0, "zero_coefficient": 0, "split_pruned": 0, "reconstructions": 0,
-                 "hits": 0, "refused": False, "seconds": {}, "peak_rss_gb": None}
+                 "hits": 0, "refused": False, "seconds": {}, "peak_rss_gb": None, "native": False}
         t_start = time.time()
+        if self.native_cls is not None and len(set(cover)) == len(cover):
+            self.last_stats = stats
+            out = self._run_native(cover, x0, target, stats, t_start)
+            if out is not None:
+                return out
         distinct = sorted(set(int(u) for u in cover))
         mult = {u: list(cover).count(u) for u in distinct}
         b1, b2, bC = target.rhs(x0)
