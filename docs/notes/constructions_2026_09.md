@@ -1049,8 +1049,143 @@ eigenspaces are not stabilizer codes, as section 3 says).
    <= 20, exponent 0.4654) is open and needs an exact tool: the
    three-ququint dictionary (2,457,000 states, the same size class as the
    five-qubit one built today) or the mod-q quotient search of
-   `t5_m2_merge.py` on the five sub-sector terms.
+   `t5_m2_merge.py` on the five sub-sector terms. Closed the same day by
+   slicing to m = 3 (next section): the sector has rank exactly 5.
 4. QPG's cat states are the Y^m sectors of |H>^m, so the k = 1 scan at
    qubit_H m=7, 8 is the cat_7 and cat_8 rank question (chi(cat_7) in
    {3, ..., 6}, chi(cat_8) in {3, ..., 6} in the literature) run by
    annealing: no rank 3 at m=7 and no rank 4 at m=8 were found.
+
+## 2026-09-24: the Z^4 sectors of |T5>^4 have rank exactly 5 (research/t5_m4_sectors)
+
+The open question of the previous section: the Z^4 eigensector of |T5>^4
+is a three-ququint state of rank at most 5, and rank 4 would give
+chi(|T5>^4) <= 20 and the per-copy exponent log_5(20)/4 = 0.4654, the
+first exponent record on the board. Answer: the rank is exactly 5 for
+every eigenvalue, decided exactly and without a three-ququint dictionary,
+in about 5 minutes of laptop time. The one-Pauli sector route at m = 4
+gives the product 25 and nothing below it. Scripts and records are under
+`research/t5_m4_sectors/` (README there); every run went through
+`research/t5_rank5/run.py` at nice 19, one process at a time, the longest
+91 s, about 0.1 CPU-hours in all.
+
+### The sectors
+
+Sector c of Z^4 is the restriction of the phase pattern w^(x1^3 + x2^3 +
+x3^3 + x4^3) to the hyperplane x1 + x2 + x3 + x4 = c, weight 1/5. The
+Clifford SUM_{1->4} SUM_{2->4} SUM_{3->4} maps it to u_c (x) |c> with
+
+    u_c(x, y, z) = w^(f_c(x, y, z)),   f_c = x^3 + y^3 + z^3 + (c - x - y - z)^3,
+
+a three-ququint state with full support and 125 entries in Q(zeta_5). One
+class: f_{c+1}(x, y, z) - f_c(x - 1, y, z) = 3x^2 - 3x + 1, so u_{c+1} =
+D X_1 u_c with D the diagonal Clifford w^(3x^2 - 3x + 1), the order-5
+symmetry of |T5> on the first copy; the five sectors are Clifford images
+of one another and share their rank. The cubic part of every f_c is
+3(xyz - (x + y + z)(xy + yz + zx)), symmetric under S_3 (the S_4 of the
+copies acts on the plane by affine maps). The five sub-sector products of
+the previous section are the terms a = 0, ..., 4 of the line partition
+x + y = a of the (x, y) plane, each a stabilizer state (checked by the
+witness converter), linearly independent, and no four of them span u_c
+(`sectors_m4.py`, all in exact arithmetic on the exponents).
+
+### The argument
+
+Slicing at x4 = a (projecting the fourth ququint onto |a>) sends every
+four-ququint stabilizer state to a stabilizer state or zero, so a rank-r
+decomposition of the sector slices to a decomposition with at most r
+terms of its slice. The slice of sector c at x4 = a is w^(a^3) times the
+restriction of w^(x1^3 + x2^3 + x3^3) to the plane x1 + x2 + x3 = c - a,
+that is, the Z^3 eigensector of |T5>^3 at eigenvalue w^(c - a), and in the
+(x, y) coordinates of that plane it is the two-ququint state
+
+    g_d(x, y) = w^(x^3 + y^3 + (d - x - y)^3),
+
+Clifford-equivalent to w^(2xy(x + y)) (the cubic part is -3xy(x + y)).
+Hence chi(g_d) <= chi(u_c) <= 5, and the m = 4 question is decided at
+m = 3, in the two-ququint dictionary of 3,900 states.
+
+### The census
+
+`sector_census.py` is the exact k = 1..4 census of
+`research/t5q_m2_rank5/common.py` (`census_low`) with an arbitrary target
+and an arbitrary unitary symmetry group: the dictionary is reduced modulo
+the target over Q(zeta_5) mod 65521, then modulo a pivot, then modulo a
+partner; a k-set is a candidate when the images of its last two members
+are parallel (a two-functional key), and every candidate is decided
+exactly modulo 2013265921 and numerically. Pivots are one per orbit of the
+unitary symmetry group of g_d (the 25 translations of the plane with their
+quadratic phase corrections, times the permutations of the three copies
+fixing the string; every generator is checked to fix g_d up to phase and
+to permute the dictionary), members have orbit roots at or above the
+pivot, and partners are one per orbit of the pivot's stabilizer subgroup
+(Schreier generators), the reduction proved in section 1.2 of
+`t5q_m2_rank5_exclusion.md`. Controls (`sector_census.py control`): the
+product decomposition of |N5>^2 from the pivot |00>, twelve planted
+rank-4 targets recovered from their smallest member, and the ten rank-3
+decompositions of |T5> from the k = 3 census.
+
+The m = 3 sector of Z^c1 Z^c2 Z^c3 at eigenvalue w^d is, by the same
+reduction, g(x, y) = w^(x^3 + y^3 + z(x, y)^3) with z = (d - c1 x - c2 y) /
+c3, one class per string, and the Z-type strings at m = 3 fall in five
+classes up to the order of the sites and the power of the string. All
+five were run, at eigenvalue 0, and Z^3 again at eigenvalue 1 with another
+seed:
+
+| string | group order | pivots | k = 4 units | modular candidates (k = 1..4) | hits | time |
+|---|---|---|---|---|---|---|
+| Z Z Z (d = 0) | 150 | 48 | 53,671 | 0, 0, 0, 3,227 | none | 20 s |
+| Z Z Z (d = 1, seed 23) | 150 | 48 | 53,671 | 0, 0, 0, 3,215 | none | 20 s |
+| Z Z Z^2 | 50 | 102 | 155,458 | 0, 0, 0, 7,436 | none | 48 s |
+| Z Z Z^3 | 50 | 98 | 155,422 | 0, 0, 0, 7,248 | none | 49 s |
+| Z Z Z^4 | 50 | 102 | 155,448 | 0, 0, 1, 7,400 | none | 50 s |
+| Z Z^2 Z^3 | 25 | 156 | 305,994 | 0, 0, 0, 11,865 | none | 90 s |
+
+So every Z-type eigensector of |T5>^3 has rank >= 5 exactly, and the
+sectors of Z Z Z, Z Z Z^2, Z Z Z^3, and Z Z Z^4 (two equal exponents give
+the five line terms) have rank exactly 5. This sharpens fact 1 of the
+previous section, which left the Z-type sectors at m = 3 at "4 or 5": the
+Z-type sector total at m = 3 is exactly 25 for every Z-type string, and
+the one-Pauli route at m = 3 is 15 or more from the mixed strings only.
+
+### Consequences at m = 4
+
+1. chi(Z^4 sector of |T5>^4) = 5 for every eigenvalue: the sector route
+   with Z^4 is exactly 25. No rank-20 decomposition of |T5>^4 comes from
+   it, and `T5-m4-upper-25.json` stays the cell's bound.
+2. Every Z-type one-Pauli sector of |T5>^4 has rank >= 5, since a Z-type
+   string at m = 4 sliced at any copy is a Z-type string at m = 3, whose
+   sectors all have rank >= 5. Z-type sector totals at m = 4 are >= 25.
+3. Other strings (`strings_report.py`, all 330 classes of full-support
+   one-Pauli strings on four copies): no one-Pauli sector of |T5>^4
+   vanishes (a Z-type site makes <P^j> = 0 for j != 0, and a Z-free string
+   has |<P^j>| = 1/25, so no sector weight (1/5)(1 + sum_j w^{-sj} <P^j>)
+   can vanish), so every pairing of the copies gives exactly five
+   nonvanishing sub-sector terms for every string. The sub-sector bound
+   (exact one-ququint ranks of the two-copy sectors) is 5 for exactly the
+   ten strings Z^a Z^a Z^b Z^b (three classes up to the power of the
+   string: Z^4, Z Z Z^2 Z^2, Z Z Z^4 Z^4, all Z-type and hence at rank
+   exactly 5 by items 1 and 2 with `sectors_m4.py`'s slices), 12 to 16 for
+   128 strings, and 28 to 45 for the rest; the two-copy strings whose five
+   sectors are all stabilizer states are Z^a Z^a only, the uniqueness of
+   section 8 of the exclusion note seen from the sector side.
+4. A rank below 25 at m = 4, if one exists, does not come from the
+   eigensectors of one Pauli string (Z-type: exactly 25 or more; mixed:
+   sub-sector bounds >= 12 per sector, no exact rank known) nor from two
+   (totals >= 60, previous section). It needs a decomposition whose terms
+   do not lie in a common Pauli eigenspace.
+
+### Sharpest facts
+
+1. The Z^4 sector question is closed by a one-line slicing argument plus a
+   20-second exact census at two ququints; the three-ququint dictionary
+   (2,457,000 states) that fact 3 of the previous section called for is
+   not needed for it.
+2. Every Z-type eigensector of |T5>^3 has rank exactly 5 (two equal
+   exponents) or at least 5 (Z Z^2 Z^3), exact over Q(zeta_5) modulo two
+   primes and numerically, with the modular caveat of section 1.4 of the
+   exclusion note (a member dropped by a zero image modulo 65521).
+3. The cubic phase states w^(2xy(x + y)) on two ququints and
+   w^(3(xyz - (x + y + z)(xy + yz + zx))) on three have stabilizer rank 5
+   each; both are one Clifford away from the Z-type sectors of |T5>^3 and
+   |T5>^4.

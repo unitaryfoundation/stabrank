@@ -1,0 +1,22 @@
+string Z^1 Z^2 Z^3, eigenvalue w^0: dictionary 3900 states, unitary symmetry group of order 25, 156 orbits [0.6s]
+  pivot 1/156 (state 24): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 300} [2s]
+  pivot 11/156 (state 266): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 2906} [18s]
+  pivot 21/156 (state 519): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 5493} [31s]
+  pivot 31/156 (state 774): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 8078} [44s]
+  pivot 41/156 (state 2876): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 9102} [54s]
+  pivot 51/156 (state 2939): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 9826} [62s]
+  pivot 61/156 (state 3021): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 10358} [69s]
+  pivot 71/156 (state 3184): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 10793} [75s]
+  pivot 81/156 (state 3274): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 11085} [79s]
+  pivot 91/156 (state 3501): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 11417} [83s]
+  pivot 101/156 (state 3559): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 11599} [86s]
+  pivot 111/156 (state 3634): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 11747} [87s]
+  pivot 121/156 (state 3682): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 11823} [89s]
+  pivot 131/156 (state 3763): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 11856} [89s]
+  pivot 141/156 (state 3805): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 11860} [90s]
+  pivot 151/156 (state 3886): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 11865} [90s]
+  pivot 156/156 (state 3899): hits {1: 0, 2: 0, 3: 0, 4: 0}, candidates {1: 0, 2: 0, 3: 0, 4: 11865} [90s]
+hits per k: {'1': 0, '2': 0, '3': 0, '4': 0}; candidates {'1': 0, '2': 0, '3': 0, '4': 11865}; units {'1': 1, '2': 156, '3': 156, '4': 305994}; 90s
+VERDICT: the Z^1 Z^2 Z^3 sector of |T5>^3 has stabilizer rank >= 5
+wrote /Users/vincent.russo/Projects/genesis/stabrank/.claude/worktrees/agent-a48dcc4fc225d52f9/research/t5_m4_sectors/results/census_Z123_d0.json
+[run.py] exit 0 after 90.7s
