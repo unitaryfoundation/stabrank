@@ -1,6 +1,6 @@
 {
  "generated_from": "bounds/",
- "head": "5e37ed6f9fb06456cde5f5110f4dabf8c4bb5f2d",
+ "head": "e99761ff5ccfde8e454bd6353f59c57509d4b786",
  "generated": "2026-09-23",
  "since": "2026-09-15",
  "exponents": [
@@ -667,11 +667,11 @@
    "orbit": "qubit_H",
    "m": 5,
    "lower": {
-    "rank": 5,
-    "tier": "reproduced",
-    "slug": "qubit_H-m5-lower-5",
-    "date": "2026-09-18",
-    "board_date": "2026-09-19",
+    "rank": 6,
+    "tier": "attested",
+    "slug": "qubit_H-m5-lower-6",
+    "date": "2026-09-24",
+    "board_date": "2026-09-23",
     "moved_since": true
    },
    "upper": {
@@ -682,7 +682,7 @@
     "board_date": "2026-09-17",
     "moved_since": true
    },
-   "settled": false,
+   "settled": true,
    "moved_since": true
   },
   {
@@ -1599,16 +1599,18 @@
    "orbit": "qubit_H",
    "m": 5,
    "rank": 6,
-   "runs": 1,
+   "runs": 2,
    "log_runs": 0,
-   "cpu_hours": 0.02,
-   "solutions": 1,
-   "cpu_hours_per_solution": 0.02,
+   "cpu_hours": 37.220000000000006,
+   "solutions": 2,
+   "cpu_hours_per_solution": 18.610000000000003,
    "bounds": [
-    "qubit_H-m5-upper-6"
+    "qubit_H-m5-upper-6",
+    "qubit_H-m5-lower-6"
    ],
    "board": [
-    "lean"
+    "lean",
+    "attested"
    ]
   },
   {
@@ -2185,6 +2187,15 @@
    "median_declared": 0.001,
    "cum_cpu_hours": 245.80761111111107,
    "cum_discoveries": 90
+  },
+  {
+   "date": "2026-09-24",
+   "seeded": false,
+   "cpu_hours": 37.2,
+   "discoveries": 1,
+   "median_declared": 37.2,
+   "cum_cpu_hours": 283.0076111111111,
+   "cum_discoveries": 91
   }
  ],
  "bounds": [
@@ -4444,6 +4455,48 @@
     "wall_clock_hours": 0.46,
     "runs": 1,
     "hardware": "Apple silicon laptop, four workers at low priority under a load average near 12: 1649 s for the enumeration and lift"
+   }
+  },
+  {
+   "slug": "qubit_H-m5-lower-6",
+   "file": "bounds/qubit_H-m5-lower-6.json",
+   "orbit": "qubit_H",
+   "m": 5,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "attested",
+   "ok": true,
+   "date": "2026-09-24",
+   "author": "this repository",
+   "reference": "stabrank research/h5_rank5",
+   "method": "two-qubit base slice: every rank-5 decomposition of |H>^5 has, along qubits 1, 2 at a base point in {00, 01}, either all five terms visible (a full 5-cover of |H>^3, the H^6 census) or four visible and one line term on the diagonal missing the base point (a full 4-cover of |H>^3); every base is completed slice by slice under the slice structure lemma, modulo 65521 with exact re-decision",
+   "pull_request": 125,
+   "merge_commit": "e99761ff5ccfde8e454bd6353f59c57509d4b786",
+   "merge_date": "2026-09-23",
+   "added_commit": "a8f9488efc810e56d63576a5e2148581238613f4",
+   "added_date": "2026-09-23",
+   "added_subject": "chi(H^5) >= 6: the rank-5 exclusion run, its batch manifest, and the attested bound",
+   "receipt": "certs/qubit_H-m5-lower-6.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_h_m5_rank5_attested.py",
+   "certificate_budget_s": 3600,
+   "certificate_attested": {
+    "batches": "research/h5_rank5/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 37.2,
+    "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host (load 25 to 40), fifteen batches in parallel at nice 19, 2026-09-23 21:56 to 2026-09-24 00:28 UTC (stage A probe batch 0 at 21:56, the 323-batch run 22:02 to 00:28); the aggregate's two seeded re-runs (batches 19 and 319) on the same pod at 00:28 UTC",
+    "note": "The exclusion of every rank-5 decomposition of |H>^5 lives in the stored batch outputs under research/h5_rank5/results/ (partition.json: 16 stage A batches over the 5,939,465 full 5-covers of |H>^3 with distinct independent base states, 293 stage B batches over the 12,390 dependent covers, 9 stage C batches over the 16,006 covers with a repeated state, including the cancel-at-base multisets, and 5 stage beta batches over the 3,466 full 4-covers, 6 of them with a repeated state), each cover matched at the base points 00 and 01 along qubits 1, 2 and every candidate re-decided mod 2013265921 and numerically: 0 hits, 0 refused, 0 undecided. The certificate checks the partition against the enumerator and the census hash, re-enumerates the degenerate covers and the stage beta bases, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/h5_rank5/batch.py, which regenerates any batch (batch.py K).",
+    "total": 323
+   },
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 37.2,
+    "wall_clock_hours": 2.5,
+    "runs": 1,
+    "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host (load 25 to 40), fifteen batches in parallel at nice 19, 2026-09-23 21:56 to 2026-09-24 00:28 UTC (stage A probe batch 0 at 21:56, the 323-batch run 22:02 to 00:28); the aggregate's two seeded re-runs (batches 19 and 319) on the same pod at 00:28 UTC"
    }
   },
   {
