@@ -1,0 +1,181 @@
+{
+  "schema_version": "0.1",
+  "orbit": "cat",
+  "m": 5,
+  "direction": "upper",
+  "rank": 3,
+  "provenance": {
+    "author": "Qassim, Pashayan, and Gosset",
+    "reference": "arXiv:2106.07740",
+    "method": "literature",
+    "date": "2021-06-14",
+    "github": []
+  },
+  "notes": "chi(|cat_5>) <= 3 from <0|_6 |cat_6> proportional to |cat_5> applied to the three-term decomposition of |cat_6> (Qassim, Pashayan, and Gosset, appendix; Kissinger, van de Wetering, and Vilmart, Section 4.1, draw it in ZX). Exact with their Lemma 3, chi(cat_5) > 2, cited in bounds/cat-m5-lower-3.json. Witness built by research/constructions/qpg_cat.py by projecting the three cat_6 terms, and verified in exact arithmetic. Implied H-type exponent log_2(3)/3 = 0.5283.",
+  "witness": {
+    "terms": [
+      {
+        "k": 0,
+        "x0": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [],
+        "Q": [],
+        "l": []
+      },
+      {
+        "k": 4,
+        "x0": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "l": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "k": 4,
+        "x0": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "l": [
+          2,
+          2,
+          2,
+          2
+        ]
+      }
+    ],
+    "coeffs": [
+      "1/2",
+      "-1/2 + I/2",
+      "-1/2 - I/2"
+    ]
+  }
+}

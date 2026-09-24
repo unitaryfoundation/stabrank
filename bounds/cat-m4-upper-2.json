@@ -1,0 +1,99 @@
+{
+  "schema_version": "0.1",
+  "orbit": "cat",
+  "m": 4,
+  "direction": "upper",
+  "rank": 2,
+  "provenance": {
+    "author": "Qassim, Pashayan, and Gosset",
+    "reference": "arXiv:2106.07740",
+    "method": "literature",
+    "date": "2021-06-14",
+    "github": []
+  },
+  "notes": "chi(|cat_4>) <= 2 from |cat_4> = i|E> + ((1-i)/2) 2^{-1/2}(|0^4> - i|1^4>), |E> the uniform superposition of the even-weight four-bit strings (Qassim, Pashayan, and Gosset, appendix; Kissinger, van de Wetering, and Vilmart, Section 4.1, use it as the 2^{0.25 t} decomposition). Exact with bounds/cat-m4-lower-2.json. Witness built by research/constructions/qpg_cat.py from the two terms as written, and verified in exact arithmetic. Implied H-type exponent log_2(2)/2 = 0.5.",
+  "witness": {
+    "terms": [
+      {
+        "k": 3,
+        "x0": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            1,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "l": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "k": 1,
+        "x0": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            1,
+            1,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0
+          ]
+        ],
+        "l": [
+          3
+        ]
+      }
+    ],
+    "coeffs": [
+      "I",
+      "1/2 - I/2"
+    ]
+  }
+}

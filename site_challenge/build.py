@@ -38,7 +38,8 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "verify_challenge"))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from stabrank_verify import (ORBIT_LABEL, ORBIT_P, implied_gamma, load_batch_manifest,  # noqa: E402
+from stabrank_verify import (ORBIT_LABEL, ORBIT_P, exponent_copies, implied_exponent,  # noqa: E402
+                             load_batch_manifest,
                              verify)
 from _assets import GHICON, UFLOGO  # noqa: E402
 
@@ -80,12 +81,16 @@ BASELINE = {
     # No exponent has been published for any p = 5 state. The baseline is the
     # single-copy product bound from chi(T5) = 3, and every page says so.
     "T5": (math.log(3, 5), "log₅3"),
+    # The cat family is measured against the qubit exponent it implies:
+    # log_2 chi(cat_m)/(m - 2), see exponent_copies in stabrank_verify.
+    "cat": (math.log(3, 2) / 4, "log₂3/4"),
 }
 # Orbits whose baseline is a product bound rather than a published exponent.
 UNPUBLISHED = {"T5"}
-ORBIT_ORDER = ["S", "N", "H3", "T3", "qubit_H", "qubit_T", "T5"]
+ORBIT_ORDER = ["S", "N", "H3", "T3", "qubit_H", "qubit_T", "T5", "cat"]
 SYSTEM = {"S": "qutrit", "N": "qutrit", "H3": "qutrit", "T3": "qutrit",
-          "qubit_H": "qubit", "qubit_T": "qubit", "T5": "ququint"}
+          "qubit_H": "qubit", "qubit_T": "qubit", "T5": "ququint",
+          "cat": "m qubits"}
 
 
 def base_word(orbit):
@@ -95,8 +100,12 @@ def base_word(orbit):
 
 def base_note(orbit):
     """The qualifier shown next to a baseline that is not a published exponent."""
-    return (" (single-copy product bound; no published exponent)"
-            if orbit in UNPUBLISHED else "")
+    if orbit in UNPUBLISHED:
+        return " (single-copy product bound; no published exponent)"
+    if orbit == "cat":
+        return (" through the implied H-type exponent log&#8322;&chi;(cat<sub>m</sub>)"
+                "/(m&minus;2)")
+    return ""
 ORBIT_TEX = {
  # \left|...\right\rangle rather than |...\rangle: the bare form renders the
  # ket as an identifier (italic, symbol spacing), the fenced form as an
@@ -112,6 +121,11 @@ ORBIT_TEX = {
             r"\qquad \cos 2\beta = \tfrac{1}{\sqrt{3}}",
  "T5": r"\left|T_5\right\rangle = \frac{1}{\sqrt{5}} \sum_{x \in \mathbb{F}_5} "
        r"\omega_5^{x^3} \left|x\right\rangle,\qquad \omega_5 = e^{2\pi i/5}",
+ "cat": r"\left|\text{cat}_m\right\rangle = \frac{\left|T\right\rangle^{\otimes m} + "
+        r"\left|T_\perp\right\rangle^{\otimes m}}{\sqrt{2}} = 2^{-(m-1)/2} "
+        r"\sum_{|x|\ \mathrm{even}} i^{|x|/2} \left|x\right\rangle,\qquad "
+        r"\left|T\right\rangle = \frac{\left|0\right\rangle + e^{i\pi/4}\left|1\right\rangle}"
+        r"{\sqrt{2}},\ \left|T_\perp\right\rangle = Z\left|T\right\rangle",
 }
 
 BASE_TEX = {
@@ -122,6 +136,7 @@ BASE_TEX = {
  "qubit_H": r"\gamma \le \tfrac{\log_2 3}{4} \approx 0.3963",
  "qubit_T": r"\gamma \le \tfrac{\log_2 3}{4} \approx 0.3963",
  "T5": r"\gamma \le \log_5 3 \approx 0.6826",
+ "cat": r"\gamma \le \tfrac{\log_2 3}{4} \approx 0.3963",
 }
 
 ORBIT_DEF = {
@@ -200,11 +215,35 @@ ORBIT_DEF = {
    "against the product bound 9. No exponent has been published for any p = 5 "
    "state; the baseline log&#8325;3 = 0.6826 is the single-copy product bound, "
    "and the rank-8 cell already sits below it at 0.6460."),
+ "cat": ("(|T&rang;<sup>&otimes;m</sup> + |T<sub>&perp;</sub>&rang;<sup>&otimes;m</sup>)/&radic;2",
+   "The magic cat state of Qassim, Pashayan, and Gosset (arXiv:2106.07740, "
+   "Eq. 3): the equal superposition of |T&rang;<sup>&otimes;m</sup> and "
+   "|T<sub>&perp;</sub>&rang;<sup>&otimes;m</sup> with |T<sub>&perp;</sub>&rang; = "
+   "Z|T&rang;, which in the computational basis is supported on the even-weight "
+   "strings with phase i<sup>|x|/2</sup>. This is a family indexed by the qubit "
+   "count m, not a tensor power: each m is one state, and the schema's m is the "
+   "number of qubits. |cat&#8322;&rang; = (|00&rang; + i|11&rang;)/&radic;2 is a "
+   "stabilizer state, so the track starts at m = 2.",
+   "The family carries the published qubit exponent. Gluing copies of "
+   "|cat<sub>m</sub>&rang; through the stabilizer bra &lang;cat&#8322;| gives "
+   "|cat<sub>l(m&minus;2)+2</sub>&rang; in &chi;(cat<sub>m</sub>)<sup>l</sup> terms, "
+   "and &chi;(T<sup>&otimes;m</sup>)/2 &le; &chi;(cat<sub>m</sub>) &le; "
+   "&chi;(T<sup>&otimes;m</sup>) (their Eq. 4), so a rank-r decomposition of "
+   "|cat<sub>m</sub>&rang; gives &gamma; &le; log&#8322;(r)/(m&minus;2) for the "
+   "H-type orbit; that is the number in the &gamma; column here, and at m = 6, "
+   "rank 3, it is the published log&#8322;3/4. The values are their Table 1: "
+   "&chi; = 1, 2, 2, 3, 3 at m = 2 to 6 (exact) and &chi; &le; 6 at m = 7, 8. "
+   "The decompositions the papers write out (m = 2, 4, 6, the &lang;cat&#8322;| "
+   "contraction at m = 8, and the &lang;0| projections to m = 3, 5, 7, also in "
+   "Kissinger, van de Wetering, and Vilmart, arXiv:2202.09202) are replayed here "
+   "as verified witnesses; the lower bounds at m = 5 to 8 rest on their appendix "
+   "and are cited. &chi;(cat&#8328;) &le; 5 would give &gamma; = 0.3870 and "
+   "&chi;(T<sup>&otimes;8</sup>) &le; 10."),
 }
 
 COLOR = {"S": "#6d28d9", "N": "#0369a1", "H3": "#059669",
          "T3": "#b45309", "qubit_H": "#be185d", "qubit_T": "#128081",
-         "T5": "#b91c1c"}
+         "T5": "#b91c1c", "cat": "#7c2d12"}
 TIER_RANK = {"lean": 5, "verified": 4, "reproduced": 3, "attested": 2, "cited": 1, None: 0}
 # `attested` holds records: the pipeline checked every stored batch output
 # against its hash, the exact re-decision of the exceptions and a bit-for-bit
@@ -248,7 +287,11 @@ def load_bounds(no_verify=False):
             cached = json.load(open(cpath))
             if cached.get("content_hash") == h:
                 res = cached
-        if res is None and no_verify:
+        # A pure citation (no witness, no certificate, no Lean claim) runs
+        # nothing when verified, so --no-verify can classify it directly
+        # instead of skipping a bound that has no receipt and no ledger row.
+        citation = not (sub.get("witness") or sub.get("certificate") or sub.get("lean"))
+        if res is None and no_verify and not citation:
             row = ledger.get(s)
             if row is None:
                 print(f"--no-verify: skipping {s}, no receipt and not in docs/ledger.json",
@@ -268,7 +311,7 @@ def load_bounds(no_verify=False):
                     json.dump(res, f, indent=2)
                     f.write("\n")
         if res.get("gamma") is None and sub["direction"] == "upper":
-            res["gamma"] = implied_gamma(ORBIT_P[sub["orbit"]], sub["rank"], sub["m"])
+            res["gamma"] = implied_exponent(sub["orbit"], sub["rank"], sub["m"])
         out.append({"sub": sub, "res": res, "slug": s})
     return out
 
@@ -321,15 +364,21 @@ def next_target(orbit, base, cells=None, lead="needs "):
     p = ORBIT_P[orbit]
     best = None
     for m in range(2, 11):     # the schema's cap on m
-        r = math.floor(p ** (base * m) - 1e-9)
-        if abs(p ** (base * m) - r) < 1e-9:
+        # For a copy orbit the exponent at m has denominator m; for the cat
+        # family it is m - 2 (the implied H-type exponent), and the m = 2
+        # cell implies no exponent at all.
+        n = exponent_copies(orbit, m)
+        if n is None:
+            continue
+        r = math.floor(p ** (base * n) - 1e-9)
+        if abs(p ** (base * n) - r) < 1e-9:
             r -= 1
         if r < 2:
             continue
         low = cells.get((orbit, m, "lower")) if cells else None
         if low is not None and r < int(low["sub"]["rank"]):
             continue
-        g = math.log(r, p) / m
+        g = math.log(r, p) / n
         if g < base - 1e-12 and (best is None or g < best[2]):
             best = (m, r, g)
     if best is None:
@@ -919,11 +968,18 @@ TENS = "<span class=tp>&otimes;</span>"
 ORB_TEX_NAME = {"S": "S", "N": "N", "H3": "H_3", "T3": "T_3",
                 "qubit_H": r"H", "qubit_T": r"T", "T5": "T_5"}
 
+# A family cell is one m-qubit state, so its ket carries m as an index
+# rather than as a tensor power: |cat_6>, not |cat>^{(x) 6}.
+FAMILY_KET = {"cat": r"\text{cat}_{%d}"}
+
 
 def ket(orbit, m, sign=None, rank=None):
     r"""\chi_R(|M\rangle^{\otimes m}) with an optional bound, as MathML."""
-    nm = ORB_TEX_NAME.get(orbit, orbit)
-    tex = rf"\chi_R\bigl(\left|{nm}\right\rangle^{{\otimes {m}}}\bigr)"
+    if orbit in FAMILY_KET:
+        tex = rf"\chi_R\bigl(\left|{FAMILY_KET[orbit] % int(m)}\right\rangle\bigr)"
+    else:
+        nm = ORB_TEX_NAME.get(orbit, orbit)
+        tex = rf"\chi_R\bigl(\left|{nm}\right\rangle^{{\otimes {m}}}\bigr)"
     if sign and rank is not None:
         tex += (r" \le " if sign in ("&le;", "<=") else r" \ge ") + str(rank)
     return f"<span class=ket>{M(tex)}</span>"
@@ -1265,7 +1321,7 @@ def build(no_verify=False):
     o.append("<h2>Cell ledger</h2>")
     o.append("<p class=h2sub>Best bound on "
              + M(r"\chi_R\bigl(\left|M\right\rangle^{\otimes m}\bigr)")
-             + " per orbit and copy count. "
+             + " per orbit and copy count, or per family and qubit count. "
              "Matching upper and lower bounds settle a cell.</p>")
     o.append("<div class=grid3>")
     for orbit in ORBIT_ORDER:

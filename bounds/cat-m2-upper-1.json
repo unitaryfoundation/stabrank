@@ -1,0 +1,43 @@
+{
+  "schema_version": "0.1",
+  "orbit": "cat",
+  "m": 2,
+  "direction": "upper",
+  "rank": 1,
+  "provenance": {
+    "author": "Qassim, Pashayan, and Gosset",
+    "reference": "arXiv:2106.07740",
+    "method": "literature",
+    "date": "2021-06-14",
+    "github": []
+  },
+  "notes": "chi(|cat_2>) = 1: |cat_2> = 2^{-1/2}(|00> + i|11>) is a stabilizer state (Qassim, Pashayan, and Gosset, Eq. 5 and Table 1). The one-term witness is the state itself. The m = 2 cell implies no exponent, since the gluing identity has denominator m - 2.",
+  "witness": {
+    "terms": [
+      {
+        "k": 1,
+        "x0": [
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0
+          ]
+        ],
+        "l": [
+          1
+        ]
+      }
+    ],
+    "coeffs": [
+      "1"
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": "0.1",
+  "orbit": "cat",
+  "m": 3,
+  "direction": "lower",
+  "rank": 2,
+  "certificate": {
+    "script": "verify_challenge/cert_family_rank1.py",
+    "exact": true,
+    "expect": "CERTIFIED chi(cat_3) >= 2"
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank verify_challenge",
+    "date": "2026-09-24",
+    "github": [
+      "vprusso"
+    ],
+    "method": "exact: the state is not a stabilizer state (its phase on the even-weight strings is not a Z_4 quadratic form)"
+  },
+  "notes": "chi(cat_3) >= 2: |cat_3> = (|000> + i(|011> + |101> + |110>))/2 is not a stabilizer state. Qassim, Pashayan, and Gosset (arXiv:2106.07740, appendix) show it through the Pauli spectrum, <cat_3|XXI|cat_3> = 1/2; the certificate decides the same fact in integer arithmetic on the exact amplitudes: the support is the affine subspace of even-weight strings, but the phase i^{|x|/2} on it is not a Z_4 quadratic form with even cross terms (at x = 011, x' = 101 the ratio f(x + x') f(0)/(f(x) f(x')) is -i). With bounds/cat-m3-upper-2.json the cell is exact, chi(cat_3) = 2, as in their Table 1."
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": "0.1",
+  "orbit": "cat",
+  "m": 8,
+  "direction": "lower",
+  "rank": 3,
+  "provenance": {
+    "author": "Qassim, Pashayan, and Gosset",
+    "reference": "arXiv:2106.07740",
+    "date": "2021-06-14",
+    "github": [],
+    "method": "literature"
+  },
+  "notes": "chi(cat_8) >= 3 by monotonicity from chi(cat_5) > 2 (Qassim, Pashayan, and Gosset, arXiv:2106.07740, appendix: <0|_m |cat_m> is proportional to |cat_{m-1}>, so chi(cat_m) >= chi(cat_{m-1}) for all m). Their Table 1 lists chi(cat_8) <= 6 and no lower bound beyond this. The board's attested chi(H^8) >= 6 gives the same 3 through chi(T^m)/2 <= chi(cat_m). Cited."
+}

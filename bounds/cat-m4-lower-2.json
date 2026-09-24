@@ -1,0 +1,22 @@
+{
+  "schema_version": "0.1",
+  "orbit": "cat",
+  "m": 4,
+  "direction": "lower",
+  "rank": 2,
+  "certificate": {
+    "script": "verify_challenge/cert_family_rank1.py",
+    "exact": true,
+    "expect": "CERTIFIED chi(cat_4) >= 2"
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank verify_challenge",
+    "date": "2026-09-24",
+    "github": [
+      "vprusso"
+    ],
+    "method": "exact: the state is not a stabilizer state (its phase on the even-weight strings is not a Z_4 quadratic form)"
+  },
+  "notes": "chi(cat_4) >= 2: |cat_4> is not a stabilizer state. Qassim, Pashayan, and Gosset (arXiv:2106.07740, appendix) get this from chi(cat_4) >= chi(cat_3) and the Pauli spectrum of cat_3; the certificate refutes the stabilizer form of cat_4 directly and exactly: the support is the even-weight affine subspace of F_2^4, and the phase i^{|x|/2} on it is not a Z_4 quadratic form with even cross terms. With bounds/cat-m4-upper-2.json the cell is exact, chi(cat_4) = 2, as in their Table 1."
+}

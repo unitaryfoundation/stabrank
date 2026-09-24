@@ -1,0 +1,247 @@
+{
+  "schema_version": "0.1",
+  "orbit": "cat",
+  "m": 6,
+  "direction": "upper",
+  "rank": 3,
+  "provenance": {
+    "author": "Qassim, Pashayan, and Gosset",
+    "reference": "arXiv:2106.07740",
+    "method": "literature",
+    "date": "2021-06-14",
+    "github": []
+  },
+  "notes": "chi(|cat_6>) <= 3 from |cat_6> = 2^{-3/2}(|0^6> - i|1^6>) + 2^{-1/2} e^{3 i pi/4}(|E_6> + i|K_6>), |E_6> the uniform superposition of the even-weight strings and |K_6> = prod_{i<j} CZ_ij |E_6> (Qassim, Pashayan, and Gosset, Eq. 5). Through chi(T^6) <= 2 chi(cat_6) this is the rank-6 cell of the qubit_H orbit, bounds/qubit_H-m6-upper-6.json. Exact with the appendix's chi(cat_6) >= chi(cat_5) > 2, cited in bounds/cat-m6-lower-3.json. Witness built by research/constructions/qpg_cat.py from the three terms as written, and verified in exact arithmetic. Implied H-type exponent log_2(3)/4 = 0.3963, the published qubit exponent.",
+  "witness": {
+    "terms": [
+      {
+        "k": 1,
+        "x0": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0
+          ]
+        ],
+        "l": [
+          3
+        ]
+      },
+      {
+        "k": 5,
+        "x0": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            1,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "l": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "k": 5,
+        "x0": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            1,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "l": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      }
+    ],
+    "coeffs": [
+      "1/2",
+      "-1/2 + I/2",
+      "-1/2 - I/2"
+    ]
+  }
+}
