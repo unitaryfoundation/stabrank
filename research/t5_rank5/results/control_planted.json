@@ -2798,6 +2798,246 @@
     "refused": false,
     "native": false
    }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "D1",
+    "D1"
+   ],
+   "kind": "same",
+   "base": [
+    140,
+    159,
+    539
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 3.280626058578491,
+   "stats": {
+    "flats": [
+     "D1",
+     "D1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     2,
+     1,
+     3
+    ],
+    "modes": [
+     [
+      2,
+      "exact"
+     ],
+     [
+      1,
+      "scan2"
+     ],
+     [
+      3,
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     0
+    ],
+    "scan_candidates": 0,
+    "scan_solutions": 0,
+    "scan2_collisions": 383,
+    "scan2_solutions": 381,
+    "absent_at_flat": 0,
+    "same_state": 1,
+    "cancelling": 0,
+    "pair_solutions": 1,
+    "candidates": 14,
+    "hits": 1,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "D1",
+    "D1"
+   ],
+   "kind": "same1",
+   "base": [
+    598,
+    1002,
+    1016
+   ],
+   "status": "recovered",
+   "hits": 37,
+   "seconds": 18.938403129577637,
+   "stats": {
+    "flats": [
+     "D1",
+     "D1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     2,
+     1,
+     3
+    ],
+    "modes": [
+     [
+      2,
+      "exact"
+     ],
+     [
+      1,
+      "scan2"
+     ],
+     [
+      3,
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     22
+    ],
+    "scan_candidates": 0,
+    "scan_solutions": 0,
+    "scan2_collisions": 1054,
+    "scan2_solutions": 1051,
+    "absent_at_flat": 0,
+    "same_state": 1,
+    "cancelling": 0,
+    "pair_solutions": 27,
+    "candidates": 746,
+    "hits": 37,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "D1",
+    "D1"
+   ],
+   "kind": "cancel",
+   "base": [
+    727,
+    785,
+    1075
+   ],
+   "status": "recovered",
+   "hits": 496,
+   "seconds": 212.74161624908447,
+   "stats": {
+    "flats": [
+     "D1",
+     "D1"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     2,
+     1,
+     3
+    ],
+    "modes": [
+     [
+      2,
+      "exact"
+     ],
+     [
+      1,
+      "scan2"
+     ],
+     [
+      3,
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     0
+    ],
+    "scan_candidates": 0,
+    "scan_solutions": 0,
+    "scan2_collisions": 26418,
+    "scan2_solutions": 26514,
+    "absent_at_flat": 0,
+    "same_state": 96,
+    "cancelling": 1,
+    "pair_solutions": 640,
+    "candidates": 2442,
+    "hits": 496,
+    "refused": false,
+    "native": false
+   }
+  },
+  {
+   "stage": "gamma",
+   "unit": [
+    "B",
+    "B"
+   ],
+   "kind": "cancel",
+   "base": [
+    140,
+    159,
+    539
+   ],
+   "status": "recovered",
+   "hits": 496,
+   "seconds": 211.3476119041443,
+   "stats": {
+    "flats": [
+     "B",
+     "B"
+    ],
+    "kappa": 0,
+    "distinct": 3,
+    "blocks": [],
+    "order": [
+     3,
+     1,
+     2
+    ],
+    "modes": [
+     [
+      3,
+      "exact"
+     ],
+     [
+      1,
+      "scan2"
+     ],
+     [
+      2,
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     0
+    ],
+    "scan_candidates": 0,
+    "scan_solutions": 0,
+    "scan2_collisions": 25956,
+    "scan2_solutions": 26048,
+    "absent_at_flat": 0,
+    "same_state": 96,
+    "cancelling": 1,
+    "pair_solutions": 640,
+    "candidates": 14873,
+    "hits": 496,
+    "refused": false,
+    "native": false
+   }
   }
  ],
  "runs": [
@@ -2835,18 +3075,44 @@
    "total": 4,
    "seconds": 557.6985621452332,
    "complete": true
+  },
+  {
+   "id": "2026-09-24T07:19:55+00:00 gamma D1+D1 same,same1,cancel,cancel1",
+   "stage": "gamma",
+   "only": "D1+D1",
+   "kinds": "same,same1,cancel,cancel1",
+   "seed": 11,
+   "git": "23ab64d5247e2618f364a48c8227f4622fe43b12",
+   "generated": "2026-09-24T07:19:55+00:00",
+   "recovered": 3,
+   "total": 3,
+   "seconds": 234.9694697856903,
+   "complete": false
+  },
+  {
+   "id": "2026-09-24T07:30:08+00:00 gamma B+B cancel",
+   "stage": "gamma",
+   "only": "B+B",
+   "kinds": "cancel",
+   "seed": 11,
+   "git": "dd23c8eb9b1ed4c197e0d8af74b0235bd7616fdb",
+   "generated": "2026-09-24T07:30:08+00:00",
+   "recovered": 1,
+   "total": 1,
+   "seconds": 211.35143494606018,
+   "complete": true
   }
  ],
- "recovered": 56,
- "total": 56,
+ "recovered": 60,
+ "total": 60,
  "by_stage": {
   "beta": [
    24,
    24
   ],
   "gamma": [
-   32,
-   32
+   36,
+   36
   ]
  },
  "pass": true

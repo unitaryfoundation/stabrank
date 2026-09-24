@@ -255,22 +255,24 @@ term's slice there (ray), and for the shared-line pairs the same-state
 variants (same: equal slices at the first point, different classes at the
 second; same1: one class, different phases; cancel: cancelling
 coefficients with different classes at the second point; cancel1:
-cancelling coefficients, one class) at (C1, C1) and (B, B). Result: 56 of
-56 planted decompositions recovered (24 stage (beta'), 32 stage (gamma));
-the (beta') instances run in 0.4 to 5.6 s, the (gamma) kind a and ray
-instances in 0.4 to 46 s, and the same-state and cancelling instances in
-3 to 320 s, since the planted target's slice at the shared line's first
-point is a low-rank vector and the rank-2 scan then lists tens of
-thousands of stabilizer-state pairs through it (real bases show nothing of
-the kind, section 6). Two defects were found and fixed by these plants
+cancelling coefficients, one class): cancel at all three lines, cancel1 at
+(B, B) and (C1, C1), same and same1 at (C1, C1) and (D1, D1). Result: 60
+of 60 planted decompositions recovered (24 stage (beta'), 36 stage
+(gamma)); the (beta') instances run in 0.4 to 5.6 s, the (gamma) kind a
+and ray instances in 0.4 to 46 s, and the same-state and cancelling
+instances in 3 to 320 s, since the planted target's slice at the shared
+line's first point is a low-rank vector and the rank-2 scan then lists
+tens of thousands of stabilizer-state pairs through it (real bases show
+nothing of the kind, section 6). Two defects were found and fixed by these plants
 before the record: the rank-2 scan took only adjacent pairs inside a run
 of three or more states with equal projective keys (the (B, B) kind a
 instance was missed), and the cancelling pair with distinct classes was
 matched with c_4 + c_5 = 0 instead of c_4 + mu c_5 = 0 for a fourth root of
 unity mu (the two terms' slices at the shared point are the same ray up to
-that phase). The kind samec instances (the pair cancelling at the second
-point inside one class) were recovered in a run killed at the cap before
-the record was made incremental and are not in the record.
+that phase). Recovered in runs killed at the cap before the record was
+made incremental, and so not in the record: the kind samec instances (the
+pair cancelling at the second point inside one class) at all three lines,
+and same and same1 at (B, B); not run to the end: cancel1 at (D1, D1).
 
 Control 2, the rank-6 witness (`driver.py control-witness`,
 `results/control_witness.json`; `--all-x0`, `results/control_witness_all_x0.json`).
@@ -456,14 +458,14 @@ status of each item for this pipeline.
     the compatibility filter is a necessary condition of the structure
     lemma, the presence pattern is checked at assembly). The 28 invisible
     multisets at 00 that Fact 2 allows are exactly the stages' cases.
-12. Controls re-run after the last matcher change: the planted control's
-    kinds a, b, c, e, ray (51 instances) and the (C1, C1) same-state and
-    cancelling kinds were run at the commit that carries the final
-    `invisible.py`; the (B, B) cancel1 instance as well; the (B, B) same,
-    same1 and cancel instances were recovered before the last change
-    (the light option tables and the Pauli-orbit table, which touch only
-    the cost) and are not in the record. `slice_cover.py` is unchanged on
-    this branch.
+12. Controls re-run after the last matcher change: every instance of the
+    planted record (60), the witness, m = 4 pair, list and table controls,
+    the rate samples and the pipeline test were run at the commit that
+    carries the final `invisible.py`; the (B, B) same and same1 and the
+    samec instances were recovered before the last change (the light
+    option tables and the Pauli-orbit table, which touch only the cost)
+    and are not in the record. `slice_cover.py` is unchanged on this
+    branch.
 13. The T field is a ring homomorphism from Q(zeta_24) sharing i with the
     compiled kernels: as in the rank-4 record (asserted in
     `Field.__init__`, exercised by the witness control through the kernel).
@@ -555,7 +557,8 @@ the pod rate of stage B (the partition takes twice the laptop rate at a
 low load; the first stage B batch on the pod decides whether the 1.7 hours
 of wall time hold). Recorded rather than closed: the two kappa = 2 witness
 bases, aborted at the default candidate cap (control 2, on no rank-5
-path); the same-state and cancelling planted kinds were run for (C1, C1)
-and partly for (B, B) only, and the samec kind is not in the record; the
-joint reconstruction of stage (beta') is written for one pair block (the
-list has no other block shape) and raises otherwise.
+path); the same-state and cancelling planted kinds are in the record for
+the pairs listed in control 1 and not for the others (samec at no line,
+same and same1 at (B, B), cancel1 at (D1, D1)); the joint reconstruction
+of stage (beta') is written for one pair block (the list has no other
+block shape) and raises otherwise.
