@@ -48,6 +48,11 @@ import latex2mathml.converter as _l2m
 _MCACHE = {}
 
 
+def _lines(tex):
+    """ORBIT_TEX entries are one string or a tuple of display lines."""
+    return tex if isinstance(tex, (list, tuple)) else (tex,)
+
+
 def M(tex, block=False):
     """Render LaTeX to MathML at build time.
 
@@ -121,11 +126,12 @@ ORBIT_TEX = {
             r"\qquad \cos 2\beta = \tfrac{1}{\sqrt{3}}",
  "T5": r"\left|T_5\right\rangle = \frac{1}{\sqrt{5}} \sum_{x \in \mathbb{F}_5} "
        r"\omega_5^{x^3} \left|x\right\rangle,\qquad \omega_5 = e^{2\pi i/5}",
- "cat": r"\left|\text{cat}_m\right\rangle = \frac{\left|T\right\rangle^{\otimes m} + "
-        r"\left|T_\perp\right\rangle^{\otimes m}}{\sqrt{2}} = 2^{-(m-1)/2} "
-        r"\sum_{|x|\ \mathrm{even}} i^{|x|/2} \left|x\right\rangle,\qquad "
-        r"\left|T\right\rangle = \frac{\left|0\right\rangle + e^{i\pi/4}\left|1\right\rangle}"
-        r"{\sqrt{2}},\ \left|T_\perp\right\rangle = Z\left|T\right\rangle",
+ # A tuple renders as stacked displays: one line would overflow the box.
+ "cat": (r"\left|\text{cat}_m\right\rangle = \frac{\left|T\right\rangle^{\otimes m} + "
+         r"\left|T_\perp\right\rangle^{\otimes m}}{\sqrt{2}} = 2^{-(m-1)/2} "
+         r"\sum_{|x|\ \mathrm{even}} i^{|x|/2} \left|x\right\rangle",
+         r"\left|T\right\rangle = \frac{\left|0\right\rangle + e^{i\pi/4}\left|1\right\rangle}"
+         r"{\sqrt{2}},\qquad \left|T_\perp\right\rangle = Z\left|T\right\rangle"),
 }
 
 BASE_TEX = {
@@ -716,7 +722,7 @@ a.m:hover{background:var(--soft);color:var(--ac)}
 .orb h3 a:hover{color:var(--ac)}
 .statebox{border:1px solid var(--bd);border-left:4px solid var(--ac);
 border-radius:var(--r);padding:16px 20px;background:var(--card);margin:4px 0 14px}
-.stateeq{font-size:19px;line-height:1.8}
+.stateeq{font-size:19px;line-height:1.8;overflow-x:auto}
 .stateeq sup{font-size:.7em}
 .ket{font-family:var(--font);font-weight:600;white-space:nowrap}
 .ket math{font-size:1.02em}
@@ -1437,7 +1443,8 @@ def orbit_page(orbit, entries, cells):
     o.append(PARTICIPATE)
     o.append("<div class=wrap><p><a href='../index.html'>&larr; back to the board</a></p>")
     o.append("<h2>The state</h2><div class=statebox><div class=stateeq>"
-             + M(ORBIT_TEX[orbit], block=True) + "</div></div>")
+             + "".join(M(t, block=True) for t in _lines(ORBIT_TEX[orbit]))
+             + "</div></div>")
     o.append(f"<p>{blurb}</p><p>{note}</p>")
     o.append("<h2>Bounds on this orbit</h2><div class=tw><table>"
              "<thead><tr><th>bound</th><th class=num>m</th><th class=num>rank</th>"
