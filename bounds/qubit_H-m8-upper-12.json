@@ -9,9 +9,7 @@
     "reference": "arXiv:2202.09202",
     "method": "literature",
     "date": "2022-02-18",
-    "github": [
-      "vprusso"
-    ],
+    "github": [],
     "compute": {
       "cpu_hours": 0.01,
       "wall_clock_hours": 0.01,
