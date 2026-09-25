@@ -1047,7 +1047,9 @@ class BlockOnlyMatcher:
             key = None if len(j) == 0 else (np.round(T / T[j[0]], 8) + 0.0).tobytes()
             if key in seen:
                 y = seen[key]
-                s = T[j[0]] / self.target.rhs(add(x0, y))[2][j[0]]
+                # a zero slice (a planted target; |M>^m has none) is proportional to the
+                # earlier zero slice with factor 0
+                s = T[j[0]] / self.target.rhs(add(x0, y))[2][j[0]] if len(j) else 0.0
                 sols[x] = [(S, a0 * s, N) for S, a0, N in sols[y]]
                 note = f"proportional to slice {y}"
             else:
@@ -1492,7 +1494,7 @@ def solve_slice3(opts, blocks, fam, rhs, rng, stats=None, log=None, budget=None,
     ords = [i for i in range(len(d1)) if i not in {b.pos for b in blocks}]
     assert len(ords) == r
     d0v = d1[ords]
-    Kv = _independent_columns_mod(K1[ords].reshape(r, -1), P1)
+    Kv = _independent_columns_mod(K1[ords].reshape(r, K1.shape[1]), P1)
     # the compiled dense solve (cpp/src/dense_solve.cpp) for one or two
     # parameters; its feature matrices are the reference's, so the budget
     # check below applies to it as well
@@ -1525,8 +1527,8 @@ def solve_slice3(opts, blocks, fam, rhs, rng, stats=None, log=None, budget=None,
                     else:
                         popts2 = [_mm_int64(o[1], Ps[1].T, P2) for o in opts]
                         prhs2 = _mm_int64(Ps[1], rhs[1][:, None], P2)[:, 0]
-                    cands = _dense_native(dense, popts, popts2, d0v, Kv, d2[ords], K2[ords].reshape(r, -1), prhs,
-                                          prhs2, sides, rng, max_cand, stats)
+                    cands = _dense_native(dense, popts, popts2, d0v, Kv, d2[ords],
+                                          K2[ords].reshape(r, K2.shape[1]), prhs, prhs2, sides, rng, max_cand, stats)
                 else:
                     cands = _dense(popts, d0v, Kv, prhs, sides, rng, max_cand)
             except AssertionError as e:

@@ -21,6 +21,7 @@ from slice_cover import (CoverEnumerator, Field, P1, P2, SliceMatcher, TermOptio
                          reconstruct_block, x0_reps)
 
 H6 = os.path.join(ROOT, "research", "h6_rank5")
+H5 = os.path.join(ROOT, "research", "h5_rank5")
 
 
 @pytest.fixture(scope="module")
@@ -39,6 +40,22 @@ def h6():
         mods = {k: importlib.import_module(k) for k in names}
     finally:
         sys.path.remove(H6)
+        for k in names:
+            sys.modules.pop(k, None)
+        sys.modules.update(saved)
+    return types.SimpleNamespace(**mods)
+
+
+@pytest.fixture(scope="module")
+def h5():
+    """The research/h5_rank5 modules, imported under their own `common`."""
+    names = ("common", "beta", "batch")
+    saved = {k: sys.modules.pop(k) for k in names if k in sys.modules}
+    sys.path.insert(0, H5)
+    try:
+        mods = {k: importlib.import_module(k) for k in names}
+    finally:
+        sys.path.remove(H5)
         for k in names:
             sys.modules.pop(k, None)
         sys.modules.update(saved)
@@ -205,6 +222,45 @@ def test_matcher_recovers_planted_pair_cancelling_at_the_base_point(enum3):
     assert fam.has_zero_coefficient(()) and not fam.has_zero_coefficient((pos,))
     hits, st = _recover(E, Psi, cover, x0, _codes_key(ords + [v, w]))
     assert st["blocks"] == [2]
+
+
+def test_matcher_solves_a_base_of_repeated_pairs_only(enum3, h5, monkeypatch):
+    """A five-qubit target of four terms (v_1, w_1, v_2, w_2), w_i a diagonal
+    copy of v_i, whose base along the first two qubits is the multiset
+    (a, a, b, b): two blocks and no ordinary term. solve_slice reshaped the
+    empty (0, kappa1) block of the family with reshape(0, -1), which numpy
+    refuses ("cannot reshape array of size 0"), so every such run raised
+    and research/h5_rank5/batch.match_cover recorded it as undecided. With
+    no ordinary term a slice equation holds exactly when the target's slice
+    lies in the span of the chosen translates, and the run recovers the
+    planted decomposition from the blocks alone."""
+    E = enum3
+    rng = np.random.default_rng(13)
+    n1, x0 = 2, 0
+    lookup = {E.codes[i].tobytes(): i for i in range(E.N)}
+    # CZ_01 and Z_0 on the sliced qubits: the copies differ at offset 3 and at offset 1
+    signs = (lambda y: -1 if y == 3 else 1, lambda y: -1 if y == 1 else 1)
+    while True:
+        v1, v2 = _full_term(rng, 5, n1), _full_term(rng, 5, n1)
+        a, b = (lookup[exact_codes(v.reshape(1 << n1, -1)[x0])[0].tobytes()] for v in (v1, v2))
+        if a != b:
+            break
+    w1, w2 = _diagonal_copy(v1, n1, signs[0]), _diagonal_copy(v2, n1, signs[1])
+    planted = [v1, w1, v2, w2]
+    Psi = sum(planted)
+    cover = tuple(sorted([a, a, b, b]))
+    M = PlantedMatcher(E, Psi, x0, n1=n1)
+    hits, st = M.run(cover, x0)
+    assert not st["refused"] and st["kappa"] == 0 and st["distinct"] == 2 and st["blocks"] == [2, 2], st
+    assert all(c for c in st["coord_solutions"]), st
+    assert any(_codes_key(h["terms"]) == _codes_key(planted) for h in hits), st
+    # the batch entry point at the planted base point: one matched run, nothing undecided
+    monkeypatch.setattr(h5.batch, "X0S", (x0,))
+    rec = {"undecided": [], "refused": 0, "matched": 0, "native_runs": 0, "coord_solution_hist": {}, "hits": []}
+    h5.batch.match_cover(M, cover, rec, [], stage="C")
+    assert rec["undecided"] == [] and rec["matched"] == 1 and rec["refused"] == 0, rec["undecided"]
+    want = sorted(exact_codes(t)[0].tolist() for t in planted)
+    assert any(sorted(h["terms"]) == want for h in rec["hits"])
 
 
 def test_dependent_block_translates_raise_instead_of_dropping(enum3, h6):

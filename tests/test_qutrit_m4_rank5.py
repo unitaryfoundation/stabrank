@@ -131,3 +131,50 @@ def test_cover_classes_and_the_cancel_at_base_multisets(q, enum_n, matcher_n):
     b = next(u for u in range(E.N) if u not in set(T) | span)
     assert tuple(sorted(T + (b, b))) in set(covers)
     assert doc["stage_c_covers"] == 16181 and doc["stage_b_covers"] == 12175
+
+
+def test_block_only_matcher_solves_planted_repeated_pair_bases(q, enum_n, matcher_n):
+    """Planted four-term targets v_1 + w_1 + v_2 + w_2 on four qutrits whose
+    base at x0 is the multiset (u, u, v, v): no ordinary term, so Matcher.run
+    hands the base to BlockOnlyMatcher (the reshape that raised in the qubit
+    solve_slice on such a base is never reached here). With plane terms
+    (every slice of the target nonzero, as for |N>^4) the planted
+    decomposition is recovered whenever the translate selection is
+    independent on three of the four lines; with random shapes the target
+    can vanish at a slice, and the proportional-slice cache divided by
+    T[j[0]] of an empty j (IndexError) before a zero slice got the factor 0."""
+    m = q.matcher
+    E, M = enum_n, matcher_n
+
+    def key(terms):
+        return sorted(m.exact_codes(t)[0].tobytes() for t in terms)
+
+    def plant(rng, kind):
+        x0 = (int(rng.integers(0, 3)), int(rng.integers(0, 3)))
+        u1, u2 = sorted(int(x) for x in rng.choice(E.N, size=2, replace=False))
+        terms = [q.driver.random_shape_term(M.options(u), x0, rng, kind=kind)[0] for u in (u1, u1, u2, u2)]
+        return x0, (u1, u1, u2, u2), terms
+
+    rng = np.random.default_rng(3)
+    ran = found = 0
+    for _ in range(12):
+        x0, cover, terms = plant(rng, "plane")
+        if len(set(key(terms))) < 4:
+            continue
+        target = m.vector_target(np.column_stack(terms) @ np.ones(4, dtype=complex), 2, E.F1, E.F2)
+        hits, st = M.run(cover, x0, target)
+        assert not st["refused"] and st["kappa"] == 0 and st["blocks"] == [2, 2], st
+        ran += 1
+        found += any(key(h["terms"]) == key(terms) for h in hits)
+    assert ran >= 10 and found >= 8, (ran, found)
+    rng = np.random.default_rng(3)
+    zero_slices = 0
+    for _ in range(8):
+        x0, cover, terms = plant(rng, None)
+        if len(set(key(terms))) < 4:
+            continue
+        Psi = np.column_stack(terms) @ np.ones(4, dtype=complex)
+        zero_slices += any(np.linalg.norm(s) < 1e-9 for s in Psi.reshape(9, -1))
+        _, st = M.run(cover, x0, m.vector_target(Psi, 2, E.F1, E.F2))
+        assert not st["refused"] and st["blocks"] == [2, 2], st
+    assert zero_slices >= 1
