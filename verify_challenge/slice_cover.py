@@ -1131,9 +1131,9 @@ def _dense_native(kernel, popts, popts2, d0v, Kv, d02, K2v, prhs, prhs2, sides, 
     o2 = [np.ascontiguousarray(o % P2, dtype=np.int64) for o in popts2]
     try:
         combos, raw, _ = kernel(o1, o2, np.ascontiguousarray(d0v % P1, dtype=np.int64),
-                                np.ascontiguousarray(Kv % P1, dtype=np.int64).reshape(r, -1),
+                                np.ascontiguousarray(Kv % P1, dtype=np.int64).reshape(r, Kv.shape[1]),
                                 np.ascontiguousarray(d02 % P2, dtype=np.int64),
-                                np.ascontiguousarray(K2v % P2, dtype=np.int64).reshape(r, -1),
+                                np.ascontiguousarray(K2v % P2, dtype=np.int64).reshape(r, K2v.shape[1]),
                                 np.ascontiguousarray(prhs % P1, dtype=np.int64),
                                 np.ascontiguousarray(prhs2 % P2, dtype=np.int64),
                                 [int(i) for i in sides[0]], [int(i) for i in sides[1]], int(max_cand),
@@ -1161,7 +1161,9 @@ def solve_slice(opts, blocks, fam, rhs, rng, max_cand=2_000_000, stats=None, log
     ords = [i for i in range(len(d1)) if i not in {b.pos for b in blocks}]
     assert len(ords) == r
     d0v = d1[ords]
-    Kv = _independent_columns_mod(K1[ords].reshape(r, -1), P1)
+    # explicit shapes: reshape(r, -1) raises on the empty array of a base
+    # whose every term is a repeated block (r = 0)
+    Kv = _independent_columns_mod(K1[ords].reshape(r, K1.shape[1]), P1)
     dense = _native_dense() if 1 <= Kv.shape[1] <= 2 else None
     out = []
     for Ssel in itertools.product(*[b.subsets for b in blocks]):
@@ -1183,8 +1185,8 @@ def solve_slice(opts, blocks, fam, rhs, rng, max_cand=2_000_000, stats=None, log
             else:
                 popts2 = [_mm(o[1], Ps[1].T, P2) for o in opts]
                 prhs2 = _mm(Ps[1], rhs[1][:, None], P2)[:, 0]
-            cands = _dense_native(dense, popts, popts2, d0v, Kv, d2[ords], K2[ords].reshape(r, -1), prhs, prhs2,
-                                  sides, rng, max_cand, stats)
+            cands = _dense_native(dense, popts, popts2, d0v, Kv, d2[ords], K2[ords].reshape(r, K2.shape[1]),
+                                  prhs, prhs2, sides, rng, max_cand, stats)
         else:
             cands = _dense(popts, d0v, Kv, prhs, sides, rng, max_cand)
         if stats is not None:
