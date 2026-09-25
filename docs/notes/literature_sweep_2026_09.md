@@ -512,3 +512,68 @@ Title only, off topic: 2609.24147, 2609.23348, 2609.23057, 2609.24606,
 No explicit finite-copy decomposition of any board state, no exact or
 approximate rank value, and no machine-search paper on stabilizer
 decompositions appeared. No BibTeX entry was added.
+
+## 9. Update of 2026-09-25
+
+Nothing moves a cell. What was checked:
+
+- arXiv API (HTTPS endpoint), the thirteen phrase queries of sections 5 to
+  8 ("stabilizer rank", "stabiliser rank", "stabilizer extent", "stabilizer
+  decomposition(s)", "magic state" with decomposition, nonstabilizerness
+  with rank, "stabilizer fidelity", qutrit or qudit with magic and
+  stabilizer, "cat state" with stabilizer and magic, "Clifford+T" with
+  simulation, "code state" with magic), sorted by last update, 40 hits
+  each: 316 entries, none updated on or after 2026-09-23.
+- The arXiv `quant-ph/new` listing for Friday 2026-09-25 (73 new entries,
+  11 cross-lists, 53 replacements) and `quant-ph/pastweek?show=500`
+  (2026-09-21 to 2026-09-25, 476 entries), every title read, abstracts
+  read for everything matching stabilizer, stabiliser, magic,
+  nonstabilizerness, Clifford, cat state, qutrit, qudit, T-count, extent,
+  decomposition, rank, Wigner, or phase space.
+- Semantic Scholar citation lists of arXiv:1601.07601 (430 citing papers),
+  2106.07740 (60), 2012.11739 (9), 2003.01130 (5), 2110.07781 (14),
+  2107.10551 (17), 2106.03214 (17), and 2202.09202 (53), sorted by date:
+  the newest citing paper of any of them is still 2609.25947 (2026-09-22,
+  section 7); nothing new since 2026-09-24. OpenAlex by DOI for
+  Bravyi-Gosset (354 citing works, newest 2026-08-25, as in section 8),
+  Qassim-Pashayan-Gosset (49, newest the Jardine Zenodo deposits of
+  section 7), and Bravyi-Browne-Calpin-Campbell-Gosset-Howard (38, newest
+  2026-06-23, logical accreditation, no rank content); the Lovitz-Steffan
+  DOI query failed at OpenAlex this time and its Semantic Scholar list
+  (above) is unchanged.
+- Four web searches for the phrases above in 2026, for cat and code state
+  decompositions, and for machine search (AlphaEvolve, FunSearch,
+  reinforcement learning) on stabilizer decompositions: only the board's
+  own repository, arXiv:2605.28586, and arXiv:2608.14798 (stabilizer
+  statistical mechanics, a magic monotone, already in section 1's skip
+  list) come back.
+
+The 2026-09-25 listing carries five new titles that passed the keyword
+screen, none rank-relevant after reading the abstract:
+
+| source | arXiv | what it contributes | on the board | usable here |
+|---|---|---|---|---|
+| ternary Clifford+P_9 synthesis 2026 | 2609.29884 | intermediate-qutrit decompositions of multi-controlled Toffoli gates counted in P_9 injections (the qutrit T-type gate whose eigenstate is the T3 orbit) | no | a gate count, not a state decomposition; does not move a cell |
+| non-Abelian sheaf qLDPC codes 2026 | 2609.30159 | good qLDPC codes whose code space has long-range magic; logical Clifford measurements preparing encoded magic states | no | no rank content; does not move a cell |
+| Clifford interaction normal forms 2026 | 2609.30125 | channel normal forms for Clifford interactions with stabilizer environments, quantum and private capacities | no | does not move a cell |
+| SU(2) lattice gauge theory magic 2026 | 2609.28634 | stabilizer Renyi entropy and its nonlocal part in a gauge-theory ground state; a sandwich inequality with the anti-flatness | no | entropy, not rank; does not move a cell |
+| MagiCFirm 2026 | 2609.29267 | a runtime for magic-state cultivation | no | does not move a cell |
+
+Replacements on the same listing that passed the screen, not rank-relevant:
+2608.08346 (non-local magic in a non-Hermitian two-qubit model), 2608.18332
+(qudit Pauli checks), 2609.13312 (Wigner entropy), 2609.17706 and
+2609.18922 (magic-state cultivation, already in section 5), 2605.27915
+(proper orthogonal decomposition readout, "decomposition" in the numerical
+sense). Title only, off topic, so the next sweep can skip them:
+2609.29890 (deterministic fault-tolerant T gates from syndrome
+measurements), 2609.30066 (tangent spaces at weighted graph states),
+2609.30149, 2609.30141, 2609.29917, 2609.29539, 2609.29497, 2609.29406,
+2609.29098 (ZX-based architecture search), 2609.28760, 2609.28657,
+2609.28623, 2510.16420 (exact circuit optimization is co-NQP-hard,
+replaced 2026-09-24), 2609.28461, 2609.23946, 2609.16125.
+
+No explicit finite-copy decomposition of any board state, no exact or
+approximate rank value, and no machine-search paper on stabilizer
+decompositions appeared between 2026-09-24 and 2026-09-25. Version pages
+unchanged: 2106.07740 at v2 (2021-12-15), 2202.09202 at v1 (2022-02-18).
+No BibTeX entry was added.

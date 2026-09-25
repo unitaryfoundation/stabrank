@@ -1189,3 +1189,320 @@ the one-Pauli route at m = 3 is 15 or more from the mixed strings only.
    w^(3(xyz - (x + y + z)(xy + yz + zx))) on three have stabilizer rank 5
    each; both are one Clifford away from the Z-type sectors of |T5>^3 and
    |T5>^4.
+
+## 2026-09-25: non-Pauli Clifford sectors, code states at every prime, the partial-times-block shape at |T>^7
+
+Scripts: `research/constructions/clifford_sectors.py`,
+`research/constructions/code_states_p.py`,
+`research/constructions/t7_partial_merge.py`; logs under
+`research/constructions/results/*_2026_09_25.log`. Everything ran as one
+process at nice 19 through `research/t5_rank5/run.py` with a 600 s cap. The
+literature update of the same day is section 9 of
+`literature_sweep_2026_09.md` (nothing new). No bound file was written: no
+construction reached a rank below the board.
+
+### Record-capable open cells
+
+Computed from `bounds/*.json` (best bound per cell, lower bounds carried
+forward by projection monotonicity): the ranks r at or above the lower
+bound and below the upper bound with log_p(r)/m below the published
+exponent, or below the board's best exponent 0.5 for T5, and for the cat
+family log_2(r)/(m - 2) below log_2(3)/4.
+
+| cell | board | record ranks (exponent) |
+|---|---|---|
+| S m=5 | 5..8 | 5 (0.2930) |
+| S m=6 | 5..8 | 5..7 (0.2442..0.2952) |
+| S m=7 | 5..16 | 5..11 (0.2093..0.3118) |
+| S m=8 | 5..16 | 5..15 (0.1831..0.3081) |
+| N m=4 | 6..7 | 6 (0.4077) |
+| N m=5 | 6..12 | 6..10 (0.3262..0.4192) |
+| N m=6 | 6..16 | 6..15 (0.2718..0.4108) |
+| H3 m=4 | 6..8 | 6 (0.4077) |
+| H3 m=5 | 6..12 | 6..10 |
+| H3 m=6 | 6..16 | 6..15 |
+| T3 m=4 | 8..9 | 8 (0.4732) |
+| T3 m=5 | 8..18 | 8..15 (0.3786..0.4930) |
+| T3 m=6 | 8..27 | 8..26 (0.3155..0.4943) |
+| qubit_H m=7 | 6..9 | 6 (0.3693) |
+| qubit_H m=8 | 6..12 | 6..8 (0.3231..0.3750) |
+| qubit_H m=9 | 6..18 | 6..11 (0.2872..0.3844) |
+| qubit_H m=10 | 6..18 | 6..15 (0.2585..0.3907) |
+| qubit_T m=7 | 6.. (no upper cell; 9 by product) | 6 |
+| qubit_T m=8 | 6..9 | 6..8 |
+| qubit_T m=9, 10 | 6.., 6..18 | 6..11, 6..15 |
+| T5 m=3 | 5..15 | 5..11 (0.3333..0.4966) |
+| T5 m=4 | 5..25 | 5..24 (0.2500..0.4937) |
+| cat m=7 | 3..6 | 3 (0.3170) |
+| cat m=8 | 3..6 | 3..5 (0.2642..0.3870) |
+| cat m=9, 10 | 3.. (no upper cell) | 3..6, 3..8 |
+
+Settled this week and no longer targets: qubit_H m=5, 6 and qubit_T m=5, 6
+(all 6), T5 m=2 (5), T3 m=3 (8), the N and H3 m=4 lower bounds (6), and
+the T5 m=3 and m=4 upper bounds (15 and 25, the products). The cat cells
+hold the published values (`bounds/cat-m*.json`); by the brief no cat
+budget went into rank-5 searches at m = 7 or 8 today.
+
+### (a) Eigensectors of non-Pauli single-qudit Cliffords: rank at least 3 per sector everywhere
+
+`clifford_sectors.py`. For a single-qudit Clifford C of order n mod phase,
+normalized so that C^n = I, the operator C^{(x) m} has order n and
+|M>^m = sum_k Pi_k |M>^m with
+
+    Pi_k |M>^m = (1/n) sum_j w_n^{-jk} |C^j M>^{(x) m},
+
+so chi(|M>^m) <= sum_k chi(Pi_k |M>^m). For C = Z on the T-basis qubit
+state this is QPG's cat pair, and the control (`--control`) recovers
+chi(cat_6) = 3 through it. For a non-Pauli C the eigenspaces of C^{(x) m}
+are not stabilizer codes (section 3 of the 2026-09-20 note), so the
+sectors are m-qudit states with no compression; they are the sums of n
+product states of Clifford images of |M>. One generator per cyclic
+subgroup of the single-qudit Clifford group mod phase (the sectors depend
+only on the group), Paulis and symmetries of |M> excluded (a symmetry
+leaves one nonzero sector), deduped under conjugation by the local
+stabilizer of |M>: 8 classes for qubit_H, 4 for qubit_T, 6 for S, 21 for
+N, 30 for H3, 37 for T3, 243 for T5. Each sector's rank is decided exactly
+in the m-qudit dictionary where that fits (qubits m <= 4, qutrits m <= 3,
+ququints m <= 2), and otherwise bounded below by its single-qudit slices
+(a projection of one qudit onto a basis state carries a decomposition to a
+decomposition of the slice), recursively down to the dictionary. About 8
+minutes of compute for the scans, 5 for the anneals below.
+
+Where the ranks are exact (small m), the sector totals against the known
+values:
+
+| cell | chi | classes | smallest sector total | how |
+|---|---|---|---|---|
+| qubit_H m=3 | 3 | 8 | 4 (order 2, ranks 2 + 2; the Pauli Z pair also gives 2 + 2) | exact, rank <= 3 decided |
+| qubit_H m=4 | 4 | 8 | 4 (one order-2 class, ranks 2 + 2); the order-4 classes give 1 + 2 + 2 + 1 = 6 and 1 + 1 + 2 + 2 = 6 at m=3, 7 and 8 at m=4 | exact |
+| qubit_T m=3 | 3 | 4 | 6 (order 2, 3 + 3; order 4, 1 + 2 + 2 + 1) | exact |
+| qubit_T m=4 | 3 | 4 | >= 5 | rank 2 excluded exactly |
+| T5 m=2 | 5 | 243 | >= 6; sectors of rank 1 and 2 occur only inside order-4, 5, and 10 classes whose other sectors have rank >= 3 | rank 2 excluded exactly (rank 3 not run: the 3900-state rank-3 search over 243 classes exceeds the cap) |
+| S, N, H3 m=3 | 4, 4, 4 | 6, 21, 30 | >= 6 (every order-2 sector has rank >= 3) | rank 2 excluded exactly |
+| T3 m=3 | 8 | 37 | >= 6 | rank 2 excluded exactly |
+
+So at every small cell where the exact value is known, the non-Pauli
+sector totals are at or above it and never below, and at qubit_T m=3 and
+T5 m=2 they are strictly above (6 against 3, 6 against 5): the route is
+weaker than the Pauli one where the Pauli one works, and equal to it only
+at qubit_H m <= 4.
+
+At the record-capable cells the lower bounds close the route exactly at
+several cells and leave the rest to the annealer:
+
+| cell | record rank | order-2 classes | exact lower bound on the total | anneal of the undecided sectors |
+|---|---|---|---|---|
+| S m=4 (control) | 4 | 1 of 6 | >= 6 | |
+| S m=5 | 5 | 1 | >= 6 (two sectors, each >= 3 by slicing to m=3) | closed exactly |
+| N m=4 | 6 | 2 of 21 | >= 6 (3 + 3 needed) | rank 3 on each 4-qutrit sector: residuals 0.567 to 0.739 |
+| H3 m=4 | 6 | 2 of 30 | >= 6 | rank 3: residuals 0.447 to 0.655 |
+| T3 m=4 | 8 | 3 of 37 | >= 6 | rank 4: residuals 0.481 to 0.675 |
+| qubit_H m=5 (control) | 6 | 3 of 8 | >= 6 | |
+| qubit_H m=7 | 6 | 3 of 8 | >= 6 (each 7-qubit sector >= 3 by three slicings) | rank 3: residuals 0.502 to 0.674 |
+| qubit_T m=7 | 6 | 2 of 4 | >= 6 | rank 3: residuals 0.380 to 0.659 |
+| T5 m=3 | 5..11 | 5 of 243 | >= 6; every order-3 class >= 9, order-5 classes >= 12 or 15 | rank 5 on two order-2 classes: residuals 0.736 to 0.792 (the p = 5 annealer is unreliable, section of 2026-09-24) |
+
+Orders 3 and above cost at least 3 per nonzero sector and so at least 9,
+which is above every record rank in the table except at T5 m=3, where the
+order-3 totals are >= 9 against records up to 11 and the order-5 classes
+>= 12; the order-2 classes are the only ones that could reach a record
+anywhere, and each of their two sectors is a generalized cat state
+(|M>^m + |C M>^m)/sqrt 2 with C a non-Pauli involution, rank >= 3 exactly
+at m >= 3 for every orbit. Nothing reached a record rank. S m=5 is closed
+exactly for this route (6 > 5); at N and H3 m=4 the route needs both
+sectors at rank exactly 3, which the annealer does not find, and a slice
+with rank >= 4 would close it exactly (the rank-3 search on the
+three-qutrit slices is queued below).
+
+### (b) Two-translate cat states at odd p: the gluing bra is never a stabilizer state
+
+`code_states_p.py --twocat 2`. QPG's cat state is the sum of the two Pauli
+translates of |T>^m; at odd p the sum of all p translates sum_j |Z^j M>^m
+is the Z^m eigensector (the Pauli route, closed), and the shape the brief
+asks about is the two-term sum c_m(P) = (|M>^m + |P M>^m)/sqrt 2 for a
+single Pauli translate P. The contraction lemma that turns chi(c_m) into
+an exponent needs its m = 2 member to be a stabilizer state (it is the
+bra glued between two larger cats, as <cat_2| is for qubits, and a
+non-stabilizer bra does not carry stabilizer terms to stabilizer terms).
+Exact ranks of c_2(P) in the two-qudit dictionaries, for every nonidentity
+Pauli P up to the local stabilizer of |M>, one line per |<M|P M>| class:
+
+| orbit | P classes | rank of c_2(P) |
+|---|---|---|
+| S | 5 (all with \|<S\|P S>\| = 1/2) | 3 |
+| N | 5 (1/2) | 3 |
+| H3 | 5 (0.683 and 0.183) | > 3 |
+| T3 | Z (orthogonal translate) | 3; the five X-type classes (0.577): > 3 |
+| T5 | Z, Z^2 (orthogonal) and the 19 X-type classes (0.447) | > 3 |
+
+No c_2(P) is a stabilizer state for any orbit and any P (rank >= 3
+exactly), so the qudit two-translate gluing stops at its first step;
+compare <cat_2| = (<00| - i<11|)/sqrt 2, a stabilizer bra, for qubits. For
+T3 with P = Z the two-translate c_m(Z) is the sum of two of the three
+Galois cat states, and c_2(Z) has rank 3 against rank 1 for each of the
+three Z (x) Z sectors, so the full sector sum (the Pauli route) is the
+right object at odd p and the two-term sum is not. Closed exactly at
+m = 2; the m = 3 run (rank-3 searches over the three-qutrit dictionary
+for every P) exceeded the 600 s cap and was not needed.
+
+### (c) Code states of QPG's Theorem 4 at p = 2, 3, 5: rank at least 3 for every code with k = 2 or 3
+
+`code_states_p.py`. QPG define, for an [m, k] binary code L, the code
+state |L_hat> = 2^{-k/2} sum_{x in L} |x_hat> with |0_hat> = |T> and
+|1_hat> = |T_perp> = Z|T>, and prove (Theorem 4) that if chi(T^n) has an
+exponent gamma then gamma <= log_2 chi(L_hat) / (m - 2k) for every k < m/2:
+contracting an information set of l copies of L_hat with <T|^{kl} kills
+every codeword but 0 (since <T|T_perp> = 0) and leaves T^{l(m-k)} from
+chi(L_hat)^l chi(T^{kl}) terms. Since sum_{x in L} Z^x is |L| times the
+projector onto the basis states of L^perp, |L_hat> is the restriction of
+|T>^m to L^perp, compressible by a Clifford to m - k qubits: the repetition
+code gives the cat states, and the [m, k] code state is the eigenvalue-1
+joint sector of the Z-type group {Z^v : v in L}, so the sector scans of
+2026-09-24 already contain the k = 1 and the m <= 7 cases. What is new is
+the criterion: the sector route needs the sum over all p^k sectors below
+the cell, while Theorem 4 needs one sector below p^{(m-2k) gamma}, with a
+denominator m - 2k instead of m; the two agree exactly when chi(L_hat) =
+p^{(m-2k)/2}, and the theorem wins below that. The construction and proof
+transfer verbatim to any single-qudit |M> whose Z-translates are
+orthonormal, that is, whose amplitudes all have modulus p^{-1/2}. That is
+the case for T3, T5, and the H-type qubit state in its T-basis
+representative (the board's cos(pi/8), sin(pi/8) vector is unbiased in the
+Y basis instead, `--unbiased`), and for no Pauli eigenbasis at all for S,
+N, H3 (support 2, and the moduli (1, 1, 2)/sqrt 6 and (a, b, b)), nor for
+the face state F, whose |<e|F>|^2 = (1 +- 1/sqrt 3)/2 in every Pauli
+eigenbasis. So the route applies to three orbits; for S, N, H3 the
+contraction would need a non-stabilizer dual bra and the theorem does not
+go through.
+
+Codes were enumerated up to monomial equivalence (multisets of m points of
+PG(k-1, p) plus zero columns, one per PGL_k(p) orbit; a coordinate scaling
+is a local Clifford on the code state, so equivalent codes have Clifford-
+equivalent code states), the compressed (m-k)-qudit state built from a
+basis of L^perp, its rank bounded below by single-qudit slices down to a
+dictionary (rank 2 excluded exactly there; the rank-3 searches over the
+30,240 three-qutrit and 36,720 four-qubit states did not fit the cap and
+were dropped, so the exact verdicts are "1", "2", or ">= 3"), and annealed
+at the rank that would beat the baseline where the lower bound allowed it.
+Rank needed: floor of p^{(m-2k) gamma_base}, minus one at an exact power.
+
+| orbit, code | codes | compressed qudits | record needs chi <= | exact lower bound | anneal at the record rank |
+|---|---|---|---|---|---|
+| T3 [5, 2] | 6 | 3 | 1 | >= 3 for every code | |
+| T3 [6, 2] | 10 | 4 | 2 (3 ties 0.5) | >= 3 | |
+| T3 [7, 3] | 30 (412 s) | 4 | 1 | >= 3 | |
+| T3 [7, 2] | 30 | 5 | 5 | >= 3 | rank 5, twelve codes: residuals 0.546 to 0.730 |
+| T5 [5, 2] | 8 | 3 | 2 | >= 3 | |
+| T5 [6, 2] | 24 | 4 | 4 (5 ties 0.5) | >= 3 | rank 4, six codes: 0.724 to 0.922 (the p = 5 annealer is unreliable) |
+| T5 [7, 3] | killed at the cap (PG(2, 5) has 31 points; the class enumeration did not finish) | 4 | 2 | | |
+| qubit_H [8, 2] | 32 | 6 | 2 (3 ties) | >= 3 (slice to 4 qubits) | not run at the tie |
+| qubit_H [9, 3] | 22 | 6 | 2 | >= 3 | |
+| qubit_H [9, 2] | 43 | 7 | 3 | >= 3 | rank 3, twelve codes: 0.383 to 0.638 |
+| qubit_H [10, 3] | 72 | 7 | 2 (3 ties) | >= 3 | not run at the tie |
+| qubit_H [10, 2] | 56 | 8 | 5 | >= 3 | rank 5, twelve codes: 0.294 to 0.558 |
+
+Exact closures: every [5, 2]_3, [7, 3]_3, [5, 2]_5, [8, 2]_2, and [9, 3]_2
+code state has rank >= 3, above the rank the theorem needs, so no code with
+those parameters gives an exponent below the baseline for T3, T5, or the
+H-type qubit state; [6, 2]_3 and [8, 2]_2 can at best tie the baseline
+(rank exactly 3, not decided). Open after the anneals: [7, 2]_3 at rank 4
+or 5 (a 243-dimensional target; rank 5 would give log_3(5)/3 = 0.4883),
+[9, 2]_2 at rank 3 (0.3170), [10, 2]_2 at rank 4 or 5 (0.3333, 0.3870),
+[6, 2]_5 at rank 4 (0.4307). The annealed codes are the twelve with the
+fewest zero columns in each family; a code with a zero column has
+|L_hat> = |M> (x) |L'_hat> for the shortened code L', so its rank is at
+least chi(L'_hat) and the twelve cover the codes of full length. None of
+the anneals found a decomposition; the residuals (0.29 to 0.92) are the
+plateau values familiar from every other cell, not near misses. QPG's
+open question (a code beating log_2(3)/4) stays open here at m <= 10;
+the cheapest undecided case is [9, 2]_2 at rank 3, a 128-dimensional
+target on which the annealer that recovers chi(cat_6) = 3 in 7 s stalls
+at 0.38 to 0.64 for all twelve codes.
+
+### (d) qubit_H m=7: the partial-times-block shape has no merge
+
+`t7_partial_merge.py`. The board's chi(|H>^7) <= 9 is the KvdWV partial
+decomposition of |T>^5 (three cat_6 terms with the sixth qubit contracted)
+times a rank-3 block for the remaining |T>^3 through the Choi vector
+(`kvv_cat.partial_product_terms`). The block was varied over the six
+stored rank-3 decompositions of |H>^3 (one per symmetry orbit,
+`data/qubit_H_m3_rank3.json`, mapped to the T basis) independently for
+each of the three partial terms: 216 nine-term decompositions of |T>^7,
+40 distinct up to the term moduli, every term confirmed a stabilizer state
+and every set confirmed to rebuild the target. No pair of terms in any set
+has a stabilizer sum (0 merges of 216 x 36), so no rank-8 decomposition
+arises by merging two terms of this shape; the 54 distinct seven-qubit
+states used span only 18 of the 128 dimensions. Two warm-started rank-8
+anneals from a nine-term set with its least significant term pruned
+(2 chains, 3000 iterations per temperature, 19 s each) stopped at
+residuals 0.1597 and 0.1604, the same plateau to three digits from two
+different sets. The cell stays 6 <= chi(|H>^7) <= 9; the record rank 6
+was not the target here (a rank-8 witness would tighten the cell only).
+
+### (e) S at m=5 to 8: what the two-point support gives, and what closed
+
+|S> = (|1> - |2>)/sqrt 2 = (i sqrt 3)^{-1} (|+_w> - |+_{w^2}>) in the
+X eigenbasis, and its amplitude is the quadratic character chi_3(x) of
+F_3 (0, 1, -1 at x = 0, 1, 2), so
+
+    |S>^m ∝ sum_x chi_3(x_1 x_2 ... x_m) |x>,
+
+supported on the cube {1, 2}^m, the complement of the coordinate
+hyperplanes. Multiplicativity chi_3(a) chi_3(b) = chi_3(ab) and the
+identity chi_3(u) = (w^u - w^{-u}) / (i sqrt 3) make the board's
+decompositions transparent: the m=2 witness is chi_3(xy) = (w^{xy} -
+w^{-xy}) / (i sqrt 3), two full-support quadratic-phase states (the file's
+extra w^{x^2 + y^2} is a diagonal Clifford), and the m=4 witness is its
+square; chi(S^3) = 4 and chi(S^4) = 4 (exact on the board) say the
+character route ends at pairs. Every term of a decomposition is supported
+on a flat A of F_3^m, and only points lie inside the cube (a line meets
+every coordinate value in some coordinate), so every non-point term sticks
+out of the cube and the off-cube parts must cancel; the m=2 identity does
+this with two full flats whose five off-cube points cancel pairwise. The
+structured attempts run on S today: the non-Pauli Clifford sectors at
+m = 3, 4, 5 (section (a); at m=5 the only order-2 class gives two sectors
+of rank >= 3 each, total >= 6 > 5, closed exactly, and orders 3 to 6 cost
+at least 9), and the two-translate cats (section (b); every c_2(P) has
+rank 3, closed exactly). A cube-cover search proper (r flats with
+prescribed cube intersections and a phase solve) was not run: the
+completing states live in the five-qutrit dictionary (5.4 x 10^9 states)
+or among the 3^20 full-support quadratic-phase states, and neither fits
+the day's budget or the tools at hand. The S cells stay as they were.
+
+### Bound files written today
+
+None. No construction reached a rank below the board at any cell.
+
+### Sharpest facts of the session
+
+1. Non-Pauli Clifford sectors never beat the Pauli ones: at every cell
+   where the exact value is known (qubit_H m=3, 4; qubit_T m=3, 4; T5
+   m=2; S, N, H3, T3 m=3) the smallest sector total is at or above chi,
+   and every sector of an order-2 non-Pauli Clifford, a generalized cat
+   (|M>^m + |C M>^m)/sqrt 2, has rank >= 3 exactly at m >= 3 for every
+   orbit. S m=5 is closed for this route (>= 6 > 5); N, H3 m=4 (need
+   3 + 3), T3 m=4 (need <= 8 from two sectors of rank >= 3), qubit_H and
+   qubit_T m=7 (need 3 + 3), and T5 m=3 are closed only heuristically, by
+   rank-3, 4, or 5 anneals that plateau at 0.38 to 0.79.
+2. The two-translate cat (|M>^2 + |P M>^2)/sqrt 2 is never a stabilizer
+   state at odd p (rank 3 or more for every orbit and Pauli, exact), so
+   QPG's cat_2 gluing has no two-term analogue at p = 3 or 5; the p-term
+   sum is the Pauli sector and is the only cat there.
+3. QPG's Theorem 4 transfers to T3 and T5 (Z-unbiased amplitudes) and to
+   the H-type qubit state, not to S, N, H3, or the face state (no Pauli
+   eigenbasis in which they are unbiased). Every [5, 2]_3, [7, 3]_3,
+   [5, 2]_5, [8, 2]_2, and [9, 3]_2 code state has rank >= 3, above what
+   the theorem needs, exactly; [7, 2]_3 at rank 5, [9, 2]_2 at rank 3,
+   [10, 2]_2 at rank 5, and [6, 2]_5 at rank 4 are open, with the
+   annealer stalling on all of them.
+4. The partial-times-block shape at |T>^7 admits no pairwise merge over
+   216 block choices, and its warm-started rank-8 anneals share one
+   plateau (0.160).
+5. |S>^m is the quadratic character of the coordinate product; the
+   character identity explains the m = 2 and m = 4 witnesses and stops at
+   pairs.
+
+Compute: about 1.8 hours of wall time as one process at nice 19, of
+which four runs were killed at the 600 s cap (T5 m=2 sectors with the
+rank-3 search, the two-translate cats at m=3, T3 [5, 2] with the rank-3
+search, T5 [7, 3]); the anneals used 2 chains, so the CPU time is about
+2 CPU-hours.
