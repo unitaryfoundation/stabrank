@@ -356,9 +356,7 @@
    "gamma": 0.4169925001442312,
    "date": "2022-02-18",
    "author": "Kissinger, van de Wetering, and Vilmart",
-   "github": [
-    "vprusso"
-   ],
+   "github": [],
    "method": "literature",
    "reference": "arXiv:2202.09202",
    "compute": {
@@ -381,9 +379,7 @@
    "gamma": 0.4528464287774732,
    "date": "2022-02-18",
    "author": "Kissinger, van de Wetering, and Vilmart",
-   "github": [
-    "vprusso"
-   ],
+   "github": [],
    "method": "literature",
    "reference": "arXiv:2202.09202",
    "compute": {
@@ -406,9 +402,7 @@
    "gamma": 0.4481203125901445,
    "date": "2022-02-18",
    "author": "Kissinger, van de Wetering, and Vilmart",
-   "github": [
-    "vprusso"
-   ],
+   "github": [],
    "method": "literature",
    "reference": "arXiv:2202.09202",
    "compute": {
