@@ -1,0 +1,91 @@
+{
+ "results": {
+  "a_coverage": {
+   "ok": true,
+   "detail": "326323 records, task ids 0..326322 each once: True; records whose (i, j, lo, hi) differ from the task list: 0; every task covers its full third-pivot range: True; buffer-overflow halvings per task: {0: 326094, 2: 9, 3: 94, 4: 85, 5: 14, 6: 14, 7: 13}"
+  },
+  "b_steps": {
+   "ok": true,
+   "detail": "recorded steps 53047283951508 + skipped on-line third pivots 28355241 = 53047312306749; predicted 53047312306749 (cost_c.py), 53047312306749 (recomputed here); tasks where the identity fails: 0; on-line third pivots skipped by the kernel: 1846 (allowed by the mask) of 2107 on-line states above j"
+  },
+  "c_decisions": {
+   "ok": true,
+   "detail": "class sets 1714877884; rank pairs {(4, 7): 1713075489, (5, 7): 1464994, (5, 8): 336320, (6, 7): 1061, (6, 8): 15, (6, 9): 5}; every pair has rank(S) < rank(S + V_3): True; candidates 0; tasks whose histogram does not sum to its class count: 0; arithmetic levels that decided a class set of more than 8 states (keys, over tasks): ['ell2']; size histogram {7: 800539189, 8: 876477993, 9: 17384442, 10: 12584401, 11: 3680727, 12: 2233201, 13: 1460321, 14: 257892, 15: 218165, 16: 34929, 17: 2444, 18: 3260, 19: 267, 20: 232, 21: 178, 22: 119, 23: 63, 24: 61}"
+  },
+  "e_symmetry": {
+   "ok": false,
+   "detail": "|G'| = 2916; first pivots equal the certificate's 45 orbit minima: True; second-pivot masks equal the certificate's after removing j = i: True (326323 pairs against the certificate's 326368, difference 45); third-pivot masks of the 21177 pairs with nontrivial Stab(i, j) equal the Stab(i, j)-orbit minima: False; pairs with excluded canonical third pivots 21173, excluded third pivots 158231569, inner steps not scanned 2137587169048 (corrected scan total 55184899475797 against 53047312306749 as run)"
+  },
+  "g_supplement": {
+   "ok": true,
+   "detail": "21173 records for 21173 pairs, each once with the right pair: True; steps recorded 2137585861464 + on-line skips 1307584; identity failures 0; original + supplement + skips = 55184899475797 against the corrected total 55184899475797: True; class sets 220971842, rank pairs {(4, 7): 220516777, (5, 7): 437895, (5, 8): 17159, (6, 7): 8, (6, 8): 3}, non-strict 0, candidates 0"
+  },
+  "f_geometry": {
+   "ok": true,
+   "detail": "states with zero projected image: 0; states parallel to a first pivot mod ell: 0; states above j on the projected line through a canonical pivot pair: 2107, of which on the line over Q(w3) (exact rank of the two pivots, the state, and V_3 at most 5): 2107; rank histogram with V_3 {5: 2107}, without {2: 2086, 3: 21}"
+  }
+ },
+ "gaps": [
+  "e_symmetry"
+ ],
+ "records": 326323,
+ "tasks": 326323,
+ "steps_recorded": 53047283951508,
+ "steps_skipped_online": 28355241,
+ "steps_predicted": 53047312306749,
+ "rank_pairs": {
+  "4,7": 1713075489,
+  "5,7": 1464994,
+  "5,8": 336320,
+  "6,7": 1061,
+  "6,8": 15,
+  "6,9": 5
+ },
+ "sizes": {
+  "7": 800539189,
+  "8": 876477993,
+  "9": 17384442,
+  "10": 12584401,
+  "11": 3680727,
+  "12": 2233201,
+  "13": 1460321,
+  "14": 257892,
+  "15": 218165,
+  "16": 34929,
+  "17": 2444,
+  "18": 3260,
+  "19": 267,
+  "20": 232,
+  "21": 178,
+  "22": 119,
+  "23": 63,
+  "24": 61
+ },
+ "decider_levels": {
+  "ell2": 326322
+ },
+ "splits": {
+  "0": 326094,
+  "4": 85,
+  "3": 94,
+  "6": 14,
+  "7": 13,
+  "5": 14,
+  "2": 9
+ },
+ "online_triples": 2107,
+ "online_triples_exact": 2107,
+ "pairs": 326323,
+ "pairs_certificate": 326368,
+ "steps_missing": 2137587169048,
+ "steps_corrected_total": 55184899475797,
+ "supplement_steps": 2137585861464,
+ "supplement_skipped_online": 1307584,
+ "supplement_rank_pairs": {
+  "4,7": 220516777,
+  "5,8": 17159,
+  "5,7": 437895,
+  "6,8": 3,
+  "6,7": 8
+ }
+}
