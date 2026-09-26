@@ -1,0 +1,3 @@
+batch 1038 of 1057: stage beta, 3622 items ((1, 1, 1, 1, 1)), 16 run(s) per item, compiled kernels, candidate cap 2000000, deadline 3600s
+batch 1038: 3622 items, 57952 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 279s, wall 280s; deterministic sha256 f131b5c6d5668c29
+batch 1038 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_1038.json

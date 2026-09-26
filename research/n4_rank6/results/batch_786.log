@@ -1,0 +1,3 @@
+batch 786 of 1057: stage B6, 29 items (kappa 2), 1 run(s) per item, compiled kernels, candidate cap 200000000, deadline 3600s
+batch 786: 29 items, 29 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 532s, wall 533s; deterministic sha256 5807dc9dd3d1f7de
+batch 786 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_786.json

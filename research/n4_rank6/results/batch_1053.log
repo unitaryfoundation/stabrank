@@ -1,0 +1,3 @@
+batch 1053 of 1057: stage beta, 20 items ((3, 1, 1)), 16 run(s) per item, compiled kernels, candidate cap 2000000, deadline 3600s
+batch 1053: 20 items, 320 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 8s, wall 9s; deterministic sha256 f28fc099c3d61a82
+batch 1053 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_1053.json

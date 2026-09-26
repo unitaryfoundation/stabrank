@@ -1,0 +1,3 @@
+batch 442 of 1057: stage B6, 361 items (kappa 1), 1 run(s) per item, compiled kernels, candidate cap 2000000, deadline 3600s
+batch 442: 361 items, 361 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 367s, wall 368s; deterministic sha256 6e8633c9b5807254
+batch 442 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_442.json

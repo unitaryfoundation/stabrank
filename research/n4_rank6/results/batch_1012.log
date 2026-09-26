@@ -1,0 +1,3 @@
+batch 1012 of 1057: stage C6, 4 items ((2, 2, 1, 1) dependent), 1 run(s) per item, compiled kernels, candidate cap 2000000, deadline 3600s
+batch 1012: 4 items, 4 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 2052s, wall 2053s; deterministic sha256 811fca5210ced546
+batch 1012 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_1012.json

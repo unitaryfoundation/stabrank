@@ -1,0 +1,3 @@
+batch 13 of 1057: stage A6, 6 pivot pairs, 1 run(s) per item, compiled kernels, candidate cap 2000000, deadline 3600s
+batch 13: 709085 items, 709085 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 17s, match 800s, wall 818s; deterministic sha256 debcfa5916102a77
+batch 13 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_13.json

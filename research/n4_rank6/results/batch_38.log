@@ -1,0 +1,3 @@
+batch 38 of 1057: stage A6, 8 pivot pairs, 1 run(s) per item, compiled kernels, candidate cap 2000000, deadline 3600s
+batch 38: 615243 items, 615243 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 11s, match 703s, wall 714s; deterministic sha256 c8d51f5844e5dc4d
+batch 38 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_38.json

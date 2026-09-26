@@ -1,0 +1,3 @@
+batch 1006 of 1057: stage C6, 658 items ((2, 2, 1, 1)), 1 run(s) per item, compiled kernels, candidate cap 2000000, deadline 3600s
+batch 1006: 658 items, 658 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 1848s, wall 1849s; deterministic sha256 c41f3ef7cefc3712
+batch 1006 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_1006.json

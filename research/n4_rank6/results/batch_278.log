@@ -1,0 +1,3 @@
+batch 278 of 1057: stage B6, 362 items (kappa 1), 1 run(s) per item, compiled kernels, candidate cap 2000000, deadline 7200s
+batch 278: 362 items, 362 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 435s, wall 437s; deterministic sha256 889adb8a951f6549
+batch 278 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_278.json

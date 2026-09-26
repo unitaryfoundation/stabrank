@@ -1,0 +1,126 @@
+{
+ "batch": {
+  "index": 40,
+  "stage": "A6",
+  "units": [
+   [
+    297,
+    8,
+    244
+   ],
+   [
+    297,
+    9,
+    243
+   ],
+   [
+    297,
+    10,
+    242
+   ],
+   [
+    297,
+    11,
+    241
+   ],
+   [
+    297,
+    13,
+    240
+   ],
+   [
+    297,
+    14,
+    239
+   ],
+   [
+    297,
+    16,
+    238
+   ],
+   [
+    297,
+    17,
+    237
+   ],
+   [
+    297,
+    28,
+    229
+   ],
+   [
+    297,
+    29,
+    228
+   ],
+   [
+    297,
+    30,
+    227
+   ]
+  ],
+  "n_units": 11
+ },
+ "orbit": "N",
+ "m": 4,
+ "rank": 6,
+ "n1": 2,
+ "x0": [
+  2,
+  2
+ ],
+ "N": 360,
+ "group_order": 72,
+ "runs_per_item": 1,
+ "partition_sha256": "597eca221ac6d6b33278033dafe5e63c8179d5dc675e8f32cd418c1adf636b23",
+ "census_sha256": "4b25c770bcb1cfe310796a1a8ab820f019ab305b3cd8753c500acc7d6e494bc4",
+ "reps_sha256": null,
+ "max_cand": 2000000,
+ "items": 708890,
+ "matched": 708890,
+ "refused": 0,
+ "coord_solution_hist": {
+  "0": 708494,
+  "6,6": 157,
+  "3,3": 8,
+  "1,1": 25,
+  "27,27": 10,
+  "2,2": 131,
+  "8,8": 3,
+  "4,4": 46,
+  "30,30": 10,
+  "34,34": 3,
+  "35,35": 1,
+  "88,88": 2
+ },
+ "hits": [],
+ "hit_count": 0,
+ "decompositions": 0,
+ "undecided": [],
+ "deterministic_sha256": "6def0b846570a1185897b26503477b3a63de9aa0423cb6052223923c37dafe25",
+ "native_runs": 708890,
+ "candidates": 5226360785,
+ "dense_raw": 0,
+ "b6_paths": {},
+ "filter_fallbacks": [],
+ "kernel_s": 14.10670804977417,
+ "match_s": 819.1447393894196,
+ "wall_s": 833.9299049377441,
+ "cpu_s": 831.49,
+ "max_seconds": 3600.0,
+ "deadline_hit": false,
+ "started": "2026-09-25T21:34:28+00:00",
+ "ended": "2026-09-25T21:48:22+00:00",
+ "hostname": "b429c21234f4",
+ "git_commit": "a844cec49ba580ec4134651ff7f8611adb8e3e43",
+ "native": true,
+ "matcher": "native",
+ "filter": null,
+ "cover6": "native",
+ "kernel_version": "Linux 6.8.0-51-generic #52~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Dec  9 15:00:52 UTC 2",
+ "machine": "x86_64",
+ "python": "3.12.14",
+ "numpy": "2.3.5",
+ "hit_numerics": [],
+ "sha256": "d79001fae511af54907e467b574e0ef0736b802a9461eede2b40267a9499a328"
+}

@@ -1,0 +1,3 @@
+batch 1056 of 1057: stage gamma, 20 items ((2, 1, 1)), 136 run(s) per item, compiled kernels, candidate cap 2000000, deadline 3600s
+batch 1056: 20 items, 2720 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 15s, wall 16s; deterministic sha256 7a8447e6e508d393
+batch 1056 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_1056.json

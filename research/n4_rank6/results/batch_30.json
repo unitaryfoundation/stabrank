@@ -1,0 +1,114 @@
+{
+ "batch": {
+  "index": 30,
+  "stage": "A6",
+  "units": [
+   [
+    285,
+    12,
+    270
+   ],
+   [
+    285,
+    15,
+    267
+   ],
+   [
+    285,
+    18,
+    264
+   ],
+   [
+    285,
+    21,
+    261
+   ],
+   [
+    285,
+    24,
+    258
+   ],
+   [
+    285,
+    27,
+    255
+   ],
+   [
+    285,
+    30,
+    252
+   ],
+   [
+    285,
+    33,
+    249
+   ],
+   [
+    285,
+    36,
+    246
+   ]
+  ],
+  "n_units": 9
+ },
+ "orbit": "N",
+ "m": 4,
+ "rank": 6,
+ "n1": 2,
+ "x0": [
+  2,
+  2
+ ],
+ "N": 360,
+ "group_order": 72,
+ "runs_per_item": 1,
+ "partition_sha256": "597eca221ac6d6b33278033dafe5e63c8179d5dc675e8f32cd418c1adf636b23",
+ "census_sha256": "4b25c770bcb1cfe310796a1a8ab820f019ab305b3cd8753c500acc7d6e494bc4",
+ "reps_sha256": null,
+ "max_cand": 2000000,
+ "items": 719380,
+ "matched": 719380,
+ "refused": 0,
+ "coord_solution_hist": {
+  "0": 718896,
+  "2,2": 141,
+  "4,4": 194,
+  "6,6": 50,
+  "48,48": 13,
+  "10,10": 27,
+  "20,20": 11,
+  "8,8": 41,
+  "5,5": 6,
+  "100,100": 1
+ },
+ "hits": [],
+ "hit_count": 0,
+ "decompositions": 0,
+ "undecided": [],
+ "deterministic_sha256": "1f300ca4edec9dfa78ac4db1e388f93d53e027d2a6fbe5afa266de25d7d0d584",
+ "native_runs": 719380,
+ "candidates": 5307520214,
+ "dense_raw": 0,
+ "b6_paths": {},
+ "filter_fallbacks": [],
+ "kernel_s": 14.642106056213379,
+ "match_s": 813.7444467544556,
+ "wall_s": 829.0761651992798,
+ "cpu_s": 827.7099999999999,
+ "max_seconds": 3600.0,
+ "deadline_hit": false,
+ "started": "2026-09-25T21:27:08+00:00",
+ "ended": "2026-09-25T21:40:57+00:00",
+ "hostname": "b429c21234f4",
+ "git_commit": "a844cec49ba580ec4134651ff7f8611adb8e3e43",
+ "native": true,
+ "matcher": "native",
+ "filter": null,
+ "cover6": "native",
+ "kernel_version": "Linux 6.8.0-51-generic #52~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Dec  9 15:00:52 UTC 2",
+ "machine": "x86_64",
+ "python": "3.12.14",
+ "numpy": "2.3.5",
+ "hit_numerics": [],
+ "sha256": "5ae91458c62bc2aca09e4bd6628591ba63848b209f980e7fde30f40172bcd6ee"
+}

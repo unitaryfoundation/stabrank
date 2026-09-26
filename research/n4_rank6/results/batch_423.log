@@ -1,0 +1,3 @@
+batch 423 of 1057: stage B6, 361 items (kappa 1), 1 run(s) per item, compiled kernels, candidate cap 2000000, deadline 7200s
+batch 423: 361 items, 361 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 429s, wall 429s; deterministic sha256 cce66c3bcde69b84
+batch 423 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_423.json

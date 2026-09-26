@@ -1,0 +1,3 @@
+batch 53 of 1057: stage A6, 245 pivot pairs, 1 run(s) per item, Python references, candidate cap 2000000
+batch 53: 451695 items, 451695 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 1241s, match 6685s, wall 7927s; deterministic sha256 c7ee0d82c5576fb0
+batch 53 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/nonative/batch_53.json
