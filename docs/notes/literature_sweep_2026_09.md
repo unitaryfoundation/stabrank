@@ -577,3 +577,77 @@ approximate rank value, and no machine-search paper on stabilizer
 decompositions appeared between 2026-09-24 and 2026-09-25. Version pages
 unchanged: 2106.07740 at v2 (2021-12-15), 2202.09202 at v1 (2022-02-18).
 No BibTeX entry was added.
+
+## 10. Update of 2026-09-26
+
+Nothing moves a cell, and the window is empty at the source: arXiv has
+announced no listing after Friday 2026-09-25. The API's submission index
+stops at 2609.30268 (submitted 2026-09-24), a `cat:quant-ph` query over
+`submittedDate:[202609250000 TO 202609270000]` returns zero entries, and
+today's `quant-ph/new` is byte for byte the Friday announcement section 9
+screened. So the two items below that are new to the note are older
+preprints that the earlier sweeps' queries did not return, not new
+postings.
+
+What was checked:
+
+- arXiv API (HTTPS), the thirteen phrase queries of sections 5 to 9 sorted
+  by last update, 40 hits each: 256 hits, 196 distinct. Per query, in the
+  order of section 9: 40, 4, 15, 16, 16, 29, 8, 23, 20, 40, 1, 40, 4. The
+  newest `updated` field anywhere in the 196 is 2026-09-17, and nothing was
+  updated on or after 2026-09-20. The quoted-phrase queries return HTTP 400
+  unless the quotes are percent-encoded, which is worth recording for the
+  next sweep.
+- The `quant-ph/new` listing (header "Friday, 25 September 2026"; 73 new
+  entries, 11 cross-lists, 53 replacements, 137 parsed) and
+  `quant-ph/pastweek?show=500` (84, 99, 89, 142, and 62 entries for Friday
+  back to Monday, 476 in all, no truncation this week). Every title read,
+  abstracts read for everything matching the keyword screen of section 9:
+  41 distinct hits across both listings, 37 already in the note.
+- Semantic Scholar citation lists of arXiv:1601.07601 (430 citing papers),
+  2106.07740 (60), 2012.11739 (9), 2003.01130 (5), 2110.07781 (14),
+  2107.10551 (17), 2106.03214 (17), and 2202.09202 (53), sorted by date, no
+  rate limiting this time: the newest citing paper of any of the eight is
+  still 2609.25947 (2026-09-22, section 7), and nothing is dated 2026-09-24
+  or later.
+- OpenAlex by DOI: Bravyi-Gosset, 354 citing works, newest 2026-08-25;
+  Qassim, Pashayan, and Gosset, 49, newest the Jardine Zenodo deposits of
+  2026-08-05; Bravyi, Browne, Calpin, Campbell, Gosset, and Howard, 303,
+  newest 2026-09-17. Correction to section 9, which records 38 citing works
+  for the last of these with a newest of 2026-06-23: that query hit a
+  duplicate OpenAlex record. Querying by the Quantum DOI
+  10.22331/q-2019-09-02-181 gives 303, whose newest entry is the journal
+  version of 2506.11725 below.
+- Zenodo, searched for "Magic Cat States", "magic-cat-state", and
+  "stabilizer rank": three records, newest 2026-08-30, all three the
+  Jardine deposits of section 7. No new deposit, and the source policy
+  there stands.
+- Five web searches for the phrases of section 9, for cat and code state
+  decompositions, and for machine search on stabilizer decompositions.
+
+New to the note, none of it rank-relevant:
+
+| source | arXiv | what it contributes | on the board | usable here |
+|---|---|---|---|---|
+| GigaEvo, VarTODD 2026 | 2603.29894 (v2 2026-08-18) | LLM-guided evolutionary search over TODD transformation trajectories, minimizing T-count in the parity-matrix representation | no | machine search, but over circuit parity matrices rather than decompositions of a state; a T-count only reaches a rank through chi(psi) <= chi(T^{T-count}), which is never below a direct decomposition; does not move a cell |
+| AlphaClifford 2026 | 2608.18946 (v2 2026-08-22) | model-based reinforcement learning with tree search over the symplectic group, synthesizing Clifford circuits from H, S, and CNOT | no | synthesizes Clifford circuits, does not search decompositions of a magic state; does not move a cell |
+| Wigner entropy counterexamples 2026 | 2609.24670 | disproof of the Wigner entropy and Wigner majorization conjectures by mixing in a Wigner-negative state | no | continuous-variable Wigner entropy, not the discrete Wigner function and not a rank; does not move a cell |
+| radial coarse graining in Wigner phase space 2026 | 2609.23277 | vacuum majorization restored at finite resolution by integrating single-mode Wigner functions over radial shells | no | single-mode continuous-variable phase space; does not move a cell |
+| Kirkwood-Dirac spatiotemporal states 2026 | 2609.24680 | spatiotemporal state formulations unified through the Kirkwood-Dirac quasiprobability | no | no stabilizer content; does not move a cell |
+| free-semigroup phase-space quantization 2026 | 2609.27004 | a state language for classical mechanics at the Planck scale | no | a false positive on "phase space"; does not move a cell |
+| Ohta, Sakurai 2026 | 2506.11725 (QIP, 2026-09-17) | journal version of the extremal-magic-state paper already in section 1 | no | no rank content; does not move a cell |
+
+The first two matter only against section 4's claim that no machine-search
+paper on stabilizer decompositions exists. That claim still holds as
+written, since neither searches decompositions, but these two are the
+nearest neighbors and should not be read as a find by a later sweep.
+
+Nothing else on the Friday listing passed the screen that sections 5 to 9
+do not already carry: its replacement block is the same 53 entries, whose
+keyword hits are 2605.27915, 2608.08346, 2608.18332, 2609.13312,
+2609.17706, and 2609.18922, all filed.
+
+No explicit finite-copy decomposition of any board state, no exact or
+approximate rank value, and no non-asymptotic lower-bound technique
+appeared. Version pages unchanged: 2106.07740 at v2 (2021-12-15),
+2202.09202 at v1 (2022-02-18). No BibTeX entry was added.

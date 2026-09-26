@@ -16,6 +16,12 @@ on the shared machine; no annealing.
 | qubit_H m=6 | 4 <= chi <= 6 | 5 (0.3870 < 0.3963) |
 | qubit_T m=6 | 4 <= chi <= 6 | 5 (0.3870) |
 
+Superseded rows, 2026-09-26: N m=4 is closed, chi(|N>^4) = 7 exactly
+(`bounds/N-m4-lower-7.json`, `N-m4-upper-7.json`), so it is no longer a
+target; qubit_H m=6 and qubit_T m=6 are closed at 6, and T3 m=4 rank 7 was
+already closed below. The current record-capable cells are the table in the
+2026-09-26 section at the end of this note.
+
 Correction to the target list: at S m=5 rank 6 gives log_3(6)/5 = 0.3261,
 above the published 0.3155, so only rank 5 moves the exponent there (rank 6
 and 7 would still tighten the cell).
@@ -1506,3 +1512,226 @@ which four runs were killed at the 600 s cap (T5 m=2 sectors with the
 rank-3 search, the two-translate cats at m=3, T3 [5, 2] with the rank-3
 search, T5 [7, 3]); the anneals used 2 chains, so the CPU time is about
 2 CPU-hours.
+
+## 2026-09-26: cyclic-invariant decompositions, and the product closure of the board
+
+Scripts: `research/constructions/cyclic_symmetric.py`,
+`research/constructions/ledger_closure.py`; logs and hits under
+`research/constructions/results/` (gitignored). Everything ran as one
+process at nice 19, no run over ten minutes. The literature update of the
+same day is section 10 of `literature_sweep_2026_09.md` (nothing new; two
+machine-search papers filed as near neighbors, and a correction to the
+citation count section 9 records for Bravyi, Browne, Calpin, Campbell,
+Gosset, and Howard). No bound file was written.
+
+### Record-capable open cells
+
+From `bounds/*.json`, with lower bounds carried up by projection
+monotonicity. The N m=4 row of the 2026-09-20 table at the top of this note
+is closed: chi(|N>^4) = 7 exactly since the overnight rank-6 exclusion, so
+N m=4 is no longer a target, and the m=5 and m=6 cells of that orbit now
+start at 7 rather than 6.
+
+| cell | board | record ranks (exponent) |
+|---|---|---|
+| S m=5 | 5..8 | 5 (0.2930) |
+| S m=6 | 5..8 | 5..7 (0.2442..0.2952) |
+| S m=7 | 5..16 | 5..11 (0.2093..0.3118) |
+| S m=8 | 5..16 | 5..15 (0.1831..0.3081) |
+| N m=5 | 7..12 | 7..10 (0.3542..0.4192) |
+| N m=6 | 7..16 | 7..15 (0.2952..0.4108) |
+| H3 m=4 | 6..8 | 6 (0.4077) |
+| H3 m=5 | 6..12 | 6..10 (0.3262..0.4192) |
+| H3 m=6 | 6..16 | 6..15 (0.2718..0.4108) |
+| T3 m=4 | 8..9 | 8 (0.4732) |
+| T3 m=5 | 8..18 | 8..15 (0.3786..0.4930) |
+| T3 m=6 | 8..27 | 8..26 (0.3155..0.4943) |
+| qubit_H m=7 | 6..9 | 6 (0.3693) |
+| qubit_H m=8 | 6..12 | 6..8 (0.3231..0.3750) |
+| qubit_H m=9 | 6..18 | 6..11 (0.2872..0.3844) |
+| qubit_H m=10 | 6..18 | 6..15 (0.2585..0.3907) |
+| qubit_T m=8 | 6..9 | 6..8 (0.3231..0.3750) |
+| qubit_T m=10 | 6..18 | 6..15 (0.2585..0.3907) |
+| T5 m=3 | 5..15 | 5..11 (0.3333..0.4966) |
+| T5 m=4 | 5..25 | 5..24 (0.2500..0.4937) |
+| cat m=7 | 3..6 | 3 (0.3170) |
+| cat m=8 | 3..6 | 3..5 (0.2642..0.3870) |
+
+### (a) Decompositions invariant under one cyclic shift of the copies
+
+`cyclic_symmetric.py`. The 2026-09-20 section 2 ran the ansatz "the term set
+is invariant under all of S_m" and recorded that subgroups of S_m were not
+tried, with enumeration cost as the obstacle. For a single m-cycle sigma the
+obstacle disappears, and at prime m the ansatz becomes decisive rather than
+expensive.
+
+The lemma. The sigma-orbits on a sigma-invariant term set have size 1 or m,
+so a decomposition of rank R < m has every term fixed by sigma, and the
+fixing is exact rather than projective: the terms of a minimal decomposition
+are independent, so the coefficients in |M>^m = sum_i c_i |s_i> are unique,
+and applying sigma to both sides with sigma|s_i> = lambda_i |s_i> forces
+lambda_i = 1. A sigma-fixed stabilizer state is supported on a sigma-invariant
+affine flat, which is a coset of a cyclic code of length m, and carries a
+phase function constant on the sigma-orbits of that flat. Both are small
+enumerations: F_2^7 has 8 invariant subspaces (dimensions 0, 1, 3, 3, 4, 4,
+6, 7) and 12 invariant flats, F_3^5 has 4 (dimensions 0, 1, 4, 5) and 8
+flats, and F_5^3 has 4 (dimensions 0, 1, 2, 3) and 12 flats. On each flat the
+invariant phase functions are enumerated orbit by orbit (g^(r-1) patterns,
+g = 4 at p = 2 and g = p otherwise) or over the quadratic coefficients,
+whichever is smaller, and on the whole-space flat directly by the
+coefficient symmetry, where sigma permutes the coordinates and an invariant
+form is one with l constant, the diagonal of Q constant, and the
+off-diagonal Q constant on the cyclic orbits of coordinate pairs. Every
+candidate is confirmed by `to_witness.term_from_vector`.
+
+The ansatz is the one the literature's own record decomposition satisfies.
+Qassim, Pashayan, and Gosset's three terms for |cat_6> are individually
+invariant under every permutation of the six qubits: the line {0^6, 1^6},
+the even-weight uniform state, and the same state with all CZ applied.
+
+Sizes of the sigma-fixed dictionary, which depends only on p and m and not
+on the orbit:
+
+| p, m | sigma-fixed stabilizer states | invariant subspace dimension | span of the dictionary |
+|---|---|---|---|
+| 2, 3 | 18 | 4 | 4 |
+| 2, 5 | 30 | 8 | 8 |
+| 2, 6 | 105 | 14 | 12 |
+| 2, 7 | 66 | 20 | 20 |
+| 2, 8 | 164 (two flats over the cap) | 36 | 24 |
+| 3, 3 | 56 | 11 | 11 |
+| 3, 5 | 120 | 51 | 27 |
+| 5, 3 | 180 | 45 | 25 |
+
+Controls, all exact and all matching the board: cat m=6 returns rank 3 and
+nothing below it, recovering the three terms above; cat m=5 returns 3;
+qubit_H m=3 and qubit_T m=3 return 3; N m=3 and H3 m=3 return 4, the four
+fully symmetric states that `perm_symmetric.py` also returns; and qubit_H
+m=5 and qubit_T m=5 return nothing at rank 5 or below, as chi = 6 there
+requires.
+
+Results at the record-capable cells:
+
+| cell | record rank | sigma-fixed dictionary | outcome |
+|---|---|---|---|
+| cat m=7 | 3 | 66, spanning all 20 invariant dimensions | no subset of size 6 or less spans the target (75 s, C(66, 4) leaves scanned) |
+| qubit_H m=7 | 6 | 66 | same, 75 s |
+| qubit_T m=7 | 6 | 66 | same, 75 s |
+| S m=5 | 5 | 120, spanning 27 of 51 | the target is not in the span at all (residual 0.791) |
+| N m=5 | 7 | 120 | not in the span (residual 0.559) |
+| H3 m=5 | 6 | 120 | not in the span (residual 0.484) |
+| T3 m=5 | 8 | 120 | not in the span (residual 0.527) |
+| T5 m=3 | 5 | 180, spanning 25 of 45 | not in the span (residual 0.548) |
+
+At m = 7 this is a complete verdict for the ansatz: no decomposition of
+|cat_7>, |H>^7, or |F>^7 with six or fewer terms has a cyclically invariant
+term set, so the record rank 6 at qubit_H and qubit_T m=7 and the record
+rank 3 at cat m=7 are closed for it. At m = 5 the verdict is stronger in one
+direction and weaker in another. Stronger: the five-qutrit target is not in
+the span of the sigma-fixed states at all, so no rank whatever admits an
+all-fixed term set, at S, N, H3, and T3 alike. Weaker: at R = m = 5 a
+sigma-invariant term set can also be a single orbit of five terms, which the
+all-fixed enumeration does not cover. The same split applies at T5 m=3,
+where R is at least 5 and so at least one 3-orbit is present in any
+sigma-invariant set.
+
+The single-orbit shape is worth writing down, because it is a sharp
+reduction rather than a search. If the term set is one sigma-orbit
+{s, sigma s, ..., sigma^(m-1) s}, then sigma-invariance of the target and
+independence of the terms force all m coefficients equal, so the target is
+proportional to the sigma-symmetrization of one stabilizer state,
+
+    |M>^m = m c Pi s,      Pi = (1/m) sum_j sigma^j.
+
+At S m=5 that is 50 linear conditions on s, read off the sigma-orbits of
+F_3^5: the cube {1, 2}^5 is sigma-invariant and splits into 8 orbits (the
+two constant points 11111 and 22222, and six orbits of five), while its
+complement splits into 43 (the point 00000 and 42 orbits of five). The sum
+of s over each of the 43 outside orbits must vanish, and the sums over the 8
+inside orbits must be proportional to the target's. What is left after those
+conditions is a scan of the five-qutrit dictionary, the same 5.4e9 states
+that have blocked the S cells all week, now cut by 50 linear equations; that
+is the shape of the next run, and it does not fit this machine.
+
+A caution on how much the ansatz is worth. The board holds a rank-6 witness
+for |cat_7> (`bounds/cat-m7-upper-6.json`, the <0| projection of the cat_8
+terms), and the scan above says no rank-6 decomposition of |cat_7> is
+cyclically invariant. So at that cell the symmetry hypothesis excludes a
+decomposition that exists, unlike at cat_6, where the optimum is symmetric
+term by term. The negative results here are about the ansatz, and they are
+exact within it; they are not evidence that the record ranks are
+unreachable.
+
+Not covered, and why: m = 8 at cat and qubit_H. Eight is not prime, so
+sigma-orbits of size 2 and 4 exist and R < 8 does not force an all-fixed
+term set; and the enumeration itself is incomplete there, since the two
+seven-dimensional invariant flats of F_2^8 carry 3.4e10 quadratic forms and
+4^19 and 4^15 orbit patterns, all over the cap, so the script reports them
+as skipped rather than enumerating them. A general solve for the invariant
+quadratic forms on a flat, as a kernel over Z_4 of the coefficient map
+induced by the affine action on the flat, is what would remove the cap; it
+is perhaps an hour of work and would also reach m = 9 and m = 10 at
+qubit_H.
+
+### (b) Product closure of the board, and the newly exact values as blocks
+
+`ledger_closure.py` computes, for every copy orbit and every m up to 12, the
+best upper bound reachable by splitting m into parts whose cells the ledger
+already holds, and compares it with the bound filed there. Result: no split
+beats any filed bound. The board's upper bounds are closed under products,
+and no lower bound is weaker than one carried up from a smaller m.
+
+The suggestion to use the newly exact values as blocks is dead on
+arithmetic. chi(|N>^4) = 7 against 4^(4/3) = 6.35 means the four-copy cell
+is worse per copy than the three-copy one, so every split through it loses:
+7 x 3 = 21 at m=6 against the filed 16, and 7 x 4 = 28 at m=7, where the
+m=3 product through m=4 is the only route the board has and is worse than
+nothing useful.
+chi(|H>^6) = 6 gives 6 x 2 = 12 at m=7 against the filed 9 and 12 at m=8,
+which ties the filed 12 rather than beating it. The same holds for every
+other exact cell settled this week.
+
+What the closure does show is two cells inside the board's own range with no
+bound at all: qubit_T m=7, where the product of the m=3 and m=4 witnesses
+has nine terms, and qubit_T m=9, where the m=2, m=3, and m=4 witnesses give
+eighteen. Both were built exactly with `product_witness.py` and neither was
+filed, for the reason the 2026-09-22 session already recorded: the face
+state's odd-m coefficients live in the nested field
+Q(sqrt 2, sqrt 3, i, sqrt(3 + sqrt 3)), and the verifier's per-entry
+`sympy.simplify` stalls on them before the 60-digit fallback decides each
+entry. Reproduced here: `stabrank_verify.py` on the nine-term m=7 file did
+not finish in 600 s, matching the two 400 s runs of 2026-09-22. The files
+were removed again. The blocker at these two cells is the coefficient
+canonicalization that session left open, not the mathematics.
+
+### Bound files written today
+
+None. No construction reached a rank below the board at any cell.
+
+### Sharpest facts of the session
+
+1. No decomposition of |cat_7>, |H>^7, or |F>^7 with six or fewer terms has
+   a term set invariant under a cyclic shift of the seven copies, exactly,
+   over all 66 sigma-fixed seven-qubit stabilizer states. This closes the
+   record ranks 3, 6, and 6 at those cells for the symmetry route.
+2. |S>^5, |N>^5, |H3>^5, and |T3>^5 are not in the span of the 120
+   sigma-fixed five-qutrit stabilizer states, and |T5>^3 is not in the span
+   of the 180 sigma-fixed three-ququint ones, so at those cells no
+   decomposition of any rank has an all-fixed term set.
+3. At prime m the only remaining sigma-invariant shape below rank m + 1 is a
+   single orbit of m terms, and there the coefficients are forced equal, so
+   the target must be proportional to the sigma-symmetrization of one
+   stabilizer state. At S m=5 that is 50 linear conditions on a five-qutrit
+   stabilizer state.
+4. The board's upper bounds are closed under products at every m up to 12,
+   and the values made exact this week are all worse per copy than the cells
+   below them, so no block split through them beats anything.
+5. The symmetry ansatz excludes a decomposition that exists at cat m=7,
+   where the board holds a rank-6 witness and no rank-6 decomposition is
+   cyclically invariant. At cat m=6 the optimum is symmetric term by term.
+   The ansatz is therefore informative about the search space, not about the
+   cells.
+
+Compute: about 25 minutes of wall time as one process at nice 19, of which
+three runs of 75 s each are the m = 7 subset searches and two of 600 s are
+the abandoned verifications of the qubit_T product files.
