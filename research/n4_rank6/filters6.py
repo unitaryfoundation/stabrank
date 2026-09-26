@@ -272,8 +272,20 @@ class Filters:
                     lam = lams[0]
                     mu = (-(int(u[k]) + lam * int(v[k]))) % P1
                     dj = (int(d01[j]) + lam * int(K1[j])) % P1
-                    if mu == 0 or dj == 0:
-                        continue                                    # a vanishing fresh coefficient: no full decomposition
+                    if dj == 0:
+                        # the slice pins lambda at the root of the fresh
+                        # coefficient: the fresh term contributes nothing,
+                        # so every phase at k solves the slice when mu = 0
+                        # (and none when mu != 0). The reference lists all
+                        # of them (its join drops the zero coefficient
+                        # later), so the filter must too, else the raw
+                        # slice counts differ by 27 per such combination
+                        # (24 pod items of the 2026-09-25 run).
+                        if mu == 0:
+                            fresh_codes.update(3 * k + l for l in range(3))
+                        continue
+                    if mu == 0:
+                        continue                                    # d_j w^l = 0 has no solution with d_j != 0
                     ph = (mu * pow(dj, P1 - 2, P1)) % P1
                     if ph in self.cube1:
                         fresh_codes.add(3 * k + self.cube1[ph])

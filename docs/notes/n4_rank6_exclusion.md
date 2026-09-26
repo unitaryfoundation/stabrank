@@ -573,6 +573,78 @@ bound, so the draft keeps its suffix until the manifest exists. Then run
 `verify_challenge/cert_n_m4_rank6_attested.py` and update the board:
 chi(N^4) = 7.
 
+### 8.1 The undecided B6 items of the first pod run
+
+The full run of 2026-09-25 finished all 1,057 batches with 0 hits, and 24
+stage B6 runs (kappa 1) in 23 batches (101, 131, 191, 202, 231, 233, 250,
+278, 281, 293, 302, 304, 326, 380, 404, 423 with two, 437, 451, 453, 470,
+503, 551, 583) ended undecided with the run_b6 assertion `filter and
+reference disagree on the coordinate-slice counts`, for instance the cover
+(8, 41, 117, 118, 249, 334) with the filter's [2, 2] against the
+reference's [56, 56]. The runner recorded them as undecided, so the
+exclusion was incomplete on exactly those 24 items.
+
+Cause. On these bases every coordinate-slice solution pins the family
+parameter lambda at the root of the fresh term's coefficient, d_j(lambda)
+= 0: the six-set is dependent and the target's slice is a combination of
+the other five states alone. The fresh term then contributes nothing, so
+for a five-term combination solving the slice every one of the fresh
+term's 28 codes (27 phased translates and absent) is a solution, and the
+reference `solve_slice3` lists all 28 (its join drops the zero
+coefficient afterwards, which is why `zero_coefficient` equals the raw
+count on these items). The filter's whole-vector test skipped a
+vanishing fresh coefficient with `if mu == 0 or dj == 0: continue`,
+keeping only the absent code, so its list was short by 27 per such
+combination: 56 = 2 + 2 x 27, 58 = 4 + 2 x 27, 60 = 6 + 2 x 27, 280 =
+10 + 10 x 27, 454 = 22 + 16 x 27 on the 24 items. The skip was sound as
+an exclusion (a decomposition with a zero coefficient has rank 5), but it
+broke the contract of section 3.1 of the design note, that the filter's
+list is the reference's first-slice list, and the deterministic key
+`coord_raw` is that raw count. The filter was the wrong side; the
+reference and the assertion were right.
+
+Fix (`filters6.Filters.b6_slice`): when d_j(lambda) = 0 mod P1 and the
+residual coordinate mu is 0, the filter adds all three phases at that
+coordinate (and the absent code as before), each decided by
+`Family.restrict` as every other candidate; mu = 0 with d_j != 0 is still
+no solution. The assertion stays. `tests/test_n4_rank6_b6_filter.py`
+checks five of the 24 covers against the reference list at both slices
+(all 28 fresh codes present, run_b6 deciding with the reference's counts),
+a planted five-term target over a base minus its fresh term (the
+zero-coefficient shape itself, filter and reference agreeing), and planted
+six-term decompositions over three of the bases recovered through the
+fixed filter.
+
+Local check at the fix. All 24 items decide on the laptop through
+`stages.run_b6` on the compiled path (`filter+reference`, 2.2 to 2.5 s
+each, counts equal to the reference's, 0 hits; the survivors of the
+second slice are dropped at the join as zero-coefficient states, the
+remaining joined states end in the composite stage with no hit), two of
+them again with `STABRANK_NO_NATIVE=1` with the same counts and 0 hits.
+The laptop record of the unaffected batch 54 (B6 kappa 1, 362 items, 39
+`filter+reference` runs) rerun with `--force` reproduces its committed
+`deterministic_sha256`: the fix changes no decided record, only the
+formerly undecided ones.
+
+Pod rerun. On the pod at the commit carrying the fix, one process per
+batch at nice 19, then the final aggregate:
+
+```
+git fetch origin && git checkout n4-b6-filter-fix && git pull --ff-only
+setsid nohup sh -c 'for K in 101 131 191 202 231 233 250 278 281 293 302 304 326 380 404 423 437 451 453 470 503 551 583; do
+  nice -n 19 /root/.local/bin/uv run --extra challenge python research/n4_rank6/batch.py $K --force \
+    > research/n4_rank6/results/batch_$K.log 2>&1; done' < /dev/null > /root/logs/n4_rerun.log 2>&1 & disown
+grep -l "DECOMPOSITION FOUND\|undecided run" research/n4_rank6/results/batch_*.log
+nice -n 19 /root/.local/bin/uv run --extra challenge python research/n4_rank6/aggregate.py --recheck 2 --recheck-seed 20260925
+```
+
+The 23 records replace the undecided ones (each about 7 minutes without
+the guard), the aggregate's recheck re-runs two batches of the whole pool
+from scratch at the fixed seed and compares their deterministic hashes as
+before, and the manifest hashes every record file; the records of these
+23 batches carry the fix commit in `git_commit` while the other 1,034
+keep the run's.
+
 ## 9. What is proved, what is assumed, what is open
 
 Proved by argument or table here: the base-point reduction (every rank-6

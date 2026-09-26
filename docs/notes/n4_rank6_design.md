@@ -197,7 +197,12 @@ combination is completed with the fresh term's code (the class k and the
 phase from the residual coordinate, or absent, from the whole 9-vector
 mod P1) and decided by `Family.restrict`, the reference's own decision,
 so the filter's solution list is the reference's first-slice list, not a
-superset. The fresh term and the partition are chosen per base to
+superset. When the slice pins lambda at the root of the fresh
+coefficient, every one of the fresh term's 28 codes completes the
+combination and the filter lists them all, as the reference does (the
+first version kept only the absent code and disagreed with the reference
+on 24 pod items; exclusion note, section 8.1). The fresh term and the
+partition are chosen per base to
 minimize the structural slack (options whose support in the translate
 basis lies inside one part, which that part's group cannot see); a
 two-part split (4 + 5) leaves tens of thousands of structural survivors
