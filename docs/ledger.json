@@ -2633,6 +2633,38 @@
     "note": "The exclusion of every rank-5 decomposition of |T>^5 lives in the stored batch outputs under research/t5_rank5/results/ (the full 5-covers, 4-covers and 3-covers of |T>^3 up to symmetry, each matched at the base point 00 along qubits 1, 2 with the invisible terms on every flat missing 00 and every candidate re-decided mod 2013265921 and numerically): 0 hits, 0 refused, 0 undecided. The certificate re-enumerates the lists, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/t5_rank5/batch.py, which regenerates any batch (batch.py K).",
     "total": 160
    }
+  },
+  {
+   "slug": "N-m4-lower-7",
+   "orbit": "N",
+   "m": 4,
+   "direction": "lower",
+   "rank": 7,
+   "tier": "attested",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-26",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "two-qutrit base slice at (2, 2): every rank-6 decomposition of |N>^4 has four, five or six terms visible at that point (Fact B of PR #86), so its base is a full 4-, 5- or 6-multiset of |N>^2 and the invisible terms lie on the 16 flats missing (2, 2); every base is enumerated up to the unitary symmetry of |N>^2 and completed slice by slice under the two-qutrit slice structure lemma, modulo 65521 with exact re-decision",
+   "reference": "stabrank research/n4_rank6",
+   "compute": {
+    "cpu_hours": 121.5,
+    "wall_clock_hours": 9.7,
+    "runs": 1,
+    "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host, fifteen batches in parallel at nice 19 (gcc-10 kernels, Python 3.12, numpy 2.3.5), 2026-09-25 21:04 to 2026-09-26 05:40 UTC for the 1,057-batch loop; the 23 stage B6 batches whose 24 items the first aggregate left undecided (the fresh-term filter of PR #153) rerun with --force on the same pod 06:12 to 06:26 UTC; the aggregate's two seeded re-runs (batches 168 and 799, seed 20260925, 255 s and 283 s) on the same pod at 06:26 to 06:46 UTC; the --no-native replays of batches 53 and 764 (05:50 to 09:22 UTC, deterministic hashes equal to the stored ones) under research/n4_rank6/results/nonative/"
+   },
+   "budget_s": 3600,
+   "attested": {
+    "batches": "research/n4_rank6/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 121.5,
+    "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host, fifteen batches in parallel at nice 19 (gcc-10 kernels, Python 3.12, numpy 2.3.5), 2026-09-25 21:04 to 2026-09-26 05:40 UTC for the 1,057-batch loop; the 23 stage B6 batches whose 24 items the first aggregate left undecided (the fresh-term filter of PR #153) rerun with --force on the same pod 06:12 to 06:26 UTC; the aggregate's two seeded re-runs (batches 168 and 799, seed 20260925, 255 s and 283 s) on the same pod at 06:26 to 06:46 UTC; the --no-native replays of batches 53 and 764 (05:50 to 09:22 UTC, deterministic hashes equal to the stored ones) under research/n4_rank6/results/nonative/",
+    "note": "The exclusion of every rank-6 decomposition of |N>^4 lives in the stored batch outputs under research/n4_rank6/results/ (54 stage A6 batches over the 37,201,212 full 6-covers of |N>^2 with distinct independent base states, 807 stage B6 batches over the 259,655 G_2 orbit representatives of the dependent 6-sets, 166 stage C6 batches over the 321,553 representatives of the repeated 6-multisets, 27 stage beta' batches over the 54,488 representatives of the full 5-multisets with the invisible term on each of the 16 flats missing (2, 2), 3 stage gamma batches over the 505 representatives of the full 4-multisets with each of the 136 flat multisets), every base matched at x_0 = (2, 2) along qutrits 1, 2, every candidate re-decided mod 2013265921 and numerically, 0 hits, 0 refused, 0 undecided. The certificate checks the partition against the enumerator, re-runs the 6-cover kernel over every pivot pair, re-enumerates the orbit representatives, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/n4_rank6/batch.py, which regenerates any batch (batch.py K).",
+    "total": 1057
+   }
   }
  ]
 }

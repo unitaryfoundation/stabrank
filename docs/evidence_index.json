@@ -1,7 +1,7 @@
 {
  "generated_from": "bounds/",
- "head": "d379fa53f865aa9d6e74832e798a3f47ddcf5fb0",
- "generated": "2026-09-25",
+ "head": "01da020f7c8e8425e0515c183b8c03aa61b411f9",
+ "generated": "2026-09-26",
  "since": "2026-09-15",
  "exponents": [
   {
@@ -344,11 +344,11 @@
    "orbit": "N",
    "m": 4,
    "lower": {
-    "rank": 6,
+    "rank": 7,
     "tier": "attested",
-    "slug": "N-m4-lower-6",
-    "date": "2026-09-23",
-    "board_date": "2026-09-23",
+    "slug": "N-m4-lower-7",
+    "date": "2026-09-26",
+    "board_date": "2026-09-26",
     "moved_since": true
    },
    "upper": {
@@ -359,7 +359,7 @@
     "board_date": "2026-09-12",
     "moved_since": false
    },
-   "settled": false,
+   "settled": true,
    "moved_since": true
   },
   {
@@ -1368,6 +1368,23 @@
     "N-m4-lower-6"
    ],
    "board": [
+    "attested"
+   ]
+  },
+  {
+   "orbit": "N",
+   "m": 4,
+   "rank": 7,
+   "runs": 1,
+   "log_runs": 0,
+   "cpu_hours": 121.5,
+   "solutions": 1,
+   "cpu_hours_per_solution": 121.5,
+   "bounds": [
+    "N-m4-lower-7"
+   ],
+   "board": [
+    "lean",
     "attested"
    ]
   },
@@ -2420,6 +2437,15 @@
    "median_declared": 0.001,
    "cum_cpu_hours": 332.8096111111111,
    "cum_discoveries": 107
+  },
+  {
+   "date": "2026-09-26",
+   "seeded": false,
+   "cpu_hours": 121.5,
+   "discoveries": 1,
+   "median_declared": 121.5,
+   "cum_cpu_hours": 454.3096111111111,
+   "cum_discoveries": 108
   }
  ],
  "bounds": [
@@ -2995,6 +3021,48 @@
     "wall_clock_hours": 4.1,
     "runs": 1,
     "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host (load 20 to 30), fifteen batches in parallel at nice 19, 2026-09-23 14:25 to 18:08 UTC (three sample batches at 14:25, the 141 shared batches 15:31 to 17:34, the 27 single-cover stage C batches 17:34 to 18:08); the aggregate's two seeded re-runs (batches 121 and 169, 720 s and 583 s) on the same pod, 2026-09-23 18:50 to 19:12 UTC"
+   }
+  },
+  {
+   "slug": "N-m4-lower-7",
+   "file": "bounds/N-m4-lower-7.json",
+   "orbit": "N",
+   "m": 4,
+   "direction": "lower",
+   "rank": 7,
+   "tier": "attested",
+   "ok": true,
+   "date": "2026-09-26",
+   "author": "this repository",
+   "reference": "stabrank research/n4_rank6",
+   "method": "two-qutrit base slice at (2, 2): every rank-6 decomposition of |N>^4 has four, five or six terms visible at that point (Fact B of PR #86), so its base is a full 4-, 5- or 6-multiset of |N>^2 and the invisible terms lie on the 16 flats missing (2, 2); every base is enumerated up to the unitary symmetry of |N>^2 and completed slice by slice under the two-qutrit slice structure lemma, modulo 65521 with exact re-decision",
+   "pull_request": 154,
+   "merge_commit": "01da020f7c8e8425e0515c183b8c03aa61b411f9",
+   "merge_date": "2026-09-26",
+   "added_commit": "73931444d82d93dcc777f011b4391a5071a13a58",
+   "added_date": "2026-09-26",
+   "added_subject": "chi(N^4) >= 7: the rank-6 exclusion run, its batch manifest, and the attested bound",
+   "receipt": "certs/N-m4-lower-7.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_n_m4_rank6_attested.py",
+   "certificate_budget_s": 3600,
+   "certificate_attested": {
+    "batches": "research/n4_rank6/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 121.5,
+    "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host, fifteen batches in parallel at nice 19 (gcc-10 kernels, Python 3.12, numpy 2.3.5), 2026-09-25 21:04 to 2026-09-26 05:40 UTC for the 1,057-batch loop; the 23 stage B6 batches whose 24 items the first aggregate left undecided (the fresh-term filter of PR #153) rerun with --force on the same pod 06:12 to 06:26 UTC; the aggregate's two seeded re-runs (batches 168 and 799, seed 20260925, 255 s and 283 s) on the same pod at 06:26 to 06:46 UTC; the --no-native replays of batches 53 and 764 (05:50 to 09:22 UTC, deterministic hashes equal to the stored ones) under research/n4_rank6/results/nonative/",
+    "note": "The exclusion of every rank-6 decomposition of |N>^4 lives in the stored batch outputs under research/n4_rank6/results/ (54 stage A6 batches over the 37,201,212 full 6-covers of |N>^2 with distinct independent base states, 807 stage B6 batches over the 259,655 G_2 orbit representatives of the dependent 6-sets, 166 stage C6 batches over the 321,553 representatives of the repeated 6-multisets, 27 stage beta' batches over the 54,488 representatives of the full 5-multisets with the invisible term on each of the 16 flats missing (2, 2), 3 stage gamma batches over the 505 representatives of the full 4-multisets with each of the 136 flat multisets), every base matched at x_0 = (2, 2) along qutrits 1, 2, every candidate re-decided mod 2013265921 and numerically, 0 hits, 0 refused, 0 undecided. The certificate checks the partition against the enumerator, re-runs the 6-cover kernel over every pivot pair, re-enumerates the orbit representatives, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/n4_rank6/batch.py, which regenerates any batch (batch.py K).",
+    "total": 1057
+   },
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 121.5,
+    "wall_clock_hours": 9.7,
+    "runs": 1,
+    "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host, fifteen batches in parallel at nice 19 (gcc-10 kernels, Python 3.12, numpy 2.3.5), 2026-09-25 21:04 to 2026-09-26 05:40 UTC for the 1,057-batch loop; the 23 stage B6 batches whose 24 items the first aggregate left undecided (the fresh-term filter of PR #153) rerun with --force on the same pod 06:12 to 06:26 UTC; the aggregate's two seeded re-runs (batches 168 and 799, seed 20260925, 255 s and 283 s) on the same pod at 06:26 to 06:46 UTC; the --no-native replays of batches 53 and 764 (05:50 to 09:22 UTC, deterministic hashes equal to the stored ones) under research/n4_rank6/results/nonative/"
    }
   },
   {

@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "tier": "attested",
+  "detail": "certificate script asserted: CERTIFIED chi(N^4) >= 7; re-ran 2 of 1057 stored batches from scratch chosen from seed 20260925 and only checked the SHA-256 of the other 1055 against research/n4_rank6/batch_manifest.json; the full enumeration (121.5 CPU-h on RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host, fifteen batches in parallel at nice 19 (gcc-10 kernels, Python 3.12, numpy 2.3.5), 2026-09-25 21:04 to 2026-09-26 05:40 UTC for the 1,057-batch loop; the 23 stage B6 batches whose 24 items the first aggregate left undecided (the fresh-term filter of PR #153) rerun with --force on the same pod 06:12 to 06:26 UTC; the aggregate's two seeded re-runs (batches 168 and 799, seed 20260925, 255 s and 283 s) on the same pod at 06:26 to 06:46 UTC; the --no-native replays of batches 53 and 764 (05:50 to 09:22 UTC, deterministic hashes equal to the stored ones) under research/n4_rank6/results/nonative/) was not re-run",
+  "gamma": null,
+  "content_hash": "0c12fc0db995deb7"
+}
