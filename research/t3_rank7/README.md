@@ -11,6 +11,15 @@ certificate behind `bounds/T3-m3-lower-8.json` (attested tier). The result:
 1,213,458,815 candidate class sets, none containing V_3, none spurious or
 undecided, 80.1 CPU-hours.
 
+## Independent scan
+
+`independent/` holds a second exclusion of rank 7 run apart from this
+pipeline: the certificate's pivot order (5.52e13 inner steps), its own
+kernel and task partition, a case split by the projected geometry, a RunPod
+Xeon pod plus a laptop supplement. Its README has the runs, the checks, the
+defect its checks found in its own third-pivot masks and the repair. The two
+scans agree; the bound and its tier are unchanged.
+
 ## Files
 
 - `common.py`: shared setup. Dictionary, descent to V_m, reduction mod
