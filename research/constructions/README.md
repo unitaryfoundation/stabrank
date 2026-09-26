@@ -29,6 +29,8 @@ repository root with `uv run --extra challenge python research/constructions/<sc
 | `clifford_sectors.py` | eigensector decompositions of |M>^m under non-Pauli single-qudit Cliffords (2026-09-25): one generator per cyclic subgroup of the single-qudit Clifford group mod phase that is neither a Pauli nor a symmetry of |M>, deduped under the local stabilizer; the sectors (1/n) sum_j w_n^{-jk} |C^j M>^m are decided exactly in the m-qudit dictionary where it fits, else bounded below by single-qudit slices, `--anneal R` for upper bounds; `--control` reproduces chi(cat_6) = 3 through the Z sectors of |T>^6 and checks the sector sum against the target |
 | `code_states_p.py` | the magic code states of QPG's Theorem 4 at p = 2, 3, 5 (2026-09-25): for an [m, k]_p code L the restriction of |M>^m to L^perp compressed to m - k qudits, one code per monomial-equivalence class (multisets of points of PG(k-1, p) up to PGL_k(p)), exact rank in the (m-k)-qudit dictionary or slice lower bounds, `--anneal` at the rank that would beat the baseline; `--unbiased` lists the Pauli eigenbases in which each orbit state is unbiased (the hypothesis of the theorem), `--twocat M` the ranks of the two-translate states (|M>^M + |P M>^M)/sqrt 2 |
 | `t7_partial_merge.py` | the KvdWV partial decomposition of |T>^5 times a rank-3 block for |T>^7 (2026-09-25): the block varied over the stored rank-3 decompositions of |H>^3 independently per partial term, every nine-term set tested exactly for a pairwise merge, `--anneal` for a warm-started rank-8 anneal from a pruned nine-term set |
+| `cyclic_symmetric.py` | exact search for decompositions whose term set is invariant under one m-cycle of the copies (2026-09-26): at rank below m every term is fixed exactly, so the script enumerates every sigma-fixed stabilizer state (invariant flats are cosets of cyclic codes; invariant phases are enumerated orbit by orbit, over the quadratic coefficients, or by the coordinate symmetry on the whole-space flat) and runs an exhaustive minimal-subset search over them, the leaf test quotiented to a parallel-pair lookup; p = 2, 3, and 5; `--control` reruns the six positive controls |
+| `ledger_closure.py` | the product closure of `docs/ledger.json`: the best upper bound at each cell reachable by splitting m into parts the board already holds, flagged against the bound filed there and against the cells with no bound at all |
 
 ## What is validated
 
@@ -101,6 +103,18 @@ repository root with `uv run --extra challenge python research/constructions/<sc
   re-decided exactly; the search also checks that the fixed terms and the
   target stay independent mod q (a dependency there would be re-decided
   exactly as a lower-rank hit).
+- `cyclic_symmetric.py --control`: the six positive controls return exactly
+  the board's exact values and nothing below them. At cat m=6 it recovers a
+  rank-3 cyclically invariant decomposition (Qassim, Pashayan, and Gosset's
+  three terms are individually permutation invariant), at cat m=5 rank 3, at
+  qubit_H m=3 and qubit_T m=3 rank 3, and at N m=3 and H3 m=3 rank 4, the
+  four fully symmetric states `perm_symmetric.py` also returns. Run
+  separately as negative controls: qubit_H m=5 and qubit_T m=5 return
+  nothing at rank 5 or below, as chi = 6 there requires. Every state the
+  enumeration keeps is confirmed by `to_witness.term_from_vector`, and a
+  flat whose invariant phase functions exceed the cap is reported as skipped
+  rather than dropped silently.
+
 - Every hit any script reports is checked numerically against the target and
   written as amplitude vectors under `results/` (not committed) for
   `verify_challenge/to_witness.py`, which is the exact step.
