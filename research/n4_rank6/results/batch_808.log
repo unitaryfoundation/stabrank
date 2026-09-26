@@ -1,0 +1,3 @@
+batch 808 of 1057: stage B6, 29 items (kappa 2), 1 run(s) per item, compiled kernels, candidate cap 200000000, deadline 3600s
+batch 808: 29 items, 29 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 489s, wall 489s; deterministic sha256 47806a0b38942b0d
+batch 808 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_808.json

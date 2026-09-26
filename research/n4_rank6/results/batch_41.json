@@ -1,0 +1,117 @@
+{
+ "batch": {
+  "index": 41,
+  "stage": "A6",
+  "units": [
+   [
+    297,
+    31,
+    226
+   ],
+   [
+    297,
+    32,
+    225
+   ],
+   [
+    297,
+    33,
+    224
+   ],
+   [
+    297,
+    34,
+    223
+   ],
+   [
+    297,
+    35,
+    222
+   ],
+   [
+    297,
+    36,
+    221
+   ],
+   [
+    297,
+    37,
+    220
+   ],
+   [
+    297,
+    38,
+    219
+   ],
+   [
+    297,
+    39,
+    218
+   ]
+  ],
+  "n_units": 9
+ },
+ "orbit": "N",
+ "m": 4,
+ "rank": 6,
+ "n1": 2,
+ "x0": [
+  2,
+  2
+ ],
+ "N": 360,
+ "group_order": 72,
+ "runs_per_item": 1,
+ "partition_sha256": "597eca221ac6d6b33278033dafe5e63c8179d5dc675e8f32cd418c1adf636b23",
+ "census_sha256": "4b25c770bcb1cfe310796a1a8ab820f019ab305b3cd8753c500acc7d6e494bc4",
+ "reps_sha256": null,
+ "max_cand": 2000000,
+ "items": 663691,
+ "matched": 663691,
+ "refused": 0,
+ "coord_solution_hist": {
+  "0": 663280,
+  "2,2": 166,
+  "4,4": 42,
+  "1,1": 11,
+  "27,27": 8,
+  "6,6": 147,
+  "3,3": 9,
+  "34,34": 5,
+  "30,30": 8,
+  "35,35": 3,
+  "8,8": 6,
+  "88,88": 2,
+  "10,10": 4
+ },
+ "hits": [],
+ "hit_count": 0,
+ "decompositions": 0,
+ "undecided": [],
+ "deterministic_sha256": "9c046020b80eabbac2d718096ed3878f13e95fe8178a7f396ca11a2087b16170",
+ "native_runs": 663691,
+ "candidates": 4893785085,
+ "dense_raw": 0,
+ "b6_paths": {},
+ "filter_fallbacks": [],
+ "kernel_s": 11.926773309707642,
+ "match_s": 751.0235061645508,
+ "wall_s": 763.5792546272278,
+ "cpu_s": 762.14,
+ "max_seconds": 3600.0,
+ "deadline_hit": false,
+ "started": "2026-09-25T21:34:35+00:00",
+ "ended": "2026-09-25T21:47:19+00:00",
+ "hostname": "b429c21234f4",
+ "git_commit": "a844cec49ba580ec4134651ff7f8611adb8e3e43",
+ "native": true,
+ "matcher": "native",
+ "filter": null,
+ "cover6": "native",
+ "kernel_version": "Linux 6.8.0-51-generic #52~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Dec  9 15:00:52 UTC 2",
+ "machine": "x86_64",
+ "python": "3.12.14",
+ "numpy": "2.3.5",
+ "hit_numerics": [],
+ "sha256": "0108bfa24718f8e19babea8a5aedd4c82a631b8db09185239eafdaf602732fc5"
+}

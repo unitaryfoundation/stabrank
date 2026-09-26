@@ -1,0 +1,3 @@
+batch 135 of 1057: stage B6, 362 items (kappa 1), 1 run(s) per item, compiled kernels, candidate cap 2000000, deadline 3600s
+batch 135: 362 items, 362 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 367s, wall 368s; deterministic sha256 b7d2612d19e46f12
+batch 135 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_135.json

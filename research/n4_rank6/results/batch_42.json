@@ -1,0 +1,145 @@
+{
+ "batch": {
+  "index": 42,
+  "stage": "A6",
+  "units": [
+   [
+    297,
+    40,
+    217
+   ],
+   [
+    297,
+    41,
+    216
+   ],
+   [
+    297,
+    42,
+    215
+   ],
+   [
+    297,
+    43,
+    214
+   ],
+   [
+    297,
+    44,
+    213
+   ],
+   [
+    297,
+    45,
+    212
+   ],
+   [
+    297,
+    46,
+    211
+   ],
+   [
+    297,
+    47,
+    210
+   ],
+   [
+    297,
+    48,
+    209
+   ],
+   [
+    297,
+    51,
+    208
+   ],
+   [
+    297,
+    54,
+    207
+   ],
+   [
+    297,
+    57,
+    206
+   ],
+   [
+    297,
+    58,
+    205
+   ],
+   [
+    297,
+    60,
+    204
+   ],
+   [
+    297,
+    62,
+    203
+   ],
+   [
+    297,
+    90,
+    183
+   ]
+  ],
+  "n_units": 16
+ },
+ "orbit": "N",
+ "m": 4,
+ "rank": 6,
+ "n1": 2,
+ "x0": [
+  2,
+  2
+ ],
+ "N": 360,
+ "group_order": 72,
+ "runs_per_item": 1,
+ "partition_sha256": "597eca221ac6d6b33278033dafe5e63c8179d5dc675e8f32cd418c1adf636b23",
+ "census_sha256": "4b25c770bcb1cfe310796a1a8ab820f019ab305b3cd8753c500acc7d6e494bc4",
+ "reps_sha256": null,
+ "max_cand": 2000000,
+ "items": 679938,
+ "matched": 679938,
+ "refused": 0,
+ "coord_solution_hist": {
+  "0": 679834,
+  "2,2": 61,
+  "10,10": 4,
+  "8,8": 2,
+  "6,6": 24,
+  "4,4": 13
+ },
+ "hits": [],
+ "hit_count": 0,
+ "decompositions": 0,
+ "undecided": [],
+ "deterministic_sha256": "193eab7aa7b2a6b48c37652df118f9f7ad5d27bea57628e7167279fee7348765",
+ "native_runs": 679938,
+ "candidates": 5011379891,
+ "dense_raw": 0,
+ "b6_paths": {},
+ "filter_fallbacks": [],
+ "kernel_s": 12.75476360321045,
+ "match_s": 774.2454326152802,
+ "wall_s": 787.622987985611,
+ "cpu_s": 785.6899999999999,
+ "max_seconds": 3600.0,
+ "deadline_hit": false,
+ "started": "2026-09-25T21:35:45+00:00",
+ "ended": "2026-09-25T21:48:52+00:00",
+ "hostname": "b429c21234f4",
+ "git_commit": "a844cec49ba580ec4134651ff7f8611adb8e3e43",
+ "native": true,
+ "matcher": "native",
+ "filter": null,
+ "cover6": "native",
+ "kernel_version": "Linux 6.8.0-51-generic #52~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Dec  9 15:00:52 UTC 2",
+ "machine": "x86_64",
+ "python": "3.12.14",
+ "numpy": "2.3.5",
+ "hit_numerics": [],
+ "sha256": "efbc4361cf8724a2d0745c98d14c0435ee4f252ab5ece7363bd886fed2fb823d"
+}

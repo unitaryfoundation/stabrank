@@ -1,0 +1,3 @@
+batch 161 of 1057: stage B6, 362 items (kappa 1), 1 run(s) per item, compiled kernels, candidate cap 2000000, deadline 3600s
+batch 161: 362 items, 362 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 342s, wall 343s; deterministic sha256 cc6b46dc554c05e0
+batch 161 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_161.json

@@ -1,0 +1,3 @@
+batch 1025 of 1057: stage C6, 19 items ((3, 2, 1)), 1 run(s) per item, compiled kernels, candidate cap 2000000, deadline 3600s
+batch 1025: 19 items, 19 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 673s, wall 674s; deterministic sha256 c0c626fd3c3399c5
+batch 1025 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_1025.json

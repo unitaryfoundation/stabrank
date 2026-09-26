@@ -1,0 +1,4 @@
+Installed 5 packages in 20ms
+batch 191 of 1057: stage B6, 362 items (kappa 1), 1 run(s) per item, compiled kernels, candidate cap 2000000, deadline 7200s
+batch 191: 362 items, 362 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 429s, wall 430s; deterministic sha256 fe34dae83e6401cb
+batch 191 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_191.json

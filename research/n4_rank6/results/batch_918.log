@@ -1,0 +1,3 @@
+batch 918 of 1057: stage C6, 3141 items ((2, 1, 1, 1, 1)), 1 run(s) per item, compiled kernels, candidate cap 2000000, deadline 3600s
+batch 918: 3141 items, 3141 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 87s, wall 88s; deterministic sha256 ed49f4a75bdbb948
+batch 918 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_918.json

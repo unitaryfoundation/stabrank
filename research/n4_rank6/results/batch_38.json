@@ -1,0 +1,107 @@
+{
+ "batch": {
+  "index": 38,
+  "stage": "A6",
+  "units": [
+   [
+    288,
+    41,
+    221
+   ],
+   [
+    288,
+    43,
+    219
+   ],
+   [
+    288,
+    45,
+    217
+   ],
+   [
+    288,
+    46,
+    216
+   ],
+   [
+    288,
+    47,
+    215
+   ],
+   [
+    288,
+    48,
+    214
+   ],
+   [
+    288,
+    51,
+    213
+   ],
+   [
+    288,
+    90,
+    188
+   ]
+  ],
+  "n_units": 8
+ },
+ "orbit": "N",
+ "m": 4,
+ "rank": 6,
+ "n1": 2,
+ "x0": [
+  2,
+  2
+ ],
+ "N": 360,
+ "group_order": 72,
+ "runs_per_item": 1,
+ "partition_sha256": "597eca221ac6d6b33278033dafe5e63c8179d5dc675e8f32cd418c1adf636b23",
+ "census_sha256": "4b25c770bcb1cfe310796a1a8ab820f019ab305b3cd8753c500acc7d6e494bc4",
+ "reps_sha256": null,
+ "max_cand": 2000000,
+ "items": 615243,
+ "matched": 615243,
+ "refused": 0,
+ "coord_solution_hist": {
+  "0": 615154,
+  "4,4": 25,
+  "6,6": 26,
+  "2,2": 19,
+  "16,16": 3,
+  "24,24": 2,
+  "3,3": 10,
+  "8,8": 4
+ },
+ "hits": [],
+ "hit_count": 0,
+ "decompositions": 0,
+ "undecided": [],
+ "deterministic_sha256": "c8d51f5844e5dc4df07df8fc09fe045863a40702814c2e440419321a751ad980",
+ "native_runs": 615243,
+ "candidates": 4534124931,
+ "dense_raw": 0,
+ "b6_paths": {},
+ "filter_fallbacks": [],
+ "kernel_s": 10.7044517993927,
+ "match_s": 702.5342650413513,
+ "wall_s": 713.8823268413544,
+ "cpu_s": 712.77,
+ "max_seconds": 3600.0,
+ "deadline_hit": false,
+ "started": "2026-09-25T21:32:23+00:00",
+ "ended": "2026-09-25T21:44:16+00:00",
+ "hostname": "b429c21234f4",
+ "git_commit": "a844cec49ba580ec4134651ff7f8611adb8e3e43",
+ "native": true,
+ "matcher": "native",
+ "filter": null,
+ "cover6": "native",
+ "kernel_version": "Linux 6.8.0-51-generic #52~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Dec  9 15:00:52 UTC 2",
+ "machine": "x86_64",
+ "python": "3.12.14",
+ "numpy": "2.3.5",
+ "hit_numerics": [],
+ "sha256": "35101e14687122133d5b8983838b74daf0760f4dd44bd91758e184755f8b224e"
+}

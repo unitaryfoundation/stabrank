@@ -1,0 +1,3 @@
+batch 769 of 1057: stage B6, 29 items (kappa 2), 1 run(s) per item, compiled kernels, candidate cap 200000000, deadline 3600s
+batch 769: 29 items, 29 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 493s, wall 494s; deterministic sha256 bc4db608a5d8c144
+batch 769 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_769.json

@@ -1,0 +1,149 @@
+{
+ "batch": {
+  "index": 39,
+  "stage": "A6",
+  "units": [
+   [
+    288,
+    108,
+    174
+   ],
+   [
+    288,
+    111,
+    171
+   ],
+   [
+    288,
+    118,
+    165
+   ],
+   [
+    288,
+    119,
+    164
+   ],
+   [
+    288,
+    126,
+    157
+   ],
+   [
+    288,
+    135,
+    148
+   ],
+   [
+    288,
+    154,
+    134
+   ],
+   [
+    288,
+    216,
+    95
+   ],
+   [
+    288,
+    225,
+    88
+   ],
+   [
+    288,
+    243,
+    77
+   ],
+   [
+    288,
+    315,
+    30
+   ],
+   [
+    297,
+    0,
+    252
+   ],
+   [
+    297,
+    2,
+    250
+   ],
+   [
+    297,
+    3,
+    249
+   ],
+   [
+    297,
+    5,
+    247
+   ],
+   [
+    297,
+    6,
+    246
+   ]
+  ],
+  "n_units": 16
+ },
+ "orbit": "N",
+ "m": 4,
+ "rank": 6,
+ "n1": 2,
+ "x0": [
+  2,
+  2
+ ],
+ "N": 360,
+ "group_order": 72,
+ "runs_per_item": 1,
+ "partition_sha256": "597eca221ac6d6b33278033dafe5e63c8179d5dc675e8f32cd418c1adf636b23",
+ "census_sha256": "4b25c770bcb1cfe310796a1a8ab820f019ab305b3cd8753c500acc7d6e494bc4",
+ "reps_sha256": null,
+ "max_cand": 2000000,
+ "items": 593277,
+ "matched": 593277,
+ "refused": 0,
+ "coord_solution_hist": {
+  "0": 592954,
+  "1,1": 45,
+  "6,6": 93,
+  "4,4": 50,
+  "2,2": 57,
+  "8,8": 23,
+  "3,3": 48,
+  "16,16": 3,
+  "12,12": 2,
+  "24,24": 2
+ },
+ "hits": [],
+ "hit_count": 0,
+ "decompositions": 0,
+ "undecided": [],
+ "deterministic_sha256": "8a8cd530e838234c9d1d1d4cff027d624dbe28d2ed1e35862aadcb9952b9eaa4",
+ "native_runs": 593277,
+ "candidates": 4370753408,
+ "dense_raw": 0,
+ "b6_paths": {},
+ "filter_fallbacks": [],
+ "kernel_s": 10.344670295715332,
+ "match_s": 672.3307876586914,
+ "wall_s": 683.3660426139832,
+ "cpu_s": 682.01,
+ "max_seconds": 3600.0,
+ "deadline_hit": false,
+ "started": "2026-09-25T21:33:09+00:00",
+ "ended": "2026-09-25T21:44:33+00:00",
+ "hostname": "b429c21234f4",
+ "git_commit": "a844cec49ba580ec4134651ff7f8611adb8e3e43",
+ "native": true,
+ "matcher": "native",
+ "filter": null,
+ "cover6": "native",
+ "kernel_version": "Linux 6.8.0-51-generic #52~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Dec  9 15:00:52 UTC 2",
+ "machine": "x86_64",
+ "python": "3.12.14",
+ "numpy": "2.3.5",
+ "hit_numerics": [],
+ "sha256": "53fbd8ded3fb7f76ca7ab7d5ce34825df60d0a17e2812a138707a45105f30362"
+}

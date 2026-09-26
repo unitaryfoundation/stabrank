@@ -1,0 +1,135 @@
+{
+ "batch": {
+  "index": 45,
+  "stage": "A6",
+  "units": [
+   [
+    306,
+    45,
+    202
+   ],
+   [
+    306,
+    46,
+    201
+   ],
+   [
+    306,
+    47,
+    200
+   ],
+   [
+    306,
+    54,
+    197
+   ],
+   [
+    306,
+    58,
+    195
+   ],
+   [
+    306,
+    62,
+    193
+   ],
+   [
+    306,
+    63,
+    192
+   ],
+   [
+    306,
+    66,
+    189
+   ]
+  ],
+  "n_units": 8
+ },
+ "orbit": "N",
+ "m": 4,
+ "rank": 6,
+ "n1": 2,
+ "x0": [
+  2,
+  2
+ ],
+ "N": 360,
+ "group_order": 72,
+ "runs_per_item": 1,
+ "partition_sha256": "597eca221ac6d6b33278033dafe5e63c8179d5dc675e8f32cd418c1adf636b23",
+ "census_sha256": "4b25c770bcb1cfe310796a1a8ab820f019ab305b3cd8753c500acc7d6e494bc4",
+ "reps_sha256": null,
+ "max_cand": 2000000,
+ "items": 692474,
+ "matched": 692474,
+ "refused": 0,
+ "coord_solution_hist": {
+  "0": 691421,
+  "2,2": 204,
+  "12,12": 71,
+  "1,1": 16,
+  "8,8": 73,
+  "6,6": 373,
+  "86,86": 4,
+  "4,4": 114,
+  "80,80": 9,
+  "16,16": 10,
+  "72,72": 5,
+  "46,46": 8,
+  "84,84": 12,
+  "76,76": 20,
+  "102,102": 5,
+  "11,11": 2,
+  "104,104": 8,
+  "114,114": 4,
+  "48,48": 4,
+  "64,64": 4,
+  "108,108": 8,
+  "20,20": 16,
+  "100,100": 4,
+  "3,3": 8,
+  "10,10": 40,
+  "9,9": 3,
+  "5,5": 4,
+  "54,54": 6,
+  "82,82": 2,
+  "7,7": 2,
+  "144,144": 3,
+  "160,160": 4,
+  "26,26": 2,
+  "56,56": 3,
+  "112,112": 1,
+  "92,92": 1
+ },
+ "hits": [],
+ "hit_count": 0,
+ "decompositions": 0,
+ "undecided": [],
+ "deterministic_sha256": "24114e95797ff4980cfe72d4c72f86477f60fe02928c8e35d1835cbb6f2eeee0",
+ "native_runs": 692474,
+ "candidates": 5114038610,
+ "dense_raw": 0,
+ "b6_paths": {},
+ "filter_fallbacks": [],
+ "kernel_s": 10.477291345596313,
+ "match_s": 801.9778165817261,
+ "wall_s": 813.1117877960205,
+ "cpu_s": 810.9,
+ "max_seconds": 3600.0,
+ "deadline_hit": false,
+ "started": "2026-09-25T21:40:32+00:00",
+ "ended": "2026-09-25T21:54:05+00:00",
+ "hostname": "b429c21234f4",
+ "git_commit": "a844cec49ba580ec4134651ff7f8611adb8e3e43",
+ "native": true,
+ "matcher": "native",
+ "filter": null,
+ "cover6": "native",
+ "kernel_version": "Linux 6.8.0-51-generic #52~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Dec  9 15:00:52 UTC 2",
+ "machine": "x86_64",
+ "python": "3.12.14",
+ "numpy": "2.3.5",
+ "hit_numerics": [],
+ "sha256": "457f1cf6bd11fd50210ba1ac3dcf647880ed48abd1a074ece552ab4078fc398e"
+}

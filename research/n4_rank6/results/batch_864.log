@@ -1,0 +1,3 @@
+batch 864 of 1057: stage C6, 3142 items ((2, 1, 1, 1, 1)), 1 run(s) per item, compiled kernels, candidate cap 2000000, deadline 3600s
+batch 864: 3142 items, 3142 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 83s, wall 85s; deterministic sha256 281ca6e116145ca1
+batch 864 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_864.json

@@ -1,0 +1,3 @@
+batch 190 of 1057: stage B6, 362 items (kappa 1), 1 run(s) per item, compiled kernels, candidate cap 2000000, deadline 3600s
+batch 190: 362 items, 362 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 362s, wall 363s; deterministic sha256 df000d20a9c28a41
+batch 190 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_190.json

@@ -1,0 +1,140 @@
+{
+ "batch": {
+  "index": 24,
+  "stage": "A6",
+  "units": [
+   [
+    281,
+    40,
+    314
+   ],
+   [
+    281,
+    41,
+    313
+   ],
+   [
+    281,
+    42,
+    312
+   ],
+   [
+    281,
+    43,
+    311
+   ],
+   [
+    281,
+    44,
+    310
+   ],
+   [
+    281,
+    45,
+    309
+   ],
+   [
+    281,
+    46,
+    308
+   ],
+   [
+    281,
+    47,
+    307
+   ],
+   [
+    281,
+    48,
+    306
+   ],
+   [
+    281,
+    49,
+    305
+   ],
+   [
+    281,
+    50,
+    304
+   ],
+   [
+    281,
+    51,
+    303
+   ],
+   [
+    281,
+    52,
+    302
+   ],
+   [
+    281,
+    53,
+    301
+   ],
+   [
+    281,
+    54,
+    300
+   ]
+  ],
+  "n_units": 15
+ },
+ "orbit": "N",
+ "m": 4,
+ "rank": 6,
+ "n1": 2,
+ "x0": [
+  2,
+  2
+ ],
+ "N": 360,
+ "group_order": 72,
+ "runs_per_item": 1,
+ "partition_sha256": "597eca221ac6d6b33278033dafe5e63c8179d5dc675e8f32cd418c1adf636b23",
+ "census_sha256": "4b25c770bcb1cfe310796a1a8ab820f019ab305b3cd8753c500acc7d6e494bc4",
+ "reps_sha256": null,
+ "max_cand": 2000000,
+ "items": 671799,
+ "matched": 671799,
+ "refused": 0,
+ "coord_solution_hist": {
+  "0": 671787,
+  "5,5": 2,
+  "1,1": 1,
+  "6,6": 3,
+  "2,2": 5,
+  "8,8": 1
+ },
+ "hits": [],
+ "hit_count": 0,
+ "decompositions": 0,
+ "undecided": [],
+ "deterministic_sha256": "f5fa98dabaf4e497a658907d805837d80af4f29567d659f2433136e7830c22c1",
+ "native_runs": 671799,
+ "candidates": 4984601288,
+ "dense_raw": 0,
+ "b6_paths": {},
+ "filter_fallbacks": [],
+ "kernel_s": 32.8836133480072,
+ "match_s": 767.3507783412933,
+ "wall_s": 800.8993980884552,
+ "cpu_s": 800.5,
+ "max_seconds": 3600.0,
+ "deadline_hit": false,
+ "started": "2026-09-25T21:19:01+00:00",
+ "ended": "2026-09-25T21:32:22+00:00",
+ "hostname": "b429c21234f4",
+ "git_commit": "a844cec49ba580ec4134651ff7f8611adb8e3e43",
+ "native": true,
+ "matcher": "native",
+ "filter": null,
+ "cover6": "native",
+ "kernel_version": "Linux 6.8.0-51-generic #52~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Dec  9 15:00:52 UTC 2",
+ "machine": "x86_64",
+ "python": "3.12.14",
+ "numpy": "2.3.5",
+ "hit_numerics": [],
+ "sha256": "4ce13f72402b4ca80018c95a4bbe6706ee00d9a717d9d7024950ef5a357c0026"
+}

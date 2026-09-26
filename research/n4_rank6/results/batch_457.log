@@ -1,0 +1,3 @@
+batch 457 of 1057: stage B6, 361 items (kappa 1), 1 run(s) per item, compiled kernels, candidate cap 2000000, deadline 3600s
+batch 457: 361 items, 361 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 522s, wall 523s; deterministic sha256 f75363c63d896857
+batch 457 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_457.json

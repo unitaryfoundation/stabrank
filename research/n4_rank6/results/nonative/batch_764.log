@@ -1,0 +1,3 @@
+batch 764 of 1057: stage B6, 361 items (kappa 1), 1 run(s) per item, Python references, candidate cap 2000000
+batch 764: 361 items, 361 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 12719s, wall 12720s; deterministic sha256 3355d307f18b64e4
+batch 764 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/nonative/batch_764.json

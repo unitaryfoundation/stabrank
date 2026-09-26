@@ -1,0 +1,3 @@
+batch 894 of 1057: stage C6, 3141 items ((2, 1, 1, 1, 1)), 1 run(s) per item, compiled kernels, candidate cap 2000000, deadline 3600s
+batch 894: 3141 items, 3141 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 95s, wall 96s; deterministic sha256 d0f6a29e8f11c60b
+batch 894 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_894.json

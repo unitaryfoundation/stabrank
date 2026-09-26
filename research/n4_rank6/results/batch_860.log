@@ -1,0 +1,3 @@
+batch 860 of 1057: stage B6, 1 items (kappa 3), 1 run(s) per item, compiled kernels, candidate cap 200000000, deadline 3600s
+batch 860: 1 items, 1 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 602s, wall 603s; deterministic sha256 13d7f92d715369bf
+batch 860 complete: no hit is a decomposition of |N>^4; written research/n4_rank6/results/batch_860.json
