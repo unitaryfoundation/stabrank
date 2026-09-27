@@ -651,3 +651,79 @@ No explicit finite-copy decomposition of any board state, no exact or
 approximate rank value, and no non-asymptotic lower-bound technique
 appeared. Version pages unchanged: 2106.07740 at v2 (2021-12-15),
 2202.09202 at v1 (2022-02-18). No BibTeX entry was added.
+
+## 11. Update of 2026-09-27
+
+Nothing moves a cell, and the window is empty at the source for the second
+day running: arXiv has announced no listing after Friday 2026-09-25, so
+this sweep re-screened the same announcement as section 10.
+
+What was checked:
+
+- arXiv API (HTTPS), the thirteen phrase queries of sections 5 to 10
+  sorted by last update, 40 hits each, with the quotes percent-encoded as
+  %22 in the raw URL. Passing `%22` through a form encoder that escapes
+  the percent sign is the other half of the pitfall section 10 records:
+  the request then returns HTTP 200 but drops the phrase, and query 1 and
+  query 2 both come back with 321 loose-token hits instead of 48 and 4.
+  Encoded correctly, the per-query hits are 40, 4, 15, 16, 16, 29, 8, 23,
+  20, 40, 1, 40, and 4, the same as yesterday: 256 hits, 196 distinct. The
+  newest `updated` field anywhere in the 196 is 2026-09-17, and nothing
+  was updated on or after 2026-09-20.
+- The API submission index. A `cat:quant-ph` query over
+  `submittedDate:[202609250000 TO 202609280000]` returns zero entries, and
+  the newest quant-ph submission the index holds is still 2609.30268
+  (2026-09-24T17:59:57Z), as in section 10.
+- The `quant-ph/new` listing, header still "Showing new listings for
+  Friday, 25 September 2026", 73 new entries, 11 cross-lists, 53
+  replacements, 137 parsed, and `quant-ph/pastweek?show=500`, still 84,
+  99, 89, 142, and 62 entries for Friday back to Monday, 476 in all. Every
+  title read, abstracts read for everything matching the keyword screen of
+  section 9 together with Wigner, phase space, and code state: 41 distinct
+  hits across the two listings, all 41 already in the note.
+- Semantic Scholar citation lists of arXiv:1601.07601 (430 citing papers,
+  newest 2609.19116, 2026-09-16, already in section 5), 2106.07740 (60),
+  2012.11739 (9), 2003.01130 (5), 2110.07781 (14), 2107.10551 (17),
+  2106.03214 (17), and 2202.09202 (53), sorted by date, no rate limiting:
+  every count is unchanged from section 10, the newest citing paper of any
+  of the eight is still 2609.25947 (2026-09-22, section 7), and nothing is
+  dated 2026-09-23 or later.
+- OpenAlex by DOI: Bravyi-Gosset, 354 citing works, newest 2026-08-25;
+  Qassim, Pashayan, and Gosset, 49, newest the Jardine Zenodo deposits of
+  2026-08-05; Bravyi, Browne, Calpin, Campbell, Gosset, and Howard through
+  the Quantum DOI 10.22331/q-2019-09-02-181, 303, newest 2026-09-17. All
+  three agree with section 10, including its correction of the duplicate
+  record.
+- Zenodo, searched for "stabilizer rank", "Magic Cat States", and
+  "magic-cat-state": three records, newest 2026-08-30, all three the
+  Jardine deposits of section 7. No new deposit, and the source policy
+  there stands.
+- Five web searches: the phrases of section 9 restricted to 2026, cat and
+  code state decompositions over finite copies, qutrit S and N lower
+  bounds, and machine search (AlphaEvolve, FunSearch, reinforcement
+  learning, LLM-guided) over stabilizer decompositions. The machine-search
+  query returns only general evolutionary-search work (Zarankiewicz
+  numbers, learning-to-rank pipelines, tensor-network contraction orders),
+  nothing over stabilizer decompositions, so section 4's claim holds.
+
+Two preprints the web searches surfaced are new to the note. Both are
+older than the window and neither is rank-relevant:
+
+| source | arXiv | what it contributes | on the board | usable here |
+|---|---|---|---|---|
+| Cudby, Strelchuk 2023 | 2307.12654 (v3 2025-09-08) | matchgate analogues of stabilizer rank, fidelity, and extent; an explicit algebraic characterization of fermionic Gaussian states; Gaussian rank 4 for two copies of the canonical fermionic magic state under symmetry-restricted decompositions, and numerics suggesting no low-rank decomposition at two or three copies | no | Gaussian rank is a matchgate quantity, not a stabilizer rank, and the states are fermionic; the fermionic counterpart of 2604.00766 (coherent-state rank) and, like it, moves nothing |
+| Zurel, Jana, de Silva 2026 | 2603.18560 | quantum quadratic residue codes unify the known distillation codes (5-qubit, Steane, 11-qutrit and 23-qubit Golay) and give new ones distilling qubit T states and qutrit Strange states with the highest thresholds currently known | no | distillation thresholds, no rank content; the same standing as Prakash 2020 in section 1, names and motivation for the S orbit only |
+
+Not rank-relevant after reading the abstract, so the next sweep can skip
+them: 2609.04119 (non-local magic in closed form), 2503.20873 (stabilizer
+entanglement in magic injection), 2507.22883 (operational reading of the
+stabilizer entropy), 2504.07230 (mutual magic with matrix product states),
+2210.14919 (stabilizer subsystem decompositions for GKP codes). Title
+only, off topic, returned by the machine-search query: 2609.22196
+(LLM-guided evolution of learning-to-rank pipelines), 2606.01975 (LLM
+search over tensor-network contraction orders).
+
+No explicit finite-copy decomposition of any board state, no exact or
+approximate stabilizer-rank value, and no non-asymptotic lower-bound
+technique appeared. Version pages unchanged: 2106.07740 at v2
+(2021-12-15), 2202.09202 at v1 (2022-02-18). No BibTeX entry was added.
