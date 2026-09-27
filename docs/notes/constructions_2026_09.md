@@ -1735,3 +1735,278 @@ None. No construction reached a rank below the board at any cell.
 Compute: about 25 minutes of wall time as one process at nice 19, of which
 three runs of 75 s each are the m = 7 subset searches and two of 600 s are
 the abandoned verifications of the qubit_T product files.
+
+## 2026-09-27: the symmetry of the board's own witnesses
+
+Scripts: `research/constructions/witness_symmetry.py`,
+`research/constructions/single_orbit.py`,
+`research/constructions/involution_cost.py`; logs under
+`research/constructions/results/` (gitignored). One process at a time at
+nice 19. The literature update of the same day is section 11 of
+`literature_sweep_2026_09.md` (nothing new; two older preprints filed, one
+on matchgate Gaussian rank and one on quadratic-residue distillation
+codes). No bound file was written.
+
+The record-capable cell table of the 2026-09-26 section was re-derived from
+`docs/ledger.json` and is unchanged, so it is not repeated here.
+
+Yesterday's route died on a sharp negative: the board's own rank-6 witness
+for |cat_7> is not invariant under the full cyclic shift, so the ansatz
+excluded a decomposition that exists. Today measures the symmetry the
+witnesses do have, instead of assuming one.
+
+### (a) The set-stabilizer of every witness the board holds
+
+The group a decomposition of |M>^m can be asked to respect is the symmetry
+group of the target,
+
+    G = U^m semidirect S_m,
+
+with U the single-qudit Clifford stabilizer of |M> and S_m the copy
+permutations. The orders of U are 2 for qubit_H, 3 for qubit_T and T3, 4
+for H3, 5 for T5, 6 for N, and 24 for S. For the cat family the target is
+not a tensor power, so U is taken diagonally, as the single-qubit Cliffords
+u with u^(x m)|cat_m> proportional to |cat_m>, of which there are 2. The
+antiunitary symmetries are left out, so every order below is a unitary one.
+
+For a term set T the script computes three things exactly: the pure
+copy-permutation set-stabilizer {pi : P_pi T = T}; the local kernel
+K = {u in U^m : (x u_j) T = T}; and the image in S_m of the full
+set-stabilizer H = {(u, pi) : (x u_j) P_pi T = T}, that is, the
+permutations that fix the term set once a local Clifford twist is allowed.
+The three are related by |H| = |K| x |image|, which is asserted on every
+run. The search is a meet in the middle on one term: every element of H
+carries s_1 to some s_j, so the projective digests of (x u) s_j over
+u in U^m and j <= R are tabulated once and each pi costs one lookup, with
+every hit verified on the whole term set afterwards. Where m! or |U|^m
+exceeds its cap the row is reported as not computed or as restricted to the
+diagonal local subgroup, never as a wrong subgroup.
+
+Sources: the 43 witnesses with terms in `bounds/*-upper-*.json` at m >= 2,
+the 173 stored minimal decompositions under `data/`, which are complete
+lists up to symmetry at their cells, and the Lean rank-7 witness for |N>^4
+in `research/qutrit_m4_rank5/N_m4_rank7_witness.json`, whose bound file
+carries no witness block. That is 217 term sets. Three of them, the
+qubit_H witnesses at m = 9 and m = 10 and the qubit_T witness at m = 10, are
+past the permutation cap and reported as not computed; all three sit at open
+cells. Of the 214 decided, 192 sit at a cell the ledger knows exactly and
+are therefore minimal. Writing R for the number of terms, the table lists
+one row per exact cell.
+
+The board's own minimal witnesses, one per exact cell:
+
+| witness | m | R | \|K\| | pure stabilizer in S_m | twisted image in S_m |
+|---|---|---|---|---|---|
+| qubit_H-m2-upper-2 | 2 | 2 | 4 | S_2 | S_2 |
+| qubit_T-m2-upper-2 | 2 | 2 | 3 | S_2 | S_2 |
+| S-m2-upper-2 | 2 | 2 | 48 | S_2 | S_2 |
+| T5-m2-upper-5 | 2 | 5 | 25 | S_2 | S_2 |
+| cat-m3-upper-2 | 3 | 2 | 2 | S_3 | S_3 |
+| qubit_H-m3-upper-3 | 3 | 3 | 1 | S_3 | S_3 |
+| qubit_T-m3-upper-3 | 3 | 3 | 1 | order 2, one transposition | S_3 |
+| T3-m3-upper-8 | 3 | 8 | 1 | order 2, one transposition | order 2, one transposition |
+| cat-m4-upper-2 | 4 | 2 | 2 | S_4 | S_4 |
+| qubit_H-m4-upper-4 | 4 | 4 | 1 | S_4 | S_4 |
+| qubit_T-m4-upper-3 | 4 | 3 | 27 | order 4, copy orbits 2+2 | order 8, transitive |
+| S-m4-upper-4 | 4 | 4 | 2304 | order 8, transitive | order 8, transitive |
+| N-m4-rank7 (research) | 4 | 7 | 16 | trivial | order 2, one transposition |
+| cat-m5-upper-3 | 5 | 3 | 2 | S_5 | S_5 |
+| qubit_H-m5-upper-6 | 5 | 6 | 1 | order 4, copy orbits 2+2+1 | order 12, copy orbits 3+2 |
+| qubit_T-m5-upper-6 | 5 | 6 | 27 | order 4, copy orbits 2+2+1 | order 8, copy orbits 4+1 |
+| cat-m6-upper-3 | 6 | 3 | 4 | S_6 | S_6 |
+| qubit_H-m6-upper-6 | 6 | 6 | 4 | order 120, copy orbits 5+1 | order 120, copy orbits 5+1 |
+| qubit_T-m6-upper-6 | 6 | 6 | 81 | order 8, copy orbits 2+2+2 | order 16, copy orbits 4+2 |
+
+Across all 192 minimal term sets, the complete stored lists included:
+
+- every one has a nontrivial twisted image in S_m, and every one of those
+  images contains an involution;
+- 29 of the 192 have a trivial pure copy-permutation stabilizer, so the
+  untwisted ansatz sees no symmetry at all there;
+- at least 61 of the 192 have a twisted image strictly larger than the pure
+  one. That count is a lower bound because the |S>^4 rows below were decided
+  with the local group cut to its diagonal, while the pure column is exact
+  everywhere.
+
+The 69 stored rank-4 decompositions of |S>^4 are the sharpest case, because
+they are a complete list up to symmetry rather than a hand-built witness.
+With the local group cut to its diagonal, 12 of the 69 look symmetry-free.
+With the full U^4 of order 331776 all 12 have a twisted image of order 4
+containing two transpositions and a double transposition, and their local
+kernels are of order 288 or 768. The other 57 are already nontrivial under
+the diagonal subgroup alone, which is contained in the full group, so no
+minimal decomposition on the board has a trivial twisted image.
+
+At the open cells the picture is different: of the 22 non-minimal witnesses,
+`bounds/T5-m2-upper-8.json` and `bounds/T3-m5-upper-18.json` have a trivial
+twisted image, and both are upper bounds nobody expects to be tight.
+
+Verdict. Minimal witnesses do carry a consistent partial symmetry, and the
+smallest one common to all of them is an involution of the copies, usually
+only after a local Clifford twist. The twist is not decoration: at |N>^4 the
+board's rank-7 witness has no copy-permutation symmetry whatever, and
+acquires a transposition only when a local Clifford is allowed on each copy.
+What this does not show is that a minimal decomposition must be symmetric.
+It is a measurement of 214 term sets, not a theorem. Two of them, both at
+open cells, have no symmetry at all, so a symmetry-free term set is a real
+object; the claim is only that none of the minimal ones on the board is one.
+
+### (b) The involution class as a search restriction
+
+The class the measurement points at is: the term set is invariant under one
+involution tau of the copies, up to a local Clifford twist. Under it a
+rank-R term set splits into f terms fixed by tau and c two-element orbits,
+with f + 2c = R. Each two-element orbit is determined by one free state of
+the full dictionary and each fixed term by one state of the fixed set, so
+the search depth falls from R to f + c and the dictionary is replaced by
+the tau-fixed set only on the f fixed terms.
+
+What the restriction costs is the size of that fixed set, and it is far
+larger than the sigma-fixed set of the m-cycle. `involution_cost.py` counts
+exactly the tau-fixed stabilizer states supported on all of F_p^m: writing
+c1 for the number of orbits of tau on the m coordinates and c2 for the
+number on the unordered pairs, they number p^(2 c1 + c2) at odd p and
+4^c1 2^c2 at p = 2, since a state on the full flat is a tau-invariant phase
+function and those are counted coefficient by coefficient. States on smaller
+flats and other cosets only add to this, so the counts below are lower
+bounds. The formula was checked against brute force over the whole
+dictionary at p = 3, n = 2 (27 of 360), p = 2, n = 3 (64 of 1080), and
+p = 2, n = 4 (1024 of 36720).
+
+| cell | rank | involution | tau-fixed states at least | leaves of the all-fixed search |
+|---|---|---|---|---|
+| H3 m=4 | 6 | one transposition | 59049 | 5.1e17 |
+| H3 m=4 | 6 | two transpositions | 6561 | 7.7e13 |
+| T3 m=4 | 8 | one transposition | 59049 | 5.9e25 |
+| T3 m=4 | 8 | two transpositions | 6561 | 1.1e20 |
+| S m=5 | 5 | one transposition | 14348907 | 4.9e20 |
+| S m=5 | 5 | two transpositions | 531441 | 2.5e16 |
+| qubit_H m=7 | 6 | one transposition | 268435456 | 2.2e32 |
+| qubit_H m=7 | 6 | two transpositions | 8388608 | 2.1e26 |
+| qubit_H m=7 | 6 | three transpositions | 1048576 | 5.0e22 |
+
+The leaf count is C(N, R-2), the same quantity `cyclic_symmetric.py` scans,
+so the comparison is direct: the m-cycle at p = 2, m = 7 leaves 66 fixed
+states and C(66, 4) = 720720 leaves, which ran in 75 s. The cheapest
+involution cell here, H3 m=4 under a double transposition, is 7.7e13
+leaves, eight orders of magnitude past that, and the shapes with c >= 1 are
+worse still because each two-element orbit costs a free state of the full
+dictionary rather than of the fixed set.
+
+Verdict. The restriction is exact and the class is nonempty, but it is not
+small enough to enumerate at any record-capable cell, on this machine or on
+the pod. The line stops here. It rules out nothing: no rank is excluded by
+anything in this subsection, and in particular the H3 m=4 rank-6, T3 m=4
+rank-8, S m=5 rank-5, and qubit_H m=7 rank-6 cells are exactly where they
+were yesterday.
+
+### (c) The single-orbit shape, settled at the constant points
+
+The shape the 2026-09-26 section left open at S m=5 is the one where the
+five terms form a single orbit of the 5-cycle sigma. There the coefficients
+are forced equal, so |M>^m = m d Pi s for one stabilizer state s and one
+scalar d, with Pi = (1/m) sum_j sigma^j the orbit average. It is settled
+without a search.
+
+The fixed points of sigma on F_p^m are the p constant vectors c 1, and they
+are exactly the diagonal line L = {c 1 : c in F_p}, a one-dimensional
+subspace. At a fixed point the orbit average is the value itself, so
+s(c 1) = <c 1|M>^m / (m d) for every c in F_p: the amplitudes of s on L are
+prescribed by the target. Two facts about a stabilizer state now decide the
+shape. Its support is an affine flat, so it meets L in none, one, or all p
+of its points; and its nonzero amplitudes all have one modulus. For a
+tensor power the constant point c 1 carries the amplitude alpha_c^m, and a
+magic state has at least two nonzero single-copy amplitudes, so the target
+is nonzero at two points of L, which forces all of L into the support. A
+constant point where the target vanishes then contradicts the support, and
+if none vanishes the equal-modulus fact forces
+
+    |alpha_0| = |alpha_1| = ... = |alpha_{p-1}|,
+
+that is, the single-copy state must be unbiased in the computational basis.
+The criterion does not depend on m.
+
+Read off the board's own orbit states, with the moduli at the constant
+points:
+
+| orbit | moduli of the target at the constant points | single m-orbit |
+|---|---|---|
+| S | 0, 0.176777, 0.176777 | impossible, a constant point has zero amplitude |
+| N | 0.011340, 0.011340, 0.362887 | impossible, moduli differ by a factor 32 |
+| H3 | 0.552389, 0.003629, 0.003629 | impossible, moduli differ by a factor 152 |
+| T3 | 0.064150 three times | not excluded, the moduli agree |
+| qubit_H | 0.574523, 0.001202 | impossible, moduli differ by a factor 478 |
+| qubit_T | 0.435656, 0.004338 | impossible, moduli differ by a factor 100 |
+| T5 | 0.089443 five times | not excluded, the moduli agree |
+| cat | 0.125, 0 | not excluded, only one constant point carries amplitude |
+
+The S row is the one that was asked for. |S> = (|1> - |2>)/sqrt 2 vanishes
+on the digit 0, so the target vanishes at 00000 and not at 11111 or 22222;
+the support of s must contain 11111 and 22222, hence the line through them,
+which over F_3 is {11111, 22222, 00000}; and s(00000) = 0 contradicts that.
+So no rank-5 decomposition of |S>^5 has a term set that is a single
+sigma-orbit.
+
+Combined with the 2026-09-26 result that |S>^5 is not in the span of the
+120 sigma-fixed five-qutrit stabilizer states at all, this closes the cyclic
+ansatz at that cell completely. At prime m = 5 a sigma-invariant term set of
+size R <= 5 is either all fixed or one orbit of five, and both are now
+excluded. The board's record rank there is 5, so the record rank is closed
+for the ansatz.
+
+It does not fit the pod and does not need it: the argument is three lines
+and the script runs in seconds. The cost estimate the 2026-09-26 section
+asked for is therefore withdrawn rather than paid.
+
+What it does not rule out. It says nothing about rank-5 decompositions of
+|S>^5 in general, only about sigma-invariant term sets. It does not cover
+the mixed shapes at R >= 6, where f fixed terms sit alongside one orbit of
+five and the constant-point equations pick up the fixed terms' amplitudes.
+It does not cover N, H3, or T3 at m = 5, whose record ranks are 7, 6, and 8
+and therefore exceed m, so their sigma-invariant term sets are mixed rather
+than a single orbit. And at T3, T5, and cat the criterion is silent by
+design, although at those cells the record rank is not equal to m and the
+shape cannot arise anyway.
+
+### Bound files written today
+
+None. No construction reached a rank below the board at any cell.
+
+### Sharpest facts of the session
+
+1. Every one of the 192 minimal witnesses the board holds, over the 214
+   term sets examined, has a nontrivial set-stabilizer inside
+   U^m semidirect S_m whose image in S_m contains an involution. Not one is
+   symmetry-free.
+2. The twist matters. 29 of the 192 have a trivial pure copy-permutation
+   stabilizer and 61 have a twisted image strictly larger than the pure one.
+   The Lean rank-7 witness for |N>^4 is the clean case: no permutation of
+   the four copies fixes its term set, and a transposition does once a local
+   Clifford is allowed on each copy.
+3. The complete list of 69 rank-4 decompositions of |S>^4 has no
+   symmetry-free member, but seeing that needs the full local group of order
+   331776; with the local group cut to its diagonal, 12 of the 69 appear to
+   have no symmetry.
+4. The involution class is too large to enumerate. The smallest fixed set at
+   a record-capable cell is 6561 states (H3 m=4 under a double
+   transposition), against 66 for the 7-cycle at qubit_H m=7, and the
+   all-fixed search there is 7.7e13 leaves against 720720.
+5. No rank-5 decomposition of |S>^5 has a term set that is a single orbit of
+   the 5-cycle, and with the 2026-09-26 span result no sigma-invariant term
+   set of size at most 5 exists at that cell at all. The obstruction is the
+   diagonal line of F_3^5: the support of a stabilizer state that meets it
+   twice contains all three of its points, and the target vanishes at one of
+   them.
+6. The same constant-point criterion kills the single-orbit shape at N, H3,
+   qubit_H, and qubit_T for every m, and leaves it open only where the
+   single-copy state is unbiased in the computational basis, which on the
+   board is T3 and T5.
+
+Compute: about forty-five minutes of wall time as one process at nice 19,
+in runs of at most eleven minutes. A first pass with no permutation cap was
+abandoned after twenty minutes inside the m = 9 and m = 10 witnesses, which
+is what the cap replaced. The full table is then eleven minutes, of which
+the H3 m=6 row is 153 s and the qubit_T m=8 row 129 s. The |S>^4 rows under
+the full local group cost 18 s each, so only the 12 the diagonal pass left
+trivial were rerun that way rather than all 69. The constant-point and
+counting scripts run in seconds.

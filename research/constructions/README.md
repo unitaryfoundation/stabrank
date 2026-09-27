@@ -30,6 +30,9 @@ repository root with `uv run --extra challenge python research/constructions/<sc
 | `code_states_p.py` | the magic code states of QPG's Theorem 4 at p = 2, 3, 5 (2026-09-25): for an [m, k]_p code L the restriction of |M>^m to L^perp compressed to m - k qudits, one code per monomial-equivalence class (multisets of points of PG(k-1, p) up to PGL_k(p)), exact rank in the (m-k)-qudit dictionary or slice lower bounds, `--anneal` at the rank that would beat the baseline; `--unbiased` lists the Pauli eigenbases in which each orbit state is unbiased (the hypothesis of the theorem), `--twocat M` the ranks of the two-translate states (|M>^M + |P M>^M)/sqrt 2 |
 | `t7_partial_merge.py` | the KvdWV partial decomposition of |T>^5 times a rank-3 block for |T>^7 (2026-09-25): the block varied over the stored rank-3 decompositions of |H>^3 independently per partial term, every nine-term set tested exactly for a pairwise merge, `--anneal` for a warm-started rank-8 anneal from a pruned nine-term set |
 | `cyclic_symmetric.py` | exact search for decompositions whose term set is invariant under one m-cycle of the copies (2026-09-26): at rank below m every term is fixed exactly, so the script enumerates every sigma-fixed stabilizer state (invariant flats are cosets of cyclic codes; invariant phases are enumerated orbit by orbit, over the quadratic coefficients, or by the coordinate symmetry on the whole-space flat) and runs an exhaustive minimal-subset search over them, the leaf test quotiented to a parallel-pair lookup; p = 2, 3, and 5; `--control` reruns the six positive controls |
+| `witness_symmetry.py` | the set-stabilizer of every witness the board holds (2026-09-27): for each term set of `bounds/*-upper-*.json`, of the stored lists under `data/`, and of the Lean rank-7 witness for |N>^4, the pure copy-permutation stabilizer, the local kernel inside U^m, and the image in S_m of the full stabilizer inside U^m semidirect S_m, by a meet in the middle on one term (the projective digests of the local images of every term are tabulated once and each permutation costs one lookup, with every hit verified on the whole set); `--minimal` keeps the cells the ledger knows exactly, `--index` selects inside a stored list, and a row past the permutation or local cap is reported as not computed or as restricted to the diagonal local subgroup rather than as a wrong subgroup |
+| `single_orbit.py` | the single-orbit shape under an m-cycle, decided at the constant points (2026-09-27): if the term set is one sigma-orbit the coefficients are forced equal, so the target is the sigma-symmetrization of one stabilizer state, and the p constant vectors span the diagonal line of F_p^m; since the support of a stabilizer state is an affine flat and its nonzero amplitudes share a modulus, the shape needs the single-copy state to be unbiased in the computational basis. Prints the constant-point moduli and the verdict per orbit |
+| `involution_cost.py` | what the involution ansatz costs (2026-09-27): the exact count of tau-fixed stabilizer states supported on all of F_p^m, p^(2 c1 + c2) at odd p and 4^c1 2^c2 at p = 2 for c1 orbits of tau on the coordinates and c2 on the unordered pairs, against the leaf count of the subset search `cyclic_symmetric.py` runs, at H3 m=4, T3 m=4, S m=5, and qubit_H m=7 |
 | `ledger_closure.py` | the product closure of `docs/ledger.json`: the best upper bound at each cell reachable by splitting m into parts the board already holds, flagged against the bound filed there and against the cells with no bound at all |
 
 ## What is validated
@@ -114,6 +117,28 @@ repository root with `uv run --extra challenge python research/constructions/<sc
   enumeration keeps is confirmed by `to_witness.term_from_vector`, and a
   flat whose invariant phase functions exceed the cap is reported as skipped
   rather than dropped silently.
+
+- `witness_symmetry.py --control`: the batched local-image builder agrees
+  with the direct mode products over all of U^2 at H3 m=2; the three
+  Qassim, Pashayan, and Gosset terms for |cat_6> have the whole of S_6 as
+  their pure stabilizer; the board's rank-6 witness for |cat_7> has no
+  7-cycle in its twisted image, matching the 2026-09-26 cyclic scan; a
+  stored rank-4 decomposition of |N>^3 and one of |H3>^3 reach S_3, as
+  `perm_symmetric.py` says; the rank-2 decomposition of |H>^2 is swap
+  invariant; |H| = |K| x |image| holds at qubit_H m=4; and the answer does
+  not depend on the order in which the terms are listed. Every term set is
+  re-checked to reproduce its target with independent terms before its
+  symmetry is computed.
+- `single_orbit.py --control`: over 400 random five-qutrit stabilizer
+  states, every support that meets the diagonal line twice contains all
+  three of its points and the amplitudes there share one modulus; the
+  m-cycle fixes |S>^5, |T3>^5 and |H>^7; the symmetrization of a random
+  state is invariant and agrees with the state at the constant points; and
+  |S>^5 vanishes at 00000 while 11111 and 22222 carry 0.1768.
+- `involution_cost.py --control`: the counting formula is checked against
+  brute force over the whole dictionary, 27 of 360 full-support states at
+  p = 3, n = 2, 64 of 1080 at p = 2, n = 3, and 1024 of 36720 at
+  p = 2, n = 4, and the dictionary sizes match the product formula.
 
 - Every hit any script reports is checked numerically against the target and
   written as amplitude vectors under `results/` (not committed) for
