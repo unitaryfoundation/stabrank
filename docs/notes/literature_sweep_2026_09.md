@@ -727,3 +727,80 @@ No explicit finite-copy decomposition of any board state, no exact or
 approximate stabilizer-rank value, and no non-asymptotic lower-bound
 technique appeared. Version pages unchanged: 2106.07740 at v2
 (2021-12-15), 2202.09202 at v1 (2022-02-18). No BibTeX entry was added.
+
+## 12. Update of 2026-09-28
+
+Nothing moves a cell. arXiv announced again after two empty days, so this
+sweep screens a real window rather than re-screening the Friday
+announcement of sections 10 and 11.
+
+What was checked:
+
+- The `quant-ph/new` listing, header "Monday, 28 September 2026", 61 new
+  entries and 138 parsed in all, and `quant-ph/pastweek?show=500`, 83
+  entries for Monday and 84 for Friday. Every title read, abstracts read for
+  everything matching the keyword screen of section 9 together with Wigner,
+  phase space, code state, distillation, and cultivation: five titles that
+  are new to the note, listed below, and the eight already-filed items from
+  the Friday listing.
+- The API submission index. A `cat:quant-ph` query over
+  `submittedDate:[202609250000 TO 202609290000]` returns 59 entries, whose
+  keyword hits are the same five plus 2609.30860, whose title carries none
+  of the screen words. The index still lags the listings by a day.
+- The thirteen phrase queries of sections 5 to 11, sorted by last update.
+  The pitfall sections 10 and 11 record has got worse rather than better:
+  today the API drops the phrase even when the quotes are percent-encoded
+  correctly at the transport level, through `curl -G --data-urlencode` as
+  well as through a literal `%22` in the raw URL, and returns loose-token
+  hits in both cases. Query 1 comes back with a graph-neural-network paper
+  at the top. The useful reading of the result is still the `updated`
+  field: nothing the queries return was updated on or after 2026-09-17, and
+  the newest rank-relevant one is 2608.09115v3 (2026-09-01), already in the
+  skip list. Until the phrase syntax works again the listings are the
+  reliable path and the phrase queries are a date filter, not a screen.
+- Semantic Scholar citation lists of arXiv:1601.07601 (430 citing papers),
+  2106.07740 (60), 2012.11739 (9), 2003.01130 (5), 2110.07781 (14),
+  2107.10551 (17), 2106.03214 (17), and 2202.09202 (53), sorted by date.
+  Every count agrees with section 11, the newest citing paper of the first
+  is still 2609.19116 (2026-09-16) and of the others still 2609.25947
+  (2026-09-22), and nothing is dated 2026-09-23 or later.
+- OpenAlex by DOI: Qassim, Pashayan, and Gosset, 49 citing works, newest
+  the Jardine Zenodo deposits of 2026-08-05; Bravyi, Browne, Calpin,
+  Campbell, Gosset, and Howard through 10.22331/q-2019-09-02-181, 303,
+  newest 2026-09-17; Bravyi and Gosset, 354, newest 2026-08-25. All three
+  agree with section 11.
+- Zenodo, searched for "stabilizer rank": three records, newest 2026-08-30,
+  the Jardine deposits of section 7. No new deposit, and the source policy
+  there stands.
+- Web searches for the phrases of section 9 in 2026, for cat and code state
+  decompositions over finite copies, and for machine search over stabilizer
+  decompositions.
+
+New to the note, none of it rank-relevant:
+
+| source | arXiv | what it contributes | on the board | usable here |
+|---|---|---|---|---|
+| Wills, Jain, Singh 2026 | 2609.30860 | classification of generalized triorthogonal codes to length 54, 74 optimal distillation protocols of which 65 are new, by an extended classification of unital triorthogonal spaces | no | distillation protocols, no rank, extent, or state decomposition; does not move a cell |
+| Esposito, Styliaris 2026 | 2609.31459 | computing the stabilizer entropy of a two-dimensional tensor-network state is #P-hard for every integer Renyi index at least 2, and deciding stabilizer membership is C=P-complete, both with constant additive accuracy | no | hardness of stabilizer entropy, not a rank; does not move a cell |
+| Zhu, Tan, Kobayashi, Hsin 2026 | 2609.31541 | non-Abelian qLDPC codes from twisted sheaf gauge theory, with a magic state fountain from gauging measurements of addressable logical CZ gates | no | magic state preparation, no rank content; does not move a cell |
+| Bhati, Bazylewicz, Korbicz 2026 | 2609.31462 | GKP correction when the ancillary code states are themselves noisy | no | continuous variable, no rank content; does not move a cell |
+| Goodarzi, Bao, Tomamichel 2026 | 2609.31350 | sharp data-processing region for quantum conditional Renyi entropies | no | a false positive on "phase space"; does not move a cell |
+
+Not rank-relevant after reading the abstract, so the next sweep can skip
+them: 2609.31596 (oracle distillation, a false positive on "distillation":
+it distills queries to a noisy oracle, not magic states), 2604.20118
+(an information-theoretic complexity quantifier for states in the stabilizer
+formalism, related to nonstabilizerness through the L^4 norm of the
+characteristic function, with no rank value).
+
+One further near neighbor for section 4's claim that no machine-search
+paper on stabilizer decompositions exists. The claim still holds as
+written, and 2605.10910 (equivariant reinforcement learning for Clifford
+circuit synthesis) joins AlphaClifford (2608.18946) and GigaEvo
+(2603.29894) from section 10 as work that searches circuits rather than
+decompositions of a state.
+
+No explicit finite-copy decomposition of any board state, no exact or
+approximate stabilizer-rank value, and no non-asymptotic lower-bound
+technique appeared. Version pages unchanged: 2106.07740 at v2
+(2021-12-15), 2202.09202 at v1 (2022-02-18). No BibTeX entry was added.

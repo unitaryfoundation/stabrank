@@ -33,6 +33,7 @@ repository root with `uv run --extra challenge python research/constructions/<sc
 | `witness_symmetry.py` | the set-stabilizer of every witness the board holds (2026-09-27): for each term set of `bounds/*-upper-*.json`, of the stored lists under `data/`, and of the Lean rank-7 witness for |N>^4, the pure copy-permutation stabilizer, the local kernel inside U^m, and the image in S_m of the full stabilizer inside U^m semidirect S_m, by a meet in the middle on one term (the projective digests of the local images of every term are tabulated once and each permutation costs one lookup, with every hit verified on the whole set); `--minimal` keeps the cells the ledger knows exactly, `--index` selects inside a stored list, and a row past the permutation or local cap is reported as not computed or as restricted to the diagonal local subgroup rather than as a wrong subgroup |
 | `single_orbit.py` | the single-orbit shape under an m-cycle, decided at the constant points (2026-09-27): if the term set is one sigma-orbit the coefficients are forced equal, so the target is the sigma-symmetrization of one stabilizer state, and the p constant vectors span the diagonal line of F_p^m; since the support of a stabilizer state is an affine flat and its nonzero amplitudes share a modulus, the shape needs the single-copy state to be unbiased in the computational basis. Prints the constant-point moduli and the verdict per orbit |
 | `involution_cost.py` | what the involution ansatz costs (2026-09-27): the exact count of tau-fixed stabilizer states supported on all of F_p^m, p^(2 c1 + c2) at odd p and 4^c1 2^c2 at p = 2 for c1 orbits of tau on the coordinates and c2 on the unordered pairs, against the leaf count of the subset search `cyclic_symmetric.py` runs, at H3 m=4, T3 m=4, S m=5, and qubit_H m=7 |
+| `twisted_cycles.py` | decompositions invariant under a twisted m-cycle of the copies (2026-09-28): the gauge classification of g = (x u_j) P_sigma by the conjugacy class of the product of the twists around the cycle, one representative per class, and the exhaustive search over the term sets it fixes. A g-orbit of size d in a minimal term set is carried by a stabilizer state s with g^d s proportional to s and contributes the single vector sum_j mu^{-j} g^j s, which has to be a mu-eigenvector of g; `--pool power` lists the candidates as the gauge image of the sigma-fixed set of `cyclic_symmetric.py` (valid when the least common multiple D of the admissible orbit sizes has gcd(D, m) = 1 and the shift eigenvalue is forced to 1, which covers qubit_H and cat at m = 7), and `--pool brute` streams the whole m-qudit dictionary and records the exact orbit size of every state. `--classes` prints the class count per record-capable cell, `--span-scan` the span of every orbit sum over the whole dictionary, `--sizes` and `--search-rank` restrict the shapes, and `--witness-cycles` lists the m-cycles, twisted or not, that fix a board witness |
 | `ledger_closure.py` | the product closure of `docs/ledger.json`: the best upper bound at each cell reachable by splitting m into parts the board already holds, flagged against the bound filed there and against the cells with no bound at all |
 
 ## What is validated
@@ -135,6 +136,18 @@ repository root with `uv run --extra challenge python research/constructions/<sc
   m-cycle fixes |S>^5, |T3>^5 and |H>^7; the symmetrization of a random
   state is invariant and agrees with the state at the constant points; and
   |S>^5 vanishes at 00000 while 11111 and 22222 carry 0.1768.
+- `twisted_cycles.py --control`: the streamed dictionary reproduces
+  p^n prod_{j<=n}(p^j + 1) at (p, n) = (2, 3), (3, 2), (2, 4) and (3, 3);
+  the power pool returns the 66 sigma-fixed seven-qubit states and the 120
+  sigma-fixed five-qutrit states that `cyclic_symmetric.py` enumerates; the
+  power pool and the dictionary pool agree in all seven classes at
+  qubit_H m=5, qubit_T m=5 and cat m=5; the board's rank-3 witness for
+  |F>^4 is fixed by 54 twisted 4-cycles and by no pure one, its term set is
+  one of the orbits the enumeration returns for that class, and the search
+  finds it at rank 3; and cat m=6 returns 105 sigma-fixed states and rank 3
+  through both the direct subset search and the shape enumeration. The
+  board's rank-6 witness for |cat_7> is fixed by none of the 1440 7-cycles,
+  twisted or not, so it cannot serve as a positive control here.
 - `involution_cost.py --control`: the counting formula is checked against
   brute force over the whole dictionary, 27 of 360 full-support states at
   p = 3, n = 2, 64 of 1080 at p = 2, n = 3, and 1024 of 36720 at
