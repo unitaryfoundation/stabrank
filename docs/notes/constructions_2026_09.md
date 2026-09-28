@@ -2010,3 +2010,239 @@ the H3 m=6 row is 153 s and the qubit_T m=8 row 129 s. The |S>^4 rows under
 the full local group cost 18 s each, so only the 12 the diagonal pass left
 trivial were rerun that way rather than all 69. The constant-point and
 counting scripts run in seconds.
+
+## 2026-09-28: twisted cycles of the copies
+
+Script: `research/constructions/twisted_cycles.py`; logs under
+`research/constructions/results/` (gitignored). One process at a time at
+nice 19. The literature update of the same day is section 12 of
+`literature_sweep_2026_09.md` (nothing new; one further near neighbor filed
+against section 4's machine-search claim). No bound file was written.
+
+The record-capable cell table of the 2026-09-26 section was re-derived from
+`docs/ledger.json` with lower bounds carried up by projection monotonicity.
+Every board range is unchanged, so it is not repeated here.
+
+The 2026-09-27 census says every minimal witness on the board has a
+nontrivial set-stabilizer in U^m semidirect S_m, that 29 of the 192 have no
+pure copy-permutation symmetry at all, and that the untwisted cyclic ansatz
+of 2026-09-26 was therefore too narrow. Today runs the rest of the m-cycles
+of that group.
+
+### (a) Twisted cycles up to gauge
+
+Write g = (x_j u_j) P_sigma with sigma an m-cycle and the u_j in U, the
+single-qudit Clifford stabilizer of |M>. Conjugating by V = (x_j v_j) in
+U^m sends
+
+    u_j  ->  v_j u_j v_{sigma^{-1}(j)}^{-1},
+
+so the ordered product of the u_j around the cycle changes only by
+conjugation in U, and every twist with a given product is gauge-equivalent
+to (P, 1, ..., 1): solve v_j u_j v_{j-1}^{-1} = 1 along the cycle and the
+whole product piles up on the last edge. The conjugacy class of P in U is
+therefore a complete invariant, and since a gauge V fixes |M>^m, a
+g-invariant decomposition is the V-image of a g_P-invariant one, so one
+representative per class suffices. Passing to another generator of <g>
+replaces P by P^k with gcd(k, m ord(P)) = 1, which merges classes further.
+For the cat family the target is not a tensor power and only the diagonal
+u^(x m) fixes it, so the gauge group commutes with P_sigma and its elements
+are classes outright.
+
+The local groups are U = Z_2 at qubit_H, Z_3 at qubit_T and T3, Z_4 at H3,
+Z_5 at T5, Z_6 at N, and SL(2, 3) of order 24 at S, whose seven conjugacy
+classes are the classes there. The cat diagonal has order 2 at m = 7 and
+order 4 at m = 6 and m = 8, which corrects the flat "2 for the cat family"
+of the 2026-09-27 note: the diagonal depends on m.
+
+| cell | \|U\| | gauge classes | classes up to the generator | untwisted class already run |
+|---|---|---|---|---|
+| S m=5 to 8 | 24 | 7 | 6 | m=5 only |
+| N m=5, 6 | 6 | 6 | 4 | m=5 only |
+| H3 m=4, 5, 6 | 4 | 4 | 3 | m=5 only |
+| T3 m=4, 5, 6 | 3 | 3 | 2 | m=5 only |
+| qubit_H m=7 to 10 | 2 | 2 | 2 | m=7 only |
+| qubit_T m=8, 10 | 3 | 3 | 2 | neither |
+| T5 m=3, 4 | 5 | 5 | 2 | m=3 only |
+| cat m=7 | 2 | 2 | 2 | yes |
+| cat m=8 | 4 | 4 | 4 | no |
+
+The 2026-09-26 run covered exactly the untwisted class, and only at the
+cells in the last column, so at qubit_H m=7 and cat m=7 one class of two was
+covered, at H3 m=4 none of four, and at S m=6 to 8, N m=6, H3 m=6, T3 m=4
+and m=6, qubit_T m=8 and m=10, T5 m=4, and cat m=8 none at all.
+
+### (b) The handle, and what the twist does to the shape space
+
+g is Clifford and g|M>^m = mu |M>^m for a phase mu. In a minimal
+decomposition the coefficients are unique, so g permutes the terms with
+c_{g s} lambda_s = mu c_s: a g-orbit of size d in the term set is carried by
+a stabilizer state s with g^d s proportional to s, and contributes the
+single vector sum_{j<d} mu^{-j} g^j s, which is s projected onto the
+mu-eigenspace of g up to scale. Two conditions cut hard. The orbit size
+divides ord(g) and is at most the rank. And the sum has to be a
+mu-eigenvector, which for g^d s = lambda s means lambda = mu^d; an orbit
+failing it cannot sit in any g-invariant decomposition whatever its size.
+
+The twist changes the shape space, not just the class. Untwisted at prime m
+the order of g is m and a rank below m forces every term fixed, which is
+the lemma the 2026-09-26 run rests on. Twisted at qubit_H and cat m = 7 the
+order is 14, so orbits of size 2 are admissible at every rank from 2 to 6
+and the all-fixed shape is no longer the only one. Both shapes are covered
+below.
+
+Listing the candidates. Let D be the least common multiple of the
+admissible orbit sizes, so every term is an eigenvector of h = g^D. When
+gcd(D, m) = 1 the permutation part of h is again an m-cycle and its cycle
+product is trivial, so h is gauge-equivalent to the plain shift
+P_{sigma^D}. An eigenvector of a shift through an m-cycle has its
+eigenvalue in the phase group of the amplitudes, of order 4 at p = 2 and p
+at odd p, and also in the m-th roots of unity, so for gcd(m, 4) = 1 at
+p = 2 the eigenvalue is 1 and the candidates are exactly V^{-1} T_rho F,
+with F the sigma-fixed set `cyclic_symmetric.py` already enumerates, V the
+gauge, and rho the position permutation j -> D j. At qubit_H and cat m = 7
+that is a filter on 66 states in place of a scan of the 8.1e10 seven-qubit
+stabilizer states. Where the dictionary fits, `--pool brute` streams it
+instead and records the exact orbit size of every state, which is both the
+route at H3 m=4 and the control on the first method.
+
+### (c) cat m=7 at rank 3 and qubit_H m=7 at rank 6: both classes closed
+
+Complete verdicts, since at m = 7 the admissible orbit sizes are 1 and 2 and
+the pool reaches both.
+
+| cell | class | ord(g) | candidates | usable orbit sums | span | rank <= record |
+|---|---|---|---|---|---|---|
+| cat m=7 | untwisted | 7 | 66 fixed | 66 of cost 1 | 20 | none |
+| cat m=7 | product of order 2 | 14 | 22 fixed, 44 in pairs | 11 of cost 1 | 10 | none |
+| qubit_H m=7 | untwisted | 7 | 66 fixed | 66 of cost 1 | 20 | none |
+| qubit_H m=7 | product of order 2 | 14 | 66 all in pairs | 27 of cost 2 | 10 | none |
+
+The untwisted rows reproduce the 2026-09-26 result, which is the
+reproduction control. In the twisted row at cat the eigenvalue condition
+removes 11 of the 22 g-fixed candidates, and every one of the 22 pair sums
+coincides projectively with one of the 11 survivors, so the pool collapses
+to 11 vectors each costing one term. At qubit_H no candidate is g-fixed at
+all: all 66 sit in orbits of size 2, giving 27 distinct sums each costing
+two of the rank, so a rank-6 term set is at most three of them. In both
+twisted rows the target is in the span of the pool and no subset of it at
+the record rank reproduces the target.
+
+So the record rank 3 at cat m=7 and the record rank 6 at qubit_H m=7 are
+closed for every m-cycle in the symmetry group of the target, twisted or
+not, and not only for the untwisted one the 2026-09-26 run reached.
+
+What this does not rule out: anything about rank 3 at cat m=7 or rank 6 at
+qubit_H m=7 in general. It closes one ansatz, now in its full form. It says
+nothing about term sets invariant under a shorter cycle or an involution,
+which the 2026-09-27 involution count puts out of reach, and nothing about
+term sets with no symmetry at all. It also says nothing at m = 8, 9, 10,
+where the pool argument needs gcd(m, 4) = 1 and fails.
+
+### (d) H3 m=4 at rank 6: three of the four classes closed
+
+At m = 4 the record rank 6 exceeds m, so no lemma forces the terms to be
+fixed and the admissible orbit sizes are 1, 2, and 4. The route is the
+dictionary stream over all 7,439,040 four-qutrit stabilizer states, 50 s per
+class, which gives the exact orbit-size census.
+
+| class | ord(g) | states by orbit size 1 / 2 / 4 | distinct orbit sums | verdict at rank <= 6 |
+|---|---|---|---|---|
+| untwisted | 4 | 192 / 14208 / 7424640 | 192 of cost 1, 6960 of cost 2 | all-fixed closed at every rank; the rest open |
+| product of order 4 | 16 | 2 / 10 / 100 | 25, all of cost 4 | closed, every shape |
+| product of order 2 | 8 | 12 / 100 / 91728 | 12, 50, and 19897 of cost 1, 2, 4 | closed, every shape |
+| product of order 4 (the other class) | 16 | 2 / 10 / 100 | 25, all of cost 4 | closed, every shape |
+
+The two order-4 classes are decided by the eigenvalue condition alone: of
+the 112 candidates, 12 have an orbit sum that is not a mu-eigenvector and
+the 25 that survive all have orbits of length 4, so a rank-6 term set holds
+at most one of them and no single one is proportional to the target. The
+order-2 class needed the whole shape enumeration, 19959 orbit sums and 35.7 s,
+and returns nothing.
+
+The untwisted class is the one left open, and it is open in a specific way.
+The target sits at distance 0.433 from the span of the 192 g-fixed states,
+which closes the all-fixed shape at every rank, not just at 6. Adding the
+6960 orbit sums of size 2 lifts the span from 18 to 24 dimensions and the
+target does land in it, so the shapes with one, two, or three pairs are not
+excluded by a span argument; they need the subset search, which is 6960,
+2.4e7, and 5.6e10 choices of the pairs, and the first of the three did not
+finish inside the ten-minute budget. The 1,856,160 orbits of size 4 were
+counted but not stored.
+
+What this does not rule out: the rank-6 cell at H3 m=4 is exactly where it
+was. Three of the four twisted 4-cycle classes are closed at rank 6, the
+untwisted class is closed only for term sets with no long orbit, and nothing
+here touches decompositions with no 4-cycle symmetry.
+
+### (e) The control, and a correction to what it should have been
+
+The control this session was asked for cannot be run, because its premise is
+false. The board's rank-6 witness for |cat_7> is fixed by no 7-cycle of the
+copies, twisted or not: all 2 x 720 = 1440 candidates were tested and none
+maps the term set to itself. That is consistent with the 2026-09-27 census,
+which finds an involution in the twisted image of every minimal witness and
+says nothing about m-cycles, and with the `witness_symmetry.py --control`
+line already recording that the cat_7 witness has no 7-cycle in its twisted
+image. A twisted-7-cycle enumeration at rank 6 must therefore not contain
+that witness, and the fact that it does not is not evidence of anything.
+
+The substitute is the board's rank-3 witness for |F>^4, whose twisted image
+is transitive of order 8 and so contains 4-cycles while its pure stabilizer,
+of order 4 with copy orbits 2+2, contains none. Exactly: 54 twisted 4-cycles
+fix its term set and no pure one does. Running the machinery on one of them
+returns that term set as one of the 10 orbits it lists for the class, and
+the search returns rank 3. The control passes.
+
+The rest of the controls: the dictionary stream reproduces
+p^n prod_{j<=n}(p^j + 1) at (p, n) = (2, 3), (3, 2), (2, 4), and (3, 3); the
+power pool returns the 66 sigma-fixed seven-qubit states and the 120
+sigma-fixed five-qutrit states of 2026-09-26; the power pool and the
+dictionary pool agree in all seven classes at qubit_H m=5, qubit_T m=5, and
+cat m=5; and cat m=6 returns 105 sigma-fixed states and rank 3, the three
+terms of Qassim, Pashayan, and Gosset, through both the direct subset search
+and the shape enumeration.
+
+### Bound files written today
+
+None. No construction reached a rank below the board at any cell.
+
+### Sharpest facts of the session
+
+1. Twisted m-cycles are classified up to gauge by the conjugacy class of the
+   product of the twists around the cycle, so the number of classes is the
+   number of conjugacy classes of U: two at qubit_H and cat m=7, three at
+   T3 and qubit_T, four at H3 and cat m=8, five at T5, six at N, and seven
+   at S. The 2026-09-26 run covered one of them, at eight of the twenty-two
+   record-capable cells.
+2. No decomposition of |cat_7> with three terms and no decomposition of
+   |H>^7 with six terms has a term set invariant under any 7-cycle of the
+   copies, twisted or not. The untwisted half of this is the 2026-09-26
+   result; the twisted half is new, and it is complete because at m = 7 the
+   admissible orbit sizes are 1 and 2 and both are enumerated.
+3. The eigenvalue condition is what does the work in the twisted classes. An
+   orbit of size d can appear only when g^d acts on the state by mu^d, and
+   at cat m=7 that removes half the fixed candidates, while at H3 m=4 it
+   removes 12 of the 112 candidates in each order-4 class and leaves only
+   orbits of length 4.
+4. At H3 m=4, three of the four twisted 4-cycle classes admit no rank-6
+   decomposition at all, over every shape. The untwisted class admits no
+   rank-6 decomposition whose terms are all fixed, and in fact none of any
+   rank, since the target is 0.433 away from the span of the 192 fixed
+   states.
+5. The board's rank-6 witness for |cat_7> has no 7-cycle in its
+   set-stabilizer, pure or twisted, so it cannot serve as a positive control
+   for a twisted-cycle enumeration. The witness that can is the rank-3
+   witness for |F>^4: 54 twisted 4-cycles fix it and no pure one does.
+6. At qubit_H m=7 the twisted class has no g-fixed stabilizer state at all.
+   Every one of the 66 candidates lies in an orbit of size 2, so the twisted
+   ansatz there is a search over 27 two-term blocks, not over single states,
+   and a rank-6 term set is at most three blocks.
+
+Compute: about fifty minutes of wall time as one process at nice 19. The
+dictionary stream at p = 3, m = 4 is 50 s per class and there are four
+classes, the qubit_H m=7 untwisted subset search is 148 s, the H3 m=4
+order-2 class search is 36 s, and the power pools are 3.5 s each. One run
+went past the ten-minute budget and was stopped: the H3 m=4 untwisted class
+with one pair forced, 6960 choices, which is the shape that section (d)
+leaves open.
