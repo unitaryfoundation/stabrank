@@ -1,27 +1,29 @@
 # Excluding rank 5 for |H>^6: design note
 
-Status (2026-09-21; the run is in section 7, the stage C repair and the
-figures that now stand in section 9). Not run to completion, and not
-certifiable until it is. The enumeration and matching machinery exists
-(`verify_challenge/slice_cover.py`, `research/h6_rank5/driver.py`, with
-the two hot paths compiled in `cpp/src/cover5.cpp` and
-`cpp/src/slice_match.cpp`), both positive controls pass on every base
-(section 5: the rank-4 decompositions of |H>^4 from the full 4-covers of
-|H>^3, and the rank-6 witness from all four of its all-visible bases,
-distinct and repeated), the 5-cover enumeration has been run to completion
-(5,939,465 full covers of distinct independent states, section 3, and
-26,242 dependent or repeated covers, section 4), and the whole exclusion is
-partitioned into 190 batches with a runner, an aggregator and a
-certificate on the attested tier (section 6): stage A is 2.4 CPU-hours
-with the compiled kernels, the degenerate stages B and C about 30
-CPU-hours in Python, about 36 CPU-hours in all, about 2.5 hours of wall
-time on a 16-vCPU pod. One batch of each stage has been run as a test; the
-full run has not been launched. The
-cell stays at 5 <= chi(H^6) <= 6, with the lower bound the projection of
-`bounds/qubit_H-m5-lower-5.json` and the upper bound the QPG cat witness
-`bounds/qubit_H-m6-upper-6.json`. Excluding rank 5 would also settle
-chi(H^5) = 5 or 6 only indirectly (a rank-5 decomposition of |H>^5 need not
-lift), so the two open cells stay coupled but distinct.
+Status (2026-09-23). Done: the exclusion ran to completion, it is
+certified, and the cell is closed. chi(qubit_H^6) = 6, with the lower
+bound `bounds/qubit_H-m6-lower-6.json` at the attested tier (certificate
+`verify_challenge/cert_qubit_h_m6_rank5_attested.py`, manifest
+`research/h6_rank5/batch_manifest.json`) and the upper bound the QPG cat
+witness `bounds/qubit_H-m6-upper-6.json`. Sections 7, 8, and 9 record the
+run of 2026-09-22, the no-native cross-check, and the stage C repair and
+re-certification of 2026-09-23; the totals as they stand are 180 batches,
+5,939,465 + 12,390 + 16,006 covers, and 74.7 CPU-hours.
+
+The machinery is `verify_challenge/slice_cover.py` and
+`research/h6_rank5/driver.py`, with the two hot paths compiled in
+`cpp/src/cover5.cpp` and `cpp/src/slice_match.cpp`. Both positive controls
+pass on every base (section 5: the rank-4 decompositions of |H>^4 from the
+full 4-covers of |H>^3, and the rank-6 witness from all four of its
+all-visible bases, distinct and repeated), with the one re-run that the
+repair note lists still outstanding on the rank-6 control. Sections 1 to 6
+below are the design as it was written before the run, and are kept for
+the argument and the cost model.
+
+The m = 5 cell was settled separately: excluding rank 5 for |H>^6 does not
+settle |H>^5, since a rank-5 decomposition of |H>^5 need not lift, and
+chi(H^5) = 6 came from its own exclusion (`bounds/qubit_H-m5-lower-6.json`,
+`docs/notes/h5_rank5_exclusion.md`).
 
 Notation. psi_m = |H>^m with |H> = cos(pi/8)|0> + sin(pi/8)|1>, both
 amplitudes nonzero. N_3 = 1080 is the number of three-qubit stabilizer
