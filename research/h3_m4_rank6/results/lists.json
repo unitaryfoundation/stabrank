@@ -1,0 +1,77 @@
+{
+ "group_order": 32,
+ "k5": {
+  "full 5-covers (census)": {
+   "multisets": 188451,
+   "orbits": 57456
+  },
+  "dependent 5-covers": {
+   "multisets": 6112,
+   "orbits": 1653
+  },
+  "repeated 5-multisets": {
+   "multisets": 7024,
+   "orbits": 2304
+  },
+  "repeated by pattern": {
+   "(3, 1, 1)": 18,
+   "(2, 1, 1, 1)": 6988,
+   "(2, 2, 1)": 18
+  },
+  "cancel-at-base T_3 + (b, b)": 0,
+  "all": {
+   "multisets": 201587,
+   "orbits": 61413
+  }
+ },
+ "k4": {
+  "full 4-covers (census)": {
+   "multisets": 1211,
+   "orbits": 554
+  },
+  "dependent 4-covers": {
+   "multisets": 2,
+   "orbits": 2
+  },
+  "repeated 4-multisets": {
+   "multisets": 18,
+   "orbits": 9
+  },
+  "all": {
+   "multisets": 1231,
+   "orbits": 565
+  }
+ },
+ "covers3": 6,
+ "census_sha256": "976f5b049ab1e62a17fb3740e2e701df62b7b03d7f9498ce6ab99a7e66f788ea",
+ "degenerate_sha256": "8b41e2740a03c19660e4bc28c64450d8b4ab555f1de117398ee62c101253c986",
+ "b6_span_states_per_5cover": {
+  "sample": 200,
+  "mean": 19.845,
+  "min": 0,
+  "max": 35,
+  "histogram": {
+   "0": 4,
+   "1": 1,
+   "2": 4,
+   "3": 4,
+   "4": 11,
+   "5": 2,
+   "7": 12,
+   "9": 11,
+   "14": 30,
+   "19": 59,
+   "35": 62
+  }
+ },
+ "b6_t5_plus_span_pairs_estimate": 3739810,
+ "c6_estimates": {
+  "(2, 1, 1, 1, 1) from independent 5-covers": 942255,
+  "(2, 1, 1, 1, 1) from dependent 5-covers": 30560,
+  "4-cover plus (b, b), b outside": 431116,
+  "(3, 1, 1, 1), (2, 2, 1, 1) from 4-covers": 12110
+ },
+ "seconds": 2.8,
+ "git": "0ba945114d9e2467faaa997016f948b53473ca78",
+ "sha256": "71713977b83b8077cc95a8d98ebc158cf572b6f12e373100f66a6217368a76ec"
+}
