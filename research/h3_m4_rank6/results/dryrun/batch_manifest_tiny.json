@@ -1,0 +1,92 @@
+{
+ "partition": "research/h3_m4_rank6/results/dryrun/partition_tiny.json",
+ "partition_sha256": "e4a765682dc291485576a35a25e20bc901b3905e086500417b44589c11344ed0",
+ "census_sha256": "658416390aafdde7deb6e39ad4d801f6a2f6237b4e110d525bca50145ca10f57",
+ "reps_sha256": "e684e58597e5e7673ef683d4f56b2745a77e3f56d6220b2ed13a11ca67ba0dec",
+ "complete": true,
+ "batches": [
+  {
+   "id": "batch_0",
+   "params": {
+    "stage": "A6",
+    "pivot_pairs": 1,
+    "runs_per_item": 1,
+    "max_cand": 2000000,
+    "matched": 1,
+    "hits": 0
+   },
+   "output": "research/h3_m4_rank6/results/dryrun/batch_0.json",
+   "sha256": "e08bfb96a8a171b75c5ddf0aee611ce61bd5330c501cc903088133269f9aabed"
+  },
+  {
+   "id": "batch_1",
+   "params": {
+    "stage": "B6",
+    "items": 1,
+    "class": "kappa 1",
+    "runs_per_item": 1,
+    "max_cand": 2000000,
+    "matched": 1,
+    "hits": 0
+   },
+   "output": "research/h3_m4_rank6/results/dryrun/batch_1.json",
+   "sha256": "bb79db89cbb22974315c561160aae24d58c2008f72025d393d5265094d593004"
+  },
+  {
+   "id": "batch_2",
+   "params": {
+    "stage": "B6",
+    "items": 1,
+    "class": "kappa 2",
+    "runs_per_item": 1,
+    "max_cand": 200000000,
+    "matched": 1,
+    "hits": 0
+   },
+   "output": "research/h3_m4_rank6/results/dryrun/batch_2.json",
+   "sha256": "85bfdec18bbea64d0ab78c5f7fb3546321c19ea2cef0b009ed33ea676879cee1"
+  },
+  {
+   "id": "batch_3",
+   "params": {
+    "stage": "C6",
+    "items": 1,
+    "class": "(2, 1, 1, 1, 1)",
+    "runs_per_item": 1,
+    "max_cand": 2000000,
+    "matched": 1,
+    "hits": 0
+   },
+   "output": "research/h3_m4_rank6/results/dryrun/batch_3.json",
+   "sha256": "be7783f4a642799de49e31b076f62bc76faac2f28086ba7aad3bc734e7fbb31a"
+  },
+  {
+   "id": "batch_4",
+   "params": {
+    "stage": "beta",
+    "items": 1,
+    "class": "(1, 1, 1, 1, 1)",
+    "runs_per_item": 1,
+    "max_cand": 2000000,
+    "matched": 1,
+    "hits": 0
+   },
+   "output": "research/h3_m4_rank6/results/dryrun/batch_4.json",
+   "sha256": "73241d3928b44de1bf3262caa1317976f1ff7969db57c224a6dcdbd27eb87848"
+  },
+  {
+   "id": "batch_5",
+   "params": {
+    "stage": "gamma",
+    "items": 1,
+    "class": "(1, 1, 1, 1)",
+    "runs_per_item": 1,
+    "max_cand": 2000000,
+    "matched": 1,
+    "hits": 0
+   },
+   "output": "research/h3_m4_rank6/results/dryrun/batch_5.json",
+   "sha256": "c70a39f602343b7d97190856663b4e72b6377330d9559053cbc8d883a5663741"
+  }
+ ]
+}

@@ -1,12 +1,15 @@
 # Excluding rank 6 for |H3>^4: design note
 
 Status (2026-10-01). Design and controls only; nothing here is a bound.
-The cell is 6 <= chi(H3^4) <= 8 (`bounds/H3-m4-lower-6.json`, the rank-5
-exclusion of `docs/notes/qutrit_m4_rank5_exclusion.md`;
-`bounds/H3-m4-upper-8.json`, the Lean witness, the four terms of the
-rank-4 decomposition of |H3>^3 tensored with the rank-2 decomposition of
-|H3>), so excluding rank 6 moves it to 7 <= chi(H3^4) <= 8 and settles
-nothing exactly. `docs/notes/next_exclusion_feasibility_2.md` (section 5)
+The pipeline (`research/h3_m4_rank6/`, the N^4 pipeline on this cell) is
+built, dry-run on the laptop at the smallest scale, and ready for the pod
+chain `research/h3_m4_rank6/pod/pod_chain.sh`; the bound would be filed
+only after that run and its aggregate. The cell is 6 <= chi(H3^4) <= 8
+(`bounds/H3-m4-lower-6.json`, the rank-5 exclusion of
+`docs/notes/qutrit_m4_rank5_exclusion.md`; `bounds/H3-m4-upper-8.json`,
+the Lean witness, the four terms of the rank-4 decomposition of |H3>^3
+tensored with the rank-2 decomposition of |H3>), so excluding rank 6
+moves it to 7 <= chi(H3^4) <= 8 and settles nothing exactly. `docs/notes/next_exclusion_feasibility_2.md` (section 5)
 costed the N^4 and H3^4 rank-6 exclusions together and named three pieces
 of engineering; `docs/notes/n4_rank6_design.md` and
 `docs/notes/n4_rank6_exclusion.md` built and ran the N^4 pipeline
@@ -200,21 +203,22 @@ The k = 6 lists are N's by construction with the H3 inputs:
   (T_5 plus a span state; T_4 plus two span states or a parallel pair; T_3
   plus three span states, a span state and a parallel pair, a parallel
   triple, or a collinear triple), enumerated mod P1 and decided
-  numerically (`research/n4_rank6/degenerate6.py --orbit H3`, not run
-  here). The dominant route is T_5 plus a span state: 19.8 span
-  states per census 5-cover on a sample of 200 evenly spaced covers
-  (min 4, max 42), about 3.74 million
-  (T_5, x) pairs before deduplication and orbit reduction; N's 3.2 million
-  pairs became 1.6 million distinct sets and 251,028 orbits by this route.
-  With H3's smaller group the orbit reduction is weaker and the B6 list is
-  expected at 3e5 to 7e5 orbit representatives, the single largest cost
-  of the exclusion (section 8).
+  numerically (`driver.py lists --write`, the routes of `degenerate6.py`;
+  `reps_H3.json`, 46 s): 3,805,533 (T_5, x) pairs (the span-state
+  histogram runs from 0 to 35 per 5-cover; the sample of `probe.py lists`
+  gave a mean of 19.8), 61,779 span pairs and 784,351 parallel pairs over
+  the 4-covers, 294,681 triples over the 3-covers; 2,133,775 distinct
+  full dependent 6-sets, 378,843 G_2 orbits (kappa 1: 375,716; kappa 2:
+  3,127; no kappa 3). N's list was 2,701,615 sets and 259,655 orbits; the
+  weaker orbit reduction (a factor 5.6 against N's 10.4) is the group
+  order, 32 against 72.
 - C6: the repeated full 6-multisets by the merged-coefficient routes: a
-  5-cover with a member doubled (5 x 188,451 + 5 x 6,112 before
-  deduplication), a 4-cover with a member tripled, two doubled, or plus
-  (b, b) for any of the 356 other states (1,211 x 356 = 431,116), a
-  3-cover with multiplicities (4, 1, 1), (3, 2, 1), (2, 2, 2), or plus
-  (b, b) and a member, or plus (b, b, b).
+  5-cover with a member doubled, a 4-cover with a member tripled, two
+  doubled, or plus (b, b) for any of the 356 other states, a 3-cover with
+  multiplicities (4, 1, 1), (3, 2, 1), (2, 2, 2), or plus (b, b) and a
+  member, or plus (b, b, b): 1,413,473 distinct multisets, 354,012 orbits
+  ((2, 1, 1, 1, 1) 347,943; (3, 1, 1, 1) 2,286; (2, 2, 1, 1) 3,753;
+  (4, 1, 1) 9; (3, 2, 1) 18; (2, 2, 2) 3).
 
 Completeness of the lists is the N^4 argument unchanged: A6 by the pivot
 and partner reductions of the census (the H^6 argument) and the kernel's
@@ -506,11 +510,13 @@ tables warm:
 | gamma (2, 1, 1) | 9 | 9 x 136 | 3.2 / 3.1 / 5 | 0 | 0 | 0 | first exact point, 1,224 of 1,224 |
 
 Every run died without a hit, refusal or undecided result; no run of any
-class reached a scan or scan2 point: the first exact point has no
-solution for every sampled base at every flat (the '0,0,0,0' histogram),
-as in the N^4 run. The two-fresh-term restriction (no blocks, pinned
-family) is therefore never exercised by a real base in the sample, and
-the planted gamma kinds are the only exercise of the scan2 paths.
+class reached a scan or scan2 point in this sample: the first exact point
+has no solution for every sampled base at every flat (the '0,0,0,0'
+histogram), as in the N^4 run. In the later rate sample of `driver.py
+sample gamma` (section 9) two runs of a dependent 4-cover reached a
+one-fresh-term scan with 72 born candidates and died at the line's next
+point. No real run reached a two-fresh-term point, so the planted gamma
+kinds are the only exercise of the scan2 paths.
 
 Tests (`tests/test_h3_m4_rank6.py`, `uv run --extra challenge --extra test
 python -m pytest tests/test_h3_m4_rank6.py`, 17 s): the
@@ -524,6 +530,34 @@ the seven shared-line kinds on the line through both coordinate points
 and cancel and samec on a diagonal line, real census bases dying without
 a hit, and the raises on three fresh terms and on a flat through the base
 point.
+
+The remaining controls of the N^4 checklist, through `driver.py` on the
+built lists (`results/control_*.json`): planted six-term decompositions
+over B6 orbit representatives, three of kappa 1 through the filter path
+and one of kappa 2 at the raised cap, 4 of 4 recovered in 14 s; C6 plants
+by class ((2, 1, 1, 1, 1) independent and dependent, (2, 2, 2), (3, 1, 1,
+1) independent and dependent), 5 of 5 in 7 s (the two-block and
+block-of-four classes are not planted, as for N); the orbit lemma
+(`control-orbit`): the 32 unitaries of G_2 (8 of them monomial with
+cube-root entries: the 1 <-> 2 swap of |H3> on either copy and the copy
+swap; the Fourier transform itself is not monomial) induce exactly the
+census's permutation group, and on six planted decompositions twelve
+random elements each carry the terms to stabilizer states with the
+permuted base and the same canonical form, with the matcher finding the
+image under a monomial element, 6 of 6; the rank-4 decomposition of
+|H3>^3 along each of the three qutrit pairs at (0, 0) (`control-m3`): all
+four terms visible at every pair (base (0, 3, 4, 5) of single-qutrit
+states), recovered 3 of 3 by the qutrit `Matcher` at n_2 = 1, so this
+control does not reach the invisible matcher, as N's did not; the rank-8
+Lean witness (`control-witness --cap 25`): sliced along the six qutrit
+pairs it has three all-visible 8-multiset bases at (0, 0), two with four
+doubled states and kappa 1 (aborted at the 25 s cap in the block-only
+path, as the rank-5 run's H3 witness bases were) and one of eight distinct
+states with kappa 4 (not run, the four-parameter Python dense solve),
+recorded as a control failure at this cap and not required (the
+eight-term shapes are on no rank-6 path); and `control-lists`, the fresh
+enumeration of the four lists equal to `reps_H3.json` by content and the
+census file's pivot pairs equal to the enumerator's.
 
 ## 7. The 6-cover census and the stage A6 rate
 
@@ -550,88 +584,83 @@ slice (`coord_raw` 0 in 5,000 of 5,000), no hit, no refusal.
 
 ## 8. Projection
 
-Laptop CPU-hours at the rates above and, for the stages not measured
-here, at the N^4 run's measured rates on the same code (B6, C6: the
-exclusion note's section 6, taken at a load of 9 to 10), with the pod
-factors of the T^5 and N^4 runs: 1.3 for the compiled stages, 4 for the
-Python stages, the B6 filter shown at both. The N^4 B6 kappa-1 rate on
-the pod came in at the Python factor (118 pod CPU-hours for 256,970
-items), which is the figure used here.
+Two projections. The first uses the N^4 run's measured rates on the
+stages this note did not time on H3 bases (the upper figure of the
+ranges); the second is the partition the pipeline wrote from `driver.py
+sample` on H3 items at (0, 0) (section 9: 8 items per B6 class, 4 per C6
+class, 6 per beta and gamma class, 3,000 A6 covers, one laptop core at
+load 10 to 12) with the pod factors of the T^5 and N^4 runs (1.3 for the
+compiled stages, 4 for the Python ones, the B6 filter's dense share at
+1.3). The N^4 B6 kappa-1 rate on the pod came in at the Python factor
+(118 estimated, 95 measured pod CPU-hours for 256,970 items).
 
-| stage | items (H3) | basis of the count | rate | laptop CPU-h | pod CPU-h |
+| stage | items | laptop rate (H3 sample) | pod s per item (partition) | pod CPU-h (partition) | pod CPU-h at N's rates |
 |---|---|---|---|---|---|
-| census of full 6-covers | 2,390 pivot pairs | run | 670 s in all | 0.19 | 0.24 |
-| A6 | 36,368,678 covers | census | 0.61 ms | 6.2 | 8 |
-| B6 kappa 1 | 3e5 to 7e5 orbits | N's 251,028 orbits by the T_5 route scaled by the (T_5, x) pair count ratio 1.16 and the weaker orbit reduction (32 against 72) | 0.55 s laptop, 1.66 s pod (N, filter) | 46 to 107 | 140 to 320 |
-| B6 kappa 2, 3 | 3e3 to 7e3 | N's 2,685 scaled as above | 5.2 s laptop, 21 s pod at cap 2e8 (N) | 5 to 10 | 19 to 42 |
-| C6 | 3e5 to 7e5 orbits | N's 321,553 scaled by the 5-cover count (0.95) and the orbit factor | 0.012 to 0.05 s (N, (2, 1, 1, 1, 1)); the tail classes at seconds | 3 to 10 | 10 to 40 |
-| beta', 16 flats | 61,413 orbits | measured | 2.6 to 23.8 ms per run (independent), 56 ms (dependent), 7.6 ms (repeated) | 1.2 to 6.6 | 5 to 26 |
-| gamma, 136 flat multisets | 565 orbits | measured | 0.9 ms per run (6 ms dependent, 3 ms repeated) | 0.02 to 0.13 | 0.1 to 0.5 |
-| total | | | | 62 to 140 | 180 to 440 |
+| census of full 6-covers | 2,390 pivot pairs | 670 s in all | | 0.24 | 0.24 |
+| A6 | 36,368,678 covers | 0.60 ms per cover | 0.00078 (kernel seconds plus matcher) | 8.1 | 8 |
+| B6 kappa 1 | 375,716 orbits | 0.225 s (filter 0.225 s; N's was 0.55 s at load 9 to 10) | 0.29 | 30.7 | 170 |
+| B6 kappa 2 | 3,127 orbits (no kappa 3) | 4.6 s at cap 2e8 | 18.2 | 15.8 | 18 |
+| C6 | 354,012 orbits | 0.0086 s for (2, 1, 1, 1, 1); 0.24 s dependent; 0.18 s (2, 2, 1, 1); 11 s (2, 2, 1, 1) dependent (6 items); 0.85 s (3, 2, 1) | 0.034 to 44 by class | 6.3 | 10 to 40 |
+| beta', 16 flats | 61,413 orbits | 0.041 s per item (independent), 0.78 s (dependent), 0.08 to 2.5 s (repeated) | 0.16 to 9.8 | 4.3 | 5 to 26 |
+| gamma, 136 flat multisets | 565 orbits | 0.079 s (independent), 0.59 s (dependent), 0.41 s (repeated) | 0.32 to 2.4 | 0.05 | 0.1 to 0.5 |
+| total | 458 batches | | | 65 | 210 to 280 |
 
-Error bars. The census and A6 counts are exact and their rates measured
-on 5,000 covers; beta' and gamma carry the spread of the rate samples
-(the max-to-mean ratios in section 6, a factor 2 on beta'). The
-B6 and C6 items are the extrapolation: N's lists were built by
-`degenerate6.py` in 81 s and the same script with `--orbit H3` would
-replace the range by a count in minutes; the range is the (T_5, x) pair
-count measured here times N's deduplication ratio (0.5) and an orbit
-reduction between N's 10.4 and N's scaled by the group orders, 10.4 x
-Error bars. The measured stages (census, A6, beta', gamma) carry the sampling
-error of the census projection (20 percent) and of the rate samples (the
-max-to-mean ratios in section 6, a factor 2 on beta'). The B6 and C6 items are
-the extrapolation: N's lists were built by `degenerate6.py` in 81 s and the
-same script with `--orbit H3` would replace the range by a count in minutes;
-the range is the (T_5, x) pair count measured here times N's deduplication
-ratio (0.5) and an orbit reduction between N's 10.4 and N's scaled by the
-group orders, 10.4 x 32 / 72 = 4.6, which gives 3e5 to 7e5. Stage B6 is the
-whole uncertainty of the run, as it was for N (118 of 174 pod CPU-hours).
-
-Pod budget. At the pod rates above the run is 180 to 440 pod CPU-hours,
-dominated by B6: on 32 cores (30 processes) 6 to 15 hours of wall time, on
-64 cores (60 processes) 3 to 7.5 hours. The N^4 run took 174 pod CPU-hours
-on a 16-vCPU shared host over about 20 hours of wall time including the
-B6 rerun; H3 is 1.0 to 2.5 times that. Nothing is out of
-reach: every stage has a measured or N-measured rate and no stage exceeds
-a few hundred pod CPU-hours. The one stage without an H3 measurement of
-its own is B6 (the filter and the reference on H3 bases at (0, 0)), and
-the first B6 batch on the pod would settle its factor before the
-partition is trusted, as the T^5 and N^4 notes did.
+The partition (`partition.json`, 458 batches of about 600 pod seconds:
+A6 52, B6 281, C6 92, beta' 30, gamma 3) estimates 65 pod CPU-hours; at
+N's measured rates the same lists give 210 to 280. The difference is
+stage B6: the H3 kappa-1 filter ran at 0.225 s per item on 8 sampled
+items against N's 0.55 s on 40 at a higher load, and 0.29 pod seconds per
+item is below the rate N saw on the pod (1.32 s per item measured over
+259,655). The chain therefore times the first B6 kappa-1 batch before
+scheduling the rest and prints the stage projected at the measured rate
+(`H3M4_B6_PROBE_DONE`); the honest range for the run is 65 to 280 pod
+CPU-hours, 2.5 to 10 hours of wall time on 32 cores at 28 workers and 1.2
+to 5 hours on 64 cores at 60 workers, with the first hour's probe
+narrowing it to a factor 1.3. Every stage has a measured rate on H3
+items; nothing is out of reach.
 
 ## 9. What was run
 
-All on the laptop at nice 19, one process at a time, about 1.3 CPU-hours
-in all (the planted controls 0.5 of it, the census 0.2). Records under
-`research/h3_m4_rank6/results/`.
+All on the laptop at nice 19, one process at a time, about 1.6 CPU-hours
+in all (the planted controls 0.5 of it, the census 0.2, the dry run and
+the samples 0.3). Records under `research/h3_m4_rank6/results/`.
 
 | step | command | time | result |
 |---|---|---|---|
 | planted controls, beta a, d, r | `invisible_p3.py controls --stage beta --kinds a,d,r --cap 120` | 107 s | 48 of 48 (`control_planted_beta_adr.json`) |
 | planted controls, beta h | `... --kinds h --cap 90` | 1,714 s | 16 of 16 (`control_planted_beta_h.json`) |
 | planted controls, gamma | `... --stage gamma --cap 120` | 29 s | 216 of 216 (`control_planted_gamma.json`) |
-| tests | `pytest tests/test_h3_m4_rank6.py` | 17 s | 29 passed |
 | geometry | `probe.py geometry` | 1 s | section 2 (`geometry.json`) |
 | lists and orbits | `probe.py lists --sample 200` | 30 s | section 3 (`lists.json`) |
 | matcher rates on real bases | `probe.py rate --count 12 --budget 420` | 52 s | section 6 (`rate_invisible.json`) |
 | 6-cover census sample | `probe.py census6 --pairs 80 --budget 300` | 40 s | section 7 (`census6_H3_sample.json`) |
 | 6-cover census | `probe.py census6 --all --budget 1500` | 690 s | 36,368,678 covers (`census6_H3_full.json`) |
 | A6 rate | `probe.py a6rate --pairs 12 --count 5000` | 25 s | section 7 (`rate_a6_x00.json`) |
+| the lists | `driver.py lists --write` | 46 s | `reps_H3.json`: B6 378,843, C6 354,012, k5 61,413, k4 565 |
+| dry run | `driver.py partition --tiny`; `batch.py K --partition results/dryrun/partition_tiny.json --out-dir results/dryrun` for K = 0..5; `aggregate.py --partition ... --results-dir ... --recheck 1 --recheck-seed 20261002 --no-reenumerate-census --manifest ...` | 65 s | one census pair (135, 234) with one cover, one B6 item of each kappa, one C6 (2, 1, 1, 1, 1) item, one 5-cover on flat p22, one 4-cover on the multiset L12_011022 twice: 6 batches, 0 hits, 0 refused, 0 undecided; the aggregate re-enumerated the lists (equal, 46 s), passed every stored check and re-ran batch 5 with a matching hash (`results/dryrun/`) |
+| planted controls, B6 and C6 | `driver.py control-planted --stage b6`, `--stage c6` | 14 s, 7 s | 4 of 4, 5 of 5 |
+| orbit lemma, m = 3, witness, lists | `driver.py control-orbit`, `control-m3`, `control-witness --cap 25`, `control-lists` | 20 s, 1 s, 51 s, 50 s | section 6 |
+| rates | `driver.py sample A6 --count 3000 --reference 20`, `sample B6 --count 8 --budget 240`, `sample C6 --count 4 --budget 240 --item-cap 40`, `sample beta --count 6 --budget 120`, `sample gamma --count 6 --budget 60` | 220 s | section 8 (`rates.json`, `sample_*.json`); every run without a hit, refusal or undecided result; the gamma sample's dependent 4-cover had two runs reach a one-fresh-term scan with 72 born candidates, all dying at the line's next point |
+| partition | `driver.py partition --target-s 600` | 2 s | 458 batches, 65 pod CPU-hours (`partition.json`) |
+| tests | `pytest tests/test_h3_m4_rank6.py tests/test_n4_rank6_b6_filter.py tests/test_qutrit_m4_rank5.py` | 152 s | 42 passed |
 
-## 10. What remains to build before a launch
+## 10. The pod run
 
-1. The lists: `degenerate6.py --orbit H3` for B6 and C6 (minutes) and an
-   `orbits` record of every list with hashes; the 6-cover census is run
-   (section 7).
-2. The pipeline in the shape of `research/n4_rank6/` (`driver.py lists`,
-   `sample`, `partition`, `batch.py`, `aggregate.py`, the certificate
-   script) with `common.py` of this directory as the cell; `stages.py`
-   and `filters6.py` of the N^4 pipeline import their cell's `common`
-   and would need the same `Cell` treatment as the matcher got here.
-3. The B6 rate on H3 bases at (0, 0) (filter and reference), which fixes
-   the dominant cost; the C6 tail classes ((2, 2, 1, 1) dependent) at a
-   cap.
-4. The remaining controls of the N^4 checklist: the orbit lemma on
-   planted decompositions with the 32 unitaries, the lists by hash, the
-   rank-8 Lean witness at its all-visible bases (recorded, not required),
-   and the m = 3 control (the rank-4 decomposition of |H3>^3 by 2 + 1
-   slicing).
+`research/h3_m4_rank6/pod/pod_chain.sh` (setup, launch, watch and
+copy-back lines in its header; markers `H3M4_*`, anchored): kernel
+import; the test module and the planted controls of the invisible
+stages; `driver.py lists --write` with the result compared with the
+committed `reps_H3.json`; the remaining controls; `driver.py sample` for
+every stage and `partition --target-s 600`; the first B6 kappa-1 batch
+timed, with the stage and the whole run projected at its rate before the
+loop is launched; the loop over every batch at `WORKERS` processes with
+`--resume --max-seconds 3600`, then a pass over batches without a record
+and a pass over batches that hit the guard; `aggregate.py --recheck 2
+--recheck-seed 20261002`; optionally (`WITH_NONATIVE=1`) the `--no-native`
+replays of the lightest A6 batch and the probe's B6 batch with their
+hashes compared; `fill_draft.py` and the certificate under
+`stabrank_verify.py` on the filled draft. The branch travels as a git
+bundle on top of the public main and is never pushed. After the run the
+records, the lists, the partition, the manifest, the bound and the logs
+are copied back, the bound moved to `bounds/H3-m4-lower-7.json`, and
+`verify_challenge/cert_h3_m4_rank6_attested.py` run on the laptop.

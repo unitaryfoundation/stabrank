@@ -1034,8 +1034,14 @@ def planted_target(terms, coeffs, F1, F2):
     return vector_target(vec, 2, F1, F2)
 
 
-def hist_key(st):
-    """The deterministic per-run key of the solution histogram."""
+def hist_key(stage_or_st, st=None):
+    """The deterministic per-run key of the solution histogram; callable
+    as hist_key(st) or, as the N^4 pipeline does, hist_key(stage, st)
+    (an A6, B6 or C6 stage gives the coordinate-slice key)."""
+    if st is None:
+        st = stage_or_st
+    elif stage_or_st not in ("beta", "gamma"):
+        return ",".join(str(b) for b in st.get("coord_raw", []))
     return (f"{'/'.join(str(v) for v in st['exact_solutions'])},{st['scan_solutions']},{st['scan2_solutions']},"
             f"{st['pair_solutions']}")
 

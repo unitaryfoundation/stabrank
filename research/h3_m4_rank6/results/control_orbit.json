@@ -1,0 +1,192 @@
+{
+ "git": "4cd923577d5ef3da5559cfcaed82a449249f8088",
+ "generated": "2026-10-01T17:36:14+00:00",
+ "group_order": 32,
+ "permutations_equal": true,
+ "rows": [
+  {
+   "kind": "alpha",
+   "base": [
+    91,
+    135,
+    138,
+    287,
+    304,
+    305
+   ],
+   "image_base": [
+    10,
+    123,
+    132,
+    164,
+    169,
+    170
+   ],
+   "predicted_image": [
+    10,
+    123,
+    132,
+    164,
+    169,
+    170
+   ],
+   "image_equals_prediction": true,
+   "twelve_elements_consistent": true,
+   "image_found": true,
+   "flats": null
+  },
+  {
+   "kind": "beta",
+   "base": [
+    0,
+    37,
+    132,
+    133,
+    140
+   ],
+   "image_base": [
+    0,
+    64,
+    133,
+    138,
+    140
+   ],
+   "predicted_image": [
+    0,
+    64,
+    133,
+    138,
+    140
+   ],
+   "image_equals_prediction": true,
+   "twelve_elements_consistent": true,
+   "image_found": true,
+   "flats": [
+    "L10_011121"
+   ]
+  },
+  {
+   "kind": "alpha",
+   "base": [
+    63,
+    64,
+    89,
+    119,
+    132,
+    140
+   ],
+   "image_base": [
+    63,
+    64,
+    89,
+    119,
+    132,
+    140
+   ],
+   "predicted_image": [
+    63,
+    64,
+    89,
+    119,
+    132,
+    140
+   ],
+   "image_equals_prediction": true,
+   "twelve_elements_consistent": true,
+   "image_found": true,
+   "flats": null
+  },
+  {
+   "kind": "beta",
+   "base": [
+    37,
+    53,
+    130,
+    141,
+    254
+   ],
+   "image_base": [
+    64,
+    77,
+    131,
+    141,
+    334
+   ],
+   "predicted_image": [
+    64,
+    77,
+    131,
+    141,
+    334
+   ],
+   "image_equals_prediction": true,
+   "twelve_elements_consistent": true,
+   "image_found": true,
+   "flats": [
+    "L11_011220"
+   ]
+  },
+  {
+   "kind": "alpha",
+   "base": [
+    10,
+    119,
+    130,
+    132,
+    134,
+    284
+   ],
+   "image_base": [
+    10,
+    119,
+    130,
+    132,
+    134,
+    284
+   ],
+   "predicted_image": [
+    10,
+    119,
+    130,
+    132,
+    134,
+    284
+   ],
+   "image_equals_prediction": true,
+   "twelve_elements_consistent": true,
+   "image_found": true,
+   "flats": null
+  },
+  {
+   "kind": "beta",
+   "base": [
+    36,
+    65,
+    122,
+    129,
+    138
+   ],
+   "image_base": [
+    36,
+    65,
+    128,
+    129,
+    132
+   ],
+   "predicted_image": [
+    36,
+    65,
+    128,
+    129,
+    132
+   ],
+   "image_equals_prediction": true,
+   "twelve_elements_consistent": true,
+   "image_found": true,
+   "flats": [
+    "L12_011022"
+   ]
+  }
+ ],
+ "pass": true
+}

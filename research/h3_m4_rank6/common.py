@@ -6,11 +6,13 @@ the slice ratios, the lists the stages draw their bases from (the attested
 rank-5 census of |H3>^2 and its degenerate multisets), canonical hashing,
 and the exact re-decision of a stored hit against psi_4 = |H3>^4.
 
-Imported as `common` by invisible_p3.py and probe.py. The
+Imported as `common` by invisible_p3.py, stages.py, filters6.py,
+degenerate6.py, driver.py, batch.py, aggregate.py and probe.py. The
 research/qutrit_m4_rank5 directory is on the path for cover_census.py and
 matcher.py; its own common.py is loaded by file as `qcommon`, so that the
 two modules named common never collide (the arrangement of
-research/n4_rank6/common.py).
+research/n4_rank6/common.py, whose API this module keeps so that the N^4
+pipeline files port with their stage logic unchanged).
 
 Why (0, 0). |H3> has amplitudes proportional to (1 + sqrt 3, 1, 1), so
 along qutrits 1, 2 the slice at x of psi_4 is alpha_x psi_2 with alpha_x =
@@ -76,7 +78,14 @@ M = 4                       # copies of |H3>
 RANK = 6
 ORBIT = "H3"
 X0 = (0, 0)                 # the single base point of the design
+STAGES = ("A6", "B6", "C6", "beta", "gamma")
 RESULTS = os.path.join(HERE, "results")
+PARTITION = os.path.join(HERE, "partition.json")
+CENSUS6 = os.path.join(RESULTS, "census6_H3_full.json")    # the 6-cover census of psi_2 per pivot pair
+REPS = os.path.join(HERE, "reps_H3.json")                  # the orbit representatives of every other list
+RATES = os.path.join(RESULTS, "rates.json")
+WITNESS8 = os.path.join(ROOT, "bounds", "H3-m4-upper-8.json")
+CLAIM = "CERTIFIED chi(H3^4) >= 7"
 NUM_TOL = 1e-8
 N_DICT = 360                # two-qutrit stabilizer states
 GROUP_ORDER = 32            # |G_2| for |H3>^2: the 4-element Clifford stabilizer of |H3> on each copy and the swap
@@ -160,7 +169,7 @@ CELL = Cell(X0)
 FLATS = CELL.flats
 FLAT_NAMES = CELL.flat_names
 FLAT_PAIRS = CELL.flat_pairs
-RUNS_PER_ITEM = {"beta": len(FLAT_NAMES), "gamma": len(FLAT_PAIRS)}
+RUNS_PER_ITEM = {"A6": 1, "B6": 1, "C6": 1, "beta": len(FLAT_NAMES), "gamma": len(FLAT_PAIRS)}
 
 
 def offset_index(y):
@@ -202,7 +211,7 @@ def git_commit():
         return None
 
 
-def write_record(path, body):
+def write_hashed(path, body, indent=None):
     """Write `body` with its own sha256 appended, atomically."""
     body = dict(body)
     body.pop("sha256", None)
@@ -210,10 +219,26 @@ def write_record(path, body):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     tmp = path + ".tmp"
     with open(tmp, "w") as f:
-        json.dump(body, f, indent=1)
+        if indent is None:
+            json.dump(body, f, separators=(",", ":"))
+        else:
+            json.dump(body, f, indent=indent)
         f.write("\n")
     os.replace(tmp, path)
     return body["sha256"]
+
+
+def write_record(path, body):
+    return write_hashed(path, body, indent=1)
+
+
+def load_hashed(path, what):
+    with open(path) as f:
+        doc = json.load(f)
+    body = {k: v for k, v in doc.items() if k != "sha256"}
+    if sha256_json(body) != doc.get("sha256"):
+        raise ValueError(f"{what} {path}: sha256 does not match its content")
+    return doc
 
 
 # ------------------------------------------------------------- codes -------
@@ -270,16 +295,121 @@ def rank5_lists():
     return out
 
 
-def item_class(E, item):
-    """The cost class of a base: the multiplicity pattern, with " dependent"
-    appended when the distinct states are dependent."""
+def item_class(E, item, stage=None):
+    """The cost class of an item: for stage B6 "kappa K"; otherwise the
+    multiplicity pattern, with " dependent" appended when the distinct
+    states are dependent."""
     item = [int(u) for u in item]
     distinct = sorted(set(item))
-    dep = np.linalg.matrix_rank(E.C[:, distinct], tol=1e-8) < len(distinct)
+    rank = np.linalg.matrix_rank(E.C[:, distinct], tol=1e-8)
+    if stage == "B6":
+        return f"kappa {len(item) - rank}"
     key = str(multiplicity_pattern(item))
-    if dep:
+    if rank < len(distinct):
         key += " dependent"
     return key
+
+
+def pairs_of(E):
+    """Every (pivot, partner, member count) unit of the cover enumeration,
+    in the pivot order of the enumerator (CoverEnumerator3.units)."""
+    return [list(u) for u in E.units()]
+
+
+# ----------------------------------------------------------- loaders -------
+
+def load_partition(path=PARTITION):
+    part = load_hashed(path, "partition")
+    for key in ("batch_geometry", "census", "reps", "x0", "flats"):
+        if key not in part:
+            raise ValueError(f"{path} lacks `{key}`; rerun driver.py partition")
+    if tuple(part["x0"]) != X0:
+        raise ValueError(f"{path}: base point {part['x0']} is not the cell's {X0}")
+    if part.get("orbit") != ORBIT:
+        raise ValueError(f"{path}: orbit {part.get('orbit')} is not {ORBIT}")
+    return part
+
+
+def load_reps(path=REPS, expect_sha256=None):
+    """The orbit-representative lists: B6 (dependent 6-sets with kappa),
+    C6 (repeated 6-multisets), k5 (full 5-multisets), k4 (full
+    4-multisets), each as an (n, k) int array of sorted dictionary indices
+    in the order of the stored codes; with the record."""
+    doc = load_hashed(path, "orbit representative lists")
+    if expect_sha256 is not None and doc["sha256"] != expect_sha256:
+        raise ValueError(f"{path}: sha256 {doc['sha256'][:16]} differs from the partition's {expect_sha256[:16]}")
+    if doc.get("orbit") != ORBIT:
+        raise ValueError(f"{path}: lists are for {doc.get('orbit')}, not {ORBIT}")
+    lists = {}
+    for key, k in (("B6", 6), ("C6", 6), ("k5", 5), ("k4", 4)):
+        lists[key] = decode(doc[key]["codes"], k)
+        if len(lists[key]) != doc[key]["count"]:
+            raise ValueError(f"{path}: {key} holds {len(lists[key])} codes, the record says {doc[key]['count']}")
+    lists["B6_kappa"] = np.asarray(doc["B6"]["kappa"], dtype=np.int64)
+    if len(lists["B6_kappa"]) != len(lists["B6"]):
+        raise ValueError(f"{path}: B6 kappa list and codes differ in length")
+    return lists, doc
+
+
+def load_census6(path=CENSUS6, expect_sha256=None):
+    """The 6-cover census of psi_2 (per pivot pair: pivot, partner, members,
+    full 6-covers, independent ones, candidates, seconds), checked against
+    the file hash the partition records."""
+    if expect_sha256 is not None:
+        got = sha256_file(path)
+        if got != expect_sha256:
+            raise ValueError(f"{path}: file sha256 {got[:16]} differs from the partition's {expect_sha256[:16]}")
+    with open(path) as f:
+        cen = json.load(f)
+    if cen.get("orbit") != ORBIT:
+        raise ValueError(f"{path}: census is for {cen.get('orbit')}, not {ORBIT}")
+    if cen.get("pairs_done") != cen.get("pairs") or len(cen["rows"]) != cen["pairs"]:
+        raise ValueError(f"{path}: the census is incomplete ({cen.get('pairs_done')} of {cen.get('pairs')} pairs)")
+    if "full6_independent" not in cen:
+        cen["full6_independent"] = int(sum(r[4] for r in cen["rows"]))
+    return cen
+
+
+def batch_geometry(part, index):
+    geos = part["batch_geometry"]
+    if 0 <= index < len(geos) and geos[index]["index"] == index:
+        return geos[index]
+    for geo in geos:
+        if geo["index"] == index:
+            return geo
+    raise IndexError(f"batch index {index} not in the partition (0..{len(geos) - 1})")
+
+
+def run_units(stage, geo=None):
+    """The (label, unit) runs of one item of a stage: one run for A6, B6,
+    C6; one per flat for beta and one per flat multiset for gamma, or the
+    subset the batch geometry names (`flats`, `pairs`: the dry-run
+    partition of driver.py partition --tiny)."""
+    if stage == "beta":
+        names = FLAT_NAMES if geo is None or "flats" not in geo else list(geo["flats"])
+        return [(f, f) for f in names]
+    if stage == "gamma":
+        pairs = FLAT_PAIRS if geo is None or "pairs" not in geo else [tuple(p) for p in geo["pairs"]]
+        return [(list(p), p) for p in pairs]
+    return [(None, None)]
+
+
+def runs_per_item(stage, geo=None):
+    return len(run_units(stage, geo))
+
+
+def witness_terms():
+    """The eight terms of the Lean rank-8 witness of |H3>^4
+    (bounds/H3-m4-upper-8.json: the four terms of the rank-4 decomposition
+    of |H3>^3 tensored with the rank-2 decomposition of |H3>) as complex
+    vectors on four qutrits in the bound file's qutrit order."""
+    with open(WITNESS8) as f:
+        doc = json.load(f)
+    if doc["orbit"] != ORBIT or int(doc["m"]) != M or int(doc["rank"]) != 8:
+        raise ValueError(f"{WITNESS8} is not the rank-8 witness of |H3>^4")
+    from matcher import constructions_common
+    cc = constructions_common()
+    return [cc.term_vector(t, 3, M) for t in doc["witness"]["terms"]], doc
 
 
 # ------------------------------------------------------------ hits ------
@@ -313,8 +443,11 @@ def codes_key(terms):
     return sorted(exact_codes(t)[0].tobytes() for t in terms)
 
 
-__all__ = ["CELL", "Cell", "COMP", "E1", "E2", "FLATS", "FLAT_NAMES", "FLAT_PAIRS", "M", "N2", "ORBIT", "OFFSETS",
-           "P1", "P2", "PTS", "RANK", "RESULTS", "X0", "Field3", "add", "codes_key", "decide_terms", "decode",
-           "encode", "flats_missing", "genuine", "git_commit", "hit_record", "item_class", "lower_priority",
-           "make_enumerator", "multiplicity_pattern", "new_matcher", "offset_index", "pidx", "qcommon",
-           "rank5_lists", "rank_mod", "ratio", "target_of", "term_from_codes", "write_record"]
+__all__ = ["CELL", "CENSUS6", "CLAIM", "COMP", "Cell", "E1", "E2", "FLATS", "FLAT_NAMES", "FLAT_PAIRS", "HERE", "M",
+           "N1", "N2", "OFFSETS", "ORBIT", "P1", "P2", "PARTITION", "PTS", "POD_FACTOR_COMPILED", "POD_FACTOR_PYTHON",
+           "RANK", "RATES", "REPS", "RESULTS", "ROOT", "RUNS_PER_ITEM", "STAGES", "X0", "Field3", "add",
+           "batch_geometry", "codes_key", "decide_terms", "decode", "encode", "flats_missing", "genuine",
+           "git_commit", "hit_record", "item_class", "load_census6", "load_hashed", "load_partition", "load_reps",
+           "lower_priority", "make_enumerator", "multiplicity_pattern", "new_matcher", "offset_index", "pairs_of",
+           "pidx", "qcommon", "rank5_lists", "rank_mod", "ratio", "run_units", "runs_per_item", "target_of",
+           "term_from_codes", "witness_terms", "write_hashed", "write_record"]

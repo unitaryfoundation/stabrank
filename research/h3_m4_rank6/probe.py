@@ -396,6 +396,7 @@ def census6(a):
     secs = sum(r[6] for r in rows)
     m3 = sum(r[2] ** 3 for r in rows)
     rec["full6"] = int(full6)
+    rec["full6_independent"] = int(full6 - dep)
     rec["dependent_from_kernel"] = int(dep)
     rec["kernel_seconds"] = round(secs, 2)
     if not a.all and rows:
