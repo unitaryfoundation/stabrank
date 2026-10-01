@@ -1,0 +1,12 @@
+81449ef5542c67ec90d68ba6ddb7e106  caseC.py
+23ab8a55e349ecea5cbffeb0166f18fe  k3.py
+383cf2bf52813b638a04f765d2c04d55  cert7.py
+d65503c977715da84989208ff85321e4  decide.py
+9ba032b8f70fa479e696537d326e7306  caseB.py
+644ac6ad797417269a2ebff78e3b93b0  cost_c.py
+dc4e89e73a4b2e8c1736934b3b66057c  setup_m3.py
+b5bee7ec90b39c6ff196089b2729a583  logs/costC.npz
+e17db1485d3c6a2b77a614b7072298e2  logs/costC_kok.pkl
+99a7a954c806cc7dfccbd63b6983ecda  logs/setup_m3.npz
+4c74939c32621947b7533904b1917871  logs/sym_exact.npz
+d750b852fd4edc0e1a7236cc6f5ab79f  logs/caseC_progress.jsonl

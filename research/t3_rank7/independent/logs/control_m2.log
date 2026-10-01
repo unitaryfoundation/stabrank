@@ -1,0 +1,8 @@
+states inside V_2 removed: [66, 79, 81]
+group order 324
+7 orbits, 496 pivot pairs, 163 pairs with nontrivial Stab(i, j)
+canonical: 8.599e+06 steps, 817586 classes, 17546 distinct pool orbits (24s)
+naive (first pivots [29, 282]): 5.815e+06 steps, 524588 classes, 158341047 seven-subsets tested, 6217 in general position with rank pair (7, 7), 336475 classes with pools > 14 skipped; 214 pool orbits with a genuine seven-set (772s)
+pool orbits found naively but not canonically: 0
+CONTROL OK: every general-position rank-7 span of V_2 found by the naive three-pivot scan is found by the canonical scan
+exit=0

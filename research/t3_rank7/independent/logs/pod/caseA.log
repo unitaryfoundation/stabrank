@@ -1,0 +1,18 @@
+538514 rank-6 classes loaded
+[3s] chunk 0/270: six-subsets 11291, dishonest 0, decompositions 0
+[9s] chunk 20/270: six-subsets 156354, dishonest 0, decompositions 0
+[11s] chunk 40/270: six-subsets 244982, dishonest 0, decompositions 0
+[14s] chunk 60/270: six-subsets 315077, dishonest 0, decompositions 0
+[21s] chunk 80/270: six-subsets 443359, dishonest 0, decompositions 0
+[27s] chunk 100/270: six-subsets 584456, dishonest 0, decompositions 0
+[32s] chunk 120/270: six-subsets 727256, dishonest 0, decompositions 0
+[38s] chunk 140/270: six-subsets 870536, dishonest 0, decompositions 0
+[41s] chunk 160/270: six-subsets 940722, dishonest 0, decompositions 0
+[46s] chunk 180/270: six-subsets 1084175, dishonest 0, decompositions 0
+[52s] chunk 200/270: six-subsets 1227219, dishonest 0, decompositions 0
+[57s] chunk 220/270: six-subsets 1370152, dishonest 0, decompositions 0
+[63s] chunk 240/270: six-subsets 1513323, dishonest 0, decompositions 0
+[74s] chunk 260/270: six-subsets 1656536, dishonest 0, decompositions 0
+rank-pair histogram of six-subsets: {(3, 6): 1597050, (4, 6): 114079}
+six-subsets 1711129, with exact rank pair (6,7): 0, rank-7 decompositions found: 0
+CASE A EXCLUDED: no seven-state span containing V_3 has six images in a 3-dim space mod ELL
