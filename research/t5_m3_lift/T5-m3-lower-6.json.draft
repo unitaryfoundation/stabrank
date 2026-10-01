@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.1",
+  "orbit": "T5",
+  "m": 3,
+  "direction": "lower",
+  "rank": 6,
+  "certificate": {
+    "script": "verify_challenge/cert_t5_m3_lift_attested.py",
+    "expect": "CERTIFIED chi(T5^3) >= 6",
+    "budget_s": 3600,
+    "attested": {
+      "batches": "research/t5q_m2_rank5/batch_manifest.json",
+      "recomputed": 2,
+      "compute_hours": 13.4,
+      "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host, fifteen batches in parallel at nice 19, 2026-09-24 12:32 to 13:36 UTC (the rank-5 census of |T5>^2, research/t5q_m2_rank5 at commit 2b751cb)",
+      "note": "The listing of every 5-set of two-ququint stabilizer states whose span contains |T5>^2, one per orbit of the unitary symmetry group, lives in the stored batch outputs under research/t5q_m2_rank5/results/ (74 batches, 155,422 pivot-partner units, every unit run, 0 undecided, one hit: the five Z(x)Z eigensectors, a set fixed by the group). The certificate re-enumerates the plan, re-runs the exact k = 1..4 censuses, verifies the hashes and geometry of every output, re-decides the stored hit, fails on any undecided unit, re-runs two batches from scratch, and then runs the exact lift decision of research/t5_m3_lift/lift.py on the listed set. The completeness of the listing rests on the stored outputs and on research/t5q_m2_rank5/batch.py, which regenerates any batch (batch.py K), under the modular assumption every kernel census of the project makes: a member whose image is nonzero over Q(zeta_5) is nonzero modulo 65521."
+    }
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank docs/notes/t5_m3_lift_design.md",
+    "method": "slice-and-lift at exact rank: the census listing of the rank-5 decompositions of |T5>^2 (one set, the five Z(x)Z eigensectors) lifted along a third ququint by an exact pattern search over Q(zeta_5); no pattern vector is a stabilizer state",
+    "date": "DATE",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.0,
+      "wall_clock_hours": 0.0,
+      "runs": 0,
+      "hardware": "HARDWARE"
+    }
+  },
+  "notes": "chi(|T5>^2) = 5 (bounds/T5-m2-upper-5.json at the Lean tier and bounds/T5-m2-lower-5.json, re-derived exactly by the k = 1..4 censuses the certificate runs). Every amplitude of |T5> is nonzero, so a rank-5 decomposition of |T5>^3 sliced at the third ququint gives, at each of the five slice values, a decomposition of |T5>^2 with at most five terms; chi(|T5>^2) = 5 forces every slice of every term to be nonzero and the five slices pairwise non-parallel, so each slice is a 5-set with |T5>^2 in its span, and the census of research/t5q_m2_rank5 lists exactly one such set up to the unitary symmetry group: the lines x + y = c with phase w^(3c x^2 - 3c^2 x), fixed by the group. The coefficient of each line in |T5>^2 is unique, so a lifted term is determined by its slice pattern c(z) and equals the restriction of |T5>^3 to {x + y = c(z)}. research/t5_m3_lift/lift.py decides over Q(zeta_5) with rational arithmetic whether five such pattern vectors are stabilizer states forming a bijection at every z: of the 3,125 patterns, 25 survive the exact prunes (the affine c(z) = c0 + d z, the only ones with a flat support) and none is a stabilizer state, since the phase has the cubic part (1 + d^3) z^3 + 3 d z x^2 - 3 d^2 z^2 x on that plane. Hence chi(|T5>^3) >= 6, and by projection monotonicity chi(|T5>^4) >= 6. No invisible or coincident term arises at exact rank; excluding rank 6 at m = 3 would need them and is not claimed. Controls (research/t5_m3_lift/results/, docs/notes/t5_m3_lift_design.md section 4): the basis of |T5> lifts to exactly the board's five sectors, the ten rank-3 decompositions of |T5> do not lift, planted products |T5>^2 (x) beta are recovered as the only lift, the qutrit T3 and N cells behave as the board says, and random stabilizer states are recognized. With bounds/T5-m3-upper-15.json the cell is 6 <= chi(|T5>^3) <= 15."
+}

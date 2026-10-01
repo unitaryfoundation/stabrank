@@ -1,0 +1,11 @@
+{
+ "label": "exact stabilizer test",
+ "count": 40,
+ "seed": 5,
+ "passed": true,
+ "generated": "2026-10-01T15:16:31+00:00",
+ "git_commit": "0ba945114d9e2467faaa997016f948b53473ca78",
+ "hostname": "vincentrusso-MacBook-Pro",
+ "python": "3.12.14",
+ "numpy": "2.3.5"
+}

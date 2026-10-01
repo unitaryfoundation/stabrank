@@ -3,6 +3,7 @@
 
     aggregate.py [--partition P] [--results-dir D] [--dry-run] [--partial]
                  [--no-low-census] [--recheck N] [--recheck-seed S] [--recheck-dir D]
+                 [--list]
 
 Checks, in order: the partition's own hash; that its units are exactly
 the (pivot, partner, member count) units of a fresh enumeration over the
@@ -34,6 +35,15 @@ the same checks without the re-runs and never certifies. --partial reports
 progress over the batches present instead of failing on the missing ones.
 Exit 0 when certified or (dry run) when every stored check passes, 2 when
 a stored batch reports a decomposition, 1 otherwise.
+
+--list reads the records as the census listing instead (the mode the
+slice-and-lift stage of research/t5_m3_lift uses, since the census found
+the rank-5 decomposition): a stored decomposition is reported, not
+failed; the manifest is written, the re-runs are made and compared, and
+the last line is `LISTING COMPLETE: K decomposition 5-set(s)` when every
+other check holds and the re-runs match (exit 0), never the CERTIFIED
+line. The 2026-09-24 pod run is a complete listing in this sense: every
+unit of every batch ran and every hit was recorded.
 """
 from __future__ import annotations
 
@@ -224,6 +234,8 @@ def main(argv):
     ap.add_argument("--recheck", type=int, default=2, help="batches to re-run from scratch")
     ap.add_argument("--recheck-seed", type=int, default=20260925)
     ap.add_argument("--recheck-dir", default=None)
+    ap.add_argument("--list", action="store_true",
+                    help="read the records as the census listing: decompositions are reported, not failed")
     a = ap.parse_args(argv[1:])
     common.lower_priority()
     t_all = time.time()
@@ -284,7 +296,10 @@ def main(argv):
         print(f"DECOMPOSITION FOUND: psi_2 = |T5>^2 lies in the span of the {h['terms_count']} stabilizer states "
               f"{h['states']} (batch {idx}, numerical rank {h['rank']}, residual {h['residual']:.2e}); "
               f"chi(T5^2) <= {h['rank']}; {len(found)} such hit(s)")
-        return 2
+        if not a.list:
+            return 2
+        for idx, h in found:
+            print(f"LISTED: batch {idx} set {h['states']}")
     if missing and not a.partial:
         print(f"NOT CERTIFIED: {len(missing)} batch(es) missing, first {missing[:10]}")
         return 1
@@ -297,7 +312,8 @@ def main(argv):
         print("every stored check passes: all batches present, hashes verify, the units are the enumerator's "
               "pivot pairs tiled exactly once, the dictionary hashes as recorded, "
               + ("ranks 1 to 4 are excluded by the exact censuses, " if not a.no_low_census else "")
-              + "no undecided unit, and no 5-set has |T5>^2 in its span")
+              + (f"no undecided unit, and {len(found)} 5-set(s) have |T5>^2 in their span (the listing)"
+                 if a.list else "no undecided unit, and no 5-set has |T5>^2 in its span"))
     if records and not a.no_manifest:
         manifest = a.manifest or os.path.join(common.HERE, "batch_manifest.json" if not missing
                                               else "batch_manifest.partial.json")
@@ -336,6 +352,11 @@ def main(argv):
               f"{time.time() - t_all:.0f}s")
         return 1
     print(f"aggregate complete in {time.time() - t_all:.0f}s")
+    if a.list:
+        print(f"LISTING COMPLETE: {len(found)} decomposition 5-set(s)")
+        return 0
+    if found:
+        return 2
     print(CLAIM)
     return 0
 

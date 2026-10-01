@@ -1,0 +1,27 @@
+{
+ "label": "T3 m=2 -> 3",
+ "p": 3,
+ "m": 2,
+ "field": 9,
+ "r": 3,
+ "sets": 1,
+ "stats": {
+  "patterns_total": 27,
+  "leaf_tests": 9,
+  "pruned_modulus": 0,
+  "pruned_direction": 0,
+  "pruned_translate": 18,
+  "stabilizer": 0,
+  "seconds": 0.0024940967559814453
+ },
+ "stabilizer_patterns": [],
+ "lifts": [],
+ "lift_count": 0,
+ "expected": 0,
+ "passed": true,
+ "generated": "2026-10-01T15:17:16+00:00",
+ "git_commit": "0ba945114d9e2467faaa997016f948b53473ca78",
+ "hostname": "vincentrusso-MacBook-Pro",
+ "python": "3.12.14",
+ "numpy": "2.3.5"
+}
