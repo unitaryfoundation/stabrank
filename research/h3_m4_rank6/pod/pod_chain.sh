@@ -79,9 +79,23 @@ echo "H3M4_PLANTED_DONE $(date -u +%FT%TZ) $(grep -h '^control-planted' "$POD"/c
 
 # the lists (B6 by the seven routes of degenerate6, C6, k5, k4), written
 # with their hash and compared with the committed reps_H3.json
+# (compared by content: the codes and kappa vectors; the record's seconds,
+# git and generated fields differ on every build and sit inside the hash)
+git show HEAD:$D/reps_H3.json > "$POD/reps_H3.committed.json" 2>/dev/null || true
 nice -n 19 $PY -u $D/driver.py lists --write > "$POD/lists.log" 2>&1; echo "lists rc=$?"
-if git diff --quiet -- $D/reps_H3.json; then LISTS=same; else LISTS=DIFFERENT; fi
-echo "H3M4_LISTS_DONE $(date -u +%FT%TZ) reps_H3.json $LISTS from the committed file; $(tail -1 "$POD/lists.log")"
+LISTS=$($PY - <<'EOF'
+import json, os
+new = json.load(open("research/h3_m4_rank6/reps_H3.json"))
+p = "research/h3_m4_rank6/results/pod/reps_H3.committed.json"
+if not os.path.exists(p) or os.path.getsize(p) == 0:
+    print("no committed file to compare")
+else:
+    old = json.load(open(p))
+    same = all(new[k]["codes"] == old[k]["codes"] for k in ("B6", "C6", "k5", "k4")) and new["B6"]["kappa"] == old["B6"]["kappa"]
+    print("same lists as the committed file (codes and kappa)" if same else "DIFFERENT lists from the committed file")
+EOF
+)
+echo "H3M4_LISTS_DONE $(date -u +%FT%TZ) reps_H3.json: $LISTS; $(tail -1 "$POD/lists.log")"
 
 # the remaining controls, each in its own log (b6 and c6 plants need the lists)
 nice -n 19 $PY -u $D/driver.py control-lists > "$POD/control_lists.log" 2>&1; echo "control-lists rc=$?"
