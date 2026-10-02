@@ -12,7 +12,7 @@
   "pruned_direction": 2308,
   "pruned_translate": 0,
   "stabilizer": 159,
-  "seconds": 3.9574851989746094
+  "seconds": 5.246412038803101
  },
  "stabilizer_patterns": [
   {
@@ -9933,9 +9933,9 @@
  "lift_count": 0,
  "expected": 0,
  "passed": true,
- "generated": "2026-10-01T15:17:20+00:00",
- "git_commit": "0ba945114d9e2467faaa997016f948b53473ca78",
- "hostname": "vincentrusso-MacBook-Pro",
- "python": "3.12.14",
- "numpy": "2.3.5"
+ "generated": "2026-10-02T01:36:35+00:00",
+ "git_commit": "b8942421fd6dae8a13c48890d5ead482d5b207fd",
+ "hostname": "ee4072210b09",
+ "python": "3.13.5",
+ "numpy": "2.4.4"
 }

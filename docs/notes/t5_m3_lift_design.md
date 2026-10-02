@@ -1,15 +1,14 @@
-# chi(|T5>^3) >= 6 by slice-and-lift at exact rank: design and controls
+# chi(|T5>^3) >= 6 by slice-and-lift at exact rank: design, controls, and the run
 
-Status (2026-10-01). Design and controls only; nothing in this note is a
-bound. The pipeline is `research/t5_m3_lift/` (exact lift stage, controls,
-pod chain, bound draft), the certificate is
+Status (2026-10-02). Done: the pod chain ran on 2026-10-02 (01:30 to
+03:19 UTC) and `bounds/T5-m3-lower-6.json` is filed at the attested tier,
+with `bounds/T5-m4-lower-6.json` by projection; section 10 has the run.
+The pipeline is `research/t5_m3_lift/` (exact lift stage, controls, pod
+chain, bound draft), the certificate is
 `verify_challenge/cert_t5_m3_lift_attested.py`, and the census it rests on
 is the one of `research/t5q_m2_rank5` that found the rank-5 decomposition
-of |T5>^2 on 2026-09-24 (`docs/notes/t5q_m2_rank5_exclusion.md`). The
-lift stage ran on the laptop against the committed census records and
-found no lift; the bound goes to the board only after the pod chain has
-run the certificate as the verifier runs it, which is what the user
-launches when the pod is free.
+of |T5>^2 on 2026-09-24 (`docs/notes/t5q_m2_rank5_exclusion.md`). Sections
+1 to 9 are the design and the laptop controls as written before the run.
 
 Notation. w = exp(2 pi i / 5), |T5> = 5^{-1/2} sum_z w^{z^3} |z>, psi_m =
 |T5>^m, alpha_z = w^{z^3} / sqrt 5 the amplitudes of |T5>, all nonzero.
@@ -371,7 +370,47 @@ tested, 0 stabilizer) and the search time; the batch-73 rate.
 Assumed: the census's modular caveat (inherited); the exactness of the
 dictionary's phase codes (asserted on the enumerator's output).
 
-Open: the pod chain has not run; the bound is not on the board; a rank
-below 15 at m = 3 and below 25 at m = 4; excluding rank 6 at m = 3, which
-would need the invisible-term machinery and a census of the rank-5
-decompositions of psi_3 or a different route.
+Open: a rank below 15 at m = 3 and below 25 at m = 4; excluding rank 6
+at m = 3, which would need the invisible-term machinery and a census of
+the rank-5 decompositions of psi_3 or a different route.
+
+## 10. The pod run (2026-10-02)
+
+The chain ran with `WITH_CENSUS=1` at 20 workers on the 32-vCPU pod
+(AMD EPYC 9655P, Ubuntu 20.04, kernels built with gcc-10, uv's Python
+3.13.5, numpy 2.4.4), commit b894242, log
+`research/t5_m3_lift/results/pod/t5m3_chain.log`.
+
+| stage | marker (UTC) | result |
+|---|---|---|
+| kernel import | 01:30:02 | `cover5_pair` imports |
+| six census controls, seven lift controls | 01:36:35 | every one rc = 0 (`results/pod/*.log`, records under `results/` and `research/t5q_m2_rank5/results/control_*.json`) |
+| batch-73 probe | 01:43:21 | 13,747 units, 6,012,090 modular candidates, 0 hits, 404 kernel s, 1.18e-7 s per squared member count, deterministic hash equal to the committed record |
+| census re-run, 74 batches | 02:32:26 | 155,422 units, 2,795,734,903 modular candidates, 1 hit (batch 31, the sector set), 0 undecided, 14.49 CPU-hours (14.57 kernel hours, 1.15e-7 s per squared member count), 49 minutes of wall time; the deterministic hash of every one of the 74 records equals the committed one (`results/pod/census/`) |
+| listing aggregate | 02:54:36, exit 0 | plan equal, k = 1..4 censuses empty, 74 records consistent, hit re-decided, re-runs of batches 12 and 47 (seed 20261001) with equal hashes (591 s, 571 s), manifest written, `LISTING COMPLETE: 1 decomposition 5-set(s)`; 1,329 s |
+| `lift.py cell --low-census` | 02:57:24, exit 0 | 3,125 patterns, 25 tested, 0 stabilizer, 0 lifts, `CERTIFIED chi(T5^3) >= 6`; 168 s |
+| `fill_draft.py`, then `stabrank_verify.py` on the filled bound | 03:19:38, exit 0 | `PASS T5-m3-lower-6.json chi(\|T5>^3) >= 6, tier=attested`, 2 of 74 batches re-run from seed 20261001; 22 minutes |
+
+What the census re-run compared. The deterministic part of a record is
+the batch geometry, its units, the dictionary, plan, and partition hashes,
+the kernel's member count for every unit, every hit with its flags and
+both decisions, and the undecided list; the candidate count, the kernel
+run count, timing, host, and version fields sit outside it. All 74
+deterministic hashes agree with the 2026-09-24 records, and the modular
+candidate count agrees too (it is seeded). What differed between the two
+runs: the pod (16-vCPU EPYC 4564P against 32-vCPU EPYC 9655P), the
+Python and numpy versions (3.12.14 and 2.3.5 against 3.13.5 and 2.4.4),
+the kernel binary (the 5-cover source was refactored after the first run
+in 561c82a and compiled here with gcc-10), and the worker count. What was
+shared: `batch.py`, `common.py`, the partition, the dictionary enumerator,
+and the kernel's functional seed. The re-run is recorded in the bound's
+compute block and does not change the tier: the tier is about the budget,
+and a second run of the same enumeration is still an enumeration no
+certificate re-runs in full.
+
+The bound files. `bounds/T5-m3-lower-6.json` (attested to
+`research/t5q_m2_rank5/batch_manifest.json`, 74 entries, `recomputed` 2;
+compute block: 28.9 CPU-hours over both census runs and the chain, 2.9
+hours of wall) and `bounds/T5-m4-lower-6.json` (projection, same
+certificate, inherits the tier). The board's T5 column is now 3, 5, 6 to
+15, 6 to 25.

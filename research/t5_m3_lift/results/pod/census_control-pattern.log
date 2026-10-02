@@ -1,0 +1,2 @@
+wrote research/t5q_m2_rank5/results/control_pattern.json
+control-pattern: the complex |T5>^2 has the phase pattern w_5^(x^3 + y^3) [True], the codes agree [True], the modular targets agree [True], w_5 = 21009 mod 65521 and 815036133 mod 2013265921 are fifth roots of unity [True], supports agree [True]: PASSED

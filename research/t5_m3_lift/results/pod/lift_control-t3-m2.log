@@ -1,0 +1,6 @@
+rank-3 decompositions of |T3>^2: 1 (group order 18)
+  patterns 27, leaf tests 9, stabilizer 0 (0.0s)
+T3 m=2 -> 3: 1 set(s) of size 3, 27 patterns, 9 tested, 0 stabilizer, 0 lift(s)
+wrote research/t5_m3_lift/results/control_t3_m2.json
+control-t3-m2 PASSED: 0 lifts (chi(T3^3) = 8)
+[0.5s]

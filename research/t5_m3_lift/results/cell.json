@@ -12,7 +12,7 @@
   "pruned_direction": 0,
   "pruned_translate": 300,
   "stabilizer": 0,
-  "seconds": 0.028031110763549805
+  "seconds": 0.03246116638183594
  },
  "stabilizer_patterns": [],
  "lifts": [],
@@ -120,32 +120,11 @@
   ],
   "group_order": 50
  },
- "low_census": {
-  "1": {
-   "hits": 0,
-   "candidates": 0,
-   "units": 1
-  },
-  "2": {
-   "hits": 0,
-   "candidates": 0,
-   "units": 98
-  },
-  "3": {
-   "hits": 0,
-   "candidates": 0,
-   "units": 98
-  },
-  "4": {
-   "hits": 0,
-   "candidates": 7367,
-   "units": 155422
-  }
- },
- "seconds": 114.33466386795044,
- "generated": "2026-10-01T15:25:36+00:00",
- "git_commit": "0ba945114d9e2467faaa997016f948b53473ca78",
- "hostname": "vincentrusso-MacBook-Pro",
- "python": "3.12.14",
- "numpy": "2.3.5"
+ "low_census": null,
+ "seconds": 1.6777310371398926,
+ "generated": "2026-10-02T03:19:37+00:00",
+ "git_commit": "b8942421fd6dae8a13c48890d5ead482d5b207fd",
+ "hostname": "ee4072210b09",
+ "python": "3.13.5",
+ "numpy": "2.4.4"
 }

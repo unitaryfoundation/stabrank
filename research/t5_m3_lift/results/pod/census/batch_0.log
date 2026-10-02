@@ -1,0 +1,3 @@
+batch 0 of 74: units 0..492 (493 pivot pairs, about 600 pod s), compiled kernel, deadline 7200s
+batch 0: 493 of 493 units run, 56118736 modular candidates, 0 hits, 0 decompositions, 0 undecided; kernel 795s, wall 797s; deterministic sha256 bce992298d358247
+batch 0 complete: no 5-set of its units has |T5>^2 in its span; written research/t5_m3_lift/results/pod/census/batch_0.json

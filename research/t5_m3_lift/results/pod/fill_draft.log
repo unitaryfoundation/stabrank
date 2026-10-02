@@ -1,0 +1,2 @@
+schema: valid
+wrote research/t5_m3_lift/results/T5-m3-lower-6.json: date 2026-10-02, compute {'cpu_hours': 0.086, 'wall_clock_hours': 0.086, 'runs': 8, 'hardware': 'ee4072210b09, one process at nice 19; the lift stage and its controls (the census behind it is the attested block)'}

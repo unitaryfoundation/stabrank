@@ -1,0 +1,9 @@
+  patterns 3125, leaf tests 25, stabilizer 5 (0.0s)
+T5^2 (x) beta, beta = plus: 1 set(s) of size 5, 3125 patterns, 25 tested, 5 stabilizer, 1 lift(s)
+  patterns 3125, leaf tests 25, stabilizer 5 (0.0s)
+T5^2 (x) beta, beta = w^(z^2): 1 set(s) of size 5, 3125 patterns, 25 tested, 5 stabilizer, 1 lift(s)
+  patterns 3125, leaf tests 25, stabilizer 5 (0.0s)
+T5^2 (x) beta, beta = w^(2z^2 + 3z): 1 set(s) of size 5, 3125 patterns, 25 tested, 5 stabilizer, 1 lift(s)
+wrote research/t5_m3_lift/results/control_product.json
+control-product PASSED: 3 planted products, each recovered as the only lift (5 stabilizer patterns, the constant ones)
+[1.4s]

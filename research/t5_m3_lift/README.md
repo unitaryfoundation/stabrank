@@ -1,8 +1,10 @@
 # research/t5_m3_lift: chi(|T5>^3) >= 6 by slice-and-lift at exact rank
 
-Status: design and controls only; nothing here is a bound yet. The
-argument, the lemma with its case split, the costs, and the launch plan
-are in `docs/notes/t5_m3_lift_design.md`.
+Status (2026-10-02): run. The pod chain ran with the census re-run, every
+hash matched, and `bounds/T5-m3-lower-6.json` is filed at the attested
+tier with `bounds/T5-m4-lower-6.json` by projection. The argument, the
+lemma with its case split, the costs, the controls, and the run are in
+`docs/notes/t5_m3_lift_design.md`.
 
 The cell chi(|T5>^2) = 5 is settled and the census of
 `research/t5q_m2_rank5` (2026-09-24, 74 batches, every unit run) is the
@@ -25,7 +27,7 @@ Files
 | `fill_draft.py` | fills `T5-m3-lower-6.json.draft` (date, compute block) into a submission file once the manifest exists |
 | `T5-m3-lower-6.json.draft` | the bound file at the attested tier (the census is the stored enumeration; the lift runs under the budget) |
 | `pod/pod_chain.sh` | the pod chain: kernel import, census and lift controls, the batch-73 rate probe against the committed record, optionally the whole census again with every hash compared, `aggregate.py --list --recheck 2`, `lift.py cell --low-census`, the certificate under the verifier; anchored `T5M3_*` markers |
-| `results/` | one JSON record per command |
+| `results/` | one JSON record per command (the pod's, from the chain); `results/pod/` holds the chain log, every stage log, the probe and recheck records, and the 74 records of the census re-run under `census/` |
 | `../t5q_m2_rank5/aggregate.py --list` | the listing mode of the census aggregate: a stored decomposition is reported rather than failed, the manifest is written, and the two seeded re-runs are made |
 | `../../verify_challenge/cert_t5_m3_lift_attested.py` | the certificate: `aggregate.py --list --recheck 2 --recheck-seed 20261001`, then `lift.py cell --trust-low-census`; prints the m = 3 claim and the m = 4 projection |
 | `../../tests/test_t5_m3_lift.py` | the field, the stabilizer test, and the lift on the basis, the rank-3 sets, the census set with a planted product, and the qutrit controls |
