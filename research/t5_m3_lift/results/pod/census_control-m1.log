@@ -1,0 +1,2 @@
+wrote research/t5q_m2_rank5/results/control_m1.json
+control-m1: |T5> has 10 rank-3 decompositions over the 30 one-ququint states in 2 orbit(s) of the order-5 unitary group (sizes [5, 5]); the k = 3 census lists 4 of them, hitting every orbit [True], all genuine [True]; k = 1, 2 empty [True]: PASSED

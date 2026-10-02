@@ -1,6 +1,6 @@
 {
- "git": "a3468f5c21708d5b4b28f457d54167625324ee0d",
- "generated": "2026-09-24T12:08:20+00:00",
+ "git": "b8942421fd6dae8a13c48890d5ead482d5b207fd",
+ "generated": "2026-10-02T01:30:08+00:00",
  "N": 30,
  "group_order": 5,
  "pivots": 6,
@@ -89,5 +89,5 @@
  "every_orbit_hit": true,
  "every_census_hit_genuine": true,
  "passed": true,
- "seconds": 0.18507909774780273
+ "seconds": 0.2163996696472168
 }

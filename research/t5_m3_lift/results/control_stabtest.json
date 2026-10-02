@@ -1,0 +1,11 @@
+{
+ "label": "exact stabilizer test",
+ "count": 40,
+ "seed": 5,
+ "passed": true,
+ "generated": "2026-10-02T01:34:07+00:00",
+ "git_commit": "b8942421fd6dae8a13c48890d5ead482d5b207fd",
+ "hostname": "ee4072210b09",
+ "python": "3.13.5",
+ "numpy": "2.4.4"
+}
