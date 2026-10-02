@@ -1,0 +1,18 @@
+partition research/h3_m4_rank6/partition.json: H3 m=4 rank=6 n1=2 x0=[0, 0], 1021 batches (A6 88, B6 802, C6 92, beta 36, gamma 3), sha256 90f1891c5eb4374e
+6-cover census re-run over 2390 pivot pairs in 927s: every count equal
+lists re-enumerated in 57s: B6 378843, C6 354012, k5 61413, k4 565 orbits (all equal to the stored lists)
+batches present 1021/1021
+stage A6: 88/88 batches, 36368678 items, 36368678 matched, 0 refused, 0 undecided, 0 hits; 14.62 CPU-h (598s per batch, 1.45 ms per item); projected stage total 14.62 CPU-h at this rate (partition estimate 14.44 pod)
+stage B6: 802/802 batches, 378843 items, 378843 matched, 0 refused, 0 undecided, 0 hits; 60.88 CPU-h (273s per batch, 578.55 ms per item); projected stage total 60.88 CPU-h at this rate (partition estimate 133.46 pod)
+stage C6: 92/92 batches, 354012 items, 354012 matched, 0 refused, 0 undecided, 0 hits; 3.30 CPU-h (129s per batch, 33.53 ms per item); projected stage total 3.30 CPU-h at this rate (partition estimate 11.39 pod)
+stage beta: 36/36 batches, 61413 items, 982608 matched, 0 refused, 0 undecided, 0 hits; 2.28 CPU-h (228s per batch, 133.83 ms per item); projected stage total 2.28 CPU-h at this rate (partition estimate 5.29 pod)
+stage gamma: 3/3 batches, 565 items, 76840 matched, 0 refused, 0 undecided, 0 hits; 0.03 CPU-h (35s per batch, 188.46 ms per item); projected stage total 0.03 CPU-h at this rate (partition estimate 0.08 pod)
+every stored check passes: all batches present, hashes verify, geometry matches the partition, the stage A6 units are the enumerator's pivot pairs, the census and the lists match their hashes and are tiled exactly once, no refused or undecided run, no hit is a decomposition of |H3>^4
+wrote research/h3_m4_rank6/batch_manifest.json: 1021 batch(es)
+seed: 20261002
+re-running 2 batch(es) from scratch: [142, 1009] -> research/h3_m4_rank6/results/pod/recheck
+  batch 142 (stage B6): 183s, deterministic hash matches (8734ba5f52f72e0b)
+  batch 1009 (stage beta): 157s, deterministic hash matches (432ddcec21cda307)
+aggregate complete in 1331s
+CERTIFIED chi(H3^4) >= 7
+AGG_RC=0

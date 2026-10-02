@@ -1,0 +1,4 @@
+gamma (1, 1, 1, 1): 554 items, 30 sampled: per item mean 0.1099s, median 0.1094s, max 0.119s, trimmed mean 0.1099s (0 tail items) [3s]
+gamma (1, 1, 1, 1) dependent: 2 items, 2 sampled: per item mean 0.9224s, median 0.9224s, max 1.524s, trimmed mean 0.9224s (0 tail items) [2s]
+gamma (2, 1, 1): 9 items, 9 sampled: per item mean 0.6727s, median 0.6661s, max 0.714s, trimmed mean 0.6727s (0 tail items) [6s]
+gamma: 41 items, 5576 runs, hits 0, refused 0, undecided 0; hist {'0,0,0,0': 5447, '2/2/0,0,0,0': 60, '2/0,0,0,0': 38, '2/2/2/0,0,0,0': 28, '2/2/0,72,0,0': 2, '2/2/2/2/0,0,0,0': 1}

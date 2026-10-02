@@ -1,0 +1,3 @@
+batch 1 of 6: stage B6, 1 items (kappa 1), 1 run(s) per item, compiled kernels, candidate cap 2000000, deadline 900s
+batch 1: 1 items, 1 matched, 0 refused, 0 hits, 0 decompositions, 0 undecided; kernel 0s, match 1s, wall 1s; deterministic sha256 40ff1cc2f2202e38
+batch 1 complete: no hit is a decomposition of |H3>^4; written research/h3_m4_rank6/results/dryrun/batch_1.json

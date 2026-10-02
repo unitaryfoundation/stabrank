@@ -1,0 +1,50 @@
+Traceback (most recent call last):
+  File "/root/stabrank-h3m4/research/h3_m4_rank6/fill_draft.py", line 121, in <module>
+    raise SystemExit(main(sys.argv))
+                     ~~~~^^^^^^^^^^
+  File "/root/stabrank-h3m4/research/h3_m4_rank6/fill_draft.py", line 107, in main
+    jsonschema.validate(doc, schema)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/root/stabrank-h3m4/.venv/lib/python3.13/site-packages/jsonschema/validators.py", line 1332, in validate
+    raise error
+jsonschema.exceptions.ValidationError: "With the Lean rank-8 witness bounds/H3-m4-upper-8.json this moves the cell to 7 <= chi(H3^4) <= 8. The argument (docs/notes/h3_m4_rank6_design.md) depends on: (1) Fact B of PR #86 (not re-run): no two-qutrit slice point of a rank-5 or rank-6 decomposition of |H3>^4 has exactly three nonzero terms, and chi(H3^2) = 3 leaves at least three, so at least four terms are visible at every point. (2) The orbit lemma: a unitary symmetry U of |H3>^2 on qutrits 3, 4 commutes with the slicing along qutrits 1, 2 and carries a decomposition with base S at (0, 0) to one with base U S and the same invisible flats, so one base per G_2 orbit (order 32) suffices; the lists hold the least element of each orbit and the aggregate recomputes them. (3) The completeness of the lists: A6 by the pivot and partner reductions of the census (the H^6 argument), B6 by the kappa reduction of the N^4 design note (an independent full k-cover plus states of its span or parallel modulo it), C6 by the merged-coefficient argument with cancelling blocks, k5 and k4 from the attested rank-5 lists of bounds/H3-m4-lower-6.json. (4) The two-qutrit slice structure lemma of PR #86; the matchers allow every flat through (0, 0) for every visible term and assume nothing beyond the base point and the invisible flats; two invisible terms that cancel at their common first point are carried explicitly to the line's next point. (5) Exactness: amplitudes in Q(omega_3, sqrt 3), both primes 1 mod 12, every modular kernel a superset, every candidate and hit re-decided mod 2013265921 and numerically. (6) The fresh-term filter of stage B6 lists the reference's first-slice solutions exactly (N^4 design note, section 3.1, with the vanishing-coefficient case of PR #153), and a base it cannot take falls back to the reference. (7) Controls (results/control_*.json): planted instances for every stage, flat and flat multiset including the cancelling-pair kinds, the orbit lemma on planted decompositions, the rank-4 decomposition of |H3>^3 along a qutrit pair, the lists and census by hash, the rank-8 witness at its bases (recorded, not required). Attested because no certificate budget re-runs the pod hours." is too long
+
+Failed validating 'maxLength' in schema['properties']['notes']:
+    {'type': 'string', 'maxLength': 2000}
+
+On instance['notes']:
+    ('With the Lean rank-8 witness bounds/H3-m4-upper-8.json this moves '
+     'the cell to 7 <= chi(H3^4) <= 8. The argument '
+     '(docs/notes/h3_m4_rank6_design.md) depends on: (1) Fact B of PR #86 '
+     '(not re-run): no two-qutrit slice point of a rank-5 or rank-6 '
+     'decomposition of |H3>^4 has exactly three nonzero terms, and '
+     'chi(H3^2) = 3 leaves at least three, so at least four terms are '
+     'visible at every point. (2) The orbit lemma: a unitary symmetry U of '
+     '|H3>^2 on qutrits 3, 4 commutes with the slicing along qutrits 1, 2 '
+     'and carries a decomposition with base S at (0, 0) to one with base U '
+     'S and the same invisible flats, so one base per G_2 orbit (order 32) '
+     'suffices; the lists hold the least element of each orbit and the '
+     'aggregate recomputes them. (3) The completeness of the lists: A6 by '
+     'the pivot and partner reductions of the census (the H^6 argument), '
+     'B6 by the kappa reduction of the N^4 design note (an independent '
+     'full k-cover plus states of its span or parallel modulo it), C6 by '
+     'the merged-coefficient argument with cancelling blocks, k5 and k4 '
+     'from the attested rank-5 lists of bounds/H3-m4-lower-6.json. (4) The '
+     'two-qutrit slice structure lemma of PR #86; the matchers allow every '
+     'flat through (0, 0) for every visible term and assume nothing beyond '
+     'the base point and the invisible flats; two invisible terms that '
+     'cancel at their common first point are carried explicitly to the '
+     "line's next point. (5) Exactness: amplitudes in Q(omega_3, sqrt 3), "
+     'both primes 1 mod 12, every modular kernel a superset, every '
+     'candidate and hit re-decided mod 2013265921 and numerically. (6) The '
+     "fresh-term filter of stage B6 lists the reference's first-slice "
+     'solutions exactly (N^4 design note, section 3.1, with the '
+     'vanishing-coefficient case of PR #153), and a base it cannot take '
+     'falls back to the reference. (7) Controls (results/control_*.json): '
+     'planted instances for every stage, flat and flat multiset including '
+     'the cancelling-pair kinds, the orbit lemma on planted '
+     'decompositions, the rank-4 decomposition of |H3>^3 along a qutrit '
+     'pair, the lists and census by hash, the rank-8 witness at its bases '
+     '(recorded, not required). Attested because no certificate budget '
+     're-runs the pod hours.')
+FILL_RC=1

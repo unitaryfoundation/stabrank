@@ -1,0 +1,7 @@
+B6: fresh 378843 orbits, stored 378843: equal
+C6: fresh 354012 orbits, stored 354012: equal
+k5: fresh 61413 orbits, stored 61413: equal
+k4: fresh 565 orbits, stored 565: equal
+census research/h3_m4_rank6/results/census6_H3_full.json: 2390 rows, 36368678 full 6-covers, pivot pairs equal to the enumerator's 2390
+wrote research/h3_m4_rank6/results/control_lists.json
+control-lists: PASS
