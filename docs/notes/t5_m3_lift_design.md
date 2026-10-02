@@ -408,6 +408,17 @@ compute block and does not change the tier: the tier is about the budget,
 and a second run of the same enumeration is still an enumeration no
 certificate re-runs in full.
 
+The verifier on the laptop. `stabrank_verify.py` on both bounds, run on
+the laptop at nice 19 under load 10 to 12 from other sessions, exceeded
+the 3,600 s budget on each (the two seeded batch re-runs alone are about
+1,160 pod seconds, and the laptop's kernel rate under that load was 4 to 9
+times the pod's in the probes of section 5). The pod ran the same
+certificate in 22 minutes. The aggregate now runs its seeded re-runs side
+by side (`--recheck-workers`, default one per core), which halves that
+part of the certificate on any machine with two cores; CI is the budget
+check that counts, and the H3^4 and N^4 attested certificates of the same
+shape run there in about 25 minutes.
+
 The bound files. `bounds/T5-m3-lower-6.json` (attested to
 `research/t5q_m2_rank5/batch_manifest.json`, 74 entries, `recomputed` 2;
 compute block: 28.9 CPU-hours over both census runs and the chain, 2.9

@@ -234,6 +234,8 @@ def main(argv):
     ap.add_argument("--recheck", type=int, default=2, help="batches to re-run from scratch")
     ap.add_argument("--recheck-seed", type=int, default=20260925)
     ap.add_argument("--recheck-dir", default=None)
+    ap.add_argument("--recheck-workers", type=int, default=None,
+                    help="re-runs in parallel (default: one per core, at most the re-run count)")
     ap.add_argument("--list", action="store_true",
                     help="read the records as the census listing: decompositions are reported, not failed")
     a = ap.parse_args(argv[1:])
@@ -327,10 +329,17 @@ def main(argv):
     picks = sorted(int(pool[x]) for x in rng.choice(len(pool), size=n, replace=False)) if n else []
     out_dir = a.recheck_dir or tempfile.mkdtemp(prefix="t5q_m2_rank5_recheck_")
     print(f"seed: {a.recheck_seed}")
-    print(f"re-running {n} batch(es) from scratch: {picks} -> {out_dir}")
+    print(f"re-running {n} batch(es) from scratch: {picks} -> {out_dir}"
+          + (f" ({min(n, a.recheck_workers or (os.cpu_count() or 1))} at a time)" if n > 1 else ""))
     mismatches = []
+    # The re-runs are independent processes, so they run side by side on the
+    # cores the machine has (the certificate's budget is wall clock).
+    from concurrent.futures import ThreadPoolExecutor
+    workers = max(1, min(a.recheck_workers or (os.cpu_count() or 1), len(picks)))
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        results = dict(zip(picks, pool.map(lambda k: rerun(a.partition, k, out_dir), picks)))
     for idx in picks:
-        proc, dt = rerun(a.partition, idx, out_dir)
+        proc, dt = results[idx]
         path = os.path.join(out_dir, f"batch_{idx}.json")
         if proc.returncode not in (0, 2) or not os.path.exists(path):
             mismatches.append(idx)
