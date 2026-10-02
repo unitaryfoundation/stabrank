@@ -1,7 +1,7 @@
 {
  "seed": 11,
- "git": "4cd923577d5ef3da5559cfcaed82a449249f8088",
- "generated": "2026-10-01T17:35:49+00:00",
+ "git": "d7e0cd6b9ef622e1ede2d31c6b7b929e983cb806",
+ "generated": "2026-10-01T17:58:54+00:00",
  "plants": [
   {
    "stage": "b6",
@@ -17,7 +17,7 @@
    ],
    "status": "recovered",
    "hits": 1,
-   "seconds": 2.673121929168701,
+   "seconds": 4.623505353927612,
    "stats": {
     "kappa": 1,
     "kappa1": 1,
@@ -47,14 +47,14 @@
     "reconstructions": 0,
     "hits": 1,
     "refused": false,
-    "peak_rss_gb": 0.277,
+    "peak_rss_gb": 0.26,
     "native": false,
-    "dense_raw": 397234,
+    "dense_raw": 397177,
     "coord_raw": [
      1,
      1
     ],
-    "filter_s": 2.673017978668213
+    "filter_s": 4.623242139816284
    }
   },
   {
@@ -71,7 +71,7 @@
    ],
    "status": "recovered",
    "hits": 1,
-   "seconds": 2.7766761779785156,
+   "seconds": 4.750467538833618,
    "stats": {
     "kappa": 1,
     "kappa1": 1,
@@ -101,14 +101,14 @@
     "reconstructions": 0,
     "hits": 1,
     "refused": false,
-    "peak_rss_gb": 0.279,
+    "peak_rss_gb": 0.26,
     "native": false,
-    "dense_raw": 87289,
+    "dense_raw": 87553,
     "coord_raw": [
      136,
      136
     ],
-    "filter_s": 2.7764971256256104
+    "filter_s": 4.749415397644043
    }
   },
   {
@@ -125,7 +125,7 @@
    ],
    "status": "recovered",
    "hits": 1,
-   "seconds": 2.6740899085998535,
+   "seconds": 4.620319128036499,
    "stats": {
     "kappa": 1,
     "kappa1": 1,
@@ -155,14 +155,14 @@
     "reconstructions": 0,
     "hits": 1,
     "refused": false,
-    "peak_rss_gb": 0.279,
+    "peak_rss_gb": 0.26,
     "native": false,
-    "dense_raw": 524327,
+    "dense_raw": 524256,
     "coord_raw": [
      1,
      1
     ],
-    "filter_s": 2.6740007400512695
+    "filter_s": 4.620071649551392
    }
   },
   {
@@ -179,7 +179,7 @@
    ],
    "status": "recovered",
    "hits": 1,
-   "seconds": 4.998361110687256,
+   "seconds": 16.770042896270752,
    "stats": {
     "kappa": 2,
     "kappa1": 2,
@@ -209,9 +209,9 @@
     "reconstructions": 0,
     "hits": 1,
     "refused": false,
-    "peak_rss_gb": 0.279,
+    "peak_rss_gb": 0.26,
     "native": false,
-    "dense_raw": 558734,
+    "dense_raw": 558856,
     "coord_raw": [
      2,
      39
@@ -242,6 +242,6 @@
    0
   ]
  },
- "seconds": 14.094458103179932,
+ "seconds": 33.91498422622681,
  "pass": true
 }

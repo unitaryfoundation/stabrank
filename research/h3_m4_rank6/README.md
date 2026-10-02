@@ -1,8 +1,9 @@
 # research/h3_m4_rank6: the rank-6 exclusion of |H3>^4
 
-The pipeline behind the planned bound chi(H3^4) >= 7 (with the Lean rank-8
-witness `bounds/H3-m4-upper-8.json`, the cell would move from
-6 <= chi(H3^4) <= 8 to 7 <= chi(H3^4) <= 8). Every rank-6 decomposition of
+The pipeline behind `bounds/H3-m4-lower-7.json` (chi(H3^4) >= 7 at the
+attested tier; with the Lean rank-8 witness `bounds/H3-m4-upper-8.json`,
+7 <= chi(H3^4) <= 8), run on the pod 2026-10-01 to 2026-10-02
+(`docs/notes/h3_m4_rank6_design.md`, section 11). Every rank-6 decomposition of
 |H3>^4 has, along qutrits 1, 2 at the base point (0, 0), four, five or six
 visible terms (Fact B of PR #86), so its base is a full 4-, 5- or
 6-multiset of |H3>^2 and the invisible terms lie on the 16 affine flats of
@@ -33,8 +34,9 @@ Files
 | `fill_draft.py`, `H3-m4-lower-7.json.draft` | the bound file, filled from the records and the manifest after the aggregate certifies |
 | `probe.py` | the design note's measurements: geometry, lists and orbits, matcher rates, the 6-cover census, the A6 rate |
 | `pod/pod_chain.sh` | the pod chain (setup and launch lines in its header; markers `H3M4_*`) |
-| `reps_H3.json` | the orbit-representative lists (B6 with kappa, C6, k5, k4) as base-360 codes, hashed (`driver.py lists --write`) |
-| `results/` | `census6_H3_full.json` (the 6-cover census per pivot pair), the design records, `control_*.json`, `dryrun/` (the laptop dry run of the chain at the smallest scale), and after the pod run the batch records, `rates.json`, `batch_manifest.json`, and `pod/` logs |
+| `reps_H3.json` | the orbit-representative lists (B6 with kappa, C6, k5, k4) as base-360 codes, hashed (`driver.py lists --write`, the pod's build) |
+| `results/` | the 1,021 pod records `batch_K.json` with their `batch_K.log`, `census6_H3_full.json` (the 6-cover census per pivot pair), the design records, `control_*.json`, `rates.json` and `sample_*.json` (the pod's rates), `dryrun/` (the laptop dry run of the chain at the smallest scale), and `pod/` (the chain's logs, the aggregate log, the two recheck records) |
+| `partition.json`, `batch_manifest.json` | the pod's partition (1,021 batches, hashed) and the aggregate's manifest of the 1,021 records with their SHA-256, what `bounds/H3-m4-lower-7.json` attests to |
 | `verify_challenge/cert_h3_m4_rank6_attested.py` | the certificate (runs `aggregate.py --recheck 2`) |
 
 The pod run is `pod/pod_chain.sh`: kernel import, the test module and the

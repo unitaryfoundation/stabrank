@@ -1,0 +1,7 @@
+beta (1, 1, 1, 1, 1): 57456 items, 30 sampled: per item mean 0.0559s, median 0.0558s, max 0.059s, trimmed mean 0.0559s (0 tail items) [2s]
+beta (1, 1, 1, 1, 1) dependent: 1653 items, 30 sampled: per item mean 0.7488s, median 0.6977s, max 0.893s, trimmed mean 0.7488s (0 tail items) [22s]
+beta (2, 1, 1, 1): 2283 items, 30 sampled: per item mean 0.1217s, median 0.1224s, max 0.133s, trimmed mean 0.1217s (0 tail items) [4s]
+beta (2, 1, 1, 1) dependent: 3 items, 3 sampled: per item mean 0.4396s, median 0.4906s, max 0.651s, trimmed mean 0.4396s (0 tail items) [1s]
+beta (2, 2, 1): 9 items, 9 sampled: per item mean 3.8116s, median 3.7019s, max 4.248s, trimmed mean 3.8116s (0 tail items) [34s]
+beta (3, 1, 1): 9 items, 9 sampled: per item mean 0.2348s, median 0.2299s, max 0.261s, trimmed mean 0.2348s (0 tail items) [2s]
+beta: 111 items, 1776 runs, hits 0, refused 0, undecided 0; hist {'0,0,0,0': 1744, '55/55/0,0,0,0': 7, '55/55/55/0,0,0,0': 7, '18/18/0,0,0,0': 7, '18/18/18/0,0,0,0': 7, '55/0,0,0,0': 2, '18/0,0,0,0': 2}

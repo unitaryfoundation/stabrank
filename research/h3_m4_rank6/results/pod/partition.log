@@ -1,0 +1,1 @@
+2390 pivot pairs in 88 stage A6 batches (14.44 pod CPU-h), 802 B6 (133.46), 92 C6 (11.39), 36 beta (5.29), 3 gamma (0.076); 1021 batches, 164.7 pod CPU-h; wrote research/h3_m4_rank6/partition.json (sha256 90f1891c5eb4374e)

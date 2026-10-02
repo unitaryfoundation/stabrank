@@ -1,0 +1,10 @@
+C6 (2, 1, 1, 1, 1): 339790 items, 10 sampled: per item mean 0.0222s, median 0.0207s, max 0.034s, trimmed mean 0.0222s (0 tail items) [0s]
+C6 (2, 1, 1, 1, 1) dependent: 8153 items, 10 sampled: per item mean 0.1829s, median 0.0948s, max 0.596s, trimmed mean 0.1829s (0 tail items) [2s]
+C6 (2, 2, 1, 1): 3747 items, 10 sampled: per item mean 0.2810s, median 0.2743s, max 0.361s, trimmed mean 0.2810s (0 tail items) [3s]
+C6 (2, 2, 1, 1) dependent: 6 items, 4 sampled: per item mean 17.2227s, median 16.3058s, max 30.366s, trimmed mean 17.2227s (0 tail items) [69s]
+C6 (2, 2, 2): 3 items, 3 sampled: per item mean 0.4711s, median 0.4699s, max 0.484s, trimmed mean 0.4711s (0 tail items) [1s]
+C6 (3, 1, 1, 1): 2283 items, 10 sampled: per item mean 0.0216s, median 0.0213s, max 0.024s, trimmed mean 0.0216s (0 tail items) [0s]
+C6 (3, 1, 1, 1) dependent: 3 items, 3 sampled: per item mean 0.0843s, median 0.0950s, max 0.125s, trimmed mean 0.0843s (0 tail items) [0s]
+C6 (3, 2, 1): 18 items, 10 sampled: per item mean 0.9548s, median 0.7528s, max 2.765s, trimmed mean 0.9548s (0 tail items) [10s]
+C6 (4, 1, 1): 9 items, 9 sampled: per item mean 0.0336s, median 0.0322s, max 0.041s, trimmed mean 0.0336s (0 tail items) [0s]
+C6: 69 items, 69 runs, hits 0, refused 0, undecided 0; hist {'0': 48, '6,6': 5, '1,1': 4, '109,109': 3, '1507,1507': 2, '12,12': 1, '110,110': 1, '9,9': 1}

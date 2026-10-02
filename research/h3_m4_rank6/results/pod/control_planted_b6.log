@@ -1,0 +1,6 @@
+  b6 kappa 1 filter base (0, 10, 118, 120, 124, 143): 1 hits, planted recovered, 4.62s
+  b6 kappa 1 filter base (4, 40, 118, 231, 233, 246): 1 hits, planted recovered, 4.75s
+  b6 kappa 1 filter base (0, 10, 123, 141, 213, 294): 1 hits, planted recovered, 4.62s
+  b6 kappa 2 reference base (0, 38, 131, 141, 142, 143): 1 hits, planted recovered, 16.77s
+wrote research/h3_m4_rank6/results/control_planted_b6.json
+control-planted (b6): 4/4 planted decompositions recovered in 34s; by stage {'b6': [4, 4], 'c6': [0, 0], 'beta': [0, 0], 'gamma': [0, 0]}; PASS

@@ -1,17 +1,20 @@
 # Excluding rank 6 for |H3>^4: design note
 
-Status (2026-10-01). Design and controls only; nothing here is a bound.
-The pipeline (`research/h3_m4_rank6/`, the N^4 pipeline on this cell) is
-built, dry-run on the laptop at the smallest scale, and ready for the pod
-chain `research/h3_m4_rank6/pod/pod_chain.sh`; the bound would be filed
-only after that run and its aggregate. The cell is 6 <= chi(H3^4) <= 8
+Status (2026-10-02). Run on the pod 2026-10-01 to 2026-10-02 (section
+11): 1,021 batches, 0 hits, 0 refused, 0 undecided after the four starved
+stage A6 batches were re-run, `CERTIFIED chi(H3^4) >= 7` by the aggregate
+with two seeded re-runs, filed as `bounds/H3-m4-lower-7.json` at the
+attested tier; with `bounds/H3-m4-upper-8.json` the cell is 7 <=
+chi(H3^4) <= 8. Sections 1 to 10 are the design as written before the
+run. Before the run the cell was 6 <= chi(H3^4) <= 8
 (`bounds/H3-m4-lower-6.json`, the rank-5 exclusion of
 `docs/notes/qutrit_m4_rank5_exclusion.md`; `bounds/H3-m4-upper-8.json`,
 the Lean witness, the four terms of the rank-4 decomposition of |H3>^3
 tensored with the rank-2 decomposition of |H3>), so excluding rank 6
-moves it to 7 <= chi(H3^4) <= 8 and settles nothing exactly. `docs/notes/next_exclusion_feasibility_2.md` (section 5)
-costed the N^4 and H3^4 rank-6 exclusions together and named three pieces
-of engineering; `docs/notes/n4_rank6_design.md` and
+moves it to 7 <= chi(H3^4) <= 8 and settles nothing exactly.
+`docs/notes/next_exclusion_feasibility_2.md` (section 5) costed the N^4
+and H3^4 rank-6 exclusions together and named three pieces of
+engineering; `docs/notes/n4_rank6_design.md` and
 `docs/notes/n4_rank6_exclusion.md` built and ran the N^4 pipeline
 (chi(N^4) = 7, 2026-09-26), which left the H3 exclusion with one missing
 component: the invisible-flat matcher at p = 3 for the H3 cell, whose base
@@ -664,3 +667,46 @@ bundle on top of the public main and is never pushed. After the run the
 records, the lists, the partition, the manifest, the bound and the logs
 are copied back, the bound moved to `bounds/H3-m4-lower-7.json`, and
 `verify_challenge/cert_h3_m4_rank6_attested.py` run on the laptop.
+
+## 11. The run (2026-10-01 to 2026-10-02)
+
+The chain of section 10 ran on a 32-vCPU RunPod pod (gcc-10 kernels,
+Python 3.13.5, numpy 2.4.4) at 28 workers alongside another job's 30:
+kernel import, the test module (29 passed), the planted controls (beta
+a, d, r 48 of 48; h 16 of 16; gamma 216 of 216), the lists (equal to the
+committed `reps_H3.json` by content), the remaining controls (B6 4 of 4,
+C6 5 of 5, orbit lemma 6 of 6, m = 3 3 of 3, lists equal, the witness
+bases aborted at the cap as before), the rates and the partition (1,021
+batches: A6 88, B6 802, C6 92, beta' 36, gamma 3; 165 pod CPU-hours
+estimated), the B6 probe, and the loop from 18:14 to 22:12 UTC.
+
+Measured (`results/pod/aggregate.log`): A6 14.6 CPU-hours (1.45 ms per
+cover), B6 60.9 (0.58 s per item against the partition's 1.4), C6 3.3,
+beta' 2.3 (134 ms per item over 16 flats), gamma 0.03; 81.1 CPU-hours
+of batch records in all, 0 hits, 0 refused. The aggregate re-ran the
+6-cover census over all 2,390 pivot pairs (927 s, every count equal),
+re-enumerated the four lists (57 s, equal), verified every record, re-ran
+batches 142 (B6 kappa 1, 183 s) and 1009 (beta', 157 s) from scratch with
+matching deterministic hashes, wrote `batch_manifest.json`, and printed
+`CERTIFIED chi(H3^4) >= 7` in 1,331 s. The bound file is
+`bounds/H3-m4-lower-7.json` (81.5 CPU-hours with the aggregate, 7.2 hours
+of wall time); `verify_challenge/cert_h3_m4_rank6_attested.py` is its
+certificate.
+
+The starvation incident. The four heaviest stage A6 batches (0, 3, 4, 5:
+the pivot-117 pairs with partners 0, 9, 10, 11, 0.7 to 2.1 million
+covers each) received 40 to 146 s of CPU in 4,740 s of wall during the
+loop (every other A6 batch has `cpu_s` equal to `wall_s`) and recorded
+4,345,471 covers as "deadline: not run" at the 3,600 s guard; the chain's
+resume pass restarted them and they were found in state T (an external
+SIGSTOP, `wchan do_signal_stop`) with 456 s of CPU each after two hours.
+The kernel runs those pairs' covers at 0.57 ms each on the laptop, no
+slower than any other pair, and the pair's cover set is 1.2 GB. They were
+killed and re-run by hand without a deadline (00:32 to 00:58 UTC, 9 to 26
+minutes each, 0 hits), their records replacing the starved ones, and the
+aggregate was run again. Lesson: the batch deadline is wall-clock, so a
+process that is stopped or starved records work it never got to run as
+undecided; a CPU-time deadline (`os.times()` against `--max-seconds`)
+would have let these batches finish inside the loop. The runner is left
+as it ran; the next pipeline should switch.
+

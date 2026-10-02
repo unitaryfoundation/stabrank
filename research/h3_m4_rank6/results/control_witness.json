@@ -1,7 +1,7 @@
 {
  "witness": "bounds/H3-m4-upper-8.json",
- "git": "4cd923577d5ef3da5559cfcaed82a449249f8088",
- "generated": "2026-10-01T17:36:16+00:00",
+ "git": "d7e0cd6b9ef622e1ede2d31c6b7b929e983cb806",
+ "generated": "2026-10-01T18:00:01+00:00",
  "cap_s": 25.0,
  "x0": [
   0,
@@ -35,8 +35,8 @@
    ],
    "kappa": 1,
    "status": "aborted",
-   "reason": "BudgetExceeded: line (1, 0): past the wall-clock deadline",
-   "seconds": 25.077690839767456,
+   "reason": "BudgetExceeded: slice (1, 0): past the wall-clock deadline",
+   "seconds": 25.476635694503784,
    "stats": {
     "kappa": 1,
     "kappa1": 1,
@@ -52,44 +52,17 @@
     "joined": 0,
     "composite_solutions": 0,
     "composite_states": [],
-    "candidates": 991761,
+    "candidates": 0,
     "zero_coefficient": 0,
     "split_pruned": 0,
     "reconstructions": 0,
     "hits": 0,
     "refused": false,
-    "seconds": {
-     "solve_10": 17.07,
-     "solve_01": 0.02,
-     "solve_11": 0.02,
-     "solve_20": 0.02,
-     "solve_02": 0.02,
-     "solve_12": 0.02,
-     "solve_21": 0.02,
-     "solve_22": 0.02
-    },
+    "seconds": {},
     "peak_rss_gb": null,
     "native": false,
-    "slice_solutions": {
-     "(1, 0)": 60941,
-     "(0, 1)": 60941,
-     "(1, 1)": 60941,
-     "(2, 0)": 60941,
-     "(0, 2)": 60941,
-     "(1, 2)": 60941,
-     "(2, 1)": 60941,
-     "(2, 2)": 60941
-    },
-    "slice_dependent": {
-     "(1, 0)": 6681,
-     "(0, 1)": 6681,
-     "(1, 1)": 6681,
-     "(2, 0)": 6681,
-     "(0, 2)": 6681,
-     "(1, 2)": 6681,
-     "(2, 1)": 6681,
-     "(2, 2)": 6681
-    },
+    "slice_solutions": {},
+    "slice_dependent": {},
     "line_pairs": {},
     "line_alive": {},
     "triples": {},
@@ -97,11 +70,7 @@
     "block_leaves": 0,
     "combinations": 0,
     "completions": 0,
-    "dependent_lines_limit": 1,
-    "coord_raw": [
-     60941,
-     60941
-    ]
+    "dependent_lines_limit": 1
    }
   },
   {
@@ -176,8 +145,8 @@
    ],
    "kappa": 1,
    "status": "aborted",
-   "reason": "BudgetExceeded: line (1, 0): past the wall-clock deadline",
-   "seconds": 25.039985179901123,
+   "reason": "BudgetExceeded: slice (1, 0): past the wall-clock deadline",
+   "seconds": 25.00985288619995,
    "stats": {
     "kappa": 1,
     "kappa1": 1,
@@ -193,44 +162,17 @@
     "joined": 0,
     "composite_solutions": 0,
     "composite_states": [],
-    "candidates": 991776,
+    "candidates": 0,
     "zero_coefficient": 0,
     "split_pruned": 0,
     "reconstructions": 0,
     "hits": 0,
     "refused": false,
-    "seconds": {
-     "solve_10": 16.44,
-     "solve_01": 0.02,
-     "solve_11": 0.02,
-     "solve_20": 0.02,
-     "solve_02": 0.02,
-     "solve_12": 0.02,
-     "solve_21": 0.02,
-     "solve_22": 0.02
-    },
+    "seconds": {},
     "peak_rss_gb": null,
     "native": false,
-    "slice_solutions": {
-     "(1, 0)": 60941,
-     "(0, 1)": 60941,
-     "(1, 1)": 60941,
-     "(2, 0)": 60941,
-     "(0, 2)": 60941,
-     "(1, 2)": 60941,
-     "(2, 1)": 60941,
-     "(2, 2)": 60941
-    },
-    "slice_dependent": {
-     "(1, 0)": 6681,
-     "(0, 1)": 6681,
-     "(1, 1)": 6681,
-     "(2, 0)": 6681,
-     "(0, 2)": 6681,
-     "(1, 2)": 6681,
-     "(2, 1)": 6681,
-     "(2, 2)": 6681
-    },
+    "slice_solutions": {},
+    "slice_dependent": {},
     "line_pairs": {},
     "line_alive": {},
     "triples": {},
@@ -238,11 +180,7 @@
     "block_leaves": 0,
     "combinations": 0,
     "completions": 0,
-    "dependent_lines_limit": 1,
-    "coord_raw": [
-     60941,
-     60941
-    ]
+    "dependent_lines_limit": 1
    }
   }
  ],

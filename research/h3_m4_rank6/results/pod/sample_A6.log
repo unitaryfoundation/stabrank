@@ -1,0 +1,1 @@
+A6: 20000 covers from 12 random pairs: 1.081 ms per cover, kernel 0.211 ms per cover; hits 0, refused 0; Matcher.run agrees on 100/100; hist {'0': 20000}

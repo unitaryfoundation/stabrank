@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/root/stabrank-h3m4/verify_challenge/stabrank_verify.py", line 571, in <module>
+    raise SystemExit(main(sys.argv))
+                     ~~~~^^^^^^^^^^
+  File "/root/stabrank-h3m4/verify_challenge/stabrank_verify.py", line 557, in main
+    sub = json.load(open(path))
+                    ~~~~^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'research/h3_m4_rank6/results/H3-m4-lower-7.json'
+VERIFY_RC=1
