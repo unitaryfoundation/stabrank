@@ -1,0 +1,114 @@
+name: Site rebuild
+
+# The board under docs/ is static and committed, so a merged submission is
+# not on the board until someone runs `make build` and lands the result.
+# This does that step: after a push to main that touched bounds/, rebuild
+# docs/ (verifying any bound without a matching receipt), and open or
+# refresh a pull request carrying the regenerated site and the new receipts.
+# The result still goes through review rather than straight to main.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "bounds/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+# Two merges in quick succession must not race on the rebuild branch. The
+# second run waits, then rebuilds from a main that already holds both.
+concurrency:
+  group: site-rebuild
+  cancel-in-progress: false
+
+jobs:
+  rebuild:
+    name: Rebuild docs/ and open the pull request
+    runs-on: ubuntu-latest
+    # A certificate may declare a budget of up to 3600 s, and a new bound
+    # has no receipt yet, so a rebuild can legitimately take an hour.
+    timeout-minutes: 90
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          # site_challenge/report.py reads `git log` to credit each bound
+          # with the pull request and merge commit that brought it to main.
+          fetch-depth: 0
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+        with:
+          enable-cache: true
+
+      - name: Rebuild the site
+        run: make build
+
+      - name: Commit the rebuilt site and open the pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BEFORE: ${{ github.event.before }}
+          BRANCH: site-rebuild-auto
+        run: |
+          git add certs/ docs/
+          if git diff --cached --quiet; then
+            echo "docs/ is already current for $GITHUB_SHA; nothing to open"
+            exit 0
+          fi
+
+          subject=$(git log -1 --format=%s "$GITHUB_SHA")
+          changed=""
+          if [ -n "$BEFORE" ] && git cat-file -e "$BEFORE" 2>/dev/null; then
+            changed=$(git diff --name-only "$BEFORE" "$GITHUB_SHA" -- bounds/ \
+              | sed 's#^bounds/##; s#\.json$##' | tr '\n' ' ' | sed 's/ $//')
+          fi
+          if [ -n "$changed" ]; then
+            title="Rebuild the site with $changed"
+          else
+            title="Rebuild the site from $(git rev-parse --short "$GITHUB_SHA")"
+          fi
+
+          {
+            echo "## Summary"
+            echo
+            echo "Automated rebuild of \`docs/\` after \`$subject\` reached main"
+            echo "(\`$GITHUB_SHA\`). \`make build\` verified every bound without a"
+            echo "matching receipt under \`certs/\` and regenerated the board, the"
+            echo "orbit and people pages, the ledger, the evidence index and the report."
+            echo
+            if [ -n "$changed" ]; then
+              echo "Submissions changed by that push:"
+              echo
+              for slug in $changed; do echo "- \`bounds/$slug.json\`"; done
+              echo
+            fi
+            echo "Check the receipt tier and the headline counter before merging;"
+            echo "merging deploys the board through GitHub Pages."
+            echo
+            echo "Run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          } > "$RUNNER_TEMP/body.md"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # One long-lived branch, reset from main on every run: a rebuild
+          # that is still open when the next submission lands is replaced by
+          # a fresh build that already includes both, never stacked on.
+          git checkout -B "$BRANCH"
+          git commit -q -F - <<MSG
+          $title
+
+          Built by the Site rebuild workflow from $GITHUB_SHA ($subject).
+          MSG
+          git push --force origin "$BRANCH"
+
+          open=$(gh pr list --head "$BRANCH" --base main --state open --json number --jq '.[0].number')
+          if [ -z "$open" ]; then
+            gh pr create --base main --head "$BRANCH" --title "$title" --body-file "$RUNNER_TEMP/body.md"
+          else
+            gh pr edit "$open" --title "$title" --body-file "$RUNNER_TEMP/body.md"
+            gh pr comment "$open" --body "Rebuilt again from \`$GITHUB_SHA\` ($subject); the branch was reset to that build."
+          fi

@@ -162,6 +162,8 @@ uv run --extra challenge python verify_challenge/validate_bounds.py bounds/yours
 
 Then open a pull request adding your file under `bounds/`. Do not commit `docs/`; the site is rebuilt from `bounds/` and a hand-edited page will conflict. Open the pull request from your own account so the `github` handles on the submission match its author.
 
+Once your pull request is merged, the `Site rebuild` workflow runs `make build` on main and opens a second pull request carrying the regenerated `docs/` and the new receipt under `certs/`. A maintainer merges that one, and the board updates. You do not need to do anything for this step, and it is why `docs/` stays out of your submission.
+
 CI validates every submission against `schema/bound.schema.json` and runs the verifier on the files the pull request touched. The schema and the verifier are taken from the base branch rather than from the pull request, so a submission cannot redefine the checks that judge it. A lower bound is the exception in kind, since its certificate script is the submission: for a branch in this repository the script runs from the pull request, and for a fork it is reported missing and left for a maintainer to run.
 
 If you need to change the verifier, the schema, or the site builder, do that in a pull request separate from any submission.
