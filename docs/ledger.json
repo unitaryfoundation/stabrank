@@ -2665,6 +2665,31 @@
     "note": "The exclusion of every rank-6 decomposition of |N>^4 lives in the stored batch outputs under research/n4_rank6/results/ (54 stage A6 batches over the 37,201,212 full 6-covers of |N>^2 with distinct independent base states, 807 stage B6 batches over the 259,655 G_2 orbit representatives of the dependent 6-sets, 166 stage C6 batches over the 321,553 representatives of the repeated 6-multisets, 27 stage beta' batches over the 54,488 representatives of the full 5-multisets with the invisible term on each of the 16 flats missing (2, 2), 3 stage gamma batches over the 505 representatives of the full 4-multisets with each of the 136 flat multisets), every base matched at x_0 = (2, 2) along qutrits 1, 2, every candidate re-decided mod 2013265921 and numerically, 0 hits, 0 refused, 0 undecided. The certificate checks the partition against the enumerator, re-runs the 6-cover kernel over every pivot pair, re-enumerates the orbit representatives, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/n4_rank6/batch.py, which regenerates any batch (batch.py K).",
     "total": 1057
    }
+  },
+  {
+   "slug": "qubit_T-m10-upper-15",
+   "orbit": "qubit_T",
+   "m": 10,
+   "direction": "upper",
+   "rank": 15,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.39068905956085187,
+   "date": "2026-10-12",
+   "author": "Samuel Bevins",
+   "github": [
+    "sjbevins"
+   ],
+   "method": "structured construction from a fifteen-word identity",
+   "reference": "Bevins 2026, arXiv submission pending",
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "direct construction, no search"
+   },
+   "budget_s": null,
+   "attested": null
   }
  ]
 }

@@ -1,7 +1,7 @@
 {
  "generated_from": "bounds/",
- "head": "01da020f7c8e8425e0515c183b8c03aa61b411f9",
- "generated": "2026-09-26",
+ "head": "aaff4fc481b5b5b789cbdc96c7c92f7648d63989",
+ "generated": "2026-10-15",
  "since": "2026-09-15",
  "exponents": [
   {
@@ -90,15 +90,15 @@
    "published_txt": "log\u20823/4",
    "reference": "qassim2021improved",
    "best": {
-    "gamma": 0.396240625180289,
-    "tier": "lean",
-    "m": 4,
-    "rank": 3,
-    "slug": "qubit_T-m4-upper-3",
-    "date": "2026-05-27"
+    "gamma": 0.39068905956085187,
+    "tier": "verified",
+    "m": 10,
+    "rank": 15,
+    "slug": "qubit_T-m10-upper-15",
+    "date": "2026-10-12"
    },
-   "verdict": "matches",
-   "gap": -5.551115123125783e-17
+   "verdict": "beats",
+   "gap": -0.005551565619437204
   },
   {
    "orbit": "T5",
@@ -934,11 +934,11 @@
    "m": 10,
    "lower": null,
    "upper": {
-    "rank": 18,
+    "rank": 15,
     "tier": "verified",
-    "slug": "qubit_T-m10-upper-18",
-    "date": "2026-09-22",
-    "board_date": "2026-09-22",
+    "slug": "qubit_T-m10-upper-15",
+    "date": "2026-10-12",
+    "board_date": "2026-10-15",
     "moved_since": true
    },
    "settled": false,
@@ -2160,6 +2160,22 @@
   {
    "orbit": "qubit_T",
    "m": 10,
+   "rank": 15,
+   "runs": 1,
+   "log_runs": 0,
+   "cpu_hours": 0.001,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.001,
+   "bounds": [
+    "qubit_T-m10-upper-15"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "qubit_T",
+   "m": 10,
    "rank": 18,
    "runs": 1,
    "log_runs": 0,
@@ -2446,6 +2462,15 @@
    "median_declared": 121.5,
    "cum_cpu_hours": 454.3096111111111,
    "cum_discoveries": 108
+  },
+  {
+   "date": "2026-10-12",
+   "seeded": false,
+   "cpu_hours": 0.001,
+   "discoveries": 1,
+   "median_declared": 0.001,
+   "cum_cpu_hours": 454.3106111111111,
+   "cum_discoveries": 109
   }
  ],
  "bounds": [
@@ -5650,6 +5675,41 @@
     "wall_clock_hours": 0.01,
     "runs": 1,
     "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "qubit_T-m10-upper-15",
+   "file": "bounds/qubit_T-m10-upper-15.json",
+   "orbit": "qubit_T",
+   "m": 10,
+   "direction": "upper",
+   "rank": 15,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-10-12",
+   "author": "Samuel Bevins",
+   "reference": "Bevins 2026, arXiv submission pending",
+   "method": "structured construction from a fifteen-word identity",
+   "pull_request": 163,
+   "merge_commit": "aaff4fc481b5b5b789cbdc96c7c92f7648d63989",
+   "merge_date": "2026-10-15",
+   "added_commit": "eb02bf3e56a941ef4d3c39b3bd3b1c4e3ea26fc7",
+   "added_date": "2026-10-12",
+   "added_subject": "qubit_T m=10: chi <= 15 (gamma 0.3907)",
+   "receipt": "certs/qubit_T-m10-upper-15.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "direct construction, no search"
    }
   },
   {
