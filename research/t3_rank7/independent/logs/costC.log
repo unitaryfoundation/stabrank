@@ -1,0 +1,52 @@
+|G'| = 2916, 45 orbits
+[26s] rep 0/45 state 0: |Stab(i)| = 108, allowed j 470, pairs with nontrivial Stab(i,j) 249; cumulative steps 5.5828e+10
+[28s] rep 1/45 state 27: |Stab(i)| = 12, allowed j 2755, pairs with nontrivial Stab(i,j) 428; cumulative steps 4.9795e+11
+[31s] rep 2/45 state 108: |Stab(i)| = 12, allowed j 2737, pairs with nontrivial Stab(i,j) 407; cumulative steps 1.0333e+12
+[35s] rep 3/45 state 189: |Stab(i)| = 18, allowed j 2303, pairs with nontrivial Stab(i,j) 755; cumulative steps 1.3845e+12
+[55s] rep 4/45 state 192: |Stab(i)| = 108, allowed j 466, pairs with nontrivial Stab(i,j) 245; cumulative steps 1.4391e+12
+[65s] rep 5/45 state 193: |Stab(i)| = 54, allowed j 775, pairs with nontrivial Stab(i,j) 265; cumulative steps 1.5541e+12
+[114s] rep 6/45 state 351: |Stab(i)| = 324, allowed j 185, pairs with nontrivial Stab(i,j) 119; cumulative steps 1.5710e+12
+[163s] rep 7/45 state 352: |Stab(i)| = 324, allowed j 185, pairs with nontrivial Stab(i,j) 119; cumulative steps 1.5879e+12
+[211s] rep 8/45 state 353: |Stab(i)| = 324, allowed j 185, pairs with nontrivial Stab(i,j) 119; cumulative steps 1.6048e+12
+[219s] rep 9/45 state 354: |Stab(i)| = 54, allowed j 887, pairs with nontrivial Stab(i,j) 422; cumulative steps 1.7200e+12
+[221s] rep 10/45 state 432: |Stab(i)| = 12, allowed j 2764, pairs with nontrivial Stab(i,j) 443; cumulative steps 2.2273e+12
+[223s] rep 11/45 state 1080: |Stab(i)| = 4, allowed j 8011, pairs with nontrivial Stab(i,j) 881; cumulative steps 3.5501e+12
+[224s] rep 12/45 state 1081: |Stab(i)| = 2, allowed j 15211, pairs with nontrivial Stab(i,j) 183; cumulative steps 6.0231e+12
+[225s] rep 13/45 state 1809: |Stab(i)| = 4, allowed j 8011, pairs with nontrivial Stab(i,j) 881; cumulative steps 7.2930e+12
+[226s] rep 14/45 state 1810: |Stab(i)| = 4, allowed j 8011, pairs with nontrivial Stab(i,j) 881; cumulative steps 8.5629e+12
+[227s] rep 15/45 state 1811: |Stab(i)| = 4, allowed j 8011, pairs with nontrivial Stab(i,j) 881; cumulative steps 9.8327e+12
+[228s] rep 16/45 state 2538: |Stab(i)| = 6, allowed j 5327, pairs with nontrivial Stab(i,j) 539; cumulative steps 1.0690e+13
+[234s] rep 17/45 state 2547: |Stab(i)| = 36, allowed j 1060, pairs with nontrivial Stab(i,j) 381; cumulative steps 1.0816e+13
+[237s] rep 18/45 state 2548: |Stab(i)| = 18, allowed j 1837, pairs with nontrivial Stab(i,j) 258; cumulative steps 1.1095e+13
+[238s] rep 19/45 state 2565: |Stab(i)| = 3, allowed j 10205, pairs with nontrivial Stab(i,j) 188; cumulative steps 1.2772e+13
+[239s] rep 20/45 state 2574: |Stab(i)| = 6, allowed j 5107, pairs with nontrivial Stab(i,j) 115; cumulative steps 1.3658e+13
+[240s] rep 21/45 state 3996: |Stab(i)| = 4, allowed j 8011, pairs with nontrivial Stab(i,j) 881; cumulative steps 1.5086e+13
+[241s] rep 22/45 state 3997: |Stab(i)| = 2, allowed j 15211, pairs with nontrivial Stab(i,j) 183; cumulative steps 1.7678e+13
+[258s] rep 23/45 state 6912: |Stab(i)| = 108, allowed j 470, pairs with nontrivial Stab(i,j) 249; cumulative steps 1.7734e+13
+[263s] rep 24/45 state 6913: |Stab(i)| = 36, allowed j 1189, pairs with nontrivial Stab(i,j) 436; cumulative steps 1.7908e+13
+[269s] rep 25/45 state 6914: |Stab(i)| = 36, allowed j 1189, pairs with nontrivial Stab(i,j) 436; cumulative steps 1.8083e+13
+[277s] rep 26/45 state 6917: |Stab(i)| = 54, allowed j 759, pairs with nontrivial Stab(i,j) 232; cumulative steps 1.8212e+13
+[285s] rep 27/45 state 6921: |Stab(i)| = 54, allowed j 887, pairs with nontrivial Stab(i,j) 422; cumulative steps 1.8328e+13
+[288s] rep 28/45 state 6922: |Stab(i)| = 18, allowed j 2303, pairs with nontrivial Stab(i,j) 755; cumulative steps 1.8679e+13
+[291s] rep 29/45 state 6923: |Stab(i)| = 18, allowed j 2303, pairs with nontrivial Stab(i,j) 755; cumulative steps 1.9030e+13
+[294s] rep 30/45 state 6926: |Stab(i)| = 27, allowed j 1487, pairs with nontrivial Stab(i,j) 416; cumulative steps 1.9289e+13
+[296s] rep 31/45 state 10557: |Stab(i)| = 12, allowed j 2954, pairs with nontrivial Stab(i,j) 827; cumulative steps 1.9747e+13
+[297s] rep 32/45 state 10558: |Stab(i)| = 4, allowed j 8011, pairs with nontrivial Stab(i,j) 881; cumulative steps 2.1070e+13
+[298s] rep 33/45 state 10559: |Stab(i)| = 4, allowed j 8011, pairs with nontrivial Stab(i,j) 881; cumulative steps 2.2392e+13
+[299s] rep 34/45 state 10562: |Stab(i)| = 6, allowed j 5097, pairs with nontrivial Stab(i,j) 98; cumulative steps 2.3463e+13
+[300s] rep 35/45 state 10638: |Stab(i)| = 2, allowed j 15839, pairs with nontrivial Stab(i,j) 1439; cumulative steps 2.5853e+13
+[301s] rep 36/45 state 10639: |Stab(i)| = 1, allowed j 30239, pairs with nontrivial Stab(i,j) 0; cumulative steps 3.0461e+13
+[302s] rep 37/45 state 10640: |Stab(i)| = 1, allowed j 30239, pairs with nontrivial Stab(i,j) 0; cumulative steps 3.5069e+13
+[303s] rep 38/45 state 10642: |Stab(i)| = 2, allowed j 15839, pairs with nontrivial Stab(i,j) 1439; cumulative steps 3.7460e+13
+[304s] rep 39/45 state 10643: |Stab(i)| = 1, allowed j 30239, pairs with nontrivial Stab(i,j) 0; cumulative steps 4.2068e+13
+[305s] rep 40/45 state 10646: |Stab(i)| = 2, allowed j 15839, pairs with nontrivial Stab(i,j) 1439; cumulative steps 4.4458e+13
+[306s] rep 41/45 state 11448: |Stab(i)| = 2, allowed j 15211, pairs with nontrivial Stab(i,j) 183; cumulative steps 4.7085e+13
+[307s] rep 42/45 state 11449: |Stab(i)| = 3, allowed j 10127, pairs with nontrivial Stab(i,j) 71; cumulative steps 4.9171e+13
+[307s] rep 43/45 state 11450: |Stab(i)| = 2, allowed j 15211, pairs with nontrivial Stab(i,j) 183; cumulative steps 5.1982e+13
+[308s] rep 44/45 state 11456: |Stab(i)| = 6, allowed j 5155, pairs with nontrivial Stab(i,j) 212; cumulative steps 5.3047e+13
+reps 45, pivot pairs 326323, pivot triples 5148456613, inner steps 5.3047e+13; stabilizer sizes [1, 2, 3, 4, 6, 12, 18, 27, 36, 54, 108, 324]; pairs with nontrivial Stab(i,j): 21177
+  at 35 ns/step: 515.7 CPU-hours
+  at 52 ns/step: 766.2 CPU-hours
+exit=0
+reps equal to certificate reps: True
+jok masks equal: False pairs 326323 326368

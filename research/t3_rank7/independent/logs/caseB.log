@@ -1,0 +1,160 @@
+8179 stage-1 tasks over 326368 pivot pairs
+[14s] task 0/8179: classes 2142, five-subsets 2304, survivors 0
+[20s] task 60/8179: classes 205551, five-subsets 214192, survivors 0
+[26s] task 120/8179: classes 464183, five-subsets 482963, survivors 0
+[32s] task 180/8179: classes 678951, five-subsets 708172, survivors 0
+[47s] task 240/8179: classes 923262, five-subsets 965056, survivors 0
+[47s] task 300/8179: classes 1082311, five-subsets 1130741, survivors 0
+[47s] task 360/8179: classes 1230500, five-subsets 1285614, survivors 0
+[47s] task 420/8179: classes 1283132, five-subsets 1341047, survivors 0
+[47s] task 480/8179: classes 1489127, five-subsets 1559011, survivors 0
+[51s] task 540/8179: classes 1630087, five-subsets 1707382, survivors 0
+[56s] task 600/8179: classes 1865789, five-subsets 1952662, survivors 0
+[57s] task 660/8179: classes 1964407, five-subsets 2055830, survivors 0
+[62s] task 720/8179: classes 2102616, five-subsets 2202864, survivors 0
+[72s] task 780/8179: classes 2453946, five-subsets 2570229, survivors 0
+[73s] task 840/8179: classes 2724337, five-subsets 2851422, survivors 0
+[78s] task 900/8179: classes 2855568, five-subsets 2988358, survivors 0
+[86s] task 960/8179: classes 3011149, five-subsets 3152928, survivors 0
+[86s] task 1020/8179: classes 3171830, five-subsets 3319572, survivors 0
+[91s] task 1080/8179: classes 3399050, five-subsets 3558162, survivors 0
+[96s] task 1140/8179: classes 3747397, five-subsets 3919560, survivors 0
+[96s] task 1200/8179: classes 3847020, five-subsets 4024159, survivors 0
+[99s] task 1260/8179: classes 4032639, five-subsets 4216624, survivors 0
+[104s] task 1320/8179: classes 4185586, five-subsets 4378734, survivors 0
+[106s] task 1380/8179: classes 4307033, five-subsets 4506515, survivors 0
+[110s] task 1440/8179: classes 4505903, five-subsets 4713563, survivors 0
+[119s] task 1500/8179: classes 4766548, five-subsets 5077414, survivors 0
+[119s] task 1560/8179: classes 4868918, five-subsets 5185395, survivors 0
+[119s] task 1620/8179: classes 4968617, five-subsets 5290784, survivors 0
+[124s] task 1680/8179: classes 5102126, five-subsets 5430295, survivors 0
+[127s] task 1740/8179: classes 5222114, five-subsets 5555463, survivors 0
+[130s] task 1800/8179: classes 5314403, five-subsets 5651903, survivors 0
+[143s] task 1860/8179: classes 5615137, five-subsets 5964827, survivors 0
+[143s] task 1920/8179: classes 6002389, five-subsets 6366475, survivors 0
+[145s] task 1980/8179: classes 6261515, five-subsets 6637537, survivors 0
+[149s] task 2040/8179: classes 6427553, five-subsets 6810934, survivors 0
+[160s] task 2100/8179: classes 6677543, five-subsets 7072824, survivors 0
+[160s] task 2160/8179: classes 6780113, five-subsets 7179701, survivors 0
+[167s] task 2220/8179: classes 6971273, five-subsets 7379367, survivors 0
+[171s] task 2280/8179: classes 7305915, five-subsets 7725865, survivors 0
+[173s] task 2340/8179: classes 7471132, five-subsets 7897975, survivors 0
+[173s] task 2400/8179: classes 7589731, five-subsets 8023632, survivors 0
+[175s] task 2460/8179: classes 7729903, five-subsets 8171295, survivors 0
+[179s] task 2520/8179: classes 7974085, five-subsets 8425701, survivors 0
+[179s] task 2580/8179: classes 8147061, five-subsets 8606125, survivors 0
+[191s] task 2640/8179: classes 8425970, five-subsets 8899047, survivors 0
+[191s] task 2700/8179: classes 8499341, five-subsets 8976990, survivors 0
+[192s] task 2760/8179: classes 8659909, five-subsets 9144333, survivors 0
+[192s] task 2820/8179: classes 8902007, five-subsets 9395866, survivors 0
+[194s] task 2880/8179: classes 9040560, five-subsets 9540338, survivors 0
+[194s] task 2940/8179: classes 9204951, five-subsets 9714157, survivors 0
+[201s] task 3000/8179: classes 9517481, five-subsets 10041194, survivors 0
+[201s] task 3060/8179: classes 9612898, five-subsets 10141180, survivors 0
+[202s] task 3120/8179: classes 9782467, five-subsets 10318138, survivors 0
+[206s] task 3180/8179: classes 9995340, five-subsets 10542203, survivors 0
+[208s] task 3240/8179: classes 10123973, five-subsets 10676627, survivors 0
+[211s] task 3300/8179: classes 10261037, five-subsets 10821794, survivors 0
+[223s] task 3360/8179: classes 10571559, five-subsets 11147109, survivors 0
+[223s] task 3420/8179: classes 10674637, five-subsets 11255036, survivors 0
+[223s] task 3480/8179: classes 10767174, five-subsets 11350707, survivors 0
+[230s] task 3540/8179: classes 11068394, five-subsets 11664821, survivors 0
+[230s] task 3600/8179: classes 11230724, five-subsets 11837375, survivors 0
+[232s] task 3660/8179: classes 11360991, five-subsets 11974812, survivors 0
+[235s] task 3720/8179: classes 11562497, five-subsets 12184832, survivors 0
+[242s] task 3780/8179: classes 11794456, five-subsets 12426221, survivors 0
+[244s] task 3840/8179: classes 11977178, five-subsets 12617946, survivors 0
+[245s] task 3900/8179: classes 12183958, five-subsets 12835272, survivors 0
+[246s] task 3960/8179: classes 12264108, five-subsets 12919280, survivors 0
+[250s] task 4020/8179: classes 12429780, five-subsets 13092475, survivors 0
+[253s] task 4080/8179: classes 12537153, five-subsets 13205194, survivors 0
+[258s] task 4140/8179: classes 12642308, five-subsets 13315951, survivors 0
+[272s] task 4200/8179: classes 12948112, five-subsets 13636785, survivors 0
+[272s] task 4260/8179: classes 13135352, five-subsets 13831219, survivors 0
+[273s] task 4320/8179: classes 13413336, five-subsets 14119381, survivors 0
+[276s] task 4380/8179: classes 13703389, five-subsets 14422269, survivors 0
+[278s] task 4440/8179: classes 13859308, five-subsets 14584591, survivors 0
+[284s] task 4500/8179: classes 14008794, five-subsets 14742015, survivors 0
+[284s] task 4560/8179: classes 14137110, five-subsets 14875845, survivors 0
+[291s] task 4620/8179: classes 14265206, five-subsets 15009860, survivors 0
+[294s] task 4680/8179: classes 14519453, five-subsets 15273839, survivors 0
+[294s] task 4740/8179: classes 14671792, five-subsets 15432851, survivors 0
+[294s] task 4800/8179: classes 14709460, five-subsets 15471794, survivors 0
+[297s] task 4860/8179: classes 14780894, five-subsets 15546785, survivors 0
+[301s] task 4920/8179: classes 14886033, five-subsets 15657920, survivors 0
+[304s] task 4980/8179: classes 15054847, five-subsets 15835077, survivors 0
+[312s] task 5040/8179: classes 15222329, five-subsets 16011447, survivors 0
+[315s] task 5100/8179: classes 15451285, five-subsets 16251312, survivors 0
+[315s] task 5160/8179: classes 15546800, five-subsets 16350563, survivors 0
+[315s] task 5220/8179: classes 15667136, five-subsets 16476014, survivors 0
+[320s] task 5280/8179: classes 15901664, five-subsets 16720171, survivors 0
+[322s] task 5340/8179: classes 16032429, five-subsets 16855917, survivors 0
+[326s] task 5400/8179: classes 16149371, five-subsets 16978004, survivors 0
+[342s] task 5460/8179: classes 16436327, five-subsets 17279092, survivors 0
+[342s] task 5520/8179: classes 16627077, five-subsets 17477766, survivors 0
+[342s] task 5580/8179: classes 16786159, five-subsets 17643912, survivors 0
+[342s] task 5640/8179: classes 16990366, five-subsets 17856032, survivors 0
+[350s] task 5700/8179: classes 17419107, five-subsets 18303955, survivors 0
+[351s] task 5760/8179: classes 17627990, five-subsets 18524302, survivors 0
+[352s] task 5820/8179: classes 17819521, five-subsets 18722237, survivors 0
+[365s] task 5880/8179: classes 18041965, five-subsets 18955102, survivors 0
+[365s] task 5940/8179: classes 18147442, five-subsets 19065357, survivors 0
+[365s] task 6000/8179: classes 18284182, five-subsets 19208633, survivors 0
+[368s] task 6060/8179: classes 18551434, five-subsets 19485237, survivors 0
+[371s] task 6120/8179: classes 18767587, five-subsets 19710658, survivors 0
+[374s] task 6180/8179: classes 18888479, five-subsets 19836959, survivors 0
+[375s] task 6240/8179: classes 19029437, five-subsets 19983034, survivors 0
+[378s] task 6300/8179: classes 19120559, five-subsets 20079634, survivors 0
+[381s] task 6360/8179: classes 19268915, five-subsets 20233084, survivors 0
+[384s] task 6420/8179: classes 19424817, five-subsets 20396328, survivors 0
+[386s] task 6480/8179: classes 19567888, five-subsets 20545335, survivors 0
+[396s] task 6540/8179: classes 19791385, five-subsets 20779224, survivors 0
+[396s] task 6600/8179: classes 19943766, five-subsets 20939678, survivors 0
+[396s] task 6660/8179: classes 20046232, five-subsets 21047204, survivors 0
+[400s] task 6720/8179: classes 20184900, five-subsets 21194114, survivors 0
+[402s] task 6780/8179: classes 20313430, five-subsets 21328343, survivors 0
+[405s] task 6840/8179: classes 20485570, five-subsets 21508378, survivors 0
+[408s] task 6900/8179: classes 20603331, five-subsets 21631063, survivors 0
+[408s] task 6960/8179: classes 20736225, five-subsets 21769499, survivors 0
+[421s] task 7020/8179: classes 21023728, five-subsets 22160581, survivors 0
+[421s] task 7080/8179: classes 21287218, five-subsets 22434636, survivors 0
+[422s] task 7140/8179: classes 21457821, five-subsets 22613952, survivors 0
+[423s] task 7200/8179: classes 21590103, five-subsets 22751654, survivors 0
+[433s] task 7260/8179: classes 21808682, five-subsets 22980522, survivors 0
+[433s] task 7320/8179: classes 21923939, five-subsets 23101354, survivors 0
+[435s] task 7380/8179: classes 22137939, five-subsets 23325253, survivors 0
+[444s] task 7440/8179: classes 22338142, five-subsets 23533444, survivors 0
+[444s] task 7500/8179: classes 22545460, five-subsets 23748739, survivors 0
+[444s] task 7560/8179: classes 22669639, five-subsets 23879772, survivors 0
+[447s] task 7620/8179: classes 22772827, five-subsets 23987661, survivors 0
+[457s] task 7680/8179: classes 22955110, five-subsets 24179257, survivors 0
+[457s] task 7740/8179: classes 23090562, five-subsets 24321661, survivors 0
+[457s] task 7800/8179: classes 23303503, five-subsets 24544665, survivors 0
+[460s] task 7860/8179: classes 23388311, five-subsets 24633047, survivors 0
+[468s] task 7920/8179: classes 23721394, five-subsets 24980523, survivors 0
+[469s] task 7980/8179: classes 23915101, five-subsets 25183212, survivors 0
+[471s] task 8040/8179: classes 24042632, five-subsets 25317644, survivors 0
+[480s] task 8100/8179: classes 24213025, five-subsets 25496423, survivors 0
+[480s] task 8160/8179: classes 24419077, five-subsets 25803527, survivors 0
+[480s] stage 1 done: 24510983 need-3 classes, 25899498 five-subsets, 0 survive the exact independence filter
+survivor rank(F5 + T) histogram: {}
+[481s] stage 2: {'honest': 0, 'dishonest': 0, 'pairs': 0, 'inW7': 0, 'decided': 0}; decider {}
+CASE B EXCLUDED: no seven-state span containing V_3 has five images in a 3-dim space mod ELL
+      488.16 real      1419.14 user        12.88 sys
+           252592128  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              360282  page reclaims
+                   0  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   1  messages sent
+                   1  messages received
+                   1  signals received
+                3009  voluntary context switches
+              924702  involuntary context switches
+            91217574  instructions retired
+            66003072  cycles elapsed
+            11256360  peak memory footprint

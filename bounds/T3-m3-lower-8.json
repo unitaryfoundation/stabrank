@@ -25,11 +25,11 @@
       "vprusso"
     ],
     "compute": {
-      "cpu_hours": 80.1,
-      "wall_clock_hours": 22.0,
-      "runs": 1,
-      "hardware": "Apple silicon laptop, four loop.py instances at nice 19 over the 459-batch partition, 21 ns per inner step averaged"
+      "cpu_hours": 468.7,
+      "wall_clock_hours": 115.8,
+      "runs": 4,
+      "hardware": "Apple silicon laptop, four loop.py instances at nice 19 over the 459-batch partition, 21 ns per inner step averaged (80.1 CPU-h, 22 h wall); independent exclusion of research/t3_rank7/independent: RunPod Xeon Gold 6342 pod, 6 workers at nice 10 under a shared 7.65-core quota, 37 ns per step per worker (378.5 CPU-h over 92.9 h wall in two sessions), plus the laptop supplement of the skipped third pivots, 14 workers (10.1 CPU-h, 0.75 h wall)"
     }
   },
-  "notes": "With the verified rank-8 witness this settles chi(T3^3) = 8. A rank-7 decomposition would be seven independent stabilizer states whose images modulo V_3 span four dimensions; the three-pivot scan in orbit-block order with Stab(i, j) masks (docs/notes/t3_rank7_exclusion.md) lists every candidate class set and decides exactly, mod 2^31 - 1 under the Hadamard bound, whether V_3 lies in its span. 1,213,458,815 class sets over 459 batches, none containing V_3, none spurious or undecided. The rare-type pivot lemma that would have cut the scan 28x is false (docs/notes/t3_rank7_rare_pivot.md). Cost 80 CPU-hours at 21 ns per step; batch outputs, partition and manifests are committed under research/t3_rank7/, and aggregate.py re-derives any batch from scratch. Attested rather than reproduced because no certificate budget re-runs the enumeration; a faster kernel or an independent re-run elsewhere would lift the tier."
+  "notes": "With the verified rank-8 witness this settles chi(T3^3) = 8. A rank-7 decomposition would be seven independent stabilizer states whose images modulo V_3 span four dimensions; the three-pivot scan in orbit-block order with Stab(i, j) masks (docs/notes/t3_rank7_exclusion.md) lists every candidate class set and decides exactly, mod 2^31 - 1 under the Hadamard bound, whether V_3 lies in its span. 1,213,458,815 class sets over 459 batches, none containing V_3, none spurious or undecided. The rare-type pivot lemma that would have cut the scan 28x is false (docs/notes/t3_rank7_rare_pivot.md). Cost 80 CPU-hours at 21 ns per step; batch outputs, partition and manifests are committed under research/t3_rank7/, and aggregate.py re-derives any batch from scratch. Attested rather than reproduced because no certificate budget re-runs the enumeration; a certificate that re-runs the enumeration under the budget would lift the tier. Independently excluded a second time by the scan of research/t3_rank7/independent (certificate pivot order, 5.52e13 inner steps, own kernel and case split, RunPod pod plus a laptop supplement, 2026-09-22 to 26): 1,935,849,726 class sets, none containing V_3; the tier is unchanged, since it is fixed by what the certificate re-runs."
 }

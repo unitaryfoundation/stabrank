@@ -15,6 +15,22 @@ bit. The rare-type pivot lemma of section 4 turned out false
 the tier: a kernel near 10 ns per step with a re-run of a larger subset, or
 an independent re-run of every batch on other hardware.
 
+Independent exclusion (2026-09-26). A second scan, designed and run apart
+from this pipeline (`research/t3_rank7/independent/`), excludes rank 7 as
+well: the certificate's pivot order with Stab(i, j)-minimal third pivots
+(5.52e13 inner steps against the 1.31e13 of the orbit-block order), a
+different kernel and task partition, a case split by the projected geometry
+(six coplanar images, five, or neither, the first two excluded by two-pivot
+scans), 378 CPU-hours on a RunPod Xeon pod over 92.9 hours of wall time plus
+a laptop supplement. Its checks found that its own third-pivot masks had been
+computed over the nontrivial stabilizer elements only, which skipped 3.9
+percent of the canonical triples; the supplement scanned exactly those. The
+two enumerations share the dictionary, the descent, the projection, the group
+and the exact decision, and nothing else. This is the "independent re-run on
+other hardware" of the paragraph above in substance; under CONTRIBUTING's
+definitions it does not change the tier, which is fixed by what the
+certificate re-runs under its budget.
+
 Status of the cell before the scan: 7 <= chi(T3^3) <= 8, lower bound from
 `verify_challenge/cert_t3m3_rank7.py` (PR #41), upper bound from the
 eight-term witness in `bounds/T3-m3-upper-8.json`. Excluding rank 7 settles
