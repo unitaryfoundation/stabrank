@@ -31,17 +31,32 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Only what the pull request touched. Re-verifying the whole board on
-      # every submission would spend the budget on bounds nobody changed.
+      # Only what the pull request or the push touched. Re-verifying the
+      # whole board on every submission would spend the budget on bounds
+      # nobody changed, and on a push to main it did exactly that: the full
+      # board takes longer than the job's timeout, so every run on main was
+      # cancelled. A pull request diffs against its base; a push diffs
+      # against the commit GitHub reports as the previous tip of main, which
+      # for a merge is the merged pull request's own changes. A push with no
+      # usable previous tip (the first on a branch, or a forced one whose
+      # old tip is gone) falls back to the whole board.
       # Collected before the staging step below, which leaves HEAD at the base
       # commit and so would make this diff empty.
       - name: Collect changed submissions
         id: changed
         env:
           BASE: ${{ github.event.pull_request.base.sha }}
+          BEFORE: ${{ github.event.before }}
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            files=$(git diff --name-only --diff-filter=d "$BASE" HEAD -- bounds/ | tr '\n' ' ')
+            from="$BASE"
+          elif [ -n "$BEFORE" ] && git cat-file -e "$BEFORE" 2>/dev/null; then
+            from="$BEFORE"
+          else
+            from=""
+          fi
+          if [ -n "$from" ]; then
+            files=$(git diff --name-only --diff-filter=d "$from" HEAD -- bounds/ | tr '\n' ' ')
           else
             files=$(ls bounds/*.json | tr '\n' ' ')
           fi
