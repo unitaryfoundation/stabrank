@@ -1,0 +1,18 @@
+{
+ "x0": [
+  0,
+  0
+ ],
+ "covers": 5000,
+ "pairs": 12,
+ "dependent_from_kernel": 0,
+ "ms_per_cover": 0.6120550155639648,
+ "native_runs": 5000,
+ "hits": 0,
+ "refused": 0,
+ "coord_raw_hist": {
+  "0": 5000
+ },
+ "git": "0ba945114d9e2467faaa997016f948b53473ca78",
+ "sha256": "b92264e8ec2b4991eb7907b272dde2ea3d35271cfdb9bfb8ed99c5b5d9c20912"
+}

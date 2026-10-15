@@ -1,0 +1,7 @@
+  c6 (2, 1, 1, 1, 1) reference base (0, 10, 101, 101, 117, 138): 1 hits, planted recovered, 0.32s
+  c6 (2, 1, 1, 1, 1) dependent reference base (0, 10, 120, 129, 135, 135): 6 hits, planted recovered, 0.97s
+  c6 (2, 2, 2) reference base (0, 0, 117, 117, 129, 129): 1 hits, planted recovered, 4.47s
+  c6 (3, 1, 1, 1) reference base (36, 36, 36, 63, 64, 131): 1 hits, planted recovered, 0.78s
+  c6 (3, 1, 1, 1) dependent reference base (0, 0, 0, 117, 129, 141): 6 hits, planted recovered, 1.32s
+wrote research/h3_m4_rank6/results/control_planted_c6.json
+control-planted (c6): 5/5 planted decompositions recovered in 17s; by stage {'b6': [0, 0], 'c6': [5, 5], 'beta': [0, 0], 'gamma': [0, 0]}; PASS

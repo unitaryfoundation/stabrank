@@ -1,0 +1,3 @@
+B6 kappa 1: 375716 items, 40 sampled: per item mean 0.4566s, median 0.2590s, max 4.700s, trimmed mean 0.4566s (0 tail items), dense 0.3513s [18s]
+B6 kappa 2: 3127 items, 25 sampled: per item mean 12.0407s, median 10.7099s, max 22.983s, trimmed mean 12.0407s (0 tail items), dense 0.0000s [301s]
+B6: 65 items, 65 runs, hits 0, refused 0, undecided 0; hist {'0': 52, '4,4': 3, '8,8': 2, '6,6': 2, '1,1': 1, '24,24': 1, '114,114': 1, '2,2': 1}

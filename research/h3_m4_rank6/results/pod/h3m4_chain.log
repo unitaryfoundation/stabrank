@@ -1,0 +1,35 @@
+H3M4_START 2026-10-01T17:49:04Z host ee4072210b09 commit d7e0cd6 workers 28 with_nonative 0
+H3M4_KERNEL_OK 2026-10-01T17:49:05Z
+H3M4_TESTS_EXIT 0 2026-10-01T17:49:49Z 29 passed in 42.54s
+planted beta a,d,r rc=0
+planted beta h rc=0
+planted gamma rc=0
+H3M4_PLANTED_DONE 2026-10-01T17:55:38Z control-planted (beta): 48/48 planted decompositions recovered in 27s control-planted (beta): 16/16 planted decompositions recovered in 253s control-planted (gamma): 216/216 planted decompositions recovered in 64s 
+lists rc=0
+H3M4_LISTS_DONE 2026-10-01T17:57:17Z reps_H3.json DIFFERENT from the committed file; wrote research/h3_m4_rank6/reps_H3.json (sha256 3958a18aa32dbb8a): B6 378843, C6 354012, k5 61413, k4 565
+control-lists rc=0
+planted b6 rc=0
+planted c6 rc=0
+control-orbit rc=0
+control-m3 rc=0
+control-witness rc=1 (recorded, not required)
+H3M4_CONTROLS_DONE 2026-10-01T18:00:52Z
+sample A6 rc=0
+sample B6 rc=0
+sample C6 rc=0
+sample beta rc=0
+sample gamma rc=0
+H3M4_SAMPLE_DONE 2026-10-01T18:13:58Z
+H3M4_PARTITION_DONE 0 2026-10-01T18:14:05Z 2390 pivot pairs in 88 stage A6 batches (14.44 pod CPU-h), 802 B6 (133.46), 92 C6 (11.39), 36 beta (5.29), 3 gamma (0.076); 1021 batches, 164.7 pod CPU-h; wrote research/h3_m4_rank6/partition.json (sha256 90f1891c5eb4374e)
+B6 probe batch 88 rc=0
+B6 probe batch 88: 684 items, 684 matched, 0 hits, 0 undecided, 244s wall (0.36 s per item against the partition's 0.88); stage B6 projected 38 CPU-h at this rate (partition estimate 133); whole run estimate 165 CPU-h, 5.9 h of wall time
+H3M4_B6_PROBE_DONE 2026-10-01T18:18:10Z
+H3M4_RUN_DONE 2026-10-01T22:12:30Z records 1021 of 1021; decompositions 0; undecided 12
+H3M4_RERUN_DONE 2026-10-02T00:30:15Z records 1021 of 1021
+H3M4_AGG_EXIT 1 2026-10-02T00:44:40Z
+PROBLEM: batch 0: 2022486 undecided run(s) (deadline: not run)
+PROBLEM: batch 5: 753672 undecided run(s) (deadline: not run)
+NOT CERTIFIED: 2 problem(s)
+H3M4_CERT_EXIT 1 2026-10-02T00:44:40Z
+H3M4_SUMMARY chi(H3^4)undecided aggregate_exit=1 certificate_exit=1 records=1021/1021 2026-10-02T00:44:40Z
+H3M4_CHAIN_DONE 2026-10-02T00:44:40Z

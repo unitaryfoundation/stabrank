@@ -1,0 +1,354 @@
+{
+ "x0": [
+  0,
+  0
+ ],
+ "alpha": {
+  "0": 2.732050807568877,
+  "1": 1.0,
+  "2": 1.0
+ },
+ "ratios": [
+  0.133975,
+  0.366025
+ ],
+ "flats": [
+  {
+   "flat": "p01",
+   "points": [
+    [
+     0,
+     1
+    ]
+   ],
+   "kind": "point",
+   "contains_e1": false,
+   "contains_e2": true,
+   "ratios": [
+    0.366025
+   ]
+  },
+  {
+   "flat": "p02",
+   "points": [
+    [
+     0,
+     2
+    ]
+   ],
+   "kind": "point",
+   "contains_e1": false,
+   "contains_e2": false,
+   "ratios": [
+    0.366025
+   ]
+  },
+  {
+   "flat": "p10",
+   "points": [
+    [
+     1,
+     0
+    ]
+   ],
+   "kind": "point",
+   "contains_e1": true,
+   "contains_e2": false,
+   "ratios": [
+    0.366025
+   ]
+  },
+  {
+   "flat": "p11",
+   "points": [
+    [
+     1,
+     1
+    ]
+   ],
+   "kind": "point",
+   "contains_e1": false,
+   "contains_e2": false,
+   "ratios": [
+    0.133975
+   ]
+  },
+  {
+   "flat": "p12",
+   "points": [
+    [
+     1,
+     2
+    ]
+   ],
+   "kind": "point",
+   "contains_e1": false,
+   "contains_e2": false,
+   "ratios": [
+    0.133975
+   ]
+  },
+  {
+   "flat": "p20",
+   "points": [
+    [
+     2,
+     0
+    ]
+   ],
+   "kind": "point",
+   "contains_e1": false,
+   "contains_e2": false,
+   "ratios": [
+    0.366025
+   ]
+  },
+  {
+   "flat": "p21",
+   "points": [
+    [
+     2,
+     1
+    ]
+   ],
+   "kind": "point",
+   "contains_e1": false,
+   "contains_e2": false,
+   "ratios": [
+    0.133975
+   ]
+  },
+  {
+   "flat": "p22",
+   "points": [
+    [
+     2,
+     2
+    ]
+   ],
+   "kind": "point",
+   "contains_e1": false,
+   "contains_e2": false,
+   "ratios": [
+    0.133975
+   ]
+  },
+  {
+   "flat": "L01_101112",
+   "points": [
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ]
+   ],
+   "kind": "line, 1 coordinate point",
+   "contains_e1": true,
+   "contains_e2": false,
+   "ratios": [
+    0.366025,
+    0.133975,
+    0.133975
+   ]
+  },
+  {
+   "flat": "L01_202122",
+   "points": [
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "kind": "line, 0 coordinate points",
+   "contains_e1": false,
+   "contains_e2": false,
+   "ratios": [
+    0.366025,
+    0.133975,
+    0.133975
+   ]
+  },
+  {
+   "flat": "L10_011121",
+   "points": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "kind": "line, 1 coordinate point",
+   "contains_e1": false,
+   "contains_e2": true,
+   "ratios": [
+    0.366025,
+    0.133975,
+    0.133975
+   ]
+  },
+  {
+   "flat": "L10_021222",
+   "points": [
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "kind": "line, 0 coordinate points",
+   "contains_e1": false,
+   "contains_e2": false,
+   "ratios": [
+    0.366025,
+    0.133975,
+    0.133975
+   ]
+  },
+  {
+   "flat": "L11_011220",
+   "points": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ]
+   ],
+   "kind": "line, 1 coordinate point",
+   "contains_e1": false,
+   "contains_e2": true,
+   "ratios": [
+    0.366025,
+    0.133975,
+    0.366025
+   ]
+  },
+  {
+   "flat": "L11_021021",
+   "points": [
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "kind": "line, 1 coordinate point",
+   "contains_e1": true,
+   "contains_e2": false,
+   "ratios": [
+    0.366025,
+    0.366025,
+    0.133975
+   ]
+  },
+  {
+   "flat": "L12_011022",
+   "points": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "kind": "line, 2 coordinate points",
+   "contains_e1": true,
+   "contains_e2": true,
+   "ratios": [
+    0.366025,
+    0.366025,
+    0.133975
+   ]
+  },
+  {
+   "flat": "L12_021120",
+   "points": [
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ]
+   ],
+   "kind": "line, 0 coordinate points",
+   "contains_e1": false,
+   "contains_e2": false,
+   "ratios": [
+    0.366025,
+    0.133975,
+    0.366025
+   ]
+  }
+ ],
+ "flats_by_coordinate_points": {
+  "neither": 9,
+  "one": 6,
+  "both": 1
+ },
+ "flat_pairs": 136,
+ "pairs_by_kind": {
+  "point+point (equal)": 8,
+  "point+point": 28,
+  "point+line (point on line)": 24,
+  "point+line": 40,
+  "line+line (equal)": 8,
+  "line+line": 28
+ },
+ "pairs_with_two_fresh_terms_at_a_point": 16,
+ "git": "0ba945114d9e2467faaa997016f948b53473ca78",
+ "sha256": "d0d1552e1c2ff16053e12b821af54e645c7407c4962c4cc651078262cf200500"
+}

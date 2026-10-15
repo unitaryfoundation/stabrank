@@ -1,0 +1,35 @@
+{
+ "git": "d7e0cd6b9ef622e1ede2d31c6b7b929e983cb806",
+ "generated": "2026-10-01T17:58:52+00:00",
+ "reps_sha256": "3958a18aa32dbb8a3de15bd63376db3df1538063e8c02b3504a66903d2b6d442",
+ "lists": {
+  "B6": {
+   "fresh": 378843,
+   "stored": 378843,
+   "equal": true
+  },
+  "C6": {
+   "fresh": 354012,
+   "stored": 354012,
+   "equal": true
+  },
+  "k5": {
+   "fresh": 61413,
+   "stored": 61413,
+   "equal": true
+  },
+  "k4": {
+   "fresh": 565,
+   "stored": 565,
+   "equal": true
+  }
+ },
+ "census": {
+  "file_sha256": "658416390aafdde7deb6e39ad4d801f6a2f6237b4e110d525bca50145ca10f57",
+  "pairs": 2390,
+  "covers": 36368678,
+  "units_equal": true
+ },
+ "seconds": 93.7703332901001,
+ "pass": true
+}

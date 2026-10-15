@@ -1,0 +1,2480 @@
+{
+ "seed": 11,
+ "git": "d7e0cd6b9ef622e1ede2d31c6b7b929e983cb806",
+ "generated": "2026-10-01T17:50:19+00:00",
+ "plants": [
+  {
+   "stage": "beta",
+   "unit": "p01",
+   "kind": "h",
+   "base": [
+    0,
+    117,
+    129,
+    275,
+    275
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 1.444091558456421,
+   "stats": {
+    "flats": [
+     [
+      [
+       0,
+       1
+      ]
+     ]
+    ],
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [
+     2
+    ],
+    "order": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "modes": [
+     [
+      [
+       0,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       0,
+       1
+      ],
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     9,
+     9,
+     9,
+     9,
+     9,
+     9
+    ],
+    "scan_candidates": 36,
+    "scan_solutions": 36,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "pair_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "zero_coefficient": 0,
+    "split_pruned": 81,
+    "candidates": 90,
+    "dense_raw": 0,
+    "reconstructions": 3,
+    "hits": 1,
+    "refused": false,
+    "native": false,
+    "flat": "p01"
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "p02",
+   "kind": "h",
+   "base": [
+    36,
+    91,
+    119,
+    119,
+    123
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 4.655979871749878,
+   "stats": {
+    "flats": [
+     [
+      [
+       0,
+       2
+      ]
+     ]
+    ],
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [
+     2
+    ],
+    "order": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "modes": [
+     [
+      [
+       0,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       0,
+       2
+      ],
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     9,
+     9,
+     9,
+     9,
+     9,
+     9,
+     9
+    ],
+    "scan_candidates": 90,
+    "scan_solutions": 90,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "pair_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "zero_coefficient": 0,
+    "split_pruned": 128,
+    "candidates": 95,
+    "dense_raw": 0,
+    "reconstructions": 18,
+    "hits": 1,
+    "refused": false,
+    "native": false,
+    "flat": "p02"
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "p10",
+   "kind": "h",
+   "base": [
+    0,
+    117,
+    141,
+    330,
+    330
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 1.1984586715698242,
+   "stats": {
+    "flats": [
+     [
+      [
+       1,
+       0
+      ]
+     ]
+    ],
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [
+     2
+    ],
+    "order": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      0
+     ]
+    ],
+    "modes": [
+     [
+      [
+       0,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       0,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       0
+      ],
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     60,
+     18,
+     60,
+     16,
+     1,
+     27,
+     9
+    ],
+    "scan_candidates": 36,
+    "scan_solutions": 36,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "pair_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "zero_coefficient": 0,
+    "split_pruned": 212,
+    "candidates": 235,
+    "dense_raw": 0,
+    "reconstructions": 4,
+    "hits": 1,
+    "refused": false,
+    "native": false,
+    "flat": "p10"
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "p11",
+   "kind": "h",
+   "base": [
+    36,
+    58,
+    58,
+    63,
+    119
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 3.7594406604766846,
+   "stats": {
+    "flats": [
+     [
+      [
+       1,
+       1
+      ]
+     ]
+    ],
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [
+     2
+    ],
+    "order": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      1
+     ]
+    ],
+    "modes": [
+     [
+      [
+       0,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       0,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       1
+      ],
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     9,
+     9,
+     1,
+     9,
+     1,
+     9,
+     9
+    ],
+    "scan_candidates": 90,
+    "scan_solutions": 90,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "pair_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "zero_coefficient": 0,
+    "split_pruned": 112,
+    "candidates": 80,
+    "dense_raw": 0,
+    "reconstructions": 18,
+    "hits": 1,
+    "refused": false,
+    "native": false,
+    "flat": "p11"
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "p12",
+   "kind": "h",
+   "base": [
+    118,
+    119,
+    343,
+    354,
+    354
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 3.7047648429870605,
+   "stats": {
+    "flats": [
+     [
+      [
+       1,
+       2
+      ]
+     ]
+    ],
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [
+     2
+    ],
+    "order": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      2
+     ]
+    ],
+    "modes": [
+     [
+      [
+       0,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       0,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       2
+      ],
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     9,
+     9,
+     9,
+     9,
+     9,
+     9,
+     9
+    ],
+    "scan_candidates": 90,
+    "scan_solutions": 90,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "pair_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "zero_coefficient": 0,
+    "split_pruned": 128,
+    "candidates": 98,
+    "dense_raw": 0,
+    "reconstructions": 18,
+    "hits": 1,
+    "refused": false,
+    "native": false,
+    "flat": "p12"
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "p20",
+   "kind": "h",
+   "base": [
+    0,
+    117,
+    129,
+    264,
+    264
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 1.060314655303955,
+   "stats": {
+    "flats": [
+     [
+      [
+       2,
+       0
+      ]
+     ]
+    ],
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [
+     2
+    ],
+    "order": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      0
+     ]
+    ],
+    "modes": [
+     [
+      [
+       0,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       0,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       0
+      ],
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     60,
+     18,
+     60,
+     15,
+     9,
+     9,
+     11
+    ],
+    "scan_candidates": 81,
+    "scan_solutions": 81,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "pair_solutions": 0,
+    "absent_at_flat": 1,
+    "same_state": 0,
+    "cancelling": 0,
+    "zero_coefficient": 0,
+    "split_pruned": 172,
+    "candidates": 209,
+    "dense_raw": 0,
+    "reconstructions": 81,
+    "hits": 1,
+    "refused": false,
+    "native": false,
+    "flat": "p20"
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "p21",
+   "kind": "h",
+   "base": [
+    0,
+    93,
+    93,
+    117,
+    141
+   ],
+   "status": "recovered",
+   "hits": 12,
+   "seconds": 2.225388288497925,
+   "stats": {
+    "flats": [
+     [
+      [
+       2,
+       1
+      ]
+     ]
+    ],
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [
+     2
+    ],
+    "order": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      1
+     ]
+    ],
+    "modes": [
+     [
+      [
+       0,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       0,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       1
+      ],
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     9,
+     9,
+     9,
+     9,
+     9,
+     9,
+     9
+    ],
+    "scan_candidates": 90,
+    "scan_solutions": 90,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "pair_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "zero_coefficient": 0,
+    "split_pruned": 128,
+    "candidates": 88,
+    "dense_raw": 0,
+    "reconstructions": 18,
+    "hits": 12,
+    "refused": false,
+    "native": false,
+    "flat": "p21"
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "p22",
+   "kind": "h",
+   "base": [
+    10,
+    10,
+    11,
+    92,
+    135
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 3.4972572326660156,
+   "stats": {
+    "flats": [
+     [
+      [
+       2,
+       2
+      ]
+     ]
+    ],
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [
+     2
+    ],
+    "order": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ]
+    ],
+    "modes": [
+     [
+      [
+       0,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       0,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       2
+      ],
+      "scan"
+     ]
+    ],
+    "exact_solutions": [
+     9,
+     9,
+     9,
+     13,
+     9,
+     9,
+     9
+    ],
+    "scan_candidates": 192,
+    "scan_solutions": 192,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "pair_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "zero_coefficient": 0,
+    "split_pruned": 183,
+    "candidates": 109,
+    "dense_raw": 0,
+    "reconstructions": 69,
+    "hits": 1,
+    "refused": false,
+    "native": false,
+    "flat": "p22"
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "L01_101112",
+   "kind": "h",
+   "base": [
+    0,
+    10,
+    117,
+    117,
+    138
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 94.52465438842773,
+   "stats": {
+    "flats": [
+     [
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       1,
+       2
+      ]
+     ]
+    ],
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [
+     2
+    ],
+    "order": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ]
+    ],
+    "modes": [
+     [
+      [
+       0,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       0,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       0
+      ],
+      "scan"
+     ],
+     [
+      [
+       1,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       2
+      ],
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     9,
+     9,
+     9,
+     46,
+     46,
+     6069,
+     54846
+    ],
+    "scan_candidates": 108,
+    "scan_solutions": 108,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "pair_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "zero_coefficient": 17664,
+    "split_pruned": 32700,
+    "candidates": 61059,
+    "dense_raw": 131811,
+    "reconstructions": 9837,
+    "hits": 1,
+    "refused": false,
+    "native": false,
+    "flat": "L01_101112"
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "L01_202122",
+   "kind": "h",
+   "base": [
+    0,
+    38,
+    38,
+    117,
+    118
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 0.9267134666442871,
+   "stats": {
+    "flats": [
+     [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       1
+      ],
+      [
+       2,
+       2
+      ]
+     ]
+    ],
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [
+     2
+    ],
+    "order": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ]
+    ],
+    "modes": [
+     [
+      [
+       0,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       0,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       0
+      ],
+      "scan"
+     ],
+     [
+      [
+       2,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       2
+      ],
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     20,
+     7
+    ],
+    "scan_candidates": 38,
+    "scan_solutions": 38,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "pair_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "zero_coefficient": 0,
+    "split_pruned": 40,
+    "candidates": 67,
+    "dense_raw": 1476,
+    "reconstructions": 7,
+    "hits": 1,
+    "refused": false,
+    "native": false,
+    "flat": "L01_202122"
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "L10_011121",
+   "kind": "h",
+   "base": [
+    0,
+    1,
+    1,
+    117,
+    129
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 4.812391757965088,
+   "stats": {
+    "flats": [
+     [
+      [
+       0,
+       1
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       2,
+       1
+      ]
+     ]
+    ],
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [
+     2
+    ],
+    "order": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ]
+    ],
+    "modes": [
+     [
+      [
+       0,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       0,
+       1
+      ],
+      "scan"
+     ],
+     [
+      [
+       1,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       1
+      ],
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     97,
+     388,
+     136,
+     30,
+     25,
+     1589,
+     2052
+    ],
+    "scan_candidates": 216,
+    "scan_solutions": 216,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "pair_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "zero_coefficient": 483,
+    "split_pruned": 3537,
+    "candidates": 4398,
+    "dense_raw": 36096,
+    "reconstructions": 297,
+    "hits": 1,
+    "refused": false,
+    "native": false,
+    "flat": "L10_011121"
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "L10_021222",
+   "kind": "h",
+   "base": [
+    36,
+    118,
+    119,
+    158,
+    158
+   ],
+   "status": "recovered",
+   "hits": 6,
+   "seconds": 97.23768615722656,
+   "stats": {
+    "flats": [
+     [
+      [
+       0,
+       2
+      ],
+      [
+       1,
+       2
+      ],
+      [
+       2,
+       2
+      ]
+     ]
+    ],
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [
+     2
+    ],
+    "order": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ]
+    ],
+    "modes": [
+     [
+      [
+       0,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       0,
+       2
+      ],
+      "scan"
+     ],
+     [
+      [
+       1,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       2
+      ],
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     46,
+     46,
+     46,
+     52,
+     1170,
+     10287
+    ],
+    "scan_candidates": 427,
+    "scan_solutions": 427,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "pair_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "zero_coefficient": 2112,
+    "split_pruned": 7789,
+    "candidates": 11678,
+    "dense_raw": 18948,
+    "reconstructions": 1786,
+    "hits": 6,
+    "refused": false,
+    "native": false,
+    "flat": "L10_021222"
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "L11_011220",
+   "kind": "h",
+   "base": [
+    0,
+    0,
+    90,
+    117,
+    138
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 22.758469343185425,
+   "stats": {
+    "flats": [
+     [
+      [
+       0,
+       1
+      ],
+      [
+       1,
+       2
+      ],
+      [
+       2,
+       0
+      ]
+     ]
+    ],
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [
+     2
+    ],
+    "order": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      0
+     ]
+    ],
+    "modes": [
+     [
+      [
+       0,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       0,
+       1
+      ],
+      "scan"
+     ],
+     [
+      [
+       1,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       0
+      ],
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     9,
+     14,
+     46,
+     46,
+     46,
+     6069,
+     11115
+    ],
+    "scan_candidates": 108,
+    "scan_solutions": 108,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "pair_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "zero_coefficient": 4839,
+    "split_pruned": 9819,
+    "candidates": 17369,
+    "dense_raw": 97563,
+    "reconstructions": 1854,
+    "hits": 1,
+    "refused": false,
+    "native": false,
+    "flat": "L11_011220"
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "L11_021021",
+   "kind": "h",
+   "base": [
+    117,
+    129,
+    129,
+    135,
+    138
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 4.197469234466553,
+   "stats": {
+    "flats": [
+     [
+      [
+       0,
+       2
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       1
+      ]
+     ]
+    ],
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [
+     2
+    ],
+    "order": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      2,
+      1
+     ]
+    ],
+    "modes": [
+     [
+      [
+       0,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       0,
+       2
+      ],
+      "scan"
+     ],
+     [
+      [
+       1,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       1
+      ],
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     9,
+     13,
+     9,
+     9,
+     9,
+     1281,
+     2052
+    ],
+    "scan_candidates": 126,
+    "scan_solutions": 126,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "pair_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "zero_coefficient": 483,
+    "split_pruned": 2552,
+    "candidates": 3415,
+    "dense_raw": 9627,
+    "reconstructions": 297,
+    "hits": 1,
+    "refused": false,
+    "native": false,
+    "flat": "L11_021021"
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "L12_011022",
+   "kind": "h",
+   "base": [
+    37,
+    37,
+    64,
+    117,
+    131
+   ],
+   "status": "recovered",
+   "hits": 6,
+   "seconds": 3.7811825275421143,
+   "stats": {
+    "flats": [
+     [
+      [
+       0,
+       1
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       2
+      ]
+     ]
+    ],
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [
+     2
+    ],
+    "order": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      2,
+      2
+     ]
+    ],
+    "modes": [
+     [
+      [
+       0,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       0,
+       1
+      ],
+      "scan"
+     ],
+     [
+      [
+       1,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       2
+      ],
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     9,
+     9,
+     9,
+     9,
+     9,
+     1281,
+     2052
+    ],
+    "scan_candidates": 108,
+    "scan_solutions": 108,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "pair_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "zero_coefficient": 483,
+    "split_pruned": 2530,
+    "candidates": 3405,
+    "dense_raw": 17889,
+    "reconstructions": 297,
+    "hits": 6,
+    "refused": false,
+    "native": false,
+    "flat": "L12_011022"
+   }
+  },
+  {
+   "stage": "beta",
+   "unit": "L12_021120",
+   "kind": "h",
+   "base": [
+    0,
+    29,
+    117,
+    165,
+    165
+   ],
+   "status": "recovered",
+   "hits": 1,
+   "seconds": 1.0557353496551514,
+   "stats": {
+    "flats": [
+     [
+      [
+       0,
+       2
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       2,
+       0
+      ]
+     ]
+    ],
+    "kappa": 0,
+    "kappa1": 0,
+    "distinct": 4,
+    "blocks": [
+     2
+    ],
+    "order": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      0
+     ]
+    ],
+    "modes": [
+     [
+      [
+       0,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       0
+      ],
+      "exact"
+     ],
+     [
+      [
+       1,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       2
+      ],
+      "exact"
+     ],
+     [
+      [
+       0,
+       2
+      ],
+      "scan"
+     ],
+     [
+      [
+       1,
+       1
+      ],
+      "exact"
+     ],
+     [
+      [
+       2,
+       0
+      ],
+      "exact"
+     ]
+    ],
+    "exact_solutions": [
+     1,
+     9,
+     9,
+     9,
+     9,
+     156,
+     246
+    ],
+    "scan_candidates": 38,
+    "scan_solutions": 38,
+    "scan2_collisions": 0,
+    "scan2_solutions": 0,
+    "pair_solutions": 0,
+    "absent_at_flat": 0,
+    "same_state": 0,
+    "cancelling": 0,
+    "zero_coefficient": 60,
+    "split_pruned": 343,
+    "candidates": 475,
+    "dense_raw": 1110,
+    "reconstructions": 42,
+    "hits": 1,
+    "refused": false,
+    "native": false,
+    "flat": "L12_021120"
+   }
+  }
+ ],
+ "only": null,
+ "kinds": "h",
+ "cap_s": 120.0,
+ "recovered": 16,
+ "total": 16,
+ "by_stage": {
+  "b6": [
+   0,
+   0
+  ],
+  "c6": [
+   0,
+   0
+  ],
+  "beta": [
+   16,
+   16
+  ],
+  "gamma": [
+   0,
+   0
+  ]
+ },
+ "seconds": 253.14826011657715,
+ "pass": true
+}

@@ -1,0 +1,7 @@
+base 0: (0, 0, 117, 117, 129, 129, 141, 141) pairs [[2, 3]] distinct 4 kappa 1
+base 1: (0, 9, 10, 11, 90, 117, 126, 135) pairs [[0, 1], [0, 2], [1, 2]] distinct 8 kappa 4
+base 2: (9, 9, 90, 90, 132, 132, 138, 138) pairs [[0, 3], [1, 3]] distinct 4 kappa 1
+  base 0: (0, 0, 117, 117, 129, 129, 141, 141) kappa 1: ABORTED BudgetExceeded: slice (1, 0): past the wall-clock deadline after 25s
+  base 1: (0, 9, 10, 11, 90, 117, 126, 135) kappa 4: not run (three-parameter family)
+  base 2: (9, 9, 90, 90, 132, 132, 138, 138) kappa 1: ABORTED BudgetExceeded: slice (1, 0): past the wall-clock deadline after 25s
+control-witness: 0/3 all-visible bases recover the witness, 2 aborted; FAIL (recorded, not required); wrote results/control_witness.json

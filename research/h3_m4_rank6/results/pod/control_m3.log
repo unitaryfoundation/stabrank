@@ -1,0 +1,5 @@
+  decomposition 0 pair (0, 1): base (0, 3, 4, 5) flats []: 4 hits, recovered
+  decomposition 0 pair (0, 2): base (0, 3, 4, 5) flats []: 4 hits, recovered
+  decomposition 0 pair (1, 2): base (0, 3, 4, 5) flats []: 4 hits, recovered
+wrote research/h3_m4_rank6/results/control_m3.json
+control-m3: 3 (decomposition, pair) runs, PASS [1s]

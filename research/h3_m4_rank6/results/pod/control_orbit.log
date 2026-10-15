@@ -1,0 +1,10 @@
+G_2: 32 unitaries up to phase, induced permutations equal to the census's group of order 32
+8 of the 32 unitaries are monomial with cube-root entries
+  alpha base (91, 135, 138, 287, 304, 305) -> (10, 123, 132, 164, 169, 170): image found; 12 random elements consistent (stabilizer images, permuted base, canonical form)
+  beta base (0, 37, 132, 133, 140) -> (0, 64, 133, 138, 140): image found; 12 random elements consistent (stabilizer images, permuted base, canonical form)
+  alpha base (63, 64, 89, 119, 132, 140) -> (63, 64, 89, 119, 132, 140): image found; 12 random elements consistent (stabilizer images, permuted base, canonical form)
+  beta base (37, 53, 130, 141, 254) -> (64, 77, 131, 141, 334): image found; 12 random elements consistent (stabilizer images, permuted base, canonical form)
+  alpha base (10, 119, 130, 132, 134, 284) -> (10, 119, 130, 132, 134, 284): image found; 12 random elements consistent (stabilizer images, permuted base, canonical form)
+  beta base (36, 65, 122, 129, 138) -> (36, 65, 128, 129, 132): image found; 12 random elements consistent (stabilizer images, permuted base, canonical form)
+wrote research/h3_m4_rank6/results/control_orbit.json
+control-orbit: PASS

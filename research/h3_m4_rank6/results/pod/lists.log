@@ -1,0 +1,10 @@
+  R5: 50000/188451 5-covers, 1074092 sets [8s]
+  R5: 100000/188451 5-covers, 2075953 sets [17s]
+  R5: 150000/188451 5-covers, 3097676 sets [25s]
+  R5 done: 3805533 (T_5, x) pairs, span-state histogram {0: 1730, 1: 482, 2: 3581, 3: 3624, 4: 8298, 5: 5383, 7: 14854, 9: 9156, 14: 30441, 19: 47951, 35: 62951} [31s]
+  R4: 61779 span pairs, 784351 parallel pairs [32s]
+  R3: [0, 1404, 2832, 290445] [33s]
+B6: 2133775 full dependent 6-sets, 378843 orbits, kappa {'1': 375716, '2': 3127} [87s]
+C6: 1413473 distinct multisets, 354012 orbits, by pattern {'(4, 1, 1)': 9, '(3, 1, 1, 1)': 2286, '(3, 2, 1)': 18, '(2, 2, 1, 1)': 3753, '(2, 1, 1, 1, 1)': 347943, '(2, 2, 2)': 3} [95s]
+k5: 201587 multisets, 61413 orbits; k4: 1231 multisets, 565 orbits [96s]
+wrote research/h3_m4_rank6/reps_H3.json (sha256 3958a18aa32dbb8a): B6 378843, C6 354012, k5 61413, k4 565

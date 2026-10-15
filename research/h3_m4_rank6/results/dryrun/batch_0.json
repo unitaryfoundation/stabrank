@@ -1,0 +1,65 @@
+{
+ "batch": {
+  "index": 0,
+  "stage": "A6",
+  "units": [
+   [
+    135,
+    234,
+    125
+   ]
+  ],
+  "n_units": 1
+ },
+ "orbit": "H3",
+ "m": 4,
+ "rank": 6,
+ "n1": 2,
+ "x0": [
+  0,
+  0
+ ],
+ "N": 360,
+ "group_order": 32,
+ "runs_per_item": 1,
+ "partition_sha256": "e4a765682dc291485576a35a25e20bc901b3905e086500417b44589c11344ed0",
+ "census_sha256": "658416390aafdde7deb6e39ad4d801f6a2f6237b4e110d525bca50145ca10f57",
+ "reps_sha256": null,
+ "max_cand": 2000000,
+ "items": 1,
+ "matched": 1,
+ "refused": 0,
+ "coord_solution_hist": {
+  "0": 1
+ },
+ "hits": [],
+ "hit_count": 0,
+ "decompositions": 0,
+ "undecided": [],
+ "deterministic_sha256": "a31ec2eedda7d46e83c8977e57c1883eeb5287390bd967661636668fa0278f8e",
+ "native_runs": 1,
+ "candidates": 50050,
+ "dense_raw": 0,
+ "b6_paths": {},
+ "filter_fallbacks": [],
+ "kernel_s": 0.048905134201049805,
+ "match_s": 0.0014719963073730469,
+ "wall_s": 0.5530641078948975,
+ "cpu_s": 0.5599999999999999,
+ "max_seconds": 900.0,
+ "deadline_hit": false,
+ "started": "2026-10-01T17:34:45+00:00",
+ "ended": "2026-10-01T17:34:46+00:00",
+ "hostname": "vincentrusso-MacBook-Pro",
+ "git_commit": "4cd923577d5ef3da5559cfcaed82a449249f8088",
+ "native": true,
+ "matcher": "native",
+ "filter": null,
+ "cover6": "native",
+ "kernel_version": "Darwin 25.5.0 Darwin Kernel Version 25.5.0: Mon Apr 27 20:41:12 PDT 2026; root:xnu-12377.121.6~2/RELEASE_ARM64_T6050",
+ "machine": "arm64",
+ "python": "3.14.7",
+ "numpy": "2.4.4",
+ "hit_numerics": [],
+ "sha256": "e6a4c78c35eb9c9341bbe240e3c51042180ade9e72177e434d00a1abae58ded7"
+}

@@ -1,0 +1,120 @@
+{
+ "batch": {
+  "index": 81,
+  "stage": "A6",
+  "units": [
+   [
+    143,
+    24,
+    307
+   ],
+   [
+    143,
+    25,
+    306
+   ],
+   [
+    143,
+    26,
+    305
+   ],
+   [
+    143,
+    37,
+    295
+   ],
+   [
+    143,
+    39,
+    294
+   ],
+   [
+    143,
+    40,
+    293
+   ],
+   [
+    143,
+    41,
+    292
+   ],
+   [
+    143,
+    45,
+    288
+   ],
+   [
+    143,
+    46,
+    287
+   ],
+   [
+    143,
+    47,
+    286
+   ],
+   [
+    143,
+    48,
+    285
+   ],
+   [
+    143,
+    49,
+    284
+   ]
+  ],
+  "n_units": 12
+ },
+ "orbit": "H3",
+ "m": 4,
+ "rank": 6,
+ "n1": 2,
+ "x0": [
+  0,
+  0
+ ],
+ "N": 360,
+ "group_order": 32,
+ "runs_per_item": 1,
+ "partition_sha256": "90f1891c5eb4374e2b7c13bcd3e64a416a250b5d610372e76618cb6fa35ab056",
+ "census_sha256": "658416390aafdde7deb6e39ad4d801f6a2f6237b4e110d525bca50145ca10f57",
+ "reps_sha256": null,
+ "max_cand": 2000000,
+ "items": 398463,
+ "matched": 398463,
+ "refused": 0,
+ "coord_solution_hist": {
+  "0": 398463
+ },
+ "hits": [],
+ "hit_count": 0,
+ "decompositions": 0,
+ "undecided": [],
+ "deterministic_sha256": "4b15883d285271250bb995e5e86668cea9fcd9a155f70ecacf03faa83c091c05",
+ "native_runs": 398463,
+ "candidates": 2953389240,
+ "dense_raw": 0,
+ "b6_paths": {},
+ "filter_fallbacks": [],
+ "kernel_s": 26.52607035636902,
+ "match_s": 1376.8990173339844,
+ "wall_s": 1404.7428648471832,
+ "cpu_s": 901.1800000000001,
+ "max_seconds": 3600.0,
+ "deadline_hit": false,
+ "started": "2026-10-01T18:56:35+00:00",
+ "ended": "2026-10-01T19:19:59+00:00",
+ "hostname": "ee4072210b09",
+ "git_commit": "d7e0cd6b9ef622e1ede2d31c6b7b929e983cb806",
+ "native": true,
+ "matcher": "native",
+ "filter": null,
+ "cover6": "native",
+ "kernel_version": "Linux 6.17.0-35-generic #35~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue May 26 19:30:42 UTC 2",
+ "machine": "x86_64",
+ "python": "3.13.5",
+ "numpy": "2.4.4",
+ "hit_numerics": [],
+ "sha256": "2d41a9b0c531a1f27f53cac87db86953aabca2041e6e8de82b344a6684535fce"
+}
