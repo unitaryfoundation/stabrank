@@ -1,0 +1,9 @@
+census records: 74/74 batches, 155422/155422 units run, 1 hit(s), 0 undecided, 0 problem(s)
+low-rank censuses k = 1..4 empty (167s): chi(T5^2) >= 5 exactly
+census listing: 1 decomposition 5-set(s) [(525, 563, 591, 619, 637)]; orbit closure under the unitary symmetry group (order 50): 1 set(s)
+  patterns 3125, leaf tests 25, stabilizer 0 (0.0s)
+T5 m=2 -> 3: 1 set(s) of size 5, 3125 patterns, 25 tested, 0 stabilizer, 0 lift(s)
+wrote research/t5_m3_lift/results/cell.json
+no rank-5 decomposition of |T5>^2 lifts to |T5>^3: every one of the 25 patterns that survive the exact prunes fails the stabilizer test
+CERTIFIED chi(T5^3) >= 6
+[168.2s]

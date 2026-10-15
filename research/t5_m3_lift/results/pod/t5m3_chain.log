@@ -1,0 +1,34 @@
+T5M3_START 2026-10-02T01:30:01Z host ee4072210b09 commit b894242 workers 20 with_census 1
+T5M3_KERNEL_OK 2026-10-02T01:30:02Z
+census control-pattern rc=0
+census control-hash rc=0
+census control-m1 rc=0
+census control-planted rc=0
+census control-rank4 rc=0
+census control-reference rc=0
+lift control-stabtest rc=0
+lift control-basis rc=0
+lift control-rank3 rc=0
+lift control-product rc=0
+lift control-t3-basis rc=0
+lift control-t3-m2 rc=0
+lift control-n-m2 rc=0
+T5M3_CONTROLS_DONE 2026-10-02T01:36:35Z
+probe rc=0
+probe batch 73: hash matches, kernel 404s, 1.18e-07 s per M^2, projected census 15.0 CPU-h
+T5M3_PROBE_DONE 2026-10-02T01:43:21Z
+census re-run: 74/74 records, 1 decomposition(s), hash mismatches [], missing []
+T5M3_CENSUS_DONE 2026-10-02T02:32:26Z
+T5M3_AGG_EXIT 0 2026-10-02T02:54:36Z
+aggregate complete in 1329s
+LISTING COMPLETE: 1 decomposition 5-set(s)
+T5M3_LIFT_EXIT 0 2026-10-02T02:57:24Z
+no rank-5 decomposition of |T5>^2 lifts to |T5>^3: every one of the 25 patterns that survive the exact prunes fails the stabilizer test
+CERTIFIED chi(T5^3) >= 6
+[168.2s]
+fill rc=0
+T5M3_CERT_EXIT 0 2026-10-02T03:19:38Z
+PASS  T5-m3-lower-6.json  chi(|T5>^3) >= 6
+      tier=attested  certificate script asserted: CERTIFIED chi(T5^3) >= 6; re-ran 2 of 74 stored batches from scratch chosen from seed 20261001 and only checked the SHA-256 of the other 72 against research/t5q_m2_rank5/batch_manifest.json; the full enumeration (13.4 CPU-h on RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host, fifteen batches in parallel at nice 19, 2026-09-24 12:32 to 13:36 UTC (the rank-5 census of |T5>^2, research/t5q_m2_rank5 at commit 2b751cb)) was not re-run
+T5M3_SUMMARY chi(T5^3)>=6 aggregate_exit=0 lift_exit=0 certificate_exit=0 2026-10-02T03:19:38Z
+T5M3_CHAIN_DONE 2026-10-02T03:19:38Z

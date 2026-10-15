@@ -1,0 +1,26 @@
+  random    [501, 521, 1946, 2301, 3107] c=[1, 3, 2, 4, 5]: recovered, 1 kernel set(s), 100480 candidates, M=3378, 1.2s
+  random    [505, 2114, 2940, 3697, 3819] c=[5, 3, 1, 2, 4]: recovered, 1 kernel set(s), 13627 candidates, M=1785, 0.3s
+  random    [964, 1789, 1998, 2613, 3070] c=[2, 3, 5, 4, 1]: recovered, 1 kernel set(s), 23547 candidates, M=2110, 0.4s
+  random    [1377, 1885, 2157, 3210, 3835] c=[3, 5, 2, 1, 4]: recovered, 1 kernel set(s), 19198 candidates, M=2014, 0.4s
+  random    [56, 1080, 1820, 2672, 3033] c=[3, 1, 5, 2, 4]: recovered, 1 kernel set(s), 55977 candidates, M=2819, 0.8s
+  random    [298, 788, 2197, 3514, 3884] c=[1, 4, 3, 2, 5]: recovered, 1 kernel set(s), 75151 candidates, M=3111, 0.9s
+  random    [1321, 1826, 2438, 2719, 3532] c=[5, 1, 3, 4, 2]: recovered, 1 kernel set(s), 22002 candidates, M=2073, 0.4s
+  random    [349, 1791, 2694, 3194, 3340] c=[1, 4, 3, 5, 2]: recovered, 1 kernel set(s), 22279 candidates, M=2108, 0.4s
+  random    [347, 1204, 1236, 3021, 3634] c=[3, 2, 4, 5, 1]: recovered, 1 kernel set(s), 49112 candidates, M=2695, 0.7s
+  random    [241, 550, 762, 3598, 3837] c=[4, 1, 3, 2, 5]: recovered, 1 kernel set(s), 92474 candidates, M=3349, 1.1s
+  random    [70, 362, 1405, 2652, 2718] c=[5, 1, 3, 4, 2]: recovered, 1 kernel set(s), 111524 candidates, M=3537, 1.3s
+  random    [846, 952, 1006, 1228, 1859] c=[4, 5, 1, 3, 2]: recovered, 1 kernel set(s), 65359 candidates, M=2947, 0.9s
+  equal     [156, 418, 2909, 3420, 3892] c=[1, 4, 1, 3, 2]: recovered, 1 kernel set(s), 110829 candidates, M=3481, 1.2s
+  equal     [316, 2577, 2699, 3427, 3569] c=[1, 1, 3, 4, 2]: recovered, 1 kernel set(s), 5567 candidates, M=1322, 0.2s
+  equal     [559, 1727, 1876, 2585, 3066] c=[1, 1, 3, 2, 4]: recovered, 1 kernel set(s), 25261 candidates, M=2172, 0.4s
+  equal     [556, 635, 2122, 2492, 3894] c=[2, 3, 4, 1, 1]: recovered, 1 kernel set(s), 87827 candidates, M=3264, 1.1s
+  pauli     [838, 963, 1213, 2213, 2338] c=[1, 3, 4, 5, 2]: recovered, 1 kernel set(s), 63443 candidates, M=2936, 0.8s
+  pauli     [1165, 1415, 1665, 2290, 2540] c=[3, 5, 4, 1, 2]: recovered, 1 kernel set(s), 38709 candidates, M=2484, 0.6s
+  pauli     [1041, 2416, 3291, 3666, 3791] c=[4, 3, 2, 5, 1]: recovered, 1 kernel set(s), 8151 candidates, M=1483, 0.2s
+  pauli     [1238, 2238, 2738, 2863, 3488] c=[2, 5, 1, 3, 4]: recovered, 1 kernel set(s), 11105 candidates, M=1661, 0.2s
+  repeated  [2301, 2965, 3136, 3238, 3238] c=[3, 5, 4, 2, 1]: recovered, 170 kernel set(s), 2176 candidates, M=934, 0.1s
+  repeated  [1114, 1114, 2085, 2234, 2362] c=[3, 1, 2, 5, 4]: recovered, 148 kernel set(s), 14049 candidates, M=1814, 0.3s
+  dependent [0, 5, 10, 33, 49] c=[4, 1, 2, 3, 5]: recovered, 2901 kernel set(s), 156364 candidates, M=3894, 2.0s
+  dependent [0, 5, 10, 33, 42] c=[5, 4, 3, 1, 2]: recovered, 2901 kernel set(s), 153493 candidates, M=3894, 2.0s
+wrote research/t5q_m2_rank5/results/control_planted.json
+control-planted (native): 24 of 24 planted targets recovered in 18s: PASSED

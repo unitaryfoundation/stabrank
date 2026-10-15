@@ -1,0 +1,6 @@
+  k = 1: 0 set(s) with psi in their span, 0 candidates over 1 unit(s), 0.0s
+  k = 2: 0 set(s) with psi in their span, 0 candidates over 98 unit(s), 0.2s
+  k = 3: 0 set(s) with psi in their span, 0 candidates over 98 unit(s), 0.2s
+  k = 4: 0 set(s) with psi in their span, 7367 candidates over 155422 unit(s), 189.6s
+wrote research/t5q_m2_rank5/results/control_rank4.json
+control-rank4: ranks 1 to 4 excluded by the exact census in 190s (cert_t5_m2_rank4.py excludes them numerically): PASSED

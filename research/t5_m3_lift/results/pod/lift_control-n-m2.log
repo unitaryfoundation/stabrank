@@ -1,0 +1,6 @@
+rank-3 decompositions of |N>^2: 48 (group order 72)
+  patterns 2985984, leaf tests 11090, stabilizer 159 (5.2s)
+N m=2 -> 3: 48 set(s) of size 3, 2985984 patterns, 11090 tested, 159 stabilizer, 0 lift(s)
+wrote research/t5_m3_lift/results/control_n_m2.json
+control-n-m2 PASSED: 48 decompositions, 0 lifts (chi(N^3) = 4)
+[5.8s]

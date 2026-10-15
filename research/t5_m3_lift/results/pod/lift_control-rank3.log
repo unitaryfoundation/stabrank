@@ -1,0 +1,6 @@
+rank-3 decompositions of |T5>: 10 (closure 10, group order 5)
+  patterns 24300000, leaf tests 101600, stabilizer 20 (136.0s)
+T5 rank-3 m=1 -> 2: 10 set(s) of size 3, 24300000 patterns, 101600 tested, 20 stabilizer, 0 lift(s)
+wrote research/t5_m3_lift/results/control_rank3.json
+control-rank3 PASSED: 10 rank-3 decompositions, 0 lifts (chi(T5^2) >= 4 by the lemma; the cell is 5)
+[138.7s]

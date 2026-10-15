@@ -1,0 +1,15 @@
+partition research/t5q_m2_rank5/partition.json: T5 m=2 rank=5, 155422 units in 74 batches, sha256 0ada0a9f1a289312
+plan re-enumerated in 1s: 3900 states, group order 50, 98 pivots, 155422 units, dictionary sha256 618955a96555d1f4 (equal to the partition's)
+low-rank censuses in 166s: k = 1: 0 hit(s), 0 candidates over 1 unit(s), k = 2: 0 hit(s), 0 candidates over 98 unit(s), k = 3: 0 hit(s), 0 candidates over 98 unit(s), k = 4: 0 hit(s), 7367 candidates over 155422 unit(s)
+batches present 74/74
+155422/155422 units run in the batches present, 2795734903 modular candidates, 1 hits, 0 undecided; 13.34 kernel CPU-h (13.40 process CPU-h, 649 kernel s per batch, 1.05e-07 s per M^2); projected census 13.3 CPU-h at this rate (partition estimate 12.3 pod CPU-h)
+DECOMPOSITION FOUND: psi_2 = |T5>^2 lies in the span of the 5 stabilizer states [525, 563, 591, 619, 637] (batch 31, numerical rank 5, residual 1.65e-15); chi(T5^2) <= 5; 1 such hit(s)
+LISTED: batch 31 set [525, 563, 591, 619, 637]
+every stored check passes: all batches present, hashes verify, the units are the enumerator's pivot pairs tiled exactly once, the dictionary hashes as recorded, ranks 1 to 4 are excluded by the exact censuses, no undecided unit, and 1 5-set(s) have |T5>^2 in their span (the listing)
+wrote research/t5q_m2_rank5/batch_manifest.json: 74 batch(es)
+seed: 20261001
+re-running 2 batch(es) from scratch: [12, 47] -> research/t5_m3_lift/results/pod/recheck
+  batch 12: 591s, deterministic hash matches (5fde18b322119343)
+  batch 47: 571s, deterministic hash matches (597d7de62a5d9ba6)
+aggregate complete in 1329s
+LISTING COMPLETE: 1 decomposition 5-set(s)

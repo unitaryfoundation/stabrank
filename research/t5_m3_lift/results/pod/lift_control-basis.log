@@ -1,0 +1,5 @@
+  patterns 3125, leaf tests 25, stabilizer 5 (0.0s)
+T5 basis m=1 -> 2: 1 set(s) of size 5, 3125 patterns, 25 tested, 5 stabilizer, 1 lift(s)
+wrote research/t5_m3_lift/results/control_basis.json
+control-basis PASSED: the lift is the board's five Z(x)Z sectors, patterns c(z) = c - z
+[0.3s]

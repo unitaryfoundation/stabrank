@@ -1,0 +1,2 @@
+PASS  T5-m3-lower-6.json  chi(|T5>^3) >= 6
+      tier=attested  certificate script asserted: CERTIFIED chi(T5^3) >= 6; re-ran 2 of 74 stored batches from scratch chosen from seed 20261001 and only checked the SHA-256 of the other 72 against research/t5q_m2_rank5/batch_manifest.json; the full enumeration (13.4 CPU-h on RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host, fifteen batches in parallel at nice 19, 2026-09-24 12:32 to 13:36 UTC (the rank-5 census of |T5>^2, research/t5q_m2_rank5 at commit 2b751cb)) was not re-run

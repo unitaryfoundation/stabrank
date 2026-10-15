@@ -1,0 +1,5 @@
+  patterns 27, leaf tests 9, stabilizer 3 (0.0s)
+T3 basis m=1 -> 2: 1 set(s) of size 3, 27 patterns, 9 tested, 3 stabilizer, 1 lift(s)
+wrote research/t5_m3_lift/results/control_t3_basis.json
+control-t3-basis PASSED: the carry decomposition of |T3>^2
+[0.3s]
