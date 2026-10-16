@@ -4,12 +4,25 @@
   "m": 6,
   "direction": "lower",
   "rank": 3,
-  "provenance": {
-    "author": "Qassim, Pashayan, and Gosset",
-    "reference": "arXiv:2106.07740",
-    "date": "2021-06-14",
-    "github": [],
-    "method": "literature"
+  "certificate": {
+    "script": "verify_challenge/cert_cat_m5_rank2.py",
+    "exact": true,
+    "expect": "CERTIFIED chi(cat_6) >= 3"
   },
-  "notes": "chi(cat_6) >= 3 from chi(cat_6) >= chi(cat_5) > 2 (Qassim, Pashayan, and Gosset, arXiv:2106.07740, appendix): <0|_m |cat_m> is proportional to |cat_{m-1}>, so the rank is non-decreasing in m, and Lemma 3 gives chi(cat_5) > 2. With bounds/cat-m6-upper-3.json the cell is exact, chi(cat_6) = 3, as in their Table 1 and in the text after Theorem 1 (\"the stabilizer rank of |cat_6> is exactly 3\"). Cited, for the same reason as the m = 5 lower bound."
+  "provenance": {
+    "author": "Michel de Messieres",
+    "reference": "stabrank verify_challenge",
+    "date": "2026-10-16",
+    "github": [
+      "MicheldeMessieres"
+    ],
+    "method": "projection monotonicity applied to the exact rank-2 exclusion at m=5",
+    "compute": {
+      "cpu_hours": 0,
+      "wall_clock_hours": 0,
+      "runs": 0,
+      "hardware": "none beyond the m=5 certificate, which this cell re-runs"
+    }
+  },
+  "notes": "chi(cat_6) >= chi(cat_5) >= 3. (I (x) <0|)|cat_6> = 2^{-1/2}|cat_5>, checked by the certificate on the exact amplitudes, and <0| on one qubit carries a stabilizer decomposition to one with no more terms (the projection lemma of cert_s_m4_from_m3.py), so the rank is non-decreasing in m; chi(cat_5) >= 3 is the exact exclusion of bounds/cat-m5-lower-3.json, which the same script re-runs (about 8 s). Qassim, Pashayan, and Gosset (arXiv:2106.07740) give the same argument from their Lemma 3. With bounds/cat-m6-upper-3.json the cell is exact, chi(cat_6) = 3, as in their Table 1 and in the text after Theorem 1 (\"the stabilizer rank of |cat_6> is exactly 3\")."
 }

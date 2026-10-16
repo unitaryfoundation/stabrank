@@ -1,0 +1,3 @@
+# research/cat_lift: brute-force cross-check of the cat_7 slice-and-lift certificate
+
+`crosscheck.py` re-derives every rank-2 decomposition of compressed cat_4 and every rank-3 decomposition of compressed cat_5 by brute force. It uses no symmetry and no pivot reduction, and runs on a separate code path (the `qubit_states` dictionary, floating-point projection, sympy confirmation). It checks that these sets equal the union of the symmetry orbits of the decompositions returned by `verify_challenge/cert_cat_m7_lift.py`, and that liftability agrees. Run `python research/cat_lift/crosscheck.py` (about 11 min on one core); it prints `CROSS-CHECK PASSED` and exits 0.

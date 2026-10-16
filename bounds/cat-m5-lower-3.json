@@ -4,12 +4,31 @@
   "m": 5,
   "direction": "lower",
   "rank": 3,
-  "provenance": {
-    "author": "Qassim, Pashayan, and Gosset",
-    "reference": "arXiv:2106.07740",
-    "date": "2021-06-14",
-    "github": [],
-    "method": "literature"
+  "certificate": {
+    "script": "verify_challenge/cert_cat_m5_rank2.py",
+    "exact": true,
+    "expect": "CERTIFIED chi(cat_5) >= 3"
   },
-  "notes": "Qassim, Pashayan, and Gosset (arXiv:2106.07740), appendix, Lemma 3: chi(cat_5) > 2. Their proof reduces any two-term decomposition to the canonical form C|cat_5> proportional to |0^5> + gamma|1^a 0^{5-a}> (their Lemma 2), pins gamma down to seven candidates from the Pauli spectrum |<cat_5|P|cat_5>| in {0, 1/4, 1/2, 1}, and compares the Pauli spectra of the seven candidate states with that of |cat_5> by computer (782 Paulis with expectation zero for cat_5 against 710 for each candidate). With bounds/cat-m5-upper-3.json the cell is exact, chi(cat_5) = 3, as in their Table 1. Cited: the spectrum comparison is theirs, not the pipeline's; a rank-2 exclusion over the 2,423,520 five-qubit stabilizer states would reproduce it."
+  "provenance": {
+    "author": "Michel de Messieres",
+    "reference": "stabrank verify_challenge",
+    "date": "2026-10-16",
+    "github": [
+      "MicheldeMessieres"
+    ],
+    "method": "exact rank-2 exclusion over the 36,720 four-qubit stabilizer states after compressing |cat_5> into the even-weight code Z^5 = +1",
+    "compute": {
+      "cpu_hours": 0.01,
+      "wall_clock_hours": 0.01,
+      "runs": 3,
+      "hardware": "Apple silicon laptop, one core",
+      "llm": [
+        {
+          "model": "claude-opus-5-5",
+          "role": "designed, wrote and ran the certificate and its cross-checks"
+        }
+      ]
+    }
+  },
+  "notes": "Machine check of Lemma 3 in the appendix of Qassim, Pashayan, and Gosset (arXiv:2106.07740), chi(cat_5) > 2, which they prove by a computer comparison of Pauli spectra; the rank is theirs, the check is new. With bounds/cat-m5-upper-3.json the cell is exact, chi(cat_5) = 3, as in their Table 1. Method: |cat_5> lies in the stabilizer code Z^{(x)5} = +1, and projecting a decomposition onto that code keeps each term a stabilizer state or zero; the CNOT chain onto the last qubit identifies the code with four qubits, so chi(cat_5) is the rank of the four-qubit state c_5(y) = cat_5(y, parity(y)), whose entries are fourth roots of unity. All 36,720 four-qubit stabilizer states are generated exactly as Gaussian-integer vectors (count asserted). With q(s) = s - s_0 t, exact over Z[i], the target lies in the span of two states iff their quotients are parallel, decided by exact reduced Gaussian-rational keys; no floating point enters the decision. Controls in the script: compressed cat_4 (chi = 2) shows its 15 rank-2 classes, a stabilizer target is flagged as rank 1, and the closed form of |cat_m> matches stabrank_verify.cat_vector exactly for m = 4, 5, 6. About 8 s on one core."
 }
