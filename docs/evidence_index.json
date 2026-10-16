@@ -1,6 +1,6 @@
 {
  "generated_from": "bounds/",
- "head": "aaff4fc481b5b5b789cbdc96c7c92f7648d63989",
+ "head": "2bba4af1b934d43128c6ada8b21cbed629a59f0b",
  "generated": "2026-10-15",
  "since": "2026-09-15",
  "exponents": [
@@ -5688,7 +5688,7 @@
    "ok": true,
    "date": "2026-10-12",
    "author": "Samuel Bevins",
-   "reference": "Bevins 2026, arXiv submission pending",
+   "reference": "arxiv:2610.17500",
    "method": "structured construction from a fifteen-word identity",
    "pull_request": 163,
    "merge_commit": "aaff4fc481b5b5b789cbdc96c7c92f7648d63989",
