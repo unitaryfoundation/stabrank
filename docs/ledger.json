@@ -184,24 +184,6 @@
    "attested": null
   },
   {
-   "slug": "cat-m5-lower-3",
-   "orbit": "cat",
-   "m": 5,
-   "direction": "lower",
-   "rank": 3,
-   "tier": "cited",
-   "ok": true,
-   "gamma": null,
-   "date": "2021-06-14",
-   "author": "Qassim, Pashayan, and Gosset",
-   "github": [],
-   "method": "literature",
-   "reference": "arXiv:2106.07740",
-   "compute": null,
-   "budget_s": null,
-   "attested": null
-  },
-  {
    "slug": "cat-m5-upper-3",
    "orbit": "cat",
    "m": 5,
@@ -210,24 +192,6 @@
    "tier": "verified",
    "ok": true,
    "gamma": 0.5283208335737187,
-   "date": "2021-06-14",
-   "author": "Qassim, Pashayan, and Gosset",
-   "github": [],
-   "method": "literature",
-   "reference": "arXiv:2106.07740",
-   "compute": null,
-   "budget_s": null,
-   "attested": null
-  },
-  {
-   "slug": "cat-m6-lower-3",
-   "orbit": "cat",
-   "m": 6,
-   "direction": "lower",
-   "rank": 3,
-   "tier": "cited",
-   "ok": true,
-   "gamma": null,
    "date": "2021-06-14",
    "author": "Qassim, Pashayan, and Gosset",
    "github": [],
@@ -1628,10 +1592,10 @@
    "method": "Galois descent to Q(w3), then exhaustive three-pivot scan of seven-state configurations in exact arithmetic, batched and attested",
    "reference": "stabrank research/t3_rank7",
    "compute": {
-    "cpu_hours": 80.1,
-    "wall_clock_hours": 22.0,
-    "runs": 1,
-    "hardware": "Apple silicon laptop, four loop.py instances at nice 19 over the 459-batch partition, 21 ns per inner step averaged"
+    "cpu_hours": 468.7,
+    "wall_clock_hours": 115.8,
+    "runs": 4,
+    "hardware": "Apple silicon laptop, four loop.py instances at nice 19 over the 459-batch partition, 21 ns per inner step averaged (80.1 CPU-h, 22 h wall); independent exclusion of research/t3_rank7/independent: RunPod Xeon Gold 6342 pod, 6 workers at nice 10 under a shared 7.65-core quota, 37 ns per step per worker (378.5 CPU-h over 92.9 h wall in two sessions), plus the laptop supplement of the skipped third pivots, 14 workers (10.1 CPU-h, 0.75 h wall)"
    },
    "budget_s": 3600,
    "attested": {
@@ -2667,6 +2631,102 @@
    }
   },
   {
+   "slug": "H3-m4-lower-7",
+   "orbit": "H3",
+   "m": 4,
+   "direction": "lower",
+   "rank": 7,
+   "tier": "attested",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-10-02",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "two-qutrit base slice at (0, 0): every rank-6 decomposition of |H3>^4 has four, five or six terms visible at that point (Fact B of PR #86), so its base is a full 4-, 5- or 6-multiset of |H3>^2 and the invisible terms lie on the 16 flats missing (0, 0); every base is enumerated up to the unitary symmetry of |H3>^2 and completed slice by slice under the two-qutrit slice structure lemma, modulo 65521 with exact re-decision",
+   "reference": "stabrank research/h3_m4_rank6",
+   "compute": {
+    "cpu_hours": 81.5,
+    "wall_clock_hours": 7.2,
+    "runs": 1,
+    "hardware": "RunPod CPU pod ee4072210b09 (32 vCPU, Ubuntu 20.04, gcc-10 kernels, Python 3.13.5, numpy 2.4.4), 28 batches in parallel at nice 19 alongside another job's 30 workers, 2026-10-01 18:14 to 2026-10-02 00:58 UTC for the 1,021-batch loop (81.1 CPU-hours of batch records: A6 14.6, B6 60.9, C6 3.3, beta' 2.3, gamma 0.03); the four heaviest stage A6 batches (0, 3, 4, 5, the pivot-117 pairs with 0.7 to 2.1 million covers each) were starved of CPU by an external SIGSTOP in the first pass (40 to 146 s of CPU in 4,740 s of wall) and recorded their covers as undecided at the 3,600 s wall-clock deadline, so they were re-run without a deadline 00:32 to 00:58 UTC (9 to 26 minutes each, 0 hits) and their records replace the starved ones; the aggregate (1,331 s, the 6-cover census re-run over every pivot pair and the lists re-enumerated, every count equal) and its two seeded re-runs (batches 142 and 1009, seed 20261002, 183 s and 157 s, deterministic hashes equal) on the same pod 01:03 to 01:25 UTC"
+   },
+   "budget_s": 3600,
+   "attested": {
+    "batches": "research/h3_m4_rank6/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 81.5,
+    "hardware": "RunPod CPU pod ee4072210b09 (32 vCPU, Ubuntu 20.04, gcc-10 kernels, Python 3.13.5, numpy 2.4.4), 28 batches in parallel at nice 19 alongside another job's 30 workers, 2026-10-01 18:14 to 2026-10-02 00:58 UTC for the 1,021-batch loop (81.1 CPU-hours of batch records: A6 14.6, B6 60.9, C6 3.3, beta' 2.3, gamma 0.03); the four heaviest stage A6 batches (0, 3, 4, 5, the pivot-117 pairs with 0.7 to 2.1 million covers each) were starved of CPU by an external SIGSTOP in the first pass (40 to 146 s of CPU in 4,740 s of wall) and recorded their covers as undecided at the 3,600 s wall-clock deadline, so they were re-run without a deadline 00:32 to 00:58 UTC (9 to 26 minutes each, 0 hits) and their records replace the starved ones; the aggregate (1,331 s, the 6-cover census re-run over every pivot pair and the lists re-enumerated, every count equal) and its two seeded re-runs (batches 142 and 1009, seed 20261002, 183 s and 157 s, deterministic hashes equal) on the same pod 01:03 to 01:25 UTC",
+    "note": "The exclusion of every rank-6 decomposition of |H3>^4 lives in the stored batch outputs under research/h3_m4_rank6/results/ (88 stage A6 batches over the 36,368,678 full 6-covers of |H3>^2 with distinct independent base states, 802 stage B6 batches over the 378,843 G_2 orbit representatives of the dependent 6-sets, 92 stage C6 batches over the 354,012 representatives of the repeated 6-multisets, 36 stage beta' batches over the 61,413 representatives of the full 5-multisets with the invisible term on each of the 16 flats missing (0, 0), 3 stage gamma batches over the 565 representatives of the full 4-multisets with each of the 136 flat multisets), every base matched at x_0 = (0, 0) along qutrits 1, 2, every candidate re-decided mod 2013265921 and numerically, 0 hits, 0 refused, 0 undecided. The certificate checks the partition against the enumerator, re-runs the 6-cover kernel over every pivot pair, re-enumerates the orbit representatives, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/h3_m4_rank6/batch.py, which regenerates any batch (batch.py K).",
+    "total": 1021
+   }
+  },
+  {
+   "slug": "T5-m3-lower-6",
+   "orbit": "T5",
+   "m": 3,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "attested",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-10-02",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "slice-and-lift at exact rank: the census listing of the rank-5 decompositions of |T5>^2 (one set, the five Z(x)Z eigensectors) lifted along a third ququint by an exact pattern search over Q(zeta_5); no pattern vector is a stabilizer state",
+   "reference": "stabrank docs/notes/t5_m3_lift_design.md",
+   "compute": {
+    "cpu_hours": 28.9,
+    "wall_clock_hours": 2.9,
+    "runs": 2,
+    "hardware": "Two census runs and the lift chain. (1) The rank-5 census of |T5>^2, 2026-09-24 12:32 to 13:36 UTC: 13.4 CPU-hours on a RunPod pod, 16 vCPU AMD EPYC 4564P on a shared host, fifteen batches at nice 19, commit 2b751cb, Python 3.12.14, numpy 2.3.5 (the attested enumeration). (2) The same 74 batches again, 2026-10-02 01:43 to 02:32 UTC: 14.5 CPU-hours (14.57 kernel hours, 1.15e-7 s per squared member count) on a RunPod pod, 32 vCPU AMD EPYC 9655P, 20 batches at nice 19, commit b894242 with the 5-cover kernel source as refactored after the first run (561c82a), built with gcc-10, Python 3.13.5, numpy 2.4.4; the deterministic hash of every one of the 74 records (units, member counts, hits with their decisions, undecided lists) equals the committed one, with the same 2,795,734,903 modular candidates and the same single hit. (3) The chain around it on the second pod, 01:30 to 03:19 UTC, about 1 CPU-hour: the census and lift controls, the batch-73 probe (404 kernel s, hash equal), the listing aggregate with its two seeded re-runs (batches 12 and 47, 591 s and 571 s, hashes equal), the lift stage (168 s with the exact k = 1..4 censuses, 0.05 s of search), and the certificate under the verifier (attested, 22 minutes). Laptop controls before the pod: 0.1 CPU-hours."
+   },
+   "budget_s": 3600,
+   "attested": {
+    "batches": "research/t5q_m2_rank5/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 13.4,
+    "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host, fifteen batches in parallel at nice 19, 2026-09-24 12:32 to 13:36 UTC (the rank-5 census of |T5>^2, research/t5q_m2_rank5 at commit 2b751cb)",
+    "note": "The listing of every 5-set of two-ququint stabilizer states whose span contains |T5>^2, one per orbit of the unitary symmetry group, lives in the stored batch outputs under research/t5q_m2_rank5/results/ (74 batches, 155,422 pivot-partner units, every unit run, 0 undecided, one hit: the five Z(x)Z eigensectors, a set fixed by the group). The enumeration was not re-run under the budget. The certificate re-enumerates the plan, re-runs the exact k = 1..4 censuses, verifies the hashes and geometry of every output, re-decides the stored hit, fails on any undecided unit, re-runs two batches from scratch (seed 20261001: batches 12 and 47), and then runs the exact lift decision of research/t5_m3_lift/lift.py on the listed set. Completeness rests on the stored outputs and on research/t5q_m2_rank5/batch.py, which regenerates any batch (batch.py K), under the modular assumption every kernel census of the project makes: a member whose image is nonzero over Q(zeta_5) is nonzero modulo 65521. An independent re-run of all 74 batches on 2026-10-02 (research/t5_m3_lift/results/pod/census/) reproduced every deterministic hash; it is recorded in provenance.compute and does not change the tier.",
+    "total": 74
+   }
+  },
+  {
+   "slug": "T5-m4-lower-6",
+   "orbit": "T5",
+   "m": 4,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "attested",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-10-02",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "projection monotonicity applied to the attested slice-and-lift exclusion of rank 5 at m=3",
+   "reference": "stabrank research/t5_m3_lift",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond the m=3 certificate, which this cell re-runs"
+   },
+   "budget_s": 3600,
+   "attested": {
+    "batches": "research/t5q_m2_rank5/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 13.4,
+    "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host, fifteen batches in parallel at nice 19, 2026-09-24 12:32 to 13:36 UTC (the rank-5 census of |T5>^2, research/t5q_m2_rank5 at commit 2b751cb)",
+    "note": "The listing of every 5-set of two-ququint stabilizer states whose span contains |T5>^2, one per orbit of the unitary symmetry group, lives in the stored batch outputs under research/t5q_m2_rank5/results/ (74 batches, 155,422 pivot-partner units, every unit run, 0 undecided, one hit: the five Z(x)Z eigensectors, a set fixed by the group). The enumeration was not re-run under the budget. The certificate re-enumerates the plan, re-runs the exact k = 1..4 censuses, verifies the hashes and geometry of every output, re-decides the stored hit, fails on any undecided unit, re-runs two batches from scratch (seed 20261001: batches 12 and 47), and then runs the exact lift decision of research/t5_m3_lift/lift.py on the listed set. Completeness rests on the stored outputs and on research/t5q_m2_rank5/batch.py, which regenerates any batch (batch.py K), under the modular assumption every kernel census of the project makes: a member whose image is nonzero over Q(zeta_5) is nonzero modulo 65521. An independent re-run of all 74 batches on 2026-10-02 (research/t5_m3_lift/results/pod/census/) reproduced every deterministic hash; it is recorded in provenance.compute and does not change the tier.",
+    "total": 74
+   }
+  },
+  {
    "slug": "qubit_T-m10-upper-15",
    "orbit": "qubit_T",
    "m": 10,
@@ -2689,6 +2749,149 @@
     "hardware": "direct construction, no search"
    },
    "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "N-m5-upper-10",
+   "orbit": "N",
+   "m": 5,
+   "direction": "upper",
+   "rank": 10,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.4191806548578769,
+   "date": "2026-10-16",
+   "author": "Vincent Russo",
+   "github": [
+    "vprusso"
+   ],
+   "method": "sparsest word representation of |N>^5 over (four-ray stabilizer-spanned three-space through |N>^2) x (same) x (four-ray plane through |N>), HiGHS MILP, coefficients solved exactly over Q(omega_3)",
+   "reference": "this repository (stabrank-research, round 28 letter lifts)",
+   "compute": {
+    "cpu_hours": 6,
+    "wall_clock_hours": 5,
+    "runs": 6,
+    "hardware": "Apple silicon laptop, one core per solve; one confirming solve on a Perlmutter CPU node",
+    "llm": [
+     {
+      "model": "claude-fable-5-1",
+      "role": "designed and ran the search and the exact refit"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "cat-m5-lower-3",
+   "orbit": "cat",
+   "m": 5,
+   "direction": "lower",
+   "rank": 3,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-10-16",
+   "author": "Michel de Messieres",
+   "github": [
+    "MicheldeMessieres"
+   ],
+   "method": "exact rank-2 exclusion over the 36,720 four-qubit stabilizer states after compressing |cat_5> into the even-weight code Z^5 = +1",
+   "reference": "stabrank verify_challenge",
+   "compute": {
+    "cpu_hours": 0.01,
+    "wall_clock_hours": 0.01,
+    "runs": 3,
+    "hardware": "Apple silicon laptop, one core",
+    "llm": [
+     {
+      "model": "claude-opus-5-5",
+      "role": "designed, wrote and ran the certificate and its cross-checks"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "cat-m6-lower-3",
+   "orbit": "cat",
+   "m": 6,
+   "direction": "lower",
+   "rank": 3,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-10-16",
+   "author": "Michel de Messieres",
+   "github": [
+    "MicheldeMessieres"
+   ],
+   "method": "projection monotonicity applied to the exact rank-2 exclusion at m=5",
+   "reference": "stabrank verify_challenge",
+   "compute": {
+    "cpu_hours": 0,
+    "wall_clock_hours": 0,
+    "runs": 0,
+    "hardware": "none beyond the m=5 certificate, which this cell re-runs"
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "cat-m7-lower-4",
+   "orbit": "cat",
+   "m": 7,
+   "direction": "lower",
+   "rank": 4,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-10-16",
+   "author": "Michel de Messieres",
+   "github": [
+    "MicheldeMessieres"
+   ],
+   "method": "slice-and-lift in the even-weight compressed picture: the one rank-3 decomposition of compressed cat_6 up to symmetry does not extend to cat_7",
+   "reference": "stabrank verify_challenge",
+   "compute": {
+    "cpu_hours": 2.8,
+    "wall_clock_hours": 2.5,
+    "runs": 5,
+    "hardware": "Apple silicon laptop, one core per run",
+    "llm": [
+     {
+      "model": "claude-opus-5-5",
+      "role": "designed, wrote and ran the certificate and its cross-checks"
+     }
+    ]
+   },
+   "budget_s": 1800,
+   "attested": null
+  },
+  {
+   "slug": "cat-m8-lower-4",
+   "orbit": "cat",
+   "m": 8,
+   "direction": "lower",
+   "rank": 4,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-10-16",
+   "author": "Michel de Messieres",
+   "github": [
+    "MicheldeMessieres"
+   ],
+   "method": "projection monotonicity applied to the slice-and-lift exclusion chi(cat_7) >= 4",
+   "reference": "stabrank verify_challenge",
+   "compute": {
+    "cpu_hours": 0,
+    "wall_clock_hours": 0,
+    "runs": 0,
+    "hardware": "none beyond the m=7 certificate, which this cell re-runs"
+   },
+   "budget_s": 1800,
    "attested": null
   }
  ]
