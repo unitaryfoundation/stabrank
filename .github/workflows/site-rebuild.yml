@@ -29,8 +29,15 @@ jobs:
     name: Rebuild docs/ and open the pull request
     runs-on: ubuntu-latest
     # A certificate may declare a budget of up to 3600 s, and a new bound
-    # has no receipt yet, so a rebuild can legitimately take an hour.
-    timeout-minutes: 90
+    # has no receipt yet, so a rebuild can legitimately take an hour per
+    # such bound. Receipts land only when the rebuild pull request is
+    # merged, so several merged submissions can queue up behind one
+    # rebuild (on 2026-10-15 three attested bounds did, and every rebuild
+    # after that was cancelled at 90 minutes). The bounds are verified one
+    # at a time and each is cut off at its own budget, so the job limit is
+    # the hosted-runner maximum: six hours covers five hour-long
+    # certificates plus the rest of the board.
+    timeout-minutes: 360
 
     steps:
       - name: Check out repository
