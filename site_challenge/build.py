@@ -25,6 +25,7 @@ from both is left off the board for that build.
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import functools
 import glob
 import hashlib
@@ -34,6 +35,7 @@ import math
 import os
 import re
 import sys
+import time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "verify_challenge"))
@@ -267,7 +269,35 @@ def slug(sub):
     return f"{sub['orbit']}-m{sub['m']}-{sub['direction']}-{sub['rank']}"
 
 
+VERIFIED_FIELDS = ("orbit", "m", "direction", "rank", "witness", "certificate", "lean")
+
+
 def content_hash(sub):
+    """What a receipt vouches for: the fields the verifier reads, plus the
+    bytes of the certificate script and batch manifest it would run or check.
+
+    Provenance, notes, dates, and authorship are on the board but play no
+    part in verification, so editing them (adding an arXiv reference, say)
+    must not send a 3600 s certificate back through the pipeline; and a
+    change to the certificate script or to the manifest it attests must,
+    even when the bound's JSON is untouched. Legacy receipts hashed the
+    whole JSON; receipt_for still accepts those, so this change re-verifies
+    nothing by itself."""
+    h = hashlib.sha256()
+    core = {k: sub[k] for k in VERIFIED_FIELDS if k in sub}
+    h.update(json.dumps(core, sort_keys=True, separators=(",", ":")).encode())
+    cert = sub.get("certificate") or {}
+    for rel in (cert.get("script"), (cert.get("attested") or {}).get("batches")):
+        if rel:
+            path = os.path.join(ROOT, rel)
+            h.update(rel.encode() + b"\0")
+            if os.path.isfile(path):
+                h.update(open(path, "rb").read())
+    return h.hexdigest()[:16]
+
+
+def legacy_content_hash(sub):
+    """The hash receipts carried before the verified-fields hash: the whole JSON."""
     return hashlib.sha256(
         json.dumps(sub, sort_keys=True, separators=(",", ":")).encode()
     ).hexdigest()[:16]
@@ -281,18 +311,109 @@ def ledger_rows():
     return {r["slug"]: r for r in json.load(open(path)).get("rows", [])}
 
 
-def load_bounds(no_verify=False):
+RECEIPT_TIERS = ("verified", "reproduced", "attested")
+
+
+def default_jobs():
+    """How many verifications run at once: STABRANK_JOBS if set, else two.
+
+    Two is what a 16 GB runner holds with room to spare; the heaviest
+    certificates materialize every four-qutrit stabilizer state, about 5 GiB
+    each, and nothing is gained by starting more scripts than that in
+    parallel when the runner has four cores and the scripts are single
+    threaded."""
+    env = os.environ.get("STABRANK_JOBS")
+    if env:
+        return max(1, int(env))
+    return max(1, min(2, os.cpu_count() or 1))
+
+
+def receipt_for(sub):
+    """The cached verification of a submission, when certs/ holds one whose
+    content hash still matches the file; else None."""
+    cpath = os.path.join(CERTS, f"{slug(sub)}.json")
+    if os.path.exists(cpath):
+        cached = json.load(open(cpath))
+        if cached.get("content_hash") in (content_hash(sub), legacy_content_hash(sub)):
+            return cached
+    return None
+
+
+def _verify_group(group):
+    """Worker: verify one group of submissions in order, inside one process,
+    so that stabrank_verify reuses a certificate script's run for every bound
+    of the group that cites it. Returns (key, result fields, seconds)."""
+    out = []
+    for key, sub in group:
+        t0 = time.monotonic()
+        r = verify(sub)
+        out.append((key, {"ok": r.ok, "tier": r.tier, "detail": r.detail, "gamma": r.gamma},
+                    time.monotonic() - t0))
+    return out
+
+
+def _group_budget(group):
+    budgets = [(g[1].get("certificate") or {}).get("budget_s") or 0 for g in group]
+    return max(budgets) if budgets else 0
+
+
+def verify_subs(items, jobs=None, log=sys.stdout):
+    """Verify submissions and record their receipts, as every rebuild does.
+
+    `items` is a list of (key, sub). Lower bounds that cite the same
+    certificate script form one group, verified in order inside one worker
+    so the script runs once; the groups run in parallel over `jobs`
+    processes (default_jobs() when None), longest declared budgets first.
+    One line per bound is printed as it finishes, flushed, so a log cut off
+    by a job timeout still shows what ran and for how long. Returns
+    {key: res} with the content hash in res, after writing a receipt under
+    certs/ for every result at a record-holding tier.
+    """
+    jobs = jobs or default_jobs()
+    subs = dict(items)
+    groups = {}
+    for key, sub in items:
+        cert = sub.get("certificate") or {}
+        if sub.get("direction") == "lower" and cert.get("script"):
+            gkey = ("script", cert["script"])
+        else:
+            gkey = ("one", key)
+        groups.setdefault(gkey, []).append((key, sub))
+    glist = sorted(groups.values(), key=_group_budget, reverse=True)
+    results = {}
+
+    def record(batch):
+        for key, fields, elapsed in batch:
+            s = slug(subs[key])
+            res = dict(fields, content_hash=content_hash(subs[key]))
+            results[key] = res
+            print(f"{'PASS' if res['ok'] else 'FAIL'}  {s}  tier={res['tier']}  "
+                  f"{elapsed:.0f}s  {res['detail']}", file=log, flush=True)
+            if res["ok"] and res["tier"] in RECEIPT_TIERS:
+                os.makedirs(CERTS, exist_ok=True)
+                with open(os.path.join(CERTS, f"{s}.json"), "w") as f:
+                    json.dump(res, f, indent=2)
+                    f.write("\n")
+
+    if jobs == 1 or len(glist) <= 1:
+        for g in glist:
+            record(_verify_group(g))
+    else:
+        with concurrent.futures.ProcessPoolExecutor(max_workers=min(jobs, len(glist))) as ex:
+            futures = [ex.submit(_verify_group, g) for g in glist]
+            for fut in concurrent.futures.as_completed(futures):
+                record(fut.result())
+    return results
+
+
+def load_bounds(no_verify=False, jobs=None):
     out = []
     ledger = ledger_rows() if no_verify else {}
+    pending = []
     for path in sorted(glob.glob(os.path.join(BOUNDS, "*.json"))):
         sub = json.load(open(path))
         s, h = slug(sub), content_hash(sub)
-        cpath = os.path.join(CERTS, f"{s}.json")
-        res = None
-        if os.path.exists(cpath):
-            cached = json.load(open(cpath))
-            if cached.get("content_hash") == h:
-                res = cached
+        res = receipt_for(sub)
         # A pure citation (no witness, no certificate, no Lean claim) runs
         # nothing when verified, so --no-verify can classify it directly
         # instead of skipping a bound that has no receipt and no ledger row.
@@ -307,18 +428,17 @@ def load_bounds(no_verify=False):
                    "detail": "tier taken from docs/ledger.json; not re-verified in "
                              "this build (--no-verify)",
                    "gamma": row.get("gamma"), "content_hash": h}
-        if res is None:
-            r = verify(sub)
-            res = {"ok": r.ok, "tier": r.tier, "detail": r.detail,
-                   "gamma": r.gamma, "content_hash": h}
-            if r.ok and r.tier in ("verified", "reproduced", "attested"):
-                os.makedirs(CERTS, exist_ok=True)
-                with open(cpath, "w") as f:
-                    json.dump(res, f, indent=2)
-                    f.write("\n")
-        if res.get("gamma") is None and sub["direction"] == "upper":
-            res["gamma"] = implied_exponent(sub["orbit"], sub["rank"], sub["m"])
         out.append({"sub": sub, "res": res, "slug": s})
+        if res is None:
+            pending.append((len(out) - 1, sub))
+    if pending:
+        print(f"verifying {len(pending)} of {len(out)} bounds without a current receipt, "
+              f"{jobs or default_jobs()} at a time", flush=True)
+        for i, res in verify_subs(pending, jobs).items():
+            out[i]["res"] = res
+    for e in out:
+        if e["res"].get("gamma") is None and e["sub"]["direction"] == "upper":
+            e["res"]["gamma"] = implied_exponent(e["sub"]["orbit"], e["sub"]["rank"], e["sub"]["m"])
     return out
 
 
@@ -1215,8 +1335,8 @@ def references_page(refs):
 
 # ------------------------------------------------------------------ build ---
 
-def build(no_verify=False):
-    entries = load_bounds(no_verify)
+def build(no_verify=False, jobs=None):
+    entries = load_bounds(no_verify, jobs)
     cells = best_by_cell(entries)
     board = leaderboard(entries)
     people = contributors(entries)
@@ -1580,4 +1700,7 @@ if __name__ == "__main__":
     ap.add_argument("--no-verify", action="store_true",
                     help="run no certificate: use certs/ receipts and docs/ledger.json "
                          "as they are, and leave a bound with neither off the board")
-    build(ap.parse_args().no_verify)
+    ap.add_argument("--jobs", type=int, default=None,
+                    help="verifications to run at once (default: STABRANK_JOBS or 2)")
+    args = ap.parse_args()
+    build(args.no_verify, args.jobs)
