@@ -30,7 +30,9 @@ from stabrank_verify import (FAMILY, ORBIT_P, cat_vector, exponent_copies,  # no
 CAT_FILES = sorted(os.path.basename(p)[:-5]
                    for p in glob.glob(os.path.join(ROOT, "bounds", "cat-*.json")))
 UPPER = {2: 1, 3: 2, 4: 2, 5: 3, 6: 3, 7: 6, 8: 6}
-LOWER = {3: 2, 4: 2, 5: 3, 6: 3, 7: 3, 8: 3}
+LOWER = {3: 2, 4: 2, 5: 3, 6: 3, 7: 4, 8: 4}
+# superseded cited lower bounds kept on disk (QPG's 3 at m = 7, 8)
+SUPERSEDED_LOWER = {7: 3, 8: 3}
 
 
 def _load(name):
@@ -120,7 +122,8 @@ def test_projection_and_bra_relations():
 
 def test_cat_files_present():
     assert CAT_FILES == sorted([f"cat-m{m}-upper-{r}" for m, r in UPPER.items()]
-                               + [f"cat-m{m}-lower-{r}" for m, r in LOWER.items()])
+                               + [f"cat-m{m}-lower-{r}" for m, r in LOWER.items()]
+                               + [f"cat-m{m}-lower-{r}" for m, r in SUPERSEDED_LOWER.items()])
 
 
 @pytest.mark.parametrize("name", CAT_FILES)
@@ -164,17 +167,33 @@ def test_cat_upper_witnesses_verify(m):
 
 
 def test_cat_lower_tiers():
-    """m = 3, 4 are exact certificates; m = 5 to 8 are citations of QPG's
-    appendix and cannot hold a record."""
+    """m = 3, 4 are exact rank-1 certificates; m = 5, 6 are the exact rank-2
+    exclusion (verified); m = 7, 8 at rank 4 are the exact slice-and-lift
+    certificate; QPG's rank-3 citations at m = 7, 8 stay on disk, superseded."""
     for m in (3, 4):
         sub = _load(f"cat-m{m}-lower-2")
         assert sub["certificate"]["exact"] is True
         assert sub["certificate"]["script"] == "verify_challenge/cert_family_rank1.py"
         assert sub["certificate"]["expect"] == f"CERTIFIED chi(cat_{m}) >= 2"
-    for m in (5, 6, 7, 8):
+    for m in (5, 6):
+        sub = _load(f"cat-m{m}-lower-3")
+        assert sub["certificate"]["exact"] is True
+        assert sub["certificate"]["script"] == "verify_challenge/cert_cat_m5_rank2.py"
+        assert sub["certificate"]["expect"] == f"CERTIFIED chi(cat_{m}) >= 3"
+        assert verify(sub).tier == "verified"
+    for m in (7, 8):
+        sub = _load(f"cat-m{m}-lower-4")
+        assert sub["certificate"]["exact"] is True
+        assert sub["certificate"]["script"] == "verify_challenge/cert_cat_m7_lift.py"
+        assert sub["certificate"]["expect"] == f"CERTIFIED chi(cat_{m}) >= 4"
         sub = _load(f"cat-m{m}-lower-3")
         assert "certificate" not in sub and "lean" not in sub
         assert verify(sub).tier == "cited"
+    src = open(os.path.join(ROOT, "verify_challenge", "cert_cat_m7_lift.py")).read()
+    for m in (7, 8):
+        assert f'print("CERTIFIED chi(cat_{m}) >= 4")' in src
+    src = open(os.path.join(ROOT, "verify_challenge", "cert_cat_m5_rank2.py")).read()
+    assert 'print("CERTIFIED chi(cat_5) >= 3")' in src
 
 
 def test_cat_cells_consistent_with_qubit_H():
@@ -239,11 +258,17 @@ def test_site_constants_and_ket():
     assert tensor in site.ket("qubit_H", 6, "&le;", 6)
     # the target rule: at m the candidate rank is the largest below
     # 2^{base (m-2)} that is not under the board's lower bound at m, and the
-    # lowest implied exponent among those wins; with the QPG lower bounds in
-    # place that is chi(cat_7) <= 3 (log_2(3)/5 = 0.317). Without them the
-    # rule would name the impossible chi(cat_6) <= 2.
+    # lowest implied exponent among those wins. With the QPG lower bounds
+    # alone that was chi(cat_7) <= 3 (log_2(3)/5 = 0.317); with chi(cat_7) >= 4
+    # and chi(cat_8) >= 4 on the board it is chi(cat_9) <= 6 (log_2(6)/7 =
+    # 0.3693). Without lower bounds the rule would name the impossible
+    # chi(cat_6) <= 2.
     base = site.BASELINE["cat"][0]
-    cells = {("cat", m, "lower"): {"sub": {"rank": r}} for m, r in LOWER.items()}
+    qpg = {3: 2, 4: 2, 5: 3, 6: 3, 7: 3, 8: 3}
+    cells = {("cat", m, "lower"): {"sub": {"rank": r}} for m, r in qpg.items()}
     tgt = site.next_target("cat", base, cells=cells, lead="")
     assert "m=7" in tgt and "&le; 3" in tgt and "0.3170" in tgt
+    cells = {("cat", m, "lower"): {"sub": {"rank": r}} for m, r in LOWER.items()}
+    tgt = site.next_target("cat", base, cells=cells, lead="")
+    assert "m=9" in tgt and "&le; 6" in tgt and "0.3693" in tgt
     assert "m=6" in site.next_target("cat", base, cells=None)

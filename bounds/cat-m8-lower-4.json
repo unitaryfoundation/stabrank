@@ -1,0 +1,29 @@
+{
+  "schema_version": "0.1",
+  "orbit": "cat",
+  "m": 8,
+  "direction": "lower",
+  "rank": 4,
+  "certificate": {
+    "script": "verify_challenge/cert_cat_m7_lift.py",
+    "exact": true,
+    "budget_s": 1800,
+    "expect": "CERTIFIED chi(cat_8) >= 4"
+  },
+  "provenance": {
+    "author": "Michel de Messieres",
+    "reference": "stabrank verify_challenge",
+    "date": "2026-10-16",
+    "github": [
+      "MicheldeMessieres"
+    ],
+    "method": "projection monotonicity applied to the slice-and-lift exclusion chi(cat_7) >= 4",
+    "compute": {
+      "cpu_hours": 0,
+      "wall_clock_hours": 0,
+      "runs": 0,
+      "hardware": "none beyond the m=7 certificate, which this cell re-runs"
+    }
+  },
+  "notes": "chi(cat_8) >= chi(cat_7) >= 4: (I (x) <0|)|cat_8> = 2^{-1/2}|cat_7>, checked by the certificate on the exact amplitudes before the claim is printed, and the projection lemma of cert_s_m4_from_m3.py; chi(cat_7) >= 4 is bounds/cat-m7-lower-4.json, which the same script re-runs (460 s on one core; budget declared for slower CI runners). Beyond the published values as of our literature check (Oct 2026): QPG (arXiv:2106.07740) list 3 <= chi(cat_8) <= 6. Jardine's Zenodo deposits (2026-08) report evidence against rank 5 for cat_8; not used here. Puts the cell at 4 <= chi <= 6; ranks 4 and 5 would still beat log_2(3)/4 through log_2(chi)/(m-2)."
+}

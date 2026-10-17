@@ -117,6 +117,8 @@ unless stated:
 | `cert_s_m5_lift.py` | `S-m5-lower-5` | "about two minutes on four cores" | Apple silicon laptop, low priority | notes |
 | `cert_n_m4_lift.py` | `N-m4-lower-5` | 43 minutes on the 4-core CI runner with the numpy search; declared budget 3600 s | GitHub Actions `ubuntu-latest` | compute block, `certificate.budget_s` |
 | `cert_t3m3_rank7.py` | `T3-m3-lower-7` | 99 s wall, 270 s CPU with 8 workers; about three minutes on the 4-core CI runner | Apple silicon laptop; CI | compute block |
+| `cert_cat_m5_rank2.py` | `cat-m5-lower-3`, `cat-m6-lower-3` | about 8 s, one core | Apple silicon laptop | notes |
+| `cert_cat_m7_lift.py` | `cat-m7-lower-4`, `cat-m8-lower-4` | 460 s, one core; declared budget 1800 s for slower runners | Apple silicon laptop | notes, `certificate.budget_s` |
 
 Every certificate pins BLAS to one thread per worker
 (`OMP_NUM_THREADS=1` at the top of the script) and picks its worker count
