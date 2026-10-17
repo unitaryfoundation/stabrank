@@ -6,6 +6,14 @@ name: Site rebuild
 # docs/ (verifying any bound without a matching receipt), and open or
 # refresh a pull request carrying the regenerated site and the new receipts.
 # The result still goes through review rather than straight to main.
+#
+# Receipts are the expensive part, and the Submissions workflow records them
+# on main as each merge is verified, so a rebuild normally only regenerates
+# the pages. When it does have certificates to run (a backlog, or a bound
+# whose receipt went stale), it runs them under a time budget and lands the
+# receipts it produced on the rebuild branch even when it is cut off, then
+# dispatches itself again to continue from them. Progress is never lost to
+# the job limit, which is why that limit can stay short.
 
 on:
   push:
@@ -17,6 +25,8 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  # to dispatch itself again after a run that was cut off by the time budget
+  actions: write
 
 # Two merges in quick succession must not race on the rebuild branch. The
 # second run waits, then rebuilds from a main that already holds both.
@@ -28,8 +38,9 @@ jobs:
   rebuild:
     name: Rebuild docs/ and open the pull request
     runs-on: ubuntu-latest
-    # A certificate may declare a budget of up to 3600 s, and a new bound
-    # has no receipt yet, so a rebuild can legitimately take an hour.
+    # A certificate may declare a budget of up to 3600 s, so a single run can
+    # legitimately spend an hour on one bound; the build step below stops at
+    # 75 minutes and lands what it has, and the next run continues.
     timeout-minutes: 90
 
     steps:
@@ -45,10 +56,53 @@ jobs:
         with:
           enable-cache: true
 
+      # Receipts produced by an earlier run that was cut off sit on the
+      # rebuild branch; take them so this run continues rather than restarts.
+      # build.py ignores any receipt whose content hash no longer matches.
+      - name: Reuse receipts from an interrupted rebuild
+        run: |
+          if git fetch -q origin site-rebuild-auto 2>/dev/null; then
+            git checkout FETCH_HEAD -- certs/ 2>/dev/null || true
+            git reset -q certs/
+            echo "reused receipts from the site-rebuild-auto branch"
+          fi
+
       - name: Rebuild the site
-        run: make build
+        id: build
+        run: |
+          set +e
+          timeout -k 60 75m make build
+          rc=$?
+          set -e
+          echo "rc=$rc" >> "$GITHUB_OUTPUT"
+          if [ "$rc" = "124" ]; then
+            echo "::notice::the build was stopped at the time budget; receipts produced so far are landed below and the rebuild continues in a new run"
+          elif [ "$rc" != "0" ]; then
+            exit "$rc"
+          fi
+
+      # A run cut off by the time budget lands only the receipts it produced
+      # (docs/ is untouched until the build completes) and dispatches the
+      # workflow again; the next run reuses them and continues.
+      - name: Land the receipts of an interrupted rebuild and continue
+        if: steps.build.outputs.rc == '124'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: site-rebuild-auto
+        run: |
+          git add certs/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          if ! git diff --cached --quiet; then
+            git commit -q -m "Receipts from a rebuild stopped at the time budget ($GITHUB_SHA)"
+          fi
+          git push --force origin "$BRANCH"
+          gh workflow run site-rebuild.yml --ref main
+          echo "receipts landed on $BRANCH; a new rebuild run was dispatched"
 
       - name: Commit the rebuilt site and open the pull request
+        if: steps.build.outputs.rc == '0'
         env:
           GH_TOKEN: ${{ github.token }}
           BEFORE: ${{ github.event.before }}

@@ -14,7 +14,9 @@ on:
       - "verify_challenge/**"
 
 permissions:
-  contents: read
+  # write so that the push-to-main run can commit the receipts it produces;
+  # pull-request runs from forks get a read-only token regardless.
+  contents: write
 
 jobs:
   bounds:
@@ -114,7 +116,29 @@ jobs:
         run: uv run --extra challenge python verify_challenge/validate_bounds.py
 
       - name: Verify them
-        if: steps.changed.outputs.files != ''
+        if: steps.changed.outputs.files != '' && github.event_name == 'pull_request'
         run: |
           uv run --extra challenge python verify_challenge/stabrank_verify.py \
             ${{ steps.changed.outputs.files }}
+
+      # On main the same verification also writes the receipts under certs/
+      # (the files site_challenge/build.py would write), and commits them, so
+      # a merged bound is verified once, here, and the Site rebuild that
+      # follows finds its receipt instead of running the certificate again.
+      # The commit touches only certs/, so it triggers neither workflow.
+      - name: Verify them and record the receipts
+        if: steps.changed.outputs.files != '' && github.event_name == 'push'
+        run: |
+          uv run --extra challenge python site_challenge/record_receipts.py \
+            ${{ steps.changed.outputs.files }}
+          git add certs/
+          if git diff --cached --quiet; then
+            echo "no new receipts"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -q -m "Record verification receipts for ${{ steps.changed.outputs.files }}"
+          # another merge may have landed while the certificates ran
+          git pull -q --rebase origin main
+          git push origin HEAD:main
