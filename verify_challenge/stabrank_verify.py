@@ -49,6 +49,7 @@ import os
 import re
 import subprocess
 import sys
+import time
 
 import sympy as sp
 
@@ -408,6 +409,36 @@ def check_attested(cert, root=ROOT):
 
 SEED_LINE = re.compile(r"^\s*seed\s*[:=]\s*(\S+)", re.I | re.M)
 
+_CERT_RUNS = {}
+
+
+def run_certificate(path, budget_s):
+    """Run a certificate script under a wall-clock budget, once per process.
+
+    Several bounds cite the same script (the two magic-cat lower bounds share
+    one, the two T5 lifts another, and the rank-2 and rank-1 exclusions serve
+    several orbits), and a rebuild used to run the script again for each of
+    them. The first run is kept, keyed by path, and reused for any later
+    request it already answers: a run that finished within t seconds answers
+    every budget of at least t, and a run that hit its budget answers every
+    budget no larger than that one. Returns (proc, elapsed, reused), with
+    proc None when the script hit the budget.
+    """
+    hit = _CERT_RUNS.get(path)
+    if hit is not None:
+        proc, elapsed, limit = hit
+        if (proc is not None and elapsed <= budget_s) or (proc is None and limit >= budget_s):
+            return proc, elapsed, True
+    t0 = time.monotonic()
+    try:
+        proc = subprocess.run([sys.executable, path], capture_output=True,
+                              text=True, timeout=budget_s, cwd=ROOT)
+    except subprocess.TimeoutExpired:
+        proc = None
+    elapsed = time.monotonic() - t0
+    _CERT_RUNS[path] = (proc, elapsed, budget_s)
+    return proc, elapsed, False
+
 
 def verify_lower(sub, budget_s=BUDGET_DEFAULT_S):
     """Run the certificate script; require exit zero and its claim on stdout.
@@ -442,10 +473,8 @@ def verify_lower(sub, budget_s=BUDGET_DEFAULT_S):
         batches, err = check_attested(cert)
         if err:
             return Result(False, None, err)
-    try:
-        proc = subprocess.run([sys.executable, path], capture_output=True,
-                              text=True, timeout=budget_s, cwd=ROOT)
-    except subprocess.TimeoutExpired:
+    proc, _elapsed, _reused = run_certificate(path, budget_s)
+    if proc is None:
         return Result(False, None, f"certificate exceeded the {budget_s}s budget")
     if proc.returncode != 0:
         return Result(False, None, f"certificate exited {proc.returncode}")

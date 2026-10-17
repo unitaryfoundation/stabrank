@@ -1,9 +1,10 @@
 .PHONY: build verify fit seed clean-site
 
 # Rebuild docs/ from bounds/. Every bound is re-verified unless a cached
-# certificate in certs/ still matches its content hash.
+# certificate in certs/ still matches its content hash; each certificate
+# script runs once per build and JOBS (default 2) verifications run at once.
 build:
-	uv run --extra challenge python site_challenge/build.py
+	uv run --extra challenge python -u site_challenge/build.py $(if $(JOBS),--jobs $(JOBS))
 
 # Verify one submission, or all of them.
 verify:
