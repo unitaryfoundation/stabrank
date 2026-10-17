@@ -67,8 +67,14 @@ jobs:
       # the schema and the verifier come from the base branch and only the data
       # under bounds/ is taken from the pull request. A lower bound is an
       # exception in kind: its certificate script *is* the submission, so that
-      # script is taken from the pull request too, and only for a branch in
-      # this repository. A fork's certificate is left for a maintainer to run.
+      # script is taken from the pull request too. For a branch in this
+      # repository everything under verify_challenge/ comes from the PR; for a
+      # fork only the certificate scripts the PR adds (new files matching
+      # verify_challenge/cert_*.py) do, next to the base branch's verifier,
+      # schema and helpers, so a fork can submit a lower bound that CI checks
+      # but cannot change how existing bounds are judged. A fork's script that
+      # needs new helper modules or research/ data fails here as "not found"
+      # or on import and is left for a maintainer to run.
       #
       # Lean sources and their build receipts are the same kind of exception: a
       # bound claiming the lean tier names a module that only exists in the PR.
@@ -91,7 +97,12 @@ jobs:
                                     lean_proofs/ certs/ research/
             echo "branch in this repository: certificate scripts and Lean sources run from the PR"
           else
-            echo "::notice::fork pull request: the schema and verifier are the base branch's, so a certificate script added by this PR is reported missing and left for a maintainer to run"
+            added=$(git diff --name-only --diff-filter=A "$BASE" "$head" -- 'verify_challenge/cert_*.py' | tr '\n' ' ')
+            if [ -n "$added" ]; then
+              git checkout "$head" -- $added
+              echo "fork pull request: certificate scripts added by the PR run from the PR: $added"
+            fi
+            echo "::notice::fork pull request: the schema, the verifier and its helpers are the base branch's; only certificate scripts this PR adds under verify_challenge/ run from the PR, and anything else they need is left for a maintainer to run"
           fi
 
       - name: Set up uv
