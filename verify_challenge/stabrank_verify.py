@@ -125,15 +125,46 @@ def orbit_state(orbit):
         # stabilizer states themselves, unlike T3 which needs Q(w_9).
         w5 = sp.exp(2 * sp.pi * sp.I / 5)
         return sp.Matrix([w5 ** ((x ** 3) % 5) for x in range(5)]) / sp.sqrt(5)
+    if orbit == "qubit_sqrtT":           # sqrt(T) state, fourth level of the Clifford hierarchy
+        # (|0> + e^{i pi/8}|1>)/sqrt 2 = Z(pi/8)|+>: the magic state of the
+        # square root of the T gate. Its phase is a primitive sixteenth root
+        # of unity, so the state lives in Q(zeta_16), a degree-4 extension of
+        # the Q(i) the qubit stabilizer states live in; the Galois descent
+        # that gives chi(T3^m) >= 3 for free gives chi >= min(4, m + 1) here
+        # (cert_sqrtt_galois.py). It is not Clifford-equivalent to the H-type
+        # (Bloch vector on an edge) or T-type (face) orbits: its Bloch vector
+        # is (cos(pi/8), sin(pi/8), 0), and the Clifford group acts on Bloch
+        # vectors by signed coordinate permutations.
+        return sp.Matrix([1, sp.exp(sp.I * sp.pi / 8)]) / sp.sqrt(2)
+    if orbit == "CS":                     # two-qubit controlled-S magic state
+        # CS|++> = (|00> + |01> + |10> + i|11>)/2, the first width-2 orbit:
+        # m copies live on 2m qubits (ORBIT_WIDTH). The phase i^{x1 x2} is not
+        # a Z_4-valued quadratic form with even cross terms, which is exactly
+        # why |CS> is not a stabilizer state; CS = ((1+i)/2) I + ((1-i)/2) CZ
+        # gives chi(|CS>) = 2.
+        return sp.Matrix([1, 1, 1, sp.I]) / 2
     raise ValueError(f"unknown orbit {orbit!r}")
 
 
 ORBIT_P = {"S": 3, "N": 3, "H3": 3, "T3": 3, "qubit_H": 2, "qubit_T": 2, "T5": 5,
-           "cat": 2}
+           "qubit_sqrtT": 2, "CS": 2, "cat": 2}
+
+# Qudits per copy. A width-w orbit state lives on w qudits, so m copies live
+# on n = w m qudits and every witness term is parametrised over F_p^n; the
+# exponent gamma = log_p(rank)/m stays per copy. Orbits absent here have
+# width 1.
+ORBIT_WIDTH = {"CS": 2}
+
+
+def orbit_qudits(orbit, m):
+    """The number of qudits n that m copies of the orbit state occupy."""
+    return ORBIT_WIDTH.get(orbit, 1) * int(m)
+
 
 ORBIT_LABEL = {
     "S": "Strange", "N": "Norrell", "H3": "H₃", "T3": "T₃",
     "qubit_H": "H-type", "qubit_T": "BK T-type", "T5": "T₅",
+    "qubit_sqrtT": "√T", "CS": "CS",
     "cat": "magic cat",
 }
 
@@ -176,8 +207,8 @@ def family_vector(orbit, m):
 
 
 def target_vector(orbit, m):
-    """|M>^{ot m} as an exact column vector of length p^m, or the m-qubit
-    state of a family track."""
+    """|M>^{ot m} as an exact column vector of length p^n with n = width * m
+    (orbit_qudits), or the m-qubit state of a family track."""
     if orbit in FAMILY:
         return family_vector(orbit, m)
     v = orbit_state(orbit)
@@ -286,6 +317,7 @@ def verify_upper(sub):
     """Rebuild the decomposition exactly and require it to equal the target."""
     orbit, m, rank = sub["orbit"], int(sub["m"]), int(sub["rank"])
     p = ORBIT_P[orbit]
+    n = orbit_qudits(orbit, m)       # qudits the m copies occupy (width * m)
     terms = sub["witness"]["terms"]
     coeffs = sub["witness"]["coeffs"]
     if len(terms) != rank or len(coeffs) != rank:
@@ -293,7 +325,7 @@ def verify_upper(sub):
                       f"claims rank {rank} but gives {len(terms)} terms and "
                       f"{len(coeffs)} coefficients")
     try:
-        cols = [stabilizer_vector(t, p, m) for t in terms]
+        cols = [stabilizer_vector(t, p, n) for t in terms]
     except Exception as exc:
         return Result(False, None, f"a term is not a valid stabilizer state: {exc}")
     try:
@@ -305,7 +337,7 @@ def verify_upper(sub):
                                    "than claimed; resubmit at the smaller rank")
 
     tgt = target_vector(orbit, m)
-    acc = sp.zeros(p ** m, 1)
+    acc = sp.zeros(p ** n, 1)
     for c, col in zip(cs, cols):
         acc += c * col
     diff = acc - tgt
