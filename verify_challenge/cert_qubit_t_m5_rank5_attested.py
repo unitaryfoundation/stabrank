@@ -39,6 +39,10 @@ part of the record and are not re-run here.
 
 Printed claims: CERTIFIED chi(qubit_T^5) >= 6
                 CERTIFIED chi(qubit_T^6) >= 6 (projection monotonicity)
+                CERTIFIED chi(qubit_T^7) >= 6 (projection monotonicity)
+                CERTIFIED chi(qubit_T^8) >= 6 (projection monotonicity)
+                CERTIFIED chi(qubit_T^9) >= 6 (projection monotonicity)
+                CERTIFIED chi(qubit_T^10) >= 6 (projection monotonicity)
 """
 
 import os
@@ -67,8 +71,9 @@ def main():
     # Projection monotonicity (Lean: stabRankP_powVecP_mono in
     # lean_proofs/LeanProofs/Stabilizer/SliceP.lean): both amplitudes of |T>
     # are nonzero, so slicing carries a rank-r decomposition of T^6 to one of
-    # T^5, and the m=5 exclusion bounds the m=6 cell as well.
-    print("CERTIFIED chi(qubit_T^6) >= 6")
+    # T^5, and the m=5 exclusion bounds every cell with m >= 5.
+    for m in (6, 7, 8, 9, 10):
+        print(f"CERTIFIED chi(qubit_T^{m}) >= 6")
     return 0
 
 
