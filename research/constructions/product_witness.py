@@ -44,11 +44,11 @@ ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, ROOT)
 sys.path.insert(0, os.path.join(ROOT, "verify_challenge"))
 
-from stabrank_verify import ORBIT_P, implied_gamma  # noqa: E402
+from stabrank_verify import ORBIT_P, implied_gamma, orbit_qudits  # noqa: E402
 
 # Orbits measured against a single-copy product bound rather than a published
 # exponent (CONTRIBUTING.md); the baseline is log_p of the m=1 rank.
-UNPUBLISHED_BASELINE = {"T5": 3}
+UNPUBLISHED_BASELINE = {"T5": 3, "CS": 2}
 
 
 def best_upper(orbit, m):
@@ -130,10 +130,12 @@ def main(argv):
     ms = [int(a) for a in argv[2:]]
     p = ORBIT_P[orbit]
     facs = [factor(orbit, m) for m in ms]
-    w, n = facs[0][0], ms[0]
+    # terms are parametrized over the qudits the copies occupy (2m for CS)
+    w, n, nq = facs[0][0], ms[0], orbit_qudits(orbit, ms[0])
     for (wf, _, _), m in zip(facs[1:], ms[1:]):
-        w = product_witness(w, wf, n, m)
+        w = product_witness(w, wf, nq, orbit_qudits(orbit, m))
         n += m
+        nq += orbit_qudits(orbit, m)
     rank = len(w["terms"])
     factors = " x ".join(f"chi(|{orbit}>^{m}) <= {r}" for (_, r, _), m in zip(facs, ms))
     seen = {}

@@ -69,15 +69,15 @@ def sector_target(m, s):
     return v / np.linalg.norm(v)
 
 
-def warm_basis(path, p, m, rank, psi):
+def warm_basis(path, p, n, rank, psi):
     """The terms of a verified witness, pruned to `rank` by dropping the least
     significant term repeatedly; a warm start for annealing one rank below a
-    known decomposition."""
+    known decomposition. `n` is the number of qudits the terms live on."""
     from stabrank import (can_represent_as_linear_combination,
                           prune_least_significant_basis_function)
     from stabrank_verify import stabilizer_vector
     sub = json.load(open(path))
-    funcs = [np.array([complex(z) for z in stabilizer_vector(t, p, m)])
+    funcs = [np.array([complex(z) for z in stabilizer_vector(t, p, n)])
              for t in sub["witness"]["terms"]]
     while len(funcs) > rank:
         funcs, _, _ = prune_least_significant_basis_function(
@@ -89,20 +89,22 @@ def anneal_once(orbit, m, rank, seed, chains, iters, cooling, warm=None):
     """One annealing run at fixed rank. Returns (vectors or None, residual, secs, cpu)."""
     from stabrank import generate_random_stabilizer_state
     from stabrank.stabrank_core import run_sa_pauli_expansion
-    from stabrank_verify import ORBIT_P
+    from stabrank_verify import ORBIT_P, orbit_qudits
     if orbit.startswith("T3sector"):
         p, psi = 3, sector_target(m + 1, int(orbit[len("T3sector"):]))
+        n = m
     else:
         p = ORBIT_P[orbit]
         psi = target(orbit, m)
+        n = orbit_qudits(orbit, m)       # qudits the m copies occupy (2m for CS)
     np.random.seed(seed)
     if warm:
-        basis = warm_basis(warm, p, m, rank, psi)
+        basis = warm_basis(warm, p, n, rank, psi)
     else:
-        basis = [generate_random_stabilizer_state(m, p=p) for _ in range(rank)]
+        basis = [generate_random_stabilizer_state(n, p=p) for _ in range(rank)]
     t0, c0 = time.time(), time.process_time()
     _, funcs, _, err, _, _ = run_sa_pauli_expansion(
-        target=psi, n_orig=m, p_prime=p, k_subset_size=rank, initial_basis=basis,
+        target=psi, n_orig=n, p_prime=p, k_subset_size=rank, initial_basis=basis,
         initial_temperature=1.0, cooling_rate=cooling, num_iterations_at_temp=iters,
         min_temperature=1 / 4000, atol=1e-7, two_func_perturb_prob=0.3,
         random_replace_prob=0.05, use_real_qubit_moves=False, clifford_ratio=0.5,

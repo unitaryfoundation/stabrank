@@ -143,12 +143,12 @@ def main(argv):
     ap.add_argument("--k", type=int, default=2, help="how many terms to replace")
     a = ap.parse_args(argv[1:])
     from rank_exclusion import dictionary, psi_for
-    from stabrank_verify import ORBIT_P
+    from stabrank_verify import ORBIT_P, orbit_qudits
     terms, resid = load_plateau(a.plateau)
     r = len(terms)
     psi = psi_for(a.orbit, a.m)
     psi = psi / np.linalg.norm(psi)
-    D = dictionary(ORBIT_P[a.orbit], a.m)
+    D = dictionary(ORBIT_P[a.orbit], orbit_qudits(a.orbit, a.m))
     print(f"plateau of {r} terms at residual {resid:.4f}; replacing {a.k} of them, "
           f"{len(list(itertools.combinations(range(r), a.k)))} choices of kept set")
     any_found = False

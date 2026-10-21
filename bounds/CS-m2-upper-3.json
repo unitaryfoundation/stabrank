@@ -1,0 +1,178 @@
+{
+  "schema_version": "0.1",
+  "orbit": "CS",
+  "m": 2,
+  "direction": "upper",
+  "rank": 3,
+  "witness": {
+    "terms": [
+      {
+        "k": 0,
+        "x0": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [],
+        "Q": [],
+        "l": []
+      },
+      {
+        "k": 4,
+        "x0": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "l": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "k": 4,
+        "x0": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "l": [
+          3,
+          3,
+          3,
+          3
+        ]
+      }
+    ],
+    "coeffs": [
+      "1/2",
+      "-1/2 - I/2",
+      "-1/2 + I/2"
+    ]
+  },
+  "provenance": {
+    "author": "Vincent Russo",
+    "reference": "stabrank docs/notes/new_orbits_design.md",
+    "method": "pivot search of rank_exclusion.py over the 36,720 four-qubit stabilizer states (design note, 2026-09-20), then exact refit by fit_coeffs.fit",
+    "date": "2026-09-20",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.01,
+      "wall_clock_hours": 0.01,
+      "runs": 1,
+      "hardware": "Apple silicon laptop, one core"
+    }
+  },
+  "notes": "|CS>^2 = (1/2)|0000> - ((1+i)/2)|+i>^4 - ((1-i)/2)(CZ (x) CZ)|-i>^4, with |+i> = (|0> + i|1>)/sqrt 2 and |-i> its conjugate; the coefficients are in Q(i) and the identity is checked symbolically by the verifier. Found by the design note's pivot search over the 36,720 four-qubit states. There are 16 rank-3 decompositions of |CS>^2 in all, each one computational basis state plus two full-support states, and they form one orbit under the unitary symmetry group of |CS>^2 (the 24 two-qubit Cliffords fixing |CS> up to phase on each copy and the swap of the copies, order 1152), reached by the pivot search from three pivot orbits; this is the member with the basis state |0000>. With the exact rank-2 exclusion of cert_cs_m2_rank2.py this settles chi(|CS>^2) = 3, strictly below the product bound 4, so the transversal-number bound 2^tau for hypergraph states is not tight even for two disjoint edges of size two. Implied gamma log_2(3)/2 = 0.7925 against the single-copy product baseline 1; no exponent has been published for the orbit, so the site does not count the baseline as beaten. The extent exponent 0.678 is the comparison line for the approximate rank."
+}

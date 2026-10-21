@@ -37,7 +37,7 @@ import sys
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from stabrank_verify import ORBIT_P, stabilizer_vector  # noqa: E402
+from stabrank_verify import ORBIT_P, orbit_qudits, stabilizer_vector  # noqa: E402
 from fit_coeffs import fit  # noqa: E402
 
 
@@ -198,12 +198,16 @@ def load_vectors(path):
 
 
 def witness_from_vectors(orbit, m, vectors, tol=1e-7):
-    """{"terms": [...], "coeffs": [...]} with exact coefficients, or raise."""
+    """{"terms": [...], "coeffs": [...]} with exact coefficients, or raise.
+
+    The vectors live on n = width * m qudits (orbit_qudits): m copies of the
+    two-qubit CS state are a 4^m-vector."""
     p = ORBIT_P[orbit]
+    n = orbit_qudits(orbit, m)
     terms = []
     for i, v in enumerate(vectors):
         try:
-            terms.append(term_from_vector(v, p, m, tol))
+            terms.append(term_from_vector(v, p, n, tol))
         except NotStabilizer as exc:
             raise NotStabilizer(f"term {i}: {exc}") from None
     coeffs = fit(orbit, m, terms)
@@ -251,7 +255,7 @@ def main(argv):
     p = ORBIT_P[a.orbit]
     # Sanity: every term rebuilds and the rank is what the terms say.
     for t in w["terms"]:
-        stabilizer_vector(t, p, a.m)
+        stabilizer_vector(t, p, orbit_qudits(a.orbit, a.m))
     if not a.author:
         print("fill in provenance.author and notes before submitting", file=sys.stderr)
     return 0

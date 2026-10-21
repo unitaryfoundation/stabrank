@@ -1,0 +1,33 @@
+{
+  "schema_version": "0.1",
+  "orbit": "CS",
+  "m": 3,
+  "direction": "lower",
+  "rank": 4,
+  "certificate": {
+    "script": "verify_challenge/cert_cs_m3_lift.py",
+    "expect": "CERTIFIED chi(CS^3) >= 4"
+  },
+  "provenance": {
+    "author": "Vincent Russo",
+    "reference": "stabrank slice_lift.py",
+    "method": "slice-and-lift along a whole copy: the slice equations of every rank-3 decomposition of |CS>^2 admit only the identity assignment, and the assembled terms |CS> (x) u_i are not stabilizer states",
+    "date": "2026-10-21",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.03,
+      "wall_clock_hours": 0.03,
+      "runs": 2,
+      "hardware": "Apple silicon laptop, one core, under load from other jobs; about 45 s for the certificate",
+      "llm": [
+        {
+          "model": "claude-fable-5-1",
+          "role": "wrote the block slice-and-lift and the certificate"
+        }
+      ]
+    }
+  },
+  "notes": "Puts the cell at 4 <= chi(|CS>^3) <= 6 (CS-m3-upper-6.json). A rank-3 decomposition of |CS>^3 sliced along its first copy gives at each of the four slice values a rank-3 decomposition of |CS>^2 (all four amplitudes of |CS> are nonzero), and each term's four slices are Pauli images of one another times fourth roots of unity: the support of a stabilizer state on a block of qubits is a coset of the X-part of its stabilizer's image there, and four nonzero slices force that image to be all of F_2^2 (slice_lift.lifts_qubit_block). Three steps. (i) The slice-00 decomposition is one of the 16 rank-3 decompositions of |CS>^2, one orbit under the unitary symmetry group of |CS>^2 (24 local Cliffords per copy and the swap, order 1152), reached by the pivot search from three pivot orbits. (ii) Each of the three slice equations (one per nonzero a in F_2^2) has exactly one solution over the 16 Pauli classes and 4 phases per term, the identity assignment with mu = alpha_a/alpha_00 = 1, 1, i. It solves every slice equation of every base decomposition because those ratios are fourth roots of unity, so the slice equations exclude nothing by themselves. (iii) The only candidate term is therefore |CS> (x) u_i, which is not a stabilizer state, and to_witness.term_from_vector rejects every assembled candidate; that test decides the bound, and the certificate prints the match counts and rejections per decomposition. Numerical with margins (pivot listing at threshold 1 - 1e-6, matching tolerance 1e-7), so reproduced rather than verified. Controls: the block matcher at width 1 agrees with lifts_qubit on |T>^3 -> |T>^4 and |H>^2 -> |H>^3; the Bravyi-Kitaev T-type state with |+>, as a block state, keeps rank 2 at two copies and 3 of its 15 rank-2 decompositions lift (1 of 15 for the edge state); the 15 rank-2 decompositions of |CS> solve the slice equations trivially and every candidate fails the stabilizer test. Rank 4 would give gamma 0.667, below the extent exponent 0.678."
+}

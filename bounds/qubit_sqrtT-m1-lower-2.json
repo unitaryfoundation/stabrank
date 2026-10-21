@@ -1,0 +1,34 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_sqrtT",
+  "m": 1,
+  "direction": "lower",
+  "rank": 2,
+  "certificate": {
+    "script": "verify_challenge/cert_sqrtt_galois.py",
+    "expect": "CERTIFIED chi(qubit_sqrtT^1) >= 2",
+    "exact": true
+  },
+  "provenance": {
+    "author": "Vincent Russo",
+    "reference": "stabrank verify_challenge",
+    "method": "Galois descent over Z[i]: the four conjugates of the target under Gal(Q(zeta_16)/Q(i)) span a space of dimension min(4, m + 1); no search",
+    "date": "2026-10-21",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.003,
+      "wall_clock_hours": 0.003,
+      "runs": 1,
+      "hardware": "Apple silicon laptop, one core; about 10 s for the certificate",
+      "llm": [
+        {
+          "model": "claude-fable-5-1",
+          "role": "found the descent argument and wrote the certificate"
+        }
+      ]
+    }
+  },
+  "notes": "Settles chi(|sqrtT>) = 2 with the two-term witness. Every qubit stabilizer state is a scalar times a vector over Z[i], so the span of a decomposition is defined over Q(i) and contains every image of the target under the four automorphisms zeta -> zeta^k (k = 1, 5, 9, 13) of Q(zeta_16) fixing i; at one copy the conjugates (1, zeta^k) span C^2, so no single stabilizer state works (directly: the amplitude ratio e^{i pi/8} is not a fourth root of unity). Exact throughout: the only computation is the rank of the 2^m x 4 matrix of conjugates in Q(zeta_16), by sympy's algebraic-field arithmetic, and no floating-point margin stands under it. The same certificate prints chi(|sqrtT>^m) >= min(4, m + 1) for m <= 6."
+}

@@ -4,7 +4,7 @@ You bring a decomposition or a certificate; the pipeline decides whether it hold
 
 A submission is one JSON file in `bounds/` claiming a bound on the exact stabilizer rank of a magic state. Write `chi(|M>^{ot m})` for the smallest number of stabilizer states whose complex span contains the m-fold tensor power of the orbit state `|M>`, and `gamma = log_p(r)/m` for the per-copy exponent a rank-`r` decomposition at `m` copies implies, where `p` is 2 for qubits, 3 for qutrits and 5 for ququints. Lower `gamma` is better, and `gamma` is what the board ranks.
 
-Seven orbits and one family track are open, with the exponent each one is measured against:
+Nine orbits and one family track are open, with the exponent each one is measured against:
 
 | orbit | state | `gamma` measured against |
 |---|---|---|
@@ -15,13 +15,19 @@ Seven orbits and one family track are open, with the exponent each one is measur
 | `qubit_H` | qubit H-type, the edge centre | `log_2(3)/4` = 0.3962 |
 | `qubit_T` | qubit Bravyi-Kitaev T-type | `log_2(3)/4` = 0.3962 |
 | `T5` | ququint T-type, cubic phase `x^3` over `F_5` | `log_5(3)` = 0.6826, single-copy product bound; no published exponent |
+| `qubit_sqrtT` | sqrt(T) state `(\|0> + e^{i pi/8}\|1>)/sqrt 2`, the fourth level of the Clifford hierarchy | `1/2`, the every-angle bound of Qassim, Pashayan, and Gosset (Theorem 2) |
+| `CS` | two-qubit controlled-S magic state `CS\|++> = (\|00> + \|01> + \|10> + i\|11>)/2`, width 2 | `log_2(2)` = 1, single-copy product bound; no published exponent |
 | `cat` | magic cat state `\|cat_m> = (\|T>^m + \|T_perp>^m)/sqrt 2`, `m` the qubit count | `log_2(3)/4` = 0.3962 through the implied H-type exponent `log_2(chi(cat_m))/(m - 2)` |
 
 A family track is indexed by the qubit count `m` rather than by copies of one state, so its cells are not tensor powers and `gamma = log_p(r)/m` does not apply. For `cat` the board shows instead the exponent a cat cell implies for the qubit orbits: gluing copies of `|cat_m>` through the stabilizer bra `<cat_2|` gives `chi(cat_{l(m-2)+2}) <= chi(cat_m)^l`, and `chi(T^m)/2 <= chi(cat_m) <= chi(T^m)` (Qassim, Pashayan, and Gosset, Eq. 4), so a rank-`r` decomposition of `|cat_m>` gives `gamma <= log_2(r)/(m - 2)` for the H-type orbit; the m = 2 cell implies nothing. Every cat bound file otherwise follows the same schema, with `m` the number of qubits. Section 6 of `docs/notes/new_orbits_design.md` has the derivation and the list of what in the pipeline is adapted to the family.
 
-Six of the seven orbits are measured against a published exponent. No exponent has been published for any p = 5 state, so `T5` is measured against the product bound from its single-copy value, `chi(|T5>) = 3`, and every page that shows the baseline says so. The convention for any further orbit without a literature exponent is the same: the baseline is `log_p(chi(|M>))`, labelled as a product bound, and it is replaced by a published exponent when one appears.
+Seven of the nine orbits are measured against a published exponent. No exponent has been published for any p = 5 state or for the CS orbit, so `T5` is measured against the product bound from its single-copy value, `chi(|T5>) = 3`, `CS` against `log_2 chi(|CS>) = 1`, and every page that shows the baseline says so. The convention for any further orbit without a literature exponent is the same: the baseline is `log_p(chi(|M>))`, labeled as a product bound, and it is replaced by a published exponent when one appears.
 
-The qubit exponent is the asymptotic value of the contracted cat-state family of Qassim, Pashayan, and Gosset (arXiv:2106.07740), not the exponent of any single cell. Kissinger, van de Wetering, and Vilmart (arXiv:2202.09202) restate that family in the ZX-calculus and add a partial decomposition of `|T>^5` into three terms that each keep one `|T>`, so `chi(T^t) <= 3 chi(T^(t-4))`; on the board that gives `chi(H^7) <= 9`, `chi(H^8) <= 12`, and the glued `|cat_10>` gives `chi(H^10) <= 18` (0.4170), all as verified witnesses. The finite-`m` values approach `log_2(3)/4` from above and none of them beats it.
+`CS` is the first multi-qubit orbit. `m` counts copies of the two-qubit state, so a bound at `m` lives on `2m` qubits, every witness term is parametrized over `F_2^(2m)`, and `gamma = log_2(r)/m` is still per copy. The symmetry reduction of `rank_exclusion.py` uses the two-qubit Clifford group for it, the slice-and-lift lemma has a block form (`slice_lift.lifts_qubit_block`, slicing along a whole copy), and `validate_bounds.py` caps it at `m <= 4` (4^m amplitudes). `ORBIT_WIDTH` in `verify_challenge/stabrank_verify.py` is the table.
+
+The exponent of the `qubit_H` and `qubit_T` orbits is the asymptotic value of the contracted cat-state family of Qassim, Pashayan, and Gosset (arXiv:2106.07740), not the exponent of any single cell. Kissinger, van de Wetering, and Vilmart (arXiv:2202.09202) restate that family in the ZX-calculus and add a partial decomposition of `|T>^5` into three terms that each keep one `|T>`, so `chi(T^t) <= 3 chi(T^(t-4))`; on the board that gives `chi(H^7) <= 9`, `chi(H^8) <= 12`, and the glued `|cat_10>` gives `chi(H^10) <= 18` (0.4170), all as verified witnesses. The finite-`m` values approach `log_2(3)/4` from above and none of them beats it.
+
+For `qubit_sqrtT` the published value is Theorem 2 of the same paper, `chi(R_theta^{ot m}) = O(2^{m/2})` for every single-qubit phase state, so its baseline is `1/2`. Its lower bounds `chi(|sqrtT>^m) >= min(4, m + 1)` are exact by a Galois argument (`verify_challenge/cert_sqrtt_galois.py`: a stabilizer span is defined over `Q(i)` and so contains the four conjugates of the target under `Gal(Q(zeta_16)/Q(i))`), and the cells that would beat `1/2` are `chi <= 5` at `m = 5` and `chi <= 7` at `m = 6`.
 
 ## Five tiers, and only `cited` holds no record
 
@@ -41,7 +47,7 @@ An upper bound carries its decomposition, and each term is given by its stabiliz
 
     sum_{y in F_p^k} w_p^{Q(y) + l.y} |x0 + W y>
 
-Here `k` is the dimension of the support flat, `x0` is a coset representative of length `m`, `W` has `k` rows of length `m` spanning the flat, `Q` is a quadratic form read upper-triangular, `l` is a linear phase of length `k`, and `w_p` is a primitive p-th root of unity. For qubits the phase is `i^(l.y) (-1)^Q(y)` instead, with `l` read mod 4, since qubit stabilizer states carry fourth roots of unity and `w_2 = -1` alone would miss the Y eigenstates. A vector that is not a stabilizer state cannot be written in this form at all, and `W` is separately checked for injectivity, so the verifier never has to decide whether a supplied amplitude vector is stabilizer.
+Here `k` is the dimension of the support flat, `x0` is a coset representative of length `n`, the number of qudits the `m` copies occupy (`m` for a single-qudit orbit, `2m` for `CS`), `W` has `k` rows of length `n` spanning the flat, `Q` is a quadratic form read upper-triangular, `l` is a linear phase of length `k`, and `w_p` is a primitive p-th root of unity. For qubits the phase is `i^(l.y) (-1)^Q(y)` instead, with `l` read mod 4, since qubit stabilizer states carry fourth roots of unity and `w_2 = -1` alone would miss the Y eigenstates. A vector that is not a stabilizer state cannot be written in this form at all, and `W` is separately checked for injectivity, so the verifier never has to decide whether a supplied amplitude vector is stabilizer.
 
 If you have the decomposition as amplitude vectors, from the annealer or by hand, `verify_challenge/to_witness.py` recovers the parametrisation of each term and the exact coefficients and writes the submission skeleton:
 
@@ -237,7 +243,7 @@ Bounds that match rather than beat the literature are still worth submitting, be
 
 ## Tips
 
-- Cap is `m <= 10`, set by the verification budget rather than by the mathematics; the qubit cells at `m = 10` verify in seconds, and a qutrit witness of that size would not. A ququint bound is capped at `m <= 5` by `validate_bounds.py` (5^6 amplitudes exceed the budget).
+- Cap is `m <= 10`, set by the verification budget rather than by the mathematics; the qubit cells at `m = 10` verify in seconds, and a qutrit witness of that size would not. A ququint bound is capped at `m <= 5` by `validate_bounds.py` (5^6 amplitudes exceed the budget), and a CS bound at `m <= 4` (two qubits per copy, 4^m amplitudes).
 - `make build` rebuilds `docs/`, and `serve` hosts it at `http://localhost:8765/` so links and rendered math behave as deployed.
 - Verification results are cached in `certs/` against the content hash of the whole submission file, so any edit re-verifies it, including one that only touches `notes`. Expect a rebuild to spend the budget again after a typo fix.
 - The verifier escalates from symbolic to 60-digit numeric with a tolerance of `1e-45` when sympy cannot decide that a cyclotomic expression vanishes. If your coefficients defeat both, say so in `notes` rather than loosening the check.

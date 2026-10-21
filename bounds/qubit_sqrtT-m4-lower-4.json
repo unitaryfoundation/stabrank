@@ -1,0 +1,34 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_sqrtT",
+  "m": 4,
+  "direction": "lower",
+  "rank": 4,
+  "certificate": {
+    "script": "verify_challenge/cert_sqrtt_galois.py",
+    "expect": "CERTIFIED chi(qubit_sqrtT^4) >= 4",
+    "exact": true
+  },
+  "provenance": {
+    "author": "Vincent Russo",
+    "reference": "stabrank verify_challenge",
+    "method": "Galois descent over Z[i]: the four conjugates of the target under Gal(Q(zeta_16)/Q(i)) span a space of dimension min(4, m + 1); no search",
+    "date": "2026-10-21",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.003,
+      "wall_clock_hours": 0.003,
+      "runs": 1,
+      "hardware": "Apple silicon laptop, one core; about 10 s for the certificate",
+      "llm": [
+        {
+          "model": "claude-fable-5-1",
+          "role": "found the descent argument and wrote the certificate"
+        }
+      ]
+    }
+  },
+  "notes": "Puts the cell at 4 <= chi(|sqrtT>^4) <= 5. Galois descent: the four conjugates of |sqrtT>^4 under Gal(Q(zeta_16)/Q(i)) are independent (a Vandermonde on the weights 0 to 3), so any stabilizer span containing the target has dimension at least 4. Exact, computed as a rank over Q(zeta_16). The numerical rank-3 exclusion over the 36,720 four-qubit states (research survey, 2026-10-17: 1,548 pivots, 1,099,080 collinear candidates, closest approach 0.974) agrees. Rank 4 here would give gamma 1/2, matching the published exponent at a single cell; rank 5 gives 0.5805."
+}
