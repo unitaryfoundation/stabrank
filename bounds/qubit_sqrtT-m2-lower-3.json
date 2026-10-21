@@ -1,0 +1,34 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_sqrtT",
+  "m": 2,
+  "direction": "lower",
+  "rank": 3,
+  "certificate": {
+    "script": "verify_challenge/cert_sqrtt_galois.py",
+    "expect": "CERTIFIED chi(qubit_sqrtT^2) >= 3",
+    "exact": true
+  },
+  "provenance": {
+    "author": "Vincent Russo",
+    "reference": "stabrank verify_challenge",
+    "method": "Galois descent over Z[i]: the four conjugates of the target under Gal(Q(zeta_16)/Q(i)) span a space of dimension min(4, m + 1); no search",
+    "date": "2026-10-21",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.003,
+      "wall_clock_hours": 0.003,
+      "runs": 1,
+      "hardware": "Apple silicon laptop, one core; about 10 s for the certificate",
+      "llm": [
+        {
+          "model": "claude-fable-5-1",
+          "role": "found the descent argument and wrote the certificate"
+        }
+      ]
+    }
+  },
+  "notes": "Settles chi(|sqrtT>^2) = 3 with the three-term witness. Galois descent: a stabilizer span containing |sqrtT>^2 contains its four conjugates (1, zeta^k)^2, k = 1, 5, 9, 13, four distinct points on the conic of product states, which span the three-dimensional symmetric subspace, so three terms are needed. Exact: the rank is computed in Q(zeta_16) and no margin stands under the bound. The numerical rank-2 exclusion over the 60 two-qubit states (closest approach 0.986 to the parallel threshold) agrees."
+}

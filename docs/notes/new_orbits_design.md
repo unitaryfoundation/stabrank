@@ -584,3 +584,74 @@ the weight rather than on the count of zeros) and a `catVec m` with its
 8. `CONTRIBUTING.md` orbit table; `docs/refs.bib` unchanged (both sources
    already present).
 9. `tests/test_families.py`.
+
+## Update 2026-10-21: sqrt(T) and CS are board orbits
+
+Both orbits of the CS plan above are in, with the plumbing of section 5
+done except for Lean. `qubit_sqrtT` is (|0> + e^{i pi/8}|1>)/sqrt 2, width
+1, measured against the published 1/2 (Qassim, Pashayan, and Gosset,
+Theorem 2, every angle); `CS` is CS|++>, width 2, measured against the
+single-copy product bound log_2 2 = 1.
+
+Width. `ORBIT_WIDTH = {"CS": 2}` and `orbit_qudits(orbit, m)` in
+`stabrank_verify.py`; `verify_upper`, `fit_coeffs.fit`,
+`to_witness.witness_from_vectors`, `autoresearch/run.py` (`n_orig`),
+`autoresearch/kopt.py`, `rank_exclusion.run_certificate` and
+`slice_lift.all_decompositions` take their qubit count from it.
+`rank_exclusion.local_clifford_group(orbit)` closes the two-qubit Clifford
+group (11,520 elements, 24 of which fix |CS> up to phase), and
+`_copy_permutation` takes a block width, so `symmetry_orbit_reps` runs for
+CS unchanged otherwise: order 48 and 6 orbits of the 60 two-qubit states at
+m = 1, order 2304 and 87 orbits of the 36,720 four-qubit states at m = 2
+(1152 and 126 without the antiunitary symmetry). `fit_coeffs` solves the
+sqrt(T) coefficients inside Q(zeta_16) by the route written for T3, now
+parametrised by (p, phase order, target order) in `CYCLOTOMIC`, because
+the generic sympy route mis-simplifies the four-copy coefficients.
+
+Block lift. `slice_lift.lifts_qubit_block` is the lemma of section 2
+written out: slice along the whole first copy; every slice is a minimal
+decomposition of |M>^m; the support of a stabilizer state on a block is a
+coset of the X-part of its stabilizer's image on the block, so with every
+amplitude of |M> nonzero all 2^w slices of a term are Pauli images of the
+first times fourth roots of unity; a lift needs 2^w - 1 simultaneous
+matchings. The matchings are solved one slice at a time and do not see
+whether the Paulis of different slices are compatible, so a candidate
+assembled from one solution per slice is a lift only if every term is a
+stabilizer state, which `to_witness.term_from_vector` decides, and for a
+block orbit that test is load-bearing. For CS it is the whole decision:
+the amplitude ratios 1, 1, i are fourth roots of unity, so the identity
+assignment solves every slice equation of every base decomposition and the
+slice equations exclude nothing by themselves. `lift_all` and `lift_chain`
+dispatch on the width, and `lift_all` prints the solution count of each
+slice equation and the fate of each assembled candidate per decomposition.
+Controls: the block matcher at width 1 agrees with `lifts_qubit`; the
+Bravyi-Kitaev T-type state tensored with |+>, as a block state, keeps rank
+2 at two copies and 3 of its 15 rank-2 decompositions lift (1 of 15 for
+the edge state); the rank-2 decompositions of |CS> do not lift to |CS>^2.
+
+Cells. CS: chi = 2 at m = 1 (two-term witness; exact rank-1 exclusion),
+chi = 3 at m = 2 (the witness above; rank 2 excluded exactly over the
+36,720 four-qubit states in Q(i) by `cert_cs_m2_rank2.py`, which enumerates
+the states from the parametrisation as Gaussian-integer vectors and
+canonicalises each state's component off the target), and
+4 <= chi <= 6 at m = 3. The lower bound is `cert_cs_m3_lift.py`: the 16
+rank-3 decompositions of |CS>^2 form one orbit of the order-1152 symmetry
+group, reached from three pivot orbits; each slice equation of each of them
+has exactly one solution, the identity assignment with mu = 1, 1, i, so the
+only candidate terms are |CS> (x) u_i, and those are not stabilizer states,
+which `term_from_vector` confirms on every assembled candidate. The upper
+bound is the product of the m = 2 and m = 1 witnesses. sqrt(T): chi = 2, 3, 4 at
+m = 1, 2, 3 and 4 <= chi <= 5 at m = 4; the upper bounds are product
+stabilizer states spanning the symmetric subspace, and the lower bounds
+are exact by Galois descent (`cert_sqrtt_galois.py`): a stabilizer span is
+defined over Q(i), so it contains the four conjugates of the target under
+Gal(Q(zeta_16)/Q(i)) = {zeta -> zeta^k : k = 1, 5, 9, 13}, which span a
+space of dimension min(4, m + 1) (a Vandermonde on the Hamming weights
+0 to 3). That replaces the numerical exclusions of the research survey,
+whose three-copy run came within 0.0019 of the parallel threshold.
+
+Not done: Lean pointwise proofs (the CS witnesses live in Q(i) and are the
+easiest to formalise; sqrt(T) needs a zeta_16 constant file), CCZ (width 3
+needs a stabilizer generating set in place of the Clifford closure), and
+the rank-4 decision at sqrt(T) m = 4 (the pivot-pair search of
+`slice_lift.all_decompositions` at rank 4 over the 36,720 states).

@@ -1,0 +1,93 @@
+{
+  "schema_version": "0.1",
+  "orbit": "CS",
+  "m": 1,
+  "direction": "upper",
+  "rank": 2,
+  "witness": {
+    "terms": [
+      {
+        "k": 2,
+        "x0": [
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "l": [
+          0,
+          0
+        ]
+      },
+      {
+        "k": 2,
+        "x0": [
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "l": [
+          0,
+          0
+        ]
+      }
+    ],
+    "coeffs": [
+      "1/2 + I/2",
+      "1/2 - I/2"
+    ]
+  },
+  "provenance": {
+    "author": "Vincent Russo",
+    "reference": "stabrank docs/notes/new_orbits_design.md",
+    "method": "by hand: CS = ((1+i)/2) I + ((1-i)/2) CZ applied to |++>, coefficients fitted exactly by fit_coeffs.fit",
+    "date": "2026-09-20",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.001,
+      "wall_clock_hours": 0.001,
+      "runs": 1,
+      "hardware": "Apple silicon laptop, one core; direct construction, no search"
+    }
+  },
+  "notes": "|CS> = CS|++> = (|00> + |01> + |10> + i|11>)/2 is the magic state of the two-qubit controlled-S gate, the first width-2 orbit on the board: m copies live on 2m qubits and gamma = log_2(rank)/m is still per copy. CS = ((1+i)/2) I + ((1-i)/2) CZ, so |CS> = ((1+i)/2)|++> + ((1-i)/2) CZ|++>, two stabilizer terms with coefficients in Q(i); the identity is checked symbolically by the verifier. With the exact rank-1 exclusion of cert_cs_m2_rank2.py this settles chi(|CS>) = 2. No exponent has been published for the CS orbit, so under the board's convention its baseline is the single-copy product bound log_2 chi(|CS>) = 1, labeled as such on every page. Comparison lines from the literature: the extent exponent log_2(8/5) = 0.678 (F(CS) = 5/8 over the 60 two-qubit stabilizer states and xi(CS) = 8/5 by the Clifford-magic-state theorem of Bravyi, Browne, Calpin, Campbell, Gosset, and Howard, arXiv:1808.00128; an approximate-rank exponent, not a bound on chi) and the T-synthesis exponent 3 log_2(3)/4 = 1.19 from three T gates per CS."
+}

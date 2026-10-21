@@ -54,8 +54,17 @@ Block orbits. For an orbit of width w > 1 (CS, w = 2) the slice is taken
 along the whole first copy, and `lifts_qubit_block` states and uses the
 corresponding lemma: every one of the 2^w slices of a term is a Pauli image
 of the first, so a lift needs 2^w - 1 simultaneous matchings; the function's
-docstring has the derivation. `lift_all` and `lift_chain` dispatch on the
-orbit's width.
+docstring has the derivation. The matchings are solved one slice at a time
+and do not see whether the Paulis chosen for different slices are compatible,
+so for a block orbit the stabilizer test on the terms assembled from the
+per-slice solutions is load-bearing, not a safety check: a candidate is a
+lift only if every assembled term passes `to_witness.term_from_vector`. For
+CS the identity assignment solves every slice equation of every base
+decomposition (its amplitude ratios 1, 1, i are fourth roots of unity), so
+the bound chi(|CS>^3) >= 4 is decided by that test, on the candidates
+|CS> (x) u_i. `lift_all` and `lift_chain` dispatch on the orbit's width, and
+`lift_all` prints, per decomposition, the number of solutions of each slice
+equation and the fate of every assembled candidate.
 
 Controls, run by `python slice_lift.py`: the rank-3 decompositions of |T3>
 lift to |T3>^2 (rank stays 3 there), and the rank-3 decompositions of |N>^2
@@ -600,7 +609,7 @@ def lifts_qubit(dec_states, dec_coeffs, alpha, target_m, m, tol=TOL):
 # ------------------------------------------------------------- blocks ------
 
 def lifts_qubit_block(dec_states, dec_coeffs, alpha, target_m, n, width, tol=TOL,
-                      max_combos=1 << 20):
+                      max_combos=1 << 20, stats=None):
     """Block version of `lifts_qubit` for a qubit orbit of width w (CS: w = 2),
     whose m copies live on n = w m qubits.
 
@@ -624,18 +633,30 @@ def lifts_qubit_block(dec_states, dec_coeffs, alpha, target_m, n, width, tol=TOL
         sum_i d_i mu_i^(a) Q_i^(a) u_i = (alpha_a / alpha_0) |M>^m,
 
     one matching per a, each the meet in the middle of `lifts_qubit`. If any
-    of the 2^w - 1 matchings has no solution the decomposition does not lift,
-    which is the direction a lower bound uses. Conversely a choice of one
+    of the 2^w - 1 matchings has no solution the decomposition does not lift.
+    The matchings are solved independently and say nothing about whether the
+    Paulis chosen for different slices are compatible, so a choice of one
     solution per a assembles s_i = sum_a |a> (x) mu_i^(a) Q_i^(a) u_i, which
-    reproduces |M>^(m+1) but is a stabilizer state only when the Paulis of
-    the three slices are compatible, so every assembled term is tested with
-    `to_witness.term_from_vector` and a lift is returned only when all r
-    terms pass. With width 1 this is `lifts_qubit` with the extra test.
+    reproduces |M>^(m+1) but is a stabilizer state only when they are; every
+    assembled term is tested with `to_witness.term_from_vector` and a lift is
+    returned only when all r terms pass. That test is load-bearing. Whenever
+    every ratio alpha_a / alpha_0 is a fourth root of unity, as for CS (the
+    ratios are 1, 1, i), the identity assignment Q_i = I, mu_i = alpha_a /
+    alpha_0 solves every slice equation of every base decomposition, the
+    slice equations alone exclude nothing, and the candidate |M> (x) u_i is
+    rejected exactly because |M> is not a stabilizer state; a lift then
+    exists only through a non-identity solution of some slice equation. With
+    width 1 this is `lifts_qubit` with the extra test.
 
     Returns (lifts, (matches, floor)) like `lifts_qubit`: `lifts` are the
     assembled decompositions whose terms are all stabilizer states, `matches`
     the number of slice solutions examined over all a, and `floor` the
-    certified miss of every rejected Pauli assignment.
+    certified miss of every rejected Pauli assignment (capped at the search
+    window of `_match_sums`). When `stats` is a dict it is filled with
+    `matches` (solutions per slice, in order of a), `identity_only` (every
+    solution of every slice is the identity class on every term),
+    `candidates` (assembled) and `rejected` (assembled terms that failed the
+    stabilizer test, as (candidate, term, reason)).
     """
     from to_witness import NotStabilizer, term_from_vector
     r = len(dec_states)
@@ -650,6 +671,8 @@ def lifts_qubit_block(dec_states, dec_coeffs, alpha, target_m, n, width, tol=TOL
     half = max(1, r // 2)
     L = _sum_table(opts[:half])
     R = _sum_table(opts[half:]) if r > half else np.zeros((1, len(target_m)), dtype=complex)
+    if stats is not None:
+        stats.update({"matches": [], "identity_only": True, "candidates": 0, "rejected": []})
     sols, nmatch, floor = [], 0, float("inf")
     for a in range(1, 1 << width):
         rhs = (a_vec[a] / a_vec[0]) * target_m
@@ -658,6 +681,10 @@ def lifts_qubit_block(dec_states, dec_coeffs, alpha, target_m, n, width, tol=TOL
         floor = min(floor, fl)
         combos = [_decode(l, sizes[:half]) + (_decode(rr, sizes[half:]) if r > half else [])
                   for l, rr in matches]
+        if stats is not None:
+            stats["matches"].append(len(combos))
+            # class 0 of pauli_images_qubit is the identity (a = 0, c = 0)
+            stats["identity_only"] &= all(c // 4 == 0 for combo in combos for c in combo)
         if not combos:
             return [], (nmatch, floor)       # slice a has no Pauli assignment: no lift
         sols.append(combos)
@@ -667,14 +694,18 @@ def lifts_qubit_block(dec_states, dec_coeffs, alpha, target_m, n, width, tol=TOL
     if total > max_combos:
         raise RuntimeError(f"{total} slice-solution combinations to assemble; refusing to decide")
     found = []
-    for choice in itertools.product(*sols):
+    for k, choice in enumerate(itertools.product(*sols)):
+        if stats is not None:
+            stats["candidates"] += 1
         terms = []
         for i in range(r):
             slices = [dec_states[i]] + [FOURTH[c[i] % 4] * imgs[i][c[i] // 4] for c in choice]
             s_i = np.concatenate(slices)
             try:
                 term_from_vector(s_i, 2, n + width)
-            except NotStabilizer:
+            except NotStabilizer as exc:
+                if stats is not None:
+                    stats["rejected"].append((k, i, str(exc)))
                 break
             terms.append(s_i)
         else:
@@ -699,22 +730,34 @@ def _lifter(orbit):
     return functools.partial(lifts_qubit_block, width=w)
 
 
-def lift_all(orbit, m, decs, D, verbose=True):
+def lift_all(orbit, m, decs, D, verbose=True, stats_out=None):
     """Lift every decomposition in `decs` (index tuples into D) one copy up.
     Returns the list of lifted term lists; every lift is confirmed against
-    phi (x) phi^m and a failure raises."""
-    from stabrank_verify import orbit_state, orbit_qudits
+    phi (x) phi^m and a failure raises. For a block orbit the per-decomposition
+    statistics of `lifts_qubit_block` are printed (the number of solutions of
+    each slice equation and the fate of every assembled candidate, which is
+    where such a lift is decided) and appended to `stats_out` when given."""
+    from stabrank_verify import ORBIT_WIDTH, orbit_state, orbit_qudits
     alpha = np.array([complex(x) for x in orbit_state(orbit)]).ravel()
     psi = psi_for(orbit, m)
     lifter = _lifter(orbit)
     n = orbit_qudits(orbit, m)
+    width = ORBIT_WIDTH.get(orbit, 1)
     lifted, floor = [], float("inf")
-    for cols in decs:
+    for k, cols in enumerate(decs):
         states = [D[:, c] for c in cols]
         d, *_ = np.linalg.lstsq(np.column_stack(states), psi, rcond=None)
         if np.linalg.norm(np.column_stack(states) @ d - psi) > 1e-9:
             raise AssertionError("a listed decomposition does not reproduce the target")
-        L, (nmatch, fl) = lifter(states, d, alpha, psi, n)
+        if width > 1:
+            st = {}
+            L, (nmatch, fl) = lifter(states, d, alpha, psi, n, stats=st)
+            if stats_out is not None:
+                stats_out.append(st)
+            if verbose:
+                print("  " + describe_block_lift(cols, st, width, k + 1, len(decs)), flush=True)
+        else:
+            L, (nmatch, fl) = lifter(states, d, alpha, psi, n)
         floor = min(floor, fl)
         for terms in L:
             res = confirm_lift(terms, alpha, psi)
@@ -723,9 +766,31 @@ def lift_all(orbit, m, decs, D, verbose=True):
             lifted.append(terms)
     if verbose:
         print(f"{orbit} m={m} -> {m + 1}: {len(decs)} decompositions, {len(lifted)} lifts"
-              + (f"; every rejected Pauli assignment misses the slice equation by at least {floor:.2e}"
-                 if floor < float("inf") else ""), flush=True)
+              + (f"; every other Pauli assignment misses its slice equation by more than "
+                 f"the {floor:.0e} search window" if floor < float("inf") else ""), flush=True)
     return lifted
+
+
+def describe_block_lift(cols, st, width, k=None, total=None):
+    """One line on the fate of a base decomposition under the block lift."""
+    head = f"decomposition {k}/{total} " if k is not None else "decomposition "
+    head += "(states " + ", ".join(str(c) for c in cols) + "): "
+    if len(st["matches"]) < (1 << width) - 1:
+        a = len(st["matches"])
+        return head + (f"slice {a + 1:0{width}b} has no Pauli assignment after "
+                       f"{', '.join(str(x) for x in st['matches'])} on the earlier slices; no lift")
+    body = "slice equations have " + ", ".join(str(x) for x in st["matches"]) + " solution(s)"
+    if st["identity_only"]:
+        body += " (the identity assignment only, so the candidate terms are |M> (x) u_i)"
+    rej = st["rejected"]
+    nrej = len({c for c, _, _ in rej})
+    body += f"; {st['candidates']} candidate(s) assembled, {nrej} rejected"
+    if rej:
+        reasons = sorted({r for _, _, r in rej})
+        body += " by the stabilizer test on the assembled terms (" + "; ".join(reasons) + ")"
+    kept = st["candidates"] - nrej
+    body += f"; {kept} lift(s)"
+    return head + body
 
 
 def lift_chain(orbit, m0, rank, m_target, workers=1, verbose=True):

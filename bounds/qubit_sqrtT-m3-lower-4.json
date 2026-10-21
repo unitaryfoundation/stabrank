@@ -1,0 +1,34 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_sqrtT",
+  "m": 3,
+  "direction": "lower",
+  "rank": 4,
+  "certificate": {
+    "script": "verify_challenge/cert_sqrtt_galois.py",
+    "expect": "CERTIFIED chi(qubit_sqrtT^3) >= 4",
+    "exact": true
+  },
+  "provenance": {
+    "author": "Vincent Russo",
+    "reference": "stabrank verify_challenge",
+    "method": "Galois descent over Z[i]: the four conjugates of the target under Gal(Q(zeta_16)/Q(i)) span a space of dimension min(4, m + 1); no search",
+    "date": "2026-10-21",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.003,
+      "wall_clock_hours": 0.003,
+      "runs": 1,
+      "hardware": "Apple silicon laptop, one core; about 10 s for the certificate",
+      "llm": [
+        {
+          "model": "claude-fable-5-1",
+          "role": "found the descent argument and wrote the certificate"
+        }
+      ]
+    }
+  },
+  "notes": "Settles chi(|sqrtT>^3) = 4 with the four-term witness. Galois descent: the four conjugates (1, zeta^k)^3 of the target, k = 1, 5, 9, 13, restricted to one string of each Hamming weight 0 to 3 form a Vandermonde matrix in zeta, zeta^5, -zeta, -zeta^5, so they are independent and any stabilizer span containing the target has dimension at least 4; from m = 3 on the argument gives 4 for every m. Exact: computed as a rank over Q(zeta_16). Replaces the numerical pivot-search exclusion of the research survey (1,080 states, 185 pivots, closest approach 0.9981, too thin for the 0.01 margin of rank_exclusion.py)."
+}

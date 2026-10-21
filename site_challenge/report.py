@@ -37,6 +37,7 @@ PUBLISHED_REF = {
     "S": "labib2026stabilizer", "N": "labib2026stabilizer",
     "H3": "labib2026stabilizer", "T3": "labib2026stabilizer",
     "qubit_H": "qassim2021improved", "qubit_T": "qassim2021improved",
+    "qubit_sqrtT": "qassim2021improved",
     "cat": "qassim2021improved",
 }
 
@@ -557,10 +558,12 @@ def report_page(comparison, cells, table, curve, evidence, refs, generated, head
                  f"<td><span class='{cls}'>{r['verdict']}</span></td></tr>")
     o.append("</tbody></table></div>")
     o.append("<p>The published exponents are the four qutrit values of "
-             f"{_ref(refs, 'labib2026stabilizer')} and, for both qubit orbits, the "
-             f"contracted-cat-state exponent of {_ref(refs, 'qassim2021improved')}. "
-             "No exponent has been published for any p = 5 state, so the T&#8325; "
-             "baseline is the single-copy product bound log&#8325;3 from &chi;(T&#8325;) = 3. "
+             f"{_ref(refs, 'labib2026stabilizer')}, for the H-type and T-type qubit "
+             f"orbits the contracted-cat-state exponent of {_ref(refs, 'qassim2021improved')}, "
+             "and for &radic;T the every-angle bound 1/2 of the same paper's Theorem 2. "
+             "No exponent has been published for any p = 5 state or for the two-qubit CS "
+             "orbit, so the T&#8325; baseline is the single-copy product bound log&#8325;3 "
+             "from &chi;(T&#8325;) = 3 and the CS baseline is log&#8322;2 = 1 from &chi;(CS) = 2. "
              "The gap is best minus published; negative would be an improvement. "
              "A match at the same rank replaces a cited value with a machine-checked "
              "one; it does not move the exponent.</p>")

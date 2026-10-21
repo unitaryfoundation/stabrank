@@ -1,0 +1,22 @@
+{
+  "schema_version": "0.1",
+  "orbit": "CS",
+  "m": 3,
+  "direction": "lower",
+  "rank": 3,
+  "certificate": {
+    "script": "verify_challenge/cert_cs_m2_rank2.py",
+    "expect": "CERTIFIED chi(CS^3) >= 3",
+    "exact": true
+  },
+  "provenance": {
+    "author": "Vincent Russo",
+    "reference": "stabrank verify_challenge",
+    "method": "projection monotonicity from the exact rank-2 exclusion at m = 2",
+    "date": "2026-10-21",
+    "github": [
+      "vprusso"
+    ]
+  },
+  "notes": "chi(psi (x) phi) >= chi(psi) when phi has a nonzero computational amplitude: (I (x) <00|) |CS>^3 = |CS>^2 / 2 and a computational-basis slice of a stabilizer state is a stabilizer state or zero, so a decomposition of |CS>^3 slices to one of |CS>^2 with no more terms, and chi(|CS>^3) >= chi(|CS>^2) = 3 by the exact rank-2 exclusion the same certificate runs. Exact throughout. The block slice-and-lift of cert_cs_m3_lift.py raises the bound to 4 at the reproduced tier (CS-m3-lower-4.json); this file keeps the verified-tier value."
+}

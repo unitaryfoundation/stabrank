@@ -28,15 +28,17 @@
         "qubit_H",
         "qubit_T",
         "T5",
+        "qubit_sqrtT",
+        "CS",
         "cat"
       ],
-      "description": "S Strange, N Norrell, H3 qutrit Hadamard eigenstate, T3 qutrit T-type (face centre), qubit_H qubit H-type (edge centre), qubit_T qubit Bravyi-Kitaev T-type, T5 ququint T-type (cubic phase x^3 over F_5). Family tracks, where m is the qubit count rather than a number of copies: cat, the magic cat state |cat_m> = (|T>^m + |T_perp>^m)/sqrt 2 of Qassim, Pashayan, and Gosset"
+      "description": "S Strange, N Norrell, H3 qutrit Hadamard eigenstate, T3 qutrit T-type (face centre), qubit_H qubit H-type (edge centre), qubit_T qubit Bravyi-Kitaev T-type, T5 ququint T-type (cubic phase x^3 over F_5), qubit_sqrtT the sqrt(T) state (|0> + e^{i pi/8}|1>)/sqrt 2, CS the two-qubit controlled-S magic state CS|++> = (|00> + |01> + |10> + i|11>)/2 (width 2: m copies live on 2m qubits). Family tracks, where m is the qubit count rather than a number of copies: cat, the magic cat state |cat_m> = (|T>^m + |T_perp>^m)/sqrt 2 of Qassim, Pashayan, and Gosset"
     },
     "m": {
       "type": "integer",
       "minimum": 1,
       "maximum": 10,
-      "description": "number of copies; capped by the verification budget (a 2^10-entry qubit witness verifies in seconds, a 3^10-entry qutrit one would not)"
+      "description": "number of copies; capped by the verification budget (a 2^10-entry qubit witness verifies in seconds, a 3^10-entry qutrit one would not). For a multi-qubit orbit m counts copies of the orbit state, so m copies of CS occupy 2m qubits and validate_bounds.py caps CS at m <= 4"
     },
     "direction": {
       "enum": [
@@ -78,7 +80,7 @@
                 "items": {
                   "type": "integer"
                 },
-                "description": "coset representative, length m"
+                "description": "coset representative, length n, the number of qudits the m copies occupy: m for a single-qudit orbit, 2m for CS"
               },
               "W": {
                 "type": "array",
@@ -88,7 +90,7 @@
                     "type": "integer"
                   }
                 },
-                "description": "k rows of length m spanning the flat; must be injective"
+                "description": "k rows of length n spanning the flat; must be injective"
               },
               "Q": {
                 "type": "array",

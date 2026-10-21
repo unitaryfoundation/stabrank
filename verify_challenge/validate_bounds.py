@@ -22,11 +22,12 @@ import jsonschema
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCHEMA = os.path.join(ROOT, "schema", "bound.schema.json")
 
-# The schema's `maximum` of 8 copies is a verification budget for qutrits,
-# 3^8 = 6561 amplitudes. A ququint bound has 5^m amplitudes, so the same
-# budget stops at m = 5 (3125; m = 6 would be 15625), and the schema cannot
-# say so because its cap is global.
-M_CAP = {"T5": 5}
+# The schema's `maximum` of 10 copies is a verification budget for single
+# qubits, 2^10 amplitudes. A ququint bound has 5^m amplitudes, so the same
+# budget stops at m = 5 (3125; m = 6 would be 15625), and a CS bound has
+# 4^m (two qubits per copy), so it stops at m = 4 (256; m = 8 would be
+# 65,536). The schema cannot say so because its cap is global.
+M_CAP = {"T5": (5, "5^m amplitudes"), "CS": (4, "two qubits per copy, 4^m amplitudes")}
 
 # Family tracks are indexed by the qubit count, and the smallest members are
 # stabilizer states or empty: |cat_1> = |0>, so the cat track starts at m = 2.
@@ -42,11 +43,11 @@ def tier_requirements(sub):
     """
     errors, notes = [], []
     d = sub.get("direction")
-    cap = M_CAP.get(sub.get("orbit"))
+    cap, why = M_CAP.get(sub.get("orbit"), (None, None))
     if cap is not None and isinstance(sub.get("m"), int) and sub["m"] > cap:
         errors.append(f"m = {sub['m']} exceeds the verification budget for "
                       f"{sub['orbit']}, which is m <= {cap} ({sub['orbit']} has "
-                      f"5^m amplitudes; the schema's cap of 8 is for qutrits)")
+                      f"{why}; the schema's cap of 10 is for single qubits)")
     low = M_MIN.get(sub.get("orbit"))
     if low is not None and isinstance(sub.get("m"), int) and sub["m"] < low:
         errors.append(f"m = {sub['m']} is below the first cell of the "

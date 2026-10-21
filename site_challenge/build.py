@@ -88,15 +88,23 @@ BASELINE = {
     # No exponent has been published for any p = 5 state. The baseline is the
     # single-copy product bound from chi(T5) = 3, and every page says so.
     "T5": (math.log(3, 5), "log₅3"),
+    # Every single-qubit phase state has exponent at most 1/2 (Qassim,
+    # Pashayan, and Gosset, Theorem 2), which is the published value for the
+    # sqrt(T) orbit until something sharper appears.
+    "qubit_sqrtT": (0.5, "1/2"),
+    # No exponent has been published for the two-qubit CS orbit; the baseline
+    # is the single-copy product bound from chi(CS) = 2, per copy.
+    "CS": (1.0, "log₂2"),
     # The cat family is measured against the qubit exponent it implies:
     # log_2 chi(cat_m)/(m - 2), see exponent_copies in stabrank_verify.
     "cat": (math.log(3, 2) / 4, "log₂3/4"),
 }
 # Orbits whose baseline is a product bound rather than a published exponent.
-UNPUBLISHED = {"T5"}
-ORBIT_ORDER = ["S", "N", "H3", "T3", "qubit_H", "qubit_T", "T5", "cat"]
+UNPUBLISHED = {"T5", "CS"}
+ORBIT_ORDER = ["S", "N", "H3", "T3", "qubit_H", "qubit_T", "qubit_sqrtT", "CS", "T5", "cat"]
 SYSTEM = {"S": "qutrit", "N": "qutrit", "H3": "qutrit", "T3": "qutrit",
-          "qubit_H": "qubit", "qubit_T": "qubit", "T5": "ququint",
+          "qubit_H": "qubit", "qubit_T": "qubit", "qubit_sqrtT": "qubit",
+          "CS": "two-qubit", "T5": "ququint",
           "cat": "m qubits"}
 
 
@@ -128,6 +136,11 @@ ORBIT_TEX = {
             r"\qquad \cos 2\beta = \tfrac{1}{\sqrt{3}}",
  "T5": r"\left|T_5\right\rangle = \frac{1}{\sqrt{5}} \sum_{x \in \mathbb{F}_5} "
        r"\omega_5^{x^3} \left|x\right\rangle,\qquad \omega_5 = e^{2\pi i/5}",
+ "qubit_sqrtT": r"\left|\sqrt{T}\right\rangle = \frac{\left|0\right\rangle + "
+                r"e^{i\pi/8}\left|1\right\rangle}{\sqrt{2}} = Z(\pi/8)\left|+\right\rangle",
+ "CS": r"\left|\mathrm{CS}\right\rangle = \mathrm{CS}\left|{+}{+}\right\rangle = "
+       r"\frac{\left|00\right\rangle + \left|01\right\rangle + \left|10\right\rangle + "
+       r"i\left|11\right\rangle}{2}",
  # A tuple renders as stacked displays: one line would overflow the box.
  "cat": (r"\left|\text{cat}_m\right\rangle = \frac{\left|T\right\rangle^{\otimes m} + "
          r"\left|T_\perp\right\rangle^{\otimes m}}{\sqrt{2}} = 2^{-(m-1)/2} "
@@ -144,6 +157,8 @@ BASE_TEX = {
  "qubit_H": r"\gamma \le \tfrac{\log_2 3}{4} \approx 0.3963",
  "qubit_T": r"\gamma \le \tfrac{\log_2 3}{4} \approx 0.3963",
  "T5": r"\gamma \le \log_5 3 \approx 0.6826",
+ "qubit_sqrtT": r"\gamma \le \tfrac{1}{2} = 0.5000",
+ "CS": r"\gamma \le \log_2 2 = 1",
  "cat": r"\gamma \le \tfrac{\log_2 3}{4} \approx 0.3963",
 }
 
@@ -223,6 +238,49 @@ ORBIT_DEF = {
    "against the product bound 9. No exponent has been published for any p = 5 "
    "state; the baseline log&#8325;3 = 0.6826 is the single-copy product bound, "
    "and the rank-8 cell already sits below it at 0.6460."),
+ "qubit_sqrtT": ("(|0&rang; + e<sup>i&pi;/8</sup>|1&rang;)/&radic;2",
+   "The &radic;T state, Z(&pi;/8)|+&rang;: the magic state of the square root of "
+   "the T gate, at the fourth level of the Clifford hierarchy. Its Bloch vector "
+   "(cos(&pi;/8), sin(&pi;/8), 0) is neither an edge nor a face centre of the "
+   "stabilizer octahedron, and the Clifford group acts on Bloch vectors by signed "
+   "coordinate permutations, so this is a third single-qubit orbit beside the "
+   "H-type and T-type states. Its amplitudes lie in Q(&zeta;&#8321;&#8326;), a "
+   "degree-four extension of the Q(i) the qubit stabilizer states live in, and "
+   "that extra degree is what the Galois argument uses: a stabilizer span "
+   "containing |&radic;T&rang;<sup>&otimes;m</sup> contains its four conjugates, "
+   "so &chi; &ge; min(4, m+1) exactly and with no search.",
+   "The published exponent is 1/2, Theorem 2 of Qassim, Pashayan, and Gosset "
+   "(arXiv:2106.07740): &chi;(R<sub>&theta;</sub><sup>&otimes;m</sup>) = "
+   "O(2<sup>m/2</sup>) for every angle &theta;. The small cells take the generic "
+   "single-qubit values: &chi; = 2, 3, 4 at one to three copies (one more than the "
+   "T state at two and three) and 4 &le; &chi; &le; 5 at four, the upper bounds "
+   "from product stabilizer states spanning the symmetric subspace. The question "
+   "the orbit asks is whether a finer phase is dearer per copy than T's "
+   "log&#8322;3/4; the cells that would beat 1/2 are &chi; &le; 5 at m = 5 and "
+   "&chi; &le; 7 at m = 6."),
+ "CS": ("(|00&rang; + |01&rang; + |10&rang; + i|11&rang;)/2",
+   "The controlled-S magic state CS|++&rang;, the first two-qubit orbit on the "
+   "board: m copies live on 2m qubits and &gamma; = log&#8322;(rank)/m is still "
+   "per copy. CS is the simplest third-level gate on two qubits, CS&sup2; = CZ, "
+   "and Clifford+CS circuits sit between Clifford+T and Clifford+CCZ. The phase "
+   "i<sup>x&#8321;x&#8322;</sup> is not a Z&#8324;-valued quadratic form with even "
+   "cross terms, which is exactly why |CS&rang; is not a stabilizer state; "
+   "CS = ((1+i)/2) I + ((1&minus;i)/2) CZ gives &chi;(CS) = 2.",
+   "&chi;(CS<sup>&otimes;2</sup>) = 3 exactly, below the product bound 4: "
+   "|CS&rang;<sup>&otimes;2</sup> = &frac12;|0000&rang; &minus; ((1+i)/2)"
+   "|+i&rang;<sup>&otimes;4</sup> &minus; ((1&minus;i)/2)(CZ&otimes;CZ)"
+   "|&minus;i&rang;<sup>&otimes;4</sup>, and rank 2 is excluded exactly over the "
+   "36,720 four-qubit stabilizer states in Q(i). So the transversal-number bound "
+   "2<sup>&tau;</sup> for hypergraph states is not tight even for two disjoint "
+   "edges of size two. At three copies the block slice-and-lift excludes rank 3 "
+   "and the product gives 6, so 4 &le; &chi;(CS<sup>&otimes;3</sup>) &le; 6. No "
+   "exponent has been published for this orbit; the baseline is the single-copy "
+   "product bound log&#8322;2 = 1, and the two-copy cell already sits below it at "
+   "0.7925. Comparison lines from the literature: the extent exponent "
+   "log&#8322;(8/5) = 0.678 (F(CS) = 5/8 and &xi;(CS) = 8/5 by the "
+   "Clifford-magic-state theorem of arXiv:1808.00128, an approximate-rank "
+   "exponent, not a bound on &chi;), and 3&nbsp;log&#8322;3/4 = 1.19 for "
+   "synthesising CS from three T gates."),
  "cat": ("(|T&rang;<sup>&otimes;m</sup> + |T<sub>&perp;</sub>&rang;<sup>&otimes;m</sup>)/&radic;2",
    "The magic cat state of Qassim, Pashayan, and Gosset (arXiv:2106.07740, "
    "Eq. 3): the equal superposition of |T&rang;<sup>&otimes;m</sup> and "
@@ -251,6 +309,7 @@ ORBIT_DEF = {
 
 COLOR = {"S": "#6d28d9", "N": "#0369a1", "H3": "#059669",
          "T3": "#b45309", "qubit_H": "#be185d", "qubit_T": "#128081",
+         "qubit_sqrtT": "#a21caf", "CS": "#1d4ed8",
          "T5": "#b91c1c", "cat": "#7c2d12"}
 TIER_RANK = {"lean": 5, "verified": 4, "reproduced": 3, "attested": 2, "cited": 1, None: 0}
 # `attested` holds records: the pipeline checked every stored batch output
@@ -1092,7 +1151,8 @@ def ref_link(prov):
 TENS = "<span class=tp>&otimes;</span>"
 
 ORB_TEX_NAME = {"S": "S", "N": "N", "H3": "H_3", "T3": "T_3",
-                "qubit_H": r"H", "qubit_T": r"T", "T5": "T_5"}
+                "qubit_H": r"H", "qubit_T": r"T", "T5": "T_5",
+                "qubit_sqrtT": r"\sqrt{T}", "CS": r"\mathrm{CS}"}
 
 # A family cell is one m-qubit state, so its ket carries m as an index
 # rather than as a tensor power: |cat_6>, not |cat>^{(x) 6}.
@@ -1412,9 +1472,9 @@ def build(no_verify=False, jobs=None):
     o.append("<h2>Exponents</h2>")
     unpub = [ORBIT_LABEL[ob] for ob in ORBIT_ORDER if ob in UNPUBLISHED]
     o.append("<p class=h2sub>Every &gamma; below is published"
-             + (", except for " + ", ".join(unpub) + ", where no exponent has been "
-                "published for any state of that dimension and the single-copy "
-                "product bound stands in" if unpub else "")
+             + (", except for " + " and ".join(unpub) + ", where no exponent has been "
+                "published for the orbit and the single-copy product bound stands in"
+                if unpub else "")
              + f". {len(moved)} of the {published_n} published exponents have been beaten here.</p>"
              "<div class=tw><table>")
     o.append("<thead><tr><th>orbit</th><th></th><th class=num>published "
