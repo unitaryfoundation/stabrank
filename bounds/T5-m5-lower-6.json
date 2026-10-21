@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.1",
+  "orbit": "T5",
+  "m": 5,
+  "direction": "lower",
+  "rank": 6,
+  "certificate": {
+    "script": "verify_challenge/cert_t5_m3_lift_attested.py",
+    "expect": "CERTIFIED chi(T5^5) >= 6",
+    "budget_s": 3600,
+    "attested": {
+      "batches": "research/t5q_m2_rank5/batch_manifest.json",
+      "recomputed": 2,
+      "compute_hours": 13.4,
+      "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host, fifteen batches in parallel at nice 19, 2026-09-24 12:32 to 13:36 UTC (the rank-5 census of |T5>^2, research/t5q_m2_rank5 at commit 2b751cb)",
+      "note": "The listing of every 5-set of two-ququint stabilizer states whose span contains |T5>^2, one per orbit of the unitary symmetry group, lives in the stored batch outputs under research/t5q_m2_rank5/results/ (74 batches, 155,422 pivot-partner units, every unit run, 0 undecided, one hit: the five Z(x)Z eigensectors, a set fixed by the group). The enumeration was not re-run under the budget. The certificate re-enumerates the plan, re-runs the exact k = 1..4 censuses, verifies the hashes and geometry of every output, re-decides the stored hit, fails on any undecided unit, re-runs two batches from scratch (seed 20261001: batches 12 and 47), and then runs the exact lift decision of research/t5_m3_lift/lift.py on the listed set. Completeness rests on the stored outputs and on research/t5q_m2_rank5/batch.py, which regenerates any batch (batch.py K), under the modular assumption every kernel census of the project makes: a member whose image is nonzero over Q(zeta_5) is nonzero modulo 65521. An independent re-run of all 74 batches on 2026-10-02 (research/t5_m3_lift/results/pod/census/) reproduced every deterministic hash; it is recorded in provenance.compute and does not change the tier."
+    }
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank research/t5_m3_lift",
+    "method": "projection monotonicity applied to the attested lift bound at m=3",
+    "date": "2026-10-17",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.0,
+      "wall_clock_hours": 0.0,
+      "runs": 0,
+      "hardware": "none beyond the m=3 certificate, which this cell re-runs"
+    }
+  },
+  "notes": "chi(psi (x) phi) >= chi(psi) when phi has a nonzero computational amplitude, applied 2 times to chi(T5^3) >= 6. The certificate is the m=3 attested one, which prints this line after certifying the exclusion, so the cell inherits the attested tier. Puts the cell at 6 <= chi <= 75; the cell had no lower bound before. The cell has no upper bound on the board; the product witness (75 terms, 3125 amplitudes) did not finish symbolic verification in seven hours locally and is not filed. Completeness rests on the stored batch outputs under research/t5q_m2_rank5 and research/t5_m3_lift and the committed runner that regenerates any of them, exactly as for T5-m3-lower-6.json; the enumeration is not re-run under the budget, and the certificate re-runs the declared batches from scratch and hashes the rest."
+}

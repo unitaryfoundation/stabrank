@@ -35,6 +35,7 @@ nonzero modulo 65521).
 
 Printed claims: CERTIFIED chi(T5^3) >= 6
                 CERTIFIED chi(T5^4) >= 6 (projection monotonicity)
+                CERTIFIED chi(T5^5) >= 6 (projection monotonicity)
 """
 
 import os
@@ -46,6 +47,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RECHECK, SEED = 2, 20261001
 CLAIM_M3 = "CERTIFIED chi(T5^3) >= 6"
 CLAIM_M4 = "CERTIFIED chi(T5^4) >= 6"
+CLAIM_M5 = "CERTIFIED chi(T5^5) >= 6"
 
 
 def run(cmd):
@@ -75,8 +77,9 @@ def main():
     # Projection monotonicity (Lean: stabRankP_powVecP_mono in
     # lean_proofs/LeanProofs/Stabilizer/SliceP.lean): every amplitude of
     # |T5> is nonzero, so a rank-r decomposition of T5^4 slices to one of
-    # T5^3, and the m=3 bound holds at m=4.
+    # T5^3, and the m=3 bound holds at m=4, and again at m=5.
     print(CLAIM_M4)
+    print(CLAIM_M5)
     return 0
 
 
