@@ -112,7 +112,10 @@ def product_witness(wa, wb, n_a, n_b):
     for s, ca in zip(wa["terms"], wa["coeffs"]):
         for t, cb in zip(wb["terms"], wb["coeffs"]):
             terms.append(product_term(s, t, n_a, n_b))
-            c = sp.nsimplify(sp.radsimp(sp.expand(sp.sympify(ca) * sp.sympify(cb))))
+            # radsimp of the expanded product; nsimplify is not applied, since on
+            # nested radicals it can return a numerical approximation written with
+            # rational exponents (it did for one qubit_T m=4 x m=3 coefficient)
+            c = sp.radsimp(sp.expand(sp.sympify(ca) * sp.sympify(cb)))
             coeffs.append(str(c))
     return {"terms": terms, "coeffs": coeffs}
 
