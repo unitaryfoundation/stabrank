@@ -29,6 +29,8 @@ of |N>^2 do not lift to |N>^3 (chi(N^3) = 4).
 
 Printed claims: CERTIFIED chi(S^5) >= 5
                 CERTIFIED chi(S^6) >= 5 (projection monotonicity)
+                CERTIFIED chi(S^7) >= 5 (projection monotonicity)
+                CERTIFIED chi(S^8) >= 5 (projection monotonicity)
 """
 
 import os
@@ -101,6 +103,9 @@ def main():
     print("CERTIFIED chi(S^5) >= 5")
     # projection onto <1| of one qutrit carries a decomposition of S^6 to one of S^5
     print("CERTIFIED chi(S^6) >= 5")
+    # and again, twice more, since <1| on any one qutrit of S^(m+1) leaves S^m
+    for m in (7, 8):
+        print(f"CERTIFIED chi(S^{m}) >= 5")
     return 0
 
 
