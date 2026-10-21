@@ -1,0 +1,27 @@
+{
+  "schema_version": "0.1",
+  "orbit": "S",
+  "m": 7,
+  "direction": "lower",
+  "rank": 5,
+  "certificate": {
+    "script": "verify_challenge/cert_s_m5_lift.py",
+    "expect": "CERTIFIED chi(S^7) >= 5"
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank verify_challenge",
+    "method": "projection monotonicity applied to the slice-and-lift bound at m=5",
+    "date": "2026-10-17",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.0,
+      "wall_clock_hours": 0.0,
+      "runs": 0,
+      "hardware": "none beyond the m=5 certificate, which this cell re-runs"
+    }
+  },
+  "notes": "chi(psi (x) phi) >= chi(psi) when phi has a nonzero computational amplitude, applied 2 times to chi(S^5) >= 5 (<1| on one qutrit of S^(m+1) leaves S^m up to a scalar). The certificate is the m=5 slice-and-lift one, which prints this line as well, so the cell inherits the reproduced tier. Puts the cell at 5 <= chi <= 16; the cell had no lower bound before."
+}
