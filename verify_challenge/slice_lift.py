@@ -50,6 +50,13 @@ orbit of decompositions (each decomposition contains some state; move that
 state to its orbit representative). The antiunitary symmetry is not used: it
 mixes slices.
 
+Block orbits. For an orbit of width w > 1 (CS, w = 2) the slice is taken
+along the whole first copy, and `lifts_qubit_block` states and uses the
+corresponding lemma: every one of the 2^w slices of a term is a Pauli image
+of the first, so a lift needs 2^w - 1 simultaneous matchings; the function's
+docstring has the derivation. `lift_all` and `lift_chain` dispatch on the
+orbit's width.
+
 Controls, run by `python slice_lift.py`: the rank-3 decompositions of |T3>
 lift to |T3>^2 (rank stays 3 there), and the rank-3 decompositions of |N>^2
 do not lift to |N>^3 (chi(N^3) = 4 by the exhaustive exclusion).
@@ -57,6 +64,7 @@ do not lift to |N>^3 (chi(N^3) = 4 by the exhaustive exclusion).
 
 from __future__ import annotations
 
+import functools
 import itertools
 import os
 import sys
@@ -487,10 +495,11 @@ def stabilizer_orbit_labels(perms, i, max_points=400, stabilizer_order=None):
 
 def all_decompositions(orbit, m, rank, D=None, verbose=True, workers=1):
     """One member of every unitary-symmetry orbit of rank-`rank`
-    decompositions of |M>^m (and possibly more), with the pivot list used."""
+    decompositions of |M>^m (and possibly more), with the pivot list used.
+    The dictionary is the one on the width * m qudits the copies occupy."""
     import time
-    from stabrank_verify import ORBIT_P
-    D = dictionary(ORBIT_P[orbit], m) if D is None else D
+    from stabrank_verify import ORBIT_P, orbit_qudits
+    D = dictionary(ORBIT_P[orbit], orbit_qudits(orbit, m)) if D is None else D
     psi = psi_for(orbit, m)
     reps, info = symmetry_orbit_reps(orbit, m, D, antiunitary=False)
     if verbose:
@@ -588,21 +597,124 @@ def lifts_qubit(dec_states, dec_coeffs, alpha, target_m, m, tol=TOL):
     return found, (len(matches), floor)
 
 
+# ------------------------------------------------------------- blocks ------
+
+def lifts_qubit_block(dec_states, dec_coeffs, alpha, target_m, n, width, tol=TOL,
+                      max_combos=1 << 20):
+    """Block version of `lifts_qubit` for a qubit orbit of width w (CS: w = 2),
+    whose m copies live on n = w m qubits.
+
+    Let |M> on w qubits have amplitudes alpha_x, x in F_2^w, all nonzero, let
+    r = chi(|M>^m), and suppose |M>^(m+1) = sum_i c_i s_i with r stabilizer
+    terms. Slice along the whole first copy, u_i^(x) = (<x| (x) I) s_i.
+
+      (a) alpha_x |M>^m = sum_i c_i u_i^(x) for every x, so every slice is a
+          minimal decomposition of |M>^m and no u_i^(x) vanishes;
+      (b) the x with u_i^(x) != 0 form a coset of the X-part of the image of
+          Stab(s_i) in the symplectic coordinates of the first block, so by
+          (a) that image projects onto all of F_2^w: for every a there is
+          lambda_a X^a Z^(c_a) (x) Q_i^(a) in Stab(s_i), and applying it to
+          s_i gives u_i^(a) = mu_i^(a) Q_i^(a) u_i^(0) with Q_i^(a) a Pauli on
+          n qubits and mu_i^(a) a fourth root of unity (the element squares
+          to a phase times I, and that phase is 1, so lambda_a^4 = 1).
+
+    So with slice 0 taken as the decomposition (d_i, u_i), d_i = c_i/alpha_0,
+    a lift needs for each a != 0 Pauli classes mod Stab(u_i) and phases with
+
+        sum_i d_i mu_i^(a) Q_i^(a) u_i = (alpha_a / alpha_0) |M>^m,
+
+    one matching per a, each the meet in the middle of `lifts_qubit`. If any
+    of the 2^w - 1 matchings has no solution the decomposition does not lift,
+    which is the direction a lower bound uses. Conversely a choice of one
+    solution per a assembles s_i = sum_a |a> (x) mu_i^(a) Q_i^(a) u_i, which
+    reproduces |M>^(m+1) but is a stabilizer state only when the Paulis of
+    the three slices are compatible, so every assembled term is tested with
+    `to_witness.term_from_vector` and a lift is returned only when all r
+    terms pass. With width 1 this is `lifts_qubit` with the extra test.
+
+    Returns (lifts, (matches, floor)) like `lifts_qubit`: `lifts` are the
+    assembled decompositions whose terms are all stabilizer states, `matches`
+    the number of slice solutions examined over all a, and `floor` the
+    certified miss of every rejected Pauli assignment.
+    """
+    from to_witness import NotStabilizer, term_from_vector
+    r = len(dec_states)
+    a_vec = [complex(x) for x in alpha]
+    if len(a_vec) != 1 << width:
+        raise ValueError(f"alpha has {len(a_vec)} amplitudes, expected {1 << width}")
+    if any(abs(x) < 1e-12 for x in a_vec):
+        raise ValueError("the block lift needs every amplitude of the orbit state nonzero")
+    imgs = [pauli_images_qubit(u, n) for u in dec_states]
+    opts = [np.array([d * mu * qu for qu in im for mu in FOURTH]) for d, im in zip(dec_coeffs, imgs)]
+    sizes = [len(o) for o in opts]
+    half = max(1, r // 2)
+    L = _sum_table(opts[:half])
+    R = _sum_table(opts[half:]) if r > half else np.zeros((1, len(target_m)), dtype=complex)
+    sols, nmatch, floor = [], 0, float("inf")
+    for a in range(1, 1 << width):
+        rhs = (a_vec[a] / a_vec[0]) * target_m
+        matches, fl = _match_sums(L, R, rhs, tol)
+        nmatch += len(matches)
+        floor = min(floor, fl)
+        combos = [_decode(l, sizes[:half]) + (_decode(rr, sizes[half:]) if r > half else [])
+                  for l, rr in matches]
+        if not combos:
+            return [], (nmatch, floor)       # slice a has no Pauli assignment: no lift
+        sols.append(combos)
+    total = 1
+    for c in sols:
+        total *= len(c)
+    if total > max_combos:
+        raise RuntimeError(f"{total} slice-solution combinations to assemble; refusing to decide")
+    found = []
+    for choice in itertools.product(*sols):
+        terms = []
+        for i in range(r):
+            slices = [dec_states[i]] + [FOURTH[c[i] % 4] * imgs[i][c[i] // 4] for c in choice]
+            s_i = np.concatenate(slices)
+            try:
+                term_from_vector(s_i, 2, n + width)
+            except NotStabilizer:
+                break
+            terms.append(s_i)
+        else:
+            found.append(terms)
+    return found, (nmatch, floor)
+
+
+def _lifter(orbit):
+    """The slice-and-lift matcher for an orbit, with the call signature
+    f(states, coeffs, alpha, target, n) -> (lifts, (matches, floor)) where n
+    is the number of qudits the states live on."""
+    from stabrank_verify import ORBIT_P, ORBIT_WIDTH
+    p, w = ORBIT_P[orbit], ORBIT_WIDTH.get(orbit, 1)
+    if p == 3:
+        if w != 1:
+            raise ValueError("the block lift is implemented for qubits only")
+        return lifts
+    if p != 2:
+        raise ValueError(f"no slice-and-lift matcher for p = {p}")
+    if w == 1:
+        return lifts_qubit
+    return functools.partial(lifts_qubit_block, width=w)
+
+
 def lift_all(orbit, m, decs, D, verbose=True):
     """Lift every decomposition in `decs` (index tuples into D) one copy up.
     Returns the list of lifted term lists; every lift is confirmed against
     phi (x) phi^m and a failure raises."""
-    from stabrank_verify import orbit_state, ORBIT_P
+    from stabrank_verify import orbit_state, orbit_qudits
     alpha = np.array([complex(x) for x in orbit_state(orbit)]).ravel()
     psi = psi_for(orbit, m)
-    lifter = lifts if ORBIT_P[orbit] == 3 else lifts_qubit
+    lifter = _lifter(orbit)
+    n = orbit_qudits(orbit, m)
     lifted, floor = [], float("inf")
     for cols in decs:
         states = [D[:, c] for c in cols]
         d, *_ = np.linalg.lstsq(np.column_stack(states), psi, rcond=None)
         if np.linalg.norm(np.column_stack(states) @ d - psi) > 1e-9:
             raise AssertionError("a listed decomposition does not reproduce the target")
-        L, (nmatch, fl) = lifter(states, d, alpha, psi, m)
+        L, (nmatch, fl) = lifter(states, d, alpha, psi, n)
         floor = min(floor, fl)
         for terms in L:
             res = confirm_lift(terms, alpha, psi)
@@ -626,15 +738,15 @@ def lift_chain(orbit, m0, rank, m_target, workers=1, verbose=True):
     assignment over the chain. counts[m_target] == 0 means
     chi(|M>^m_target) > rank, given chi(|M>^m) == rank for m0 <= m < m_target.
     """
-    from stabrank_verify import orbit_state, ORBIT_P
+    from stabrank_verify import orbit_state, ORBIT_P, orbit_qudits
     p = ORBIT_P[orbit]
-    D = dictionary(p, m0)
+    D = dictionary(p, orbit_qudits(orbit, m0))
     decs, _ = all_decompositions(orbit, m0, rank, D, verbose=verbose, workers=workers)
     counts = {m0: len(decs)}
     current = lift_all(orbit, m0, decs, D, verbose=verbose)
     counts[m0 + 1] = len(current)
     alpha = np.array([complex(x) for x in orbit_state(orbit)]).ravel()
-    lifter = lifts if p == 3 else lifts_qubit
+    lifter = _lifter(orbit)
     gap = float("inf")
     for m in range(m0 + 1, m_target):
         psi = psi_for(orbit, m)
@@ -644,7 +756,7 @@ def lift_chain(orbit, m0, rank, m_target, workers=1, verbose=True):
             d, *_ = np.linalg.lstsq(A, psi, rcond=None)
             if np.linalg.norm(A @ d - psi) > 1e-9:
                 raise AssertionError("a lifted decomposition does not reproduce the target")
-            L, (_, g) = lifter(terms, d, alpha, psi, m)
+            L, (_, g) = lifter(terms, d, alpha, psi, orbit_qudits(orbit, m))
             gap = min(gap, g)
             for t in L:
                 if confirm_lift(t, alpha, psi) > 1e-8:
