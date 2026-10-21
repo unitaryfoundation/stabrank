@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "tier": "attested",
+  "detail": "certificate script asserted: CERTIFIED chi(H3^6) >= 7; re-ran 2 of 1021 stored batches from scratch chosen from seed 20261002 and only checked the SHA-256 of the other 1019 against research/h3_m4_rank6/batch_manifest.json; the full enumeration (81.5 CPU-h on RunPod CPU pod ee4072210b09 (32 vCPU, Ubuntu 20.04, gcc-10 kernels, Python 3.13.5, numpy 2.4.4), 28 batches in parallel at nice 19 alongside another job's 30 workers, 2026-10-01 18:14 to 2026-10-02 00:58 UTC for the 1,021-batch loop (81.1 CPU-hours of batch records: A6 14.6, B6 60.9, C6 3.3, beta' 2.3, gamma 0.03); the four heaviest stage A6 batches (0, 3, 4, 5, the pivot-117 pairs with 0.7 to 2.1 million covers each) were starved of CPU by an external SIGSTOP in the first pass (40 to 146 s of CPU in 4,740 s of wall) and recorded their covers as undecided at the 3,600 s wall-clock deadline, so they were re-run without a deadline 00:32 to 00:58 UTC (9 to 26 minutes each, 0 hits) and their records replace the starved ones; the aggregate (1,331 s, the 6-cover census re-run over every pivot pair and the lists re-enumerated, every count equal) and its two seeded re-runs (batches 142 and 1009, seed 20261002, 183 s and 157 s, deterministic hashes equal) on the same pod 01:03 to 01:25 UTC) was not re-run",
+  "gamma": null,
+  "content_hash": "0e9c6a5307d1f810"
+}
