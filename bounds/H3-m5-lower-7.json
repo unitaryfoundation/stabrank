@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.1",
+  "orbit": "H3",
+  "m": 5,
+  "direction": "lower",
+  "rank": 7,
+  "certificate": {
+    "script": "verify_challenge/cert_h3_m4_rank6_attested.py",
+    "expect": "CERTIFIED chi(H3^5) >= 7",
+    "budget_s": 3600,
+    "attested": {
+      "batches": "research/h3_m4_rank6/batch_manifest.json",
+      "recomputed": 2,
+      "compute_hours": 81.5,
+      "hardware": "RunPod CPU pod ee4072210b09 (32 vCPU, Ubuntu 20.04, gcc-10 kernels, Python 3.13.5, numpy 2.4.4), 28 batches in parallel at nice 19 alongside another job's 30 workers, 2026-10-01 18:14 to 2026-10-02 00:58 UTC for the 1,021-batch loop (81.1 CPU-hours of batch records: A6 14.6, B6 60.9, C6 3.3, beta' 2.3, gamma 0.03); the four heaviest stage A6 batches (0, 3, 4, 5, the pivot-117 pairs with 0.7 to 2.1 million covers each) were starved of CPU by an external SIGSTOP in the first pass (40 to 146 s of CPU in 4,740 s of wall) and recorded their covers as undecided at the 3,600 s wall-clock deadline, so they were re-run without a deadline 00:32 to 00:58 UTC (9 to 26 minutes each, 0 hits) and their records replace the starved ones; the aggregate (1,331 s, the 6-cover census re-run over every pivot pair and the lists re-enumerated, every count equal) and its two seeded re-runs (batches 142 and 1009, seed 20261002, 183 s and 157 s, deterministic hashes equal) on the same pod 01:03 to 01:25 UTC",
+      "note": "The exclusion of every rank-6 decomposition of |H3>^4 lives in the stored batch outputs under research/h3_m4_rank6/results/ (88 stage A6 batches over the 36,368,678 full 6-covers of |H3>^2 with distinct independent base states, 802 stage B6 batches over the 378,843 G_2 orbit representatives of the dependent 6-sets, 92 stage C6 batches over the 354,012 representatives of the repeated 6-multisets, 36 stage beta' batches over the 61,413 representatives of the full 5-multisets with the invisible term on each of the 16 flats missing (0, 0), 3 stage gamma batches over the 565 representatives of the full 4-multisets with each of the 136 flat multisets), every base matched at x_0 = (0, 0) along qutrits 1, 2, every candidate re-decided mod 2013265921 and numerically, 0 hits, 0 refused, 0 undecided. The certificate checks the partition against the enumerator, re-runs the 6-cover kernel over every pivot pair, re-enumerates the orbit representatives, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/h3_m4_rank6/batch.py, which regenerates any batch (batch.py K)."
+    }
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank research/h3_m4_rank6",
+    "method": "projection monotonicity applied to the attested exact rank-6 exclusion at m=4",
+    "date": "2026-10-17",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.0,
+      "wall_clock_hours": 0.0,
+      "runs": 0,
+      "hardware": "none beyond the m=4 certificate, which this cell re-runs"
+    }
+  },
+  "notes": "chi(psi (x) phi) >= chi(psi) when phi has a nonzero computational amplitude, applied once to chi(H3^4) >= 7. The certificate is the m=4 attested one, which prints this line after certifying the exclusion, so the cell inherits the attested tier. Puts the cell at 7 <= chi <= 12; the cell had no lower bound before. Completeness rests on the stored batch outputs under research/h3_m4_rank6 and the committed runner that regenerates any of them, exactly as for H3-m4-lower-7.json; the enumeration is not re-run under the budget, and the certificate re-runs the declared batches from scratch and hashes the rest."
+}
