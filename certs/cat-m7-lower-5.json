@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "tier": "attested",
+  "detail": "certificate script asserted: CERTIFIED chi(cat_7) >= 5; re-ran 2 of 1600 stored batches from scratch chosen from seed 20261017 and only checked the SHA-256 of the other 1598 against research/cat7_rank4/batch_manifest.json; the full enumeration (110.9 CPU-h on one Perlmutter CPU node (AMD EPYC 7763, 128 workers) for the corrected census of the full 4-covers of compressed cat_5, job 59930310, 1261 s wall, 2026-10-18 UTC; two earlier census runs (jobs 59924919 and 59926124, 736 s and 1,120 s) listed a fifth of the covers because their hash functionals wrapped int64 and are superseded; stages beta, B, C and A on an Apple silicon laptop (one core)) was not re-run",
+  "gamma": null,
+  "content_hash": "a747580455422f16"
+}
