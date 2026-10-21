@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_T",
+  "m": 10,
+  "direction": "lower",
+  "rank": 6,
+  "certificate": {
+    "script": "verify_challenge/cert_qubit_t_m5_rank5_attested.py",
+    "expect": "CERTIFIED chi(qubit_T^10) >= 6",
+    "budget_s": 3600,
+    "attested": {
+      "batches": "research/t5_rank5/batch_manifest.json",
+      "recomputed": 2,
+      "compute_hours": 36.4,
+      "hardware": "RunPod CPU pod, 16 vCPU AMD EPYC 4564P on a shared host (load 30 to 40), fifteen batches in parallel at nice 19, 2026-09-24 07:37 to 10:04 UTC (the gamma smoke batch 159 at 07:37, the 160-batch loop 07:40 to 10:04); the aggregate's two seeded re-runs (batches 10 and 58) on the same pod at 10:05 UTC",
+      "note": "The exclusion of every rank-5 decomposition of |T>^5 lives in the stored batch outputs under research/t5_rank5/results/ (the full 5-covers, 4-covers and 3-covers of |T>^3 up to symmetry, each matched at the base point 00 along qubits 1, 2 with the invisible terms on every flat missing 00 and every candidate re-decided mod 2013265921 and numerically): 0 hits, 0 refused, 0 undecided. The certificate re-enumerates the lists, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/t5_rank5/batch.py, which regenerates any batch (batch.py K)."
+    }
+  },
+  "provenance": {
+    "author": "this repository",
+    "reference": "stabrank research/t5_rank5",
+    "method": "projection monotonicity applied to the attested exact rank-5 exclusion at m=5",
+    "date": "2026-10-17",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.0,
+      "wall_clock_hours": 0.0,
+      "runs": 0,
+      "hardware": "none beyond the m=5 certificate, which this cell re-runs"
+    }
+  },
+  "notes": "chi(psi (x) phi) >= chi(psi) when phi has a nonzero computational amplitude, applied 5 times to chi(qubit_T^5) >= 6. The certificate is the m=5 attested one, which prints this line after certifying the exclusion, so the cell inherits the attested tier. Puts the cell at 6 <= chi <= 15; the cell had no lower bound before. Completeness rests on the stored batch outputs under research/t5_rank5 and the committed runner that regenerates any of them, exactly as for qubit_T-m5-lower-6.json; the enumeration is not re-run under the budget, and the certificate re-runs the declared batches from scratch and hashes the rest."
+}
