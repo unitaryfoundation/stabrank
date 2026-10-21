@@ -26,6 +26,7 @@ records that as the attested tier.
 Printed claims: CERTIFIED chi(T3^3) >= 8
                 CERTIFIED chi(T3^4) >= 8 (projection monotonicity)
                 CERTIFIED chi(T3^5) >= 8 (projection monotonicity)
+                CERTIFIED chi(T3^6) >= 8 (projection monotonicity)
 """
 
 import os
@@ -51,9 +52,10 @@ def main():
         return 1
     # Projection monotonicity: every amplitude of |T3> is nonzero, so
     # (I (x) <x|) carries a decomposition of T3^(m+1) to one of T3^m with no
-    # more terms, and the m=3 value bounds the next two cells.
+    # more terms, and the m=3 value bounds the next three cells.
     print("CERTIFIED chi(T3^4) >= 8")
     print("CERTIFIED chi(T3^5) >= 8")
+    print("CERTIFIED chi(T3^6) >= 8")
     return 0
 
 
