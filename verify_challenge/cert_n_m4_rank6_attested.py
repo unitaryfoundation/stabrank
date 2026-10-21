@@ -43,6 +43,8 @@ the enumeration rests on the stored outputs and on the committed runner
 not re-run here.
 
 Printed claims: CERTIFIED chi(N^4) >= 7
+                CERTIFIED chi(N^5) >= 7 (projection monotonicity)
+                CERTIFIED chi(N^6) >= 7 (projection monotonicity)
 """
 
 import os
@@ -68,6 +70,12 @@ def main():
     if proc.returncode != 0 or CLAIM not in lines:
         print("aggregation did not certify", file=sys.stderr)
         return 1
+    # Projection monotonicity (Lean: stabRankP_powVecP_mono in
+    # lean_proofs/LeanProofs/Stabilizer/SliceP.lean): every amplitude of |N>
+    # is nonzero, so slicing carries a rank-r decomposition of N^(m+1) to one
+    # of N^m, and the m=4 exclusion bounds the m=5 and m=6 cells as well.
+    for m in (5, 6):
+        print(f"CERTIFIED chi(N^{m}) >= 7")
     return 0
 
 
