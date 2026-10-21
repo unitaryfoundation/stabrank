@@ -12,7 +12,7 @@
   "provenance": {
     "author": "Vincent Russo",
     "reference": "stabrank verify_challenge",
-    "method": "exact: no two-qubit stabilizer state is parallel to |CS>, decided in Q(i) over the 60 states enumerated from the parametrisation",
+    "method": "exact: no two-qubit stabilizer state is parallel to |CS>, decided in Q(i) over the 60 states enumerated from the parametrization",
     "date": "2026-10-21",
     "github": [
       "vprusso"
@@ -30,5 +30,5 @@
       ]
     }
   },
-  "notes": "Settles chi(|CS>) = 2 with the two-term witness. |CS> is not a stabilizer state: its support is all of F_2^2 but the phase i^(x1 x2) is not a Z_4-valued quadratic form with even cross terms (the cross term is odd), and the certificate decides this as the rank-1 case of its exact pair search: every two-qubit stabilizer state is written down from the verifier's parametrisation as a vector over Z[i] (60 states, checked against 2^2 (2+1)(4+1) and pairwise distinct up to phase), and none has a vanishing component off |CS>. Exact throughout; no floating-point margin stands under the bound. Controls: |++> is reported as rank 1, and the pair {|++>, CZ|++>} is among the 15 pairs of two-qubit stabilizer states that span |CS>."
+  "notes": "Settles chi(|CS>) = 2 with the two-term witness. |CS> is not a stabilizer state: its support is all of F_2^2 but the phase i^(x1 x2) is not a Z_4-valued quadratic form with even cross terms (the cross term is odd), and the certificate decides this as the rank-1 case of its exact pair search: every two-qubit stabilizer state is written down from the verifier's parametrization as a vector over Z[i] (60 states, checked against 2^2 (2+1)(4+1) and pairwise distinct up to phase), and none has a vanishing component off |CS>. Exact throughout; no floating-point margin stands under the bound. Controls: |++> is reported as rank 1, and the pair {|++>, CZ|++>} is among the 15 pairs of two-qubit stabilizer states that span |CS>."
 }

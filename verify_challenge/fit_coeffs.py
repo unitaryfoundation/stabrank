@@ -27,7 +27,7 @@ from stabrank_verify import ORBIT_P, is_zero, orbit_qudits, stabilizer_vector, t
 def fit(orbit, m, terms):
     """Exact coefficients, or None if no exact combination reproduces the target.
 
-    The terms are parametrised over the n = width * m qudits the m copies
+    The terms are parametrized over the n = width * m qudits the m copies
     occupy (orbit_qudits), which is m itself for every single-qudit orbit."""
     p = ORBIT_P[orbit]
     cols = [stabilizer_vector(t, p, orbit_qudits(orbit, m)) for t in terms]
@@ -68,7 +68,7 @@ def _fit_cyclotomic(n, terms, cols, b, p, stab_order, target_order):
     zeta^(target_order/stab_order), and the target times sqrt(p)^n has entries
     that are powers of zeta. Solving there gives each coefficient as a short
     polynomial in zeta with rational coefficients, times the power of sqrt(p)
-    that restores the normalisations, and the check that the solution
+    that restores the normalizations, and the check that the solution
     reproduces the target is exact field arithmetic rather than
     simplification.
     """

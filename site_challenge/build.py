@@ -241,7 +241,7 @@ ORBIT_DEF = {
  "qubit_sqrtT": ("(|0&rang; + e<sup>i&pi;/8</sup>|1&rang;)/&radic;2",
    "The &radic;T state, Z(&pi;/8)|+&rang;: the magic state of the square root of "
    "the T gate, at the fourth level of the Clifford hierarchy. Its Bloch vector "
-   "(cos(&pi;/8), sin(&pi;/8), 0) is neither an edge nor a face centre of the "
+   "(cos(&pi;/8), sin(&pi;/8), 0) is neither an edge nor a face center of the "
    "stabilizer octahedron, and the Clifford group acts on Bloch vectors by signed "
    "coordinate permutations, so this is a third single-qubit orbit beside the "
    "H-type and T-type states. Its amplitudes lie in Q(&zeta;&#8321;&#8326;), a "

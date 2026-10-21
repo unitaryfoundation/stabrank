@@ -51,7 +51,7 @@ def test_sqrtt_state():
     assert np.allclose(_num(v), np.array([1, np.exp(1j * np.pi / 8)]) / np.sqrt(2))
     # not a stabilizer state, and not in the H-type or T-type orbits: its
     # Bloch vector is (cos(pi/8), sin(pi/8), 0), which no signed coordinate
-    # permutation carries to an edge centre (1, 1, 0)/sqrt 2 or a face centre
+    # permutation carries to an edge center (1, 1, 0)/sqrt 2 or a face center
     D = dictionary(2, 1)
     assert np.max(np.abs(_num(v).conj() @ D)) < 1 - 1e-6
     bloch = np.array([np.cos(np.pi / 8), np.sin(np.pi / 8), 0.0])
@@ -79,7 +79,7 @@ def test_cs_state_and_width():
 # ------------------------------------------------------------ the plumbing ---
 
 def test_verify_upper_uses_width():
-    """A CS witness is parametrised over 2m qubits; the committed two-copy
+    """A CS witness is parametrized over 2m qubits; the committed two-copy
     witness verifies and a term of the wrong length is refused."""
     sub = _load("CS-m2-upper-3")
     r = verify(sub)

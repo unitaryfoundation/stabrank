@@ -4,14 +4,14 @@ controlled-S magic state, exactly, and chi(|CS>^{ot 3}) >= 3 by projection.
 |CS> = CS|++> = (|00> + |01> + |10> + i|11>)/2 is a width-2 orbit: m copies
 live on 2m qubits. Every amplitude of 2^m |CS>^m is a power of i, and every
 n-qubit stabilizer state is a scalar times a vector over Z[i] with entries
-in {0, 1, i, -1, -i} (the verifier's own parametrisation, i^(l.y) (-1)^Q(y)
+in {0, 1, i, -1, -i} (the verifier's own parametrization, i^(l.y) (-1)^Q(y)
 on an affine flat), so both questions live in the Gaussian rationals Q(i)
 and are decided there: Python integers for the Gaussian integers, Fractions
 for the one division. No floating-point number stands anywhere under the
 bound, so the bound files declare `exact: true`.
 
 Enumeration. The n-qubit stabilizer states are written down from the
-parametrisation sum_y i^(l.y) (-1)^Q(y) |x0 + W y> with W in reduced row
+parametrization sum_y i^(l.y) (-1)^Q(y) |x0 + W y> with W in reduced row
 echelon form, x0 supported off the pivot columns, Q strictly upper
 triangular (a diagonal entry of Q is the same state as l shifted by 2) and
 l in Z_4^k. That names each state exactly once; the count is checked
@@ -25,7 +25,7 @@ in Z[i]. q(s) = 0 exactly when s is parallel to P. For two distinct states
 s, t, P lies in span(s, t) exactly when q(s) and q(t) are parallel: if
 P = a s + b t with a, b nonzero then q(t) = -(a/b) q(s), and conversely
 q(s) = c q(t) puts s - c t on the line of P with s, t not parallel. So the
-pair search is one exact canonicalisation per state, dividing q(s) by its
+pair search is one exact canonicalization per state, dividing q(s) by its
 first nonzero entry in Q(i), and two states are a rank-2 decomposition of
 P exactly when their canonical forms coincide.
 
@@ -85,7 +85,7 @@ def rref_matrices(n, k):
 
 
 def exact_state(n, k, x0, W, cross, ell):
-    """The unnormalised stabilizer state sum_y i^(l.y) (-1)^(sum_{i<j} Q_ij y_i y_j)
+    """The unnormalized stabilizer state sum_y i^(l.y) (-1)^(sum_{i<j} Q_ij y_i y_j)
     |x0 + W y> as a tuple of 2^n Gaussian integers; `cross` lists the
     strictly-upper entries Q_ij that are 1."""
     v = [(0, 0)] * (1 << n)
@@ -188,7 +188,7 @@ def main():
         if len({canonical(s) for s in S[n]}) != len(S[n]):
             print(f"{n} qubits: two enumerated states coincide up to phase", file=sys.stderr)
             return 1
-        print(f"{n} qubits: {len(S[n])} stabilizer states enumerated from the parametrisation, "
+        print(f"{n} qubits: {len(S[n])} stabilizer states enumerated from the parametrization, "
               f"distinct up to phase; all arithmetic in Z[i] and Q(i)")
         if not check_against_dictionary(S[n], n):
             print(f"{n} qubits: the exact enumeration does not match the numerical dictionary",

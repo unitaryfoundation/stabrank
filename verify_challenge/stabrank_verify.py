@@ -150,7 +150,7 @@ ORBIT_P = {"S": 3, "N": 3, "H3": 3, "T3": 3, "qubit_H": 2, "qubit_T": 2, "T5": 5
            "qubit_sqrtT": 2, "CS": 2, "cat": 2}
 
 # Qudits per copy. A width-w orbit state lives on w qudits, so m copies live
-# on n = w m qudits and every witness term is parametrised over F_p^n; the
+# on n = w m qudits and every witness term is parametrized over F_p^n; the
 # exponent gamma = log_p(rank)/m stays per copy. Orbits absent here have
 # width 1.
 ORBIT_WIDTH = {"CS": 2}

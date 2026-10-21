@@ -605,7 +605,7 @@ CS unchanged otherwise: order 48 and 6 orbits of the 60 two-qubit states at
 m = 1, order 2304 and 87 orbits of the 36,720 four-qubit states at m = 2
 (1152 and 126 without the antiunitary symmetry). `fit_coeffs` solves the
 sqrt(T) coefficients inside Q(zeta_16) by the route written for T3, now
-parametrised by (p, phase order, target order) in `CYCLOTOMIC`, because
+parametrized by (p, phase order, target order) in `CYCLOTOMIC`, because
 the generic sympy route mis-simplifies the four-copy coefficients.
 
 Block lift. `slice_lift.lifts_qubit_block` is the lemma of section 2
@@ -632,8 +632,8 @@ the edge state); the rank-2 decompositions of |CS> do not lift to |CS>^2.
 Cells. CS: chi = 2 at m = 1 (two-term witness; exact rank-1 exclusion),
 chi = 3 at m = 2 (the witness above; rank 2 excluded exactly over the
 36,720 four-qubit states in Q(i) by `cert_cs_m2_rank2.py`, which enumerates
-the states from the parametrisation as Gaussian-integer vectors and
-canonicalises each state's component off the target), and
+the states from the parametrization as Gaussian-integer vectors and
+canonicalizes each state's component off the target), and
 4 <= chi <= 6 at m = 3. The lower bound is `cert_cs_m3_lift.py`: the 16
 rank-3 decompositions of |CS>^2 form one orbit of the order-1152 symmetry
 group, reached from three pivot orbits; each slice equation of each of them
@@ -651,7 +651,7 @@ space of dimension min(4, m + 1) (a Vandermonde on the Hamming weights
 whose three-copy run came within 0.0019 of the parallel threshold.
 
 Not done: Lean pointwise proofs (the CS witnesses live in Q(i) and are the
-easiest to formalise; sqrt(T) needs a zeta_16 constant file), CCZ (width 3
+easiest to formalize; sqrt(T) needs a zeta_16 constant file), CCZ (width 3
 needs a stabilizer generating set in place of the Clifford closure), and
 the rank-4 decision at sqrt(T) m = 4 (the pivot-pair search of
 `slice_lift.all_decompositions` at rank 4 over the 36,720 states).

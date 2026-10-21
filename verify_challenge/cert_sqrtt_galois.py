@@ -4,7 +4,7 @@ with no search.
 |sqrtT> = (|0> + zeta |1>)/sqrt 2 with zeta = exp(i pi/8), a primitive
 sixteenth root of unity. Every qubit stabilizer state is a positive scalar
 times a vector over Z[i] (entries in {0, 1, i, -1, -i}: the verifier's
-parametrisation i^(l.y) (-1)^Q(y) on an affine flat), so the span of an
+parametrization i^(l.y) (-1)^Q(y) on an affine flat), so the span of an
 exact decomposition is defined over Q(i) and is mapped to itself by every
 automorphism of C fixing Q(i). The target times sqrt(2)^m is t_1^m with
 t_k = (1, zeta^k), which lies in Q(zeta), and Gal(Q(zeta)/Q(i)) has order
@@ -31,7 +31,7 @@ floating-point number stands under the bound, so the bound files declare
 Consistency checks, not load-bearing: the verifier's exact target
 sqrt(2)^m |sqrtT>^m equals t_1^m symbolically, and every entry of the two-,
 three- and four-qubit numerical dictionaries is in {0, 1, i, -1, -i} once
-the first nonzero entry is normalised, which is the Z[i] fact on the
+the first nonzero entry is normalized, which is the Z[i] fact on the
 dictionaries the numerical exclusions used.
 
 This replaces the numerical exclusions of the research survey (rank 2 at

@@ -32,7 +32,7 @@
         "CS",
         "cat"
       ],
-      "description": "S Strange, N Norrell, H3 qutrit Hadamard eigenstate, T3 qutrit T-type (face centre), qubit_H qubit H-type (edge centre), qubit_T qubit Bravyi-Kitaev T-type, T5 ququint T-type (cubic phase x^3 over F_5), qubit_sqrtT the sqrt(T) state (|0> + e^{i pi/8}|1>)/sqrt 2, CS the two-qubit controlled-S magic state CS|++> = (|00> + |01> + |10> + i|11>)/2 (width 2: m copies live on 2m qubits). Family tracks, where m is the qubit count rather than a number of copies: cat, the magic cat state |cat_m> = (|T>^m + |T_perp>^m)/sqrt 2 of Qassim, Pashayan, and Gosset"
+      "description": "S Strange, N Norrell, H3 qutrit Hadamard eigenstate, T3 qutrit T-type (face center), qubit_H qubit H-type (edge center), qubit_T qubit Bravyi-Kitaev T-type, T5 ququint T-type (cubic phase x^3 over F_5), qubit_sqrtT the sqrt(T) state (|0> + e^{i pi/8}|1>)/sqrt 2, CS the two-qubit controlled-S magic state CS|++> = (|00> + |01> + |10> + i|11>)/2 (width 2: m copies live on 2m qubits). Family tracks, where m is the qubit count rather than a number of copies: cat, the magic cat state |cat_m> = (|T>^m + |T_perp>^m)/sqrt 2 of Qassim, Pashayan, and Gosset"
     },
     "m": {
       "type": "integer",

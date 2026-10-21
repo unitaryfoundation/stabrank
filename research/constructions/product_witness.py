@@ -127,7 +127,7 @@ def main(argv):
     ms = [int(a) for a in argv[2:]]
     p = ORBIT_P[orbit]
     facs = [factor(orbit, m) for m in ms]
-    # terms are parametrised over the qudits the copies occupy (2m for CS)
+    # terms are parametrized over the qudits the copies occupy (2m for CS)
     w, n, nq = facs[0][0], ms[0], orbit_qudits(orbit, ms[0])
     for (wf, _, _), m in zip(facs[1:], ms[1:]):
         w = product_witness(w, wf, nq, orbit_qudits(orbit, m))
