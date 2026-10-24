@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "tier": "attested",
+  "detail": "certificate script asserted: CERTIFIED chi(S^8) >= 6; re-ran 3 of 4259 stored batches from scratch chosen from seed 20261023 and only checked the SHA-256 of the other 4256 against research/s5_rank5/batch_manifest.json; the full enumeration (1700 CPU-h on Perlmutter CPU nodes (AMD EPYC 7763, 128 workers per node): the level-3 census in four interactive allocations on 2026-10-23 (jobs 60160192, 60160573, 60170484, 60171488; about 12 node-hours for the kernel-2 pass, 4,096 chunks, 442,623,432 prefixes, 54,157,309,763 candidates decided modulo two primes), the level-5 kappa = 0 lifts (128 chunks, minutes) and the kappa = 1 family brute force (35 bases x 243 ranges, about 2 node-hours); the other stages on an Apple silicon laptop) was not re-run",
+  "gamma": null,
+  "content_hash": "83d160089e20d549"
+}
