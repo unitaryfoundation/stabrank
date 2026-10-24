@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "tier": "attested",
+  "detail": "certificate script asserted: CERTIFIED chi(qubit_sqrtT^6) >= 7; re-ran 2 of 859 stored batches from scratch chosen from seed 20261023 and only checked the SHA-256 of the other 857 against research/sqrtt_m5_rank6/batch_manifest.json; the full enumeration (46.3 CPU-h on Perlmutter CPU node (two AMD EPYC 7763, 128 worker processes), NERSC job 60159879, 2026-10-23 16:04 to 16:41 UTC; the representatives stage single-threaded (846 s), the pivot census 46.1 CPU-h over 128 workers (about 23 min wall)) was not re-run",
+  "gamma": null,
+  "content_hash": "29b7ed841c480631"
+}

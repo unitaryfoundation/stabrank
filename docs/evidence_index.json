@@ -1,6 +1,6 @@
 {
  "generated_from": "bounds/",
- "head": "b0cc69b9e71e0df1a170c7abbf0ce8e6858b8310",
+ "head": "68e582eb026329fdea029935db0edc444c4792d2",
  "generated": "2026-10-24",
  "since": "2026-09-15",
  "exponents": [
@@ -106,15 +106,15 @@
    "published_txt": "1/2",
    "reference": "qassim2021improved",
    "best": {
-    "gamma": 0.5804820237218405,
+    "gamma": 0.5121375001030223,
     "tier": "verified",
-    "m": 4,
-    "rank": 5,
-    "slug": "qubit_sqrtT-m4-upper-5",
-    "date": "2026-10-17"
+    "m": 7,
+    "rank": 12,
+    "slug": "qubit_sqrtT-m7-upper-12",
+    "date": "2026-10-23"
    },
    "verdict": "trails",
-   "gap": 0.08048202372184055
+   "gap": 0.01213750010302228
   },
   {
    "orbit": "CS",
@@ -1248,11 +1248,11 @@
    "orbit": "qubit_sqrtT",
    "m": 4,
    "lower": {
-    "rank": 4,
+    "rank": 5,
     "tier": "verified",
-    "slug": "qubit_sqrtT-m4-lower-4",
-    "date": "2026-10-21",
-    "board_date": "2026-10-21",
+    "slug": "qubit_sqrtT-m4-lower-5",
+    "date": "2026-10-23",
+    "board_date": "2026-10-24",
     "moved_since": true
    },
    "upper": {
@@ -1261,6 +1261,72 @@
     "slug": "qubit_sqrtT-m4-upper-5",
     "date": "2026-10-17",
     "board_date": "2026-10-21",
+    "moved_since": true
+   },
+   "settled": true,
+   "moved_since": true
+  },
+  {
+   "orbit": "qubit_sqrtT",
+   "m": 5,
+   "lower": {
+    "rank": 6,
+    "tier": "verified",
+    "slug": "qubit_sqrtT-m5-lower-6",
+    "date": "2026-10-23",
+    "board_date": "2026-10-24",
+    "moved_since": true
+   },
+   "upper": {
+    "rank": 6,
+    "tier": "verified",
+    "slug": "qubit_sqrtT-m5-upper-6",
+    "date": "2026-10-23",
+    "board_date": "2026-10-24",
+    "moved_since": true
+   },
+   "settled": true,
+   "moved_since": true
+  },
+  {
+   "orbit": "qubit_sqrtT",
+   "m": 6,
+   "lower": {
+    "rank": 7,
+    "tier": "attested",
+    "slug": "qubit_sqrtT-m6-lower-7",
+    "date": "2026-10-23",
+    "board_date": "2026-10-24",
+    "moved_since": true
+   },
+   "upper": {
+    "rank": 12,
+    "tier": "verified",
+    "slug": "qubit_sqrtT-m6-upper-12",
+    "date": "2026-10-23",
+    "board_date": "2026-10-24",
+    "moved_since": true
+   },
+   "settled": false,
+   "moved_since": true
+  },
+  {
+   "orbit": "qubit_sqrtT",
+   "m": 7,
+   "lower": {
+    "rank": 7,
+    "tier": "attested",
+    "slug": "qubit_sqrtT-m7-lower-7",
+    "date": "2026-10-23",
+    "board_date": "2026-10-24",
+    "moved_since": true
+   },
+   "upper": {
+    "rank": 12,
+    "tier": "verified",
+    "slug": "qubit_sqrtT-m7-upper-12",
+    "date": "2026-10-23",
+    "board_date": "2026-10-24",
     "moved_since": true
    },
    "settled": false,
@@ -3042,13 +3108,111 @@
    "orbit": "qubit_sqrtT",
    "m": 4,
    "rank": 5,
+   "runs": 4,
+   "log_runs": 0,
+   "cpu_hours": 0.021,
+   "solutions": 2,
+   "cpu_hours_per_solution": 0.0105,
+   "bounds": [
+    "qubit_sqrtT-m4-upper-5",
+    "qubit_sqrtT-m4-lower-5"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "qubit_sqrtT",
+   "m": 5,
+   "rank": 6,
+   "runs": 4,
+   "log_runs": 0,
+   "cpu_hours": 0.021,
+   "solutions": 2,
+   "cpu_hours_per_solution": 0.0105,
+   "bounds": [
+    "qubit_sqrtT-m5-lower-6",
+    "qubit_sqrtT-m5-upper-6"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "qubit_sqrtT",
+   "m": 6,
+   "rank": 6,
+   "runs": 3,
+   "log_runs": 0,
+   "cpu_hours": 0.02,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.02,
+   "bounds": [
+    "qubit_sqrtT-m6-lower-6"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "qubit_sqrtT",
+   "m": 6,
+   "rank": 7,
+   "runs": 1,
+   "log_runs": 0,
+   "cpu_hours": 47.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 47.0,
+   "bounds": [
+    "qubit_sqrtT-m6-lower-7"
+   ],
+   "board": [
+    "attested"
+   ]
+  },
+  {
+   "orbit": "qubit_sqrtT",
+   "m": 6,
+   "rank": 12,
    "runs": 1,
    "log_runs": 0,
    "cpu_hours": 0.001,
    "solutions": 1,
    "cpu_hours_per_solution": 0.001,
    "bounds": [
-    "qubit_sqrtT-m4-upper-5"
+    "qubit_sqrtT-m6-upper-12"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "qubit_sqrtT",
+   "m": 7,
+   "rank": 7,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "qubit_sqrtT-m7-lower-7"
+   ],
+   "board": [
+    "attested"
+   ]
+  },
+  {
+   "orbit": "qubit_sqrtT",
+   "m": 7,
+   "rank": 12,
+   "runs": 37,
+   "log_runs": 0,
+   "cpu_hours": 22.7452,
+   "solutions": 1,
+   "cpu_hours_per_solution": 22.7452,
+   "bounds": [
+    "qubit_sqrtT-m7-upper-12"
    ],
    "board": [
     "verified"
@@ -3611,11 +3775,11 @@
   {
    "date": "2026-10-23",
    "seeded": false,
-   "cpu_hours": 7200.0,
-   "discoveries": 4,
-   "median_declared": 1800.0,
-   "cum_cpu_hours": 8385.595611111112,
-   "cum_discoveries": 162
+   "cpu_hours": 7269.807200000002,
+   "discoveries": 12,
+   "median_declared": 11.3826,
+   "cum_cpu_hours": 8455.402811111113,
+   "cum_discoveries": 170
   }
  ],
  "bounds": [
@@ -9426,6 +9590,47 @@
    }
   },
   {
+   "slug": "qubit_sqrtT-m4-lower-5",
+   "file": "bounds/qubit_sqrtT-m4-lower-5.json",
+   "orbit": "qubit_sqrtT",
+   "m": 4,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-10-23",
+   "author": "Vincent Russo",
+   "reference": "this repository (stabrank-research, round 33)",
+   "method": "exact census of the four-qubit stabilizer states inside the Galois-forced subspace V4: three states, of rank 3, so no four terms",
+   "pull_request": 189,
+   "merge_commit": "68e582eb026329fdea029935db0edc444c4792d2",
+   "merge_date": "2026-10-24",
+   "added_commit": "e2ff283573744c9c5195cfc69240298b45278563",
+   "added_date": "2026-10-24",
+   "added_subject": "sqrt(T): chi(R^4) = 5, chi(R^5) = 6, chi(R^6) >= 7 through the Galois-forced subspace (exact census and attested rank-6 census), and chi(R^7) <= 12 from the annealer",
+   "receipt": "certs/qubit_sqrtT-m4-lower-5.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_sqrtt_galois_census.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.02,
+    "wall_clock_hours": 0.01,
+    "runs": 3,
+    "hardware": "Apple silicon laptop (shared, load 70), three census runs of 25 s each at m = 4 and 5",
+    "llm": [
+     {
+      "model": "claude-fable-5-1",
+      "role": "found the forced-subspace reduction, wrote the census and the certificate"
+     }
+    ]
+   }
+  },
+  {
    "slug": "qubit_sqrtT-m4-upper-5",
    "file": "bounds/qubit_sqrtT-m4-upper-5.json",
    "orbit": "qubit_sqrtT",
@@ -9458,6 +9663,289 @@
     "wall_clock_hours": 0.001,
     "runs": 1,
     "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "qubit_sqrtT-m5-lower-6",
+   "file": "bounds/qubit_sqrtT-m5-lower-6.json",
+   "orbit": "qubit_sqrtT",
+   "m": 5,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-10-23",
+   "author": "Vincent Russo",
+   "reference": "this repository (stabrank-research, round 33)",
+   "method": "exact residue census of all 2,423,520 five-qubit stabilizer states modulo the Galois-forced subspace V4: no state inside V4 and no class of five with parallel residues",
+   "pull_request": 189,
+   "merge_commit": "68e582eb026329fdea029935db0edc444c4792d2",
+   "merge_date": "2026-10-24",
+   "added_commit": "e2ff283573744c9c5195cfc69240298b45278563",
+   "added_date": "2026-10-24",
+   "added_subject": "sqrt(T): chi(R^4) = 5, chi(R^5) = 6, chi(R^6) >= 7 through the Galois-forced subspace (exact census and attested rank-6 census), and chi(R^7) <= 12 from the annealer",
+   "receipt": "certs/qubit_sqrtT-m5-lower-6.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_sqrtt_galois_census.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.02,
+    "wall_clock_hours": 0.01,
+    "runs": 3,
+    "hardware": "Apple silicon laptop (shared, load 70), three census runs of 25 s each at m = 4 and 5",
+    "llm": [
+     {
+      "model": "claude-fable-5-1",
+      "role": "found the forced-subspace reduction, wrote the census and the certificate"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "qubit_sqrtT-m5-upper-6",
+   "file": "bounds/qubit_sqrtT-m5-upper-6.json",
+   "orbit": "qubit_sqrtT",
+   "m": 5,
+   "direction": "upper",
+   "rank": 6,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-10-23",
+   "author": "Vincent Russo",
+   "reference": "this repository (stabrank-research, round 33)",
+   "method": "by hand: the six product stabilizer states |0>^5, |1>^5, |+>^5, |->^5, |+i>^5, |-i>^5 span Sym^5(C^2); coefficients solved exactly in Q(zeta_16)",
+   "pull_request": 189,
+   "merge_commit": "68e582eb026329fdea029935db0edc444c4792d2",
+   "merge_date": "2026-10-24",
+   "added_commit": "e2ff283573744c9c5195cfc69240298b45278563",
+   "added_date": "2026-10-24",
+   "added_subject": "sqrt(T): chi(R^4) = 5, chi(R^5) = 6, chi(R^6) >= 7 through the Galois-forced subspace (exact census and attested rank-6 census), and chi(R^7) <= 12 from the annealer",
+   "receipt": "certs/qubit_sqrtT-m5-upper-6.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "qubit_sqrtT-m6-lower-6",
+   "file": "bounds/qubit_sqrtT-m6-lower-6.json",
+   "orbit": "qubit_sqrtT",
+   "m": 6,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-10-23",
+   "author": "Vincent Russo",
+   "reference": "this repository (stabrank-research, round 33)",
+   "method": "projection monotonicity applied to the exact rank-5 exclusion at m=5",
+   "pull_request": 189,
+   "merge_commit": "68e582eb026329fdea029935db0edc444c4792d2",
+   "merge_date": "2026-10-24",
+   "added_commit": "e2ff283573744c9c5195cfc69240298b45278563",
+   "added_date": "2026-10-24",
+   "added_subject": "sqrt(T): chi(R^4) = 5, chi(R^5) = 6, chi(R^6) >= 7 through the Galois-forced subspace (exact census and attested rank-6 census), and chi(R^7) <= 12 from the annealer",
+   "receipt": "certs/qubit_sqrtT-m6-lower-6.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_sqrtt_galois_census.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.02,
+    "wall_clock_hours": 0.01,
+    "runs": 3,
+    "hardware": "Apple silicon laptop (shared, load 70), three census runs of 25 s each at m = 4 and 5",
+    "llm": [
+     {
+      "model": "claude-fable-5-1",
+      "role": "found the forced-subspace reduction, wrote the census and the certificate"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "qubit_sqrtT-m6-lower-7",
+   "file": "bounds/qubit_sqrtT-m6-lower-7.json",
+   "orbit": "qubit_sqrtT",
+   "m": 6,
+   "direction": "lower",
+   "rank": 7,
+   "tier": "attested",
+   "ok": true,
+   "date": "2026-10-23",
+   "author": "Vincent Russo",
+   "reference": "this repository (stabrank-research, round 33)",
+   "method": "slice-and-lift from the complete rank-6 census of |sqrtT>^5 through the Galois-forced subspace: no six-term decomposition of |sqrtT>^5 lifts to six copies",
+   "pull_request": 189,
+   "merge_commit": "68e582eb026329fdea029935db0edc444c4792d2",
+   "merge_date": "2026-10-24",
+   "added_commit": "e2ff283573744c9c5195cfc69240298b45278563",
+   "added_date": "2026-10-24",
+   "added_subject": "sqrt(T): chi(R^4) = 5, chi(R^5) = 6, chi(R^6) >= 7 through the Galois-forced subspace (exact census and attested rank-6 census), and chi(R^7) <= 12 from the annealer",
+   "receipt": "certs/qubit_sqrtT-m6-lower-7.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_sqrtt_m6_rank6_attested.py",
+   "certificate_budget_s": 3600,
+   "certificate_attested": {
+    "batches": "research/sqrtt_m5_rank6/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 46.3,
+    "hardware": "Perlmutter CPU node (two AMD EPYC 7763, 128 worker processes), NERSC job 60159879, 2026-10-23 16:04 to 16:41 UTC; the representatives stage single-threaded (846 s), the pivot census 46.1 CPU-h over 128 workers (about 23 min wall)",
+    "note": "The complete list of six-term stabilizer decompositions of |sqrtT>^5 lives in the stored batch outputs under research/sqrtt_m5_rank6/results/: for each of the 8,585 orbit representatives of the five-qubit stabilizer states under S_5 x <S^(x)5>, the residue classes modulo V4 + span(pivot) under two primes and every class that could carry a decomposition (one candidate set in all, the 18 symmetric states). The certificate re-enumerates the dictionary and checks its hash, verifies that the stored pivots meet every orbit exactly once, re-runs two blocks from scratch (seed printed) and compares them byte for byte, re-decides the candidate set exactly over Q(zeta_16) (3,375 decompositions, their exact coefficients), closes the list under the group, and runs the lift to six copies in full; completeness rests on the stored outputs and on research/sqrtt_m5_rank6/census.py, which regenerates any block (census.py run 5 OUT --pivots ...).",
+    "total": 859
+   },
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 47.0,
+    "wall_clock_hours": 0.7,
+    "runs": 1,
+    "hardware": "Perlmutter CPU node, 128 workers (job 60159879); controls and the collection and lift stages on an Apple silicon laptop",
+    "llm": [
+     {
+      "model": "claude-fable-5-1",
+      "role": "designed the plane census and the lift, wrote the runner and the certificate"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "qubit_sqrtT-m6-upper-12",
+   "file": "bounds/qubit_sqrtT-m6-upper-12.json",
+   "orbit": "qubit_sqrtT",
+   "m": 6,
+   "direction": "upper",
+   "rank": 12,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-10-23",
+   "author": "this repository",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "method": "structured construction",
+   "pull_request": 189,
+   "merge_commit": "68e582eb026329fdea029935db0edc444c4792d2",
+   "merge_date": "2026-10-24",
+   "added_commit": "e2ff283573744c9c5195cfc69240298b45278563",
+   "added_date": "2026-10-24",
+   "added_subject": "sqrt(T): chi(R^4) = 5, chi(R^5) = 6, chi(R^6) >= 7 through the Galois-forced subspace (exact census and attested rank-6 census), and chi(R^7) <= 12 from the annealer",
+   "receipt": "certs/qubit_sqrtT-m6-upper-12.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "qubit_sqrtT-m7-lower-7",
+   "file": "bounds/qubit_sqrtT-m7-lower-7.json",
+   "orbit": "qubit_sqrtT",
+   "m": 7,
+   "direction": "lower",
+   "rank": 7,
+   "tier": "attested",
+   "ok": true,
+   "date": "2026-10-23",
+   "author": "Vincent Russo",
+   "reference": "this repository (stabrank-research, round 33)",
+   "method": "projection monotonicity applied to the attested slice-and-lift bound chi(|sqrtT>^6) >= 7",
+   "pull_request": 189,
+   "merge_commit": "68e582eb026329fdea029935db0edc444c4792d2",
+   "merge_date": "2026-10-24",
+   "added_commit": "e2ff283573744c9c5195cfc69240298b45278563",
+   "added_date": "2026-10-24",
+   "added_subject": "sqrt(T): chi(R^4) = 5, chi(R^5) = 6, chi(R^6) >= 7 through the Galois-forced subspace (exact census and attested rank-6 census), and chi(R^7) <= 12 from the annealer",
+   "receipt": "certs/qubit_sqrtT-m7-lower-7.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_sqrtt_m6_rank6_attested.py",
+   "certificate_budget_s": 3600,
+   "certificate_attested": {
+    "batches": "research/sqrtt_m5_rank6/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 46.3,
+    "hardware": "Perlmutter CPU node (two AMD EPYC 7763, 128 worker processes), NERSC job 60159879, 2026-10-23 16:04 to 16:41 UTC; the representatives stage single-threaded (846 s), the pivot census 46.1 CPU-h over 128 workers (about 23 min wall)",
+    "note": "The complete list of six-term stabilizer decompositions of |sqrtT>^5 lives in the stored batch outputs under research/sqrtt_m5_rank6/results/: for each of the 8,585 orbit representatives of the five-qubit stabilizer states under S_5 x <S^(x)5>, the residue classes modulo V4 + span(pivot) under two primes and every class that could carry a decomposition (one candidate set in all, the 18 symmetric states). The certificate re-enumerates the dictionary and checks its hash, verifies that the stored pivots meet every orbit exactly once, re-runs two blocks from scratch (seed printed) and compares them byte for byte, re-decides the candidate set exactly over Q(zeta_16) (3,375 decompositions, their exact coefficients), closes the list under the group, and runs the lift to six copies in full; completeness rests on the stored outputs and on research/sqrtt_m5_rank6/census.py, which regenerates any block (census.py run 5 OUT --pivots ...).",
+    "total": 859
+   },
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond the m = 6 certificate, which prints this line from the same computation"
+   }
+  },
+  {
+   "slug": "qubit_sqrtT-m7-upper-12",
+   "file": "bounds/qubit_sqrtT-m7-upper-12.json",
+   "orbit": "qubit_sqrtT",
+   "m": 7,
+   "direction": "upper",
+   "rank": 12,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-10-23",
+   "author": "Vincent Russo",
+   "reference": "stabrank autoresearch/run.py on Perlmutter (round 33 of stabrank-research, job 60161156)",
+   "method": "simulated annealing at rank 12 (8 chains, 8000 iterations per temperature, cooling 0.995), then exact refit",
+   "pull_request": 189,
+   "merge_commit": "68e582eb026329fdea029935db0edc444c4792d2",
+   "merge_date": "2026-10-24",
+   "added_commit": "e2ff283573744c9c5195cfc69240298b45278563",
+   "added_date": "2026-10-24",
+   "added_subject": "sqrt(T): chi(R^4) = 5, chi(R^5) = 6, chi(R^6) >= 7 through the Galois-forced subspace (exact census and attested rank-6 census), and chi(R^7) <= 12 from the annealer",
+   "receipt": "certs/qubit_sqrtT-m7-upper-12.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 22.7452,
+    "wall_clock_hours": 8.5804,
+    "runs": 37,
+    "hardware": "x86_64 Linux, 256 cores",
+    "llm": [
+     {
+      "model": "claude-fable-5-1",
+      "role": "drove the search"
+     }
+    ]
    }
   }
  ]
