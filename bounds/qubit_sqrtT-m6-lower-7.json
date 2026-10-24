@@ -1,0 +1,41 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_sqrtT",
+  "m": 6,
+  "direction": "lower",
+  "rank": 7,
+  "certificate": {
+    "script": "verify_challenge/cert_sqrtt_m6_rank6_attested.py",
+    "expect": "CERTIFIED chi(qubit_sqrtT^6) >= 7",
+    "budget_s": 3600,
+    "attested": {
+      "batches": "research/sqrtt_m5_rank6/batch_manifest.json",
+      "recomputed": 2,
+      "compute_hours": 46.3,
+      "hardware": "Perlmutter CPU node (two AMD EPYC 7763, 128 worker processes), NERSC job 60159879, 2026-10-23 16:04 to 16:41 UTC; the representatives stage single-threaded (846 s), the pivot census 46.1 CPU-h over 128 workers (about 23 min wall)",
+      "note": "The complete list of six-term stabilizer decompositions of |sqrtT>^5 lives in the stored batch outputs under research/sqrtt_m5_rank6/results/: for each of the 8,585 orbit representatives of the five-qubit stabilizer states under S_5 x <S^(x)5>, the residue classes modulo V4 + span(pivot) under two primes and every class that could carry a decomposition (one candidate set in all, the 18 symmetric states). The certificate re-enumerates the dictionary and checks its hash, verifies that the stored pivots meet every orbit exactly once, re-runs two blocks from scratch (seed printed) and compares them byte for byte, re-decides the candidate set exactly over Q(zeta_16) (3,375 decompositions, their exact coefficients), closes the list under the group, and runs the lift to six copies in full; completeness rests on the stored outputs and on research/sqrtt_m5_rank6/census.py, which regenerates any block (census.py run 5 OUT --pivots ...)."
+    }
+  },
+  "provenance": {
+    "author": "Vincent Russo",
+    "reference": "this repository (stabrank-research, round 33)",
+    "method": "slice-and-lift from the complete rank-6 census of |sqrtT>^5 through the Galois-forced subspace: no six-term decomposition of |sqrtT>^5 lifts to six copies",
+    "date": "2026-10-23",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 47.0,
+      "wall_clock_hours": 0.7,
+      "runs": 1,
+      "hardware": "Perlmutter CPU node, 128 workers (job 60159879); controls and the collection and lift stages on an Apple silicon laptop",
+      "llm": [
+        {
+          "model": "claude-fable-5-1",
+          "role": "designed the plane census and the lift, wrote the runner and the certificate"
+        }
+      ]
+    }
+  },
+  "notes": "Every stabilizer decomposition of |sqrtT>^m has a span containing the four-dimensional Galois-forced subspace V4 (cert_sqrtt_galois.py), and chi(|sqrtT>^5) = 6 exactly (qubit_sqrtT-m5-lower-6.json). Six terms at m = 5 are therefore independent with residues modulo V4 spanning a plane, and pivoting on one term reduces the census to residue classes modulo V4 + span(pivot), computed exactly modulo two primes with every candidate class re-decided over Q(zeta_16). Over all 8,585 orbit representatives under the qubit permutations and the diagonal Clifford S^(x)5 (which maps the set of decompositions to itself through the Galois automorphism zeta -> zeta^13), the only candidate set is the 18 permutation-symmetric five-qubit stabilizer states, so every six-term decomposition of |sqrtT>^5 lies inside Sym^5: exactly 3,375 of them, 852 orbits. Both computational slices of |sqrtT>^6 are |sqrtT>^5 up to the scalar zeta, so a six-term decomposition of |sqrtT>^6 would slice to two six-term decompositions of |sqrtT>^5 related term by term by a Pauli and a fourth root of unity; the lift searches every pair in the complete list and finds none. Hence chi(|sqrtT>^6) >= 7, and the cell is 7 <= chi <= 12 (qubit_sqrtT-m6-upper-12.json). The enumeration was not re-run under the budget: it is attested by the stored block outputs and the committed runner; the certificate re-runs two blocks from a printed seed, checks the orbit coverage of the stored pivots, and runs the exact collection and the lift in full. chi <= 7 at this cell would beat the published exponent 1/2."
+}

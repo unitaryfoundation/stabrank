@@ -277,7 +277,9 @@ NEW_FILES = sorted(os.path.basename(p)[:-5] for pat in ("CS-*.json", "qubit_sqrt
                    for p in glob.glob(os.path.join(ROOT, "bounds", pat)))
 CELLS = {("CS", 1): (2, 2), ("CS", 2): (3, 3), ("CS", 3): (4, 6),
          ("qubit_sqrtT", 1): (2, 2), ("qubit_sqrtT", 2): (3, 3),
-         ("qubit_sqrtT", 3): (4, 4), ("qubit_sqrtT", 4): (4, 5)}
+         ("qubit_sqrtT", 3): (4, 4), ("qubit_sqrtT", 4): (5, 5),
+         ("qubit_sqrtT", 5): (6, 6), ("qubit_sqrtT", 6): (7, 12),
+         ("qubit_sqrtT", 7): (7, 12)}
 
 
 def test_new_bound_files_exist():
@@ -286,7 +288,10 @@ def test_new_bound_files_exist():
         "CS-m3-lower-3", "CS-m3-lower-4", "CS-m3-upper-6",
         "qubit_sqrtT-m1-lower-2", "qubit_sqrtT-m1-upper-2", "qubit_sqrtT-m2-lower-3",
         "qubit_sqrtT-m2-upper-3", "qubit_sqrtT-m3-lower-4", "qubit_sqrtT-m3-upper-4",
-        "qubit_sqrtT-m4-lower-4", "qubit_sqrtT-m4-upper-5"]
+        "qubit_sqrtT-m4-lower-4", "qubit_sqrtT-m4-lower-5", "qubit_sqrtT-m4-upper-5",
+        "qubit_sqrtT-m5-lower-6", "qubit_sqrtT-m5-upper-6", "qubit_sqrtT-m6-lower-6",
+        "qubit_sqrtT-m6-lower-7", "qubit_sqrtT-m6-upper-12", "qubit_sqrtT-m7-lower-7",
+        "qubit_sqrtT-m7-upper-12"]
 
 
 @pytest.mark.parametrize("name", NEW_FILES)
@@ -339,7 +344,9 @@ def test_new_certificate_claims_match(name):
     assert (f'print("{expect}")' in src
             or (expect.startswith("CERTIFIED chi(qubit_sqrtT^")
                 and 'print(f"CERTIFIED chi(qubit_sqrtT^{m}) >= {r}")' in src))
-    assert cert.get("exact", False) == (cert["script"] != "verify_challenge/cert_cs_m3_lift.py")
+    # exact everywhere except the two certificates whose completeness rests on a search or a stored enumeration
+    assert cert.get("exact", False) == (cert["script"] not in (
+        "verify_challenge/cert_cs_m3_lift.py", "verify_challenge/cert_sqrtt_m6_rank6_attested.py"))
 
 
 def test_cs_m_cap():
