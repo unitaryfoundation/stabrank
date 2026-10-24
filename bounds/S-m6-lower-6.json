@@ -1,0 +1,41 @@
+{
+  "schema_version": "0.1",
+  "orbit": "S",
+  "m": 6,
+  "direction": "lower",
+  "rank": 6,
+  "certificate": {
+    "script": "verify_challenge/cert_s_m5_rank5_attested.py",
+    "budget_s": 3600,
+    "attested": {
+      "batches": "research/s5_rank5/batch_manifest.json",
+      "recomputed": 3,
+      "compute_hours": 1700.0,
+      "hardware": "Perlmutter CPU nodes (AMD EPYC 7763, 128 workers per node): the level-3 census in four interactive allocations on 2026-10-23 (jobs 60160192, 60160573, 60170484, 60171488; about 12 node-hours for the kernel-2 pass, 4,096 chunks, 442,623,432 prefixes, 54,157,309,763 candidates decided modulo two primes), the level-5 kappa = 0 lifts (128 chunks, minutes) and the kappa = 1 family brute force (35 bases x 243 ranges, about 2 node-hours); the other stages on an Apple silicon laptop",
+      "note": "Stored outputs: the census (4,096 chunks of 3 or 4 pivot pairs: pairs, covers, prefixes skipped because the third letter lies in span(t, u, a) mod P1, counters), the level-5 kappa = 0 lifts (128 chunks over the 2,574 bases of results/b4_reps_v2.json), and the kappa = 1 family brute force (35 files, 243 first-option ranges each). The certificate verifies every stored output by hash and recomputes in full: letters, symmetry group, pivot pairs, the rank-4 census and its closure (the 2,160 four-term decompositions of |S>^3), the premises chi(S^3) >= 4 and chi(S^5) >= 5 exactly (a decomposition with four or fewer terms fails the run), Theorem F.3 exactly over the three representatives of |S>^4 and the complete four-qutrit letter table, the closure of the stored covers (2,013,120 in 154 orbits, representatives confirmed over Z[omega]), the P2 recheck of every one-prime skip, every level 3 to 4 lift, the 9,936 four-term decompositions of |S>^4, the 756 product-pattern completions, the span scan of all 7,439,040 four-qutrit letters, and the assembly of the 2,609 level-4 bases, then checks that the stored level-5 results cover every base with nothing found. Whole work units re-run from the seed (recomputed = 3): one census chunk with stored covers, re-enumerated with fresh functionals and compared cover for cover and skip for skip, and two kappa = 0 lift chunks; on top, three 100-prefix slices, 120 further bases, and 4 of the 8,505 family ranges. Every modular decision is exact by Hadamard's bound (minors of norm at most 6^6 against P of order 2e9). Completeness rests on the stored outputs and the committed code in research/s5_rank5, which regenerates any unit; its README has the full account."
+    },
+    "expect": "CERTIFIED chi(S^6) >= 6"
+  },
+  "provenance": {
+    "author": "Vincent Russo",
+    "reference": "stabrank-research, round 33 (attacks/round33-strange-rank5)",
+    "date": "2026-10-23",
+    "github": [
+      "vprusso"
+    ],
+    "method": "recursive slice-and-lift over non-minimal covers: every five-term decomposition of |S>^5 is all full, hence a lift of a five-term decomposition of |S>^4 with nonzero coefficients; these are lifts of five-covers of |S>^3 (exact census) or completions of its four-term decompositions; no level-4 base lifts",
+    "compute": {
+      "cpu_hours": 1800.0,
+      "wall_clock_hours": 10.0,
+      "runs": 2,
+      "hardware": "Perlmutter CPU nodes (AMD EPYC 7763) for the census (two passes: kernel 1 abandoned after 1,491 chunks when its one-prime dependency screen was replaced by the two-prime decision, kernel 2 complete), the level-5 lifts and the family brute force; Apple silicon laptop (loaded, load average 70 to 100) for the controls and the other stages",
+      "llm": [
+        {
+          "model": "claude-fable-5-1",
+          "role": "designed, wrote and ran the exclusion, its controls and this certificate"
+        }
+      ]
+    }
+  },
+  "notes": "Projection monotonicity from bounds/S-m5-lower-6.json: a decomposition of |S>^6 with r terms gives one of |S>^5 with at most r terms by fixing 1 qutrit(s) to |1>, so chi(S^6) >= chi(S^5) >= 6. Strict improvement of bounds/S-m6-lower-5.json."
+}
