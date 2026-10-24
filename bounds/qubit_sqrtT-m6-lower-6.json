@@ -1,0 +1,34 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_sqrtT",
+  "m": 6,
+  "direction": "lower",
+  "rank": 6,
+  "certificate": {
+    "script": "verify_challenge/cert_sqrtt_galois_census.py",
+    "expect": "CERTIFIED chi(qubit_sqrtT^6) >= 6",
+    "exact": true
+  },
+  "provenance": {
+    "author": "Vincent Russo",
+    "reference": "this repository (stabrank-research, round 33)",
+    "method": "projection monotonicity applied to the exact rank-5 exclusion at m=5",
+    "date": "2026-10-23",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.02,
+      "wall_clock_hours": 0.01,
+      "runs": 3,
+      "hardware": "Apple silicon laptop (shared, load 70), three census runs of 25 s each at m = 4 and 5",
+      "llm": [
+        {
+          "model": "claude-fable-5-1",
+          "role": "found the forced-subspace reduction, wrote the census and the certificate"
+        }
+      ]
+    }
+  },
+  "notes": "(<0| (x) I)|sqrtT>^6 = 2^{-1/2} |sqrtT>^5 and a computational-basis slice of a stabilizer state is a stabilizer state or zero, so chi(|sqrtT>^6) >= chi(|sqrtT>^5) = 6 (qubit_sqrtT-m5-lower-6.json, exact). First lower bound for this cell; with the product upper bound 12 the cell is 6 <= chi <= 12, and chi <= 7 here would beat the published exponent 1/2 (log_2(7)/6 = 0.4680). The six product states phi^6 span only the hyperplane f(1) = f(5) of Sym^6 and no symmetric six-qubit stabilizer state leaves it, so the symmetric construction that gives the m <= 5 witnesses stops at m = 6."
+}

@@ -1,0 +1,34 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_sqrtT",
+  "m": 4,
+  "direction": "lower",
+  "rank": 5,
+  "certificate": {
+    "script": "verify_challenge/cert_sqrtt_galois_census.py",
+    "expect": "CERTIFIED chi(qubit_sqrtT^4) >= 5",
+    "exact": true
+  },
+  "provenance": {
+    "author": "Vincent Russo",
+    "reference": "this repository (stabrank-research, round 33)",
+    "method": "exact census of the four-qubit stabilizer states inside the Galois-forced subspace V4: three states, of rank 3, so no four terms",
+    "date": "2026-10-23",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.02,
+      "wall_clock_hours": 0.01,
+      "runs": 3,
+      "hardware": "Apple silicon laptop (shared, load 70), three census runs of 25 s each at m = 4 and 5",
+      "llm": [
+        {
+          "model": "claude-fable-5-1",
+          "role": "found the forced-subspace reduction, wrote the census and the certificate"
+        }
+      ]
+    }
+  },
+  "notes": "Galois-forced subspace: by cert_sqrtt_galois.py the span of any exact decomposition of |sqrtT>^m contains the four conjugates t_k = (1, zeta^k)^m, k = 1, 5, 9, 13, independent for m >= 3 (their span is V4), and the target lies in V4. Four terms would have to lie inside V4. The certificate enumerates all 36,720 four-qubit stabilizer states exactly from the verifier's parametrization (count and distinctness checked), computes each residue modulo V4 modulo two primes congruent to 1 mod 16 (zeta mapped to a primitive sixteenth root of unity, a ring homomorphism on Z[zeta]), finds exactly three states in the zero set, taken as the union over the two primes of the states whose residue vanishes mod P (|0000> + i|1111>, the uniform odd-weight state, the odd-weight state with sign -1 on weight 3; the same three follow by hand from f(4) = i f(0) on even weights), and their exact rank over Q(zeta_16) is 3. Every step is exact: integer modular arithmetic for the screen and DomainMatrix ranks in Q(zeta_16) for the decisions, no floating-point margin anywhere. With qubit_sqrtT-m4-upper-5.json the cell is exact, chi(|sqrtT>^4) = 5, gamma 0.5805. Controls in the script: at m = 3 the states inside V4 span it (the known rank 4), and the rank-5 census at m = 4 recovers the five product states of the filed witness in one residue class. About 25 s on a laptop."
+}

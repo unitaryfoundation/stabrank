@@ -1,0 +1,34 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_sqrtT",
+  "m": 5,
+  "direction": "lower",
+  "rank": 6,
+  "certificate": {
+    "script": "verify_challenge/cert_sqrtt_galois_census.py",
+    "expect": "CERTIFIED chi(qubit_sqrtT^5) >= 6",
+    "exact": true
+  },
+  "provenance": {
+    "author": "Vincent Russo",
+    "reference": "this repository (stabrank-research, round 33)",
+    "method": "exact residue census of all 2,423,520 five-qubit stabilizer states modulo the Galois-forced subspace V4: no state inside V4 and no class of five with parallel residues",
+    "date": "2026-10-23",
+    "github": [
+      "vprusso"
+    ],
+    "compute": {
+      "cpu_hours": 0.02,
+      "wall_clock_hours": 0.01,
+      "runs": 3,
+      "hardware": "Apple silicon laptop (shared, load 70), three census runs of 25 s each at m = 4 and 5",
+      "llm": [
+        {
+          "model": "claude-fable-5-1",
+          "role": "found the forced-subspace reduction, wrote the census and the certificate"
+        }
+      ]
+    }
+  },
+  "notes": "Galois-forced subspace: by cert_sqrtt_galois.py the span of any exact decomposition of |sqrtT>^m contains the four conjugates t_k = (1, zeta^k)^m, k = 1, 5, 9, 13, independent for m >= 3 (their span is V4), and the target lies in V4. Five terms with a span containing V4 would be five independent states whose residues modulo V4 are pairwise parallel or zero (or four states inside V4). The certificate enumerates all 2,423,520 five-qubit stabilizer states exactly (count and distinctness checked), computes every residue modulo V4 under two primes congruent to 1 mod 16 with zeta a primitive sixteenth root of unity mod P, and groups the states by the projective key of the residue (first nonzero index and two linear functionals over the pivot entry) under both primes. Parallel residues over Q(zeta) have equal keys mod P unless one vanishes mod P, so every exact five-term decomposition would lie in one class together with the zero set; the zero set, taken as the union over the two primes of the states whose residue vanishes mod P, is empty, and the 2,423,508 classes have at most three members (six classes of size 3), so none exists (a class is examined when its rank modulo either prime is at least 5, which loses nothing since a 5 x 5 minor with entries in {0, +-1, +-i} has norm at most 5^5 < P). Exact throughout: the screen is modular integer arithmetic and the decisions are DomainMatrix ranks in Q(zeta_16); no floating-point margin. With qubit_sqrtT-m5-upper-6.json the cell is exact, chi(|sqrtT>^5) = 6, gamma 0.5170, so the route to an exponent below 1/2 through chi <= 5 at m = 5 is closed; the cells that would beat 1/2 are now chi <= 7 at m = 6, chi <= 11 at m = 7, and chi <= 15 at m = 8. About 25 s on a laptop."
+}
