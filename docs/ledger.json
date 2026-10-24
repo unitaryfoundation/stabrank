@@ -4184,6 +4184,250 @@
     "note": "Stored outputs: the census (4,096 chunks of 3 or 4 pivot pairs: pairs, covers, prefixes skipped because the third letter lies in span(t, u, a) mod P1, counters), the level-5 kappa = 0 lifts (128 chunks over the 2,574 bases of results/b4_reps_v2.json), and the kappa = 1 family brute force (35 files, 243 first-option ranges each). The certificate verifies every stored output by hash and recomputes in full: letters, symmetry group, pivot pairs, the rank-4 census and its closure (the 2,160 four-term decompositions of |S>^3), the premises chi(S^3) >= 4 and chi(S^5) >= 5 exactly (a decomposition with four or fewer terms fails the run), Theorem F.3 exactly over the three representatives of |S>^4 and the complete four-qutrit letter table, the closure of the stored covers (2,013,120 in 154 orbits, representatives confirmed over Z[omega]), the P2 recheck of every one-prime skip, every level 3 to 4 lift, the 9,936 four-term decompositions of |S>^4, the 756 product-pattern completions, the span scan of all 7,439,040 four-qutrit letters, and the assembly of the 2,609 level-4 bases, then checks that the stored level-5 results cover every base with nothing found. Whole work units re-run from the seed (recomputed = 3): one census chunk with stored covers, re-enumerated with fresh functionals and compared cover for cover and skip for skip, and two kappa = 0 lift chunks; on top, three 100-prefix slices, 120 further bases, and 4 of the 8,505 family ranges. Every modular decision is exact by Hadamard's bound (minors of norm at most 6^6 against P of order 2e9). Completeness rests on the stored outputs and the committed code in research/s5_rank5, which regenerates any unit; its README has the full account.",
     "total": 4259
    }
+  },
+  {
+   "slug": "qubit_sqrtT-m4-lower-5",
+   "orbit": "qubit_sqrtT",
+   "m": 4,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-10-23",
+   "author": "Vincent Russo",
+   "github": [
+    "vprusso"
+   ],
+   "method": "exact census of the four-qubit stabilizer states inside the Galois-forced subspace V4: three states, of rank 3, so no four terms",
+   "reference": "this repository (stabrank-research, round 33)",
+   "compute": {
+    "cpu_hours": 0.02,
+    "wall_clock_hours": 0.01,
+    "runs": 3,
+    "hardware": "Apple silicon laptop (shared, load 70), three census runs of 25 s each at m = 4 and 5",
+    "llm": [
+     {
+      "model": "claude-fable-5-1",
+      "role": "found the forced-subspace reduction, wrote the census and the certificate"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_sqrtT-m5-lower-6",
+   "orbit": "qubit_sqrtT",
+   "m": 5,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-10-23",
+   "author": "Vincent Russo",
+   "github": [
+    "vprusso"
+   ],
+   "method": "exact residue census of all 2,423,520 five-qubit stabilizer states modulo the Galois-forced subspace V4: no state inside V4 and no class of five with parallel residues",
+   "reference": "this repository (stabrank-research, round 33)",
+   "compute": {
+    "cpu_hours": 0.02,
+    "wall_clock_hours": 0.01,
+    "runs": 3,
+    "hardware": "Apple silicon laptop (shared, load 70), three census runs of 25 s each at m = 4 and 5",
+    "llm": [
+     {
+      "model": "claude-fable-5-1",
+      "role": "found the forced-subspace reduction, wrote the census and the certificate"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_sqrtT-m5-upper-6",
+   "orbit": "qubit_sqrtT",
+   "m": 5,
+   "direction": "upper",
+   "rank": 6,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.5169925001442313,
+   "date": "2026-10-23",
+   "author": "Vincent Russo",
+   "github": [
+    "vprusso"
+   ],
+   "method": "by hand: the six product stabilizer states |0>^5, |1>^5, |+>^5, |->^5, |+i>^5, |-i>^5 span Sym^5(C^2); coefficients solved exactly in Q(zeta_16)",
+   "reference": "this repository (stabrank-research, round 33)",
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_sqrtT-m6-lower-6",
+   "orbit": "qubit_sqrtT",
+   "m": 6,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-10-23",
+   "author": "Vincent Russo",
+   "github": [
+    "vprusso"
+   ],
+   "method": "projection monotonicity applied to the exact rank-5 exclusion at m=5",
+   "reference": "this repository (stabrank-research, round 33)",
+   "compute": {
+    "cpu_hours": 0.02,
+    "wall_clock_hours": 0.01,
+    "runs": 3,
+    "hardware": "Apple silicon laptop (shared, load 70), three census runs of 25 s each at m = 4 and 5",
+    "llm": [
+     {
+      "model": "claude-fable-5-1",
+      "role": "found the forced-subspace reduction, wrote the census and the certificate"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_sqrtT-m6-lower-7",
+   "orbit": "qubit_sqrtT",
+   "m": 6,
+   "direction": "lower",
+   "rank": 7,
+   "tier": "attested",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-10-23",
+   "author": "Vincent Russo",
+   "github": [
+    "vprusso"
+   ],
+   "method": "slice-and-lift from the complete rank-6 census of |sqrtT>^5 through the Galois-forced subspace: no six-term decomposition of |sqrtT>^5 lifts to six copies",
+   "reference": "this repository (stabrank-research, round 33)",
+   "compute": {
+    "cpu_hours": 47.0,
+    "wall_clock_hours": 0.7,
+    "runs": 1,
+    "hardware": "Perlmutter CPU node, 128 workers (job 60159879); controls and the collection and lift stages on an Apple silicon laptop",
+    "llm": [
+     {
+      "model": "claude-fable-5-1",
+      "role": "designed the plane census and the lift, wrote the runner and the certificate"
+     }
+    ]
+   },
+   "budget_s": 3600,
+   "attested": {
+    "batches": "research/sqrtt_m5_rank6/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 46.3,
+    "hardware": "Perlmutter CPU node (two AMD EPYC 7763, 128 worker processes), NERSC job 60159879, 2026-10-23 16:04 to 16:41 UTC; the representatives stage single-threaded (846 s), the pivot census 46.1 CPU-h over 128 workers (about 23 min wall)",
+    "note": "The complete list of six-term stabilizer decompositions of |sqrtT>^5 lives in the stored batch outputs under research/sqrtt_m5_rank6/results/: for each of the 8,585 orbit representatives of the five-qubit stabilizer states under S_5 x <S^(x)5>, the residue classes modulo V4 + span(pivot) under two primes and every class that could carry a decomposition (one candidate set in all, the 18 symmetric states). The certificate re-enumerates the dictionary and checks its hash, verifies that the stored pivots meet every orbit exactly once, re-runs two blocks from scratch (seed printed) and compares them byte for byte, re-decides the candidate set exactly over Q(zeta_16) (3,375 decompositions, their exact coefficients), closes the list under the group, and runs the lift to six copies in full; completeness rests on the stored outputs and on research/sqrtt_m5_rank6/census.py, which regenerates any block (census.py run 5 OUT --pivots ...).",
+    "total": 859
+   }
+  },
+  {
+   "slug": "qubit_sqrtT-m6-upper-12",
+   "orbit": "qubit_sqrtT",
+   "m": 6,
+   "direction": "upper",
+   "rank": 12,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.5974937501201927,
+   "date": "2026-10-23",
+   "author": "this repository",
+   "github": [
+    "vprusso"
+   ],
+   "method": "structured construction",
+   "reference": "stabrank research/constructions/product_witness.py",
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_sqrtT-m7-lower-7",
+   "orbit": "qubit_sqrtT",
+   "m": 7,
+   "direction": "lower",
+   "rank": 7,
+   "tier": "attested",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-10-23",
+   "author": "Vincent Russo",
+   "github": [
+    "vprusso"
+   ],
+   "method": "projection monotonicity applied to the attested slice-and-lift bound chi(|sqrtT>^6) >= 7",
+   "reference": "this repository (stabrank-research, round 33)",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond the m = 6 certificate, which prints this line from the same computation"
+   },
+   "budget_s": 3600,
+   "attested": {
+    "batches": "research/sqrtt_m5_rank6/batch_manifest.json",
+    "recomputed": 2,
+    "compute_hours": 46.3,
+    "hardware": "Perlmutter CPU node (two AMD EPYC 7763, 128 worker processes), NERSC job 60159879, 2026-10-23 16:04 to 16:41 UTC; the representatives stage single-threaded (846 s), the pivot census 46.1 CPU-h over 128 workers (about 23 min wall)",
+    "note": "The complete list of six-term stabilizer decompositions of |sqrtT>^5 lives in the stored batch outputs under research/sqrtt_m5_rank6/results/: for each of the 8,585 orbit representatives of the five-qubit stabilizer states under S_5 x <S^(x)5>, the residue classes modulo V4 + span(pivot) under two primes and every class that could carry a decomposition (one candidate set in all, the 18 symmetric states). The certificate re-enumerates the dictionary and checks its hash, verifies that the stored pivots meet every orbit exactly once, re-runs two blocks from scratch (seed printed) and compares them byte for byte, re-decides the candidate set exactly over Q(zeta_16) (3,375 decompositions, their exact coefficients), closes the list under the group, and runs the lift to six copies in full; completeness rests on the stored outputs and on research/sqrtt_m5_rank6/census.py, which regenerates any block (census.py run 5 OUT --pivots ...).",
+    "total": 859
+   }
+  },
+  {
+   "slug": "qubit_sqrtT-m7-upper-12",
+   "orbit": "qubit_sqrtT",
+   "m": 7,
+   "direction": "upper",
+   "rank": 12,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.5121375001030223,
+   "date": "2026-10-23",
+   "author": "Vincent Russo",
+   "github": [
+    "vprusso"
+   ],
+   "method": "simulated annealing at rank 12 (8 chains, 8000 iterations per temperature, cooling 0.995), then exact refit",
+   "reference": "stabrank autoresearch/run.py on Perlmutter (round 33 of stabrank-research, job 60161156)",
+   "compute": {
+    "cpu_hours": 22.7452,
+    "wall_clock_hours": 8.5804,
+    "runs": 37,
+    "hardware": "x86_64 Linux, 256 cores",
+    "llm": [
+     {
+      "model": "claude-fable-5-1",
+      "role": "drove the search"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
   }
  ]
 }

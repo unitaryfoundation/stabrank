@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "tier": "verified",
+  "detail": "12 stabilizer terms reproduce |qubit_sqrtT>^{ot 7}, checked symbolically",
+  "gamma": 0.5121375001030223,
+  "content_hash": "4cd801ff368ee351"
+}
