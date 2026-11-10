@@ -5,23 +5,30 @@
   "direction": "lower",
   "rank": 3,
   "certificate": {
-    "script": "verify_challenge/cert_qubit_t_m3_rank2.py",
+    "script": "verify_challenge/cert_qubit_galois_m3_m4.py",
+    "exact": true,
     "expect": "CERTIFIED chi(qubit_T^3) >= 3"
   },
   "provenance": {
-    "author": "this repository",
-    "reference": "stabrank rank_exclusion.py",
-    "method": "exhaustion over all pairs of 3-qubit stabilizer states, via the quotient by the target",
-    "date": "2026-09-16",
+    "author": "we* + @mizopl",
+    "reference": "stabrank verify_challenge",
+    "method": "exact Z[i] codimension-2 Galois quotient over Q(i, sqrt(3)) on all 1,080 3-qubit stabilizer states",
+    "date": "2026-11-10",
     "github": [
-      "vprusso"
+      "mizopl"
     ],
     "compute": {
       "cpu_hours": 0.001,
       "wall_clock_hours": 0.001,
       "runs": 1,
-      "hardware": "Apple silicon laptop"
+      "hardware": "Apple M1 laptop (16 GB)",
+      "llm": [
+        {
+          "model": "gemini",
+          "role": "we* multi-agent algebraic quotient and exact certificate synthesis"
+        }
+      ]
     }
   },
-  "notes": "Pairs with the annealed rank-3 decomposition to settle chi(|T>^3) = 3 exactly. The exclusion is numerical and rests on a margin: the closest any two key-adjacent quotient directions come to parallel is 0.81 against a threshold of 1 - 1e-6. The T-type state at m=2, whose rank-2 decomposition is verified on the board, is the positive control."
+  "notes": "Pairs with the Lean rank-3 upper bound to settle chi(|T>^3) = 3 with zero floating-point margins in either direction. Upgraded from reproduced to verified (exact: true) via the division-free Z[i] codimension-2 Galois quotient modulo P_3 = span_{Q(i)}(A_3, B_3), where (3 + sqrt(3))^3 |T>^3 = A_3 + sqrt(3) B_3 in Z[i]^8 + sqrt(3) Z[i]^8. Across all 1,080 3-qubit stabilizer states, 0 states lie in P_3 and none of the parallel ray groups in Q(i)^8 / P_3 spans P_3. Positive controls at m=2 (3 exact rank-2 decompositions) and m=3 rank 3 (72 exact decompositions) are verified in the same run."
 }

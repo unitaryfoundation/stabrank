@@ -5,17 +5,30 @@
   "direction": "lower",
   "rank": 3,
   "certificate": {
-    "script": "verify_challenge/cert_qubit_rank2.py",
+    "script": "verify_challenge/cert_qubit_galois_m3_m4.py",
+    "exact": true,
     "expect": "CERTIFIED chi(qubit_T^4) >= 3"
   },
   "provenance": {
-    "author": "this repository",
-    "reference": "stabrank PR #18",
-    "method": "exhaustion over all pairs of stabilizer states, via the quotient by the target",
-    "date": "2026-09-12",
+    "author": "we* + @mizopl",
+    "reference": "stabrank verify_challenge",
+    "method": "exact Z[i] codimension-2 Galois quotient over Q(i, sqrt(3)) on all 36,720 4-qubit stabilizer states",
+    "date": "2026-11-10",
     "github": [
-      "vprusso"
-    ]
+      "mizopl"
+    ],
+    "compute": {
+      "cpu_hours": 0.001,
+      "wall_clock_hours": 0.001,
+      "runs": 1,
+      "hardware": "Apple M1 laptop (16 GB)",
+      "llm": [
+        {
+          "model": "gemini",
+          "role": "we* multi-agent algebraic quotient and exact certificate synthesis"
+        }
+      ]
+    }
   },
-  "notes": "Pairs with the rank-3 upper bound to settle this cell at chi = 3 exactly. Closes it as a route to the published exponent log_2(3)/4, which would need rank 2 here. The stabilizer states are enumerated by closing the Clifford orbit of |0...0> rather than from a phase parametrisation, since the verifier's witness format uses w_2 = -1 and so reaches only the real stabilizer states, missing the Y eigenstates; the count is checked against 2^n prod (2^k + 1). The exclusion rests on a margin rather than exact arithmetic: the closest any two candidate directions come to parallel is 0.76 to 0.78 against a threshold of 1 - 1e-6, so no rounding at the 1e-15 level of these inputs can close the gap. The H-type state at m=2 has a known rank-2 decomposition, which the same code finds as a positive control."
+  "notes": "Pairs with the Lean rank-3 upper bound to settle chi(|T>^4) = 3 with zero floating-point margins in either direction. Upgraded from reproduced to verified (exact: true) via the exact Z[i] codimension-2 Galois quotient modulo P_4 = span_{Q(i)}(A_4, B_4) over all 36,720 4-qubit stabilizer states, which also enumerates all 9 exact rank-3 decompositions of |T>^4 in the same pass."
 }

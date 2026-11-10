@@ -5,17 +5,30 @@
   "direction": "lower",
   "rank": 3,
   "certificate": {
-    "script": "verify_challenge/cert_qubit_rank2.py",
+    "script": "verify_challenge/cert_qubit_galois_m3_m4.py",
+    "exact": true,
     "expect": "CERTIFIED chi(qubit_H^3) >= 3"
   },
   "provenance": {
-    "author": "this repository",
-    "reference": "stabrank PR #18",
-    "method": "exhaustion over all pairs of stabilizer states, via the quotient by the target",
-    "date": "2026-09-12",
+    "author": "we* + @mizopl",
+    "reference": "stabrank verify_challenge",
+    "method": "exact Z[i] codimension-2 Galois quotient over Q(i, sqrt(2)) on all 1,080 3-qubit stabilizer states",
+    "date": "2026-11-10",
     "github": [
-      "vprusso"
-    ]
+      "mizopl"
+    ],
+    "compute": {
+      "cpu_hours": 0.001,
+      "wall_clock_hours": 0.001,
+      "runs": 1,
+      "hardware": "Apple M1 laptop (16 GB)",
+      "llm": [
+        {
+          "model": "gemini",
+          "role": "we* multi-agent algebraic quotient and exact certificate synthesis"
+        }
+      ]
+    }
   },
-  "notes": "Pairs with the rank-3 upper bound to settle this cell at chi = 3 exactly. Closes it as a route to the published exponent log_2(3)/4, which would need rank 2 here. The stabilizer states are enumerated by closing the Clifford orbit of |0...0> rather than from a phase parametrisation, since the verifier's witness format uses w_2 = -1 and so reaches only the real stabilizer states, missing the Y eigenstates; the count is checked against 2^n prod (2^k + 1). The exclusion rests on a margin rather than exact arithmetic: the closest any two candidate directions come to parallel is 0.76 to 0.78 against a threshold of 1 - 1e-6, so no rounding at the 1e-15 level of these inputs can close the gap. The H-type state at m=2 has a known rank-2 decomposition, which the same code finds as a positive control."
+  "notes": "Pairs with the rank-3 upper bound to settle this cell at chi = 3 exactly. Upgraded from reproduced (floating-point margin) to verified (exact: true) via the division-free Z[i] Galois quotient q(s) in Z[i]^6 modulo P_3 = span_{Q(i)}(A_3, B_3), where (1 + sqrt(2))^3 |H>^3 = A_3 + sqrt(2) B_3 in Z[i]^8 + sqrt(2) Z[i]^8. All 1,080 3-qubit stabilizer states are generated in exact Z[i] arithmetic from affine subspaces and Z_4 quadratic phase forms; 0 states lie in P_3, and none of the parallel ray groups in Q(i)^8 / P_3 spans both A_3 and B_3. Positive controls at m=2 (1 exact rank-2 decomposition) and m=3 rank 3 (16 exact decompositions) are verified in the same run."
 }
