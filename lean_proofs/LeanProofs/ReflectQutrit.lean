@@ -26,6 +26,7 @@ The generated cell modules (`H3M4StabRank`, `T3M3StabRank`, `T3M4StabRank`,
 -/
 import LeanProofs.ReflectBases
 import LeanProofs.H3Shared
+import LeanProofs.NorrellShared
 import LeanProofs.T3GaloisM
 import LeanProofs.StrangeM2Pointwise
 
@@ -164,6 +165,53 @@ theorem strangeVec_eq_ev (m : ℕ) (idx : Fin (3 ^ m)) :
   rw [ev_unitZ B3 (by norm_num) B3_zero]
   push_cast
   simp only [strangeAmp1'_eq, Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ,
+    Fintype.card_fin]
+
+/-! ### `N` -/
+
+/-- `|N⟩^⊗m` on digit strings, from the one-qutrit amplitude of
+    `NorrellShared`. -/
+noncomputable def norrellVec (m : ℕ) : Fin (3 ^ m) → ℂ :=
+  fun idx => ∏ i, norrellAmp1 (digitsP 3 m idx i)
+
+theorem norrellAmp1_zero :
+    norrellAmp1 (0 : ZMod 3) = (Real.sqrt 2 : ℂ) * (Real.sqrt 3 : ℂ) / 6 := rfl
+theorem norrellAmp1_one :
+    norrellAmp1 (1 : ZMod 3) = (Real.sqrt 2 : ℂ) * (Real.sqrt 3 : ℂ) / 6 := rfl
+theorem norrellAmp1_two :
+    norrellAmp1 (2 : ZMod 3) = -((Real.sqrt 2 : ℂ) * (Real.sqrt 3 : ℂ)) / 3 := rfl
+
+/-- The digit factor of the Norrell state: `1`, `1`, `-2` at `0`, `1`, `2`. -/
+def norZ (v : ZMod 3) : ℤ := if v = 2 then -2 else 1
+
+theorem norZ_zero : norZ (0 : ZMod 3) = 1 := by decide
+theorem norZ_one : norZ (1 : ZMod 3) = 1 := by decide
+theorem norZ_two : norZ (2 : ZMod 3) = -2 := by decide
+
+/-- The one-qutrit amplitude as `(√2 √3 / 6)` times the integer digit factor. -/
+theorem norrellAmp1_eq (v : ZMod 3) :
+    norrellAmp1 v = (Real.sqrt 2 : ℂ) * (Real.sqrt 3 : ℂ) / 6 * ((norZ v : ℤ) : ℂ) := by
+  rcases zmod3_cases v with rfl | rfl | rfl
+  · rw [norrellAmp1_zero, norZ_zero]
+    simp
+  · rw [norrellAmp1_one, norZ_one]
+    simp
+  · rw [norrellAmp1_two, norZ_two]
+    push_cast
+    ring
+
+/-- The product of the Norrell digit factors as an integer vector in `ℤ[ω₃, √3]`. -/
+def tgtN (m : ℕ) (x : Fin m → ZMod 3) : Fin 4 → ℤ := unitZ (∏ i, norZ (x i))
+
+/-- **`|N⟩^⊗m` reflected**: the amplitude is `(√2 √3 / 6)^m` times the evaluation
+    of `tgtN`. -/
+theorem norrellVec_eq_ev (m : ℕ) (idx : Fin (3 ^ m)) :
+    norrellVec m idx =
+      ((Real.sqrt 2 : ℂ) * (Real.sqrt 3 : ℂ) / 6) ^ m * ev B3 (tgtN m (digitsP 3 m idx)) := by
+  unfold norrellVec tgtN
+  rw [ev_unitZ B3 (by norm_num) B3_zero]
+  push_cast
+  simp only [norrellAmp1_eq, Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ,
     Fintype.card_fin]
 
 end StabRank

@@ -62,3 +62,12 @@ import LeanProofs.Stabilizer.Reparam
 import LeanProofs.QutritDict2Keys
 import LeanProofs.QutritDict2
 import LeanProofs.Stabilizer.Covering
+import LeanProofs.QubitHM1StabRank
+import LeanProofs.QubitTM1StabRank
+import LeanProofs.QubitTM7StabRank
+import LeanProofs.QubitTM8StabRank
+import LeanProofs.H3M1StabRank
+import LeanProofs.H3M5StabRank
+import LeanProofs.NorrellM1StabRank
+import LeanProofs.NorrellM5StabRank
+import LeanProofs.M1Lower
