@@ -5,31 +5,25 @@
   "direction": "lower",
   "rank": 5,
   "certificate": {
-    "script": "verify_challenge/cert_qubit_t_m5_rank4_attested.py",
-    "expect": "CERTIFIED chi(qubit_T^5) >= 5",
-    "budget_s": 1800,
-    "attested": {
-      "batches": "research/t5_rank4/batch_manifest.json",
-      "recomputed": 2,
-      "compute_hours": 0.002,
-      "hardware": "Apple M5 Pro laptop (macOS 26.5.1), one core at nice 19 under load from other sessions, 2026-09-24 02:25 UTC; the aggregate's two seeded re-runs (batches 0 and 1) on the same machine at 02:26 UTC",
-      "note": "The exclusion of every rank-4 decomposition of |T>^5 lives in the stored batch outputs under research/t5_rank4/results/ (partition.json over the census covers4.json: the 4,709 full 4-covers of |T>^3 up to the unitary symmetry of |T>^3, 4,697 of distinct independent states and 12 with a repeated state, each matched at the base points 00 and 01 along qubits 1, 2 with every candidate re-decided mod 2013265921 and numerically): 0 hits, 0 refused, 0 undecided. The certificate re-enumerates the census, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/t5_rank4/batch.py, which regenerates any batch (batch.py K)."
-    }
+    "script": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py",
+    "exact": true,
+    "expect": "CERTIFIED chi(qubit_T^5) >= 5"
   },
   "provenance": {
     "author": "this repository",
-    "reference": "stabrank research/t5_rank4",
-    "method": "two-qubit base slice: every rank-4 decomposition of |T>^5 has, along qubits 1, 2 at a base point in {00, 01}, all four terms visible, so its base is a full 4-cover of |T>^3; every such cover is completed slice by slice under the slice structure lemma, modulo 65521 over Q(zeta_24) with exact re-decision",
-    "date": "2026-09-24",
+    "reference": "stabrank verify_challenge",
+    "method": "exact Z[i] 1-pivot codimension-2 Galois quotient on D_3 (1,080 states) + orthogonal Pauli destabilizer basis + 2-qubit slice matching",
+    "date": "2026-11-10",
     "github": [
-      "vprusso"
+      "vprusso",
+      "mizopl"
     ],
     "compute": {
       "cpu_hours": 0.002,
       "wall_clock_hours": 0.002,
       "runs": 1,
-      "hardware": "Apple M5 Pro laptop (macOS 26.5.1), one core at nice 19 under load from other sessions, 2026-09-24 02:25 UTC; the aggregate's two seeded re-runs (batches 0 and 1) on the same machine at 02:26 UTC"
+      "hardware": "Apple M1 laptop (16 GB), single core (7.1 s)"
     }
   },
-  "notes": "Puts the cell at 5 <= chi(T^5) <= 6 (bounds/qubit_T-m5-upper-6.json, Lean tier) and by projection chi(T^6) >= 5. The argument (docs/notes/t5_rank4_exclusion.md) depends on: (1) Fact 1, every term full along every qubit: chi(T^4) = 3, so a one-qubit slice with three visible terms is the unique rank-3 decomposition of |T>^4 (qubit_T_m4_rank3.json, completeness up to symmetry assumed as in qubit_T-m5-lower-4.json) with a local fourth term, and the residual tables of research/constructions/two_qubit_slice.py for it have no exact and no stabilizer combination at the slice ratio tau^{+-1}, tau = e^{i pi/4} tan(beta) (recomputed, results/tables.json). (2) Fact 2, at most one absent term at a two-qubit point: chi(T^3) = 3, bounds/qubit_T-m3-lower-3.json. (3) The flat lemma (every term a plane or a diagonal line, at most one line per diagonal) and the base point: all four terms visible at 00 or 01; one line on each diagonal is excluded by the same tables for the 8 rank-3 decompositions of |T>^3 at tau^{+-2} (0 exact combinations). (4) The slice structure lemma; the matcher assumes nothing beyond the base point. (5) The census covers4.json (CoverEnumerator.covers(4) at orbit qubit_T plus the 12 multisets T + (x,), x in T, over the 4 full 3-covers; span(T) holds no further state, so no dependent 4-set and no cancel-at-base multiset exists), equal up to symmetry to the full covers among the numeric enumerator's 5,205 rank-4 tuples (4,697 in 2,372 orbits) and re-enumerated by the certificate. (6) Exactness: amplitudes in Q(zeta_24), both primes 1 mod 24, modular supersets, every candidate and hit re-decided mod 2013265921 and in floating point; an undecidable block or residual raises and fails the batch (none did). (7) Controls (results/control_*.json): the rank-6 witness from its all-visible pair bases (kernel and reference), planted four-term instances of five kinds, the rank-3 decomposition of |T>^4 along a qubit pair, the census against the numeric enumerator."
+  "notes": "Upgraded from attested (6 stored batch files under research/t5_rank4/) to a self-contained verified certificate (exact: true, 7.1 s on a single core under the default budget, zero external files, zero floating-point arithmetic). Slicing along qubits 1, 2: (1) Fact 1 (every term full along every qubit) is verified in exact Z[i] arithmetic on the unique rank-3 decomposition orbit of |T>^4, whose 262,144-entry residual tables at tau^{+-1} have 0 exact and 0 stabilizer hits; (2) Fact 2 (at most 1 absent term at any 2-qubit point) holds from chi(T^3) = 3; (3) the flat lemma and exact integer residual tables on the 4 G_3-orbits of rank-3 decompositions of |T>^3 at tau^{+-2} (0 exact hits) exclude any B-line term (n_B = 0), forcing all 4 terms to be visible at x_0 = 00; (4) the 1-pivot codimension-2 Galois quotient on D_3 (1,080 states, |G_3| = 162) enumerates all 2,372 Kind-A independent 4-cover orbits, 0 Kind-B dependent 4-cover orbits (max parallel ray group in Q(i)^8 / P_3 is 3 < 4), and 8 Kind-C repeated-state 4-cover orbits; (5) every Kind-C orbit is eliminated in exact Z[i] arithmetic by projecting its 1,089 slice-11 residuals onto the 8 orthogonal Pauli classes {P_k u_blk}_{k=0}^7 (minimum non-zero Pauli support is 4 > 2); (6) exact integer meet-in-the-middle slice matching across x in {01, 10, 11} leaves 196 slice-01 survivors and 0 5-qubit survivors."
 }

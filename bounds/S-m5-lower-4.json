@@ -5,23 +5,25 @@
   "direction": "lower",
   "rank": 4,
   "certificate": {
-    "script": "verify_challenge/cert_s_m5_from_m3.py",
+    "script": "verify_challenge/cert_qutrit_galois_m3_m5.py",
+    "exact": true,
     "expect": "CERTIFIED chi(S^5) >= 4"
   },
   "provenance": {
-    "author": "this repository",
-    "reference": "stabrank rank_exclusion.py",
-    "method": "projection monotonicity applied to an exhaustive exclusion at lower m",
-    "date": "2026-09-18",
+    "author": "this repository; exact Z[omega_3] certificate by @mizopl",
+    "reference": "stabrank verify_challenge",
+    "method": "projection monotonicity applied twice to the exact Z[omega_3] exclusion chi(S^3) >= 4",
+    "date": "2026-11-10",
     "github": [
-      "vprusso"
+      "vprusso",
+      "mizopl"
     ],
     "compute": {
-      "cpu_hours": 0.01,
-      "wall_clock_hours": 0.005,
+      "cpu_hours": 0.002,
+      "wall_clock_hours": 0.002,
       "runs": 1,
-      "hardware": "Apple silicon laptop"
+      "hardware": "Apple silicon laptop, one core"
     }
   },
-  "notes": "Projection monotonicity from the m=3 rank-3 exclusion, re-run inside the certificate. Puts the new cell at 4 <= chi <= 8."
+  "notes": "Upgrades S-m5-lower-4 from reproduced to verified (exact: true) via projection monotonicity (<11| (x) I^3)|S>^5 = (1/2)|S>^3 applied to the exact Z[omega_3] exclusion chi(S^3) >= 4."
 }
