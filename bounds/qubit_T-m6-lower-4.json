@@ -10,19 +10,24 @@
     "expect": "CERTIFIED chi(qubit_T^6) >= 4"
   },
   "provenance": {
-    "author": "this repository",
+    "author": "we* + @mizopl",
     "reference": "stabrank verify_challenge",
     "method": "projection monotonicity applied to the exact Z[i] slice-and-lift bound chi(T^5) >= 4",
     "date": "2026-11-10",
     "github": [
-      "vprusso",
       "mizopl"
     ],
     "compute": {
       "cpu_hours": 0.001,
       "wall_clock_hours": 0.001,
       "runs": 1,
-      "hardware": "Apple M1 laptop (16 GB), single core"
+      "hardware": "Apple M1 laptop (16 GB)",
+      "llm": [
+        {
+          "model": "gemini",
+          "role": "we* multi-agent algebraic quotient and exact certificate synthesis"
+        }
+      ]
     }
   },
   "notes": "Projection monotonicity chi(psi (x) phi) >= chi(psi) (Lean: qubit_t_stabRankP_mono in LeanProofs/QubitProjection.lean) applied to the exact Z[i] slice-and-lift bound chi(T^5) >= 4, re-run inside verify_challenge/cert_qubit_galois_m3_m4.py."

@@ -5,7 +5,7 @@
   "direction": "upper",
   "rank": 9,
   "provenance": {
-    "author": "this repository",
+    "author": "we* + @mizopl",
     "reference": "stabrank bounds/CS-m2-upper-3.json",
     "method": "tensor square of the exact rank-3 witness for |CS>^2",
     "date": "2026-11-10",
@@ -16,7 +16,13 @@
       "cpu_hours": 0.001,
       "wall_clock_hours": 0.001,
       "runs": 1,
-      "hardware": "Apple M1 laptop (16 GB), single core"
+      "hardware": "Apple M1 laptop (16 GB)",
+      "llm": [
+        {
+          "model": "gemini",
+          "role": "we* multi-agent algebraic quotient and exact certificate synthesis"
+        }
+      ]
     }
   },
   "notes": "chi(|CS>^4) <= chi(|CS>^2)^2 = 3^2 = 9: the nine-term witness is the pairwise tensor product of the three 4-qubit stabilizer terms of bounds/CS-m2-upper-3.json (|0000>, |+i>^{ot 4}, and (CZ (x) CZ)|-i>^{ot 4}), giving implied per-copy exponent log_2(9)/4 = log_2(3)/2 = 0.7925. Together with bounds/CS-m4-lower-4.json this places the m = 4 cell at 4 <= chi(|CS>^4) <= 9.",
