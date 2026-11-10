@@ -230,13 +230,14 @@ def make_orbit(orbit, m):
                     tgt=tgt, scalar_rat=scalar_rat, th=th, th_pow=th_pow, atoms=atoms,
                     quad=quad, stat="count0")
     if orbit == "H3":
-        # generators: w (omega_3), s3, th (= N = sqrt(3 - sqrt 3))
-        names = ["w", "s3", "th"]
-        R = Ring(names, [(2, {(0, 0, 0): Fraction(-1), (1, 0, 0): Fraction(-1)}),
-                         (2, {(0, 0, 0): Fraction(3)}),
-                         (2, {(0, 0, 0): Fraction(3), (0, 1, 0): Fraction(-1)})])
-        w, s3, th = (R.gen(k) for k in range(3))
-        basis = [(0, 0, 0), (1, 0, 0), (0, 1, 0), (1, 1, 0)]
+        # generators: w (omega_3), s3, th (= N = sqrt(3 - sqrt 3)), s2
+        names = ["w", "s3", "th", "s2"]
+        R = Ring(names, [(2, {(0, 0, 0, 0): Fraction(-1), (1, 0, 0, 0): Fraction(-1)}),
+                         (2, {(0, 0, 0, 0): Fraction(3)}),
+                         (2, {(0, 0, 0, 0): Fraction(3), (0, 1, 0, 0): Fraction(-1)}),
+                         (2, {(0, 0, 0, 0): Fraction(2)})])
+        w, s3, th, s2 = (R.gen(k) for k in range(4))
+        basis = [(0, 0, 0, 0), (1, 0, 0, 0), (0, 1, 0, 0), (1, 1, 0, 0)]
         lean = dict(module_prefix="H3", shared="ReflectQutrit", basis="B3",
                     zeta_mat="Mw3", zeta_rep="Mw3_represents", target="h3Vec",
                     target_ev="h3Vec_eq_ev", tgt="tgtH3", dim=4, theorem_stem="h3")
@@ -249,7 +250,7 @@ def make_orbit(orbit, m):
                          R.pow(R.add(R.const(3), R.neg(s3)), h))
         # i = (2w + 1)/sqrt3 = (2w+1) s3 / 3
         i_elt = R.scale(R.mul(R.add(R.scale(w, 2), R.const(1)), s3), Fraction(1, 3))
-        atoms = {"sqrt3": s3, "I": i_elt}
+        atoms = {"sqrt2": s2, "sqrt3": s3, "I": i_elt}
         return dict(R=R, p=3, zeta=w, sqrt_p=s3, basis=basis, lean=lean, tgt=tgt,
                     scalar_rat=scalar_rat, th=th, th_pow=m % 2, atoms=atoms,
                     quad=("s3", 1, 3), stat="count0")
@@ -267,7 +268,8 @@ def make_orbit(orbit, m):
         # = (s3/3)^m, whose inverse in the ring is s3^m
         def tgt(d):
             return R.pow(w, d)
-        atoms = {"sqrt3": s3}
+        i_elt = R.scale(R.mul(R.add(R.scale(R.pow(w, 3), 2), R.const(1)), s3), Fraction(1, 3))
+        atoms = {"sqrt3": s3, "I": i_elt}
         return dict(R=R, p=3, zeta=R.pow(w, 3), sqrt_p=s3, basis=basis, lean=lean,
                     tgt=tgt, scalar_inv=R.pow(s3, m), th=None, th_pow=0, atoms=atoms,
                     quad=None, stat="digitSum", w9=w)
@@ -296,6 +298,32 @@ def make_orbit(orbit, m):
         atoms = {"sqrt2": s2, "sqrt3": s3, "I": i_elt}
         return dict(R=R, p=3, zeta=w, sqrt_p=s3, basis=basis, lean=lean, tgt=tgt,
                     scalar_inv=R.pow(s2, m), th=None, th_pow=0, atoms=atoms,
+                    quad=None, stat="digits")
+    if orbit == "N":
+        # generators: w (omega_3), s2, s3. The coefficients of the Norrell cells
+        # are read in ℚ(ω₃, √2, √3) and land in ℤ[ω₃, √3] once the √3^k term
+        # normalisation and the (√2 √3 / 6)^m of the target are folded in.
+        names = ["w", "s2", "s3"]
+        R = Ring(names, [(2, {(0, 0, 0): Fraction(-1), (1, 0, 0): Fraction(-1)}),
+                         (2, {(0, 0, 0): Fraction(2)}),
+                         (2, {(0, 0, 0): Fraction(3)})])
+        w, s2, s3 = (R.gen(k) for k in range(3))
+        basis = [(0, 0, 0), (1, 0, 0), (0, 0, 1), (1, 0, 1)]
+        lean = dict(module_prefix="Norrell", shared="ReflectQutrit", basis="B3",
+                    zeta_mat="Mw3", zeta_rep="Mw3_represents", target="norrellVec",
+                    target_ev="norrellVec_eq_ev", tgt="tgtN", dim=4, theorem_stem="norrell")
+        # amplitude at a digit string: (sqrt2 * sqrt3 / 6)^m times the product
+        # of the digit factors (1, 1, -2 at 0, 1, 2); the scalar's inverse in R
+        # is (s2 * s3)^m since (s2 * s3 / 6) * (s2 * s3) = 1.
+        def tgt(x):
+            fac = 1
+            for d in x:
+                fac *= {0: 1, 1: 1, 2: -2}[d]
+            return R.const(fac)
+        i_elt = R.scale(R.mul(R.add(R.scale(w, 2), R.const(1)), s3), Fraction(1, 3))
+        atoms = {"sqrt2": s2, "sqrt3": s3, "I": i_elt}
+        return dict(R=R, p=3, zeta=w, sqrt_p=s3, basis=basis, lean=lean, tgt=tgt,
+                    scalar_inv=R.pow(R.mul(s2, s3), m), th=None, th_pow=0, atoms=atoms,
                     quad=None, stat="digits")
     raise ValueError(f"unsupported orbit {orbit!r}")
 
@@ -488,6 +516,15 @@ class CoeffParser:
                     r = self.sqrt_quadratic(R.mul(rad, inv), target / self.numeric(self.orb["th"]))
                     if r is not None:
                         return R.mul(r, self.orb["th"])
+                    if "I" in self.orb["atoms"]:
+                        r = self.sqrt_quadratic(R.neg(R.mul(rad, inv)),
+                                                target / (sp.I * self.numeric(self.orb["th"])))
+                        if r is not None:
+                            return R.mul(self.orb["atoms"]["I"], R.mul(r, self.orb["th"]))
+                if "I" in self.orb["atoms"]:
+                    r = self.sqrt_quadratic(R.neg(rad), target / sp.I)
+                    if r is not None:
+                        return R.mul(self.orb["atoms"]["I"], r)
                 raise ValueError(f"cannot recognise sqrt({base})")
             raise ValueError(f"unsupported power {expr}")
         if isinstance(expr, sp.exp):
@@ -567,7 +604,8 @@ def lean_int(q):
 
 
 WORDS = {2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven", 8: "eight",
-         9: "nine", 10: "ten", 12: "twelve", 18: "eighteen"}
+         9: "nine", 10: "ten", 12: "twelve", 15: "fifteen", 16: "sixteen", 18: "eighteen",
+         27: "twentyseven"}
 
 
 def generate(path, check_only=False, chunks=1):
@@ -837,7 +875,7 @@ def update_bound(path, module, theorem):
     print(f"updated {os.path.relpath(path, ROOT)}")
 
 
-ORBIT_P_LOCAL = {"H3": 3, "T3": 3, "S": 3, "qubit_H": 2, "qubit_T": 2}
+ORBIT_P_LOCAL = {"H3": 3, "T3": 3, "S": 3, "N": 3, "qubit_H": 2, "qubit_T": 2}
 
 
 def orb_scalar_lean(orbit, m):
@@ -857,6 +895,8 @@ def orb_scalar_lean(orbit, m):
         body = f"((1 / Real.sqrt 3 : ℝ) : ℂ) ^ {m}"
     elif orbit == "S":
         body = f"(1 / (Real.sqrt 2 : ℂ)) ^ {m}"
+    elif orbit == "N":
+        body = f"((Real.sqrt 2 : ℂ) * (Real.sqrt 3 : ℂ) / 6) ^ {m}"
     else:
         raise ValueError(orbit)
     return f"/-- The scalar in front of the target in `{orbit}` at `m = {m}`. -/\nnoncomputable def scalar : ℂ := {body}"
@@ -1032,7 +1072,7 @@ def emit_bases(out_path=None):
     # ℤ[ω₃, √3]
     orb = make_orbit("H3", 2)
     R, basis = orb["R"], orb["basis"]
-    names = ["w3", "s3", "th"]
+    names = ["w3", "s3", "th", "s2"]
     g = {n: R.gen(i) for i, n in enumerate(R.names)}
     hyps = {0: "hw3", 1: "h3"}
     A("/-! ### `ℤ[ω₃, √3]`, for the H₃ cells -/")
