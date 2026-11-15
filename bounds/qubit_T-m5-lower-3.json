@@ -5,7 +5,8 @@
   "direction": "lower",
   "rank": 3,
   "certificate": {
-    "script": "verify_challenge/cert_qubit_t_m5_from_m4.py",
+    "script": "verify_challenge/cert_qubit_galois_m3_m4.py",
+    "exact": true,
     "expect": "CERTIFIED chi(qubit_T^5) >= 3"
   },
   "provenance": {
@@ -23,5 +24,5 @@
       "hardware": "Apple silicon laptop"
     }
   },
-  "notes": "Projection monotonicity from the m=4 rank-2 exclusion, re-run inside the certificate. Puts the new cell at 3 <= chi <= 6."
+  "notes": "Upgraded from reproduced to verified (exact: true, we* + @mizopl, 2026-11-10) via verify_challenge/cert_qubit_galois_m3_m4.py: projection monotonicity chi(psi (x) phi) >= chi(psi) (Lean: qubit_t_stabRankP_mono) applied to the exact Z[i] Galois quotient exclusion of rank 2 at m=4. Prior reproduced record (verify_challenge/cert_qubit_t_m5_from_m4.py): Projection monotonicity from the m=4 rank-2 exclusion, re-run inside the certificate. Puts the new cell at 3 <= chi <= 6."
 }

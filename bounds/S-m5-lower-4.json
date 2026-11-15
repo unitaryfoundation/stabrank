@@ -5,7 +5,8 @@
   "direction": "lower",
   "rank": 4,
   "certificate": {
-    "script": "verify_challenge/cert_s_m5_from_m3.py",
+    "script": "verify_challenge/cert_qutrit_galois_m3_m5.py",
+    "exact": true,
     "expect": "CERTIFIED chi(S^5) >= 4"
   },
   "provenance": {
@@ -23,5 +24,5 @@
       "hardware": "Apple silicon laptop"
     }
   },
-  "notes": "Projection monotonicity from the m=3 rank-3 exclusion, re-run inside the certificate. Puts the new cell at 4 <= chi <= 8."
+  "notes": "Upgraded from reproduced to verified (exact: true, we* + @mizopl, 2026-11-10) via verify_challenge/cert_qutrit_galois_m3_m5.py: projection monotonicity (<11| (x) I^3)|S>^5 = (1/2)|S>^3 applied to the exact Z[omega_3] 12-pivot exclusion chi(S^3) >= 4. Prior reproduced record (verify_challenge/cert_s_m5_from_m3.py): Projection monotonicity from the m=3 rank-3 exclusion, re-run inside the certificate. Puts the new cell at 4 <= chi <= 8."
 }

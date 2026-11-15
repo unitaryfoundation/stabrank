@@ -5,7 +5,8 @@
   "direction": "lower",
   "rank": 3,
   "certificate": {
-    "script": "verify_challenge/cert_qubit_rank2.py",
+    "script": "verify_challenge/cert_qubit_galois_m3_m4.py",
+    "exact": true,
     "expect": "CERTIFIED chi(qubit_H^3) >= 3"
   },
   "provenance": {
@@ -17,5 +18,5 @@
       "vprusso"
     ]
   },
-  "notes": "Pairs with the rank-3 upper bound to settle this cell at chi = 3 exactly. Closes it as a route to the published exponent log_2(3)/4, which would need rank 2 here. The stabilizer states are enumerated by closing the Clifford orbit of |0...0> rather than from a phase parametrisation, since the verifier's witness format uses w_2 = -1 and so reaches only the real stabilizer states, missing the Y eigenstates; the count is checked against 2^n prod (2^k + 1). The exclusion rests on a margin rather than exact arithmetic: the closest any two candidate directions come to parallel is 0.76 to 0.78 against a threshold of 1 - 1e-6, so no rounding at the 1e-15 level of these inputs can close the gap. The H-type state at m=2 has a known rank-2 decomposition, which the same code finds as a positive control."
+  "notes": "Upgraded from reproduced to verified (exact: true, we* + @mizopl, 2026-11-10) via verify_challenge/cert_qubit_galois_m3_m4.py: scaling |H> = cos(pi/8)|0> + sin(pi/8)|1> by cos(pi/8)^(-1) gives |0> + (sqrt(2) - 1)|1>, so cos(pi/8)^(-3) |H>^3 = (|0> + (sqrt(2) - 1)|1>)^3 = A_3 + sqrt(2) B_3 with A_3, B_3 in Z[i]^8 (verified symbolically against stabrank_verify.target_vector). Across all 1,080 3-qubit stabilizer states in Z[i]^8, 0 states lie in P_3 = span_{Q(i)}(A_3, B_3), excluding rank <= 2 with zero pivots and zero floating-point tolerances (m=2 rank-2 and m=3 rank-3 controls verified in the same run). Prior reproduced record (verify_challenge/cert_qubit_rank2.py): Pairs with the rank-3 upper bound to settle this cell at chi = 3 exactly. Closes it as a route to the published exponent log_2(3)/4, which would need rank 2 here. The stabilizer states are enumerated by closing the Clifford orbit of |0...0> rather than from a phase parametrisation, since the verifier's witness format uses w_2 = -1 and so reaches only the real stabilizer states, missing the Y eigenstates; the count is checked against 2^n prod (2^k + 1). The exclusion rests on a margin rather than exact arithmetic: the closest any two candidate directions come to parallel is 0.76 to 0.78 against a threshold of 1 - 1e-6, so no rounding at the 1e-15 level of these inputs can close the gap. The H-type state at m=2 has a known rank-2 decomposition, which the same code finds as a positive control."
 }

@@ -4,6 +4,11 @@
   "m": 3,
   "direction": "lower",
   "rank": 4,
+  "certificate": {
+    "script": "verify_challenge/cert_qutrit_galois_m3_m5.py",
+    "exact": true,
+    "expect": "CERTIFIED chi(H3^3) >= 4"
+  },
   "provenance": {
     "author": "Labib and Russo",
     "reference": "arXiv:2605.28586",
@@ -20,9 +25,5 @@
       "hardware": "Apple silicon laptop, 8 worker processes"
     }
   },
-  "notes": "The exhaustive m=3 value of arXiv:2605.28586, reproduced here from scratch: every rank-3 triple over the 30240 three-qutrit stabilizer states is excluded by the pivot-and-quotient search of rank_exclusion.py, with rank 2 excluded in the same pass. Together with the Lean-checked rank-4 decomposition this settles chi(|H3>^3) = 4 with both directions machine-checked. The exclusion is numerical and rests on a margin: the certificate reports the closest any two non-parallel quotient directions come to the parallel threshold and refuses to print its claim if that margin is under 0.01. The Norrell state at m=2, whose rank-3 decomposition is proved in Lean, is the positive control.",
-  "certificate": {
-    "script": "verify_challenge/cert_h3_m3_rank3.py",
-    "expect": "CERTIFIED chi(H3^3) >= 4"
-  }
+  "notes": "Upgraded from reproduced to verified (exact: true, we* + @mizopl, 2026-11-10) via verify_challenge/cert_qutrit_galois_m3_m5.py: unnormalised |H3> = (1 + sqrt(3))|0> + |1> + |2> (checked projectively against stabrank_verify.orbit_state('H3')) lies in Z[sqrt(3)]^3, while every qutrit stabilizer state lies in Z[omega_3] subset Q(sqrt(-3)). Under tau(sqrt(3)) = -sqrt(3), tau(omega_3) = omega_3, any rank-3 decomposition of |H3>^3 must contain the 2D subspace V_3(H3) subset Z^27 and project to a single ray modulo V_3(H3); across all 30,240 states in exact Z[omega_3] arithmetic, 0 lie in V_3(H3) and the maximum ray bucket size is 1 (0 pivots, 0.1 s; m=2 positive control finds 3 buckets of size >= 3). Prior reproduced record (verify_challenge/cert_h3_m3_rank3.py): The exhaustive m=3 value of arXiv:2605.28586, reproduced here from scratch: every rank-3 triple over the 30240 three-qutrit stabilizer states is excluded by the pivot-and-quotient search of rank_exclusion.py, with rank 2 excluded in the same pass. Together with the Lean-checked rank-4 decomposition this settles chi(|H3>^3) = 4 with both directions machine-checked. The exclusion is numerical and rests on a margin: the certificate reports the closest any two non-parallel quotient directions come to the parallel threshold and refuses to print its claim if that margin is under 0.01. The Norrell state at m=2, whose rank-3 decomposition is proved in Lean, is the positive control."
 }

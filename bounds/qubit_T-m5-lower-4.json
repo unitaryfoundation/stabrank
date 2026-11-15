@@ -5,7 +5,8 @@
   "direction": "lower",
   "rank": 4,
   "certificate": {
-    "script": "verify_challenge/cert_qubit_t_m5_lift.py",
+    "script": "verify_challenge/cert_qubit_galois_m3_m4.py",
+    "exact": true,
     "expect": "CERTIFIED chi(qubit_T^5) >= 4"
   },
   "provenance": {
@@ -23,5 +24,5 @@
       "hardware": "Apple silicon laptop"
     }
   },
-  "notes": "A rank-3 decomposition of |T>^5 sliced along one qubit gives a rank-3 decomposition of |T>^4 whose terms are related slice to slice by a Pauli and a fourth root of unity. |T>^4 has one rank-3 decomposition up to its unitary symmetries (the QubitTM4 witness), and no choice of Paulis and phases satisfies the second slice, so rank 3 is impossible at m=5. Puts the cell at 4 <= chi <= 6."
+  "notes": "Upgraded from reproduced to verified (exact: true, we* + @mizopl, 2026-11-10, 0.5 s) via verify_challenge/cert_qubit_galois_m3_m4.py: the exact Z[i] Galois quotient on all 36,720 4-qubit stabilizer states enumerates all 9 exact rank-3 decompositions of |T>^4, and checking all (4 * 2^4)^3 = 262,144 phased 4-qubit Pauli triples in exact Z[i] arithmetic proves 0 lift to |T>^5. Prior reproduced record (verify_challenge/cert_qubit_t_m5_lift.py): A rank-3 decomposition of |T>^5 sliced along one qubit gives a rank-3 decomposition of |T>^4 whose terms are related slice to slice by a Pauli and a fourth root of unity. |T>^4 has one rank-3 decomposition up to its unitary symmetries (the QubitTM4 witness), and no choice of Paulis and phases satisfies the second slice, so rank 3 is impossible at m=5. Puts the cell at 4 <= chi <= 6."
 }

@@ -5,7 +5,8 @@
   "direction": "lower",
   "rank": 6,
   "certificate": {
-    "script": "verify_challenge/cert_t3m3_rank6.py",
+    "script": "verify_challenge/cert_qutrit_galois_m3_m5.py",
+    "exact": true,
     "expect": "CERTIFIED chi(T3^3) >= 6"
   },
   "provenance": {
@@ -17,5 +18,5 @@
       "vprusso"
     ]
   },
-  "notes": "Pairs with the rank-8 upper bound to put this cell at 6 <= chi <= 8. Every rank-5 decomposition would put five stabilizer states on one projective line off the Galois space; the 45 candidate groups are enumerated and each candidate is rejected twice, by least squares and then in exact arithmetic over Q(w9), where adjoining the target must raise the rank of the five states. The harvest of candidate lines is numerical and rests on the parallelism margin the certificate documents; the rejection of what it harvests is exact. The bound therefore still rests on the harvest margin, which is why it stays at the reproduced tier. The groups do exist, so the argument cannot be closed by observing that none do. Grouping is done on a random projection to C^6, which can only propose extra candidates, never lose one, since a linear map preserves collinearity."
+  "notes": "Upgraded from reproduced to verified (exact: true, we* + @mizopl, 2026-11-10, ~2.8 s T3 scan / 6.4 s full script on one core) via verify_challenge/cert_qutrit_galois_m3_m5.py: over Z[omega_3], the 3D Gal(Q(omega_9)/Q(omega_3))-invariant subspace V_3(T3) is spanned by disjoint-support monomial vectors u_0, u_1, u_2 in Z[omega_3]^27 with u_r[r] = 1, giving an exact division-free quotient Z[omega_3]^27 / V_3(T3) = Z[omega_3]^24; scanning the 173 symmetry pivot orbit representatives of |T3>^3 by exact Z[omega_3] ray canonicalisation harvests the single 5-state candidate orbit {351, 352, 6912, 7029, 7146} with zero random projections and zero floating-point margins, and exact Q(omega_3)-rank over Z confirms rank 3 vs rank 5 > 3 with V_3(T3) adjoined. Prior reproduced record (verify_challenge/cert_t3m3_rank6.py): Pairs with the rank-8 upper bound to put this cell at 6 <= chi <= 8. Every rank-5 decomposition would put five stabilizer states on one projective line off the Galois space; the 45 candidate groups are enumerated and each candidate is rejected twice, by least squares and then in exact arithmetic over Q(w9), where adjoining the target must raise the rank of the five states. The harvest of candidate lines is numerical and rests on the parallelism margin the certificate documents; the rejection of what it harvests is exact. The bound therefore still rests on the harvest margin, which is why it stays at the reproduced tier. The groups do exist, so the argument cannot be closed by observing that none do. Grouping is done on a random projection to C^6, which can only propose extra candidates, never lose one, since a linear map preserves collinearity."
 }

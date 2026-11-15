@@ -5,7 +5,8 @@
   "direction": "lower",
   "rank": 4,
   "certificate": {
-    "script": "verify_challenge/cert_qubit_t_m5_lift.py",
+    "script": "verify_challenge/cert_qubit_galois_m3_m4.py",
+    "exact": true,
     "expect": "CERTIFIED chi(qubit_T^6) >= 4"
   },
   "provenance": {
@@ -23,5 +24,5 @@
       "hardware": "the m=5 certificate"
     }
   },
-  "notes": "chi(psi (x) phi) >= chi(psi) when phi has a nonzero computational amplitude, applied to chi(T^5) >= 4, whose certificate prints this line as well. Puts the cell at 4 <= chi <= 6."
+  "notes": "Upgraded from reproduced to verified (exact: true, we* + @mizopl, 2026-11-10) via verify_challenge/cert_qubit_galois_m3_m4.py: projection monotonicity chi(psi (x) phi) >= chi(psi) (Lean: qubit_t_stabRankP_mono) applied to the exact Z[i] slice-and-lift bound chi(T^5) >= 4. Prior reproduced record (verify_challenge/cert_qubit_t_m5_lift.py): chi(psi (x) phi) >= chi(psi) when phi has a nonzero computational amplitude, applied to chi(T^5) >= 4, whose certificate prints this line as well. Puts the cell at 4 <= chi <= 6."
 }

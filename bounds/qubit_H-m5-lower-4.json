@@ -4,6 +4,11 @@
   "m": 5,
   "direction": "lower",
   "rank": 4,
+  "certificate": {
+    "script": "verify_challenge/cert_qubit_galois_m3_m4.py",
+    "exact": true,
+    "expect": "CERTIFIED chi(qubit_H^5) >= 4"
+  },
   "provenance": {
     "author": "this repository",
     "reference": "stabrank rank_exclusion.py",
@@ -19,9 +24,5 @@
       "hardware": "Apple silicon laptop; the m=4 rank-3 exclusion re-runs inside the certificate"
     }
   },
-  "notes": "Projection monotonicity from the m=4 rank-3 exclusion, re-run inside the certificate: chi(psi (x) phi) >= chi(psi) when phi has a nonzero computational amplitude. Puts the cell at 4 <= chi <= 6; the m=6 file cites the same certificate one copy further, and the m=5 upper file's note had asserted this bound without a file behind it.",
-  "certificate": {
-    "script": "verify_challenge/cert_qubit_h_m6_from_m4.py",
-    "expect": "CERTIFIED chi(qubit_H^5) >= 4"
-  }
+  "notes": "Upgraded from reproduced to verified (exact: true, we* + @mizopl, 2026-11-10) via verify_challenge/cert_qubit_galois_m3_m4.py: projection monotonicity chi(psi (x) phi) >= chi(psi) (Lean: qubit_h_stabRankP_mono in LeanProofs/QubitProjection.lean) applied to the exact Z[i] 0-pivot Galois quotient exclusion chi(H^4) >= 4. Prior reproduced record (verify_challenge/cert_qubit_h_m6_from_m4.py): Projection monotonicity from the m=4 rank-3 exclusion, re-run inside the certificate: chi(psi (x) phi) >= chi(psi) when phi has a nonzero computational amplitude. Puts the cell at 4 <= chi <= 6; the m=6 file cites the same certificate one copy further, and the m=5 upper file's note had asserted this bound without a file behind it."
 }

@@ -4,6 +4,11 @@
   "m": 3,
   "direction": "lower",
   "rank": 4,
+  "certificate": {
+    "script": "verify_challenge/cert_qutrit_galois_m3_m5.py",
+    "exact": true,
+    "expect": "CERTIFIED chi(S^3) >= 4"
+  },
   "provenance": {
     "author": "Labib and Russo",
     "reference": "arXiv:2605.28586",
@@ -20,9 +25,5 @@
       "hardware": "Apple silicon laptop, 8 worker processes"
     }
   },
-  "notes": "The exhaustive m=3 value of arXiv:2605.28586, reproduced here from scratch: every rank-3 triple over the 30240 three-qutrit stabilizer states is excluded by the pivot-and-quotient search of rank_exclusion.py, with rank 2 excluded in the same pass. Together with the Lean-checked rank-4 decomposition this settles chi(|S>^3) = 4 with both directions machine-checked. The exclusion is numerical and rests on a margin: the certificate reports the closest any two non-parallel quotient directions come to the parallel threshold and refuses to print its claim if that margin is under 0.01. The Norrell state at m=2, whose rank-3 decomposition is proved in Lean, is the positive control.",
-  "certificate": {
-    "script": "verify_challenge/cert_s_m3_rank3.py",
-    "expect": "CERTIFIED chi(S^3) >= 4"
-  }
+  "notes": "Upgraded from reproduced to verified (exact: true, we* + @mizopl, 2026-11-10) via verify_challenge/cert_qutrit_galois_m3_m5.py: unnormalised |S> = |1> - |2> (verified projectively against stabrank_verify.orbit_state('S') = (0, 1, -1)/sqrt(2)) lies in Z^3; scanning the 12 symmetry pivot orbit representatives of |S>^3 across all 30,240 states in exact Z[omega_3] arithmetic shows every collinear bucket in Q(omega_3)^27 / span(|S>^3, s_piv) is already collinear modulo s_piv alone (m=2 positive control recovers rank 2). Prior reproduced record (verify_challenge/cert_s_m3_rank3.py): The exhaustive m=3 value of arXiv:2605.28586, reproduced here from scratch: every rank-3 triple over the 30240 three-qutrit stabilizer states is excluded by the pivot-and-quotient search of rank_exclusion.py, with rank 2 excluded in the same pass. Together with the Lean-checked rank-4 decomposition this settles chi(|S>^3) = 4 with both directions machine-checked. The exclusion is numerical and rests on a margin: the certificate reports the closest any two non-parallel quotient directions come to the parallel threshold and refuses to print its claim if that margin is under 0.01. The Norrell state at m=2, whose rank-3 decomposition is proved in Lean, is the positive control."
 }
