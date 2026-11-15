@@ -1,0 +1,631 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_sqrtT",
+  "m": 6,
+  "direction": "upper",
+  "rank": 8,
+  "provenance": {
+    "author": "Fedor Kuyanov",
+    "github": [
+      "kuyanov"
+    ],
+    "reference": "https://github.com/kuyanov/stabzoo/blob/d81ebcb98e80fefafb7b721c599a7adf263a1614/phase_product/n6_r8.json",
+    "method": "Exact specialization of the stabzoo arbitrary-phase product construction at w = exp(I*pi/8)",
+    "date": "2026-09-06"
+  },
+  "notes": "chi(|sqrtT>^6) <= 8, alpha = log_2(8)/6 = 0.500000000000. Specializes the exact polynomial identity for (|0>+w|1>)^6 from stabzoo phase_product/n6_r8.json, partition 3+3. Set w=exp(I*pi/8), convert QlAb stabilizers to affine-support witness terms, and adjust their constant phases and support normalizations to the normalized challenge target. The source identity holds for arbitrary complex w and was checked coefficientwise on all 64 computational amplitudes before specialization. No coefficients vanish at this phase. The provenance date is the original construction date; specialization and export were performed on 2026-11-15. The unmodified source certificate is preserved at research/constructions/data/phase_product_n6_rank8_stabzoo.json.",
+  "witness": {
+    "terms": [
+      {
+        "k": 0,
+        "x0": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "W": [],
+        "Q": [],
+        "l": []
+      },
+      {
+        "k": 5,
+        "x0": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "l": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "k": 6,
+        "x0": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "l": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "k": 6,
+        "x0": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "l": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "k": 6,
+        "x0": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "l": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "k": 0,
+        "x0": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [],
+        "Q": [],
+        "l": []
+      },
+      {
+        "k": 3,
+        "x0": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            1,
+            1,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "l": [
+          0,
+          0,
+          2
+        ]
+      },
+      {
+        "k": 3,
+        "x0": [
+          1,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        "W": [
+          [
+            1,
+            1,
+            1,
+            1,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            1,
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            1,
+            1,
+            0,
+            0,
+            1
+          ]
+        ],
+        "Q": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "l": [
+          2,
+          2,
+          2
+        ]
+      }
+    ],
+    "coeffs": [
+      "-exp(I*pi/4)/8 + I*exp(I*pi/4)/8",
+      "-sqrt(2)*exp(3*I*pi/8)/4 - sqrt(2)*exp(I*pi/4)/4 + sqrt(2)*exp(I*pi/8)/8 + sqrt(2)*I*exp(I*pi/8)/8 + sqrt(2)*I/4",
+      "-exp(I*pi/4)/2 + I/2",
+      "-exp(3*I*pi/8)/4 - I*exp(I*pi/8)/8 - exp(I*pi/8)/8 + exp(I*pi/4)/4 + I/4",
+      "exp(I*pi/8)/8 + I*exp(I*pi/8)/8 + exp(I*pi/4)/4 + exp(3*I*pi/8)/4 + I/4",
+      "1/8 - I/8",
+      "-sqrt(2)*I*exp(I*pi/8)/8 + sqrt(2)*exp(I*pi/8)/8",
+      "-sqrt(2)*exp(I*pi/8)/8 + sqrt(2)*I*exp(I*pi/8)/8"
+    ]
+  }
+}
