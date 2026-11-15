@@ -2777,6 +2777,26 @@
    }
   },
   {
+   "slug": "qubit_H-m9-upper-17",
+   "orbit": "qubit_H",
+   "m": 9,
+   "direction": "upper",
+   "rank": 17,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.45416253791670436,
+   "date": "2026-10-09",
+   "author": "Fedor Kuyanov",
+   "github": [
+    "kuyanov"
+   ],
+   "method": "Codex-assisted 3+3+3 block-symmetric search: joint Galois E/O target, OMP initialization, annealed destroy-and-repair search, exact reconstruction",
+   "reference": "kuyanov/stabzoo; original exact certificate at research/constructions/data/t_product_n9_rank17_stabzoo.json",
+   "compute": null,
+   "budget_s": null,
+   "attested": null
+  },
+  {
    "slug": "qubit_T-m10-upper-15",
    "orbit": "qubit_T",
    "m": 10,
@@ -4427,6 +4447,28 @@
     ]
    },
    "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "CS-m3-lower-5",
+   "orbit": "CS",
+   "m": 3,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-06",
+   "author": "Ruoyu Liu",
+   "github": [
+    "w2386411651-lang"
+   ],
+   "method": "Exact complete CS-square four-cover census and coefficient-fixed four-fiber lift exclusion, using explicit unitary and antiunitary symmetry.",
+   "reference": "Analytic reduction embedded in verify_challenge/cert_cs3_analytic.py; accompanying research/cs_cube_lower_5 notes.",
+   "compute": {
+    "hardware": "AMD Ryzen 9 9955HX (16 cores, 32 logical processors), 31.18 GiB reported memory, Windows 11; Python 3.12.14 and NumPy 2.5.4; four worker processes. Aggregate discovery CPU-hours, run count, token use and monetary cost were not reconstructed."
+   },
+   "budget_s": 3600,
    "attested": null
   }
  ]

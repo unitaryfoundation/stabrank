@@ -1,7 +1,7 @@
 {
  "generated_from": "bounds/",
- "head": "68e582eb026329fdea029935db0edc444c4792d2",
- "generated": "2026-10-24",
+ "head": "ee166beccfdf45f286ff6c53405cf5773f87a656",
+ "generated": "2026-11-15",
  "since": "2026-09-15",
  "exponents": [
   {
@@ -926,11 +926,11 @@
     "moved_since": true
    },
    "upper": {
-    "rank": 18,
+    "rank": 17,
     "tier": "verified",
-    "slug": "qubit_H-m9-upper-18",
-    "date": "2026-09-22",
-    "board_date": "2026-09-22",
+    "slug": "qubit_H-m9-upper-17",
+    "date": "2026-10-09",
+    "board_date": "2026-11-15",
     "moved_since": true
    },
    "settled": false,
@@ -1380,11 +1380,11 @@
    "orbit": "CS",
    "m": 3,
    "lower": {
-    "rank": 4,
-    "tier": "reproduced",
-    "slug": "CS-m3-lower-4",
-    "date": "2026-10-21",
-    "board_date": "2026-10-21",
+    "rank": 5,
+    "tier": "verified",
+    "slug": "CS-m3-lower-5",
+    "date": "2026-11-06",
+    "board_date": "2026-11-15",
     "moved_since": true
    },
    "upper": {
@@ -3271,6 +3271,22 @@
   {
    "orbit": "CS",
    "m": 3,
+   "rank": 5,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "CS-m3-lower-5"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "CS",
+   "m": 3,
    "rank": 6,
    "runs": 1,
    "log_runs": 0,
@@ -3728,13 +3744,22 @@
    "cum_discoveries": 113
   },
   {
+   "date": "2026-10-09",
+   "seeded": false,
+   "cpu_hours": 0.0,
+   "discoveries": 1,
+   "median_declared": null,
+   "cum_cpu_hours": 953.3206111111109,
+   "cum_discoveries": 114
+  },
+  {
    "date": "2026-10-12",
    "seeded": false,
    "cpu_hours": 0.001,
    "discoveries": 1,
    "median_declared": 0.001,
    "cum_cpu_hours": 953.3216111111109,
-   "cum_discoveries": 114
+   "cum_discoveries": 115
   },
   {
    "date": "2026-10-16",
@@ -3743,7 +3768,7 @@
    "discoveries": 5,
    "median_declared": 0.01,
    "cum_cpu_hours": 962.1316111111108,
-   "cum_discoveries": 119
+   "cum_discoveries": 120
   },
   {
    "date": "2026-10-17",
@@ -3752,7 +3777,7 @@
    "discoveries": 29,
    "median_declared": 0.0,
    "cum_cpu_hours": 1185.5416111111108,
-   "cum_discoveries": 148
+   "cum_discoveries": 149
   },
   {
    "date": "2026-10-18",
@@ -3761,7 +3786,7 @@
    "discoveries": 1,
    "median_declared": 0.001,
    "cum_cpu_hours": 1185.5426111111108,
-   "cum_discoveries": 149
+   "cum_discoveries": 150
   },
   {
    "date": "2026-10-21",
@@ -3770,7 +3795,7 @@
    "discoveries": 9,
    "median_declared": 0.003,
    "cum_cpu_hours": 1185.5956111111109,
-   "cum_discoveries": 158
+   "cum_discoveries": 159
   },
   {
    "date": "2026-10-23",
@@ -3779,7 +3804,16 @@
    "discoveries": 12,
    "median_declared": 11.3826,
    "cum_cpu_hours": 8455.402811111113,
-   "cum_discoveries": 170
+   "cum_discoveries": 171
+  },
+  {
+   "date": "2026-11-06",
+   "seeded": false,
+   "cpu_hours": 0.0,
+   "discoveries": 1,
+   "median_declared": 0.0,
+   "cum_cpu_hours": 8455.402811111113,
+   "cum_discoveries": 172
   }
  ],
  "bounds": [
@@ -4004,6 +4038,38 @@
       "role": "wrote the block slice-and-lift and the certificate"
      }
     ]
+   }
+  },
+  {
+   "slug": "CS-m3-lower-5",
+   "file": "bounds/CS-m3-lower-5.json",
+   "orbit": "CS",
+   "m": 3,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-06",
+   "author": "Ruoyu Liu",
+   "reference": "Analytic reduction embedded in verify_challenge/cert_cs3_analytic.py; accompanying research/cs_cube_lower_5 notes.",
+   "method": "Exact complete CS-square four-cover census and coefficient-fixed four-fiber lift exclusion, using explicit unitary and antiunitary symmetry.",
+   "pull_request": 192,
+   "merge_commit": "ee166beccfdf45f286ff6c53405cf5773f87a656",
+   "merge_date": "2026-11-15",
+   "added_commit": "d46f22360ec643d51515b6d8f35ba3c276e41117",
+   "added_date": "2026-11-06",
+   "added_subject": "Add exact CS-cube rank-five lower-bound certificate",
+   "receipt": "certs/CS-m3-lower-5.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_cs3_challenge.py",
+   "certificate_budget_s": 3600,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "hardware": "AMD Ryzen 9 9955HX (16 cores, 32 logical processors), 31.18 GiB reported memory, Windows 11; Python 3.12.14 and NumPy 2.5.4; four worker processes. Aggregate discovery CPU-hours, run count, token use and monetary cost were not reconstructed."
    }
   },
   {
@@ -8343,6 +8409,36 @@
     "runs": 0,
     "hardware": "none beyond the m=6 certificate, which this cell re-runs"
    }
+  },
+  {
+   "slug": "qubit_H-m9-upper-17",
+   "file": "bounds/qubit_H-m9-upper-17.json",
+   "orbit": "qubit_H",
+   "m": 9,
+   "direction": "upper",
+   "rank": 17,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-10-09",
+   "author": "Fedor Kuyanov",
+   "reference": "kuyanov/stabzoo; original exact certificate at research/constructions/data/t_product_n9_rank17_stabzoo.json",
+   "method": "Codex-assisted 3+3+3 block-symmetric search: joint Galois E/O target, OMP initialization, annealed destroy-and-repair search, exact reconstruction",
+   "pull_request": 191,
+   "merge_commit": "aed801ceecd54e288313dc24a29edc7068367b83",
+   "merge_date": "2026-11-15",
+   "added_commit": "e3161635abb330a94d5862e901604f60d7d54d75",
+   "added_date": "2026-11-02",
+   "added_subject": "Added decomposition",
+   "receipt": "certs/qubit_H-m9-upper-17.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": null
   },
   {
    "slug": "qubit_H-m9-upper-18",
