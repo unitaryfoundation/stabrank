@@ -1,7 +1,7 @@
 {
   "ok": true,
-  "tier": "reproduced",
-  "detail": "certificate script asserted: CERTIFIED chi(qubit_H^5) >= 5 within a declared 3600s budget",
+  "tier": "verified",
+  "detail": "certificate script asserted: CERTIFIED chi(qubit_H^5) >= 5, by an argument declared exact throughout (no floating-point margin)",
   "gamma": null,
-  "content_hash": "404bcf9aaa1d6d6a"
+  "content_hash": "f7151d8a0130058b"
 }
