@@ -1,6 +1,6 @@
 {
  "generated_from": "bounds/",
- "head": "ee166beccfdf45f286ff6c53405cf5773f87a656",
+ "head": "71a92e287ed5ff14032f26e3c3c2751263db8ac8",
  "generated": "2026-11-15",
  "since": "2026-09-15",
  "exponents": [
@@ -215,7 +215,7 @@
    "m": 3,
    "lower": {
     "rank": 4,
-    "tier": "reproduced",
+    "tier": "verified",
     "slug": "S-m3-lower-4",
     "date": "2026-05-27",
     "board_date": "2026-09-12",
@@ -237,7 +237,7 @@
    "m": 4,
    "lower": {
     "rank": 4,
-    "tier": "reproduced",
+    "tier": "verified",
     "slug": "S-m4-lower-4",
     "date": "2026-05-27",
     "board_date": "2026-09-12",
@@ -391,7 +391,7 @@
    "m": 3,
    "lower": {
     "rank": 4,
-    "tier": "reproduced",
+    "tier": "verified",
     "slug": "N-m3-lower-4",
     "date": "2026-05-27",
     "board_date": "2026-09-12",
@@ -523,7 +523,7 @@
    "m": 3,
    "lower": {
     "rank": 4,
-    "tier": "reproduced",
+    "tier": "verified",
     "slug": "H3-m3-lower-4",
     "date": "2026-05-27",
     "board_date": "2026-09-12",
@@ -787,7 +787,7 @@
    "m": 3,
    "lower": {
     "rank": 3,
-    "tier": "reproduced",
+    "tier": "verified",
     "slug": "qubit_H-m3-lower-3",
     "date": "2026-09-12",
     "board_date": "2026-09-16",
@@ -809,7 +809,7 @@
    "m": 4,
    "lower": {
     "rank": 4,
-    "tier": "reproduced",
+    "tier": "verified",
     "slug": "qubit_H-m4-lower-4",
     "date": "2026-09-16",
     "board_date": "2026-09-17",
@@ -1007,7 +1007,7 @@
    "m": 3,
    "lower": {
     "rank": 3,
-    "tier": "reproduced",
+    "tier": "verified",
     "slug": "qubit_T-m3-lower-3",
     "date": "2026-09-16",
     "board_date": "2026-09-17",
@@ -1029,7 +1029,7 @@
    "m": 4,
    "lower": {
     "rank": 3,
-    "tier": "reproduced",
+    "tier": "verified",
     "slug": "qubit_T-m4-lower-3",
     "date": "2026-09-12",
     "board_date": "2026-09-16",
@@ -1399,6 +1399,28 @@
    "moved_since": true
   },
   {
+   "orbit": "CS",
+   "m": 4,
+   "lower": {
+    "rank": 4,
+    "tier": "verified",
+    "slug": "CS-m4-lower-4",
+    "date": "2026-11-10",
+    "board_date": "2026-11-15",
+    "moved_since": true
+   },
+   "upper": {
+    "rank": 9,
+    "tier": "verified",
+    "slug": "CS-m4-upper-9",
+    "date": "2026-11-10",
+    "board_date": "2026-11-15",
+    "moved_since": true
+   },
+   "settled": false,
+   "moved_since": true
+  },
+  {
    "orbit": "T5",
    "m": 1,
    "lower": {
@@ -1654,6 +1676,50 @@
    },
    "settled": false,
    "moved_since": true
+  },
+  {
+   "orbit": "cat",
+   "m": 9,
+   "lower": {
+    "rank": 4,
+    "tier": "verified",
+    "slug": "cat-m9-lower-4",
+    "date": "2026-11-10",
+    "board_date": "2026-11-15",
+    "moved_since": true
+   },
+   "upper": {
+    "rank": 9,
+    "tier": "verified",
+    "slug": "cat-m9-upper-9",
+    "date": "2026-11-10",
+    "board_date": "2026-11-15",
+    "moved_since": true
+   },
+   "settled": false,
+   "moved_since": true
+  },
+  {
+   "orbit": "cat",
+   "m": 10,
+   "lower": {
+    "rank": 4,
+    "tier": "verified",
+    "slug": "cat-m10-lower-4",
+    "date": "2026-11-10",
+    "board_date": "2026-11-15",
+    "moved_since": true
+   },
+   "upper": {
+    "rank": 9,
+    "tier": "verified",
+    "slug": "cat-m10-upper-9",
+    "date": "2026-11-10",
+    "board_date": "2026-11-15",
+    "moved_since": true
+   },
+   "settled": false,
+   "moved_since": true
   }
  ],
  "cost_by_cell": [
@@ -1671,7 +1737,7 @@
    ],
    "board": [
     "lean",
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -1687,7 +1753,7 @@
     "S-m5-lower-4"
    ],
    "board": [
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -1908,7 +1974,7 @@
    ],
    "board": [
     "lean",
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -1924,7 +1990,23 @@
     "N-m4-lower-3"
    ],
    "board": [
-    "reproduced"
+    "verified"
+   ]
+  },
+  {
+   "orbit": "N",
+   "m": 4,
+   "rank": 4,
+   "runs": 4,
+   "log_runs": 0,
+   "cpu_hours": 0.18,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.18,
+   "bounds": [
+    "N-m4-lower-4"
+   ],
+   "board": [
+    "verified"
    ]
   },
   {
@@ -2098,7 +2180,7 @@
    ],
    "board": [
     "lean",
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -2114,7 +2196,23 @@
     "H3-m4-lower-3"
    ],
    "board": [
-    "reproduced"
+    "verified"
+   ]
+  },
+  {
+   "orbit": "H3",
+   "m": 4,
+   "rank": 4,
+   "runs": 2,
+   "log_runs": 0,
+   "cpu_hours": 0.08,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.08,
+   "bounds": [
+    "H3-m4-lower-4"
+   ],
+   "board": [
+    "verified"
    ]
   },
   {
@@ -2299,7 +2397,7 @@
     "T3-m4-lower-6"
    ],
    "board": [
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -2331,7 +2429,7 @@
     "T3-m5-lower-6"
    ],
    "board": [
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -2456,7 +2554,7 @@
    ],
    "board": [
     "lean",
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -2474,7 +2572,7 @@
    ],
    "board": [
     "lean",
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -2490,7 +2588,7 @@
     "qubit_H-m5-lower-4"
    ],
    "board": [
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -2506,7 +2604,7 @@
     "qubit_H-m5-lower-5"
    ],
    "board": [
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -2540,20 +2638,24 @@
     "qubit_H-m6-lower-4"
    ],
    "board": [
-    "reproduced"
+    "verified"
    ]
   },
   {
    "orbit": "qubit_H",
    "m": 6,
    "rank": 5,
-   "runs": 36,
+   "runs": 42,
    "log_runs": 36,
-   "cpu_hours": 3.2356111111111114,
-   "solutions": 0,
-   "cpu_hours_per_solution": null,
-   "bounds": [],
-   "board": []
+   "cpu_hours": 3.6856111111111116,
+   "solutions": 1,
+   "cpu_hours_per_solution": 3.6856111111111116,
+   "bounds": [
+    "qubit_H-m6-lower-5"
+   ],
+   "board": [
+    "verified"
+   ]
   },
   {
    "orbit": "qubit_H",
@@ -2763,7 +2865,7 @@
    ],
    "board": [
     "lean",
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -2779,7 +2881,7 @@
     "qubit_T-m5-lower-3"
    ],
    "board": [
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -2795,7 +2897,7 @@
     "qubit_T-m5-lower-4"
    ],
    "board": [
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -2811,7 +2913,7 @@
     "qubit_T-m5-lower-5"
    ],
    "board": [
-    "attested"
+    "verified"
    ]
   },
   {
@@ -2845,7 +2947,7 @@
     "qubit_T-m6-lower-4"
    ],
    "board": [
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -2861,7 +2963,7 @@
     "qubit_T-m6-lower-5"
    ],
    "board": [
-    "attested"
+    "verified"
    ]
   },
   {
@@ -3265,7 +3367,7 @@
     "CS-m3-lower-4"
    ],
    "board": [
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -3295,6 +3397,38 @@
    "cpu_hours_per_solution": 0.001,
    "bounds": [
     "CS-m3-upper-6"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "CS",
+   "m": 4,
+   "rank": 4,
+   "runs": 3,
+   "log_runs": 0,
+   "cpu_hours": 0.12,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.12,
+   "bounds": [
+    "CS-m4-lower-4"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "CS",
+   "m": 4,
+   "rank": 9,
+   "runs": 1,
+   "log_runs": 0,
+   "cpu_hours": 0.02,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.02,
+   "bounds": [
+    "CS-m4-upper-9"
    ],
    "board": [
     "verified"
@@ -3559,6 +3693,70 @@
    ]
   },
   {
+   "orbit": "cat",
+   "m": 9,
+   "rank": 4,
+   "runs": 3,
+   "log_runs": 0,
+   "cpu_hours": 0.15,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.15,
+   "bounds": [
+    "cat-m9-lower-4"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "cat",
+   "m": 9,
+   "rank": 9,
+   "runs": 1,
+   "log_runs": 0,
+   "cpu_hours": 0.02,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.02,
+   "bounds": [
+    "cat-m9-upper-9"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "cat",
+   "m": 10,
+   "rank": 4,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "cat-m10-lower-4"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "cat",
+   "m": 10,
+   "rank": 9,
+   "runs": 2,
+   "log_runs": 0,
+   "cpu_hours": 0.05,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.05,
+   "bounds": [
+    "cat-m10-upper-9"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
    "orbit": "T3sector0",
    "m": 2,
    "rank": 2,
@@ -3612,10 +3810,10 @@
    "date": "2026-09-01",
    "seeded": true,
    "cpu_hours": 0.63,
-   "discoveries": 38,
+   "discoveries": 40,
    "median_declared": 0.015,
    "cum_cpu_hours": 0.63,
-   "cum_discoveries": 38
+   "cum_discoveries": 40
   },
   {
    "date": "2026-09-07",
@@ -3624,7 +3822,7 @@
    "discoveries": 2,
    "median_declared": null,
    "cum_cpu_hours": 0.63,
-   "cum_discoveries": 40
+   "cum_discoveries": 42
   },
   {
    "date": "2026-09-12",
@@ -3633,7 +3831,7 @@
    "discoveries": 5,
    "median_declared": null,
    "cum_cpu_hours": 0.63,
-   "cum_discoveries": 45
+   "cum_discoveries": 47
   },
   {
    "date": "2026-09-15",
@@ -3642,7 +3840,7 @@
    "discoveries": 1,
    "median_declared": null,
    "cum_cpu_hours": 0.63,
-   "cum_discoveries": 46
+   "cum_discoveries": 48
   },
   {
    "date": "2026-09-16",
@@ -3651,7 +3849,7 @@
    "discoveries": 7,
    "median_declared": 0.08,
    "cum_cpu_hours": 1.301,
-   "cum_discoveries": 53
+   "cum_discoveries": 55
   },
   {
    "date": "2026-09-17",
@@ -3660,7 +3858,7 @@
    "discoveries": 1,
    "median_declared": 0.6,
    "cum_cpu_hours": 1.9009999999999998,
-   "cum_discoveries": 54
+   "cum_discoveries": 56
   },
   {
    "date": "2026-09-18",
@@ -3669,7 +3867,7 @@
    "discoveries": 13,
    "median_declared": 0.05,
    "cum_cpu_hours": 20.49297222222221,
-   "cum_discoveries": 67
+   "cum_discoveries": 69
   },
   {
    "date": "2026-09-19",
@@ -3678,7 +3876,7 @@
    "discoveries": 0,
    "median_declared": null,
    "cum_cpu_hours": 32.81566666666666,
-   "cum_discoveries": 67
+   "cum_discoveries": 69
   },
   {
    "date": "2026-09-20",
@@ -3687,7 +3885,7 @@
    "discoveries": 11,
    "median_declared": 0.0055,
    "cum_cpu_hours": 510.02427777777757,
-   "cum_discoveries": 78
+   "cum_discoveries": 80
   },
   {
    "date": "2026-09-21",
@@ -3696,7 +3894,7 @@
    "discoveries": 3,
    "median_declared": 0.04,
    "cum_cpu_hours": 510.0642777777776,
-   "cum_discoveries": 81
+   "cum_discoveries": 83
   },
   {
    "date": "2026-09-22",
@@ -3705,7 +3903,7 @@
    "discoveries": 8,
    "median_declared": 0.001,
    "cum_cpu_hours": 510.4116111111109,
-   "cum_discoveries": 89
+   "cum_discoveries": 91
   },
   {
    "date": "2026-09-23",
@@ -3714,7 +3912,7 @@
    "discoveries": 8,
    "median_declared": 0.001,
    "cum_cpu_hours": 634.4166111111109,
-   "cum_discoveries": 97
+   "cum_discoveries": 99
   },
   {
    "date": "2026-09-24",
@@ -3723,7 +3921,7 @@
    "discoveries": 12,
    "median_declared": 0.001,
    "cum_cpu_hours": 721.4206111111109,
-   "cum_discoveries": 109
+   "cum_discoveries": 111
   },
   {
    "date": "2026-09-26",
@@ -3732,7 +3930,7 @@
    "discoveries": 1,
    "median_declared": 121.5,
    "cum_cpu_hours": 842.9206111111109,
-   "cum_discoveries": 110
+   "cum_discoveries": 112
   },
   {
    "date": "2026-10-02",
@@ -3741,7 +3939,7 @@
    "discoveries": 3,
    "median_declared": 28.9,
    "cum_cpu_hours": 953.3206111111109,
-   "cum_discoveries": 113
+   "cum_discoveries": 115
   },
   {
    "date": "2026-10-09",
@@ -3750,7 +3948,7 @@
    "discoveries": 1,
    "median_declared": null,
    "cum_cpu_hours": 953.3206111111109,
-   "cum_discoveries": 114
+   "cum_discoveries": 116
   },
   {
    "date": "2026-10-12",
@@ -3759,7 +3957,7 @@
    "discoveries": 1,
    "median_declared": 0.001,
    "cum_cpu_hours": 953.3216111111109,
-   "cum_discoveries": 115
+   "cum_discoveries": 117
   },
   {
    "date": "2026-10-16",
@@ -3768,7 +3966,7 @@
    "discoveries": 5,
    "median_declared": 0.01,
    "cum_cpu_hours": 962.1316111111108,
-   "cum_discoveries": 120
+   "cum_discoveries": 122
   },
   {
    "date": "2026-10-17",
@@ -3777,7 +3975,7 @@
    "discoveries": 29,
    "median_declared": 0.0,
    "cum_cpu_hours": 1185.5416111111108,
-   "cum_discoveries": 149
+   "cum_discoveries": 151
   },
   {
    "date": "2026-10-18",
@@ -3786,7 +3984,7 @@
    "discoveries": 1,
    "median_declared": 0.001,
    "cum_cpu_hours": 1185.5426111111108,
-   "cum_discoveries": 150
+   "cum_discoveries": 152
   },
   {
    "date": "2026-10-21",
@@ -3795,7 +3993,7 @@
    "discoveries": 9,
    "median_declared": 0.003,
    "cum_cpu_hours": 1185.5956111111109,
-   "cum_discoveries": 159
+   "cum_discoveries": 161
   },
   {
    "date": "2026-10-23",
@@ -3804,7 +4002,7 @@
    "discoveries": 12,
    "median_declared": 11.3826,
    "cum_cpu_hours": 8455.402811111113,
-   "cum_discoveries": 171
+   "cum_discoveries": 173
   },
   {
    "date": "2026-11-06",
@@ -3813,7 +4011,16 @@
    "discoveries": 1,
    "median_declared": 0.0,
    "cum_cpu_hours": 8455.402811111113,
-   "cum_discoveries": 172
+   "cum_discoveries": 174
+  },
+  {
+   "date": "2026-11-10",
+   "seeded": false,
+   "cpu_hours": 1.07,
+   "discoveries": 9,
+   "median_declared": 0.08,
+   "cum_cpu_hours": 8456.472811111113,
+   "cum_discoveries": 183
   }
  ],
  "bounds": [
@@ -4006,7 +4213,7 @@
    "m": 3,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-10-21",
    "author": "Vincent Russo",
@@ -4020,7 +4227,7 @@
    "added_subject": "Make sqrt(T) and CS board orbits with their first cells",
    "receipt": "certs/CS-m3-lower-4.json",
    "receipt_matches": true,
-   "certificate_script": "verify_challenge/cert_cs_m3_lift.py",
+   "certificate_script": "verify_challenge/cert_cs_m3_m4_exact.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -4105,6 +4312,88 @@
     "wall_clock_hours": 0.001,
     "runs": 1,
     "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "CS-m4-lower-4",
+   "file": "bounds/CS-m4-lower-4.json",
+   "orbit": "CS",
+   "m": 4,
+   "direction": "lower",
+   "rank": 4,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-10",
+   "author": "we* + @mizopl",
+   "reference": "stabrank verify_challenge",
+   "method": "projection monotonicity (<00|_{7,8} |CS>^4 = (1/2) |CS>^3) applied to the exact Z[i] even-qubit postselection bound chi(CS^3) >= 4",
+   "pull_request": 193,
+   "merge_commit": "71a92e287ed5ff14032f26e3c3c2751263db8ac8",
+   "merge_date": "2026-11-15",
+   "added_commit": "367268516a030915857d15b7016432a16fb77b6c",
+   "added_date": "2026-11-10",
+   "added_subject": "bounds, verify_challenge: exact Z[i] and Z[w3] certificates for 35 qubit/qutrit bounds",
+   "receipt": "certs/CS-m4-lower-4.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_cs_m3_m4_exact.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.12,
+    "wall_clock_hours": 0.15,
+    "runs": 3,
+    "hardware": "Apple M1 laptop (16 GB), one core; Clifford postselection search and two-handle D_2/D_3 exact verification",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) heuristic search and exact certificate synthesis"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "CS-m4-upper-9",
+   "file": "bounds/CS-m4-upper-9.json",
+   "orbit": "CS",
+   "m": 4,
+   "direction": "upper",
+   "rank": 9,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-10",
+   "author": "we* + @mizopl",
+   "reference": "stabrank bounds/CS-m2-upper-3.json",
+   "method": "tensor square of the exact rank-3 witness for |CS>^2",
+   "pull_request": 193,
+   "merge_commit": "71a92e287ed5ff14032f26e3c3c2751263db8ac8",
+   "merge_date": "2026-11-15",
+   "added_commit": "367268516a030915857d15b7016432a16fb77b6c",
+   "added_date": "2026-11-10",
+   "added_subject": "bounds, verify_challenge: exact Z[i] and Z[w3] certificates for 35 qubit/qutrit bounds",
+   "receipt": "certs/CS-m4-upper-9.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.02,
+    "wall_clock_hours": 0.03,
+    "runs": 1,
+    "hardware": "Apple M1 laptop (16 GB), one core; direct tensor-square construction and exact symbolic verification",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) heuristic search and exact witness construction"
+     }
+    ]
    }
   },
   {
@@ -4239,7 +4528,7 @@
    "m": 3,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-05-27",
    "author": "Labib and Russo",
@@ -4252,8 +4541,8 @@
    "added_date": "2026-09-12",
    "added_subject": "Add a verified-submission leaderboard for stabilizer-rank bounds",
    "receipt": "certs/H3-m3-lower-4.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_h3_m3_rank3.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qutrit_galois_m3_m5.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -4304,7 +4593,7 @@
    "m": 4,
    "direction": "lower",
    "rank": 3,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-18",
    "author": "this repository",
@@ -4317,8 +4606,8 @@
    "added_date": "2026-09-18",
    "added_subject": "chi(N^4) >= 3 and chi(H3^4) >= 3 in two minutes, superseding PR #20",
    "receipt": "certs/H3-m4-lower-3.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_h3_m4_rank2.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qutrit_galois_m3_m5.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -4330,6 +4619,47 @@
     "wall_clock_hours": 0.03,
     "runs": 1,
     "hardware": "Apple silicon laptop, one core"
+   }
+  },
+  {
+   "slug": "H3-m4-lower-4",
+   "file": "bounds/H3-m4-lower-4.json",
+   "orbit": "H3",
+   "m": 4,
+   "direction": "lower",
+   "rank": 4,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-10",
+   "author": "we* + @mizopl",
+   "reference": "stabrank verify_challenge",
+   "method": "projection monotonicity from the exact Z[omega_3] tau-Galois exclusion chi(H3^3) >= 4",
+   "pull_request": 193,
+   "merge_commit": "71a92e287ed5ff14032f26e3c3c2751263db8ac8",
+   "merge_date": "2026-11-15",
+   "added_commit": "367268516a030915857d15b7016432a16fb77b6c",
+   "added_date": "2026-11-10",
+   "added_subject": "bounds, verify_challenge: exact Z[i] and Z[w3] certificates for 35 qubit/qutrit bounds",
+   "receipt": "certs/H3-m4-lower-4.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qutrit_galois_m3_m5.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.08,
+    "wall_clock_hours": 0.12,
+    "runs": 2,
+    "hardware": "Apple M1 laptop (16 GB), one core; Z[omega_3] tau-Galois quotient search and exact verification",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) heuristic search and exact certificate synthesis"
+     }
+    ]
    }
   },
   {
@@ -4767,7 +5097,7 @@
    "m": 3,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-05-27",
    "author": "Labib and Russo",
@@ -4780,8 +5110,8 @@
    "added_date": "2026-09-12",
    "added_subject": "Add a verified-submission leaderboard for stabilizer-rank bounds",
    "receipt": "certs/N-m3-lower-4.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_n_m3_rank3.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qutrit_galois_m3_m5.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -4832,7 +5162,7 @@
    "m": 4,
    "direction": "lower",
    "rank": 3,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-18",
    "author": "this repository",
@@ -4845,8 +5175,8 @@
    "added_date": "2026-09-18",
    "added_subject": "chi(N^4) >= 3 and chi(H3^4) >= 3 in two minutes, superseding PR #20",
    "receipt": "certs/N-m4-lower-3.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_n_m4_rank2.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qutrit_galois_m3_m5.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -4858,6 +5188,51 @@
     "wall_clock_hours": 0.03,
     "runs": 1,
     "hardware": "Apple silicon laptop, one core"
+   }
+  },
+  {
+   "slug": "N-m4-lower-4",
+   "file": "bounds/N-m4-lower-4.json",
+   "orbit": "N",
+   "m": 4,
+   "direction": "lower",
+   "rank": 4,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-10",
+   "author": "we* + @mizopl",
+   "reference": "stabrank verify_challenge",
+   "method": "projection monotonicity from the exact Z[omega_3] exclusion chi(N^3) >= 4",
+   "pull_request": 193,
+   "merge_commit": "71a92e287ed5ff14032f26e3c3c2751263db8ac8",
+   "merge_date": "2026-11-15",
+   "added_commit": "367268516a030915857d15b7016432a16fb77b6c",
+   "added_date": "2026-11-10",
+   "added_subject": "bounds, verify_challenge: exact Z[i] and Z[w3] certificates for 35 qubit/qutrit bounds",
+   "receipt": "certs/N-m4-lower-4.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qutrit_galois_m3_m5.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.18,
+    "wall_clock_hours": 0.25,
+    "runs": 4,
+    "hardware": "Apple M1 laptop (16 GB), one core; Z[omega_3] 1-pivot quotient search and canonical (1, 1, -2)/sqrt(6) verification",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) heuristic search and exact certificate synthesis"
+     },
+     {
+      "model": "gemini-4-carbon",
+      "role": "we* (PROOFER v19) heuristic verification for canonical Norrell vector"
+     }
+    ]
    }
   },
   {
@@ -5331,7 +5706,7 @@
    "m": 3,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-05-27",
    "author": "Labib and Russo",
@@ -5344,8 +5719,8 @@
    "added_date": "2026-09-12",
    "added_subject": "Add a verified-submission leaderboard for stabilizer-rank bounds",
    "receipt": "certs/S-m3-lower-4.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_s_m3_rank3.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qutrit_galois_m3_m5.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -5396,7 +5771,7 @@
    "m": 4,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-05-27",
    "author": "Labib and Russo",
@@ -5409,8 +5784,8 @@
    "added_date": "2026-09-12",
    "added_subject": "Add a verified-submission leaderboard for stabilizer-rank bounds",
    "receipt": "certs/S-m4-lower-4.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_s_m4_from_m3.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qutrit_galois_m3_m5.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -5456,7 +5831,7 @@
    "m": 5,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-18",
    "author": "this repository",
@@ -5469,8 +5844,8 @@
    "added_date": "2026-09-18",
    "added_subject": "Fill the S and BK T-type cells at m=5, both directions",
    "receipt": "certs/S-m5-lower-4.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_s_m5_from_m3.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qutrit_galois_m3_m5.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -6078,7 +6453,7 @@
    "m": 3,
    "direction": "lower",
    "rank": 6,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-07",
    "author": "this repository",
@@ -6091,8 +6466,8 @@
    "added_date": "2026-09-12",
    "added_subject": "Date submissions properly and put chi(T3^3) >= 6 on the board",
    "receipt": "certs/T3-m3-lower-6.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_t3m3_rank6.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qutrit_galois_m3_m5.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -6215,7 +6590,7 @@
    "m": 4,
    "direction": "lower",
    "rank": 6,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-16",
    "author": "this repository",
@@ -6228,8 +6603,8 @@
    "added_date": "2026-09-16",
    "added_subject": "Certify nine lower bounds: five cells settled, T3 at m=4 bounded for the first time",
    "receipt": "certs/T3-m4-lower-6.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_t3_m4_from_m3.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qutrit_galois_m3_m5.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -6322,7 +6697,7 @@
    "m": 5,
    "direction": "lower",
    "rank": 6,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-18",
    "author": "this repository",
@@ -6335,8 +6710,8 @@
    "added_date": "2026-09-18",
    "added_subject": "chi(|T3>^5) >= 6 by projection monotonicity from the certified m=3 bound",
    "receipt": "certs/T3-m5-lower-6.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_t3_m5_from_m3.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qutrit_galois_m3_m5.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -6982,6 +7357,88 @@
    }
   },
   {
+   "slug": "cat-m10-lower-4",
+   "file": "bounds/cat-m10-lower-4.json",
+   "orbit": "cat",
+   "m": 10,
+   "direction": "lower",
+   "rank": 4,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-10",
+   "author": "we* + @mizopl",
+   "reference": "stabrank verify_challenge (extending cert_cat_m7_lift.py by Michel de Messieres)",
+   "method": "projection monotonicity (<0|_1 |cat_m> = 2^{-1/2} |cat_{m-1}>) applied to 2-step exact Z[i] slice-and-lift c_5 -> c_6 -> c_7 on D_4",
+   "pull_request": 193,
+   "merge_commit": "71a92e287ed5ff14032f26e3c3c2751263db8ac8",
+   "merge_date": "2026-11-15",
+   "added_commit": "367268516a030915857d15b7016432a16fb77b6c",
+   "added_date": "2026-11-10",
+   "added_subject": "bounds, verify_challenge: exact Z[i] and Z[w3] certificates for 35 qubit/qutrit bounds",
+   "receipt": "certs/cat-m10-lower-4.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_cat_m7_to_m10_lift.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0,
+    "wall_clock_hours": 0,
+    "runs": 0,
+    "hardware": "none beyond bounds/cat-m9-lower-4.json (verify_challenge/cert_cat_m7_to_m10_lift.py), which this cell re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) heuristic search and exact certificate synthesis"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "cat-m10-upper-9",
+   "file": "bounds/cat-m10-upper-9.json",
+   "orbit": "cat",
+   "m": 10,
+   "direction": "upper",
+   "rank": 9,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-10",
+   "author": "we* + @mizopl",
+   "reference": "arXiv:2106.07740 (Qassim, Pashayan, and Gosset); stabrank verify_challenge",
+   "method": "explicit 9-term stabilizer witness constructed from the cat_{4k+2} gluing of Qassim, Pashayan, and Gosset (arXiv:2106.07740) and verified in exact arithmetic",
+   "pull_request": 193,
+   "merge_commit": "71a92e287ed5ff14032f26e3c3c2751263db8ac8",
+   "merge_date": "2026-11-15",
+   "added_commit": "367268516a030915857d15b7016432a16fb77b6c",
+   "added_date": "2026-11-10",
+   "added_subject": "bounds, verify_challenge: exact Z[i] and Z[w3] certificates for 35 qubit/qutrit bounds",
+   "receipt": "certs/cat-m10-upper-9.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.05,
+    "wall_clock_hours": 0.08,
+    "runs": 2,
+    "hardware": "Apple M1 laptop (16 GB), one core; stabilizer contraction and exact tableau verification",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) heuristic search and exact witness construction"
+     }
+    ]
+   }
+  },
+  {
    "slug": "cat-m2-upper-1",
    "file": "bounds/cat-m2-upper-1.json",
    "orbit": "cat",
@@ -7274,7 +7731,7 @@
    "m": 7,
    "direction": "lower",
    "rank": 3,
-   "tier": "cited",
+   "tier": "verified",
    "ok": true,
    "date": "2021-06-14",
    "author": "Qassim, Pashayan, and Gosset",
@@ -7286,9 +7743,9 @@
    "added_commit": "e84a236183ba4a9df078a6f52c71e66043e47ad9",
    "added_date": "2026-09-24",
    "added_subject": "Add the magic cat track: cat_m targets, implied H exponent, and the QPG cells",
-   "receipt": null,
-   "receipt_matches": null,
-   "certificate_script": null,
+   "receipt": "certs/cat-m7-lower-3.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_cat_m7_to_m10_lift.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -7423,7 +7880,7 @@
    "m": 8,
    "direction": "lower",
    "rank": 3,
-   "tier": "cited",
+   "tier": "verified",
    "ok": true,
    "date": "2021-06-14",
    "author": "Qassim, Pashayan, and Gosset",
@@ -7435,9 +7892,9 @@
    "added_commit": "e84a236183ba4a9df078a6f52c71e66043e47ad9",
    "added_date": "2026-09-24",
    "added_subject": "Add the magic cat track: cat_m targets, implied H exponent, and the QPG cells",
-   "receipt": null,
-   "receipt_matches": null,
-   "certificate_script": null,
+   "receipt": "certs/cat-m8-lower-3.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_cat_m7_to_m10_lift.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -7552,6 +8009,88 @@
    "lean_receipt": null,
    "lean_receipt_ok": null,
    "compute": null
+  },
+  {
+   "slug": "cat-m9-lower-4",
+   "file": "bounds/cat-m9-lower-4.json",
+   "orbit": "cat",
+   "m": 9,
+   "direction": "lower",
+   "rank": 4,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-10",
+   "author": "we* + @mizopl",
+   "reference": "stabrank verify_challenge (extending cert_cat_m7_lift.py by Michel de Messieres)",
+   "method": "projection monotonicity (<0|_1 |cat_m> = 2^{-1/2} |cat_{m-1}>) applied to 2-step exact Z[i] slice-and-lift c_5 -> c_6 -> c_7 on D_4",
+   "pull_request": 193,
+   "merge_commit": "71a92e287ed5ff14032f26e3c3c2751263db8ac8",
+   "merge_date": "2026-11-15",
+   "added_commit": "367268516a030915857d15b7016432a16fb77b6c",
+   "added_date": "2026-11-10",
+   "added_subject": "bounds, verify_challenge: exact Z[i] and Z[w3] certificates for 35 qubit/qutrit bounds",
+   "receipt": "certs/cat-m9-lower-4.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_cat_m7_to_m10_lift.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.15,
+    "wall_clock_hours": 0.2,
+    "runs": 3,
+    "hardware": "Apple M1 laptop (16 GB), one core; exploratory D_4 2-step slice-and-lift search and exact verification",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) heuristic search and exact certificate synthesis"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "cat-m9-upper-9",
+   "file": "bounds/cat-m9-upper-9.json",
+   "orbit": "cat",
+   "m": 9,
+   "direction": "upper",
+   "rank": 9,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-10",
+   "author": "we* + @mizopl",
+   "reference": "arXiv:2106.07740 (Qassim, Pashayan, and Gosset); stabrank verify_challenge",
+   "method": "explicit 9-term stabilizer witness constructed from the cat_{4k+2} gluing of Qassim, Pashayan, and Gosset (arXiv:2106.07740) and verified in exact arithmetic",
+   "pull_request": 193,
+   "merge_commit": "71a92e287ed5ff14032f26e3c3c2751263db8ac8",
+   "merge_date": "2026-11-15",
+   "added_commit": "367268516a030915857d15b7016432a16fb77b6c",
+   "added_date": "2026-11-10",
+   "added_subject": "bounds, verify_challenge: exact Z[i] and Z[w3] certificates for 35 qubit/qutrit bounds",
+   "receipt": "certs/cat-m9-upper-9.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.02,
+    "wall_clock_hours": 0.03,
+    "runs": 1,
+    "hardware": "Apple M1 laptop (16 GB), one core; computational-basis projection of cat-m10-upper-9 witness and exact verification",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) heuristic search and exact witness construction"
+     }
+    ]
+   }
   },
   {
    "slug": "qubit_H-m1-lower-2",
@@ -7767,7 +8306,7 @@
    "m": 3,
    "direction": "lower",
    "rank": 3,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-12",
    "author": "this repository",
@@ -7780,8 +8319,8 @@
    "added_date": "2026-09-12",
    "added_subject": "Close the qubit rank-2 cells too",
    "receipt": "certs/qubit_H-m3-lower-3.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_qubit_rank2.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m3_m4.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -7832,7 +8371,7 @@
    "m": 4,
    "direction": "lower",
    "rank": 3,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-12",
    "author": "this repository",
@@ -7845,8 +8384,8 @@
    "added_date": "2026-09-12",
    "added_subject": "Close the qubit rank-2 cells too",
    "receipt": "certs/qubit_H-m4-lower-3.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_qubit_rank2.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m3_m4.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -7862,7 +8401,7 @@
    "m": 4,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-16",
    "author": "this repository",
@@ -7875,8 +8414,8 @@
    "added_date": "2026-09-16",
    "added_subject": "Certify nine lower bounds: five cells settled, T3 at m=4 bounded for the first time",
    "receipt": "certs/qubit_H-m4-lower-4.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_qubit_h_m4_rank3.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m3_m4.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -7932,7 +8471,7 @@
    "m": 5,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-18",
    "author": "this repository",
@@ -7945,8 +8484,8 @@
    "added_date": "2026-09-18",
    "added_subject": "Fix the documentation drift the M5 draft surfaced",
    "receipt": "certs/qubit_H-m5-lower-4.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_qubit_h_m6_from_m4.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m3_m4.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -7967,7 +8506,7 @@
    "m": 5,
    "direction": "lower",
    "rank": 5,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-18",
    "author": "this repository",
@@ -7980,9 +8519,9 @@
    "added_date": "2026-09-18",
    "added_subject": "chi(H^5) >= 5 for the qubit H-type state by slice-and-lift",
    "receipt": "certs/qubit_H-m5-lower-5.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_qubit_h_m5_lift.py",
-   "certificate_budget_s": 3600,
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py",
+   "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
    "lean_theorem": null,
@@ -8079,7 +8618,7 @@
    "m": 6,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-05-27",
    "author": "Labib and Russo",
@@ -8092,8 +8631,8 @@
    "added_date": "2026-09-12",
    "added_subject": "Add a verified-submission leaderboard for stabilizer-rank bounds",
    "receipt": "certs/qubit_H-m6-lower-4.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_qubit_h_m6_from_m4.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m3_m4.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -8105,6 +8644,47 @@
     "wall_clock_hours": 0.08,
     "runs": 1,
     "hardware": "Apple silicon laptop, 8 worker processes"
+   }
+  },
+  {
+   "slug": "qubit_H-m6-lower-5",
+   "file": "bounds/qubit_H-m6-lower-5.json",
+   "orbit": "qubit_H",
+   "m": 6,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-10",
+   "author": "we* + @mizopl",
+   "reference": "stabrank verify_challenge",
+   "method": "projection monotonicity applied to the exact Z[i] 1-pivot Galois quotient rank-4 exclusion chi(H^5) >= 5",
+   "pull_request": 193,
+   "merge_commit": "71a92e287ed5ff14032f26e3c3c2751263db8ac8",
+   "merge_date": "2026-11-15",
+   "added_commit": "367268516a030915857d15b7016432a16fb77b6c",
+   "added_date": "2026-11-10",
+   "added_subject": "bounds, verify_challenge: exact Z[i] and Z[w3] certificates for 35 qubit/qutrit bounds",
+   "receipt": "certs/qubit_H-m6-lower-5.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.45,
+    "wall_clock_hours": 0.72,
+    "runs": 6,
+    "hardware": "Apple M1 laptop (16 GB), one core; includes aborted D_4 pair-bucket search superseded by D_3 1-pivot Galois quotient",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) heuristic search and exact certificate synthesis"
+     }
+    ]
    }
   },
   {
@@ -8724,7 +9304,7 @@
    "m": 3,
    "direction": "lower",
    "rank": 3,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-16",
    "author": "this repository",
@@ -8737,8 +9317,8 @@
    "added_date": "2026-09-16",
    "added_subject": "Certify nine lower bounds: five cells settled, T3 at m=4 bounded for the first time",
    "receipt": "certs/qubit_T-m3-lower-3.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_qubit_t_m3_rank2.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m3_m4.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -8794,7 +9374,7 @@
    "m": 4,
    "direction": "lower",
    "rank": 3,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-12",
    "author": "this repository",
@@ -8807,8 +9387,8 @@
    "added_date": "2026-09-12",
    "added_subject": "Close the qubit rank-2 cells too",
    "receipt": "certs/qubit_T-m4-lower-3.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_qubit_rank2.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m3_m4.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -8854,7 +9434,7 @@
    "m": 5,
    "direction": "lower",
    "rank": 3,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-18",
    "author": "this repository",
@@ -8867,8 +9447,8 @@
    "added_date": "2026-09-18",
    "added_subject": "Fill the S and BK T-type cells at m=5, both directions",
    "receipt": "certs/qubit_T-m5-lower-3.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_qubit_t_m5_from_m4.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m3_m4.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -8889,7 +9469,7 @@
    "m": 5,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-18",
    "author": "this repository",
@@ -8902,8 +9482,8 @@
    "added_date": "2026-09-18",
    "added_subject": "chi(T^5) >= 4 by slice-and-lift",
    "receipt": "certs/qubit_T-m5-lower-4.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_qubit_t_m5_lift.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m3_m4.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -8924,7 +9504,7 @@
    "m": 5,
    "direction": "lower",
    "rank": 5,
-   "tier": "attested",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-24",
    "author": "this repository",
@@ -8937,17 +9517,10 @@
    "added_date": "2026-09-23",
    "added_subject": "chi(T^5) >= 5 and chi(T^6) >= 5: the attested bounds from the rank-4 exclusion",
    "receipt": "certs/qubit_T-m5-lower-5.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_qubit_t_m5_rank4_attested.py",
-   "certificate_budget_s": 1800,
-   "certificate_attested": {
-    "batches": "research/t5_rank4/batch_manifest.json",
-    "recomputed": 2,
-    "compute_hours": 0.002,
-    "hardware": "Apple M5 Pro laptop (macOS 26.5.1), one core at nice 19 under load from other sessions, 2026-09-24 02:25 UTC; the aggregate's two seeded re-runs (batches 0 and 1) on the same machine at 02:26 UTC",
-    "note": "The exclusion of every rank-4 decomposition of |T>^5 lives in the stored batch outputs under research/t5_rank4/results/ (partition.json over the census covers4.json: the 4,709 full 4-covers of |T>^3 up to the unitary symmetry of |T>^3, 4,697 of distinct independent states and 12 with a repeated state, each matched at the base points 00 and 01 along qubits 1, 2 with every candidate re-decided mod 2013265921 and numerically): 0 hits, 0 refused, 0 undecided. The certificate re-enumerates the census, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/t5_rank4/batch.py, which regenerates any batch (batch.py K).",
-    "total": 6
-   },
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
    "lean_module": null,
    "lean_theorem": null,
    "lean_receipt": null,
@@ -9043,7 +9616,7 @@
    "m": 6,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-20",
    "author": "this repository",
@@ -9056,8 +9629,8 @@
    "added_date": "2026-09-20",
    "added_subject": "Lower bounds for the five cells that had none",
    "receipt": "certs/qubit_T-m6-lower-4.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_qubit_t_m5_lift.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m3_m4.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -9078,7 +9651,7 @@
    "m": 6,
    "direction": "lower",
    "rank": 5,
-   "tier": "attested",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-24",
    "author": "this repository",
@@ -9091,17 +9664,10 @@
    "added_date": "2026-09-23",
    "added_subject": "chi(T^5) >= 5 and chi(T^6) >= 5: the attested bounds from the rank-4 exclusion",
    "receipt": "certs/qubit_T-m6-lower-5.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_qubit_t_m5_rank4_attested.py",
-   "certificate_budget_s": 1800,
-   "certificate_attested": {
-    "batches": "research/t5_rank4/batch_manifest.json",
-    "recomputed": 2,
-    "compute_hours": 0.002,
-    "hardware": "Apple M5 Pro laptop (macOS 26.5.1), one core at nice 19 under load from other sessions, 2026-09-24 02:25 UTC; the aggregate's two seeded re-runs (batches 0 and 1) on the same machine at 02:26 UTC",
-    "note": "The exclusion of every rank-4 decomposition of |T>^5 lives in the 6 stored batch outputs under research/t5_rank4/results/ (the 4,709 full 4-covers of |T>^3 up to symmetry, each matched at the base points 00 and 01 along qubits 1, 2 with every candidate re-decided mod 2013265921 and numerically): 0 hits, 0 refused, 0 undecided. The certificate re-enumerates the census, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/t5_rank4/batch.py, which regenerates any batch (batch.py K).",
-    "total": 6
-   },
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
    "lean_module": null,
    "lean_theorem": null,
    "lean_receipt": null,
