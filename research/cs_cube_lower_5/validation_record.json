@@ -1,0 +1,88 @@
+{
+  "status": "complete_core_independent_audit_and_observed_native_verifier_pass",
+  "date": "2026-11-06",
+  "claim": "5 <= chi(CS^3) <= 6; no five-term construction claimed",
+  "core_source_main_sha256": "70fc5bcb8637f213077d5adf59143b85ae8d9c0736c26e9f7125f17792636de4",
+  "core_runtime_manifest_sha256": "97ed16aa67a79cdece5f9e664bad77422c5de01c05f9a11483a88fc1e6fcfe80",
+  "no_argument_adapter_sha256": "b47b9b47b07c1cd475e226f24d64e7560749983182be9ffcfcbad45c565328f5",
+  "clean_run": {
+    "result_sha256": "bb8be3763d7aa970c327f0e75255c283017e8f26d2079350202471d2009a6272",
+    "status": "complete_unfiltered_portable_gate",
+    "all_gates_passed": true,
+    "producer_exit_observed": false,
+    "producer_exit_code": null,
+    "evidence": "complete saved outputs read back; producer terminal output not retained",
+    "rays": 36720,
+    "minimum_three_covers": 16,
+    "minimum_three_orbits": 1,
+    "retained_pair_classes": 331913,
+    "accepted_occurrences": 6922,
+    "zero_retained_records": 1504,
+    "shorter_records": 2,
+    "recorded_four_sets": 5877,
+    "complete_cover_orbits": 667,
+    "ordered_transition_pairs": 1693,
+    "crossing_signs": 27088,
+    "family_or_fidelity_filters_used": false,
+    "precomputed_scientific_inputs_used": false,
+    "elapsed_seconds": 718.1942550000022
+  },
+  "independent_audit": {
+    "result_sha256": "53dc1bc05f15b09bb2fce94b83f525c801ea0cf182778fc64679128e2e47d158",
+    "status": "PASS_independent_clean_portable_outputs_and_all_new_fibers",
+    "terminal_exit_observed": true,
+    "exit_code": 0,
+    "completed_class_records": 331913,
+    "exact_logged_identities": 8428,
+    "physical_cover_transports": 5877,
+    "lift_cases": 667,
+    "ordered_pairs": 1693,
+    "sign_tests": 27088,
+    "negative_free_pair_scan_repeated": false,
+    "full_group_orbit_enumeration_repeated": false,
+    "elapsed_seconds": 17.710710699997435
+  },
+  "trusted_schema_check": {
+    "status": "passed",
+    "entries": 1,
+    "final_candidate_sha256": "351d58f71d1b0a1a1c666ea6a999902daa2e1c52c909ecb7fd32e38a0523f120"
+  },
+  "native_certificate_verifier": {
+    "status": "PASS",
+    "tier_reported_locally": "verified",
+    "upstream_commit": "edde871fda354479d56e49b93a2502989bd956a2",
+    "observed_exit_code": 0,
+    "full_scientific_pipeline_repeated": true,
+    "elapsed_seconds": 730.7265415000002,
+    "result_sha256": "154d87b3a6d0a5e96908f1504989d911012e18a720640ed12d864f2caa72f0a1",
+    "receipt_sha256": "a2a05db0578bdd819363081892e0b03ae05bb6c91ddde2cbe30e61f4556a9cc9",
+    "tested_bound_sha256": "9aabf3e02e9d6a4f44fc4c885211cba6ad2250b73f41d8dc8be7fed130f91ed0",
+    "final_bound_sha256": "351d58f71d1b0a1a1c666ea6a999902daa2e1c52c909ecb7fd32e38a0523f120",
+    "metadata_changes_after_test": [
+      "notes",
+      "provenance.compute.hardware"
+    ],
+    "certificate_claim_and_runtime_sources_unchanged": true,
+    "final_metadata_schema_revalidation": "PASS: final candidate validated against pinned upstream schema; 1 of 1 valid; observed exit 0",
+    "external_CI_or_maintainer_acceptance": false
+  },
+  "environment": {
+    "os": "Windows 11",
+    "CPU": "AMD Ryzen 9 9955HX",
+    "physical_cores": 16,
+    "logical_processors": 32,
+    "reported_memory_GiB": 31.18,
+    "python": "3.12.14",
+    "numpy": "2.5.4",
+    "workers": 4
+  },
+  "discovery_costs": {
+    "aggregate_cpu_hours": null,
+    "aggregate_failed_and_successful_runs": null,
+    "token_costs": null,
+    "note": "Run timings above are validation timings, not reconstructed aggregate discovery costs."
+  },
+  "human_expert_review_claimed": false,
+  "public_submission_made": false,
+  "status_as_of": "Local validation completed before publication of this research patch."
+}

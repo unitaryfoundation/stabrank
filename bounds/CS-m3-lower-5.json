@@ -1,0 +1,26 @@
+{
+  "schema_version": "0.1",
+  "orbit": "CS",
+  "m": 3,
+  "direction": "lower",
+  "rank": 5,
+  "certificate": {
+    "script": "verify_challenge/cert_cs3_challenge.py",
+    "expect": "CERTIFIED chi(CS^3) >= 5",
+    "exact": true,
+    "budget_s": 3600
+  },
+  "provenance": {
+    "author": "Ruoyu Liu",
+    "date": "2026-11-06",
+    "github": [
+      "w2386411651-lang"
+    ],
+    "reference": "Analytic reduction embedded in verify_challenge/cert_cs3_analytic.py; accompanying research/cs_cube_lower_5 notes.",
+    "method": "Exact complete CS-square four-cover census and coefficient-fixed four-fiber lift exclusion, using explicit unitary and antiunitary symmetry.",
+    "compute": {
+      "hardware": "AMD Ryzen 9 9955HX (16 cores, 32 logical processors), 31.18 GiB reported memory, Windows 11; Python 3.12.14 and NumPy 2.5.4; four worker processes. Aggregate discovery CPU-hours, run count, token use and monetary cost were not reconstructed."
+    }
+  },
+  "notes": "Exact complete enumeration over every affine support, with proved finite-field rank bounds and Gaussian arithmetic. The portable certificate regenerates all scientific inputs and tests every four-cover orbit without product-family, one-entangled-family or fidelity filters. A full local run through the pinned upstream verifier returned PASS and tier=verified; this is not upstream CI or maintainer acceptance. Independent arithmetic checks verified all logged identities, physical cover transports and every lift decision; they did not repeat the full negative free-pair scan. Ruoyu Liu initiated and authorized the research; OpenAI Codex performed the mathematical development, code, internal audits and writing. No independent human expert review is claimed. The exact model deployment identifier and aggregate discovery costs are unavailable and are not invented. A five-term CS-cube construction is not claimed."
+}
