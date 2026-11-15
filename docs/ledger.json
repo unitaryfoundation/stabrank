@@ -225,7 +225,7 @@
    "m": 7,
    "direction": "lower",
    "rank": 3,
-   "tier": "cited",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2021-06-14",
@@ -261,7 +261,7 @@
    "m": 8,
    "direction": "lower",
    "rank": 3,
-   "tier": "cited",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2021-06-14",
@@ -405,7 +405,7 @@
    "m": 3,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-05-27",
@@ -494,7 +494,7 @@
    "m": 3,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-05-27",
@@ -604,7 +604,7 @@
    "m": 3,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-05-27",
@@ -651,7 +651,7 @@
    "m": 4,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-05-27",
@@ -782,7 +782,7 @@
    "m": 6,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-05-27",
@@ -870,7 +870,7 @@
    "m": 3,
    "direction": "lower",
    "rank": 6,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-07",
@@ -930,7 +930,7 @@
    "m": 3,
    "direction": "lower",
    "rank": 3,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-12",
@@ -950,7 +950,7 @@
    "m": 4,
    "direction": "lower",
    "rank": 3,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-12",
@@ -970,7 +970,7 @@
    "m": 4,
    "direction": "lower",
    "rank": 3,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-12",
@@ -1055,7 +1055,7 @@
    "m": 4,
    "direction": "lower",
    "rank": 6,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-16",
@@ -1080,7 +1080,7 @@
    "m": 4,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-16",
@@ -1130,7 +1130,7 @@
    "m": 3,
    "direction": "lower",
    "rank": 3,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-16",
@@ -1211,7 +1211,7 @@
    "m": 4,
    "direction": "lower",
    "rank": 3,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-18",
@@ -1261,7 +1261,7 @@
    "m": 4,
    "direction": "lower",
    "rank": 3,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-18",
@@ -1311,7 +1311,7 @@
    "m": 5,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-18",
@@ -1386,7 +1386,7 @@
    "m": 5,
    "direction": "lower",
    "rank": 6,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-18",
@@ -1411,7 +1411,7 @@
    "m": 5,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-18",
@@ -1436,7 +1436,7 @@
    "m": 5,
    "direction": "lower",
    "rank": 5,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-18",
@@ -1452,7 +1452,7 @@
     "runs": 1,
     "hardware": "Apple silicon laptop, four workers at low priority under a load average near 12: 1649 s for the enumeration and lift"
    },
-   "budget_s": 3600,
+   "budget_s": null,
    "attested": null
   },
   {
@@ -1461,7 +1461,7 @@
    "m": 5,
    "direction": "lower",
    "rank": 3,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-18",
@@ -1486,7 +1486,7 @@
    "m": 5,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-18",
@@ -1792,7 +1792,7 @@
    "m": 6,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-20",
@@ -2526,7 +2526,7 @@
    "m": 5,
    "direction": "lower",
    "rank": 5,
-   "tier": "attested",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-24",
@@ -2542,15 +2542,8 @@
     "runs": 1,
     "hardware": "Apple M5 Pro laptop (macOS 26.5.1), one core at nice 19 under load from other sessions, 2026-09-24 02:25 UTC; the aggregate's two seeded re-runs (batches 0 and 1) on the same machine at 02:26 UTC"
    },
-   "budget_s": 1800,
-   "attested": {
-    "batches": "research/t5_rank4/batch_manifest.json",
-    "recomputed": 2,
-    "compute_hours": 0.002,
-    "hardware": "Apple M5 Pro laptop (macOS 26.5.1), one core at nice 19 under load from other sessions, 2026-09-24 02:25 UTC; the aggregate's two seeded re-runs (batches 0 and 1) on the same machine at 02:26 UTC",
-    "note": "The exclusion of every rank-4 decomposition of |T>^5 lives in the stored batch outputs under research/t5_rank4/results/ (partition.json over the census covers4.json: the 4,709 full 4-covers of |T>^3 up to the unitary symmetry of |T>^3, 4,697 of distinct independent states and 12 with a repeated state, each matched at the base points 00 and 01 along qubits 1, 2 with every candidate re-decided mod 2013265921 and numerically): 0 hits, 0 refused, 0 undecided. The certificate re-enumerates the census, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/t5_rank4/batch.py, which regenerates any batch (batch.py K).",
-    "total": 6
-   }
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_T-m5-lower-6",
@@ -2590,7 +2583,7 @@
    "m": 6,
    "direction": "lower",
    "rank": 5,
-   "tier": "attested",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-24",
@@ -2606,15 +2599,8 @@
     "runs": 0,
     "hardware": "none beyond the m=5 certificate, which this cell re-runs"
    },
-   "budget_s": 1800,
-   "attested": {
-    "batches": "research/t5_rank4/batch_manifest.json",
-    "recomputed": 2,
-    "compute_hours": 0.002,
-    "hardware": "Apple M5 Pro laptop (macOS 26.5.1), one core at nice 19 under load from other sessions, 2026-09-24 02:25 UTC; the aggregate's two seeded re-runs (batches 0 and 1) on the same machine at 02:26 UTC",
-    "note": "The exclusion of every rank-4 decomposition of |T>^5 lives in the 6 stored batch outputs under research/t5_rank4/results/ (the 4,709 full 4-covers of |T>^3 up to symmetry, each matched at the base points 00 and 01 along qubits 1, 2 with every candidate re-decided mod 2013265921 and numerically): 0 hits, 0 refused, 0 undecided. The certificate re-enumerates the census, verifies the hashes and geometry of every output, re-decides every stored hit, fails on any refusal or undecided run, and re-runs two batches from scratch; completeness rests on the stored outputs and on research/t5_rank4/batch.py, which regenerates any batch (batch.py K).",
-    "total": 6
-   }
+   "budget_s": null,
+   "attested": null
   },
   {
    "slug": "qubit_T-m6-lower-6",
@@ -3879,7 +3865,7 @@
    "m": 3,
    "direction": "lower",
    "rank": 4,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-10-21",
@@ -4469,6 +4455,289 @@
     "hardware": "AMD Ryzen 9 9955HX (16 cores, 32 logical processors), 31.18 GiB reported memory, Windows 11; Python 3.12.14 and NumPy 2.5.4; four worker processes. Aggregate discovery CPU-hours, run count, token use and monetary cost were not reconstructed."
    },
    "budget_s": 3600,
+   "attested": null
+  },
+  {
+   "slug": "CS-m4-lower-4",
+   "orbit": "CS",
+   "m": 4,
+   "direction": "lower",
+   "rank": 4,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-10",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity (<00|_{7,8} |CS>^4 = (1/2) |CS>^3) applied to the exact Z[i] even-qubit postselection bound chi(CS^3) >= 4",
+   "reference": "stabrank verify_challenge",
+   "compute": {
+    "cpu_hours": 0.12,
+    "wall_clock_hours": 0.15,
+    "runs": 3,
+    "hardware": "Apple M1 laptop (16 GB), one core; Clifford postselection search and two-handle D_2/D_3 exact verification",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) heuristic search and exact certificate synthesis"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "CS-m4-upper-9",
+   "orbit": "CS",
+   "m": 4,
+   "direction": "upper",
+   "rank": 9,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.792481250360578,
+   "date": "2026-11-10",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "tensor square of the exact rank-3 witness for |CS>^2",
+   "reference": "stabrank bounds/CS-m2-upper-3.json",
+   "compute": {
+    "cpu_hours": 0.02,
+    "wall_clock_hours": 0.03,
+    "runs": 1,
+    "hardware": "Apple M1 laptop (16 GB), one core; direct tensor-square construction and exact symbolic verification",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) heuristic search and exact witness construction"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "H3-m4-lower-4",
+   "orbit": "H3",
+   "m": 4,
+   "direction": "lower",
+   "rank": 4,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-10",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity from the exact Z[omega_3] tau-Galois exclusion chi(H3^3) >= 4",
+   "reference": "stabrank verify_challenge",
+   "compute": {
+    "cpu_hours": 0.08,
+    "wall_clock_hours": 0.12,
+    "runs": 2,
+    "hardware": "Apple M1 laptop (16 GB), one core; Z[omega_3] tau-Galois quotient search and exact verification",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) heuristic search and exact certificate synthesis"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "N-m4-lower-4",
+   "orbit": "N",
+   "m": 4,
+   "direction": "lower",
+   "rank": 4,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-10",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity from the exact Z[omega_3] exclusion chi(N^3) >= 4",
+   "reference": "stabrank verify_challenge",
+   "compute": {
+    "cpu_hours": 0.18,
+    "wall_clock_hours": 0.25,
+    "runs": 4,
+    "hardware": "Apple M1 laptop (16 GB), one core; Z[omega_3] 1-pivot quotient search and canonical (1, 1, -2)/sqrt(6) verification",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) heuristic search and exact certificate synthesis"
+     },
+     {
+      "model": "gemini-4-carbon",
+      "role": "we* (PROOFER v19) heuristic verification for canonical Norrell vector"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "cat-m10-lower-4",
+   "orbit": "cat",
+   "m": 10,
+   "direction": "lower",
+   "rank": 4,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-10",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity (<0|_1 |cat_m> = 2^{-1/2} |cat_{m-1}>) applied to 2-step exact Z[i] slice-and-lift c_5 -> c_6 -> c_7 on D_4",
+   "reference": "stabrank verify_challenge (extending cert_cat_m7_lift.py by Michel de Messieres)",
+   "compute": {
+    "cpu_hours": 0,
+    "wall_clock_hours": 0,
+    "runs": 0,
+    "hardware": "none beyond bounds/cat-m9-lower-4.json (verify_challenge/cert_cat_m7_to_m10_lift.py), which this cell re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) heuristic search and exact certificate synthesis"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "cat-m10-upper-9",
+   "orbit": "cat",
+   "m": 10,
+   "direction": "upper",
+   "rank": 9,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.396240625180289,
+   "date": "2026-11-10",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "explicit 9-term stabilizer witness constructed from the cat_{4k+2} gluing of Qassim, Pashayan, and Gosset (arXiv:2106.07740) and verified in exact arithmetic",
+   "reference": "arXiv:2106.07740 (Qassim, Pashayan, and Gosset); stabrank verify_challenge",
+   "compute": {
+    "cpu_hours": 0.05,
+    "wall_clock_hours": 0.08,
+    "runs": 2,
+    "hardware": "Apple M1 laptop (16 GB), one core; stabilizer contraction and exact tableau verification",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) heuristic search and exact witness construction"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "cat-m9-lower-4",
+   "orbit": "cat",
+   "m": 9,
+   "direction": "lower",
+   "rank": 4,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-10",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity (<0|_1 |cat_m> = 2^{-1/2} |cat_{m-1}>) applied to 2-step exact Z[i] slice-and-lift c_5 -> c_6 -> c_7 on D_4",
+   "reference": "stabrank verify_challenge (extending cert_cat_m7_lift.py by Michel de Messieres)",
+   "compute": {
+    "cpu_hours": 0.15,
+    "wall_clock_hours": 0.2,
+    "runs": 3,
+    "hardware": "Apple M1 laptop (16 GB), one core; exploratory D_4 2-step slice-and-lift search and exact verification",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) heuristic search and exact certificate synthesis"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "cat-m9-upper-9",
+   "orbit": "cat",
+   "m": 9,
+   "direction": "upper",
+   "rank": 9,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.4528464287774732,
+   "date": "2026-11-10",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "explicit 9-term stabilizer witness constructed from the cat_{4k+2} gluing of Qassim, Pashayan, and Gosset (arXiv:2106.07740) and verified in exact arithmetic",
+   "reference": "arXiv:2106.07740 (Qassim, Pashayan, and Gosset); stabrank verify_challenge",
+   "compute": {
+    "cpu_hours": 0.02,
+    "wall_clock_hours": 0.03,
+    "runs": 1,
+    "hardware": "Apple M1 laptop (16 GB), one core; computational-basis projection of cat-m10-upper-9 witness and exact verification",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) heuristic search and exact witness construction"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_H-m6-lower-5",
+   "orbit": "qubit_H",
+   "m": 6,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-10",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity applied to the exact Z[i] 1-pivot Galois quotient rank-4 exclusion chi(H^5) >= 5",
+   "reference": "stabrank verify_challenge",
+   "compute": {
+    "cpu_hours": 0.45,
+    "wall_clock_hours": 0.72,
+    "runs": 6,
+    "hardware": "Apple M1 laptop (16 GB), one core; includes aborted D_4 pair-bucket search superseded by D_3 1-pivot Galois quotient",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) heuristic search and exact certificate synthesis"
+     }
+    ]
+   },
+   "budget_s": null,
    "attested": null
   }
  ]

@@ -1,7 +1,7 @@
 {
   "ok": true,
-  "tier": "reproduced",
-  "detail": "certificate script asserted: CERTIFIED chi(T3^3) >= 6",
+  "tier": "verified",
+  "detail": "certificate script asserted: CERTIFIED chi(T3^3) >= 6, by an argument declared exact throughout (no floating-point margin)",
   "gamma": null,
-  "content_hash": "dc976b3018d5b54e"
+  "content_hash": "0815fc40aaf3ab35"
 }

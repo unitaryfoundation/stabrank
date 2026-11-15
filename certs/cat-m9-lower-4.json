@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "tier": "verified",
+  "detail": "certificate script asserted: CERTIFIED chi(cat_9) >= 4, by an argument declared exact throughout (no floating-point margin)",
+  "gamma": null,
+  "content_hash": "d4b17b663c129ce6"
+}
