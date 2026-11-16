@@ -845,6 +845,86 @@
    "attested": null
   },
   {
+   "slug": "qubit_sqrtT-m10-upper-24",
+   "orbit": "qubit_sqrtT",
+   "m": 10,
+   "direction": "upper",
+   "rank": 24,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.45849625007211564,
+   "date": "2026-09-06",
+   "author": "Fedor Kuyanov",
+   "github": [
+    "kuyanov"
+   ],
+   "method": "Exact specialization of the stabzoo arbitrary-phase product construction at w = exp(I*pi/8)",
+   "reference": "https://github.com/kuyanov/stabzoo/blob/d81ebcb98e80fefafb7b721c599a7adf263a1614/phase_product/n10_r24.json",
+   "compute": null,
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_sqrtT-m6-upper-8",
+   "orbit": "qubit_sqrtT",
+   "m": 6,
+   "direction": "upper",
+   "rank": 8,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.5,
+   "date": "2026-09-06",
+   "author": "Fedor Kuyanov",
+   "github": [
+    "kuyanov"
+   ],
+   "method": "Exact specialization of the stabzoo arbitrary-phase product construction at w = exp(I*pi/8)",
+   "reference": "https://github.com/kuyanov/stabzoo/blob/d81ebcb98e80fefafb7b721c599a7adf263a1614/phase_product/n6_r8.json",
+   "compute": null,
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_sqrtT-m8-upper-15",
+   "orbit": "qubit_sqrtT",
+   "m": 8,
+   "direction": "upper",
+   "rank": 15,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.48836132445106484,
+   "date": "2026-09-06",
+   "author": "Fedor Kuyanov",
+   "github": [
+    "kuyanov"
+   ],
+   "method": "Exact specialization of the stabzoo arbitrary-phase product construction at w = exp(I*pi/8)",
+   "reference": "https://github.com/kuyanov/stabzoo/blob/d81ebcb98e80fefafb7b721c599a7adf263a1614/phase_product/n8_r15.json",
+   "compute": null,
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_sqrtT-m9-upper-18",
+   "orbit": "qubit_sqrtT",
+   "m": 9,
+   "direction": "upper",
+   "rank": 18,
+   "tier": "verified",
+   "ok": true,
+   "gamma": 0.4633250001602569,
+   "date": "2026-09-06",
+   "author": "Fedor Kuyanov",
+   "github": [
+    "kuyanov"
+   ],
+   "method": "Exact specialization of the stabzoo arbitrary-phase product construction at w = exp(I*pi/8)",
+   "reference": "https://github.com/kuyanov/stabzoo/blob/d81ebcb98e80fefafb7b721c599a7adf263a1614/phase_product/n9_r18.json",
+   "compute": null,
+   "budget_s": null,
+   "attested": null
+  },
+  {
    "slug": "T3-m2-lower-3",
    "orbit": "T3",
    "m": 2,
