@@ -55,5 +55,9 @@
       "hardware": "Apple silicon laptop, one core; direct construction, no search"
     }
   },
-  "notes": "The single-copy cell. |qubit_H> is not a stabilizer state (its nonzero amplitudes have two different moduli, the lower-bound certificate of the same cell), and it lies in the span of two stabilizer states; this is the first of the 12 rank-2 decompositions listed in research/constructions/data/qubit_H_m1_rank2.json, with coefficients fitted exactly. The implied exponent log_p(2) is the trivial one and moves nothing; the cell is filed so the orbit page shows chi = 2 at m = 1 as it does for S, T3, and T5."
+  "notes": "The single-copy cell. |qubit_H> is not a stabilizer state (its nonzero amplitudes have two different moduli, the lower-bound certificate of the same cell), and it lies in the span of two stabilizer states; this is the first of the 12 rank-2 decompositions listed in research/constructions/data/qubit_H_m1_rank2.json, with coefficients fitted exactly. The implied exponent log_p(2) is the trivial one and moves nothing; the cell is filed so the orbit page shows chi = 2 at m = 1 as it does for S, T3, and T5. Also proved in Lean 4 (PR #194, 0 sorryAx): qubit_h_m1_stabRankP_le_two in LeanProofs.QubitHM1StabRank proves stabRankP 2 (hVec 1) <= 2 from this witness via coordinate reflection over Z[i, sqrt(2)].",
+  "lean": {
+    "module": "LeanProofs.QubitHM1StabRank",
+    "theorem": "qubit_h_m1_stabRankP_le_two"
+  }
 }

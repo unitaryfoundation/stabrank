@@ -19,7 +19,7 @@
       "hardware": "Apple silicon laptop, one core; direct construction, no search"
     }
   },
-  "notes": "Tensor product of the exact decompositions qubit_T-m4-upper-3.json, qubit_T-m3-upper-3.json: chi(|qubit_T>^4) <= 3 x chi(|qubit_T>^3) <= 3 gives chi(|qubit_T>^7) <= 9, exponent 0.4528. First witness for this cell; it is the sub-multiplicative value the board already implied and does not move the exponent. Terms are the exact products (x0 and l concatenated, W and Q block diagonal) and coefficients the exact products, built by research/constructions/product_witness.py.",
+  "notes": "Tensor product of the exact decompositions qubit_T-m4-upper-3.json, qubit_T-m3-upper-3.json: chi(|qubit_T>^4) <= 3 x chi(|qubit_T>^3) <= 3 gives chi(|qubit_T>^7) <= 9, exponent 0.4528. First witness for this cell; it is the sub-multiplicative value the board already implied and does not move the exponent. Terms are the exact products (x0 and l concatenated, W and Q block diagonal) and coefficients the exact products, built by research/constructions/product_witness.py. Also proved in Lean 4 (PR #194, 0 sorryAx): qubit_t_m7_stabRankP_le_nine in LeanProofs.QubitTM7StabRank proves stabRankP 2 (tVec 7) <= 9 from this witness on all 128 amplitudes via coordinate reflection.",
   "witness": {
     "terms": [
       {
@@ -1101,5 +1101,9 @@
       "sqrt(3)*(3*sqrt(6)*(-sqrt(2 - sqrt(3))*sqrt(sqrt(3) + 3) - I*sqrt(sqrt(3) + 2)*sqrt(sqrt(3) + 3)) + 9*sqrt(2)*(sqrt(sqrt(3) + 2)*sqrt(sqrt(3) + 3) - I*sqrt(2 - sqrt(3))*sqrt(sqrt(3) + 3)))/162",
       "sqrt(2)*(sqrt(9 - 5*sqrt(3))*sqrt(sqrt(3) + 2) + sqrt(2 - sqrt(3))*sqrt(sqrt(3) + 3) - I*sqrt(2 - sqrt(3))*sqrt(9 - 5*sqrt(3)) + I*sqrt(sqrt(3) + 2)*sqrt(sqrt(3) + 3))/18"
     ]
+  },
+  "lean": {
+    "module": "LeanProofs.QubitTM7StabRank",
+    "theorem": "qubit_t_m7_stabRankP_le_nine"
   }
 }
