@@ -1,7 +1,7 @@
 {
  "generated_from": "bounds/",
- "head": "71a92e287ed5ff14032f26e3c3c2751263db8ac8",
- "generated": "2026-11-15",
+ "head": "2fd3e3f7ee786e0f0c5ec5831455d68c8ca4bc46",
+ "generated": "2026-11-16",
  "since": "2026-09-15",
  "exponents": [
   {
@@ -106,15 +106,15 @@
    "published_txt": "1/2",
    "reference": "qassim2021improved",
    "best": {
-    "gamma": 0.5121375001030223,
+    "gamma": 0.45849625007211564,
     "tier": "verified",
-    "m": 7,
-    "rank": 12,
-    "slug": "qubit_sqrtT-m7-upper-12",
-    "date": "2026-10-23"
+    "m": 10,
+    "rank": 24,
+    "slug": "qubit_sqrtT-m10-upper-24",
+    "date": "2026-09-06"
    },
-   "verdict": "trails",
-   "gap": 0.01213750010302228
+   "verdict": "beats",
+   "gap": -0.04150374992788436
   },
   {
    "orbit": "CS",
@@ -1300,11 +1300,11 @@
     "moved_since": true
    },
    "upper": {
-    "rank": 12,
+    "rank": 8,
     "tier": "verified",
-    "slug": "qubit_sqrtT-m6-upper-12",
-    "date": "2026-10-23",
-    "board_date": "2026-10-24",
+    "slug": "qubit_sqrtT-m6-upper-8",
+    "date": "2026-09-06",
+    "board_date": "2026-11-16",
     "moved_since": true
    },
    "settled": false,
@@ -1327,6 +1327,51 @@
     "slug": "qubit_sqrtT-m7-upper-12",
     "date": "2026-10-23",
     "board_date": "2026-10-24",
+    "moved_since": true
+   },
+   "settled": false,
+   "moved_since": true
+  },
+  {
+   "orbit": "qubit_sqrtT",
+   "m": 8,
+   "lower": null,
+   "upper": {
+    "rank": 15,
+    "tier": "verified",
+    "slug": "qubit_sqrtT-m8-upper-15",
+    "date": "2026-09-06",
+    "board_date": "2026-11-16",
+    "moved_since": true
+   },
+   "settled": false,
+   "moved_since": true
+  },
+  {
+   "orbit": "qubit_sqrtT",
+   "m": 9,
+   "lower": null,
+   "upper": {
+    "rank": 18,
+    "tier": "verified",
+    "slug": "qubit_sqrtT-m9-upper-18",
+    "date": "2026-09-06",
+    "board_date": "2026-11-16",
+    "moved_since": true
+   },
+   "settled": false,
+   "moved_since": true
+  },
+  {
+   "orbit": "qubit_sqrtT",
+   "m": 10,
+   "lower": null,
+   "upper": {
+    "rank": 24,
+    "tier": "verified",
+    "slug": "qubit_sqrtT-m10-upper-24",
+    "date": "2026-09-06",
+    "board_date": "2026-11-16",
     "moved_since": true
    },
    "settled": false,
@@ -3816,13 +3861,22 @@
    "cum_discoveries": 40
   },
   {
+   "date": "2026-09-06",
+   "seeded": false,
+   "cpu_hours": 0.0,
+   "discoveries": 4,
+   "median_declared": null,
+   "cum_cpu_hours": 0.63,
+   "cum_discoveries": 44
+  },
+  {
    "date": "2026-09-07",
    "seeded": false,
    "cpu_hours": 0.0,
    "discoveries": 2,
    "median_declared": null,
    "cum_cpu_hours": 0.63,
-   "cum_discoveries": 42
+   "cum_discoveries": 46
   },
   {
    "date": "2026-09-12",
@@ -3831,7 +3885,7 @@
    "discoveries": 5,
    "median_declared": null,
    "cum_cpu_hours": 0.63,
-   "cum_discoveries": 47
+   "cum_discoveries": 51
   },
   {
    "date": "2026-09-15",
@@ -3840,7 +3894,7 @@
    "discoveries": 1,
    "median_declared": null,
    "cum_cpu_hours": 0.63,
-   "cum_discoveries": 48
+   "cum_discoveries": 52
   },
   {
    "date": "2026-09-16",
@@ -3849,7 +3903,7 @@
    "discoveries": 7,
    "median_declared": 0.08,
    "cum_cpu_hours": 1.301,
-   "cum_discoveries": 55
+   "cum_discoveries": 59
   },
   {
    "date": "2026-09-17",
@@ -3858,7 +3912,7 @@
    "discoveries": 1,
    "median_declared": 0.6,
    "cum_cpu_hours": 1.9009999999999998,
-   "cum_discoveries": 56
+   "cum_discoveries": 60
   },
   {
    "date": "2026-09-18",
@@ -3867,7 +3921,7 @@
    "discoveries": 13,
    "median_declared": 0.05,
    "cum_cpu_hours": 20.49297222222221,
-   "cum_discoveries": 69
+   "cum_discoveries": 73
   },
   {
    "date": "2026-09-19",
@@ -3876,7 +3930,7 @@
    "discoveries": 0,
    "median_declared": null,
    "cum_cpu_hours": 32.81566666666666,
-   "cum_discoveries": 69
+   "cum_discoveries": 73
   },
   {
    "date": "2026-09-20",
@@ -3885,7 +3939,7 @@
    "discoveries": 11,
    "median_declared": 0.0055,
    "cum_cpu_hours": 510.02427777777757,
-   "cum_discoveries": 80
+   "cum_discoveries": 84
   },
   {
    "date": "2026-09-21",
@@ -3894,7 +3948,7 @@
    "discoveries": 3,
    "median_declared": 0.04,
    "cum_cpu_hours": 510.0642777777776,
-   "cum_discoveries": 83
+   "cum_discoveries": 87
   },
   {
    "date": "2026-09-22",
@@ -3903,7 +3957,7 @@
    "discoveries": 8,
    "median_declared": 0.001,
    "cum_cpu_hours": 510.4116111111109,
-   "cum_discoveries": 91
+   "cum_discoveries": 95
   },
   {
    "date": "2026-09-23",
@@ -3912,7 +3966,7 @@
    "discoveries": 8,
    "median_declared": 0.001,
    "cum_cpu_hours": 634.4166111111109,
-   "cum_discoveries": 99
+   "cum_discoveries": 103
   },
   {
    "date": "2026-09-24",
@@ -3921,7 +3975,7 @@
    "discoveries": 12,
    "median_declared": 0.001,
    "cum_cpu_hours": 721.4206111111109,
-   "cum_discoveries": 111
+   "cum_discoveries": 115
   },
   {
    "date": "2026-09-26",
@@ -3930,7 +3984,7 @@
    "discoveries": 1,
    "median_declared": 121.5,
    "cum_cpu_hours": 842.9206111111109,
-   "cum_discoveries": 112
+   "cum_discoveries": 116
   },
   {
    "date": "2026-10-02",
@@ -3939,7 +3993,7 @@
    "discoveries": 3,
    "median_declared": 28.9,
    "cum_cpu_hours": 953.3206111111109,
-   "cum_discoveries": 115
+   "cum_discoveries": 119
   },
   {
    "date": "2026-10-09",
@@ -3948,7 +4002,7 @@
    "discoveries": 1,
    "median_declared": null,
    "cum_cpu_hours": 953.3206111111109,
-   "cum_discoveries": 116
+   "cum_discoveries": 120
   },
   {
    "date": "2026-10-12",
@@ -3957,7 +4011,7 @@
    "discoveries": 1,
    "median_declared": 0.001,
    "cum_cpu_hours": 953.3216111111109,
-   "cum_discoveries": 117
+   "cum_discoveries": 121
   },
   {
    "date": "2026-10-16",
@@ -3966,7 +4020,7 @@
    "discoveries": 5,
    "median_declared": 0.01,
    "cum_cpu_hours": 962.1316111111108,
-   "cum_discoveries": 122
+   "cum_discoveries": 126
   },
   {
    "date": "2026-10-17",
@@ -3975,7 +4029,7 @@
    "discoveries": 29,
    "median_declared": 0.0,
    "cum_cpu_hours": 1185.5416111111108,
-   "cum_discoveries": 151
+   "cum_discoveries": 155
   },
   {
    "date": "2026-10-18",
@@ -3984,7 +4038,7 @@
    "discoveries": 1,
    "median_declared": 0.001,
    "cum_cpu_hours": 1185.5426111111108,
-   "cum_discoveries": 152
+   "cum_discoveries": 156
   },
   {
    "date": "2026-10-21",
@@ -3993,7 +4047,7 @@
    "discoveries": 9,
    "median_declared": 0.003,
    "cum_cpu_hours": 1185.5956111111109,
-   "cum_discoveries": 161
+   "cum_discoveries": 165
   },
   {
    "date": "2026-10-23",
@@ -4002,7 +4056,7 @@
    "discoveries": 12,
    "median_declared": 11.3826,
    "cum_cpu_hours": 8455.402811111113,
-   "cum_discoveries": 173
+   "cum_discoveries": 177
   },
   {
    "date": "2026-11-06",
@@ -4011,7 +4065,7 @@
    "discoveries": 1,
    "median_declared": 0.0,
    "cum_cpu_hours": 8455.402811111113,
-   "cum_discoveries": 174
+   "cum_discoveries": 178
   },
   {
    "date": "2026-11-10",
@@ -4020,7 +4074,7 @@
    "discoveries": 9,
    "median_declared": 0.08,
    "cum_cpu_hours": 8456.472811111113,
-   "cum_discoveries": 183
+   "cum_discoveries": 187
   }
  ],
  "bounds": [
@@ -10059,6 +10113,36 @@
    }
   },
   {
+   "slug": "qubit_sqrtT-m10-upper-24",
+   "file": "bounds/qubit_sqrtT-m10-upper-24.json",
+   "orbit": "qubit_sqrtT",
+   "m": 10,
+   "direction": "upper",
+   "rank": 24,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-09-06",
+   "author": "Fedor Kuyanov",
+   "reference": "https://github.com/kuyanov/stabzoo/blob/d81ebcb98e80fefafb7b721c599a7adf263a1614/phase_product/n10_r24.json",
+   "method": "Exact specialization of the stabzoo arbitrary-phase product construction at w = exp(I*pi/8)",
+   "pull_request": 198,
+   "merge_commit": "2fd3e3f7ee786e0f0c5ec5831455d68c8ca4bc46",
+   "merge_date": "2026-11-16",
+   "added_commit": "006c4207b544c72b09114dec8ec234753f5bcd29",
+   "added_date": "2026-11-15",
+   "added_subject": "New upper bounds",
+   "receipt": "certs/qubit_sqrtT-m10-upper-24.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": null
+  },
+  {
    "slug": "qubit_sqrtT-m2-lower-3",
    "file": "bounds/qubit_sqrtT-m2-lower-3.json",
    "orbit": "qubit_sqrtT",
@@ -10528,6 +10612,36 @@
    }
   },
   {
+   "slug": "qubit_sqrtT-m6-upper-8",
+   "file": "bounds/qubit_sqrtT-m6-upper-8.json",
+   "orbit": "qubit_sqrtT",
+   "m": 6,
+   "direction": "upper",
+   "rank": 8,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-09-06",
+   "author": "Fedor Kuyanov",
+   "reference": "https://github.com/kuyanov/stabzoo/blob/d81ebcb98e80fefafb7b721c599a7adf263a1614/phase_product/n6_r8.json",
+   "method": "Exact specialization of the stabzoo arbitrary-phase product construction at w = exp(I*pi/8)",
+   "pull_request": 198,
+   "merge_commit": "2fd3e3f7ee786e0f0c5ec5831455d68c8ca4bc46",
+   "merge_date": "2026-11-16",
+   "added_commit": "006c4207b544c72b09114dec8ec234753f5bcd29",
+   "added_date": "2026-11-15",
+   "added_subject": "New upper bounds",
+   "receipt": "certs/qubit_sqrtT-m6-upper-8.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": null
+  },
+  {
    "slug": "qubit_sqrtT-m7-lower-7",
    "file": "bounds/qubit_sqrtT-m7-lower-7.json",
    "orbit": "qubit_sqrtT",
@@ -10609,6 +10723,66 @@
      }
     ]
    }
+  },
+  {
+   "slug": "qubit_sqrtT-m8-upper-15",
+   "file": "bounds/qubit_sqrtT-m8-upper-15.json",
+   "orbit": "qubit_sqrtT",
+   "m": 8,
+   "direction": "upper",
+   "rank": 15,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-09-06",
+   "author": "Fedor Kuyanov",
+   "reference": "https://github.com/kuyanov/stabzoo/blob/d81ebcb98e80fefafb7b721c599a7adf263a1614/phase_product/n8_r15.json",
+   "method": "Exact specialization of the stabzoo arbitrary-phase product construction at w = exp(I*pi/8)",
+   "pull_request": 198,
+   "merge_commit": "2fd3e3f7ee786e0f0c5ec5831455d68c8ca4bc46",
+   "merge_date": "2026-11-16",
+   "added_commit": "006c4207b544c72b09114dec8ec234753f5bcd29",
+   "added_date": "2026-11-15",
+   "added_subject": "New upper bounds",
+   "receipt": "certs/qubit_sqrtT-m8-upper-15.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": null
+  },
+  {
+   "slug": "qubit_sqrtT-m9-upper-18",
+   "file": "bounds/qubit_sqrtT-m9-upper-18.json",
+   "orbit": "qubit_sqrtT",
+   "m": 9,
+   "direction": "upper",
+   "rank": 18,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-09-06",
+   "author": "Fedor Kuyanov",
+   "reference": "https://github.com/kuyanov/stabzoo/blob/d81ebcb98e80fefafb7b721c599a7adf263a1614/phase_product/n9_r18.json",
+   "method": "Exact specialization of the stabzoo arbitrary-phase product construction at w = exp(I*pi/8)",
+   "pull_request": 198,
+   "merge_commit": "2fd3e3f7ee786e0f0c5ec5831455d68c8ca4bc46",
+   "merge_date": "2026-11-16",
+   "added_commit": "006c4207b544c72b09114dec8ec234753f5bcd29",
+   "added_date": "2026-11-15",
+   "added_subject": "New upper bounds",
+   "receipt": "certs/qubit_sqrtT-m9-upper-18.json",
+   "receipt_matches": true,
+   "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": null
   }
  ]
 }
