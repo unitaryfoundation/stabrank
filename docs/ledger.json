@@ -1316,7 +1316,7 @@
    "m": 4,
    "direction": "lower",
    "rank": 5,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-18",
@@ -1332,7 +1332,7 @@
     "runs": 1,
     "hardware": "Apple silicon laptop, four workers at low priority under a load average near 12: 1183 s for the enumeration and lift"
    },
-   "budget_s": 3600,
+   "budget_s": null,
    "attested": null
   },
   {
@@ -1366,7 +1366,7 @@
    "m": 4,
    "direction": "lower",
    "rank": 5,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-18",
@@ -1382,7 +1382,7 @@
     "runs": 3,
     "hardware": "Apple silicon laptop at low priority for the 6.4-hour first enumeration; the certificate ran in 43 minutes on the 4-core CI runner with the numpy search, and re-runs here with the compiled kernel"
    },
-   "budget_s": 3600,
+   "budget_s": null,
    "attested": null
   },
   {
@@ -1416,7 +1416,7 @@
    "m": 5,
    "direction": "lower",
    "rank": 5,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-18",
@@ -1686,7 +1686,7 @@
    "m": 6,
    "direction": "lower",
    "rank": 5,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-20",
@@ -1917,7 +1917,7 @@
    "m": 2,
    "direction": "lower",
    "rank": 5,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-21",
@@ -2163,7 +2163,7 @@
    "m": 8,
    "direction": "upper",
    "rank": 9,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "gamma": 0.396240625180289,
    "date": "2026-09-22",
@@ -2220,7 +2220,7 @@
    "m": 5,
    "direction": "upper",
    "rank": 12,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "gamma": 0.45237190142858297,
    "date": "2026-09-23",
@@ -2434,7 +2434,7 @@
    "m": 3,
    "direction": "lower",
    "rank": 5,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-24",
@@ -2484,7 +2484,7 @@
    "m": 4,
    "direction": "lower",
    "rank": 5,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-09-24",
@@ -2893,7 +2893,7 @@
    "m": 5,
    "direction": "upper",
    "rank": 10,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "gamma": 0.4191806548578769,
    "date": "2026-10-16",
@@ -3036,7 +3036,7 @@
    "m": 1,
    "direction": "lower",
    "rank": 2,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "gamma": null,
    "date": "2026-10-17",
@@ -3056,7 +3056,7 @@
    "m": 1,
    "direction": "upper",
    "rank": 2,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "gamma": 0.6309297535714574,
    "date": "2026-10-17",
@@ -3145,7 +3145,7 @@
    "m": 1,
    "direction": "lower",
    "rank": 2,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "gamma": null,
    "date": "2026-10-17",
@@ -3165,7 +3165,7 @@
    "m": 1,
    "direction": "upper",
    "rank": 2,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "gamma": 0.6309297535714574,
    "date": "2026-10-17",
@@ -3254,7 +3254,7 @@
    "m": 7,
    "direction": "lower",
    "rank": 5,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-10-17",
@@ -3279,7 +3279,7 @@
    "m": 8,
    "direction": "lower",
    "rank": 5,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "gamma": null,
    "date": "2026-10-17",
@@ -3463,7 +3463,7 @@
    "m": 1,
    "direction": "lower",
    "rank": 2,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "gamma": null,
    "date": "2026-10-17",
@@ -3483,7 +3483,7 @@
    "m": 1,
    "direction": "upper",
    "rank": 2,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "gamma": 1.0,
    "date": "2026-10-17",
@@ -3540,7 +3540,7 @@
    "m": 1,
    "direction": "lower",
    "rank": 2,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "gamma": null,
    "date": "2026-10-17",
@@ -3560,7 +3560,7 @@
    "m": 1,
    "direction": "upper",
    "rank": 2,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "gamma": 1.0,
    "date": "2026-10-17",
@@ -3649,7 +3649,7 @@
    "m": 7,
    "direction": "upper",
    "rank": 9,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "gamma": 0.4528464287774732,
    "date": "2026-10-17",
@@ -4816,6 +4816,653 @@
       "role": "we* (PROOFER v19) heuristic search and exact certificate synthesis"
      }
     ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "CS-m4-lower-5",
+   "orbit": "CS",
+   "m": 4,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "even-qubit (<0|_2 (I (x) H))^4 Clifford postselection to |Psi_4> = (2|0> + (1+i)|1>)^4 in Z[i]^16 + exact F_P S_3-reduced D_3 rank-4 enumeration and 32^2 x 32^2 Pauli slice-and-lift exclusion",
+   "reference": "stabrank verify_challenge (extending cert_cs_m3_m4_exact.py)",
+   "compute": {
+    "cpu_hours": 0.18,
+    "wall_clock_hours": 0.22,
+    "runs": 3,
+    "hardware": "Apple M1 laptop (16 GB), one core; 4-qubit Clifford postselection discovery and S_3-reduced D_3 rank-4 lift search",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) heuristic postselection discovery and exact Z[i]/F_P certificate synthesis"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "H3-m5-lower-5",
+   "orbit": "H3",
+   "m": 5,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity applied 1 time(s) to the exact 2D tau-Galois + Z[omega_3, sqrt(3)] slice-and-lift bound chi(|H3>^4) >= 5",
+   "reference": "stabrank verify_challenge",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond H3-m4-lower-5.json (verify_challenge/cert_h3_m4_to_m6_rank5_exact.py), which this cell re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact Galois-plane slice-lift synthesis and projection bound wiring"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "H3-m6-lower-5",
+   "orbit": "H3",
+   "m": 6,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity applied 2 time(s) to the exact 2D tau-Galois + Z[omega_3, sqrt(3)] slice-and-lift bound chi(|H3>^4) >= 5",
+   "reference": "stabrank verify_challenge",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond H3-m4-lower-5.json (verify_challenge/cert_h3_m4_to_m6_rank5_exact.py), which this cell re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact Galois-plane slice-lift synthesis and projection bound wiring"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "N-m5-lower-5",
+   "orbit": "N",
+   "m": 5,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity (<0| (x) I)|N>^(k+1) = 6^(-1/2)|N>^k applied 1 time(s) to the exact Z[omega_3] slice-and-lift bound chi(|N>^4) >= 5",
+   "reference": "stabrank verify_challenge",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond N-m4-lower-5.json (verify_challenge/cert_s_n_rank5_exact.py), which this cell re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact Z[omega_3] slice-lift synthesis and projection bound wiring"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "N-m6-lower-5",
+   "orbit": "N",
+   "m": 6,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity (<0| (x) I)|N>^(k+1) = 6^(-1/2)|N>^k applied 2 time(s) to the exact Z[omega_3] slice-and-lift bound chi(|N>^4) >= 5",
+   "reference": "stabrank verify_challenge",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond N-m4-lower-5.json (verify_challenge/cert_s_n_rank5_exact.py), which this cell re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact Z[omega_3] slice-lift synthesis and projection bound wiring"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "T3-m4-lower-7",
+   "orbit": "T3",
+   "m": 4,
+   "direction": "lower",
+   "rank": 7,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity (<0|^{ot 1} (x) I^3)|T3>^4 = 3^{-1/2}|T3>^3 applied to the exact modular rank-6 exclusion at m = 3",
+   "reference": "verify_challenge/cert_t3m3_rank7.py (bounds/T3-m3-lower-7.json)",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond T3-m3-lower-7.json (verify_challenge/cert_t3m3_rank7.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "T3-m5-lower-7",
+   "orbit": "T3",
+   "m": 5,
+   "direction": "lower",
+   "rank": 7,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity (<0|^{ot 2} (x) I^3)|T3>^5 = 3^{-2/2}|T3>^3 applied to the exact modular rank-6 exclusion at m = 3",
+   "reference": "verify_challenge/cert_t3m3_rank7.py (bounds/T3-m3-lower-7.json)",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond T3-m3-lower-7.json (verify_challenge/cert_t3m3_rank7.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "T3-m6-lower-7",
+   "orbit": "T3",
+   "m": 6,
+   "direction": "lower",
+   "rank": 7,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity (<0|^{ot 3} (x) I^3)|T3>^6 = 3^{-3/2}|T3>^3 applied to the exact modular rank-6 exclusion at m = 3",
+   "reference": "verify_challenge/cert_t3m3_rank7.py (bounds/T3-m3-lower-7.json)",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond T3-m3-lower-7.json (verify_challenge/cert_t3m3_rank7.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "T5-m5-lower-5",
+   "orbit": "T5",
+   "m": 5,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity applied 3 times to the exact F_P Galois-Clifford rank-4 exclusion chi(|T5>^2) >= 5",
+   "reference": "stabrank verify_challenge",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond T5-m2-lower-5.json (verify_challenge/cert_t5_m2_to_m5_exact.py), which this cell re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) Galois-Clifford quotient synthesis and projection bound wiring"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "cat-m2-lower-1",
+   "orbit": "cat",
+   "m": 2,
+   "direction": "lower",
+   "rank": 1,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "exact: |cat_2> = (|00> + i|11>)/sqrt(2) is non-zero (|||cat_2>||^2 = 1 > 0), excluding rank 0",
+   "reference": "arXiv:2106.07740 (Qassim, Pashayan, and Gosset, Table 1); stabrank verify_challenge",
+   "compute": null,
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_H-m10-lower-5",
+   "orbit": "qubit_H",
+   "m": 10,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity (<0|^{ot 5} (x) I^5)|qubit_H>^10 applied to the exact Z[i] / Z[i, sqrt(3)] rank-4 exclusion at m = 5",
+   "reference": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py (PR #193)",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_H-m5-lower-5.json (verify_challenge/cert_qubit_galois_m5_m6_rank4.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_H-m7-lower-5",
+   "orbit": "qubit_H",
+   "m": 7,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity (<0|^{ot 2} (x) I^5)|qubit_H>^7 applied to the exact Z[i] / Z[i, sqrt(3)] rank-4 exclusion at m = 5",
+   "reference": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py (PR #193)",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_H-m5-lower-5.json (verify_challenge/cert_qubit_galois_m5_m6_rank4.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_H-m8-lower-5",
+   "orbit": "qubit_H",
+   "m": 8,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity (<0|^{ot 3} (x) I^5)|qubit_H>^8 applied to the exact Z[i] / Z[i, sqrt(3)] rank-4 exclusion at m = 5",
+   "reference": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py (PR #193)",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_H-m5-lower-5.json (verify_challenge/cert_qubit_galois_m5_m6_rank4.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_H-m9-lower-5",
+   "orbit": "qubit_H",
+   "m": 9,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity (<0|^{ot 4} (x) I^5)|qubit_H>^9 applied to the exact Z[i] / Z[i, sqrt(3)] rank-4 exclusion at m = 5",
+   "reference": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py (PR #193)",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_H-m5-lower-5.json (verify_challenge/cert_qubit_galois_m5_m6_rank4.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_T-m10-lower-5",
+   "orbit": "qubit_T",
+   "m": 10,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity (<0|^{ot 5} (x) I^5)|qubit_T>^10 applied to the exact Z[i] / Z[i, sqrt(3)] rank-4 exclusion at m = 5",
+   "reference": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py (PR #193)",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_T-m5-lower-5.json (verify_challenge/cert_qubit_galois_m5_m6_rank4.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_T-m7-lower-5",
+   "orbit": "qubit_T",
+   "m": 7,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity (<0|^{ot 2} (x) I^5)|qubit_T>^7 applied to the exact Z[i] / Z[i, sqrt(3)] rank-4 exclusion at m = 5",
+   "reference": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py (PR #193)",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_T-m5-lower-5.json (verify_challenge/cert_qubit_galois_m5_m6_rank4.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_T-m8-lower-5",
+   "orbit": "qubit_T",
+   "m": 8,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity (<0|^{ot 3} (x) I^5)|qubit_T>^8 applied to the exact Z[i] / Z[i, sqrt(3)] rank-4 exclusion at m = 5",
+   "reference": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py (PR #193)",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_T-m5-lower-5.json (verify_challenge/cert_qubit_galois_m5_m6_rank4.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_T-m9-lower-5",
+   "orbit": "qubit_T",
+   "m": 9,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity (<0|^{ot 4} (x) I^5)|qubit_T>^9 applied to the exact Z[i] / Z[i, sqrt(3)] rank-4 exclusion at m = 5",
+   "reference": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py (PR #193)",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_T-m5-lower-5.json (verify_challenge/cert_qubit_galois_m5_m6_rank4.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_sqrtT-m10-lower-6",
+   "orbit": "qubit_sqrtT",
+   "m": 10,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity applied to the exact rank-5 exclusion at m=5",
+   "reference": "verify_challenge/cert_sqrtt_galois_census.py (bounds/qubit_sqrtT-m6-lower-6.json)",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_sqrtT-m6-lower-6.json, which runs the same certificate"
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_sqrtT-m7-lower-6",
+   "orbit": "qubit_sqrtT",
+   "m": 7,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity applied to the exact rank-5 exclusion at m=5",
+   "reference": "verify_challenge/cert_sqrtt_galois_census.py (bounds/qubit_sqrtT-m6-lower-6.json)",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_sqrtT-m6-lower-6.json, which runs the same certificate"
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_sqrtT-m8-lower-6",
+   "orbit": "qubit_sqrtT",
+   "m": 8,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity applied to the exact rank-5 exclusion at m=5",
+   "reference": "verify_challenge/cert_sqrtt_galois_census.py (bounds/qubit_sqrtT-m6-lower-6.json)",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_sqrtT-m6-lower-6.json, which runs the same certificate"
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_sqrtT-m9-lower-6",
+   "orbit": "qubit_sqrtT",
+   "m": 9,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "github": [
+    "mizopl"
+   ],
+   "method": "projection monotonicity applied to the exact rank-5 exclusion at m=5",
+   "reference": "verify_challenge/cert_sqrtt_galois_census.py (bounds/qubit_sqrtT-m6-lower-6.json)",
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_sqrtT-m6-lower-6.json, which runs the same certificate"
    },
    "budget_s": null,
    "attested": null

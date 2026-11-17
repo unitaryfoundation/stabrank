@@ -1,7 +1,7 @@
 {
  "generated_from": "bounds/",
- "head": "2fd3e3f7ee786e0f0c5ec5831455d68c8ca4bc46",
- "generated": "2026-11-16",
+ "head": "791cf31b418bdc296d8ddf9c0436e0229c756ef2",
+ "generated": "2026-11-17",
  "since": "2026-09-15",
  "exponents": [
   {
@@ -27,7 +27,7 @@
    "reference": "labib2026stabilizer",
    "best": {
     "gamma": 0.4191806548578769,
-    "tier": "verified",
+    "tier": "lean",
     "m": 5,
     "rank": 10,
     "slug": "N-m5-upper-10",
@@ -347,7 +347,7 @@
    "m": 1,
    "lower": {
     "rank": 2,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "N-m1-lower-2",
     "date": "2026-10-17",
     "board_date": "2026-10-21",
@@ -355,7 +355,7 @@
    },
    "upper": {
     "rank": 2,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "N-m1-upper-2",
     "date": "2026-10-17",
     "board_date": "2026-10-21",
@@ -443,7 +443,7 @@
    },
    "upper": {
     "rank": 10,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "N-m5-upper-10",
     "date": "2026-10-16",
     "board_date": "2026-10-17",
@@ -479,7 +479,7 @@
    "m": 1,
    "lower": {
     "rank": 2,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "H3-m1-lower-2",
     "date": "2026-10-17",
     "board_date": "2026-10-21",
@@ -487,7 +487,7 @@
    },
    "upper": {
     "rank": 2,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "H3-m1-upper-2",
     "date": "2026-10-17",
     "board_date": "2026-10-21",
@@ -575,7 +575,7 @@
    },
    "upper": {
     "rank": 12,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "H3-m5-upper-12",
     "date": "2026-09-23",
     "board_date": "2026-09-23",
@@ -743,7 +743,7 @@
    "m": 1,
    "lower": {
     "rank": 2,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "qubit_H-m1-lower-2",
     "date": "2026-10-17",
     "board_date": "2026-10-21",
@@ -751,7 +751,7 @@
    },
    "upper": {
     "rank": 2,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "qubit_H-m1-upper-2",
     "date": "2026-10-17",
     "board_date": "2026-10-21",
@@ -963,7 +963,7 @@
    "m": 1,
    "lower": {
     "rank": 2,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "qubit_T-m1-lower-2",
     "date": "2026-10-17",
     "board_date": "2026-10-21",
@@ -971,7 +971,7 @@
    },
    "upper": {
     "rank": 2,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "qubit_T-m1-upper-2",
     "date": "2026-10-17",
     "board_date": "2026-10-21",
@@ -1103,7 +1103,7 @@
    },
    "upper": {
     "rank": 9,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "qubit_T-m7-upper-9",
     "date": "2026-10-17",
     "board_date": "2026-10-21",
@@ -1125,7 +1125,7 @@
    },
    "upper": {
     "rank": 9,
-    "tier": "verified",
+    "tier": "lean",
     "slug": "qubit_T-m8-upper-9",
     "date": "2026-09-22",
     "board_date": "2026-09-22",
@@ -1335,7 +1335,14 @@
   {
    "orbit": "qubit_sqrtT",
    "m": 8,
-   "lower": null,
+   "lower": {
+    "rank": 6,
+    "tier": "verified",
+    "slug": "qubit_sqrtT-m8-lower-6",
+    "date": "2026-11-16",
+    "board_date": "2026-11-17",
+    "moved_since": true
+   },
    "upper": {
     "rank": 15,
     "tier": "verified",
@@ -1350,7 +1357,14 @@
   {
    "orbit": "qubit_sqrtT",
    "m": 9,
-   "lower": null,
+   "lower": {
+    "rank": 6,
+    "tier": "verified",
+    "slug": "qubit_sqrtT-m9-lower-6",
+    "date": "2026-11-16",
+    "board_date": "2026-11-17",
+    "moved_since": true
+   },
    "upper": {
     "rank": 18,
     "tier": "verified",
@@ -1365,7 +1379,14 @@
   {
    "orbit": "qubit_sqrtT",
    "m": 10,
-   "lower": null,
+   "lower": {
+    "rank": 6,
+    "tier": "verified",
+    "slug": "qubit_sqrtT-m10-lower-6",
+    "date": "2026-11-16",
+    "board_date": "2026-11-17",
+    "moved_since": true
+   },
    "upper": {
     "rank": 24,
     "tier": "verified",
@@ -1447,11 +1468,11 @@
    "orbit": "CS",
    "m": 4,
    "lower": {
-    "rank": 4,
+    "rank": 5,
     "tier": "verified",
-    "slug": "CS-m4-lower-4",
-    "date": "2026-11-10",
-    "board_date": "2026-11-15",
+    "slug": "CS-m4-lower-5",
+    "date": "2026-11-16",
+    "board_date": "2026-11-17",
     "moved_since": true
    },
    "upper": {
@@ -1492,7 +1513,7 @@
    "m": 2,
    "lower": {
     "rank": 5,
-    "tier": "reproduced",
+    "tier": "verified",
     "slug": "T5-m2-lower-5",
     "date": "2026-09-21",
     "board_date": "2026-09-21",
@@ -1578,7 +1599,14 @@
   {
    "orbit": "cat",
    "m": 2,
-   "lower": null,
+   "lower": {
+    "rank": 1,
+    "tier": "verified",
+    "slug": "cat-m2-lower-1",
+    "date": "2026-11-16",
+    "board_date": "2026-11-17",
+    "moved_since": true
+   },
    "upper": {
     "rank": 1,
     "tier": "verified",
@@ -1587,7 +1615,7 @@
     "board_date": "2026-09-24",
     "moved_since": true
    },
-   "settled": false,
+   "settled": true,
    "moved_since": true
   },
   {
@@ -1814,7 +1842,7 @@
     "S-m5-lower-5"
    ],
    "board": [
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -1862,7 +1890,7 @@
     "S-m6-lower-5"
    ],
    "board": [
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -1894,7 +1922,7 @@
     "S-m7-lower-5"
    ],
    "board": [
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -1942,7 +1970,7 @@
     "S-m8-lower-5"
    ],
    "board": [
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -2002,7 +2030,7 @@
     "N-m1-upper-2"
    ],
    "board": [
-    "verified"
+    "lean"
    ]
   },
   {
@@ -2067,7 +2095,7 @@
     "N-m4-lower-5"
    ],
    "board": [
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -2106,6 +2134,22 @@
   {
    "orbit": "N",
    "m": 5,
+   "rank": 5,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "N-m5-lower-5"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "N",
+   "m": 5,
    "rank": 7,
    "runs": 0,
    "log_runs": 0,
@@ -2132,7 +2176,7 @@
     "N-m5-upper-10"
    ],
    "board": [
-    "verified"
+    "lean"
    ]
   },
   {
@@ -2146,6 +2190,22 @@
    "cpu_hours_per_solution": 0.001,
    "bounds": [
     "N-m5-upper-12"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "N",
+   "m": 6,
+   "rank": 5,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "N-m6-lower-5"
    ],
    "board": [
     "verified"
@@ -2208,7 +2268,7 @@
     "H3-m1-upper-2"
    ],
    "board": [
-    "verified"
+    "lean"
    ]
   },
   {
@@ -2273,7 +2333,7 @@
     "H3-m4-lower-5"
    ],
    "board": [
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -2311,6 +2371,22 @@
   {
    "orbit": "H3",
    "m": 5,
+   "rank": 5,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "H3-m5-lower-5"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "H3",
+   "m": 5,
    "rank": 7,
    "runs": 0,
    "log_runs": 0,
@@ -2335,6 +2411,22 @@
    "cpu_hours_per_solution": 0.001,
    "bounds": [
     "H3-m5-upper-12"
+   ],
+   "board": [
+    "lean"
+   ]
+  },
+  {
+   "orbit": "H3",
+   "m": 6,
+   "rank": 5,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "H3-m6-lower-5"
    ],
    "board": [
     "verified"
@@ -2448,6 +2540,22 @@
   {
    "orbit": "T3",
    "m": 4,
+   "rank": 7,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "T3-m4-lower-7"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "T3",
+   "m": 4,
    "rank": 8,
    "runs": 8,
    "log_runs": 8,
@@ -2472,6 +2580,22 @@
    "cpu_hours_per_solution": 0.15,
    "bounds": [
     "T3-m5-lower-6"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "T3",
+   "m": 5,
+   "rank": 7,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "T3-m5-lower-7"
    ],
    "board": [
     "verified"
@@ -2507,6 +2631,22 @@
    ],
    "board": [
     "lean"
+   ]
+  },
+  {
+   "orbit": "T3",
+   "m": 6,
+   "rank": 7,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "T3-m6-lower-7"
+   ],
+   "board": [
+    "verified"
    ]
   },
   {
@@ -2554,7 +2694,7 @@
     "qubit_H-m1-upper-2"
    ],
    "board": [
-    "verified"
+    "lean"
    ]
   },
   {
@@ -2738,6 +2878,22 @@
   {
    "orbit": "qubit_H",
    "m": 7,
+   "rank": 5,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "qubit_H-m7-lower-5"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "qubit_H",
+   "m": 7,
    "rank": 6,
    "runs": 0,
    "log_runs": 0,
@@ -2765,6 +2921,22 @@
    ],
    "board": [
     "lean"
+   ]
+  },
+  {
+   "orbit": "qubit_H",
+   "m": 8,
+   "rank": 5,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "qubit_H-m8-lower-5"
+   ],
+   "board": [
+    "verified"
    ]
   },
   {
@@ -2802,6 +2974,22 @@
   {
    "orbit": "qubit_H",
    "m": 9,
+   "rank": 5,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "qubit_H-m9-lower-5"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "qubit_H",
+   "m": 9,
    "rank": 6,
    "runs": 0,
    "log_runs": 0,
@@ -2826,6 +3014,22 @@
    "cpu_hours_per_solution": 0.01,
    "bounds": [
     "qubit_H-m9-upper-18"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "qubit_H",
+   "m": 10,
+   "rank": 5,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "qubit_H-m10-lower-5"
    ],
    "board": [
     "verified"
@@ -2876,7 +3080,7 @@
     "qubit_T-m1-upper-2"
    ],
    "board": [
-    "verified"
+    "lean"
    ]
   },
   {
@@ -3031,6 +3235,22 @@
   {
    "orbit": "qubit_T",
    "m": 7,
+   "rank": 5,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "qubit_T-m7-lower-5"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "qubit_T",
+   "m": 7,
    "rank": 6,
    "runs": 0,
    "log_runs": 0,
@@ -3055,6 +3275,22 @@
    "cpu_hours_per_solution": 0.001,
    "bounds": [
     "qubit_T-m7-upper-9"
+   ],
+   "board": [
+    "lean"
+   ]
+  },
+  {
+   "orbit": "qubit_T",
+   "m": 8,
+   "rank": 5,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "qubit_T-m8-lower-5"
    ],
    "board": [
     "verified"
@@ -3101,6 +3337,22 @@
     "qubit_T-m8-upper-9"
    ],
    "board": [
+    "lean"
+   ]
+  },
+  {
+   "orbit": "qubit_T",
+   "m": 9,
+   "rank": 5,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "qubit_T-m9-lower-5"
+   ],
+   "board": [
     "verified"
    ]
   },
@@ -3131,6 +3383,22 @@
    "cpu_hours_per_solution": 0.001,
    "bounds": [
     "qubit_T-m9-upper-15"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "qubit_T",
+   "m": 10,
+   "rank": 5,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "qubit_T-m10-lower-5"
    ],
    "board": [
     "verified"
@@ -3336,6 +3604,22 @@
   {
    "orbit": "qubit_sqrtT",
    "m": 7,
+   "rank": 6,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "qubit_sqrtT-m7-lower-6"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "qubit_sqrtT",
+   "m": 7,
    "rank": 7,
    "runs": 0,
    "log_runs": 0,
@@ -3360,6 +3644,54 @@
    "cpu_hours_per_solution": 22.7452,
    "bounds": [
     "qubit_sqrtT-m7-upper-12"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "qubit_sqrtT",
+   "m": 8,
+   "rank": 6,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "qubit_sqrtT-m8-lower-6"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "qubit_sqrtT",
+   "m": 9,
+   "rank": 6,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "qubit_sqrtT-m9-lower-6"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "qubit_sqrtT",
+   "m": 10,
+   "rank": 6,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "qubit_sqrtT-m10-lower-6"
    ],
    "board": [
     "verified"
@@ -3466,6 +3798,22 @@
   {
    "orbit": "CS",
    "m": 4,
+   "rank": 5,
+   "runs": 3,
+   "log_runs": 0,
+   "cpu_hours": 0.18,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.18,
+   "bounds": [
+    "CS-m4-lower-5"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "CS",
+   "m": 4,
    "rank": 9,
    "runs": 1,
    "log_runs": 0,
@@ -3510,7 +3858,7 @@
    ],
    "board": [
     "lean",
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -3526,7 +3874,7 @@
     "T5-m3-lower-5"
    ],
    "board": [
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -3574,7 +3922,7 @@
     "T5-m4-lower-5"
    ],
    "board": [
-    "reproduced"
+    "verified"
    ]
   },
   {
@@ -3607,6 +3955,22 @@
    ],
    "board": [
     "lean"
+   ]
+  },
+  {
+   "orbit": "T5",
+   "m": 5,
+   "rank": 5,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "T5-m5-lower-5"
+   ],
+   "board": [
+    "verified"
    ]
   },
   {
@@ -4075,6 +4439,15 @@
    "median_declared": 0.08,
    "cum_cpu_hours": 8456.472811111113,
    "cum_discoveries": 187
+  },
+  {
+   "date": "2026-11-16",
+   "seeded": false,
+   "cpu_hours": 0.18,
+   "discoveries": 22,
+   "median_declared": 0.0,
+   "cum_cpu_hours": 8456.652811111113,
+   "cum_discoveries": 209
   }
  ],
  "bounds": [
@@ -4410,6 +4783,47 @@
    }
   },
   {
+   "slug": "CS-m4-lower-5",
+   "file": "bounds/CS-m4-lower-5.json",
+   "orbit": "CS",
+   "m": 4,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "stabrank verify_challenge (extending cert_cs_m3_m4_exact.py)",
+   "method": "even-qubit (<0|_2 (I (x) H))^4 Clifford postselection to |Psi_4> = (2|0> + (1+i)|1>)^4 in Z[i]^16 + exact F_P S_3-reduced D_3 rank-4 enumeration and 32^2 x 32^2 Pauli slice-and-lift exclusion",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/CS-m4-lower-5.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_cs_m4_rank5_exact.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.18,
+    "wall_clock_hours": 0.22,
+    "runs": 3,
+    "hardware": "Apple M1 laptop (16 GB), one core; 4-qubit Clifford postselection discovery and S_3-reduced D_3 rank-4 lift search",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) heuristic postselection discovery and exact Z[i]/F_P certificate synthesis"
+     }
+    ]
+   }
+  },
+  {
    "slug": "CS-m4-upper-9",
    "file": "bounds/CS-m4-upper-9.json",
    "orbit": "CS",
@@ -4457,7 +4871,7 @@
    "m": 1,
    "direction": "lower",
    "rank": 2,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-10-17",
    "author": "this repository",
@@ -4469,15 +4883,15 @@
    "added_commit": "dd232c348dfd99d3339e2e11dcad6749b7bc27e9",
    "added_date": "2026-10-21",
    "added_subject": "File the single-copy cells of H3, N, qubit_H, and qubit_T",
-   "receipt": "certs/H3-m1-lower-2.json",
-   "receipt_matches": true,
+   "receipt": null,
+   "receipt_matches": null,
    "certificate_script": "verify_challenge/cert_rank1_moduli.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.M1Lower",
+   "lean_theorem": "h3_m1_stabRankP_gt_one",
+   "lean_receipt": "certs/lean-LeanProofs-M1Lower.json",
+   "lean_receipt_ok": true,
    "compute": null
   },
   {
@@ -4487,7 +4901,7 @@
    "m": 1,
    "direction": "upper",
    "rank": 2,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-10-17",
    "author": "this repository",
@@ -4499,15 +4913,15 @@
    "added_commit": "dd232c348dfd99d3339e2e11dcad6749b7bc27e9",
    "added_date": "2026-10-21",
    "added_subject": "File the single-copy cells of H3, N, qubit_H, and qubit_T",
-   "receipt": "certs/H3-m1-upper-2.json",
-   "receipt_matches": true,
+   "receipt": null,
+   "receipt_matches": null,
    "certificate_script": null,
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.H3M1StabRank",
+   "lean_theorem": "h3_m1_stabRankP_le_two",
+   "lean_receipt": "certs/lean-LeanProofs-H3M1StabRank.json",
+   "lean_receipt_ok": true,
    "compute": {
     "cpu_hours": 0.001,
     "wall_clock_hours": 0.001,
@@ -4723,7 +5137,7 @@
    "m": 4,
    "direction": "lower",
    "rank": 5,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-18",
    "author": "this repository",
@@ -4736,9 +5150,9 @@
    "added_date": "2026-09-18",
    "added_subject": "chi(H3^4) >= 5 by slice-and-lift",
    "receipt": "certs/H3-m4-lower-5.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_h3_m4_lift.py",
-   "certificate_budget_s": 3600,
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_h3_m4_to_m6_rank5_exact.py",
+   "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
    "lean_theorem": null,
@@ -4866,6 +5280,47 @@
    "compute": null
   },
   {
+   "slug": "H3-m5-lower-5",
+   "file": "bounds/H3-m5-lower-5.json",
+   "orbit": "H3",
+   "m": 5,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "stabrank verify_challenge",
+   "method": "projection monotonicity applied 1 time(s) to the exact 2D tau-Galois + Z[omega_3, sqrt(3)] slice-and-lift bound chi(|H3>^4) >= 5",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/H3-m5-lower-5.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_h3_m4_to_m6_rank5_exact.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond H3-m4-lower-5.json (verify_challenge/cert_h3_m4_to_m6_rank5_exact.py), which this cell re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact Galois-plane slice-lift synthesis and projection bound wiring"
+     }
+    ]
+   }
+  },
+  {
    "slug": "H3-m5-lower-7",
    "file": "bounds/H3-m5-lower-7.json",
    "orbit": "H3",
@@ -4914,7 +5369,7 @@
    "m": 5,
    "direction": "upper",
    "rank": 12,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-09-23",
    "author": "this repository",
@@ -4926,9 +5381,44 @@
    "added_commit": "bd2b13d4cf153ba9321cfa2faf4143e5c8472ba3",
    "added_date": "2026-09-23",
    "added_subject": "Sweep of 2026-09-23: T5 and qutrit product witnesses, a T5 m=2 rank-7 search, literature update",
-   "receipt": "certs/H3-m5-upper-12.json",
-   "receipt_matches": false,
+   "receipt": null,
+   "receipt_matches": null,
    "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": "LeanProofs.H3M5StabRank",
+   "lean_theorem": "h3_m5_stabRankP_le_twelve",
+   "lean_receipt": "certs/lean-LeanProofs-H3M5StabRank.json",
+   "lean_receipt_ok": true,
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "H3-m6-lower-5",
+   "file": "bounds/H3-m6-lower-5.json",
+   "orbit": "H3",
+   "m": 6,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "stabrank verify_challenge",
+   "method": "projection monotonicity applied 2 time(s) to the exact 2D tau-Galois + Z[omega_3, sqrt(3)] slice-and-lift bound chi(|H3>^4) >= 5",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/H3-m6-lower-5.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_h3_m4_to_m6_rank5_exact.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -4936,10 +5426,16 @@
    "lean_receipt": null,
    "lean_receipt_ok": null,
    "compute": {
-    "cpu_hours": 0.001,
-    "wall_clock_hours": 0.001,
-    "runs": 1,
-    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond H3-m4-lower-5.json (verify_challenge/cert_h3_m4_to_m6_rank5_exact.py), which this cell re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact Galois-plane slice-lift synthesis and projection bound wiring"
+     }
+    ]
    }
   },
   {
@@ -5026,7 +5522,7 @@
    "m": 1,
    "direction": "lower",
    "rank": 2,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-10-17",
    "author": "this repository",
@@ -5038,15 +5534,15 @@
    "added_commit": "dd232c348dfd99d3339e2e11dcad6749b7bc27e9",
    "added_date": "2026-10-21",
    "added_subject": "File the single-copy cells of H3, N, qubit_H, and qubit_T",
-   "receipt": "certs/N-m1-lower-2.json",
-   "receipt_matches": true,
+   "receipt": null,
+   "receipt_matches": null,
    "certificate_script": "verify_challenge/cert_rank1_moduli.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.M1Lower",
+   "lean_theorem": "norrell_m1_stabRankP_gt_one",
+   "lean_receipt": "certs/lean-LeanProofs-M1Lower.json",
+   "lean_receipt_ok": true,
    "compute": null
   },
   {
@@ -5056,7 +5552,7 @@
    "m": 1,
    "direction": "upper",
    "rank": 2,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-10-17",
    "author": "this repository",
@@ -5068,15 +5564,15 @@
    "added_commit": "dd232c348dfd99d3339e2e11dcad6749b7bc27e9",
    "added_date": "2026-10-21",
    "added_subject": "File the single-copy cells of H3, N, qubit_H, and qubit_T",
-   "receipt": "certs/N-m1-upper-2.json",
-   "receipt_matches": true,
+   "receipt": null,
+   "receipt_matches": null,
    "certificate_script": null,
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.NorrellM1StabRank",
+   "lean_theorem": "norrell_m1_stabRankP_le_two",
+   "lean_receipt": "certs/lean-LeanProofs-NorrellM1StabRank.json",
+   "lean_receipt_ok": true,
    "compute": {
     "cpu_hours": 0.001,
     "wall_clock_hours": 0.001,
@@ -5296,7 +5792,7 @@
    "m": 4,
    "direction": "lower",
    "rank": 5,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-18",
    "author": "this repository",
@@ -5309,9 +5805,9 @@
    "added_date": "2026-09-18",
    "added_subject": "chi(N^4) >= 5 by slice-and-lift, the first cell on a declared budget",
    "receipt": "certs/N-m4-lower-5.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_n_m4_lift.py",
-   "certificate_budget_s": 3600,
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_s_n_rank5_exact.py",
+   "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
    "lean_theorem": null,
@@ -5439,6 +5935,47 @@
    "compute": null
   },
   {
+   "slug": "N-m5-lower-5",
+   "file": "bounds/N-m5-lower-5.json",
+   "orbit": "N",
+   "m": 5,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "stabrank verify_challenge",
+   "method": "projection monotonicity (<0| (x) I)|N>^(k+1) = 6^(-1/2)|N>^k applied 1 time(s) to the exact Z[omega_3] slice-and-lift bound chi(|N>^4) >= 5",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/N-m5-lower-5.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_s_n_rank5_exact.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond N-m4-lower-5.json (verify_challenge/cert_s_n_rank5_exact.py), which this cell re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact Z[omega_3] slice-lift synthesis and projection bound wiring"
+     }
+    ]
+   }
+  },
+  {
    "slug": "N-m5-lower-7",
    "file": "bounds/N-m5-lower-7.json",
    "orbit": "N",
@@ -5487,7 +6024,7 @@
    "m": 5,
    "direction": "upper",
    "rank": 10,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-10-16",
    "author": "Vincent Russo",
@@ -5499,15 +6036,15 @@
    "added_commit": "9867cf065918033d9a5c6cbce51044c67ce8708f",
    "added_date": "2026-10-17",
    "added_subject": "chi(N^5) <= 10: a ten-term stabilizer decomposition of |N>^5 (verified tier)",
-   "receipt": "certs/N-m5-upper-10.json",
-   "receipt_matches": false,
+   "receipt": null,
+   "receipt_matches": null,
    "certificate_script": null,
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.NorrellM5StabRank",
+   "lean_theorem": "norrell_m5_stabRankP_le_ten",
+   "lean_receipt": "certs/lean-LeanProofs-NorrellM5StabRank.json",
+   "lean_receipt_ok": true,
    "compute": {
     "cpu_hours": 6,
     "wall_clock_hours": 5,
@@ -5554,6 +6091,47 @@
     "wall_clock_hours": 0.001,
     "runs": 1,
     "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "N-m6-lower-5",
+   "file": "bounds/N-m6-lower-5.json",
+   "orbit": "N",
+   "m": 6,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "stabrank verify_challenge",
+   "method": "projection monotonicity (<0| (x) I)|N>^(k+1) = 6^(-1/2)|N>^k applied 2 time(s) to the exact Z[omega_3] slice-and-lift bound chi(|N>^4) >= 5",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/N-m6-lower-5.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_s_n_rank5_exact.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond N-m4-lower-5.json (verify_challenge/cert_s_n_rank5_exact.py), which this cell re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact Z[omega_3] slice-lift synthesis and projection bound wiring"
+     }
+    ]
    }
   },
   {
@@ -5920,7 +6498,7 @@
    "m": 5,
    "direction": "lower",
    "rank": 5,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-18",
    "author": "this repository",
@@ -5933,8 +6511,8 @@
    "added_date": "2026-09-18",
    "added_subject": "chi(S^5) >= 5 by slice-and-lift twice",
    "receipt": "certs/S-m5-lower-5.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_s_m5_lift.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_s_n_rank5_exact.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -6038,7 +6616,7 @@
    "m": 6,
    "direction": "lower",
    "rank": 5,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-20",
    "author": "this repository",
@@ -6051,8 +6629,8 @@
    "added_date": "2026-09-20",
    "added_subject": "Lower bounds for the five cells that had none",
    "receipt": "certs/S-m6-lower-5.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_s_m5_lift.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_s_n_rank5_exact.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -6151,7 +6729,7 @@
    "m": 7,
    "direction": "lower",
    "rank": 5,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-10-17",
    "author": "this repository",
@@ -6165,7 +6743,7 @@
    "added_subject": "Carry the S lower bound to m = 7 and 8 by projection monotonicity",
    "receipt": "certs/S-m7-lower-5.json",
    "receipt_matches": true,
-   "certificate_script": "verify_challenge/cert_s_m5_lift.py",
+   "certificate_script": "verify_challenge/cert_s_n_rank5_exact.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -6269,7 +6847,7 @@
    "m": 8,
    "direction": "lower",
    "rank": 5,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-10-17",
    "author": "this repository",
@@ -6283,7 +6861,7 @@
    "added_subject": "Carry the S lower bound to m = 7 and 8 by projection monotonicity",
    "receipt": "certs/S-m8-lower-5.json",
    "receipt_matches": true,
-   "certificate_script": "verify_challenge/cert_s_m5_lift.py",
+   "certificate_script": "verify_challenge/cert_s_n_rank5_exact.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -6673,6 +7251,47 @@
    }
   },
   {
+   "slug": "T3-m4-lower-7",
+   "file": "bounds/T3-m4-lower-7.json",
+   "orbit": "T3",
+   "m": 4,
+   "direction": "lower",
+   "rank": 7,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "verify_challenge/cert_t3m3_rank7.py (bounds/T3-m3-lower-7.json)",
+   "method": "projection monotonicity (<0|^{ot 1} (x) I^3)|T3>^4 = 3^{-1/2}|T3>^3 applied to the exact modular rank-6 exclusion at m = 3",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/T3-m4-lower-7.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_t3_m4_to_m6_rank7.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond T3-m3-lower-7.json (verify_challenge/cert_t3m3_rank7.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
+   }
+  },
+  {
    "slug": "T3-m4-lower-8",
    "file": "bounds/T3-m4-lower-8.json",
    "orbit": "T3",
@@ -6780,6 +7399,47 @@
    }
   },
   {
+   "slug": "T3-m5-lower-7",
+   "file": "bounds/T3-m5-lower-7.json",
+   "orbit": "T3",
+   "m": 5,
+   "direction": "lower",
+   "rank": 7,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "verify_challenge/cert_t3m3_rank7.py (bounds/T3-m3-lower-7.json)",
+   "method": "projection monotonicity (<0|^{ot 2} (x) I^3)|T3>^5 = 3^{-2/2}|T3>^3 applied to the exact modular rank-6 exclusion at m = 3",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/T3-m5-lower-7.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_t3_m4_to_m6_rank7.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond T3-m3-lower-7.json (verify_challenge/cert_t3m3_rank7.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
+   }
+  },
+  {
    "slug": "T3-m5-lower-8",
    "file": "bounds/T3-m5-lower-8.json",
    "orbit": "T3",
@@ -6858,6 +7518,47 @@
      {
       "model": "claude-fable-5-1",
       "role": "designed the sector decomposition and drove the search"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "T3-m6-lower-7",
+   "file": "bounds/T3-m6-lower-7.json",
+   "orbit": "T3",
+   "m": 6,
+   "direction": "lower",
+   "rank": 7,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "verify_challenge/cert_t3m3_rank7.py (bounds/T3-m3-lower-7.json)",
+   "method": "projection monotonicity (<0|^{ot 3} (x) I^3)|T3>^6 = 3^{-3/2}|T3>^3 applied to the exact modular rank-6 exclusion at m = 3",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/T3-m6-lower-7.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_t3_m4_to_m6_rank7.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond T3-m3-lower-7.json (verify_challenge/cert_t3m3_rank7.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
      }
     ]
    }
@@ -7011,7 +7712,7 @@
    "m": 2,
    "direction": "lower",
    "rank": 5,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-21",
    "author": "this repository",
@@ -7024,8 +7725,8 @@
    "added_date": "2026-09-21",
    "added_subject": "Make the ququint T-type state T5 a board orbit with its first four cells",
    "receipt": "certs/T5-m2-lower-5.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_t5_m2_rank4.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_t5_m2_to_m5_exact.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -7116,7 +7817,7 @@
    "m": 3,
    "direction": "lower",
    "rank": 5,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-24",
    "author": "this repository",
@@ -7129,8 +7830,8 @@
    "added_date": "2026-09-24",
    "added_subject": "T5 m = 3 and 4: lower bound 5 by projection from the rank-4 exclusion at m = 2",
    "receipt": "certs/T5-m3-lower-5.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_t5_m2_rank4.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_t5_m2_to_m5_exact.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -7228,7 +7929,7 @@
    "m": 4,
    "direction": "lower",
    "rank": 5,
-   "tier": "reproduced",
+   "tier": "verified",
    "ok": true,
    "date": "2026-09-24",
    "author": "this repository",
@@ -7241,8 +7942,8 @@
    "added_date": "2026-09-24",
    "added_subject": "T5 m = 3 and 4: lower bound 5 by projection from the rank-4 exclusion at m = 2",
    "receipt": "certs/T5-m4-lower-5.json",
-   "receipt_matches": false,
-   "certificate_script": "verify_challenge/cert_t5_m2_rank4.py",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_t5_m2_to_m5_exact.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -7331,6 +8032,47 @@
     "wall_clock_hours": 0.001,
     "runs": 1,
     "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "T5-m5-lower-5",
+   "file": "bounds/T5-m5-lower-5.json",
+   "orbit": "T5",
+   "m": 5,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "stabrank verify_challenge",
+   "method": "projection monotonicity applied 3 times to the exact F_P Galois-Clifford rank-4 exclusion chi(|T5>^2) >= 5",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/T5-m5-lower-5.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_t5_m2_to_m5_exact.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond T5-m2-lower-5.json (verify_challenge/cert_t5_m2_to_m5_exact.py), which this cell re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) Galois-Clifford quotient synthesis and projection bound wiring"
+     }
+    ]
    }
   },
   {
@@ -7491,6 +8233,36 @@
      }
     ]
    }
+  },
+  {
+   "slug": "cat-m2-lower-1",
+   "file": "bounds/cat-m2-lower-1.json",
+   "orbit": "cat",
+   "m": 2,
+   "direction": "lower",
+   "rank": 1,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "arXiv:2106.07740 (Qassim, Pashayan, and Gosset, Table 1); stabrank verify_challenge",
+   "method": "exact: |cat_2> = (|00> + i|11>)/sqrt(2) is non-zero (|||cat_2>||^2 = 1 > 0), excluding rank 0",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/cat-m2-lower-1.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_cat_m2_rank1.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": null
   },
   {
    "slug": "cat-m2-upper-1",
@@ -8153,7 +8925,7 @@
    "m": 1,
    "direction": "lower",
    "rank": 2,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-10-17",
    "author": "this repository",
@@ -8165,15 +8937,15 @@
    "added_commit": "dd232c348dfd99d3339e2e11dcad6749b7bc27e9",
    "added_date": "2026-10-21",
    "added_subject": "File the single-copy cells of H3, N, qubit_H, and qubit_T",
-   "receipt": "certs/qubit_H-m1-lower-2.json",
-   "receipt_matches": true,
+   "receipt": null,
+   "receipt_matches": null,
    "certificate_script": "verify_challenge/cert_rank1_moduli.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.M1Lower",
+   "lean_theorem": "qubit_h_m1_stabRankP_gt_one",
+   "lean_receipt": "certs/lean-LeanProofs-M1Lower.json",
+   "lean_receipt_ok": true,
    "compute": null
   },
   {
@@ -8183,7 +8955,7 @@
    "m": 1,
    "direction": "upper",
    "rank": 2,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-10-17",
    "author": "this repository",
@@ -8195,9 +8967,44 @@
    "added_commit": "dd232c348dfd99d3339e2e11dcad6749b7bc27e9",
    "added_date": "2026-10-21",
    "added_subject": "File the single-copy cells of H3, N, qubit_H, and qubit_T",
-   "receipt": "certs/qubit_H-m1-upper-2.json",
-   "receipt_matches": true,
+   "receipt": null,
+   "receipt_matches": null,
    "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": "LeanProofs.QubitHM1StabRank",
+   "lean_theorem": "qubit_h_m1_stabRankP_le_two",
+   "lean_receipt": "certs/lean-LeanProofs-QubitHM1StabRank.json",
+   "lean_receipt_ok": true,
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "qubit_H-m10-lower-5",
+   "file": "bounds/qubit_H-m10-lower-5.json",
+   "orbit": "qubit_H",
+   "m": 10,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py (PR #193)",
+   "method": "projection monotonicity (<0|^{ot 5} (x) I^5)|qubit_H>^10 applied to the exact Z[i] / Z[i, sqrt(3)] rank-4 exclusion at m = 5",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/qubit_H-m10-lower-5.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m7_m10_rank5.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -8205,10 +9012,16 @@
    "lean_receipt": null,
    "lean_receipt_ok": null,
    "compute": {
-    "cpu_hours": 0.001,
-    "wall_clock_hours": 0.001,
-    "runs": 1,
-    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_H-m5-lower-5.json (verify_challenge/cert_qubit_galois_m5_m6_rank4.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
    }
   },
   {
@@ -8849,6 +9662,47 @@
    }
   },
   {
+   "slug": "qubit_H-m7-lower-5",
+   "file": "bounds/qubit_H-m7-lower-5.json",
+   "orbit": "qubit_H",
+   "m": 7,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py (PR #193)",
+   "method": "projection monotonicity (<0|^{ot 2} (x) I^5)|qubit_H>^7 applied to the exact Z[i] / Z[i, sqrt(3)] rank-4 exclusion at m = 5",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/qubit_H-m7-lower-5.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m7_m10_rank5.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_H-m5-lower-5.json (verify_challenge/cert_qubit_galois_m5_m6_rank4.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
+   }
+  },
+  {
    "slug": "qubit_H-m7-lower-6",
    "file": "bounds/qubit_H-m7-lower-6.json",
    "orbit": "qubit_H",
@@ -8926,6 +9780,47 @@
    }
   },
   {
+   "slug": "qubit_H-m8-lower-5",
+   "file": "bounds/qubit_H-m8-lower-5.json",
+   "orbit": "qubit_H",
+   "m": 8,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py (PR #193)",
+   "method": "projection monotonicity (<0|^{ot 3} (x) I^5)|qubit_H>^8 applied to the exact Z[i] / Z[i, sqrt(3)] rank-4 exclusion at m = 5",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/qubit_H-m8-lower-5.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m7_m10_rank5.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_H-m5-lower-5.json (verify_challenge/cert_qubit_galois_m5_m6_rank4.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
+   }
+  },
+  {
    "slug": "qubit_H-m8-lower-6",
    "file": "bounds/qubit_H-m8-lower-6.json",
    "orbit": "qubit_H",
@@ -9000,6 +9895,47 @@
     "wall_clock_hours": 0.01,
     "runs": 1,
     "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "qubit_H-m9-lower-5",
+   "file": "bounds/qubit_H-m9-lower-5.json",
+   "orbit": "qubit_H",
+   "m": 9,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py (PR #193)",
+   "method": "projection monotonicity (<0|^{ot 4} (x) I^5)|qubit_H>^9 applied to the exact Z[i] / Z[i, sqrt(3)] rank-4 exclusion at m = 5",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/qubit_H-m9-lower-5.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m7_m10_rank5.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_H-m5-lower-5.json (verify_challenge/cert_qubit_galois_m5_m6_rank4.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
    }
   },
   {
@@ -9116,7 +10052,7 @@
    "m": 1,
    "direction": "lower",
    "rank": 2,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-10-17",
    "author": "this repository",
@@ -9128,15 +10064,15 @@
    "added_commit": "dd232c348dfd99d3339e2e11dcad6749b7bc27e9",
    "added_date": "2026-10-21",
    "added_subject": "File the single-copy cells of H3, N, qubit_H, and qubit_T",
-   "receipt": "certs/qubit_T-m1-lower-2.json",
-   "receipt_matches": true,
+   "receipt": null,
+   "receipt_matches": null,
    "certificate_script": "verify_challenge/cert_rank1_moduli.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
-   "lean_module": null,
-   "lean_theorem": null,
-   "lean_receipt": null,
-   "lean_receipt_ok": null,
+   "lean_module": "LeanProofs.M1Lower",
+   "lean_theorem": "qubit_t_m1_stabRankP_gt_one",
+   "lean_receipt": "certs/lean-LeanProofs-M1Lower.json",
+   "lean_receipt_ok": true,
    "compute": null
   },
   {
@@ -9146,7 +10082,7 @@
    "m": 1,
    "direction": "upper",
    "rank": 2,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-10-17",
    "author": "this repository",
@@ -9158,9 +10094,44 @@
    "added_commit": "dd232c348dfd99d3339e2e11dcad6749b7bc27e9",
    "added_date": "2026-10-21",
    "added_subject": "File the single-copy cells of H3, N, qubit_H, and qubit_T",
-   "receipt": "certs/qubit_T-m1-upper-2.json",
-   "receipt_matches": true,
+   "receipt": null,
+   "receipt_matches": null,
    "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": "LeanProofs.QubitTM1StabRank",
+   "lean_theorem": "qubit_t_m1_stabRankP_le_two",
+   "lean_receipt": "certs/lean-LeanProofs-QubitTM1StabRank.json",
+   "lean_receipt_ok": true,
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "qubit_T-m10-lower-5",
+   "file": "bounds/qubit_T-m10-lower-5.json",
+   "orbit": "qubit_T",
+   "m": 10,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py (PR #193)",
+   "method": "projection monotonicity (<0|^{ot 5} (x) I^5)|qubit_T>^10 applied to the exact Z[i] / Z[i, sqrt(3)] rank-4 exclusion at m = 5",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/qubit_T-m10-lower-5.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m7_m10_rank5.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -9168,10 +10139,16 @@
    "lean_receipt": null,
    "lean_receipt_ok": null,
    "compute": {
-    "cpu_hours": 0.001,
-    "wall_clock_hours": 0.001,
-    "runs": 1,
-    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_T-m5-lower-5.json (verify_challenge/cert_qubit_galois_m5_m6_rank4.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
    }
   },
   {
@@ -9806,6 +10783,47 @@
    "compute": null
   },
   {
+   "slug": "qubit_T-m7-lower-5",
+   "file": "bounds/qubit_T-m7-lower-5.json",
+   "orbit": "qubit_T",
+   "m": 7,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py (PR #193)",
+   "method": "projection monotonicity (<0|^{ot 2} (x) I^5)|qubit_T>^7 applied to the exact Z[i] / Z[i, sqrt(3)] rank-4 exclusion at m = 5",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/qubit_T-m7-lower-5.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m7_m10_rank5.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_T-m5-lower-5.json (verify_challenge/cert_qubit_galois_m5_m6_rank4.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
+   }
+  },
+  {
    "slug": "qubit_T-m7-lower-6",
    "file": "bounds/qubit_T-m7-lower-6.json",
    "orbit": "qubit_T",
@@ -9854,7 +10872,7 @@
    "m": 7,
    "direction": "upper",
    "rank": 9,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-10-17",
    "author": "this repository",
@@ -9866,9 +10884,44 @@
    "added_commit": "c302c75c9cff516798e7801a592df0583adf918f",
    "added_date": "2026-10-21",
    "added_subject": "Fill the qubit T-type cells at seven and nine copies with derived witnesses",
-   "receipt": "certs/qubit_T-m7-upper-9.json",
-   "receipt_matches": true,
+   "receipt": null,
+   "receipt_matches": null,
    "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": "LeanProofs.QubitTM7StabRank",
+   "lean_theorem": "qubit_t_m7_stabRankP_le_nine",
+   "lean_receipt": "certs/lean-LeanProofs-QubitTM7StabRank.json",
+   "lean_receipt_ok": true,
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "qubit_T-m8-lower-5",
+   "file": "bounds/qubit_T-m8-lower-5.json",
+   "orbit": "qubit_T",
+   "m": 8,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py (PR #193)",
+   "method": "projection monotonicity (<0|^{ot 3} (x) I^5)|qubit_T>^8 applied to the exact Z[i] / Z[i, sqrt(3)] rank-4 exclusion at m = 5",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/qubit_T-m8-lower-5.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m7_m10_rank5.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -9876,10 +10929,16 @@
    "lean_receipt": null,
    "lean_receipt_ok": null,
    "compute": {
-    "cpu_hours": 0.001,
-    "wall_clock_hours": 0.001,
-    "runs": 1,
-    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_T-m5-lower-5.json (verify_challenge/cert_qubit_galois_m5_m6_rank4.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
    }
   },
   {
@@ -9931,7 +10990,7 @@
    "m": 8,
    "direction": "upper",
    "rank": 9,
-   "tier": "verified",
+   "tier": "lean",
    "ok": true,
    "date": "2026-09-22",
    "author": "this repository",
@@ -9943,9 +11002,44 @@
    "added_commit": "d47094a8e5a3ceb61d5905589705a08f4a9d48c8",
    "added_date": "2026-09-22",
    "added_subject": "Sweep of 2026-09-22: five product and cat witnesses, T3 sector contraction, literature update",
-   "receipt": "certs/qubit_T-m8-upper-9.json",
-   "receipt_matches": false,
+   "receipt": null,
+   "receipt_matches": null,
    "certificate_script": null,
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": "LeanProofs.QubitTM8StabRank",
+   "lean_theorem": "qubit_t_m8_stabRankP_le_nine",
+   "lean_receipt": "certs/lean-LeanProofs-QubitTM8StabRank.json",
+   "lean_receipt_ok": true,
+   "compute": {
+    "cpu_hours": 0.001,
+    "wall_clock_hours": 0.001,
+    "runs": 1,
+    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "qubit_T-m9-lower-5",
+   "file": "bounds/qubit_T-m9-lower-5.json",
+   "orbit": "qubit_T",
+   "m": 9,
+   "direction": "lower",
+   "rank": 5,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "verify_challenge/cert_qubit_galois_m5_m6_rank4.py (PR #193)",
+   "method": "projection monotonicity (<0|^{ot 4} (x) I^5)|qubit_T>^9 applied to the exact Z[i] / Z[i, sqrt(3)] rank-4 exclusion at m = 5",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/qubit_T-m9-lower-5.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_galois_m7_m10_rank5.py",
    "certificate_budget_s": null,
    "certificate_attested": null,
    "lean_module": null,
@@ -9953,10 +11047,16 @@
    "lean_receipt": null,
    "lean_receipt_ok": null,
    "compute": {
-    "cpu_hours": 0.001,
-    "wall_clock_hours": 0.001,
-    "runs": 1,
-    "hardware": "Apple silicon laptop, one core; direct construction, no search"
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_T-m5-lower-5.json (verify_challenge/cert_qubit_galois_m5_m6_rank4.py), which this projection wrapper re-runs",
+    "llm": [
+     {
+      "model": "gemini-4-argon",
+      "role": "we* (PROOFER v19) exact symbolic projection wrapper"
+     }
+    ]
    }
   },
   {
@@ -10110,6 +11210,41 @@
     "wall_clock_hours": 0.001,
     "runs": 1,
     "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "qubit_sqrtT-m10-lower-6",
+   "file": "bounds/qubit_sqrtT-m10-lower-6.json",
+   "orbit": "qubit_sqrtT",
+   "m": 10,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "verify_challenge/cert_sqrtt_galois_census.py (bounds/qubit_sqrtT-m6-lower-6.json)",
+   "method": "projection monotonicity applied to the exact rank-5 exclusion at m=5",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/qubit_sqrtT-m10-lower-6.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_sqrtt_galois_census.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_sqrtT-m6-lower-6.json, which runs the same certificate"
    }
   },
   {
@@ -10642,6 +11777,41 @@
    "compute": null
   },
   {
+   "slug": "qubit_sqrtT-m7-lower-6",
+   "file": "bounds/qubit_sqrtT-m7-lower-6.json",
+   "orbit": "qubit_sqrtT",
+   "m": 7,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "verify_challenge/cert_sqrtt_galois_census.py (bounds/qubit_sqrtT-m6-lower-6.json)",
+   "method": "projection monotonicity applied to the exact rank-5 exclusion at m=5",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/qubit_sqrtT-m7-lower-6.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_sqrtt_galois_census.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_sqrtT-m6-lower-6.json, which runs the same certificate"
+   }
+  },
+  {
    "slug": "qubit_sqrtT-m7-lower-7",
    "file": "bounds/qubit_sqrtT-m7-lower-7.json",
    "orbit": "qubit_sqrtT",
@@ -10725,6 +11895,41 @@
    }
   },
   {
+   "slug": "qubit_sqrtT-m8-lower-6",
+   "file": "bounds/qubit_sqrtT-m8-lower-6.json",
+   "orbit": "qubit_sqrtT",
+   "m": 8,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "verify_challenge/cert_sqrtt_galois_census.py (bounds/qubit_sqrtT-m6-lower-6.json)",
+   "method": "projection monotonicity applied to the exact rank-5 exclusion at m=5",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/qubit_sqrtT-m8-lower-6.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_sqrtt_galois_census.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_sqrtT-m6-lower-6.json, which runs the same certificate"
+   }
+  },
+  {
    "slug": "qubit_sqrtT-m8-upper-15",
    "file": "bounds/qubit_sqrtT-m8-upper-15.json",
    "orbit": "qubit_sqrtT",
@@ -10753,6 +11958,41 @@
    "lean_receipt": null,
    "lean_receipt_ok": null,
    "compute": null
+  },
+  {
+   "slug": "qubit_sqrtT-m9-lower-6",
+   "file": "bounds/qubit_sqrtT-m9-lower-6.json",
+   "orbit": "qubit_sqrtT",
+   "m": 9,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-16",
+   "author": "we* + @mizopl",
+   "reference": "verify_challenge/cert_sqrtt_galois_census.py (bounds/qubit_sqrtT-m6-lower-6.json)",
+   "method": "projection monotonicity applied to the exact rank-5 exclusion at m=5",
+   "pull_request": 200,
+   "merge_commit": "0c0cbb44ce4e0eab2aacde737b52af07850b8e23",
+   "merge_date": "2026-11-17",
+   "added_commit": "b232adb26985373f802a4d486af4c36dc8a18722",
+   "added_date": "2026-11-16",
+   "added_subject": "bounds, verify_challenge: wire 12 #194 Lean bounds, upgrade last 9 reproduced bounds to verified, and add 22 exact cells",
+   "receipt": "certs/qubit_sqrtT-m9-lower-6.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_sqrtt_galois_census.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 0.0,
+    "wall_clock_hours": 0.0,
+    "runs": 0,
+    "hardware": "none beyond qubit_sqrtT-m6-lower-6.json, which runs the same certificate"
+   }
   },
   {
    "slug": "qubit_sqrtT-m9-upper-18",
