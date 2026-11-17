@@ -1,0 +1,9 @@
+{
+  "module": "LeanProofs.M1Lower",
+  "ok": true,
+  "log": [
+    "Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`",
+    "\u2714 [3327/3327] Built LeanProofs.M1Lower (4.5s)",
+    "Build completed successfully (3327 jobs)."
+  ]
+}
