@@ -1,7 +1,7 @@
 {
   "ok": true,
-  "tier": "reproduced",
-  "detail": "certificate script asserted: CERTIFIED chi(N^4) >= 5 within a declared 3600s budget",
+  "tier": "verified",
+  "detail": "certificate script asserted: CERTIFIED chi(N^4) >= 5, by an argument declared exact throughout (no floating-point margin)",
   "gamma": null,
-  "content_hash": "e2a2a044e5ee96c9"
+  "content_hash": "3e88fde81dd444b6"
 }
