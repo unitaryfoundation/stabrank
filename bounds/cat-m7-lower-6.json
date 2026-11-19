@@ -1,0 +1,32 @@
+{
+  "schema_version": "0.1",
+  "orbit": "cat",
+  "m": 7,
+  "direction": "lower",
+  "rank": 6,
+  "certificate": {
+    "script": "verify_challenge/cert_cat_m7_rank5_exact.py",
+    "exact": true,
+    "expect": "CERTIFIED chi(cat_7) >= 6"
+  },
+  "provenance": {
+    "author": "Farrokh Labib",
+    "reference": "stabrank-research, round 10 (attacks/round10-nonpauli); exact certificate verify_challenge/cert_cat_m7_rank5_exact.py",
+    "date": "2026-09-17",
+    "github": [
+      "FarLab"
+    ],
+    "method": "projection-lemma vocabulary exclusion on compressed c_7: cheap Paulis from recursively proved projected ranks, a 1088-state vocabulary, symmetric pivot triples and sorted quotient images, exact over Z[i] modulo two split primes",
+    "compute": {
+      "cpu_hours": 34,
+      "hardware": "Apple silicon laptop, one to three cores",
+      "llm": [
+        {
+          "model": "claude-opus-5-5",
+          "role": "wrote and ran the exact certificate, its controls and cross-checks"
+        }
+      ]
+    }
+  },
+  "notes": "With bounds/cat-m7-upper-6.json, chi(cat_7) = 6; improves bounds/cat-m7-lower-5.json (attested). First found 2026-09-17 by a floating-point run of the same argument (stabrank-research round 10, about 33 CPU-hours, mostly the five-qubit projected ranks); this certificate redoes it exactly in about 200 s on one core. Projection lemma on compressed c_7 (six qubits): a term stabilised by g forces chi((1-g)c_7) <= 4, two terms sharing g force <= 3, three force <= 2. Projected ranks come from the same exclusion one qubit down, recursively to three qubits (all 1080 states): >= 5 on 6524 signed Paulis, >= 4 on 1526, >= 3 on 140, one representative per orbit of <S_7, J_0 J_1 (J = X S^dagger), K = S^(x)7 o conj> (12 orbits, generators asserted to fix c_7; point stabilisers transported to five qubits via Schreier generators). Cheap set 1666, vocabulary 1088 states (every signed group inside it, each once), 3968 pivot triples after symmetry and the pair/triple constraints, no decomposition. Exactness: entries in Z[i], ranks mod P1 = 2147483629 and P2 = 2147483549 (both 1 mod 4); independence mod either prime is independence over Q(i), and a deficiency counts only below Hadamard's bound (P1, or P1 P2 for the 6x6 pair test). No floating-point value anywhere, enumeration and symmetry included. Controls in the run: chi(c_5) = chi(c_6) = 3 recovered by the same prover (it finds rank-3 decompositions when asked for 4); a planted unit sum of five compatible vocabulary states is excluded at rank 4 and found at rank 5. The counts (orbit sizes, 140/1666 cheap, 1088 states, 13 to 88 five-qubit orbits) match the September run."
+}
