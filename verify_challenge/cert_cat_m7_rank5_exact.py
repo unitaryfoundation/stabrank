@@ -1,22 +1,16 @@
-"""Exact certificate: chi(cat_m) >= 6 for m = 7, 8, 9, 10.
+"""Exact certificate: chi(cat_7) >= 6.
 
-Printed claims (when every check passes):
+Printed claim (when every check passes):
     CERTIFIED chi(cat_7) >= 6
-    CERTIFIED chi(cat_8) >= 6
-    CERTIFIED chi(cat_9) >= 6
-    CERTIFIED chi(cat_10) >= 6
 
-Together with bounds/cat-m7-upper-6.json and bounds/cat-m8-upper-6.json this
-gives chi(cat_7) = chi(cat_8) = 6. Integer arithmetic throughout: vectors over
+Together with bounds/cat-m7-upper-6.json this gives chi(cat_7) = 6. Integer arithmetic throughout: vectors over
 Z[i] as int64 pairs, every rank decided modulo split primes P1, P2 just below
 2^31 (verify_challenge/pauli_vocabulary.py). No floating-point number is
 created anywhere.
 
 1. Target. c_7(y) = cat_7(y, par(y)) = i^{(|y| + par(y))/2} on six qubits is the
-   image of |cat_7> under a CNOT ladder, so chi(cat_7) = chi(c_7), and
-   (<0|_1 (x) I)|cat_m> = 2^{-1/2}|cat_{m-1}> gives chi(cat_m) >= chi(cat_7)
-   for m = 8, 9, 10 (<0| maps stabilizer states to stabilizer states or 0). All
-   identities are checked symbolically against stabrank_verify.target_vector.
+   image of |cat_7> under a CNOT ladder, so chi(cat_7) = chi(c_7). The
+   compression is checked symbolically against stabrank_verify.target_vector.
 
 2. Projection lemma (Wstate / tclass note). If c_7 = sum_{j<=5} c_j s_j and the
    signed Pauli g stabilises s_1, then (1 - g) c_7 is a sum of four stabilizer
@@ -85,7 +79,6 @@ def c_vector(m: int):
 
 def check_target() -> None:
     cat7 = target_vector("cat", 7)
-    cat8 = target_vector("cat", 8)
     re, im = c_vector(7)
     scale = sp.sqrt(2) ** 6
     for x in range(128):
@@ -97,13 +90,6 @@ def check_target() -> None:
         want = int(re[y]) + sp.I * int(im[y])
         if sp.simplify(scale * cat7[x] - want) != 0:
             fail(f"compressed c_7 mismatch at y={y}")
-    prev = cat7
-    for m in (8, 9, 10):
-        cur = cat8 if m == 8 else target_vector("cat", m)
-        half = 1 << (m - 1)
-        if sp.simplify(sp.Matrix(cur[:half]) - prev / sp.sqrt(2)) != sp.zeros(half, 1):
-            fail(f"(<0|_1 (x) I)|cat_{m}> != 2^(-1/2)|cat_{m - 1}>")
-        prev = cur
 
 
 def symmetry_ops():
@@ -184,8 +170,7 @@ def main() -> int:
         print(f"[{time.time() - t0:6.1f}s] {msg}", flush=True)
 
     check_target()
-    log("target: c_7 is the compressed cat_7; (<0|_1 (x) I)|cat_m> = 2^(-1/2)|cat_(m-1)> "
-        "for m = 8, 9, 10")
+    log("target: c_7 is the compressed cat_7")
     pv.full_vocab(3)
     pv.full_vocab(4)
     log("stabilizer states: 1080 on 3 qubits, 36720 on 4 qubits (counts checked)")
@@ -237,8 +222,7 @@ def main() -> int:
             st["pivot tuples"] = len(piv)
         log(f"chi(c_7) >= {k}: cheap set {int(cheap.sum())}, vocabulary {V.m}, {st}")
 
-    for m in (7, 8, 9, 10):
-        print(f"CERTIFIED chi(cat_{m}) >= 6")
+    print("CERTIFIED chi(cat_7) >= 6")
     log("done")
     return 0
 
