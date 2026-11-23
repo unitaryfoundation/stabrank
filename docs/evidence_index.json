@@ -1,7 +1,7 @@
 {
  "generated_from": "bounds/",
- "head": "791cf31b418bdc296d8ddf9c0436e0229c756ef2",
- "generated": "2026-11-17",
+ "head": "4acb19c0dbddfddc2d2689c1fa323508581e27c1",
+ "generated": "2026-11-23",
  "since": "2026-09-15",
  "exponents": [
   {
@@ -1710,11 +1710,11 @@
    "orbit": "cat",
    "m": 7,
    "lower": {
-    "rank": 5,
-    "tier": "attested",
-    "slug": "cat-m7-lower-5",
-    "date": "2026-10-17",
-    "board_date": "2026-10-21",
+    "rank": 6,
+    "tier": "verified",
+    "slug": "cat-m7-lower-6",
+    "date": "2026-09-17",
+    "board_date": "2026-11-23",
     "moved_since": true
    },
    "upper": {
@@ -1725,7 +1725,7 @@
     "board_date": "2026-09-24",
     "moved_since": true
    },
-   "settled": false,
+   "settled": true,
    "moved_since": true
   },
   {
@@ -4071,6 +4071,22 @@
   },
   {
    "orbit": "cat",
+   "m": 7,
+   "rank": 6,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 34.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 34.0,
+   "bounds": [
+    "cat-m7-lower-6"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "cat",
    "m": 8,
    "rank": 4,
    "runs": 0,
@@ -4272,11 +4288,11 @@
   {
    "date": "2026-09-17",
    "seeded": false,
-   "cpu_hours": 0.6,
-   "discoveries": 1,
-   "median_declared": 0.6,
-   "cum_cpu_hours": 1.9009999999999998,
-   "cum_discoveries": 60
+   "cpu_hours": 34.6,
+   "discoveries": 2,
+   "median_declared": 17.3,
+   "cum_cpu_hours": 35.901,
+   "cum_discoveries": 61
   },
   {
    "date": "2026-09-18",
@@ -4284,8 +4300,8 @@
    "cpu_hours": 18.59197222222221,
    "discoveries": 13,
    "median_declared": 0.05,
-   "cum_cpu_hours": 20.49297222222221,
-   "cum_discoveries": 73
+   "cum_cpu_hours": 54.492972222222214,
+   "cum_discoveries": 74
   },
   {
    "date": "2026-09-19",
@@ -4293,8 +4309,8 @@
    "cpu_hours": 12.322694444444446,
    "discoveries": 0,
    "median_declared": null,
-   "cum_cpu_hours": 32.81566666666666,
-   "cum_discoveries": 73
+   "cum_cpu_hours": 66.81566666666666,
+   "cum_discoveries": 74
   },
   {
    "date": "2026-09-20",
@@ -4302,8 +4318,8 @@
    "cpu_hours": 477.20861111111094,
    "discoveries": 11,
    "median_declared": 0.0055,
-   "cum_cpu_hours": 510.02427777777757,
-   "cum_discoveries": 84
+   "cum_cpu_hours": 544.0242777777776,
+   "cum_discoveries": 85
   },
   {
    "date": "2026-09-21",
@@ -4311,8 +4327,8 @@
    "cpu_hours": 0.04,
    "discoveries": 3,
    "median_declared": 0.04,
-   "cum_cpu_hours": 510.0642777777776,
-   "cum_discoveries": 87
+   "cum_cpu_hours": 544.0642777777775,
+   "cum_discoveries": 88
   },
   {
    "date": "2026-09-22",
@@ -4320,8 +4336,8 @@
    "cpu_hours": 0.3473333333333333,
    "discoveries": 8,
    "median_declared": 0.001,
-   "cum_cpu_hours": 510.4116111111109,
-   "cum_discoveries": 95
+   "cum_cpu_hours": 544.4116111111109,
+   "cum_discoveries": 96
   },
   {
    "date": "2026-09-23",
@@ -4329,8 +4345,8 @@
    "cpu_hours": 124.005,
    "discoveries": 8,
    "median_declared": 0.001,
-   "cum_cpu_hours": 634.4166111111109,
-   "cum_discoveries": 103
+   "cum_cpu_hours": 668.4166111111109,
+   "cum_discoveries": 104
   },
   {
    "date": "2026-09-24",
@@ -4338,8 +4354,8 @@
    "cpu_hours": 87.004,
    "discoveries": 12,
    "median_declared": 0.001,
-   "cum_cpu_hours": 721.4206111111109,
-   "cum_discoveries": 115
+   "cum_cpu_hours": 755.4206111111109,
+   "cum_discoveries": 116
   },
   {
    "date": "2026-09-26",
@@ -4347,8 +4363,8 @@
    "cpu_hours": 121.5,
    "discoveries": 1,
    "median_declared": 121.5,
-   "cum_cpu_hours": 842.9206111111109,
-   "cum_discoveries": 116
+   "cum_cpu_hours": 876.9206111111109,
+   "cum_discoveries": 117
   },
   {
    "date": "2026-10-02",
@@ -4356,8 +4372,8 @@
    "cpu_hours": 110.4,
    "discoveries": 3,
    "median_declared": 28.9,
-   "cum_cpu_hours": 953.3206111111109,
-   "cum_discoveries": 119
+   "cum_cpu_hours": 987.3206111111109,
+   "cum_discoveries": 120
   },
   {
    "date": "2026-10-09",
@@ -4365,8 +4381,8 @@
    "cpu_hours": 0.0,
    "discoveries": 1,
    "median_declared": null,
-   "cum_cpu_hours": 953.3206111111109,
-   "cum_discoveries": 120
+   "cum_cpu_hours": 987.3206111111109,
+   "cum_discoveries": 121
   },
   {
    "date": "2026-10-12",
@@ -4374,8 +4390,8 @@
    "cpu_hours": 0.001,
    "discoveries": 1,
    "median_declared": 0.001,
-   "cum_cpu_hours": 953.3216111111109,
-   "cum_discoveries": 121
+   "cum_cpu_hours": 987.3216111111109,
+   "cum_discoveries": 122
   },
   {
    "date": "2026-10-16",
@@ -4383,8 +4399,8 @@
    "cpu_hours": 8.809999999999999,
    "discoveries": 5,
    "median_declared": 0.01,
-   "cum_cpu_hours": 962.1316111111108,
-   "cum_discoveries": 126
+   "cum_cpu_hours": 996.1316111111108,
+   "cum_discoveries": 127
   },
   {
    "date": "2026-10-17",
@@ -4392,8 +4408,8 @@
    "cpu_hours": 223.41000000000005,
    "discoveries": 29,
    "median_declared": 0.0,
-   "cum_cpu_hours": 1185.5416111111108,
-   "cum_discoveries": 155
+   "cum_cpu_hours": 1219.5416111111108,
+   "cum_discoveries": 156
   },
   {
    "date": "2026-10-18",
@@ -4401,8 +4417,8 @@
    "cpu_hours": 0.001,
    "discoveries": 1,
    "median_declared": 0.001,
-   "cum_cpu_hours": 1185.5426111111108,
-   "cum_discoveries": 156
+   "cum_cpu_hours": 1219.5426111111108,
+   "cum_discoveries": 157
   },
   {
    "date": "2026-10-21",
@@ -4410,8 +4426,8 @@
    "cpu_hours": 0.05300000000000001,
    "discoveries": 9,
    "median_declared": 0.003,
-   "cum_cpu_hours": 1185.5956111111109,
-   "cum_discoveries": 165
+   "cum_cpu_hours": 1219.5956111111109,
+   "cum_discoveries": 166
   },
   {
    "date": "2026-10-23",
@@ -4419,8 +4435,8 @@
    "cpu_hours": 7269.807200000002,
    "discoveries": 12,
    "median_declared": 11.3826,
-   "cum_cpu_hours": 8455.402811111113,
-   "cum_discoveries": 177
+   "cum_cpu_hours": 8489.402811111113,
+   "cum_discoveries": 178
   },
   {
    "date": "2026-11-06",
@@ -4428,8 +4444,8 @@
    "cpu_hours": 0.0,
    "discoveries": 1,
    "median_declared": 0.0,
-   "cum_cpu_hours": 8455.402811111113,
-   "cum_discoveries": 178
+   "cum_cpu_hours": 8489.402811111113,
+   "cum_discoveries": 179
   },
   {
    "date": "2026-11-10",
@@ -4437,8 +4453,8 @@
    "cpu_hours": 1.07,
    "discoveries": 9,
    "median_declared": 0.08,
-   "cum_cpu_hours": 8456.472811111113,
-   "cum_discoveries": 187
+   "cum_cpu_hours": 8490.472811111113,
+   "cum_discoveries": 188
   },
   {
    "date": "2026-11-16",
@@ -4446,8 +4462,8 @@
    "cpu_hours": 0.18,
    "discoveries": 22,
    "median_declared": 0.0,
-   "cum_cpu_hours": 8456.652811111113,
-   "cum_discoveries": 209
+   "cum_cpu_hours": 8490.652811111113,
+   "cum_discoveries": 210
   }
  ],
  "bounds": [
@@ -8665,6 +8681,45 @@
      {
       "model": "claude-fable-5-1",
       "role": "designed, wrote and ran the exclusion and its planted controls"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "cat-m7-lower-6",
+   "file": "bounds/cat-m7-lower-6.json",
+   "orbit": "cat",
+   "m": 7,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-09-17",
+   "author": "Farrokh Labib",
+   "reference": "stabrank-research, round 10 (attacks/round10-nonpauli); exact certificate verify_challenge/cert_cat_m7_rank5_exact.py",
+   "method": "projection-lemma vocabulary exclusion on compressed c_7: cheap Paulis from recursively proved projected ranks, a 1088-state vocabulary, symmetric pivot triples and sorted quotient images, exact over Z[i] modulo two split primes",
+   "pull_request": 203,
+   "merge_commit": "4acb19c0dbddfddc2d2689c1fa323508581e27c1",
+   "merge_date": "2026-11-23",
+   "added_commit": "d3e63a0ea1f3888361656b7d2add3e26a9fb762a",
+   "added_date": "2026-11-19",
+   "added_subject": "cat m=7..10: exact certificate for chi(cat_7) >= 6",
+   "receipt": "certs/cat-m7-lower-6.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_cat_m7_rank5_exact.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "cpu_hours": 34,
+    "hardware": "Apple silicon laptop, one to three cores",
+    "llm": [
+     {
+      "model": "claude-opus-5-5",
+      "role": "wrote and ran the exact certificate, its controls and cross-checks"
      }
     ]
    }

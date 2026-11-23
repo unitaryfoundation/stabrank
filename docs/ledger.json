@@ -1286,6 +1286,35 @@
    "attested": null
   },
   {
+   "slug": "cat-m7-lower-6",
+   "orbit": "cat",
+   "m": 7,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-09-17",
+   "author": "Farrokh Labib",
+   "github": [
+    "FarLab"
+   ],
+   "method": "projection-lemma vocabulary exclusion on compressed c_7: cheap Paulis from recursively proved projected ranks, a 1088-state vocabulary, symmetric pivot triples and sorted quotient images, exact over Z[i] modulo two split primes",
+   "reference": "stabrank-research, round 10 (attacks/round10-nonpauli); exact certificate verify_challenge/cert_cat_m7_rank5_exact.py",
+   "compute": {
+    "cpu_hours": 34,
+    "hardware": "Apple silicon laptop, one to three cores",
+    "llm": [
+     {
+      "model": "claude-opus-5-5",
+      "role": "wrote and ran the exact certificate, its controls and cross-checks"
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
    "slug": "H3-m4-lower-3",
    "orbit": "H3",
    "m": 4,
