@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "tier": "verified",
+  "detail": "certificate script asserted: CERTIFIED chi(qubit_H^9) >= 10, by an argument declared exact throughout (no floating-point margin)",
+  "gamma": null,
+  "content_hash": "251a68e6d5e3d3c9"
+}
