@@ -1,7 +1,7 @@
 {
  "generated_from": "bounds/",
- "head": "4acb19c0dbddfddc2d2689c1fa323508581e27c1",
- "generated": "2026-11-23",
+ "head": "21f0849019110e027b2f789964de256819b22f6b",
+ "generated": "2026-11-26",
  "since": "2026-09-15",
  "exponents": [
   {
@@ -874,11 +874,11 @@
    "orbit": "qubit_H",
    "m": 7,
    "lower": {
-    "rank": 6,
-    "tier": "attested",
-    "slug": "qubit_H-m7-lower-6",
-    "date": "2026-09-22",
-    "board_date": "2026-09-22",
+    "rank": 8,
+    "tier": "verified",
+    "slug": "qubit_H-m7-lower-8",
+    "date": "2026-11-25",
+    "board_date": "2026-11-26",
     "moved_since": true
    },
    "upper": {
@@ -918,11 +918,11 @@
    "orbit": "qubit_H",
    "m": 9,
    "lower": {
-    "rank": 6,
-    "tier": "attested",
-    "slug": "qubit_H-m9-lower-6",
-    "date": "2026-10-17",
-    "board_date": "2026-10-21",
+    "rank": 10,
+    "tier": "verified",
+    "slug": "qubit_H-m9-lower-10",
+    "date": "2026-11-25",
+    "board_date": "2026-11-26",
     "moved_since": true
    },
    "upper": {
@@ -1732,11 +1732,11 @@
    "orbit": "cat",
    "m": 8,
    "lower": {
-    "rank": 5,
-    "tier": "attested",
-    "slug": "cat-m8-lower-5",
-    "date": "2026-10-17",
-    "board_date": "2026-10-21",
+    "rank": 6,
+    "tier": "verified",
+    "slug": "cat-m8-lower-6",
+    "date": "2026-11-19",
+    "board_date": "2026-11-26",
     "moved_since": true
    },
    "upper": {
@@ -1747,7 +1747,7 @@
     "board_date": "2026-09-24",
     "moved_since": true
    },
-   "settled": false,
+   "settled": true,
    "moved_since": true
   },
   {
@@ -2910,6 +2910,22 @@
   {
    "orbit": "qubit_H",
    "m": 7,
+   "rank": 8,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "qubit_H-m7-lower-8"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "qubit_H",
+   "m": 7,
    "rank": 9,
    "runs": 1,
    "log_runs": 0,
@@ -3001,6 +3017,22 @@
    ],
    "board": [
     "attested"
+   ]
+  },
+  {
+   "orbit": "qubit_H",
+   "m": 9,
+   "rank": 10,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "qubit_H-m9-lower-10"
+   ],
+   "board": [
+    "verified"
    ]
   },
   {
@@ -4119,6 +4151,22 @@
   },
   {
    "orbit": "cat",
+   "m": 8,
+   "rank": 6,
+   "runs": 0,
+   "log_runs": 0,
+   "cpu_hours": 0.0,
+   "solutions": 1,
+   "cpu_hours_per_solution": 0.0,
+   "bounds": [
+    "cat-m8-lower-6"
+   ],
+   "board": [
+    "verified"
+   ]
+  },
+  {
+   "orbit": "cat",
    "m": 9,
    "rank": 4,
    "runs": 3,
@@ -4464,6 +4512,24 @@
    "median_declared": 0.0,
    "cum_cpu_hours": 8490.652811111113,
    "cum_discoveries": 210
+  },
+  {
+   "date": "2026-11-19",
+   "seeded": false,
+   "cpu_hours": 0.0,
+   "discoveries": 1,
+   "median_declared": 0.0,
+   "cum_cpu_hours": 8490.652811111113,
+   "cum_discoveries": 211
+  },
+  {
+   "date": "2026-11-25",
+   "seeded": false,
+   "cpu_hours": 0.0,
+   "discoveries": 2,
+   "median_declared": 0.0,
+   "cum_cpu_hours": 8490.652811111113,
+   "cum_discoveries": 213
   }
  ],
  "bounds": [
@@ -8862,6 +8928,43 @@
    }
   },
   {
+   "slug": "cat-m8-lower-6",
+   "file": "bounds/cat-m8-lower-6.json",
+   "orbit": "cat",
+   "m": 8,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-19",
+   "author": "Jonas Helsen",
+   "reference": "stabrank verify_challenge",
+   "method": "Computational-basis postselection from the eight-qubit to the seven-qubit cat, together with the signed-Pauli exclusion at seven qubits.",
+   "pull_request": 205,
+   "merge_commit": "21f0849019110e027b2f789964de256819b22f6b",
+   "merge_date": "2026-11-26",
+   "added_commit": "ff1e4486fc7c20f023187ee7045240e27d932b93",
+   "added_date": "2026-11-26",
+   "added_subject": "Certify seven- and nine-copy H-type and eight-qubit magic cat lower bounds",
+   "receipt": "certs/cat-m8-lower-6.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_cat_m8_pauli.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "llm": [
+     {
+      "model": "OpenAI Codex",
+      "role": "Assisted with the lower-bound argument and its exact computational certificate."
+     }
+    ]
+   }
+  },
+  {
    "slug": "cat-m8-upper-6",
    "file": "bounds/cat-m8-upper-6.json",
    "orbit": "cat",
@@ -9800,6 +9903,43 @@
    }
   },
   {
+   "slug": "qubit_H-m7-lower-8",
+   "file": "bounds/qubit_H-m7-lower-8.json",
+   "orbit": "qubit_H",
+   "m": 7,
+   "direction": "lower",
+   "rank": 8,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-25",
+   "author": "Jonas Helsen",
+   "reference": "research/h7_h9_bell/proof.md",
+   "method": "Signed Pauli postselection, two-site Bell contraction, and a Gram matrix bound on the Gaussian-conjugate target plane. The shared certificate regenerates the five-copy exclusion from scratch.",
+   "pull_request": 205,
+   "merge_commit": "21f0849019110e027b2f789964de256819b22f6b",
+   "merge_date": "2026-11-26",
+   "added_commit": "ff1e4486fc7c20f023187ee7045240e27d932b93",
+   "added_date": "2026-11-26",
+   "added_subject": "Certify seven- and nine-copy H-type and eight-qubit magic cat lower bounds",
+   "receipt": "certs/qubit_H-m7-lower-8.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_h_m7_m9_bell.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "llm": [
+     {
+      "model": "OpenAI Codex",
+      "role": "Assisted with the lower-bound argument, implementation and independent checks."
+     }
+    ]
+   }
+  },
+  {
    "slug": "qubit_H-m7-upper-9",
    "file": "bounds/qubit_H-m7-upper-9.json",
    "orbit": "qubit_H",
@@ -9950,6 +10090,43 @@
     "wall_clock_hours": 0.01,
     "runs": 1,
     "hardware": "Apple silicon laptop, one core; direct construction, no search"
+   }
+  },
+  {
+   "slug": "qubit_H-m9-lower-10",
+   "file": "bounds/qubit_H-m9-lower-10.json",
+   "orbit": "qubit_H",
+   "m": 9,
+   "direction": "lower",
+   "rank": 10,
+   "tier": "verified",
+   "ok": true,
+   "date": "2026-11-25",
+   "author": "Jonas Helsen",
+   "reference": "research/h7_h9_bell/proof.md",
+   "method": "Signed Pauli postselection, two-site Bell contraction, and a Gram matrix bound on the Gaussian-conjugate target plane. The shared certificate regenerates the five-copy exclusion from scratch.",
+   "pull_request": 205,
+   "merge_commit": "21f0849019110e027b2f789964de256819b22f6b",
+   "merge_date": "2026-11-26",
+   "added_commit": "ff1e4486fc7c20f023187ee7045240e27d932b93",
+   "added_date": "2026-11-26",
+   "added_subject": "Certify seven- and nine-copy H-type and eight-qubit magic cat lower bounds",
+   "receipt": "certs/qubit_H-m9-lower-10.json",
+   "receipt_matches": true,
+   "certificate_script": "verify_challenge/cert_qubit_h_m7_m9_bell.py",
+   "certificate_budget_s": null,
+   "certificate_attested": null,
+   "lean_module": null,
+   "lean_theorem": null,
+   "lean_receipt": null,
+   "lean_receipt_ok": null,
+   "compute": {
+    "llm": [
+     {
+      "model": "OpenAI Codex",
+      "role": "Assisted with the lower-bound argument, implementation and independent checks."
+     }
+    ]
    }
   },
   {

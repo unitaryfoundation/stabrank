@@ -5495,6 +5495,87 @@
    },
    "budget_s": null,
    "attested": null
+  },
+  {
+   "slug": "cat-m8-lower-6",
+   "orbit": "cat",
+   "m": 8,
+   "direction": "lower",
+   "rank": 6,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-19",
+   "author": "Jonas Helsen",
+   "github": [
+    "jonashelsen"
+   ],
+   "method": "Computational-basis postselection from the eight-qubit to the seven-qubit cat, together with the signed-Pauli exclusion at seven qubits.",
+   "reference": "stabrank verify_challenge",
+   "compute": {
+    "llm": [
+     {
+      "model": "OpenAI Codex",
+      "role": "Assisted with the lower-bound argument and its exact computational certificate."
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_H-m7-lower-8",
+   "orbit": "qubit_H",
+   "m": 7,
+   "direction": "lower",
+   "rank": 8,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-25",
+   "author": "Jonas Helsen",
+   "github": [
+    "jonashelsen"
+   ],
+   "method": "Signed Pauli postselection, two-site Bell contraction, and a Gram matrix bound on the Gaussian-conjugate target plane. The shared certificate regenerates the five-copy exclusion from scratch.",
+   "reference": "research/h7_h9_bell/proof.md",
+   "compute": {
+    "llm": [
+     {
+      "model": "OpenAI Codex",
+      "role": "Assisted with the lower-bound argument, implementation and independent checks."
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
+  },
+  {
+   "slug": "qubit_H-m9-lower-10",
+   "orbit": "qubit_H",
+   "m": 9,
+   "direction": "lower",
+   "rank": 10,
+   "tier": "verified",
+   "ok": true,
+   "gamma": null,
+   "date": "2026-11-25",
+   "author": "Jonas Helsen",
+   "github": [
+    "jonashelsen"
+   ],
+   "method": "Signed Pauli postselection, two-site Bell contraction, and a Gram matrix bound on the Gaussian-conjugate target plane. The shared certificate regenerates the five-copy exclusion from scratch.",
+   "reference": "research/h7_h9_bell/proof.md",
+   "compute": {
+    "llm": [
+     {
+      "model": "OpenAI Codex",
+      "role": "Assisted with the lower-bound argument, implementation and independent checks."
+     }
+    ]
+   },
+   "budget_s": null,
+   "attested": null
   }
  ]
 }
