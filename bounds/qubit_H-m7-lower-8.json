@@ -1,0 +1,30 @@
+{
+  "schema_version": "0.1",
+  "orbit": "qubit_H",
+  "m": 7,
+  "direction": "lower",
+  "rank": 8,
+  "certificate": {
+    "script": "verify_challenge/cert_qubit_h_m7_m9_bell.py",
+    "exact": true,
+    "expect": "CERTIFIED chi(qubit_H^7) >= 8"
+  },
+  "provenance": {
+    "author": "Jonas Helsen",
+    "github": [
+      "jonashelsen"
+    ],
+    "date": "2026-11-25",
+    "reference": "research/h7_h9_bell/proof.md",
+    "method": "Signed Pauli postselection, two-site Bell contraction, and a Gram matrix bound on the Gaussian-conjugate target plane. The shared certificate regenerates the five-copy exclusion from scratch.",
+    "compute": {
+      "llm": [
+        {
+          "model": "OpenAI Codex",
+          "role": "Assisted with the lower-bound argument, implementation and independent checks."
+        }
+      ]
+    }
+  },
+  "notes": "The phase state (|0> + exp(i pi/4)|1>)/sqrt(2) is in the leaderboard's H-type Clifford orbit. Starting from chi(H^5) >= 6, the shared certificate excludes a span of 7 atoms at 7 copies. It verifies the local Bell identities and the exact Gram inequality described in research/h7_h9_bell/proof.md. The five-copy base already appears in bounds/qubit_H-m5-lower-6.json. This run independently generates all of its input dictionaries, retains 224 five-qubit rays and checks 173223 five-dimensional candidate spaces. No stored search batches are used."
+}

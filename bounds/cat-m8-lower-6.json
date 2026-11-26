@@ -1,0 +1,30 @@
+{
+  "schema_version": "0.1",
+  "orbit": "cat",
+  "m": 8,
+  "direction": "lower",
+  "rank": 6,
+  "certificate": {
+    "script": "verify_challenge/cert_cat_m8_pauli.py",
+    "exact": true,
+    "expect": "CERTIFIED chi(cat_8) >= 6"
+  },
+  "provenance": {
+    "author": "Jonas Helsen",
+    "reference": "stabrank verify_challenge",
+    "date": "2026-11-19",
+    "method": "Computational-basis postselection from the eight-qubit to the seven-qubit cat, together with the signed-Pauli exclusion at seven qubits.",
+    "compute": {
+      "llm": [
+        {
+          "model": "OpenAI Codex",
+          "role": "Assisted with the lower-bound argument and its exact computational certificate."
+        }
+      ]
+    },
+    "github": [
+      "jonashelsen"
+    ]
+  },
+  "notes": "Qassim, Pashayan, and Gosset (arXiv:2106.07740, Appendix) proved chi(cat_7) <= chi(cat_8) <= 6. Farrokh Labib established chi(cat_7) >= 6 in September 2026; the challenge records his exact verification in bounds/cat-m7-lower-6.json. Together those results already imply chi(cat_8) = 6. This certificate checks the normalized identity (I x <0|) cat_8 = cat_7 / sqrt(2) and independently reruns the seven-qubit rank-five exclusion using the accompanying signed-Pauli kernels. Postselection maps each stabilizer term to a stabilizer ray or zero. The 1088 surviving rays yield 4831 orbits of unordered triples; the finite-field span test excludes all five-term decompositions. The matching upper bound is recorded in bounds/cat-m8-upper-6.json."
+}
